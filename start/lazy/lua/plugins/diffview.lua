@@ -7,13 +7,6 @@ return {
   keys = {
     '<leader>gi',
     '<leader>go',
-    '<leader>gq',
-
-    '<leader>gT',
-    '<leader>ge',
-    '<leader>gl',
-
-    '<leader>xt',
   },
   config = function()
     require('config.diffview')
