@@ -3,6 +3,8 @@ require("diffview").setup()
 local close_allow_timeout = 0
 local close_allow_timer
 local close_allowed = nil
+local close_force = nil
+local close_print_en = 1
 
 local function close_allow_timer_do()
   close_allowed = nil
@@ -19,6 +21,10 @@ local function close_allow_timer_do()
           close_allow_timer:stop()
           close_allow_timer = nil
           close_allowed = 1
+          if close_force then
+            vim.cmd('DiffviewClose')
+            close_force = nil
+          end
         end
       end)
     end)
@@ -39,13 +45,27 @@ local function diffviewclose()
   if close_allowed then
     vim.cmd('DiffviewClose')
   else
-    print(close_allow_timeout .. 'ms后再尝试')
+    if close_print_en then
+      print(close_allow_timeout .. 'ms后再尝试')
+    end
+  end
+end
+
+local function diffviewcloseforce()
+  if close_allowed then
+    vim.cmd('DiffviewClose')
+  else
+    close_force = 1
+    if close_print_en then
+      print(close_allow_timeout .. 'ms后执行DiffviewClose')
+    end
   end
 end
 
 vim.keymap.set({ 'n', 'v' }, '<leader>gi', diffviewfilehistory, { silent = true, desc = 'diffview filehistory' })
 vim.keymap.set({ 'n', 'v' }, '<leader>go', diffviewopen, { silent = true, desc = 'diffview open' })
 vim.keymap.set({ 'n', 'v' }, '<leader>gq', diffviewclose, { silent = true, desc = 'diffview close' })
+vim.keymap.set({ 'n', 'v' }, '<leader>gQ', diffviewcloseforce, { silent = true, desc = 'diffview close force' })
 
 vim.keymap.set({ 'n', 'v' }, '<leader>ge', ':<c-u>DiffviewRefresh<cr>', { silent = true, desc = 'DiffviewRefresh' })
 vim.keymap.set({ 'n', 'v' }, '<leader>gl', ':<c-u>DiffviewToggleFiles<cr>', { silent = true, desc = 'DiffviewToggleFiles' })
