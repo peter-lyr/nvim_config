@@ -57,12 +57,12 @@ return {
       '<leader><leader>wo',
       '<leader><leader>wi',
 
-      '<leader><leader><leader>wi',
-
-      '<leader><leader>wk',
-      '<leader><leader>wj',
-      '<leader><leader>wh',
-      '<leader><leader>wl',
+      -- '<leader><leader><leader>wi',
+      --
+      -- '<leader><leader>wk',
+      -- '<leader><leader>wj',
+      -- '<leader><leader>wh',
+      -- '<leader><leader>wl',
 
     },
   },

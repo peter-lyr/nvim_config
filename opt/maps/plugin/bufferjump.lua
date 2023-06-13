@@ -10,3 +10,6 @@ vim.keymap.set({ 'n', 'v' }, '<leader>wl', '<c-w>l', { silent = true, desc = 'wi
 vim.keymap.set({ 'n', 'v' }, '<leader>wo', '<c-w>_', { silent = true, desc = 'wincmd _' })
 vim.keymap.set({ 'n', 'v' }, '<leader>wu', '<c-w>|', { silent = true, desc = 'wincmd |' })
 vim.keymap.set({ 'n', 'v' }, '<leader>wi', bufferjump.i, { silent = true, desc = 'wincmd =' })
+
+vim.keymap.set({ 'n', 'v' }, '<leader><leader>wi', bufferjump.ii, { silent = true, desc = 'win height auto max disable' })
+vim.keymap.set({ 'n', 'v' }, '<leader><leader>wo', bufferjump.oo, { silent = true, desc = 'win height auto max enable' })
