@@ -1,7 +1,7 @@
 require("diffview").setup()
 
 local close_allow_timeout = 0
-local close_allow_timer
+local close_allow_timer = nil
 local close_allowed = nil
 local close_force = nil
 local close_print_en = 1
@@ -18,8 +18,10 @@ local function close_allow_timer_do()
       vim.schedule(function()
         close_allow_timeout = close_allow_timeout - 200
         if close_allow_timeout <= 0 then
-          close_allow_timer:stop()
-          close_allow_timer = nil
+          if close_allow_timer then
+            close_allow_timer:stop()
+            close_allow_timer = nil
+          end
           close_allowed = 1
           if close_force then
             vim.cmd('DiffviewClose')
