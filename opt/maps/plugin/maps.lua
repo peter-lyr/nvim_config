@@ -1,4 +1,4 @@
--- %s/vim.keymap.set(\s*\({\s*[^\}]\+},\)\s*\(.\+,\)\s*\(.\+\))/\=printf("vim.keymap.set(%-18s %-25s %s)", submatch(1), submatch(2), submatch(3))
+-- %s/vim.keymap.set(\({[ 'nvtic,]\+},\)\s\+\([^ ]\+,\)\s\+\(.\+\))/\=printf("vim.keymap.set(%-18s %-25s %s)", submatch(1), submatch(2), submatch(3))
 
 -- alt_num
 
