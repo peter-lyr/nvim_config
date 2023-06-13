@@ -3,6 +3,10 @@ return {
   lazy = true,
   keys = {
     '<leader>gl',
+    '<leader>gc',
+    '<leader>gf',
+    '<leader>gC',
+
     '<leader>gL',
     '<leader>gt',
   },
