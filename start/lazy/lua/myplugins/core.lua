@@ -43,7 +43,7 @@ return {
 
       -- bufferjump
 
-      '<leader>ww',
+      '<leader>wp',
 
       '<leader>wk',
       '<leader>wj',
