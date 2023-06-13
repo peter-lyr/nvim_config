@@ -6,3 +6,7 @@ vim.keymap.set({ 'n', 'v' }, '<leader>wk', bufferjump.k, { silent = true, desc =
 vim.keymap.set({ 'n', 'v' }, '<leader>wj', bufferjump.j, { silent = true, desc = 'wincmd j' })
 vim.keymap.set({ 'n', 'v' }, '<leader>wh', '<c-w>h', { silent = true, desc = 'wincmd h' })
 vim.keymap.set({ 'n', 'v' }, '<leader>wl', '<c-w>l', { silent = true, desc = 'wincmd l' })
+
+vim.keymap.set({ 'n', 'v' }, '<leader>wo', '<c-w>_', { silent = true, desc = 'wincmd _' })
+vim.keymap.set({ 'n', 'v' }, '<leader>wu', '<c-w>|', { silent = true, desc = 'wincmd |' })
+vim.keymap.set({ 'n', 'v' }, '<leader>wi', bufferjump.i, { silent = true, desc = 'wincmd =' })
