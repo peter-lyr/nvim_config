@@ -27,9 +27,9 @@ vim.keymap.set({ 'n', 'v' },      '<a-s-p>',                '"+P', { desc = '"+P
 
 vim.keymap.set({ 'c', 'i' },      '<a-w>',                  '<c-r>=g:word<cr>', { desc = 'paste g:word' })
 vim.keymap.set({ 'c', 'i' },      '<a-v>',                  '<c-r>"', { desc = 'paste "' })
-vim.keymap.set({ 't',     },      '<a-v>',                  '<c-\\><c-n>pi', { desc = 'paste "' })
+vim.keymap.set({ 't', },          '<a-v>',                  '<c-\\><c-n>pi', { desc = 'paste "' })
 vim.keymap.set({ 'c', 'i' },      '<a-=>',                  '<c-r>+', { desc = 'paste +' })
-vim.keymap.set({ 't',     },      '<a-=>',                  '<c-\\><c-n>"+pi', { desc = 'paste +' })
+vim.keymap.set({ 't', },          '<a-=>',                  '<c-\\><c-n>"+pi', { desc = 'paste +' })
 
 vim.keymap.set({ 'n', 'v' },      '<leader>y',              '<esc>:let @+ = expand("%:t")<cr>', { desc = 'copy %:t to +' })
 vim.keymap.set({ 'n', 'v' },      '<leader>gy',             '<esc>:let @+ = substitute(nvim_buf_get_name(0), "/", "\\\\", "g")<cr>', { desc = 'copy fullpath to +' })
@@ -86,8 +86,8 @@ vim.keymap.set({ 't', },          'Ql',                     '<c-\\><c-n>', { des
 vim.keymap.set({ 't', },          'QL',                     '<c-\\><c-n>', { desc = 'esc' })
 
 vim.keymap.set({ 'i', 'c' },      '<a-m>',                  '<esc><esc>', { desc = 'esc' })
-vim.keymap.set({ 't',     },      '<esc>',                  '<c-\\><c-n>', { desc = 'esc' })
-vim.keymap.set({ 't',     },      '<a-m>',                  '<c-\\><c-n>', { desc = 'esc' })
+vim.keymap.set({ 't', },          '<esc>',                  '<c-\\><c-n>', { desc = 'esc' })
+vim.keymap.set({ 't', },          '<a-m>',                  '<c-\\><c-n>', { desc = 'esc' })
 
 -- enter
 
