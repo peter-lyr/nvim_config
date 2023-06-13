@@ -11,6 +11,9 @@ return {
     dir = opt .. 'maps',
     event = { 'CmdlineEnter', 'InsertEnter', 'ModeChanged', },
     keys = {
+
+      -- maps
+
       'c.',
       'cu',
       'c-',
@@ -37,6 +40,30 @@ return {
       '<leader>f.',
 
       'U',
+
+      -- bufferjump
+
+      '<leader>ww',
+
+      '<leader>wk',
+      '<leader>wj',
+      '<leader>wh',
+      '<leader>wl',
+
+      '<leader>wo',
+      '<leader>wi',
+      '<leader>wu',
+
+      '<leader><leader>wo',
+      '<leader><leader>wi',
+
+      '<leader><leader><leader>wi',
+
+      '<leader><leader>wk',
+      '<leader><leader>wj',
+      '<leader><leader>wh',
+      '<leader><leader>wl',
+
     },
   },
 }
