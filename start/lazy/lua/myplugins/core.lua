@@ -1,6 +1,12 @@
-local name = "core"
+local opt = vim.fn.expand('$VIMRUNTIME') .. '\\pack\\testnvim2\\opt\\'
 
 return {
-  name = name,
-  dir = vim.fn.expand('$VIMRUNTIME') .. '\\pack\\testnvim2\\opt\\' .. name
+  {
+    name = 'options',
+    dir = opt .. 'options',
+  },
+  {
+    name = 'maps',
+    dir = opt .. 'maps',
+  },
 }
