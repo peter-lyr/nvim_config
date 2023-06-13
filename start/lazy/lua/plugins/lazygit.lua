@@ -3,6 +3,7 @@ return {
   lazy = true,
   keys = {
     '<leader>gl',
+    '<leader>gL',
     '<leader>gt',
   },
   dependencies = {
