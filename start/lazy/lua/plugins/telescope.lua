@@ -33,7 +33,7 @@ return {
     { '<leader><leader>sp', '<cmd>Telescope planets<cr>',                                                                                      mode = { 'n', 'v', }, silent = true, desc = 'Telescope planets', },
   },
   dependencies = {
-    'nvim-lua/plenary.nvim',
+    require('plugins.plenary'),
   },
   config = function()
     require('config.telescope')

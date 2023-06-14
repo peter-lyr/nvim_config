@@ -1,9 +1,9 @@
 return {
   { "folke/lazy.nvim" },
 
-  -- "nvim-lua/plenary.nvim",
+  -- require('plugins.plenary'),
 
-  -- "nvim-tree/nvim-web-devicons",
+  -- require('plugins.webdevicons'),
 
   {
     "dstein64/vim-startuptime",
