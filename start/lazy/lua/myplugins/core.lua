@@ -61,24 +61,24 @@ return {
 
       -- bufferjump.lua
 
-      '<leader>wp',
+      { '<leader>wp',         '<c-w>p',                                                                mode = { 'n', 'v' },      silent = true, desc = 'wincmd p' },
 
-      '<leader>wk',
-      '<leader>wj',
-      '<leader>wh',
-      '<leader>wl',
+      { '<leader>wk',         function() require('bufferjump').k() end,                                mode = { 'n', 'v' },      silent = true, desc = 'wincmd k' },
+      { '<leader>wj',         function() require('bufferjump').j() end,                                mode = { 'n', 'v' },      silent = true, desc = 'wincmd j' },
+      { '<leader>wh',         '<c-w>h',                                                                mode = { 'n', 'v' },      silent = true, desc = 'wincmd h' },
+      { '<leader>wl',         '<c-w>l',                                                                mode = { 'n', 'v' },      silent = true, desc = 'wincmd l' },
 
-      '<leader>wo',
-      '<leader>wu',
-      '<leader>wi',
+      { '<leader>wo',         '<c-w>_',                                                                mode = { 'n', 'v' },      silent = true, desc = 'wincmd _' },
+      { '<leader>wu',         '<c-w>|',                                                                mode = { 'n', 'v' },      silent = true, desc = 'wincmd |' },
+      { '<leader>wi',         function() require('bufferjump').i() end,                                mode = { 'n', 'v' },      silent = true, desc = 'wincmd =' },
 
-      '<leader><leader>wi',
-      '<leader><leader>wo',
+      { '<leader><leader>wi', function() require('bufferjump').ii() end,                               mode = { 'n', 'v' },      silent = true, desc = 'win height auto max disable' },
+      { '<leader><leader>wo', function() require('bufferjump').oo() end,                               mode = { 'n', 'v' },      silent = true, desc = 'win height auto max enable' },
 
-      '<leader><leader>wh',
-      '<leader><leader>wj',
-      '<leader><leader>wk',
-      '<leader><leader>wl',
+      { '<leader><leader>wh', function() require('bufferjump').hh() end,                               mode = { 'n', 'v' },      silent = true, desc = 'set winfixwidth' },
+      { '<leader><leader>wj', function() require('bufferjump').jj() end,                               mode = { 'n', 'v' },      silent = true, desc = 'set nowinfixheight' },
+      { '<leader><leader>wk', function() require('bufferjump').kk() end,                               mode = { 'n', 'v' },      silent = true, desc = 'set winfixheight' },
+      { '<leader><leader>wl', function() require('bufferjump').ll() end,                               mode = { 'n', 'v' },      silent = true, desc = 'set nowinfixwidth' },
     },
   },
 }
