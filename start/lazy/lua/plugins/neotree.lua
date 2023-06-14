@@ -11,7 +11,7 @@ return {
   },
   dependencies = {
     require('plugins.plenary'),
-    require('plugins.webdevicons'),
+    require('plugins.web-devicons'),
     'MunifTanjim/nui.nvim',
     's1n7ax/nvim-window-picker',
   },

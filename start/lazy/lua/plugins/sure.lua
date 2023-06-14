@@ -3,7 +3,7 @@ return {
 
   -- require('plugins.plenary'),
 
-  -- require('plugins.webdevicons'),
+  -- require('plugins.web-devicons'),
 
   {
     "dstein64/vim-startuptime",
