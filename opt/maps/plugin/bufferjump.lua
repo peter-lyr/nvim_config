@@ -13,3 +13,8 @@ vim.keymap.set({ 'n', 'v' }, '<leader>wi',         bufferjump.i, { silent = true
 
 vim.keymap.set({ 'n', 'v' }, '<leader><leader>wi', bufferjump.ii, { silent = true, desc = 'win height auto max disable' })
 vim.keymap.set({ 'n', 'v' }, '<leader><leader>wo', bufferjump.oo, { silent = true, desc = 'win height auto max enable' })
+
+vim.keymap.set({ 'n', 'v' }, '<leader><leader>wh', bufferjump.hh, { silent = true, desc = 'set winfixwidth' })
+vim.keymap.set({ 'n', 'v' }, '<leader><leader>wj', bufferjump.jj, { silent = true, desc = 'set nowinfixheight' })
+vim.keymap.set({ 'n', 'v' }, '<leader><leader>wk', bufferjump.kk, { silent = true, desc = 'set winfixheight' })
+vim.keymap.set({ 'n', 'v' }, '<leader><leader>wl', bufferjump.ll, { silent = true, desc = 'set nowinfixwidth' })

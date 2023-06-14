@@ -57,6 +57,10 @@ return {
       '<leader><leader>wi',
       '<leader><leader>wo',
 
+      '<leader><leader>wh',
+      '<leader><leader>wj',
+      '<leader><leader>wk',
+      '<leader><leader>wl',
     },
   },
 }

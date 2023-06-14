@@ -41,4 +41,24 @@ M.i = function()
   end
 end
 
+M.hh = function()
+  vim.cmd('set winfixwidth')
+  print('set winfixwidth')
+end
+
+M.ll = function()
+  vim.cmd('set nowinfixwidth')
+  print('set nowinfixwidth')
+end
+
+M.kk = function()
+  vim.cmd('set winfixheight')
+  print('set winfixheight')
+end
+
+M.jj = function()
+  vim.cmd('set nowinfixheight')
+  print('set nowinfixheight')
+end
+
 return M
