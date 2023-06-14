@@ -125,29 +125,3 @@ add(t, {
 -- })
 
 telescope.setup(get_setup_table(t))
-
-vim.keymap.set({ 'n', 'v' }, '<leader>sh',         ':<c-u>Telescope search_history<cr>', { silent = true, desc = 'Telescope search_history' })
-vim.keymap.set({ 'n', 'v' }, '<leader>sc',         ':<c-u>Telescope command_history<cr>', { silent = true, desc = 'Telescope command_history' })
-vim.keymap.set({ 'n', 'v' }, '<leader>sC',         ':<c-u>Telescope commands<cr>', { silent = true, desc = 'Telescope commands' })
-
-vim.keymap.set({ 'n', 'v' }, '<leader>so',         ':<c-u>Telescope oldfiles previewer=false<cr>', { silent = true, desc = 'Telescope oldfiles' })
-vim.keymap.set({ 'n', 'v' }, '<leader>sf',         ':<c-u>Telescope find_files previewer=false<cr>', { silent = true, desc = 'Telescope find_files' })
-vim.keymap.set({ 'n', 'v' }, '<leader>sb',         ':<c-u>Telescope buffers cwd_only=true sort_mru=true ignore_current_buffer=true<cr>', { silent = true, desc = 'Telescope buffers cwd_only' })
-vim.keymap.set({ 'n', 'v' }, '<leader>sB',         ':<c-u>Telescope buffers<cr>', { silent = true, desc = 'Telescope buffers' })
-
-vim.keymap.set({ 'n', 'v' }, '<leader>sl',         ':<c-u>Telescope live_grep<cr>', { silent = true, desc = 'Telescope live_grep' })
-vim.keymap.set({ 'n', 'v' }, '<leader>ss',         ':<c-u>Telescope grep_string shorten_path=true word_match=-w only_sort_text=true search= grep_open_files=true<cr>', { silent = true, desc = 'Telescope grep_string' })
-vim.keymap.set({ 'n', 'v' }, '<leader>sz',         ':<c-u>Telescope current_buffer_fuzzy_find<cr>', { silent = true, desc = 'Telescope current_buffer_fuzzy_find' })
-
-vim.keymap.set({ 'n', 'v' }, '<leader>sq',         ':<c-u>Telescope quickfix<cr>', { silent = true, desc = 'Telescope quickfix' })
-vim.keymap.set({ 'n', 'v' }, '<leader>sQ',         ':<c-u>Telescope quickfixhistory<cr>', { silent = true, desc = 'Telescope quickfixhistory' })
-
-vim.keymap.set({ 'n', 'v' }, '<leader><leader>sa', ':<c-u>Telescope builtin<cr>', { silent = true, desc = 'Telescope builtin' })
-vim.keymap.set({ 'n', 'v' }, '<leader><leader>sc', ':<c-u>Telescope colorscheme<cr>', { silent = true, desc = 'Telescope colorscheme' })
-vim.keymap.set({ 'n', 'v' }, '<leader><leader>sd', ':<c-u>Telescope diagnostics<cr>', { silent = true, desc = 'Telescope diagnostics' })
-vim.keymap.set({ 'n', 'v' }, '<leader><leader>sf', ':<c-u>Telescope filetypes<cr>', { silent = true, desc = 'Telescope filetypes' })
-vim.keymap.set({ 'n', 'v' }, '<leader><leader>sh', ':<c-u>Telescope help_tags<cr>', { silent = true, desc = 'Telescope help_tags' })
-vim.keymap.set({ 'n', 'v' }, '<leader><leader>sj', ':<c-u>Telescope jumplist<cr>', { silent = true, desc = 'Telescope jumplist' })
-vim.keymap.set({ 'n', 'v' }, '<leader><leader>sm', ':<c-u>Telescope keymaps<cr>', { silent = true, desc = 'Telescope keymaps' })
-vim.keymap.set({ 'n', 'v' }, '<leader><leader>so', ':<c-u>Telescope vim_options<cr>', { silent = true, desc = 'Telescope vim_options' })
-vim.keymap.set({ 'n', 'v' }, '<leader><leader>sp', ':<c-u>Telescope planets<cr>', { silent = true, desc = 'Telescope planets' })
