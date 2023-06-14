@@ -54,6 +54,7 @@ return {
 
       -- record
 
+      { 'q',                  '<nop>',                                                                 mode = { 'n', 'v' },      silent = true, desc = 'nop' },
       { 'Q',                  'q',                                                                     mode = { 'n', 'v' },      silent = true, desc = 'record' },
 
       -- source
