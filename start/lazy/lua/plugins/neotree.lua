@@ -11,8 +11,8 @@ return {
     { '<leader>wg', '<cmd>Neotree git_status toggle reveal_force_cwd<cr>',                   mode = { 'n', 'v' }, desc = 'NeoTree' },
   },
   dependencies = {
-    'nvim-lua/plenary.nvim',
-    'nvim-tree/nvim-web-devicons',
+    require('plugins.plenary'),
+    require('plugins.web-devicons'),
     'MunifTanjim/nui.nvim',
     's1n7ax/nvim-window-picker',
   },
