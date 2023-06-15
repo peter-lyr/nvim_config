@@ -65,6 +65,10 @@ return {
 
       { 'U',                  '<c-r>',                                                                 mode = { 'n', },          silent = true, desc = 'redo' },
 
+      -- go cmdline
+
+      { '<leader>;',          ':',                                                                     mode = { 'n', 'v', },     silent = false, desc = 'go cmdline' },
+
       ------------------------
       -- bufferjump.lua
       ------------------------
