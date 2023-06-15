@@ -33,7 +33,9 @@ vim.api.nvim_create_autocmd({ "BufLeave", "CmdlineEnter", }, {
 -- cursor
 
 vim.keymap.set({ 't', 'c', 'i' }, '<a-k>',   '<UP>', { desc = 'up' })
+vim.keymap.set({ 't', 'c', 'i' }, 'qk',      '<UP>', { desc = 'up' })
 vim.keymap.set({ 't', 'c', 'i' }, '<a-j>',   '<DOWN>', { desc = 'down' })
+vim.keymap.set({ 't', 'c', 'i' }, 'qj',      '<DOWN>', { desc = 'down' })
 vim.keymap.set({ 't', 'c', 'i' }, '<a-s-k>', '<UP><UP><UP><UP><UP>', { desc = '5 up' })
 vim.keymap.set({ 't', 'c', 'i' }, '<a-s-j>', '<DOWN><DOWN><DOWN><DOWN><DOWN>', { desc = '5 down' })
 vim.keymap.set({ 't', 'c', 'i' }, '<a-i>',   '<HOME>', { desc = 'home' })
