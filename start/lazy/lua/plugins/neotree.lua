@@ -9,6 +9,7 @@ return {
   keys = {
     { '<leader>wf', '<cmd>Neotree filesystem toggle reveal_force_cwd<cr>',                   mode = { 'n', 'v' }, desc = 'NeoTree' },
     { '<leader>wg', '<cmd>Neotree git_status toggle reveal_force_cwd<cr>',                   mode = { 'n', 'v' }, desc = 'NeoTree' },
+    { '<leader>wb', '<cmd>Neotree buffers    toggle reveal_force_cwd<cr>',                   mode = { 'n', 'v' }, desc = 'NeoTree' },
   },
   dependencies = {
     require('plugins.plenary'),
