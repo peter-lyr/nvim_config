@@ -1,14 +1,18 @@
--- %s/.*{\s*\([^ ]\+\) *\(.\+,\) *\(mode = {[ 'nvtic,]\+},\) *\(.\+\) *},/\=printf("      { %-13s %-72s %-20s %s },", submatch(1), submatch(2), submatch(3), substitute(trim(submatch(4)), ' \+', ' ' ,'g'))
 return {
   'nvim-neo-tree/neo-tree.nvim',
   lazy = true,
   branch = 'v2.x',
+  event = {
+    'CursorMoved'
+  },
   cmd = {
     'Neotree',
   },
   keys = {
-    { '<leader>wf', '<cmd>Neotree filesystem toggle reveal_force_cwd<cr>',                   mode = { 'n', 'v' }, desc = 'NeoTree' },
-    { '<leader>wg', '<cmd>Neotree git_status toggle reveal_force_cwd<cr>',                   mode = { 'n', 'v' }, desc = 'NeoTree' },
+    { '<leader>q',             '<cmd>Neotree filesystem focus reveal_force_cwd<cr>', mode = { 'n', 'v' }, desc = 'NeoTree filesystem' },
+    { '<leader><tab>',         '<cmd>Neotree buffers    focus reveal_force_cwd<cr>', mode = { 'n', 'v' }, desc = 'NeoTree buffers' },
+    { '<leader><leader><tab>', '<cmd>Neotree git_status focus reveal_force_cwd<cr>', mode = { 'n', 'v' }, desc = 'NeoTree git_status' },
+    { 'q<tab>',                '<cmd>Neotree close<cr>',                             mode = { 'n', 'v' }, desc = 'NeoTree git_status' },
   },
   dependencies = {
     require('plugins.plenary'),

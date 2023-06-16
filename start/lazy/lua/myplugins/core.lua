@@ -1,6 +1,6 @@
 local opt = vim.fn.expand('$VIMRUNTIME') .. '\\pack\\testnvim2\\opt\\'
 
--- 
+-- %s/.*{\s*\([^ ]\+\) *\(.\+,\) *\(mode = {[ 'nvtic,]\+},\) *\(.\+\) *},/\=printf("      { %-13s %-72s %-20s %s },", submatch(1), submatch(2), submatch(3), substitute(trim(submatch(4)), ' \+', ' ' ,'g'))
 
 return {
   {
@@ -54,6 +54,7 @@ return {
 
       -- record
 
+      { 'q',                  '<nop>',                                                                 mode = { 'n', 'v' },      silent = true, desc = 'nop' },
       { 'Q',                  'q',                                                                     mode = { 'n', 'v' },      silent = true, desc = 'record' },
 
       -- source
@@ -63,6 +64,15 @@ return {
       -- undo
 
       { 'U',                  '<c-r>',                                                                 mode = { 'n', },          silent = true, desc = 'redo' },
+
+      -- go cmdline
+
+      { '<leader>;',          ':',                                                                     mode = { 'n', 'v', },     silent = false, desc = 'go cmdline' },
+
+      -- scroll horizontally
+
+      { '<S-ScrollWheelDown>',  '10zl',                                                                mode = { 'n', 'v', },     silent = false, desc = 'scroll right horizontally' },
+      { '<S-ScrollWheelUp>',    '10zh',                                                                mode = { 'n', 'v', },     silent = false, desc = 'scroll left horizontally' },
 
       ------------------------
       -- bufferjump.lua
