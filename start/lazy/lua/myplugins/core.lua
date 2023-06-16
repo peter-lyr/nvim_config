@@ -69,6 +69,11 @@ return {
 
       { '<leader>;',          ':',                                                                     mode = { 'n', 'v', },     silent = false, desc = 'go cmdline' },
 
+      -- scroll horizontally
+
+      { '<S-ScrollWheelDown>',  '10zl',                                                                mode = { 'n', 'v', },     silent = false, desc = 'scroll right horizontally' },
+      { '<S-ScrollWheelUp>',    '10zh',                                                                mode = { 'n', 'v', },     silent = false, desc = 'scroll left horizontally' },
+
       ------------------------
       -- bufferjump.lua
       ------------------------
