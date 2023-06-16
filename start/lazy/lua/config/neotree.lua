@@ -71,9 +71,11 @@ local M = {}
 
 -- filesystem
 
-M.filesystem = function()
+M.filesystem_open = function()
   vim.cmd('Neotree filesystem focus reveal_force_cwd')
-  vim.cmd('wincmd H')
+  if string.match(vim.api.nvim_buf_get_name(vim.fn.winbufnr(i)), 'neo%-tree filesystem %[%d+%]') then
+    vim.cmd('wincmd H')
+  end
   vim.api.nvim_win_set_width(0, require('neo-tree').config.window.width)
 end
 
@@ -102,7 +104,7 @@ end
 
 M.going_to_buffers = nil
 
-M.git_status_buffers = function()
+M.git_status_buffers_toggle = function()
   local fname = vim.api.nvim_buf_get_name(0)
   if string.match(fname, 'neo%-tree git_status %[%d+%]') or string.match(fname, 'neo%-tree buffers %[%d+%]') then
     if M.going_to_buffers then
@@ -129,9 +131,9 @@ end
 -- open close
 
 M.open = function()
-  M.filesystem()
+  M.filesystem_open()
   vim.cmd('wincmd b')
-  M.git_status_buffers()
+  M.git_status_buffers_toggle()
 end
 
 M.close = function()
