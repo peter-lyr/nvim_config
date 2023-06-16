@@ -25,7 +25,6 @@ require('neo-tree').setup({
   filesystem = {
     window = {
       mappings = {
-        ["q"] = "noop",
         ["[g"] = "noop",
         ["]g"] = "noop",
         ["H"] = "noop",
@@ -66,17 +65,4 @@ require('neo-tree').setup({
       }
     }
   },
-  -- source_selector = {
-  --   winbar = true,
-  --   statusline = false,
-  -- }
 })
-
--- vim.api.nvim_create_autocmd({ 'BufEnter', }, {
---   callback = function()
---     local cwd = require('neo-tree.git').get_repository_root(vim.fn.fnamemodify(vim.api.nvim_buf_get_name(0), ':h'))
---     if #cwd > 0 and vim.loop.cwd() ~= cwd then
---       vim.cmd('cd ' .. cwd)
---     end
---   end,
--- })
