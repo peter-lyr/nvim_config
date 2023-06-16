@@ -1,6 +1,6 @@
 local opt = vim.fn.expand('$VIMRUNTIME') .. '\\pack\\testnvim2\\opt\\'
 
--- %s/.*{\s*\([^ ]\+\) *\(.\+,\) *\(mode = {[ 'nvtic,]\+},\) *\(.\+\) *},/\=printf("      { %-13s %-72s %-20s %s },", submatch(1), submatch(2), submatch(3), substitute(trim(submatch(4)), ' \+', ' ' ,'g'))
+-- %s/.*{\s*\([^ ]\+\) *\(.\+,\) *\(mode = {[ 'nvtic,]\+},\) *\(.\+\) *},/\=printf("      { %-30s %-72s %-20s %s },", submatch(1), submatch(2), submatch(3), substitute(trim(submatch(4)), ' \+', ' ' ,'g'))
 
 return {
   {
@@ -45,12 +45,6 @@ return {
       -- f5
 
       { '<f5>',               '<cmd>e!<cr>',                                                           mode = { 'n', 'v' },      silent = true, desc = 'e!' },
-
-      -- mouse
-
-      { '<rightmouse>',       '<leftmouse>',                                                           mode = { 'n', 'v', 'i' }, silent = true, desc = 'leftmouse' },
-      { '<rightrelease>',     '<nop>',                                                                 mode = { 'n', 'v', 'i' }, silent = true, desc = 'nop' },
-      { '<middlemouse>',      '<nop>',                                                                 mode = { 'n', 'v', 'i' }, silent = true, desc = 'nop' },
 
       -- record
 

@@ -9,10 +9,15 @@ return {
     'Neotree',
   },
   keys = {
-    { '<leader>q',             '<cmd>Neotree filesystem focus reveal_force_cwd<cr>', mode = { 'n', 'v' }, desc = 'NeoTree filesystem' },
-    { '<leader><tab>',         '<cmd>Neotree buffers    focus reveal_force_cwd<cr>', mode = { 'n', 'v' }, desc = 'NeoTree buffers' },
-    { '<leader><leader><tab>', '<cmd>Neotree git_status focus reveal_force_cwd<cr>', mode = { 'n', 'v' }, desc = 'NeoTree git_status' },
-    { 'q<tab>',                '<cmd>Neotree close<cr>',                             mode = { 'n', 'v' }, desc = 'NeoTree git_status' },
+    { '<leader>q',                 function() require('config.neotree').filesystem() end,               mode = { 'n', 'v' }, desc = 'NeoTree filesystem' },
+    { '<leader><leader>q',         function() require('config.neotree').filesystem_min_width() end,     mode = { 'n', 'v' }, desc = 'NeoTree filesystem min width' },
+    { '<leader><leader><leader>q', function() require('config.neotree').filesystem_close() end,         mode = { 'n', 'v' }, desc = 'NeoTree filesystem close' },
+
+    { '<leader><tab>',             function() require('config.neotree').git_status_buffers() end,       mode = { 'n', 'v' }, desc = 'NeoTree git_status buffers toggle' },
+    { '<leader><leader><tab>',     function() require('config.neotree').git_status_buffers_close() end, mode = { 'n', 'v' }, desc = 'NeoTree git_status buffers close' },
+
+    { '<rightmouse>',              function() require('config.neotree').open() end,                     mode = { 'n', 'v' }, desc = 'NeoTree open' },
+    { '<middlemouse>',             function() require('config.neotree').close() end,                    mode = { 'n', 'v' }, desc = 'NeoTree close' },
   },
   dependencies = {
     require('plugins.plenary'),

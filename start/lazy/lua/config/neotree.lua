@@ -65,17 +65,78 @@ require('neo-tree').setup({
       }
     }
   },
-  source_selector = {
-    winbar = true,
-    statusline = false,
-  }
 })
 
-vim.api.nvim_create_autocmd({ 'BufEnter', }, {
-  callback = function()
-    local cwd = require('neo-tree.git').get_repository_root(vim.fn.fnamemodify(vim.api.nvim_buf_get_name(0), ':h'))
-    if #cwd > 0 and vim.loop.cwd() ~= cwd then
-      vim.cmd('cd ' .. cwd)
+local M = {}
+
+-- filesystem
+
+M.filesystem = function()
+  vim.cmd('Neotree filesystem focus reveal_force_cwd')
+  vim.cmd('wincmd H')
+  vim.api.nvim_win_set_width(0, require('neo-tree').config.window.width)
+end
+
+local get_filesystem_winid = function()
+  for i=1, vim.fn.winnr('$') do
+    if string.match(vim.api.nvim_buf_get_name(vim.fn.winbufnr(i)), 'neo%-tree filesystem %[%d+%]') then
+      return vim.fn.win_getid(i)
     end
-  end,
-})
+  end
+  return 0
+end
+
+M.filesystem_min_width = function()
+  local filesystem_winid = get_filesystem_winid()
+  vim.api.nvim_win_set_width(filesystem_winid, 0)
+  if filesystem_winid == vim.fn.win_getid() then
+    vim.cmd('wincmd l')
+  end
+end
+
+M.filesystem_close = function()
+  vim.cmd('Neotree filesystem close')
+end
+
+-- buffers git_status
+
+M.going_to_buffers = nil
+
+M.git_status_buffers = function()
+  local fname = vim.api.nvim_buf_get_name(0)
+  if string.match(fname, 'neo%-tree git_status %[%d+%]') or string.match(fname, 'neo%-tree buffers %[%d+%]') then
+    if M.going_to_buffers then
+      M.going_to_buffers = nil
+      vim.cmd('Neotree git_status focus reveal_force_cwd right')
+    else
+      M.going_to_buffers = 1
+      vim.cmd('Neotree buffers focus reveal_force_cwd right')
+    end
+  else
+    if M.going_to_buffers then
+      vim.cmd('Neotree buffers focus reveal_force_cwd right')
+    else
+      vim.cmd('Neotree git_status focus reveal_force_cwd right')
+    end
+  end
+end
+
+M.git_status_buffers_close = function()
+  vim.cmd('Neotree git_status close')
+  vim.cmd('Neotree buffers close')
+end
+
+-- open close
+
+M.open = function()
+  M.filesystem()
+  vim.cmd('wincmd b')
+  M.git_status_buffers()
+end
+
+M.close = function()
+  M.git_status_buffers_close()
+  M.filesystem_min_width()
+end
+
+return M
