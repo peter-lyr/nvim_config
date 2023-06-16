@@ -9,10 +9,9 @@ return {
     'Neotree',
   },
   keys = {
-    { '<leader>q',             '<cmd>Neotree filesystem focus reveal_force_cwd<cr>', mode = { 'n', 'v' }, desc = 'NeoTree filesystem' },
-    { '<leader><tab>',         '<cmd>Neotree buffers    focus reveal_force_cwd<cr>', mode = { 'n', 'v' }, desc = 'NeoTree buffers' },
-    { '<leader><leader><tab>', '<cmd>Neotree git_status focus reveal_force_cwd<cr>', mode = { 'n', 'v' }, desc = 'NeoTree git_status' },
-    { 'q<tab>',                '<cmd>Neotree close<cr>',                             mode = { 'n', 'v' }, desc = 'NeoTree git_status' },
+    { '<leader>q',             '<cmd>Neotree filesystem focus  reveal_force_cwd<cr>',       mode = { 'n', 'v' }, desc = 'NeoTree filesystem' },
+    { '<leader><tab>',         '<cmd>Neotree buffers    toggle reveal_force_cwd right<cr>', mode = { 'n', 'v' }, desc = 'NeoTree buffers' },
+    { '<leader><leader><tab>', '<cmd>Neotree git_status toggle reveal_force_cwd right<cr>', mode = { 'n', 'v' }, desc = 'NeoTree git_status' },
   },
   dependencies = {
     require('plugins.plenary'),
