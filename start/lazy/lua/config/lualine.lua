@@ -35,8 +35,19 @@ require('lualine').setup({
         function()
           return string.format('%dM', vim.loop.resident_set_memory() / 1024 / 1024)
         end,
+        cond = function ()
+          return vim.g.GuiWindowFullScreen == 1
+        end
       },
       'filesize',
+      {
+        function()
+          return string.gsub(vim.loop.cwd(), '\\', '/')
+        end,
+        cond = function ()
+          return vim.g.GuiWindowFullScreen == 1
+        end
+      },
       {
         function()
           return filename('lualine_fname_tail_active')
