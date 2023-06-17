@@ -69,6 +69,7 @@ require('lualine').setup({
       },
     },
     lualine_y = {
+      '%m%r',
       'encoding',
       'fileformat',
       {
