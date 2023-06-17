@@ -1,4 +1,4 @@
-function filename(hl_group)
+local filename = function(hl_group)
   local fname = string.gsub(vim.fn.expand('%:~:.'), '\\', '/')
   local ext = vim.fn.fnamemodify(fname, ":e")
   local head = vim.fn.fnamemodify(fname, ":h")
