@@ -1,3 +1,18 @@
+function filename(hl_group)
+  local fname = string.gsub(vim.fn.expand('%:~:.'), '\\', '/')
+  local ext = vim.fn.fnamemodify(fname, ":e")
+  local head = vim.fn.fnamemodify(fname, ":h")
+  local tail = vim.fn.fnamemodify(fname, ":t")
+  local icons = require('nvim-web-devicons').get_icons()[ext]
+  local opt = { fg = icons and icons['color'] or '#ffffff', bold = true }
+  vim.api.nvim_set_hl(0, hl_group, opt)
+  if head == '.' then
+    return string.format('%%#%s#%s', hl_group, tail)
+  else
+    return string.format('%s/%%#%s#%s', head, hl_group, tail)
+  end
+end
+
 require('lualine').setup({
   options = {
     ignore_focus = {
@@ -24,18 +39,7 @@ require('lualine').setup({
       'filesize',
       {
         function()
-          local fname = string.gsub(vim.fn.expand('%:~:.'), '\\', '/')
-          local ext = vim.fn.fnamemodify(fname, ":e")
-          local head = vim.fn.fnamemodify(fname, ":h")
-          local tail = vim.fn.fnamemodify(fname, ":t")
-          local icons = require('nvim-web-devicons').get_icons()[ext]
-          local opt = { fg = icons and icons['color'] or '#ffffff', bold = true }
-          vim.api.nvim_set_hl(0, 'lualine_fname_tail_active', opt)
-          if head == '.' then
-            return string.format('%%#lualine_fname_tail_active#%s', tail)
-          else
-            return string.format('%s/%%#lualine_fname_tail_active#%s', head, tail)
-          end
+          return filename('lualine_fname_tail_active')
         end,
         cond = function()
           return #vim.fn.expand('%:~:.') > 0
@@ -93,18 +97,7 @@ require('lualine').setup({
     lualine_c = {
       {
         function()
-          local fname = string.gsub(vim.fn.expand('%:~:.'), '\\', '/')
-          local ext = vim.fn.fnamemodify(fname, ":e")
-          local head = vim.fn.fnamemodify(fname, ":h")
-          local tail = vim.fn.fnamemodify(fname, ":t")
-          local icons = require('nvim-web-devicons').get_icons()[ext]
-          local opt = { fg = icons and icons['color'] or '#ffffff' }
-          vim.api.nvim_set_hl(0, 'lualine_fname_tail_inactive', opt)
-          if head == '.' then
-            return string.format('%%#lualine_fname_tail_inactive#%s', tail)
-          else
-            return string.format('%s/%%#lualine_fname_tail_inactive#%s', head, tail)
-          end
+          return filename('lualine_fname_tail_inactive')
         end,
         cond = function()
           return #vim.fn.expand('%:~:.') > 0
