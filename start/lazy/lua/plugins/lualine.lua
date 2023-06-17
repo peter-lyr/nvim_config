@@ -1,5 +1,6 @@
 return {
-  'nvim-lualine/lualine.nvim',
+  -- 'nvim-lualine/lualine.nvim',
+  'peter-lyr/lualine.nvim',
   event = "VeryLazy",
   dependencies = {
     require('plugins.web-devicons'),

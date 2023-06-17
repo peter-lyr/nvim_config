@@ -13,6 +13,25 @@ local filename = function(hl_group)
   end
 end
 
+local function get_git_root(fpath)
+  if #fpath == 0 then
+    return ''
+  end
+  local path = fpath
+  local temp
+  for _=1,32 do
+    temp = vim.fn.fnamemodify(path, ':h')
+    if #temp >= #path then
+      break
+    end
+    path = temp
+    if vim.fn.isdirectory(path .. "/.git/") ~= 0 or vim.fn.filereadable(path .. "/.git") ~= 0 then
+      return path
+    end
+  end
+  return ''
+end
+
 require('lualine').setup({
   options = {
     ignore_focus = {
@@ -136,4 +155,27 @@ require('lualine').setup({
       },
     },
   },
+  tabline = {
+    lualine_a = {
+      {
+        'buffers',
+        mode = 2,
+        filetype_names = {
+          ['neo-tree'] = 'Neo Tree',
+          ['lazy'] = 'Lazy',
+        },
+        use_mode_colors = true,
+        buffer_filter = function(b)
+          local projectroot = get_git_root(vim.api.nvim_buf_get_name(0))
+          if #projectroot == 0 then
+            return true
+          end
+          vim.cmd('cd ' .. projectroot)
+          return get_git_root(vim.api.nvim_buf_get_name(b)) == projectroot
+        end,
+      },
+    },
+    lualine_x = {
+    },
+  }
 })
