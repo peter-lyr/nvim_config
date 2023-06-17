@@ -52,7 +52,7 @@ require('lualine').setup({
       },
       {
         function()
-          return '@' .. vim.fn.reg_recording()
+          return 'recording @' .. vim.fn.reg_recording()
         end,
         cond = function()
           return #vim.fn.reg_recording() > 0
