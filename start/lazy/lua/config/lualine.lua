@@ -69,7 +69,12 @@ require('lualine').setup({
       },
     },
     lualine_y = {
-      '%m%r',
+      {
+        '%m%r',
+        cond = function()
+          return vim.bo.modifiable == false or vim.bo.readonly == true
+        end
+      },
       'encoding',
       'fileformat',
       {
