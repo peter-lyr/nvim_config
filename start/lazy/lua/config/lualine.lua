@@ -1,5 +1,8 @@
 require('lualine').setup({
   options = {
+    ignore_focus = {
+      'neo-tree',
+    },
     component_separators = {
       left = "",
       right = ""
@@ -13,15 +16,7 @@ require('lualine').setup({
   sections = {
     lualine_c = {
       'filesize',
-      {
-        "filetype",
-        icon_only = true,
-        separator = "",
-        padding = {
-          left = 1,
-          right = 0
-        }
-      },
+      { "filetype", icon_only = true, separator = "", padding = { left = 1, right = 0 } },
       { "filename", path = 1, symbols = { modified = "  ", readonly = "", unnamed = "" } },
     },
     lualine_x = {
@@ -49,6 +44,9 @@ require('lualine').setup({
   inactive_sections = {
     lualine_c = {
       { "filename", path = 1, },
+    },
+    lualine_x = {
+      { "filetype", icons_enabled = false },
     },
   },
 })
