@@ -42,6 +42,14 @@ require('lualine').setup({
       'filesize',
       {
         function()
+          return vim.fn.strftime('%Y-%m-%d %A')
+        end,
+        cond = function ()
+          return vim.g.GuiWindowFullScreen == 1
+        end
+      },
+      {
+        function()
           return string.gsub(vim.loop.cwd(), '\\', '/')
         end,
         cond = function ()
