@@ -96,10 +96,6 @@ M.filesystem_min_width = function()
   end
 end
 
-M.filesystem_close = function()
-  vim.cmd('Neotree filesystem close')
-end
-
 -- buffers git_status
 
 M.going_to_buffers = nil
