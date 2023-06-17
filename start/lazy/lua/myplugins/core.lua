@@ -78,10 +78,10 @@ return {
 
       -- jump buffer beside
 
-      { '<leader>wk',         function() require('bufferjump').k() end,  mode = { 'n', 'v' }, silent = true, desc = 'wincmd k' },
-      { '<leader>wj',         function() require('bufferjump').j() end,  mode = { 'n', 'v' }, silent = true, desc = 'wincmd j' },
-      { '<leader>wh',         '<c-w>h',                                  mode = { 'n', 'v' }, silent = true, desc = 'wincmd h' },
-      { '<leader>wl',         '<c-w>l',                                  mode = { 'n', 'v' }, silent = true, desc = 'wincmd l' },
+      { '<leader>ww',         function() require('bufferjump').k() end,  mode = { 'n', 'v' }, silent = true, desc = 'wincmd k' },
+      { '<leader>ws',         function() require('bufferjump').j() end,  mode = { 'n', 'v' }, silent = true, desc = 'wincmd j' },
+      { '<leader>a',          '<c-w>h',                                  mode = { 'n', 'v' }, silent = true, desc = 'wincmd h' },
+      { '<leader>d',          '<c-w>l',                                  mode = { 'n', 'v' }, silent = true, desc = 'wincmd l' },
 
       -- win max min equal width height
 
