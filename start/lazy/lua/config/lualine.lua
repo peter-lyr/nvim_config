@@ -16,6 +16,11 @@ require('lualine').setup({
   },
   sections = {
     lualine_c = {
+      {
+        function()
+          return string.format('%dM', vim.loop.resident_set_memory() / 1024 / 1024)
+        end,
+      },
       'filesize',
       {
         function()
