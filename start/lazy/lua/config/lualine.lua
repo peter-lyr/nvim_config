@@ -8,7 +8,7 @@ require('lualine').setup({
       left = "",
       right = ""
     },
-    globalstatus = true,
+    globalstatus = false,
   },
   sections = {
     lualine_c = {
