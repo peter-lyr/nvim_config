@@ -32,6 +32,15 @@ local function get_git_root(fpath)
   return ''
 end
 
+local function get_git_name()
+  local projectroot = get_git_root(vim.api.nvim_buf_get_name(0))
+  projectroot = vim.fn.fnamemodify(projectroot, ':t')
+  if #projectroot >= 15 then
+    return string.sub(projectroot, 1, 7) .. '…' .. string.sub(projectroot, #projectroot-6, #projectroot)
+  end
+  return projectroot
+end
+
 require('lualine').setup({
   options = {
     ignore_focus = {
@@ -175,7 +184,16 @@ require('lualine').setup({
         end,
       },
     },
-    lualine_x = {
+    lualine_z = {
+       {
+        'tabs',
+        use_mode_colors = true,
+        mode = 2,
+        cond = function()
+          vim.fn['LualineRenameTab'](get_git_name())
+          return true
+        end
+      },
     },
   }
 })
