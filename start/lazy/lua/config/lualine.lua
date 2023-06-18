@@ -226,6 +226,6 @@ end, { desc = 'next tab' })
 
 vim.keymap.set({ 'n', 'v', }, '<c-bs>', function()
   local curtab = vim.fn.tabpagenr()
-  local nexttab = curtab - 1 >= 1 and curtab - 1 or vim.fn.tabpagenr('$')
-  vim.cmd("tabn " .. nexttab)
+  local prevtab = curtab - 1 >= 1 and curtab - 1 or vim.fn.tabpagenr('$')
+  vim.cmd("tabn " .. prevtab)
 end, { desc = 'prev tab' })
