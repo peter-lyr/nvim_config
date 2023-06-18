@@ -229,3 +229,19 @@ vim.keymap.set({ 'n', 'v', }, '<c-bs>', function()
   local prevtab = curtab - 1 >= 1 and curtab - 1 or vim.fn.tabpagenr('$')
   vim.cmd("tabn " .. prevtab)
 end, { desc = 'prev tab' })
+
+vim.keymap.set({ 'n', 'v', }, '<c-h>', function()
+  local buffers = require('lualine.components.buffers').bufpos2nr
+  local curbufnr = vim.fn.bufnr()
+  local curbufnr_idx = vim.fn.indexof(buffers, string.format('v:val == %d', curbufnr)) + 1
+  local prevbufnr = buffers[curbufnr_idx - 1 >= 1 and curbufnr_idx - 1 or #buffers]
+  vim.cmd('b' .. prevbufnr)
+end, { desc = 'next buffer' })
+
+vim.keymap.set({ 'n', 'v', }, '<c-l>', function()
+  local buffers = require('lualine.components.buffers').bufpos2nr
+  local curbufnr = vim.fn.bufnr()
+  local curbufnr_idx = vim.fn.indexof(buffers, string.format('v:val == %d', curbufnr)) + 1
+  local nextbufnr = buffers[curbufnr_idx + 1 <= #buffers and curbufnr_idx + 1 or 1]
+  vim.cmd('b' .. nextbufnr)
+end, { desc = 'next buffer' })
