@@ -216,3 +216,16 @@ vim.keymap.set({ 'n', 'v', }, '<f7>', function()
     vim.cmd('LualineBuffersJump! ' .. vim.v.count)
   end
 end, { desc = 'go buffer' })
+
+vim.keymap.set({ 'n', 'v', }, '<bs>', function()
+  local tabs = vim.fn.tabpagenr('$')
+  local curtab = vim.fn.tabpagenr()
+  local nexttab = curtab + 1 <= tabs and curtab + 1 or 1
+  vim.cmd("tabn " .. nexttab)
+end, { desc = 'next tab' })
+
+vim.keymap.set({ 'n', 'v', }, '<c-bs>', function()
+  local curtab = vim.fn.tabpagenr()
+  local nexttab = curtab - 1 >= 1 and curtab - 1 or vim.fn.tabpagenr('$')
+  vim.cmd("tabn " .. nexttab)
+end, { desc = 'prev tab' })
