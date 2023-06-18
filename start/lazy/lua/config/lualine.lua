@@ -234,14 +234,42 @@ vim.keymap.set({ 'n', 'v', }, '<c-h>', function()
   local buffers = require('lualine.components.buffers').bufpos2nr
   local curbufnr = vim.fn.bufnr()
   local curbufnr_idx = vim.fn.indexof(buffers, string.format('v:val == %d', curbufnr)) + 1
-  local prevbufnr = buffers[curbufnr_idx - 1 >= 1 and curbufnr_idx - 1 or #buffers]
-  vim.cmd('b' .. prevbufnr)
+  if curbufnr_idx >= 1 then
+   local prevbufnr = buffers[curbufnr_idx - 1 >= 1 and curbufnr_idx - 1 or #buffers]
+   vim.cmd('b' .. prevbufnr)
+  end
 end, { desc = 'prev buffer' })
 
 vim.keymap.set({ 'n', 'v', }, '<c-l>', function()
   local buffers = require('lualine.components.buffers').bufpos2nr
   local curbufnr = vim.fn.bufnr()
   local curbufnr_idx = vim.fn.indexof(buffers, string.format('v:val == %d', curbufnr)) + 1
-  local nextbufnr = buffers[curbufnr_idx + 1 <= #buffers and curbufnr_idx + 1 or 1]
-  vim.cmd('b' .. nextbufnr)
+  if curbufnr_idx >= 1 then
+    local nextbufnr = buffers[curbufnr_idx + 1 <= #buffers and curbufnr_idx + 1 or 1]
+    vim.cmd('b' .. nextbufnr)
+  end
 end, { desc = 'next buffer' })
+
+vim.keymap.set({ 'n', 'v', }, '<c-s-h>', function()
+  local buffers = require('lualine.components.buffers').bufpos2nr
+  local curbufnr = vim.fn.bufnr()
+  local curbufnr_idx = vim.fn.indexof(buffers, string.format('v:val == %d', curbufnr)) + 1
+  if curbufnr_idx >= 1 then
+    local prevbufnr = buffers[curbufnr_idx - 1 >= 1 and curbufnr_idx - 1 or #buffers]
+    if prevbufnr ~= curbufnr_idx then
+      vim.cmd('Bdelete! ' .. vim.api.nvim_buf_get_name(prevbufnr))
+    end
+  end
+end, { desc = 'Bdelele prev buffer' })
+
+vim.keymap.set({ 'n', 'v', }, '<c-s-l>', function()
+  local buffers = require('lualine.components.buffers').bufpos2nr
+  local curbufnr = vim.fn.bufnr()
+  local curbufnr_idx = vim.fn.indexof(buffers, string.format('v:val == %d', curbufnr)) + 1
+  if curbufnr_idx >= 1 then
+    local nextbufnr = buffers[curbufnr_idx + 1 <= #buffers and curbufnr_idx + 1 or 1]
+    if nextbufnr ~= curbufnr_idx then
+      vim.cmd('Bdelete! ' .. vim.api.nvim_buf_get_name(nextbufnr))
+    end
+  end
+end, { desc = 'Bdelele next buffer' })
