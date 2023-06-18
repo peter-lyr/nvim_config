@@ -24,9 +24,9 @@ end
 
 M.stack_cur_bufname = function()
   local fname = vim.api.nvim_buf_get_name(0)
-  if #fname > 0 then
-    stack_fpath = fname
-    print(stack_fpath)
+  if #fname > 0 and vim.bo.modifiable == true and vim.bo.readonly == false then
+      stack_fpath = fname
+      print('stack file: ' .. vim.fn.expand('%:~:.'))
   end
 end
 
