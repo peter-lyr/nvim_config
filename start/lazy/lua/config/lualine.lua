@@ -182,3 +182,37 @@ require('lualine').setup({
     },
   }
 })
+
+local lasttabnr = vim.fn['tabpagenr']()
+
+vim.api.nvim_create_autocmd({ "TabLeave", }, {
+  callback = function()
+    lasttabnr = vim.fn.tabpagenr()
+  end,
+})
+
+vim.keymap.set({ 'n', 'v', }, '<f8>', function()
+  if vim.v.count == 0 then
+    vim.cmd("tabn " .. lasttabnr)
+    return
+  end
+  local tabs = vim.fn.tabpagenr('$')
+  if vim.v.count > tabs then
+    vim.cmd('tabn ' .. tabs)
+  else
+    vim.cmd('tabn ' .. vim.v.count)
+  end
+end, { desc = 'go tab' })
+
+vim.keymap.set({ 'n', 'v', }, '<f7>', function()
+  if vim.v.count == 0 then
+    vim.cmd([[call feedkeys("\<c-6>")]])
+    return
+  end
+  local buffers = require('lualine.components.buffers').bufpos2nr
+  if vim.v.count > #buffers then
+    vim.cmd('LualineBuffersJump! ' .. #buffers)
+  else
+    vim.cmd('LualineBuffersJump! ' .. vim.v.count)
+  end
+end, { desc = 'go buffer' })
