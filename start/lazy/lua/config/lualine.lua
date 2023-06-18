@@ -236,7 +236,7 @@ vim.keymap.set({ 'n', 'v', }, '<c-h>', function()
   local curbufnr_idx = vim.fn.indexof(buffers, string.format('v:val == %d', curbufnr)) + 1
   local prevbufnr = buffers[curbufnr_idx - 1 >= 1 and curbufnr_idx - 1 or #buffers]
   vim.cmd('b' .. prevbufnr)
-end, { desc = 'next buffer' })
+end, { desc = 'prev buffer' })
 
 vim.keymap.set({ 'n', 'v', }, '<c-l>', function()
   local buffers = require('lualine.components.buffers').bufpos2nr
