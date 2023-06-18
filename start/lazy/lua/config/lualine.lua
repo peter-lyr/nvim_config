@@ -255,9 +255,11 @@ vim.keymap.set({ 'n', 'v', }, '<c-s-h>', function()
   local curbufnr = vim.fn.bufnr()
   local curbufnr_idx = vim.fn.indexof(buffers, string.format('v:val == %d', curbufnr)) + 1
   if curbufnr_idx >= 1 then
-    local prevbufnr = buffers[curbufnr_idx - 1 >= 1 and curbufnr_idx - 1 or #buffers]
-    if prevbufnr ~= curbufnr_idx then
+    local prevbufnr_idx = curbufnr_idx - 1 >= 1 and curbufnr_idx - 1 or #buffers
+    if prevbufnr_idx ~= curbufnr_idx then
+      local prevbufnr = buffers[prevbufnr_idx]
       vim.cmd('Bdelete! ' .. vim.api.nvim_buf_get_name(prevbufnr))
+      require('lualine').refresh()
     end
   end
 end, { desc = 'Bdelele prev buffer' })
@@ -267,9 +269,11 @@ vim.keymap.set({ 'n', 'v', }, '<c-s-l>', function()
   local curbufnr = vim.fn.bufnr()
   local curbufnr_idx = vim.fn.indexof(buffers, string.format('v:val == %d', curbufnr)) + 1
   if curbufnr_idx >= 1 then
-    local nextbufnr = buffers[curbufnr_idx + 1 <= #buffers and curbufnr_idx + 1 or 1]
-    if nextbufnr ~= curbufnr_idx then
+    local nextbufnr_idx = curbufnr_idx + 1 <= #buffers and curbufnr_idx + 1 or 1
+    if nextbufnr_idx ~= curbufnr_idx then
+      local nextbufnr = buffers[nextbufnr_idx]
       vim.cmd('Bdelete! ' .. vim.api.nvim_buf_get_name(nextbufnr))
+      require('lualine').refresh()
     end
   end
 end, { desc = 'Bdelele next buffer' })
