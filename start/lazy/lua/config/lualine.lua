@@ -299,3 +299,9 @@ vim.keymap.set({ 'n', 'v', }, '<c-f8>', function()
   vim.cmd(nexttab_idx .. 'tabclose!')
   require('lualine').refresh()
 end, { desc = 'tabclose next tab' })
+
+vim.api.nvim_create_autocmd({ "TabEnter", }, {
+  callback = function()
+    vim.cmd('ProjectRootCD')
+  end,
+})
