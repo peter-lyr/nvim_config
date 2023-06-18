@@ -183,6 +183,8 @@ require('lualine').setup({
   }
 })
 
+-- number go tab or buffer
+
 local lasttabnr = vim.fn['tabpagenr']()
 
 vim.api.nvim_create_autocmd({ "TabLeave", }, {
@@ -217,6 +219,8 @@ vim.keymap.set({ 'n', 'v', }, '<f7>', function()
   end
 end, { desc = 'go buffer' })
 
+-- go next or prev tab or buffer
+
 vim.keymap.set({ 'n', 'v', }, '<bs>', function()
   local tabs = vim.fn.tabpagenr('$')
   local curtab = vim.fn.tabpagenr()
@@ -250,6 +254,8 @@ vim.keymap.set({ 'n', 'v', }, '<c-l>', function()
   end
 end, { desc = 'next buffer' })
 
+-- Bdelete next or prev buffer
+
 vim.keymap.set({ 'n', 'v', }, '<c-s-h>', function()
   local buffers = require('lualine.components.buffers').bufpos2nr
   local curbufnr = vim.fn.bufnr()
@@ -278,6 +284,8 @@ vim.keymap.set({ 'n', 'v', }, '<c-s-l>', function()
   end
 end, { desc = 'Bdelele next buffer' })
 
+-- Bdelete next or prev tab
+
 vim.keymap.set({ 'n', 'v', }, '<c-f7>', function()
   local tabs = vim.fn.tabpagenr('$')
   if tabs == 1 then
@@ -299,6 +307,8 @@ vim.keymap.set({ 'n', 'v', }, '<c-f8>', function()
   vim.cmd(nexttab_idx .. 'tabclose!')
   require('lualine').refresh()
 end, { desc = 'tabclose next tab' })
+
+-- auto change dir root
 
 vim.api.nvim_create_autocmd({ "TabEnter", }, {
   callback = function()
