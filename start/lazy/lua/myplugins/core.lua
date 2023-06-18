@@ -14,6 +14,7 @@ return {
     event = { 'CmdlineEnter', 'InsertEnter', 'ModeChanged', },
     dependencies = {
       require('plugins.plenary'),
+      require('plugins.projectroot'),
     },
     keys = {
 
@@ -26,6 +27,7 @@ return {
       { 'c.',                 '<cmd>try|cd %:h|ec getcwd()|catch|endtry<cr>',                          mode = { 'n', 'v' },  silent = true, desc = 'cd %:h' },
       { 'cu',                 '<cmd>try|cd ..|ec getcwd()|catch|endtry<cr>',                           mode = { 'n', 'v' },  silent = true, desc = 'cd ..' },
       { 'c-',                 '<cmd>try|cd -|ec getcwd()|catch|endtry<cr>',                            mode = { 'n', 'v' },  silent = true, desc = 'cd -' },
+      { 'c=',                 '<cmd>ProjectRootCD<cr>',                                                mode = { 'n', 'v' },  silent = true, desc = 'ProjectRootCD' },
 
       -- copy_paste
 

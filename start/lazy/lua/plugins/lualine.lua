@@ -4,6 +4,7 @@ return {
   event = "VeryLazy",
   dependencies = {
     require('plugins.web-devicons'),
+    require('plugins.projectroot'),
     {
       "folke/noice.nvim",
       opts = {
