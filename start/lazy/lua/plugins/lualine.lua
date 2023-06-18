@@ -10,7 +10,14 @@ return {
       },
       dependencies = {
         "MunifTanjim/nui.nvim",
-        "rcarriga/nvim-notify",
+        {
+          "rcarriga/nvim-notify",
+          opts = {
+            minimum_width = 20,
+            timeout = 1000,
+            top_down = false,
+          },
+        }
       },
     }
   },
