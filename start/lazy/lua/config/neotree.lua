@@ -1,5 +1,9 @@
 vim.g.neo_tree_remove_legacy_commands = 1
 
+local utils = require("neo-tree.utils")
+local manager = require("neo-tree.sources.manager")
+local refresh = utils.wrap(manager.refresh, "buffers")
+
 require('neo-tree').setup({
   window = {
     mappings = {
@@ -41,8 +45,17 @@ require('neo-tree').setup({
   buffers = {
     window = {
       mappings = {
-        ["dd"] = "buffer_delete",
         ["O"] = "set_root",
+        ['dd'] = function(state)
+          local node = state.tree:get_node()
+          if node then
+            if node.type == "message" then
+              return
+            end
+            vim.cmd('Bdelete ' .. vim.api.nvim_buf_get_name(node.extra.bufnr))
+          end
+          refresh()
+        end,
       },
     },
   },

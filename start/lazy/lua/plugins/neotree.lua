@@ -24,6 +24,7 @@ return {
     require('plugins.web-devicons'),
     'MunifTanjim/nui.nvim',
     's1n7ax/nvim-window-picker',
+    require('plugins.bbye'),
   },
   config = function()
     require('config.neotree')
