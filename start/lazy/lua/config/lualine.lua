@@ -193,7 +193,7 @@ vim.api.nvim_create_autocmd({ "TabLeave", }, {
   end,
 })
 
-vim.keymap.set({ 'n', 'v', }, '<f8>', function()
+local function go_tab()
   if vim.v.count == 0 then
     vim.cmd("tabn " .. lasttabnr)
     return
@@ -204,9 +204,9 @@ vim.keymap.set({ 'n', 'v', }, '<f8>', function()
   else
     vim.cmd('tabn ' .. vim.v.count)
   end
-end, { desc = 'go tab' })
+end
 
-vim.keymap.set({ 'n', 'v', }, '<f7>', function()
+local function go_buffer()
   if vim.v.count == 0 then
     vim.cmd([[call feedkeys("\<c-6>")]])
     return
@@ -217,7 +217,13 @@ vim.keymap.set({ 'n', 'v', }, '<f7>', function()
   else
     vim.cmd('LualineBuffersJump! ' .. vim.v.count)
   end
-end, { desc = 'go buffer' })
+end
+
+vim.keymap.set({ 'n', 'v', }, '<f8>', go_tab, { desc = 'go tab' })
+vim.keymap.set({ 'n', 'v', }, '<f2>', go_tab, { desc = 'go tab' })
+
+vim.keymap.set({ 'n', 'v', }, '<f7>', go_buffer, { desc = 'go buffer' })
+vim.keymap.set({ 'n', 'v', }, '<f1>', go_buffer, { desc = 'go buffer' })
 
 -- go next or prev tab or buffer
 
