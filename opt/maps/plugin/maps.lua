@@ -98,3 +98,7 @@ vim.keymap.set({ 't', 'c', },     'qo',      '<cr>', { desc = 'enter' })
 vim.keymap.set({ 't', 'c', },     'Qo',      '<cr>', { desc = 'enter' })
 vim.keymap.set({ 't', 'c', },     'qO',      '<cr>', { desc = 'enter' })
 vim.keymap.set({ 't', 'c', },     'QO',      '<cr>', { desc = 'enter' })
+
+-- :w!<cr>
+
+vim.keymap.set({ 'c', }, 'wo', 'wa!<cr>', { desc = 'wa!' })
