@@ -16,7 +16,7 @@ end
 local projectroot = vim.fn['ProjectRootGet'](vim.api.nvim_buf_get_name(0))
 
 local function get_projectroot()
-  temp = vim.fn.fnamemodify(projectroot, ':t')
+  local temp = vim.fn.fnamemodify(projectroot, ':t')
   if #temp >= 15 then
     return string.sub(temp, 1, 7) .. '…' .. string.sub(temp, #temp-6, #temp)
   end
@@ -162,8 +162,13 @@ require('lualine').setup({
         mode = 2,
         max_length = function()
           local l = 0
+          local sta
+          local tmp
           for _, v in ipairs(vim.api.nvim_list_tabpages()) do
-            l = #vim.api.nvim_tabpage_get_var(v, 'tabname') + 4
+            sta, tmp = pcall(vim.api.nvim_tabpage_get_var, v, 'tabname')
+            if sta and type(tmp) == number then
+              l = l + tmp + 4
+            end
           end
           return vim.o.columns - l - 1
         end,
