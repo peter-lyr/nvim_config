@@ -161,7 +161,11 @@ require('lualine').setup({
         'buffers',
         mode = 2,
         max_length = function()
-          return vim.o.columns - vim.fn.tabpagenr('$') * 19
+          local l = 0
+          for _, v in ipairs(vim.api.nvim_list_tabpages()) do
+            l = #vim.api.nvim_tabpage_get_var(v, 'tabname') + 4
+          end
+          return vim.o.columns - l - 1
         end,
         filetype_names = {
           ['neo-tree'] = 'Neo Tree',
