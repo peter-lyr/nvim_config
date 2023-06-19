@@ -23,8 +23,6 @@ require('neo-tree').setup({
       ["dl"] = "open_vsplit",
       ["dk"] = "open_tabnew",
       ["D"] = "delete",
-      ["<c-h>"] = "prev_source",
-      ["<c-l>"] = "next_source",
       ["do"] = "open",
       ["o"] = "open",
       ["zm"] = "close_node",
