@@ -35,7 +35,7 @@ local get_setup_table = function(file_ignore_patterns)
           ['<c-o>'] = actions.select_default,
           ['qo'] = actions.select_default,
 
-          ['qw'] = actions_layout.toggle_preview,
+          ['qn'] = actions_layout.toggle_preview,
 
           ['qj'] = function(prompt_bufnr)
             actions.move_selection_next(prompt_bufnr)
@@ -65,7 +65,7 @@ local get_setup_table = function(file_ignore_patterns)
           ['<c-o>'] = actions.select_default,
           ['o'] = actions.select_default,
 
-          ['w'] = actions_layout.toggle_preview,
+          ['n'] = actions_layout.toggle_preview,
         }
       },
       file_ignore_patterns = file_ignore_patterns,

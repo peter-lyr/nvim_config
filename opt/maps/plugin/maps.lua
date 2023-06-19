@@ -15,17 +15,28 @@
 
 -- copy_paste
 
-vim.keymap.set({ 'c', 'i' },      '<a-w>',   '<c-r>=g:word<cr>', { desc = 'paste g:word' })
+vim.fn.setreg('w', 'reg w empty')
+
+vim.keymap.set({ 'c', 'i' },      '<a-w>',   '<c-r>w', { desc = 'paste <cword>' })
+vim.keymap.set({ 'c', 'i' },      'qw',      '<c-r>w', { desc = 'paste <cword>' })
+
 vim.keymap.set({ 'c', 'i' },      '<a-v>',   '<c-r>"', { desc = 'paste "' })
+vim.keymap.set({ 'c', 'i' },      'qv',      '<c-r>"', { desc = 'paste "' })
+
 vim.keymap.set({ 't', },          '<a-v>',   '<c-\\><c-n>pi', { desc = 'paste "' })
+vim.keymap.set({ 't', },          'qv',      '<c-\\><c-n>pi', { desc = 'paste "' })
+
 vim.keymap.set({ 'c', 'i' },      '<a-=>',   '<c-r>+', { desc = 'paste +' })
+vim.keymap.set({ 'c', 'i' },      'q=',      '<c-r>+', { desc = 'paste +' })
+
 vim.keymap.set({ 't', },          '<a-=>',   '<c-\\><c-n>"+pi', { desc = 'paste +' })
+vim.keymap.set({ 't', },          'q=',      '<c-\\><c-n>"+pi', { desc = 'paste +' })
 
 vim.api.nvim_create_autocmd({ "BufLeave", "CmdlineEnter", }, {
   callback = function()
     local word = vim.fn.expand('<cword>')
     if #word > 0 then
-      vim.g.word = word
+      vim.fn.setreg('w', word)
     end
   end,
 })
