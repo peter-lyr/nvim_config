@@ -160,6 +160,9 @@ require('lualine').setup({
       {
         'buffers',
         mode = 2,
+        max_length = function()
+          return vim.o.columns - vim.fn.tabpagenr('$') * 19
+        end,
         filetype_names = {
           ['neo-tree'] = 'Neo Tree',
           ['lazy'] = 'Lazy',
@@ -176,6 +179,9 @@ require('lualine').setup({
     lualine_z = {
        {
         'tabs',
+        max_length = function()
+          return vim.o.columns
+        end,
         use_mode_colors = true,
         mode = 2,
       },
