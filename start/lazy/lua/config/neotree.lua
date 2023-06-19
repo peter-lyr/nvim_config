@@ -16,6 +16,7 @@ require('neo-tree').setup({
       ["d"] = "noop",
       ["z"] = "noop",
       ["C"] = "noop",
+      ["R"] = "noop",
 
       ["<tab>"] = { "toggle_preview", config = { use_float = true } },
       ["dj"] = "open_split",
@@ -28,6 +29,7 @@ require('neo-tree').setup({
       ["o"] = "open",
       ["zm"] = "close_node",
       ["zM"] = "close_all_nodes",
+      ["<F5>"] = "refresh",
     },
   },
   filesystem = {
