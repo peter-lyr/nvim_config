@@ -30,6 +30,10 @@ require('neo-tree').setup({
       ["zm"] = "close_node",
       ["zM"] = "close_all_nodes",
       ["<F5>"] = "refresh",
+      ["q"] = function()
+        vim.api.nvim_win_set_width(0, 0)
+        vim.cmd('wincmd l')
+      end,
     },
   },
   filesystem = {
@@ -62,6 +66,10 @@ require('neo-tree').setup({
           end
           refresh()
         end,
+        ["q"] = function()
+          vim.api.nvim_win_set_width(0, 0)
+          vim.cmd('wincmd h')
+        end,
       },
     },
   },
@@ -81,6 +89,10 @@ require('neo-tree').setup({
         ["c"] = "git_commit",
         ["p"] = "git_push",
         ["g"] = "git_commit_and_push",
+        ["q"] = function()
+          vim.api.nvim_win_set_width(0, 0)
+          vim.cmd('wincmd h')
+        end,
       }
     }
   },
@@ -88,72 +100,68 @@ require('neo-tree').setup({
 
 local M = {}
 
+local function find_neotree_winid(source_ft)
+  for _, bufnr in ipairs(vim.fn.tabpagebuflist()) do
+    if vim.fn.getbufvar(bufnr, '&filetype') == 'neo-tree' then
+      if string.match(vim.api.nvim_buf_get_name(bufnr), 'neo%-tree ' .. source_ft .. ' %[%d+%]') then
+        return vim.fn.bufwinid(bufnr)
+      end
+    end
+  end
+  return nil
+end
+
+
 -- filesystem
 
 M.filesystem_open = function()
-  vim.cmd('Neotree filesystem focus reveal_force_cwd')
-  if string.match(vim.api.nvim_buf_get_name(vim.fn.winbufnr(i)), 'neo%-tree filesystem %[%d+%]') then
+  local winid = find_neotree_winid('filesystem')
+  if winid then
+    vim.fn.win_gotoid(winid)
     vim.cmd('wincmd H')
-  end
-  vim.api.nvim_win_set_width(0, require('neo-tree').config.window.width)
-end
-
-local get_filesystem_winid = function()
-  for i=1, vim.fn.winnr('$') do
-    if string.match(vim.api.nvim_buf_get_name(vim.fn.winbufnr(i)), 'neo%-tree filesystem %[%d+%]') then
-      return vim.fn.win_getid(i)
-    end
-  end
-  return 0
-end
-
-M.filesystem_min_width = function()
-  local filesystem_winid = get_filesystem_winid()
-  vim.api.nvim_win_set_width(filesystem_winid, 0)
-  if filesystem_winid == vim.fn.win_getid() then
-    vim.cmd('wincmd l')
+    vim.api.nvim_win_set_width(0, require('neo-tree').config.window.width)
+  else
+    vim.cmd('Neotree filesystem focus reveal_force_cwd')
   end
 end
 
 -- buffers git_status
 
-M.going_to_buffers = nil
-
-M.git_status_buffers_toggle = function()
+M.git_status_buffers_open = function()
+  local buffers_winid = find_neotree_winid('buffers')
+  local git_status_winid = find_neotree_winid('git_status')
+  if not git_status_winid and not buffers_winid then
+    vim.cmd('Neotree git_status focus reveal_force_cwd right')
+  end
   local fname = vim.api.nvim_buf_get_name(0)
-  if string.match(fname, 'neo%-tree git_status %[%d+%]') or string.match(fname, 'neo%-tree buffers %[%d+%]') then
-    if M.going_to_buffers then
-      M.going_to_buffers = nil
-      vim.cmd('Neotree git_status focus reveal_force_cwd right')
-    else
-      M.going_to_buffers = 1
+  if vim.bo.ft == 'neo-tree' then
+    if git_status_winid then
       vim.cmd('Neotree buffers focus reveal_force_cwd right')
+    else
+      vim.cmd('Neotree git_status focus reveal_force_cwd right')
     end
   else
-    if M.going_to_buffers then
-      vim.cmd('Neotree buffers focus reveal_force_cwd right')
+    if git_status_winid then
+      vim.fn.win_gotoid(git_status_winid)
+      vim.cmd('wincmd L')
+      vim.api.nvim_win_set_width(0, require('neo-tree').config.window.width)
     else
-      vim.cmd('Neotree git_status focus reveal_force_cwd right')
+      vim.fn.win_gotoid(buffers_winid)
+      vim.cmd('wincmd L')
+      vim.api.nvim_win_set_width(0, require('neo-tree').config.window.width)
     end
   end
-end
-
-M.git_status_buffers_close = function()
-  vim.cmd('Neotree git_status close')
-  vim.cmd('Neotree buffers close')
 end
 
 -- open close
 
 M.open = function()
   M.filesystem_open()
-  vim.cmd('wincmd b')
-  M.git_status_buffers_toggle()
+  M.git_status_buffers_open()
 end
 
 M.close = function()
-  M.git_status_buffers_close()
-  M.filesystem_min_width()
+  vim.cmd([[call feedkeys("\<space>qq\<space>\<tab>q")]])
 end
 
 return M
