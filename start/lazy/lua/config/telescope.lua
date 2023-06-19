@@ -3,7 +3,7 @@ local actions = require('telescope.actions')
 local actions_layout = require('telescope.actions.layout')
 
 vim.cmd([[
-autocmd User TelescopePreviewerLoaded setlocal number | setlocal wrap
+autocmd User TelescopePreviewerLoaded setlocal rnu | setlocal number | setlocal wrap
 ]])
 
 local get_setup_table = function(file_ignore_patterns)
