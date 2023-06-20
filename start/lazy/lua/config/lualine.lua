@@ -15,7 +15,7 @@ end
 
 local projectroot = vim.fn['ProjectRootGet'](vim.api.nvim_buf_get_name(0))
 
-local function get_projectroot()
+local function get_projectroot(projectroot)
   local temp = vim.fn.fnamemodify(projectroot, ':t')
   if #temp >= 15 then
     return string.sub(temp, 1, 7) .. '…' .. string.sub(temp, #temp-6, #temp)
@@ -27,7 +27,7 @@ vim.api.nvim_create_autocmd({ "BufEnter", }, {
   callback = function()
     projectroot = vim.fn['ProjectRootGet'](vim.api.nvim_buf_get_name(0))
     if #projectroot > 0 then
-      vim.fn['LualineRenameTab'](get_projectroot())
+      vim.fn['LualineRenameTab'](get_projectroot(projectroot))
     end
   end,
 })
@@ -338,3 +338,33 @@ vim.api.nvim_create_autocmd({ "TabEnter", }, {
     vim.cmd('ProjectRootCD')
   end,
 })
+
+-- restore hidden tabs
+
+vim.keymap.set({ 'n', 'v', }, '<a-f7>', function()
+  local sta, tmp
+  local tabs = {}
+  local curtabnr = vim.fn.tabpagenr()
+  for _, v in ipairs(vim.api.nvim_list_tabpages()) do
+    sta, tmp = pcall(vim.api.nvim_tabpage_get_var, v, 'tabname')
+    if sta == true then
+      tabs[#tabs+1] = tmp
+    end
+  end
+  for b = 1, vim.fn.bufnr('$') do
+    if vim.fn.buflisted(b) ~= 0 and vim.api.nvim_buf_get_option(b, 'buftype') ~= 'quickfix' then
+      local fname = vim.api.nvim_buf_get_name(b)
+      if #fname > 0 then
+        local fname = vim.api.nvim_buf_get_name(b)
+        local tabname = get_projectroot(vim.fn['ProjectRootGet'](vim.api.nvim_buf_get_name(b)))
+        if vim.tbl_contains(tabs, tabname) ~= true then
+          vim.cmd('tabnew')
+          vim.cmd('e ' .. fname)
+          tabs[#tabs+1] = tmp
+          vim.fn['LualineRenameTab'](tabname)
+        end
+      end
+    end
+  end
+  vim.cmd(curtabnr .. 'tabnext')
+end, { desc = 'restore hidden tabs' })
