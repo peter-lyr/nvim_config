@@ -183,7 +183,7 @@ require('lualine').setup({
           if #projectroot == 0 then
             return true
           end
-          return vim.fn['ProjectRootGet'](vim.api.nvim_buf_get_name(b)) == projectroot
+          return #vim.api.nvim_buf_get_name(b) > 0 and vim.fn['ProjectRootGet'](vim.api.nvim_buf_get_name(b)) == projectroot
         end,
       },
     },
