@@ -1,6 +1,8 @@
 vim.g.neo_tree_remove_legacy_commands = 1
 
+local cc = require("neo-tree.sources.common.commands")
 local utils = require("neo-tree.utils")
+local fs = require("neo-tree.sources.filesystem")
 local manager = require("neo-tree.sources.manager")
 local refresh = utils.wrap(manager.refresh, "buffers")
 
@@ -18,7 +20,11 @@ require('neo-tree').setup({
       ["C"] = "noop",
       ["R"] = "noop",
 
-      ["<tab>"] = { "toggle_preview", config = { use_float = true } },
+      ["h"] = { "toggle_preview", config = { use_float = true } },
+      ["<tab>"] = function(state)
+        cc.open(state, utils.wrap(fs.toggle_directory, state))
+        vim.cmd('wincmd h')
+      end,
       ["dj"] = "open_split",
       ["dl"] = "open_vsplit",
       ["dk"] = "open_tabnew",
@@ -69,6 +75,10 @@ require('neo-tree').setup({
           vim.api.nvim_win_set_width(0, 0)
           vim.cmd('wincmd h')
         end,
+        ["<tab>"] = function(state)
+          cc.open(state, utils.wrap(fs.toggle_directory, state))
+          vim.cmd('wincmd l')
+        end,
       },
     },
   },
@@ -91,6 +101,14 @@ require('neo-tree').setup({
         ["q"] = function()
           vim.api.nvim_win_set_width(0, 0)
           vim.cmd('wincmd h')
+        end,
+        ["<tab>"] = function(state, toggle_directory)
+          local sta, _ = pcall(cc.open, state, utils.wrap(fs.toggle_directory, state))
+          if not sta then
+            cc.toggle_directory(state, toggle_directory)
+            return
+          end
+          vim.cmd('wincmd l')
         end,
       }
     }
