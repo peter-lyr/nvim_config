@@ -1,6 +1,8 @@
 return {
   -- 'nvim-lualine/lualine.nvim',
-  'peter-lyr/lualine.nvim',
+  -- 'peter-lyr/lualine.nvim',
+  'phi-mah/lualine.nvim',
+  branch = 'filterbuffers',
   event = "VeryLazy",
   dependencies = {
     require('plugins.web-devicons'),

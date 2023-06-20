@@ -179,11 +179,17 @@ require('lualine').setup({
           ['lazy'] = 'Lazy',
         },
         use_mode_colors = true,
-        buffer_filter = function(b)
-          if #projectroot == 0 then
-            return true
+        show_buffers = function()
+          local buffers = {}
+          for b = 1, vim.fn.bufnr('$') do
+            if vim.fn.buflisted(b) ~= 0 and vim.api.nvim_buf_get_option(b, 'buftype') ~= 'quickfix' then
+              local fname = vim.api.nvim_buf_get_name(b)
+              if #projectroot == 0 or #fname > 0 and vim.fn['ProjectRootGet'](fname) == projectroot then
+                buffers[#buffers+1] = b
+              end
+            end
           end
-          return #vim.api.nvim_buf_get_name(b) > 0 and vim.fn['ProjectRootGet'](vim.api.nvim_buf_get_name(b)) == projectroot
+          return buffers
         end,
       },
     },
