@@ -28,6 +28,7 @@ require('neo-tree').setup({
       ["zm"] = "close_node",
       ["zM"] = "close_all_nodes",
       ["<F5>"] = "refresh",
+      ["<c-r>"] = "refresh",
       ["q"] = function()
         vim.api.nvim_win_set_width(0, 0)
         vim.cmd('wincmd l')
