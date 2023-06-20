@@ -166,11 +166,13 @@ require('lualine').setup({
           local tmp
           for _, v in ipairs(vim.api.nvim_list_tabpages()) do
             sta, tmp = pcall(vim.api.nvim_tabpage_get_var, v, 'tabname')
-            if sta and type(tmp) == number then
-              l = l + tmp + 4
+            if sta == true then
+              l = l + #tmp + 4
+            else
+              l = l + 15 + 4
             end
           end
-          return vim.o.columns - l - 1
+          return vim.o.columns - l - 2
         end,
         filetype_names = {
           ['neo-tree'] = 'Neo Tree',
