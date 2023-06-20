@@ -142,6 +142,11 @@ M.filesystem_open = function()
   end
 end
 
+M.filesystem_open_reveal = function()
+  vim.cmd('Neotree filesystem reveal')
+  vim.api.nvim_win_set_width(0, require('neo-tree').config.window.width)
+end
+
 -- buffers git_status
 
 M.git_status_buffers_open = function()
