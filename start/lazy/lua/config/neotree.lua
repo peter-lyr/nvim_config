@@ -163,7 +163,6 @@ local function find_neotree_winid(source_ft)
   return nil
 end
 
-
 -- filesystem
 
 M.filesystem_open = function()
