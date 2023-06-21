@@ -157,7 +157,7 @@ return {
       -- gitpushinit.lua
       ------------------------
 
-      { '<leader>gP',         function() require('gitpushinit').push() end,                  mode = { 'n', 'v' }, silent = true, desc = 'git add all commit and push' },
+      { '<leader>g1',         function() require('gitpushinit').push() end,                  mode = { 'n', 'v' }, silent = true, desc = 'git add all commit and push' },
       { '<leader>gI',         function() require('gitpushinit').init() end,                  mode = { 'n', 'v' }, silent = true, desc = 'git init' },
 
     },

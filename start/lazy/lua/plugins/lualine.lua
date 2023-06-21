@@ -16,8 +16,7 @@ return {
         {
           "rcarriga/nvim-notify",
           opts = {
-            minimum_width = 20,
-            timeout = 1000,
+            -- minimum_width = 20,
             top_down = false,
           },
         }
