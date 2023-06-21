@@ -16,6 +16,7 @@ return {
       require('wait.plenary'),
       require('wait.asyncrun'),
       require('wait.projectroot'),
+      require('wait.telescope_ui_select'),
     },
     keys = {
 
