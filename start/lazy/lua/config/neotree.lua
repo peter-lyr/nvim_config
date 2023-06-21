@@ -71,7 +71,9 @@ require('neo-tree').setup({
             if node.type == "message" then
               return
             end
-            vim.cmd('Bdelete! ' .. node.extra.bufnr)
+            if node.extra and node.extra.bufnr then
+              vim.cmd('Bdelete! ' .. node.extra.bufnr)
+            end
           end
           refresh()
         end,
