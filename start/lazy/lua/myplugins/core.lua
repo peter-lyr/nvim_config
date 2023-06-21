@@ -159,8 +159,9 @@ return {
       ------------------------
 
       { '<leader>g1',         function() require('gitpushinit').addcommitpush() end,         mode = { 'n', 'v' }, silent = true, desc = 'git add all commit and push' },
-      { '<leader>g2',         function() require('gitpushinit').commit() end,                  mode = { 'n', 'v' }, silent = true, desc = 'git add all commit and push' },
-      { '<leader>g3',         function() require('gitpushinit').push() end,                  mode = { 'n', 'v' }, silent = true, desc = 'git add all commit and push' },
+      { '<leader>g2',         function() require('gitpushinit').commit() end,                mode = { 'n', 'v' }, silent = true, desc = 'git just commit' },
+      { '<leader>g3',         function() require('gitpushinit').push() end,                  mode = { 'n', 'v' }, silent = true, desc = 'git just push' },
+      { '<leader>g4',         [[<c-u>:silent exe '!start cmd /c "git log --all --graph --decorate --oneline && pause"'<cr>]], mode = { 'n', 'v' }, silent = true, desc = 'git graph' },
       { '<leader>gI',         function() require('gitpushinit').init() end,                  mode = { 'n', 'v' }, silent = true, desc = 'git init' },
 
     },
