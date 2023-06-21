@@ -1,5 +1,9 @@
 local M = {}
 
+local function asyncrunprepare()
+  vim.cmd([[au User AsyncRunStop lua local l = vim.fn.getqflist(); vim.notify(l[#l]['text']); vim.cmd('au! User AsyncRunStop')]])
+end
+
 M.addcommitpush = function()
   local result = vim.fn.systemlist({ "git", "status", "-s" })
   if #result > 0 then
@@ -8,7 +12,7 @@ M.addcommitpush = function()
     if #input > 0 then
       vim.loop.new_timer():start(10, 0, function()
         vim.schedule(function()
-          vim.cmd([[au User AsyncRunStop lua local l = vim.fn.getqflist(); vim.notify(l[#l]['text']); vim.cmd('au! User AsyncRunStop')]])
+          asyncrunprepare()
           vim.cmd(string.format('AsyncRun git add -A && git status && git commit -m "%s" && git push', input))
         end)
       end)
@@ -26,7 +30,7 @@ M.commit = function()
     if #input > 0 then
       vim.loop.new_timer():start(10, 0, function()
         vim.schedule(function()
-          vim.cmd([[au User AsyncRunStop lua local l = vim.fn.getqflist(); vim.notify(l[#l]['text']); vim.cmd('au! User AsyncRunStop')]])
+          asyncrunprepare()
           vim.cmd(string.format('AsyncRun git commit -m "%s"', input))
         end)
       end)
@@ -42,7 +46,7 @@ M.push = function()
     vim.notify(vim.loop.cwd() .. '\n' .. table.concat(result, '\n'))
     vim.loop.new_timer():start(10, 0, function()
       vim.schedule(function()
-        vim.cmd([[au User AsyncRunStop lua local l = vim.fn.getqflist(); vim.notify(l[#l]['text']); vim.cmd('au! User AsyncRunStop')]])
+        asyncrunprepare()
         vim.cmd('AsyncRun git push')
       end)
     end)
