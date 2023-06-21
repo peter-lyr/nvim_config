@@ -50,6 +50,21 @@ require('neo-tree').setup({
         local node = state.tree:get_node()
         print(vim.inspect(node))
       end,
+      ["<leader>y"] = function(state)
+        local node = state.tree:get_node()
+        if node.type ~= 'message' then
+          vim.cmd(string.format([[let @+ = '%s']], node.name))
+        end
+      end,
+      ["<leader>gy"] = function(state)
+        local node = state.tree:get_node()
+        if node.type ~= 'message' then
+          vim.cmd(string.format([[let @+ = '%s']], node.path))
+        end
+      end,
+      ["<leader><leader>gy"] = function(state)
+        vim.cmd(string.format([[let @+ = '%s']], state.path))
+      end,
     },
   },
   filesystem = {
