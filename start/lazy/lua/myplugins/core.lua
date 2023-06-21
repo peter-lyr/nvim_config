@@ -13,8 +13,8 @@ return {
     dir = opt .. 'maps',
     event = { 'CmdlineEnter', 'InsertEnter', 'ModeChanged', },
     dependencies = {
-      require('plugins.plenary'),
-      require('plugins.projectroot'),
+      require('wait.plenary'),
+      require('wait.projectroot'),
     },
     keys = {
 

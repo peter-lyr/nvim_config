@@ -5,8 +5,8 @@ return {
   branch = 'filterbuffers',
   event = "VeryLazy",
   dependencies = {
-    require('plugins.web-devicons'),
-    require('plugins.projectroot'),
+    require('wait.web-devicons'),
+    require('wait.projectroot'),
     {
       "folke/noice.nvim",
       opts = {

@@ -17,11 +17,11 @@ return {
     { '<middlemouse>',     function() require('config.neotree').close() end,                     mode = { 'n', 'v' }, desc = 'NeoTree close' },
   },
   dependencies = {
-    require('plugins.plenary'),
-    require('plugins.web-devicons'),
+    require('wait.plenary'),
+    require('wait.web-devicons'),
     'MunifTanjim/nui.nvim',
     's1n7ax/nvim-window-picker',
-    require('plugins.bbye'),
+    require('wait.bbye'),
   },
   config = function()
     require('config.neotree')

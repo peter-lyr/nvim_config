@@ -40,7 +40,7 @@ return {
 
   },
   dependencies = {
-    require('plugins.plenary'),
+    require('wait.plenary'),
   },
   config = function()
     require('config.telescope')
