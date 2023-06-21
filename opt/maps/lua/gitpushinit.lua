@@ -7,7 +7,7 @@ end
 M.addcommitpush = function()
   local result = vim.fn.systemlist({ "git", "status", "-s" })
   if #result > 0 then
-    vim.notify(vim.loop.cwd() .. '\n' .. table.concat(result, '\n'))
+    vim.notify("git status -s" .. '\n' .. vim.loop.cwd() .. '\n' .. table.concat(result, '\n'))
     local input = vim.fn.input('commit info (Add all and push): ')
     if #input > 0 then
       vim.loop.new_timer():start(10, 0, function()
@@ -25,7 +25,7 @@ end
 M.commit = function()
   local result = vim.fn.systemlist({ "git", "diff", "--staged", "--stat" })
   if #result > 0 then
-    vim.notify(vim.loop.cwd() .. '\n' .. table.concat(result, '\n'))
+    vim.notify("git diff --staged --stat" .. '\n' .. vim.loop.cwd() .. '\n' .. table.concat(result, '\n'))
     local input = vim.fn.input('commit info (just commit): ')
     if #input > 0 then
       vim.loop.new_timer():start(10, 0, function()
@@ -43,7 +43,7 @@ end
 M.push = function()
   local result = vim.fn.systemlist({ "git", "cherry", "-v" })
   if #result > 0 then
-    vim.notify(vim.loop.cwd() .. '\n' .. table.concat(result, '\n'))
+    vim.notify("git cherry -v" .. '\n' .. vim.loop.cwd() .. '\n' .. table.concat(result, '\n'))
     vim.loop.new_timer():start(10, 0, function()
       vim.schedule(function()
         asyncrunprepare()
