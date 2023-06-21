@@ -1,6 +1,6 @@
 local M = {}
 
-M.push = function()
+M.addcommitpush = function()
   local result = vim.fn.systemlist({ "git", "status", "-s" })
   if #result > 0 then
     vim.notify(vim.loop.cwd() .. '\n' .. table.concat(result, '\n'))
