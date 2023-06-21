@@ -5,7 +5,7 @@ M.push = function()
   if #result > 0 then
     require('notify').notify(vim.loop.cwd() .. '\n' .. table.concat(result))
     local input = vim.fn.input('commit info (Add all and push): ')
-    if #input > 0 and #vim.fn.input('Sure to add all and push? (Empty for yes): ') == 0 then
+    if #input > 0 then
       vim.loop.new_timer():start(10, 0, function()
         vim.schedule(function()
           vim.cmd([[au User AsyncRunStop lua local l = vim.fn.getqflist(); vim.notify(l[#l]['text']); vim.cmd('au! User AsyncRunStop')]])
