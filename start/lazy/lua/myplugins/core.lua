@@ -14,6 +14,7 @@ return {
     event = { 'CmdlineEnter', 'InsertEnter', 'ModeChanged', },
     dependencies = {
       require('wait.plenary'),
+      require('wait.asyncrun'),
       require('wait.projectroot'),
     },
     keys = {
@@ -151,6 +152,13 @@ return {
       { '<c-->',              function() require('fontsize').sizedown() end,                 mode = { 'n', 'v' }, silent = true, desc = 'fontsize down' },
       { '<c-0><c-0>',         function() require('fontsize').sizenormal() end,               mode = { 'n', 'v' }, silent = true, desc = 'fontsize normal' },
       { '<c-0>_',             function() require('fontsize').sizemin() end,                  mode = { 'n', 'v' }, silent = true, desc = 'fontsize min' },
+
+      ------------------------
+      -- gitpushinit.lua
+      ------------------------
+
+      { '<leader>gP',         function() require('gitpushinit').push() end,                  mode = { 'n', 'v' }, silent = true, desc = 'git add all commit and push' },
+      { '<leader>gI',         function() require('gitpushinit').init() end,                  mode = { 'n', 'v' }, silent = true, desc = 'git init' },
 
     },
   },
