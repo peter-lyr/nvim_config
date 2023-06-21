@@ -39,6 +39,10 @@ require('neo-tree').setup({
         vim.api.nvim_win_set_width(0, 0)
         vim.cmd('wincmd l')
       end,
+      ["X"] = "cut_to_clipboard",
+      ["x"] = function(state)
+        vim.fn.system('start ' .. state.tree._content.node_id_by_linenr[vim.fn.line('.')])
+      end,
     },
   },
   filesystem = {
