@@ -143,6 +143,15 @@ return {
       { '<leader><del>',      function() require('buffernew').bw_unlisted_buffers() end,     mode = { 'n', 'v' }, silent = true, desc = 'bw_unlisted_buffers' },
       { '<leader>x<bs>',      '<cmd>qa!<cr>',                                                mode = { 'n', 'v' }, silent = true, desc = 'qa!' },
 
+      ------------------------
+      -- fontsize.lua
+      ------------------------
+
+      { '<c-=>',              function() require('fontsize').sizeup() end,                   mode = { 'n', 'v' }, silent = true, desc = 'fontsize up' },
+      { '<c-->',              function() require('fontsize').sizedown() end,                 mode = { 'n', 'v' }, silent = true, desc = 'fontsize down' },
+      { '<c-0><c-0>',         function() require('fontsize').sizenormal() end,               mode = { 'n', 'v' }, silent = true, desc = 'fontsize normal' },
+      { '<c-0>_',             function() require('fontsize').sizemin() end,                  mode = { 'n', 'v' }, silent = true, desc = 'fontsize min' },
+
     },
   },
 }
