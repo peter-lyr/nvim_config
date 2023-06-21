@@ -41,7 +41,10 @@ require('neo-tree').setup({
       end,
       ["X"] = "cut_to_clipboard",
       ["x"] = function(state)
-        vim.fn.system('start ' .. state.tree._content.node_id_by_linenr[vim.fn.line('.')])
+        local node = state.tree:get_node()
+        if node.type ~= 'message' then
+          vim.fn.system('start ' .. node.path)
+        end
       end,
     },
   },
