@@ -158,6 +158,7 @@ return {
       ------------------------
 
       { '<leader>g1',         function() require('gitpushinit').addcommitpush() end,         mode = { 'n', 'v' }, silent = true, desc = 'git add all commit and push' },
+      { '<leader>g2',         function() require('gitpushinit').push() end,                  mode = { 'n', 'v' }, silent = true, desc = 'git add all commit and push' },
       { '<leader>gI',         function() require('gitpushinit').init() end,                  mode = { 'n', 'v' }, silent = true, desc = 'git init' },
 
     },
