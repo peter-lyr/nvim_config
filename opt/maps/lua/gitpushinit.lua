@@ -1,17 +1,9 @@
 local M = {}
 
-Msg = {}
-
 M.push = function()
   local result = vim.fn.systemlist({ "git", "status", "-s" })
   if #result > 0 then
-    Msg = {
-      ['1'] = vim.loop.cwd(),
-    }
-    -- for k, v in ipairs(result) do
-    --   Msg[1 + k] = v
-    -- end
-    vim.cmd([[call feedkeys(":\<c-u>lua print(vim.inspect(Msg))\<cr>")]])
+    vim.notify(vim.loop.cwd() .. '\n' .. table.concat(result, '\n'))
     local input = vim.fn.input('commit info (Add all and push): ')
     if #input > 0 then
       vim.loop.new_timer():start(10, 0, function()
