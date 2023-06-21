@@ -13,6 +13,8 @@ M.push = function()
         end)
       end)
     end
+  else
+    vim.notify('no changes')
   end
 end
 
