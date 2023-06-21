@@ -1,7 +1,7 @@
 local M = {}
 
 local function asyncrunprepare()
-  vim.cmd([[au User AsyncRunStop lua local l = vim.fn.getqflist(); vim.notify(l[#l]['text']); vim.cmd('au! User AsyncRunStop')]])
+  vim.cmd([[au User AsyncRunStop lua local l = vim.fn.getqflist(); vim.notify(l[1]['text'] .. '--' .. l[#l]['text']); vim.cmd('au! User AsyncRunStop')]])
 end
 
 M.addcommitpush = function()
