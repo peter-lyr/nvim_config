@@ -360,7 +360,7 @@ vim.keymap.set({ 'n', 'v', }, '<a-f7>', function()
         if vim.tbl_contains(tabs, tabname) ~= true then
           vim.cmd('tabnew')
           vim.cmd('e ' .. fname)
-          tabs[#tabs+1] = tmp
+          tabs[#tabs+1] = tabname
           vim.fn['LualineRenameTab'](tabname)
         end
       end
