@@ -58,6 +58,13 @@ require('neo-tree').setup({
         ["."] = "toggle_hidden",
         ["O"] = "set_root",
         ["F"] = "clear_filter",
+        ['dd'] = function(state)
+          local node = state.tree:get_node()
+          if node.type == 'file' and vim.fn.bufnr(node.path) ~= -1 then
+            vim.cmd('Bdelete! ' .. node.path)
+            refresh()
+          end
+        end,
       },
     },
   },
