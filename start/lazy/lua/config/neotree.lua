@@ -46,6 +46,10 @@ require('neo-tree').setup({
           vim.fn.system('start ' .. node.path)
         end
       end,
+      ["<f1>"] = function(state)
+        local node = state.tree:get_node()
+        print(vim.inspect(node))
+      end,
     },
   },
   filesystem = {
