@@ -45,3 +45,4 @@ vim.opt.sidescrolloff   = 8 -- Columns of context
 vim.opt.scrolloff       = 4 -- Lines of context
 vim.opt.completeopt     = "menu,menuone,noselect"
 vim.opt.conceallevel    = 3 -- Hide * markup for bold and italic
+vim.opt.list            = true
