@@ -9,21 +9,21 @@ return {
     require('wait.projectroot'),
     {
       "folke/noice.nvim",
-      opts = {
-      },
       dependencies = {
         "MunifTanjim/nui.nvim",
         {
           "rcarriga/nvim-notify",
-          opts = {
-            -- minimum_width = 20,
-            top_down = false,
-          },
           config = function()
+            require("notify").setup({
+              top_down = false,
+            })
             vim.keymap.set({ 'n', }, '<esc>', function() require("notify").dismiss() end, { desc = 'dismiss notification' })
           end,
-        }
+        },
       },
+      config = function()
+        require("noice").setup()
+      end
     }
   },
   config = function()
