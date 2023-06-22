@@ -1,6 +1,7 @@
 {
   "asyncrun.vim": { "branch": "master", "commit": "7191d0c30dd105e5d7f897b9a6ee19cabe734466" },
   "gitsigns.nvim": { "branch": "main", "commit": "256569c2fe697a3003dbd49ff474e5935af9066c" },
+  "hop.nvim": { "branch": "master", "commit": "03f0434869f1f38868618198b5f4f2ab6d39aef2" },
   "indent-blankline.nvim": { "branch": "master", "commit": "7075d7861f7a6bbf0de0298c83f8a13195e6ec01" },
   "lazygit.nvim": { "branch": "main", "commit": "3466e48439601445e26c65635421625886f2d0c0" },
   "lualine.nvim": { "branch": "filterbuffers", "commit": "c2d24e9725622a8ee5dfee94509ef5ea3d23bbd0" },
