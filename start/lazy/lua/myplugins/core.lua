@@ -1,6 +1,6 @@
 local opt = vim.fn.expand('$VIMRUNTIME') .. '\\pack\\testnvim2\\opt\\'
 
--- %s/.*{\s*\([^ ]\+\) *\(.\+,\) *\(mode = {[ 'nvtic,]\+},\) *\(.\+\) *},/\=printf("      { %-30s %-72s %-20s %s },", submatch(1), submatch(2), submatch(3), substitute(trim(submatch(4)), ' \+', ' ' ,'g'))
+-- %s/.*{\s*\([^ ]\+\) *\(.\+,\) *\(mode = {[ 'nvtic,]\+},\) *\(.\+\) *},/\=printf("      { %-30s %-86s %-20s %s },", submatch(1), submatch(2), submatch(3), substitute(trim(submatch(4)), ' \+', ' ' ,'g'))
 
 return {
   {
@@ -165,6 +165,73 @@ return {
       { '<leader>g5',         [[<c-u>:silent exe '!start cmd /c "git log --all --graph --decorate --oneline && pause"'<cr>]], mode = { 'n', 'v' }, silent = true, desc = 'git graph' },
       { '<leader>gI',         function() require('gitpushinit').init() end,                  mode = { 'n', 'v' }, silent = true, desc = 'git init' },
       { '<leader>gA',         function() require('gitpushinit').addall() end,                mode = { 'n', 'v' }, silent = true, desc = 'git add -A' },
+
+      ------------------------
+      -- terminal.lua
+      ------------------------
+
+      -- toggle
+
+      { '<leader><f1><f1>', function() require('terminal').toggle('cmd') end,                           mode = { 'n', 'v' }, silent = true, desc = 'toggle cmd' },
+      { '<leader><f2><f2>', function() require('terminal').toggle('ipython') end,                       mode = { 'n', 'v' }, silent = true, desc = 'toggle ipython' },
+      { '<leader><f3><f3>', function() require('terminal').toggle('bash') end,                          mode = { 'n', 'v' }, silent = true, desc = 'toggle bash' },
+      { '<leader><f4><f4>', function() require('terminal').toggle('powershell') end,                    mode = { 'n', 'v' }, silent = true, desc = 'toggle powershell' },
+
+      -- cd
+
+      { '<leader><f1>w',    function() require('terminal').toggle('cmd',        'cwd') end,             mode = { 'n', 'v' }, silent = true, desc = 'toggle cd cwd [cmd]' },
+      { '<leader><f2>w',    function() require('terminal').toggle('ipython',    'cwd') end,             mode = { 'n', 'v' }, silent = true, desc = 'toggle cd cwd [ipython]' },
+      { '<leader><f3>w',    function() require('terminal').toggle('bash',       'cwd') end,             mode = { 'n', 'v' }, silent = true, desc = 'toggle cd cwd [bash]' },
+      { '<leader><f4>w',    function() require('terminal').toggle('powershell', 'cwd') end,             mode = { 'n', 'v' }, silent = true, desc = 'toggle cd cwd [powershell]' },
+
+      { '<leader><f1>.',    function() require('terminal').toggle('cmd',        '.') end,               mode = { 'n', 'v' }, silent = true, desc = 'toggle cd . [cmd]' },
+      { '<leader><f2>.',    function() require('terminal').toggle('ipython',    '.') end,               mode = { 'n', 'v' }, silent = true, desc = 'toggle cd . [ipython]' },
+      { '<leader><f3>.',    function() require('terminal').toggle('bash',       '.') end,               mode = { 'n', 'v' }, silent = true, desc = 'toggle cd . [bash]' },
+      { '<leader><f4>.',    function() require('terminal').toggle('powershell', '.') end,               mode = { 'n', 'v' }, silent = true, desc = 'toggle cd . [powershell]' },
+
+      { '<leader><f1>u',    function() require('terminal').toggle('cmd',        'u') end,               mode = { 'n', 'v' }, silent = true, desc = 'toggle cd u [cmd]' },
+      { '<leader><f2>u',    function() require('terminal').toggle('ipython',    'u') end,               mode = { 'n', 'v' }, silent = true, desc = 'toggle cd u [ipython]' },
+      { '<leader><f3>u',    function() require('terminal').toggle('bash',       'u') end,               mode = { 'n', 'v' }, silent = true, desc = 'toggle cd u [bash]' },
+      { '<leader><f4>u',    function() require('terminal').toggle('powershell', 'u') end,               mode = { 'n', 'v' }, silent = true, desc = 'toggle cd u [powershell]' },
+
+      { '<leader><f1>-',    function() require('terminal').toggle('cmd',        '-') end,               mode = { 'n', 'v' }, silent = true, desc = 'toggle cd - [cmd]' },
+      { '<leader><f2>-',    function() require('terminal').toggle('ipython',    '-') end,               mode = { 'n', 'v' }, silent = true, desc = 'toggle cd - [ipython]' },
+      { '<leader><f3>-',    function() require('terminal').toggle('bash',       '-') end,               mode = { 'n', 'v' }, silent = true, desc = 'toggle cd - [bash]' },
+      { '<leader><f4>-',    function() require('terminal').toggle('powershell', '-') end,               mode = { 'n', 'v' }, silent = true, desc = 'toggle cd - [powershell]' },
+
+      -- send and show
+
+      { '<leader><f1>s.',   function() require('terminal').send('cmd',        'curline',   'show') end, mode = { 'n', 'v' }, silent = true, desc = 'send curline show [cmd]' },
+      { '<leader><f2>s.',   function() require('terminal').send('ipython',    'curline',   'show') end, mode = { 'n', 'v' }, silent = true, desc = 'send curline show [ipython]' },
+      { '<leader><f3>s.',   function() require('terminal').send('bash',       'curline',   'show') end, mode = { 'n', 'v' }, silent = true, desc = 'send curline show [bash]' },
+      { '<leader><f4>s.',   function() require('terminal').send('powershell', 'curline',   'show') end, mode = { 'n', 'v' }, silent = true, desc = 'send curline show [powershell]' },
+
+      { '<leader><f1>sp',   function() require('terminal').send('cmd',        'paragraph', 'show') end, mode = { 'n', 'v' }, silent = true, desc = 'send paragraph show [cmd]' },
+      { '<leader><f2>sp',   function() require('terminal').send('ipython',    'paragraph', 'show') end, mode = { 'n', 'v' }, silent = true, desc = 'send paragraph show [ipython]' },
+      { '<leader><f3>sp',   function() require('terminal').send('bash',       'paragraph', 'show') end, mode = { 'n', 'v' }, silent = true, desc = 'send paragraph show [bash]' },
+      { '<leader><f4>sp',   function() require('terminal').send('powershell', 'paragraph', 'show') end, mode = { 'n', 'v' }, silent = true, desc = 'send paragraph show [powershell]' },
+
+      { '<leader><f1>sc',   function() require('terminal').send('cmd',        'clipboard', 'show') end, mode = { 'n', 'v' }, silent = true, desc = 'send clipboard show [cmd]' },
+      { '<leader><f2>sc',   function() require('terminal').send('ipython',    'clipboard', 'show') end, mode = { 'n', 'v' }, silent = true, desc = 'send clipboard show [ipython]' },
+      { '<leader><f3>sc',   function() require('terminal').send('bash',       'clipboard', 'show') end, mode = { 'n', 'v' }, silent = true, desc = 'send clipboard show [bash]' },
+      { '<leader><f4>sc',   function() require('terminal').send('powershell', 'clipboard', 'show') end, mode = { 'n', 'v' }, silent = true, desc = 'send clipboard show [powershell]' },
+
+      -- send and hide
+
+      { '<leader><f1>S.',   function() require('terminal').send('cmd',        'curline',   'hide') end, mode = { 'n', 'v' }, silent = true, desc = 'send curline hide [cmd]' },
+      { '<leader><f2>S.',   function() require('terminal').send('ipython',    'curline',   'hide') end, mode = { 'n', 'v' }, silent = true, desc = 'send curline hide [ipython]' },
+      { '<leader><f3>S.',   function() require('terminal').send('bash',       'curline',   'hide') end, mode = { 'n', 'v' }, silent = true, desc = 'send curline hide [bash]' },
+      { '<leader><f4>S.',   function() require('terminal').send('powershell', 'curline',   'hide') end, mode = { 'n', 'v' }, silent = true, desc = 'send curline hide [powershell]' },
+
+      { '<leader><f1>Sp',   function() require('terminal').send('cmd',        'paragraph', 'hide') end, mode = { 'n', 'v' }, silent = true, desc = 'send paragraph hide [cmd]' },
+      { '<leader><f2>Sp',   function() require('terminal').send('ipython',    'paragraph', 'hide') end, mode = { 'n', 'v' }, silent = true, desc = 'send paragraph hide [ipython]' },
+      { '<leader><f3>Sp',   function() require('terminal').send('bash',       'paragraph', 'hide') end, mode = { 'n', 'v' }, silent = true, desc = 'send paragraph hide [bash]' },
+      { '<leader><f4>Sp',   function() require('terminal').send('powershell', 'paragraph', 'hide') end, mode = { 'n', 'v' }, silent = true, desc = 'send paragraph hide [powershell]' },
+
+      { '<leader><f1>Sc',   function() require('terminal').send('cmd',        'clipboard', 'hide') end, mode = { 'n', 'v' }, silent = true, desc = 'send clipboard hide [cmd]' },
+      { '<leader><f2>Sc',   function() require('terminal').send('ipython',    'clipboard', 'hide') end, mode = { 'n', 'v' }, silent = true, desc = 'send clipboard hide [ipython]' },
+      { '<leader><f3>Sc',   function() require('terminal').send('bash',       'clipboard', 'hide') end, mode = { 'n', 'v' }, silent = true, desc = 'send clipboard hide [bash]' },
+      { '<leader><f4>Sc',   function() require('terminal').send('powershell', 'clipboard', 'hide') end, mode = { 'n', 'v' }, silent = true, desc = 'send clipboard hide [powershell]' },
 
     },
   },
