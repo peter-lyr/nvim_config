@@ -17,6 +17,10 @@ return {
       require('wait.asyncrun'),
       require('wait.projectroot'),
       require('wait.telescope_ui_select'),
+      {
+        name = 'sha2',
+        dir = opt .. 'sha2',
+      },
     },
     keys = {
 
@@ -232,6 +236,43 @@ return {
       { '<leader><f2>Sc',   function() require('terminal').send('ipython',    'clipboard', 'hide') end, mode = { 'n', 'v' }, silent = true, desc = 'send clipboard hide [ipython]' },
       { '<leader><f3>Sc',   function() require('terminal').send('bash',       'clipboard', 'hide') end, mode = { 'n', 'v' }, silent = true, desc = 'send clipboard hide [bash]' },
       { '<leader><f4>Sc',   function() require('terminal').send('powershell', 'clipboard', 'hide') end, mode = { 'n', 'v' }, silent = true, desc = 'send clipboard hide [powershell]' },
+
+      ------------------------
+      -- multihili.lua
+      ------------------------
+
+      -- multiline hili
+
+      { '*',                function() require('multihili').search() end,          mode = { 'v' },      silent = true, desc = 'multiline search' },
+
+      -- windo cursorword
+
+      { '<a-8>',            function() require('multihili').windocursorword() end, mode = { 'n' },      silent = true, desc = 'windo cursor word' },
+
+      -- cword hili
+
+      { '<c-8>',            function() require('multihili').hili_n() end,          mode = { 'n', },     silent = true, desc = 'hili cword' },
+      { '<c-8>',            function() require('multihili').hili_v() end,          mode = { 'v', },     silent = true, desc = 'hili cword' },
+
+      -- cword hili rm
+
+      { '<c-s-8>',          function() require('multihili').rmhili_v() end,        mode = { 'v', },     silent = true, desc = 'rm hili v' },
+      { '<c-s-8>',          function() require('multihili').rmhili_n() end,        mode = { 'n', },     silent = true, desc = 'rm hili n' },
+
+      -- select hili
+
+      { '<c-7>',            function() require('multihili').selnexthili() end,     mode = { 'n', 'v', }, silent = true, desc = 'sel next hili' },
+      { '<c-s-7>',          function() require('multihili').selprevhili() end,     mode = { 'n', 'v', }, silent = true, desc = 'sel prev hili' },
+
+      -- go hili
+
+      { '<c-n>',            function() require('multihili').prevhili() end,        mode = { 'n', 'v', }, silent = true, desc = 'go prev hili' },
+      { '<c-m>',            function() require('multihili').nexthili() end,        mode = { 'n', 'v', }, silent = true, desc = 'go next hili' },
+
+      -- go cur hili
+
+      { '<c-s-n>',          function() require('multihili').prevcurhili() end,     mode = { 'n', 'v', }, silent = true, desc = 'go cur prev hili' },
+      { '<c-s-m>',          function() require('multihili').nextcurhili() end,     mode = { 'n', 'v', }, silent = true, desc = 'go cur next hili' },
 
     },
   },
