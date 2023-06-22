@@ -247,6 +247,7 @@ return {
 
       -- windo cursorword
 
+      { '<a-7>',            function() require('multihili').cursorword() end,      mode = { 'n' },      silent = true, desc = 'cursor word' },
       { '<a-8>',            function() require('multihili').windocursorword() end, mode = { 'n' },      silent = true, desc = 'windo cursor word' },
 
       -- cword hili

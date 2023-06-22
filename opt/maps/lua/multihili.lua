@@ -270,26 +270,40 @@ M.selprevhili = function()
   end
 end
 
+local hicurword = 1
 local windo = 0
 
 vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI', }, {
   callback = function()
-    local word = vim.fn.expand('<cword>')
-    local winid = vim.fn.win_getid()
-    if windo == 1 then
-      if string.match(word, "^[%w_一-龥]+$") then
-        vim.cmd(string.format([[keepj windo match CursorWord /\V\<%s\>/]], word))
+    local just_hicword = nil
+    local word
+    if hicurword == 1 then
+      word = vim.fn.expand('<cword>')
+      if windo == 1 then
+        if vim.fn.getbufvar(vim.fn.bufnr(), '&buftype') ~= 'nofile' then
+          local winid = vim.fn.win_getid()
+          if string.match(word, "^[%w_一-龥]+$") then
+            vim.cmd(string.format([[keepj windo match CursorWord /\V\<%s\>/]], word))
+          else
+            vim.cmd([[keepj windo match CursorWord //]])
+          end
+          vim.fn.win_gotoid(winid)
+        else
+          just_hicword = 1
+        end
       else
-        vim.cmd([[keepj windo match CursorWord //]])
+        just_hicword = 1
       end
     else
+      vim.cmd([[match CursorWord //]])
+    end
+    if just_hicword then
       if string.match(word, "^[%w_一-龥]+$") then
         vim.cmd(string.format([[match CursorWord /\V\<%s\>/]], word))
       else
         vim.cmd([[match CursorWord //]])
       end
     end
-    vim.fn.win_gotoid(winid)
   end,
 })
 
@@ -309,10 +323,20 @@ vim.api.nvim_create_autocmd({ 'ColorScheme', }, {
 M.windocursorword = function()
   if windo == 1 then
     windo = 0
-    print('match')
+    print('do not windo match')
   else
     windo = 1
     print('windo match')
+  end
+end
+
+M.cursorword = function()
+  if hicurword == 1 then
+    hicurword = 0
+    print('do not cursorword')
+  else
+    hicurword = 1
+    print('cursorword')
   end
 end
 
