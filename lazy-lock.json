@@ -4,6 +4,7 @@
   "indent-blankline.nvim": { "branch": "master", "commit": "7075d7861f7a6bbf0de0298c83f8a13195e6ec01" },
   "lazygit.nvim": { "branch": "main", "commit": "3466e48439601445e26c65635421625886f2d0c0" },
   "lualine.nvim": { "branch": "filterbuffers", "commit": "c2d24e9725622a8ee5dfee94509ef5ea3d23bbd0" },
+  "mini.indentscope": { "branch": "main", "commit": "f60e9b51a6214c73a170ffc5445ce91560981031" },
   "neo-tree.nvim": { "branch": "v2.x", "commit": "d883632bf8f92f1d5abea4a9c28fb2f90aa795aa" },
   "nerdcommenter": { "branch": "master", "commit": "b0b09ea46c9f0509556257bd8b838b40f493d6a0" },
   "noice.nvim": { "branch": "main", "commit": "a3318600bc1eba2cca84e879048c1ab8d4a0262d" },
