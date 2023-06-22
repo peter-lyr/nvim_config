@@ -117,9 +117,9 @@ add(t, {
 --   'standard',
 -- })
 
-add(t, {
-  'test',
-})
+-- add(t, {
+--   'test',
+-- })
 
 -- add(t, {
 --   'map.txt',
