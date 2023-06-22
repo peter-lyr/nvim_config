@@ -139,4 +139,9 @@ M.init = function()
   end)
 end
 
+M.addall = function()
+  asyncrunprepare()
+  vim.cmd('AsyncRun git add -A')
+end
+
 return M
