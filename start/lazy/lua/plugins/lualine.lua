@@ -19,6 +19,9 @@ return {
             -- minimum_width = 20,
             top_down = false,
           },
+          config = function()
+            vim.keymap.set({ 'n', }, '<esc>', function() require("notify").dismiss() end, { desc = 'dismiss notification' })
+          end,
         }
       },
     }
