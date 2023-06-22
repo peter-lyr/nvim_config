@@ -219,7 +219,15 @@ M.open = function()
 end
 
 M.close = function()
-  vim.cmd([[call feedkeys("\<space>qq\<space>\<tab>q")]])
+  local filesystem_winid = find_neotree_winid('filesystem')
+  if filesystem_winid and vim.api.nvim_win_get_width(filesystem_winid) > 1 then
+    vim.cmd([[call feedkeys("\<space>qq")]])
+  end
+  local buffers_winid = find_neotree_winid('buffers')
+  local git_status_winid = find_neotree_winid('git_status')
+  if buffers_winid and vim.api.nvim_win_get_width(buffers_winid) > 1 or git_status_winid and vim.api.nvim_win_get_width(git_status_winid) > 1 then
+    vim.cmd([[call feedkeys("\<space>\<tab>q")]])
+  end
 end
 
 return M
