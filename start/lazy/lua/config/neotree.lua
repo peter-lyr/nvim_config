@@ -7,8 +7,10 @@ local manager = require("neo-tree.sources.manager")
 local refresh = utils.wrap(manager.refresh, "buffers")
 
 require('neo-tree').setup({
+  open_files_do_not_replace_types = { "qf", },
   window = {
     mappings = {
+      ["<space>"] = "none",
       ["P"] = 'noop',
       ["s"] = "noop",
       ["S"] = "noop",
