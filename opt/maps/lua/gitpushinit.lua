@@ -22,6 +22,24 @@ M.addcommitpush = function()
   end
 end
 
+M.commitpush = function()
+  local result = vim.fn.systemlist({ "git", "diff", "--staged", "--stat" })
+  if #result > 0 then
+    vim.notify("git diff --staged --stat" .. '\n' .. vim.loop.cwd() .. '\n' .. table.concat(result, '\n'))
+    local input = vim.fn.input('commit info (commit and push): ')
+    if #input > 0 then
+      vim.loop.new_timer():start(10, 0, function()
+        vim.schedule(function()
+          asyncrunprepare()
+          vim.cmd(string.format('AsyncRun git commit -m "%s" && git push', input))
+        end)
+      end)
+    end
+  else
+    vim.notify('no staged')
+  end
+end
+
 M.commit = function()
   local result = vim.fn.systemlist({ "git", "diff", "--staged", "--stat" })
   if #result > 0 then
