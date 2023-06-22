@@ -1,5 +1,6 @@
 return {
   'anuvyklack/pretty-fold.nvim',
+  lazy = true,
   keys = {
     'zm',
     'zM',
