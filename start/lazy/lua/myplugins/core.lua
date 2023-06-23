@@ -157,6 +157,8 @@ return {
       { '<c-->',              function() require('fontsize').sizedown() end,                 mode = { 'n', 'v' }, silent = true, desc = 'fontsize down' },
       { '<c-0><c-0>',         function() require('fontsize').sizenormal() end,               mode = { 'n', 'v' }, silent = true, desc = 'fontsize normal' },
       { '<c-0>_',             function() require('fontsize').sizemin() end,                  mode = { 'n', 'v' }, silent = true, desc = 'fontsize min' },
+      { '<c-0><c-->',         function() require('fontsize').frameless() end,                mode = { 'n', 'v' }, silent = true, desc = 'frameless' },
+      { '<c-0><c-=>',         function() require('fontsize').fullscreen() end,               mode = { 'n', 'v' }, silent = true, desc = 'fullscreen' },
 
       ------------------------
       -- gitpushinit.lua

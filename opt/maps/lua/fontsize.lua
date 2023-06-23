@@ -41,4 +41,20 @@ M.sizemin = function()
   print('GuiFont! ' .. fontname .. 1)
 end
 
+M.frameless = function()
+  if vim.g.GuiWindowFrameless == 0 then
+    vim.fn['GuiWindowFrameless'](1)
+  else
+    vim.fn['GuiWindowFrameless'](0)
+  end
+end
+
+M.fullscreen = function()
+  if vim.g.GuiWindowFullScreen == 0 then
+    vim.fn['GuiWindowFullScreen'](1)
+  else
+    vim.fn['GuiWindowFullScreen'](0)
+  end
+end
+
 return M
