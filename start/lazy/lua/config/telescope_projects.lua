@@ -1,6 +1,6 @@
 local M = {}
 
-local datapath = require("plenary.path"):new(vim.fn.expand("$VIMRUNTIME")):joinpath("my-neovim-data")
+local datapath = require("plenary.path"):new(vim.fn.expand("$VIMRUNTIME")):joinpath("pack", "data")
 
 if not datapath:exists() then
   vim.fn.mkdir(datapath.filename)
