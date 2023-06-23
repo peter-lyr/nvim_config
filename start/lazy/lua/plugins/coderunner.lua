@@ -9,9 +9,10 @@ return {
       filetype = {
         python = 'python -u',
         c = 'cd $dir && ' ..
+          'taskkill /f /im $fileNameWithoutExt.exe & ' ..
           'gcc $fileName -Wall -s -ffunction-sections -fdata-sections -Wl,--gc-sections -O3 -o $fileNameWithoutExt && ' ..
-          'strip -s $dir/$fileNameWithoutExt.exe && ' ..
-          'upx --best $dir/$fileNameWithoutExt.exe && ' .. '$dir/$fileNameWithoutExt'
+          'strip -s $dir\\$fileNameWithoutExt.exe && ' ..
+          'upx --best $dir\\$fileNameWithoutExt.exe && ' .. '$dir\\$fileNameWithoutExt'
       },
     })
   end,
