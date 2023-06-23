@@ -150,7 +150,7 @@ require('lualine').setup({
     },
   },
   tabline = {
-    lualine_a = {
+    lualine_c = {
       {
         'buffers',
         mode = 2,
@@ -172,7 +172,19 @@ require('lualine').setup({
           ['neo-tree'] = 'Neo Tree',
           ['lazy'] = 'Lazy',
         },
-        use_mode_colors = true,
+        use_mode_colors = false,
+        buffers_color = {
+          active = function()
+            local path = vim.fn.bufname()
+            local ext = string.match(path, "%.([^.]+)$")
+            local ic, color = require("nvim-web-devicons").get_icon_color(path.filename, ext)
+            if ic then
+              return { fg = color, gui = 'bold' }
+            end
+            return { fg = 'white', gui = 'bold' }
+          end,
+          inactive = { fg = 'gray' },
+        },
         show_buffers = function()
           local buffers = {}
           for _, b in ipairs(vim.api.nvim_list_bufs()) do
@@ -187,14 +199,62 @@ require('lualine').setup({
         end,
       },
     },
-    lualine_z = {
-       {
+    lualine_x = {
+      {
         'tabs',
         max_length = function()
           return vim.o.columns
         end,
         use_mode_colors = true,
         mode = 2,
+        tabs_color = {
+          active = function()
+            local path = vim.fn.bufname()
+            local ext = string.match(path, "%.([^.]+)$")
+            local ic, color = require("nvim-web-devicons").get_icon_color(path.filename, ext)
+            if ic then
+              return { fg = color, gui = 'bold' }
+            end
+            return { fg = 'white', gui = 'bold' }
+          end,
+          inactive = { fg = 'gray' },
+        },
+      },
+    },
+  },
+  winbar = {
+    lualine_c = {
+      {
+        function()
+          return filename('lualine_fname_tail_active')
+        end,
+        cond = function()
+          return #vim.fn.expand('%:~:.') > 0
+        end,
+      },
+    },
+    lualine_x = {
+      {
+        "filetype",
+        icons_enabled = false,
+      },
+    },
+  },
+  inactive_winbar = {
+    lualine_c = {
+      {
+        function()
+          return filename('lualine_fname_tail_active')
+        end,
+        cond = function()
+          return #vim.fn.expand('%:~:.') > 0
+        end,
+      },
+    },
+    lualine_x = {
+      {
+        "filetype",
+        icons_enabled = false,
       },
     },
   }
@@ -368,3 +428,5 @@ vim.keymap.set({ 'n', 'v', }, '<a-f7>', function()
   end
   vim.cmd(curtabnr .. 'tabnext')
 end, { desc = 'restore hidden tabs' })
+
+vim.opt.laststatus = 3

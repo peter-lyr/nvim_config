@@ -1,21 +1,27 @@
 local M = {}
 
 M.max_en = 1
+M.winid = 0
 
 M.check = function()
   if M.max_en then
     if vim.opt.winfixheight:get() == false then
       vim.cmd('wincmd _')
+      if M.winid ~= vim.fn.win_getid() then
+        vim.api.nvim_win_set_height(M.winid, 2)
+      end
     end
   end
 end
 
 M.k = function()
+  M.winid = vim.fn.win_getid()
   vim.cmd('wincmd k')
   M.check()
 end
 
 M.j = function()
+  M.winid = vim.fn.win_getid()
   vim.cmd('wincmd j')
   M.check()
 end
