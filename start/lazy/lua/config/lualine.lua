@@ -2,7 +2,9 @@ local filename = function(hl_group)
   local fname = string.gsub(vim.fn.expand('%:~:.'), '\\', '/')
   local ext = vim.fn.fnamemodify(fname, ":e")
   local head = vim.fn.fnamemodify(fname, ":h")
+  head = string.gsub(head, '%%', '%%%%')
   local tail = vim.fn.fnamemodify(fname, ":t")
+  tail = string.gsub(tail, '%%', '%%%%')
   local icons = require('nvim-web-devicons').get_icons()[ext]
   local opt = { fg = icons and icons['color'] or '#ffffff', bold = true }
   vim.api.nvim_set_hl(0, hl_group, opt)
