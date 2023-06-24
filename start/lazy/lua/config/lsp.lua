@@ -127,7 +127,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
     vim.keymap.set({ 'n', 'v' }, '<leader>fs', vim.lsp.buf.signature_help, opts)
     vim.keymap.set({ 'n', 'v' }, '<leader>fe', vim.lsp.buf.references, opts)
     vim.keymap.set({ 'n', 'v' }, '<leader><leader>fd', vim.lsp.buf.type_definition, opts)
-    vim.keymap.set({ 'n', 'v' }, '<leader>fn', vim.lsp.buf.rename, opts)
+    vim.keymap.set({ 'n', 'v' }, '<leader>fn', function() vim.fn.feedkeys(":IncRename " .. vim.fn.expand("<cword>")) end, opts)
     vim.keymap.set({ 'n', 'v' }, '<leader>ff', function() vim.lsp.buf.format { async = true } end, opts)
     vim.keymap.set({ 'n', 'v' }, '<leader>fc', vim.lsp.buf.code_action, opts)
   end,

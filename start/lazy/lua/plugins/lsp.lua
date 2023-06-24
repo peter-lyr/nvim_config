@@ -23,6 +23,12 @@ return {
     },
     require('plugins.cmp'),
     'folke/neodev.nvim',
+    {
+        "smjonas/inc-rename.nvim",
+        config = function()
+          require("inc_rename").setup()
+        end,
+    },
   },
   ft = {
     'c', 'cpp',
