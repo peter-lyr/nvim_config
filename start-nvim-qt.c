@@ -43,19 +43,23 @@ int main(int argc, char *argv[])
 
     // get localappdata dir
 
-    char localappdata[828];
-    sprintf(localappdata, "%s\\%s", nvimwin64, "localappdata");
+    char *pack = get_parent_dir(argv[0], 2);
+    // printf("pack: %s\n", pack);
+
+    char localappdata[256];
+    // sprintf(localappdata, "%s\\%s", nvimwin64, "localappdata");
+    sprintf(localappdata, "%s\\%s", pack, "localappdata");
     // printf("localappdata: %s\n", localappdata);
 
     // get nvim-qt.exe
 
-    char nvimqtexe[828];
+    char nvimqtexe[256];
     sprintf(nvimqtexe, "%s\\%s", nvimwin64, "bin\\nvim-qt.exe");
     // printf("nvimqtexe: %s\n", nvimqtexe);
 
     // get cmd
 
-    char cmd[828];
+    char cmd[256];
     sprintf(cmd, "set LOCALAPPDATA=%s&& start /d %s /b %s", localappdata, config, nvimqtexe);
 
     // run cmd to open nvim-qt.exe
