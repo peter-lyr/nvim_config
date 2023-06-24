@@ -38,6 +38,11 @@ return {
     { '<leader>gh',         ':<c-u>Telescope git_branches<cr>',                                                                                mode = { 'n', 'v', }, silent = true, desc = 'Telescope git_branches', },
     { '<leader>gj',         ':<c-u>Telescope git_status<cr>',                                                                                  mode = { 'n', 'v', }, silent = true, desc = 'Telescope git_status', },
 
+    -- lsp
+
+    { '<leader>fl',         ':<c-u>Telescope lsp_document_symbols<cr>',                                                                        mode = { 'n', 'v', }, silent = true, desc = 'Telescope lsp_document_symbols', },
+    { '<leader>fr',         ':<c-u>Telescope lsp_references<cr>',                                                                              mode = { 'n', 'v', }, silent = true, desc = 'Telescope lsp_references', },
+
   },
   dependencies = {
     require('wait.plenary'),
