@@ -191,7 +191,6 @@ M.git_status_buffers_open = function()
   if not git_status_winid and not buffers_winid then
     vim.cmd('Neotree git_status focus reveal_force_cwd right')
   end
-  local fname = vim.api.nvim_buf_get_name(0)
   if vim.bo.ft == 'neo-tree' then
     if git_status_winid then
       vim.cmd('Neotree buffers focus reveal_force_cwd right')
