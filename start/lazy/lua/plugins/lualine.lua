@@ -8,6 +8,7 @@ return {
     require('wait.web-devicons'),
     require('wait.projectroot'),
     require('wait.noice'),
+    require('wait.plenary'),
     {
       "SmiteshP/nvim-navic",
       lazy = true,

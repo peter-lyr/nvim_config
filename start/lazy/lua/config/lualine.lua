@@ -190,10 +190,12 @@ require('lualine').setup({
         show_buffers = function()
           local buffers = {}
           for _, b in ipairs(vim.api.nvim_list_bufs()) do
-            if vim.fn.buflisted(b) ~= 0 and vim.api.nvim_buf_get_option(b, 'buftype') ~= 'quickfix' or vim.api.nvim_buf_get_option(b, 'buftype') == 'help' then
-              local fname = vim.api.nvim_buf_get_name(b)
-              if #curprojectroot == 0 or #fname > 0 and vim.fn.tolower(vim.fn['ProjectRootGet'](fname)) == curprojectroot then
-                buffers[#buffers+1] = b
+            local fname = vim.api.nvim_buf_get_name(b)
+            if require('plenary.path').new(fname):exists() then
+              if vim.fn.buflisted(b) ~= 0 and vim.api.nvim_buf_get_option(b, 'buftype') ~= 'quickfix' or vim.api.nvim_buf_get_option(b, 'buftype') == 'help' then
+                if #curprojectroot == 0 or #fname > 0 and vim.fn.tolower(vim.fn['ProjectRootGet'](fname)) == curprojectroot then
+                  buffers[#buffers+1] = b
+                end
               end
             end
           end
