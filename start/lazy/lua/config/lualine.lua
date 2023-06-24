@@ -232,6 +232,10 @@ require('lualine').setup({
           return #vim.fn.expand('%:~:.') > 0
         end,
       },
+      {
+        function() return require("nvim-navic").get_location() end,
+        cond = function() return package.loaded["nvim-navic"] and require("nvim-navic").is_available() end,
+      },
     },
     lualine_x = {
       {
