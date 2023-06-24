@@ -1,4 +1,4 @@
-local opt = vim.fn.expand('$VIMRUNTIME') .. '\\pack\\testnvim2\\opt\\'
+local opt = vim.fn.expand('$VIMRUNTIME') .. '\\pack\\nvim_config\\opt\\'
 
 -- %s/.*{\s*\([^ ]\+\) *\(.\+,\) *\(mode = {[ 'nvtic,]\+},\) *\(.\+\) *},/\=printf("      { %-30s %-86s %-20s %s },", submatch(1), submatch(2), submatch(3), substitute(trim(submatch(4)), ' \+', ' ' ,'g'))
 
