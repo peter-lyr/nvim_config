@@ -15,7 +15,13 @@ local filename = function(hl_group)
   end
 end
 
-local curprojectroot = vim.fn.tolower(vim.loop.cwd())
+local function rep(content)
+  content = vim.fn.tolower(content)
+  content = string.gsub(content, '/', '\\')
+  return content
+end
+
+local curprojectroot = rep(vim.loop.cwd())
 
 local function get_projectroot(projectroot)
   local temp = vim.fn.fnamemodify(projectroot, ':t')
@@ -27,7 +33,7 @@ end
 
 vim.api.nvim_create_autocmd({ "BufEnter", }, {
   callback = function()
-    curprojectroot = vim.fn.tolower(vim.fn['ProjectRootGet'](vim.api.nvim_buf_get_name(0)))
+    curprojectroot = rep(vim.fn['ProjectRootGet'](vim.api.nvim_buf_get_name(0)))
     if #curprojectroot > 0 then
       vim.fn['LualineRenameTab'](get_projectroot(curprojectroot))
     end
@@ -193,7 +199,7 @@ require('lualine').setup({
             local fname = vim.api.nvim_buf_get_name(b)
             if require('plenary.path').new(fname):exists() then
               if vim.fn.buflisted(b) ~= 0 and vim.api.nvim_buf_get_option(b, 'buftype') ~= 'quickfix' or vim.api.nvim_buf_get_option(b, 'buftype') == 'help' then
-                if #curprojectroot == 0 or #fname > 0 and vim.fn.tolower(vim.fn['ProjectRootGet'](fname)) == curprojectroot then
+                if #curprojectroot == 0 or #fname > 0 and rep(vim.fn['ProjectRootGet'](fname)) == curprojectroot then
                   buffers[#buffers+1] = b
                 end
               end
