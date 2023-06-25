@@ -2,7 +2,7 @@ return {
   'stevearc/aerial.nvim',
   event = { 'LspAttach', },
   keys = {
-    { '<leader>,', ':<c-u>AerialToggle float<cr>', mode = { 'n', 'v', }, silent = true, desc = 'AerialToggle float' },
+    { '<leader>,', ':<c-u>AerialToggle left<cr>', mode = { 'n', 'v', }, silent = true, desc = 'AerialToggle left' },
     { ']a', ':<c-u>AerialNext<cr>', mode = { 'n', 'v', }, silent = true, desc = 'AerialNext' },
     { '[a', ':<c-u>AerialPrev<cr>', mode = { 'n', 'v', }, silent = true, desc = 'AerialPrev' },
   },
