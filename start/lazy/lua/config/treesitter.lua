@@ -38,9 +38,9 @@ require("nvim-treesitter.configs").setup({
     extended_mode = true,
     max_file_lines = nil,
   },
-  -- matchup = {
-  --   enable = true,
-  -- },
+  matchup = {
+    enable = true,
+  },
 })
 
 require"rainbow.internal".defhl()
@@ -49,4 +49,4 @@ require("treesitter-context").setup({
   max_lines = 0,
 })
 
--- require("match-up").setup({})
+require("match-up").setup({})
