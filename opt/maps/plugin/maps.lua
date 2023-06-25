@@ -1,31 +1,29 @@
 -- %s/vim.keymap.set(\({[ 'nvtic,]\+},\)\s\+\([^ ]\+,\)\s\+\(.\+\))/\=printf("vim.keymap.set(%-18s %-10s %s)", submatch(1), submatch(2), submatch(3))
 
--- alt_num
-
--- vim.keymap.set({ 'n', },          '<alt-1>', '<nop>', { silent = true, desc = 'nop' })
--- vim.keymap.set({ 'n', },          '<alt-2>', '<nop>', { silent = true, desc = 'nop' })
--- vim.keymap.set({ 'n', },          '<alt-3>', '<nop>', { silent = true, desc = 'nop' })
--- vim.keymap.set({ 'n', },          '<alt-4>', '<nop>', { silent = true, desc = 'nop' })
--- vim.keymap.set({ 'n', },          '<alt-5>', '<nop>', { silent = true, desc = 'nop' })
--- vim.keymap.set({ 'n', },          '<alt-6>', '<nop>', { silent = true, desc = 'nop' })
--- vim.keymap.set({ 'n', },          '<alt-7>', '<nop>', { silent = true, desc = 'nop' })
--- vim.keymap.set({ 'n', },          '<alt-8>', '<nop>', { silent = true, desc = 'nop' })
--- vim.keymap.set({ 'n', },          '<alt-9>', '<nop>', { silent = true, desc = 'nop' })
--- vim.keymap.set({ 'n', },          '<alt-0>', '<nop>', { silent = true, desc = 'nop' })
-
 -- copy_paste
 
-vim.keymap.set({ 'c', 'i' },      '<a-w>',   '<c-r>=g:word<cr>', { desc = 'paste g:word' })
+vim.fn.setreg('w', 'reg w empty')
+
+vim.keymap.set({ 'c', 'i' },      '<a-w>',   '<c-r>w', { desc = 'paste <cword>' })
+vim.keymap.set({ 'c', 'i' },      'qw',      '<c-r>w', { desc = 'paste <cword>' })
+
 vim.keymap.set({ 'c', 'i' },      '<a-v>',   '<c-r>"', { desc = 'paste "' })
+vim.keymap.set({ 'c', 'i' },      'qv',      '<c-r>"', { desc = 'paste "' })
+
 vim.keymap.set({ 't', },          '<a-v>',   '<c-\\><c-n>pi', { desc = 'paste "' })
+vim.keymap.set({ 't', },          'qv',      '<c-\\><c-n>pi', { desc = 'paste "' })
+
 vim.keymap.set({ 'c', 'i' },      '<a-=>',   '<c-r>+', { desc = 'paste +' })
+vim.keymap.set({ 'c', 'i' },      'q=',      '<c-r>+', { desc = 'paste +' })
+
 vim.keymap.set({ 't', },          '<a-=>',   '<c-\\><c-n>"+pi', { desc = 'paste +' })
+vim.keymap.set({ 't', },          'q=',      '<c-\\><c-n>"+pi', { desc = 'paste +' })
 
 vim.api.nvim_create_autocmd({ "BufLeave", "CmdlineEnter", }, {
   callback = function()
     local word = vim.fn.expand('<cword>')
     if #word > 0 then
-      vim.g.word = word
+      vim.fn.setreg('w', word)
     end
   end,
 })
@@ -33,7 +31,9 @@ vim.api.nvim_create_autocmd({ "BufLeave", "CmdlineEnter", }, {
 -- cursor
 
 vim.keymap.set({ 't', 'c', 'i' }, '<a-k>',   '<UP>', { desc = 'up' })
+vim.keymap.set({ 't', 'c', 'i' }, 'qk',      '<UP>', { desc = 'up' })
 vim.keymap.set({ 't', 'c', 'i' }, '<a-j>',   '<DOWN>', { desc = 'down' })
+vim.keymap.set({ 't', 'c', 'i' }, 'qj',      '<DOWN>', { desc = 'down' })
 vim.keymap.set({ 't', 'c', 'i' }, '<a-s-k>', '<UP><UP><UP><UP><UP>', { desc = '5 up' })
 vim.keymap.set({ 't', 'c', 'i' }, '<a-s-j>', '<DOWN><DOWN><DOWN><DOWN><DOWN>', { desc = '5 down' })
 vim.keymap.set({ 't', 'c', 'i' }, '<a-i>',   '<HOME>', { desc = 'home' })

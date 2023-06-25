@@ -18,12 +18,13 @@ end
 
 local root = pack .. "lazy\\plugins"
 local readme = pack .. "lazy\\readme"
-local lockfile = pack .. "testnvim2\\lazy-lock.json"
+local lockfile = pack .. "nvim_config\\lazy-lock.json"
 
 local lazy = require('lazy')
 
 lazy.setup({
   spec = {
+    { import = 'wait' },
     { import = 'plugins' },
     { import = 'myplugins' },
   },

@@ -1,1 +1,1 @@
-# testnvim2
+# nvim_config

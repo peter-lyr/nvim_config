@@ -1,20 +1,25 @@
--- %s/.*{\s*\([^ ]\+\) *\(.\+,\) *\(mode = {[ 'nvtic,]\+},\) *\(.\+\) *},/\=printf("      { %-13s %-72s %-20s %s },", submatch(1), submatch(2), submatch(3), substitute(trim(submatch(4)), ' \+', ' ' ,'g'))
 return {
   'nvim-neo-tree/neo-tree.nvim',
   lazy = true,
   branch = 'v2.x',
+  event = { "BufReadPost", "BufNew", "BufNewFile",  },
   cmd = {
     'Neotree',
   },
   keys = {
-    { '<leader>wf', '<cmd>Neotree filesystem toggle reveal_force_cwd<cr>',                   mode = { 'n', 'v' }, desc = 'NeoTree' },
-    { '<leader>wg', '<cmd>Neotree git_status toggle reveal_force_cwd<cr>',                   mode = { 'n', 'v' }, desc = 'NeoTree' },
+    { '<leader>q',         function() require('config.neotree').filesystem_open() end,         mode = { 'n', 'v' }, desc = 'NeoTree open filesystem' },
+    { '<leader><leader>q', function() require('config.neotree').filesystem_open_reveal() end,  mode = { 'n', 'v' }, desc = 'NeoTree open filesystem' },
+    { '<leader><tab>',     function() require('config.neotree').git_status_buffers_open() end, mode = { 'n', 'v' }, desc = 'NeoTree git_status buffers toggle' },
+
+    { '<rightmouse>',      function() require('config.neotree').open() end,                    mode = { 'n', 'v' }, desc = 'NeoTree open' },
+    { '<middlemouse>',     function() require('config.neotree').close() end,                   mode = { 'n', 'v' }, desc = 'NeoTree close' },
   },
   dependencies = {
-    require('plugins.plenary'),
-    require('plugins.web-devicons'),
+    require('wait.plenary'),
+    require('wait.web-devicons'),
     'MunifTanjim/nui.nvim',
     's1n7ax/nvim-window-picker',
+    require('wait.bbye'),
   },
   config = function()
     require('config.neotree')
