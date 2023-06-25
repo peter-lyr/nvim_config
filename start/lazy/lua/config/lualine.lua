@@ -241,6 +241,7 @@ require('lualine').setup({
         cond = function()
           return #vim.fn.expand('%:~:.') > 0
         end,
+        color = { fg = '#834567', }
       },
       {
         function() return require("nvim-navic").get_location() end,
