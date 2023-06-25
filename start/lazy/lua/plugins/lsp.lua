@@ -2,6 +2,10 @@ return {
   'neovim/nvim-lspconfig',
   lazy = true,
   event = { "BufReadPost", "BufNewFile" },
+  cmd = {
+    'LspInfo', 'LspInstall', 'LspLog', 'LspRestart', 'LspStart', 'LspStop',
+    'Mason',
+  },
   dependencies = {
     {
       'williamboman/mason.nvim',
