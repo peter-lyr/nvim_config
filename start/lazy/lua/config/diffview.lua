@@ -6,7 +6,9 @@ local close_allowed = nil
 local close_force = nil
 local close_print_en = 1
 
-local function close_allow_timer_do()
+local M = {}
+
+M.close_allow_timer_do = function()
   close_allowed = nil
   close_allow_timeout = 2000
   if close_allow_timer then
@@ -33,17 +35,17 @@ local function close_allow_timer_do()
   end
 end
 
-local function diffviewfilehistory()
+M.diffviewfilehistory = function()
   vim.cmd('DiffviewFileHistory')
-  close_allow_timer_do()
+  M.close_allow_timer_do()
 end
 
-local function diffviewopen()
+M.diffviewopen = function()
   vim.cmd('DiffviewOpen -u')
-  close_allow_timer_do()
+  M.close_allow_timer_do()
 end
 
-local function diffviewclose()
+M.diffviewclose = function()
   if close_allowed then
     vim.cmd('DiffviewClose')
   else
@@ -53,7 +55,7 @@ local function diffviewclose()
   end
 end
 
-local function diffviewcloseforce()
+M.diffviewcloseforce = function()
   if close_allowed then
     vim.cmd('DiffviewClose')
   else
@@ -64,12 +66,4 @@ local function diffviewcloseforce()
   end
 end
 
-vim.keymap.set({ 'n', 'v' }, '<leader>gi', diffviewfilehistory, { silent = true, desc = 'diffview filehistory' })
-vim.keymap.set({ 'n', 'v' }, '<leader>go', diffviewopen, { silent = true, desc = 'diffview open' })
-vim.keymap.set({ 'n', 'v' }, '<leader>gq', diffviewclose, { silent = true, desc = 'diffview close' })
-vim.keymap.set({ 'n', 'v' }, '<leader>gQ', diffviewcloseforce, { silent = true, desc = 'diffview close force' })
-
-vim.keymap.set({ 'n', 'v' }, '<leader>ge', ':<c-u>DiffviewRefresh<cr>', { silent = true, desc = 'DiffviewRefresh' })
-vim.keymap.set({ 'n', 'v' }, '<leader>gl', ':<c-u>DiffviewToggleFiles<cr>', { silent = true, desc = 'DiffviewToggleFiles' })
-
-vim.keymap.set({ 'n', 'v' }, '<leader>xt', ':<c-u>tabclose<cr>', { silent = true, desc = 'tabclose' })
+return M

@@ -1,5 +1,3 @@
--- %s/.*{\s*\([^ ]\+\) *\(.\+,\) *\(mode = {[ 'nvtic,]\+},\) *\(desc = ['"][^'"]\+['"]\) *},/\=printf("    { %-21s %-115s %-21s %s },", submatch(1), submatch(2), submatch(3), submatch(4))
-
 return {
   'nvim-telescope/telescope.nvim',
   tag = '0.1.1',
