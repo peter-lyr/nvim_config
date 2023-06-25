@@ -17,10 +17,7 @@ return {
       require('wait.asyncrun'),
       require('wait.projectroot'),
       require('wait.telescope_ui_select'),
-      {
-        name = 'sha2',
-        dir = opt .. 'sha2',
-      },
+      'peter-lyr/sha2',
     },
     keys = {
 
