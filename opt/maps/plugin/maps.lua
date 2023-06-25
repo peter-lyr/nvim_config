@@ -1,18 +1,5 @@
 -- %s/vim.keymap.set(\({[ 'nvtic,]\+},\)\s\+\([^ ]\+,\)\s\+\(.\+\))/\=printf("vim.keymap.set(%-18s %-10s %s)", submatch(1), submatch(2), submatch(3))
 
--- alt_num
-
--- vim.keymap.set({ 'n', },          '<alt-1>', '<nop>', { silent = true, desc = 'nop' })
--- vim.keymap.set({ 'n', },          '<alt-2>', '<nop>', { silent = true, desc = 'nop' })
--- vim.keymap.set({ 'n', },          '<alt-3>', '<nop>', { silent = true, desc = 'nop' })
--- vim.keymap.set({ 'n', },          '<alt-4>', '<nop>', { silent = true, desc = 'nop' })
--- vim.keymap.set({ 'n', },          '<alt-5>', '<nop>', { silent = true, desc = 'nop' })
--- vim.keymap.set({ 'n', },          '<alt-6>', '<nop>', { silent = true, desc = 'nop' })
--- vim.keymap.set({ 'n', },          '<alt-7>', '<nop>', { silent = true, desc = 'nop' })
--- vim.keymap.set({ 'n', },          '<alt-8>', '<nop>', { silent = true, desc = 'nop' })
--- vim.keymap.set({ 'n', },          '<alt-9>', '<nop>', { silent = true, desc = 'nop' })
--- vim.keymap.set({ 'n', },          '<alt-0>', '<nop>', { silent = true, desc = 'nop' })
-
 -- copy_paste
 
 vim.fn.setreg('w', 'reg w empty')
