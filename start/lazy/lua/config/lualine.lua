@@ -209,7 +209,7 @@ require('lualine').setup({
         end,
       },
     },
-    lualine_x = {
+    lualine_y = {
       {
         'tabs',
         max_length = function()
