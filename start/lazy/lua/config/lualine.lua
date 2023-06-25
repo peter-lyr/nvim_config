@@ -191,7 +191,7 @@ require('lualine').setup({
             end
             return { fg = 'white', bg = '#234567', gui = 'bold' }
           end,
-          inactive = { fg = '#234567', bg = 'gray' },
+          inactive = { fg = '#888888', bg = '#333333' },
         },
         show_buffers = function()
           local buffers = {}
