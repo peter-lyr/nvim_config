@@ -18,8 +18,8 @@ vim.api.nvim_create_autocmd({ 'ColorScheme', }, {
 require("bqf").setup({
   auto_resize_height = true,
   preview = {
-    win_height = 360,
-    win_vheight = 360,
+    win_height = 50,
+    win_vheight = 50,
     wrap = true,
   },
 })
