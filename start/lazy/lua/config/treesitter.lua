@@ -13,7 +13,12 @@ end
 vim.opt.runtimepath:append(parser_path.filename)
 
 require("nvim-treesitter.configs").setup({
-  ensure_installed = 'all',
+  ensure_installed = {
+    'c',
+    'python',
+    'vim', 'lua',
+    'markdown', 'markdown_inline',
+  },
   sync_install = false,
   auto_install = false,
   parser_install_dir = parser_path.filename,
