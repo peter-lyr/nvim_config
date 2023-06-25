@@ -174,12 +174,22 @@ M.filesystem_open = function()
     vim.cmd('wincmd H')
     vim.api.nvim_win_set_width(0, require('neo-tree').config.window.width)
   else
-    vim.cmd('Neotree filesystem focus reveal_force_cwd reveal_file=' .. vim.api.nvim_buf_get_name(0))
+    local fname = vim.api.nvim_buf_get_name(0)
+    if #fname > 0 and require('plenary.path'):new(fname):exists() then
+      vim.cmd('Neotree filesystem focus reveal_force_cwd reveal_file=' .. fname)
+    else
+      vim.cmd('Neotree filesystem focus reveal_force_cwd')
+    end
   end
 end
 
 M.filesystem_open_reveal = function()
-  vim.cmd('Neotree filesystem focus reveal_force_cwd reveal_file=' .. vim.api.nvim_buf_get_name(0))
+  local fname = vim.api.nvim_buf_get_name(0)
+  if #fname > 0 and require('plenary.path'):new(fname):exists() then
+    vim.cmd('Neotree filesystem focus reveal_force_cwd reveal_file=' .. fname)
+  else
+    vim.cmd('Neotree filesystem focus reveal_force_cwd')
+  end
   vim.api.nvim_win_set_width(0, require('neo-tree').config.window.width)
 end
 
