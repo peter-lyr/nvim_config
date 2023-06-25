@@ -187,11 +187,11 @@ require('lualine').setup({
             local ext = string.match(path, "%.([^.]+)$")
             local ic, color = require("nvim-web-devicons").get_icon_color(path.filename, ext)
             if ic then
-              return { fg = color, gui = 'bold' }
+              return { fg = color, bg = '#234567', gui = 'bold' }
             end
-            return { fg = 'white', gui = 'bold' }
+            return { fg = 'white', bg = '#234567', gui = 'bold' }
           end,
-          inactive = { fg = 'gray' },
+          inactive = { fg = '#234567', bg = 'gray' },
         },
         show_buffers = function()
           local buffers = {}
