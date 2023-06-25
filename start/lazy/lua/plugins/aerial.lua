@@ -49,7 +49,7 @@ return {
       backends = { "lsp", },
       post_jump_cmd = [[norm zt]],
       close_automatic_events = {},
-      close_on_select = true,
+      close_on_select = false,
       float = {
         relative = 'editor',
       },
