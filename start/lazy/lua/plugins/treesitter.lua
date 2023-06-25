@@ -7,6 +7,7 @@ return {
   dependencies = {
     'nvim-treesitter/nvim-treesitter-context',
     'p00f/nvim-ts-rainbow',
+    'andymass/vim-matchup',
   },
   config = function()
     require('config.treesitter')
