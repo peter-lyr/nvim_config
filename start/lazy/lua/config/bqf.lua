@@ -38,6 +38,13 @@ M.toggle = function()
   if is_copened() then
     if vim.bo.ft == 'qf' then
       vim.cmd('wincmd p')
+      vim.loop.new_timer():start(10, 0, function()
+        vim.schedule(function()
+          if vim.bo.ft == 'neo-tree' then
+            vim.cmd('wincmd l')
+          end
+        end)
+      end)
     end
     vim.cmd('ccl')
   else
