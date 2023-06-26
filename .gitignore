@@ -4,3 +4,4 @@ saved_images
 *.exe
 *.lnk
 lazy-lock.json
+*.o
