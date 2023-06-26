@@ -33,3 +33,8 @@ upx --best %pack%nvim_config\start-nvim-qt.exe
 REM  run exe
 
 REM  %pack%nvim_config\start-nvim-qt
+
+REM  exit bat
+
+timeout /t 3
+exit
