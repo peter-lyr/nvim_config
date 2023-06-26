@@ -1,4 +1,6 @@
 #include <stdlib.h>
+#include <string.h>
+#include <stdio.h>
 
 char *get_parent_dir_do(const char *path) {
     char *parent_dir = NULL;
@@ -59,7 +61,7 @@ int main(int argc, char *argv[])
 
     // get cmd
 
-    char cmd[256];
+    char cmd[576];
     sprintf(cmd, "set LOCALAPPDATA=%s&& start /d %s /b %s", localappdata, config, nvimqtexe);
 
     // run cmd to open nvim-qt.exe
