@@ -16,5 +16,6 @@ $env:LOCALAPPDATA=$localappdata
 $nvimexe = $nvimwin64 + "\bin\nvim.exe"
 
 New-Alias -Name nvim -Value $nvimexe
+New-Alias -Name v -Value $nvimexe
 
 . $nvimexe
