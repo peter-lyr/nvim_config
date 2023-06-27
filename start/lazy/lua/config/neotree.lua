@@ -224,6 +224,7 @@ end
 
 M.open = function()
   M.filesystem_open()
+  vim.cmd('wincmd b')
   M.git_status_buffers_open()
   vim.cmd('wincmd h')
 end
