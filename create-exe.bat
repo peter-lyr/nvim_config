@@ -30,6 +30,10 @@ REM  compress exe
 strip -s %pack%nvim_config\start-nvim-qt.exe
 upx --best %pack%nvim_config\start-nvim-qt.exe
 
+REM  del obj
+
+del /f /s /q %pack%nvim_config\neovim.ico.o
+
 REM  run exe
 
 REM  %pack%nvim_config\start-nvim-qt
