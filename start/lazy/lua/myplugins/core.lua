@@ -274,6 +274,14 @@ return {
       { '<c-s-n>',          function() require('multihili').prevcurhili() end,     mode = { 'n', 'v', }, silent = true, desc = 'go cur prev hili' },
       { '<c-s-m>',          function() require('multihili').nextcurhili() end,     mode = { 'n', 'v', }, silent = true, desc = 'go cur next hili' },
 
+      ------------------------
+      -- config.lua
+      ------------------------
+
+      -- nvim_config
+
+      { '<a-s-f12>',        function() require('config').nvim_config() end,        mode = { 'n', 'v', }, silent = true, desc = 'open nvim_config' },
+
     },
   },
 }
