@@ -25,7 +25,7 @@ int main(int argc, char *argv[])
     // get cmd
 
     char cmd[576];
-    sprintf(cmd, "wt powershell -NoExit -file %s", ps1);
+    sprintf(cmd, "wt pwsh -NoExit -file %s", ps1);
 
     // run cmd to open nvim.exe in powershell
 
