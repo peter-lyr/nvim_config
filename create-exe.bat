@@ -17,6 +17,9 @@ windres -i "neovim.ico.rc" -o "neovim.ico.o"
 gcc open-with-cmd.c neovim.ico.o -Wall -s -ffunction-sections -fdata-sections -Wl,--gc-sections -O3 -o open-with-cmd
 gcc open-with-ps1.c neovim.ico.o -Wall -s -ffunction-sections -fdata-sections -Wl,--gc-sections -O3 -o open-with-ps1
 
+REM  del ico.o
+
+del /f /s /q %repo%neovim.ico.o
 
 REM  compress exe
 
