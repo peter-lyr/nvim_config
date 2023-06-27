@@ -11,7 +11,10 @@ $nvimwin64 = Split-Path -Parent $share
 $localappdata = $pack + "\localappdata"
 $env:LOCALAPPDATA=$localappdata
 
-# get nvim.exe and run
+# set alias and run nvim.exe
 
 $nvimexe = $nvimwin64 + "\bin\nvim.exe"
+
+New-Alias -Name nvim -Value $nvimexe
+
 . $nvimexe
