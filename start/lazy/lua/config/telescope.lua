@@ -129,3 +129,17 @@ add(t, {
 -- })
 
 telescope.setup(get_setup_table(t))
+
+local M = {}
+
+local p = require('plenary.path')
+
+M.boot_lua_path = p:new(vim.g.boot_lua)
+M.nvim_config_path = M.boot_lua_path:parent():parent():parent():parent()
+M.telescope_lua_path = M.nvim_config_path:joinpath('start', 'lazy', 'lua', 'config', 'telescope.lua')
+
+M.open = function()
+  vim.cmd('e ' .. M.telescope_lua_path.filename)
+end
+
+return M
