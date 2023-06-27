@@ -43,7 +43,7 @@ return {
 
     -- config
 
-    { '<leader>fO',         function() require('config.telescope').open() end,                                                                 mode = { 'n', 'v', }, silent = true, desc = 'Telescope config', },
+    { '<leader>sO',         function() require('config.telescope').open() end,                                                                 mode = { 'n', 'v', }, silent = true, desc = 'Telescope config', },
 
 
   },
