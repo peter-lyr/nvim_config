@@ -201,7 +201,9 @@ M.git_status_buffers_open = function()
   if not git_status_winid and not buffers_winid then
     vim.cmd('Neotree git_status focus reveal_force_cwd right')
   end
-  if vim.bo.ft == 'neo-tree' then
+  if vim.bo.ft == 'neo-tree' and
+    (string.match(vim.api.nvim_buf_get_name(0), 'neo%-tree buffers %[%d+%]') or
+    string.match(vim.api.nvim_buf_get_name(0), 'neo%-tree git_status %[%d+%]')) then
     if git_status_winid then
       vim.cmd('Neotree buffers focus reveal_force_cwd right')
     else
@@ -209,14 +211,24 @@ M.git_status_buffers_open = function()
     end
     vim.api.nvim_win_set_width(0, require('neo-tree').config.window.width)
   else
+    local switch = nil
     if git_status_winid then
       vim.fn.win_gotoid(git_status_winid)
+      if vim.api.nvim_win_get_width(0) == require('neo-tree').config.window.width then
+        switch = true
+      end
       vim.cmd('wincmd L')
       vim.api.nvim_win_set_width(0, require('neo-tree').config.window.width)
     else
       vim.fn.win_gotoid(buffers_winid)
+      if vim.api.nvim_win_get_width(0) == require('neo-tree').config.window.width then
+        switch = true
+      end
       vim.cmd('wincmd L')
       vim.api.nvim_win_set_width(0, require('neo-tree').config.window.width)
+    end
+    if switch then
+      M.git_status_buffers_open()
     end
   end
 end
