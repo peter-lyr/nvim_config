@@ -56,7 +56,7 @@ int main(int argc, char *argv[])
     // get nvim.exe
 
     char nvimexe[256];
-    sprintf(nvimexe, "%s\\%s", nvimwin64, "bin\\nvim.exe");
+    sprintf(nvimexe, "%s\\%s", nvimwin64, "bin\\nvim-qt.exe");
     // printf("nvimexe: %s\n", nvimexe);
 
     // get cmd
