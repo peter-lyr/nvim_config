@@ -22,8 +22,8 @@ taskkill /f /im start-nvim-qt.exe
 
 REM  build nvim-qt.exe
 
-windres -i "neovim.ico.rc" -o "neovim.ico.o"
-gcc start-nvim-qt.c neovim.ico.o -Wall -s -ffunction-sections -fdata-sections -Wl,--gc-sections -O3 -o start-nvim-qt
+windres -i "qt\neovim.ico.rc" -o "qt\neovim.ico.o"
+gcc qt\start-nvim-qt.c qt\neovim.ico.o -Wall -s -ffunction-sections -fdata-sections -Wl,--gc-sections -O3 -o start-nvim-qt
 
 REM  compress exe
 
@@ -32,7 +32,7 @@ upx --best %pack%nvim_config\start-nvim-qt.exe
 
 REM  del obj
 
-del /f /s /q %pack%nvim_config\neovim.ico.o
+del /f /s /q %pack%nvim_config\qt\neovim.ico.o
 
 REM  run exe
 
