@@ -20,7 +20,7 @@ int main(int argc, char *argv[])
 
     char ps1[256];
     char *config = get_parent_dir(argv[0]);
-    sprintf(ps1, "%s\\%s", config, "start-nvim.ps1");
+    sprintf(ps1, "%s\\cli\\%s", config, "start-nvim.ps1");
 
     // get cmd
 

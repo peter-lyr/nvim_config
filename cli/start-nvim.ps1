@@ -1,5 +1,6 @@
 $ps1 = $MyInvocation.MyCommand.Path
-$config = Split-Path -Parent $ps1
+$cli = Split-Path -Parent $ps1
+$config = Split-Path -Parent $cli
 $pack = Split-Path -Parent $config
 $runtime = Split-Path -Parent $pack
 $nvim = Split-Path -Parent $runtime
