@@ -207,6 +207,7 @@ M.git_status_buffers_open = function()
     else
       vim.cmd('Neotree git_status focus reveal_force_cwd right')
     end
+    vim.api.nvim_win_set_width(0, require('neo-tree').config.window.width)
   else
     if git_status_winid then
       vim.fn.win_gotoid(git_status_winid)
