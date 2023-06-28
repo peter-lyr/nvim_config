@@ -445,3 +445,10 @@ vim.keymap.set({ 'n', 'v', }, '<a-f7>', function()
 end, { desc = 'restore hidden tabs' })
 
 vim.opt.laststatus = 3
+
+vim.cmd([[
+  function! LualineSwitchBuffer(bufnr, mouseclicks, mousebutton, modifiers)
+    echomsg '|' .. a:bufnr .. '|' .. a:mouseclicks .. '|' .. a:mousebutton .. '|' .. a:modifiers .. '|'
+    execute ":buffer " . a:bufnr
+  endfunction
+]])
