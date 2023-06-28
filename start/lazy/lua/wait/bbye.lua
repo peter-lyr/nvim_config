@@ -1,4 +1,5 @@
 return {
-  'moll/vim-bbye',
+  -- 'moll/vim-bbye',
+  'peter-lyr/vim-bbye',
   lazy = true,
 }

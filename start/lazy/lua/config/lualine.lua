@@ -448,7 +448,11 @@ vim.opt.laststatus = 3
 
 vim.cmd([[
   function! LualineSwitchBuffer(bufnr, mouseclicks, mousebutton, modifiers)
-    echomsg '|' .. a:bufnr .. '|' .. a:mouseclicks .. '|' .. a:mousebutton .. '|' .. a:modifiers .. '|'
-    execute ":buffer " . a:bufnr
+    " echomsg '|' .. a:bufnr .. '|' .. a:mouseclicks .. '|' .. a:mousebutton .. '|' .. a:modifiers .. '|'
+    if a:mousebutton == 'm' && a:mouseclicks == 1
+      execute ":Bdelete! " . a:bufnr
+    elseif a:mousebutton == 'l' && a:mouseclicks == 1
+      execute ":buffer " . a:bufnr
+    endif
   endfunction
 ]])
