@@ -287,7 +287,9 @@ vim.api.nvim_create_autocmd({ "TabLeave", }, {
 
 local function go_tab()
   if vim.v.count == 0 then
-    vim.cmd("tabn " .. lasttabnr)
+    if lasttabnr <= vim.fn.tabpagenr('$') then
+      vim.cmd("tabn " .. lasttabnr)
+    end
     return
   end
   local tabs = vim.fn.tabpagenr('$')
