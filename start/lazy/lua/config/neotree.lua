@@ -22,6 +22,7 @@ require('neo-tree').setup({
       ["C"] = "noop",
       ["R"] = "noop",
       ["<bs>"] = "noop",
+      ["e"] = "noop",
 
       ["h"] = { "toggle_preview", config = { use_float = true } },
       ["<tab>"] = function(state)
