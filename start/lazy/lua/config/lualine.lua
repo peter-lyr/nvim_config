@@ -24,7 +24,7 @@ end
 local curprojectroot = rep(vim.loop.cwd())
 
 local function get_projectroot(projectroot)
-  local temp = vim.fn.fnamemodify(projectroot, ':t')
+  local temp = vim.fn.tolower(vim.fn.fnamemodify(projectroot, ':t'))
   if #temp >= 15 then
     return string.sub(temp, 1, 7) .. '…' .. string.sub(temp, #temp-6, #temp)
   end
@@ -444,6 +444,21 @@ vim.keymap.set({ 'n', 'v', }, '<a-f7>', function()
     end
   end
   vim.cmd(curtabnr .. 'tabnext')
+  tabs = {}
+  local tabidxs = {}
+  for k, v in ipairs(vim.api.nvim_list_tabpages()) do
+    sta, tmp = pcall(vim.api.nvim_tabpage_get_var, v, 'tabname')
+    if sta == true then
+      if vim.tbl_contains(tabs, tmp) ~= true then
+        tabs[#tabs+1] = tmp
+      else
+        tabidxs[#tabidxs+1] = k
+      end
+    end
+  end
+  for _, v in ipairs(vim.fn.reverse(tabidxs)) do
+    vim.cmd(v .. 'tabclose')
+  end
 end, { desc = 'restore hidden tabs' })
 
 vim.opt.laststatus = 3
