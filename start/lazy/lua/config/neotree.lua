@@ -194,6 +194,7 @@ M.filesystem_open = function()
       vim.cmd('Neotree filesystem focus reveal_force_cwd')
     end
   end
+  refresh()
 end
 
 M.filesystem_open_reveal = function()
@@ -204,6 +205,7 @@ M.filesystem_open_reveal = function()
     vim.cmd('Neotree filesystem focus reveal_force_cwd')
   end
   vim.api.nvim_win_set_width(0, require('neo-tree').config.window.width)
+  refresh()
 end
 
 -- buffers git_status
@@ -237,6 +239,7 @@ M.git_status_buffers_open = function()
   vim.cmd('set nowinfixheight')
   vim.cmd('wincmd _')
   vim.api.nvim_win_set_width(0, require('neo-tree').config.window.width)
+  refresh()
 end
 
 -- open close
