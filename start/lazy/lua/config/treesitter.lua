@@ -55,3 +55,21 @@ require("treesitter-context").setup({
 })
 
 require("match-up").setup({})
+
+-- solve diffview close err
+
+if package.loaded['plugins.diffview'] then
+  vim.api.nvim_create_autocmd({ "TabClosed", "TabEnter", }, {
+    callback = function()
+      vim.loop.new_timer():start(50, 0, function()
+        vim.schedule(function()
+          if string.match(vim.bo.ft, "Diffview") or vim.opt.diff:get() == true then
+            vim.cmd('TSDisable rainbow')
+          else
+            vim.cmd('TSEnable rainbow')
+          end
+        end)
+      end)
+    end,
+  })
+end

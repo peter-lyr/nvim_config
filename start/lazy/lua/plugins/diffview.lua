@@ -6,12 +6,12 @@ return {
     "paopaol/telescope-git-diffs.nvim",
     require('wait.telescope'),
     require('wait.plenary'),
+    require('plugins.treesitter'),
   },
   keys = {
     { '<leader>gi', function() require('config.diffview').diffviewfilehistory() end, mode = { 'n', 'v', }, silent = true, desc = 'diffview filehistory' },
     { '<leader>go', function() require('config.diffview').diffviewopen() end,        mode = { 'n', 'v', }, silent = true, desc = 'diffview open' },
     { '<leader>gq', function() require('config.diffview').diffviewclose() end,       mode = { 'n', 'v', }, silent = true, desc = 'diffview close' },
-    { '<leader>gQ', function() require('config.diffview').diffviewcloseforce() end,  mode = { 'n', 'v', }, silent = true, desc = 'diffview close force' },
 
     { '<leader>ge', ':<c-u>DiffviewRefresh<cr>',                                     mode = { 'n', 'v', }, silent = true, desc = 'DiffviewRefresh' },
     { '<leader>gl', ':<c-u>DiffviewToggleFiles<cr>',                                 mode = { 'n', 'v', }, silent = true, desc = 'DiffviewToggleFiles' },
