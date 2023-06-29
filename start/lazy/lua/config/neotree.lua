@@ -21,6 +21,7 @@ require('neo-tree').setup({
       ["z"] = "noop",
       ["C"] = "noop",
       ["R"] = "noop",
+      ["<bs>"] = "noop",
 
       ["h"] = { "toggle_preview", config = { use_float = true } },
       ["<tab>"] = function(state)
@@ -37,6 +38,8 @@ require('neo-tree').setup({
       ["zM"] = "close_all_nodes",
       ["<F5>"] = "refresh",
       ["<c-r>"] = "refresh",
+      ["u"] = "navigate_up",
+
       ["q"] = function()
         vim.api.nvim_win_set_width(0, 0)
         vim.cmd('wincmd l')
