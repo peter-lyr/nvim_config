@@ -32,6 +32,12 @@ return {
       { 'c-',                 '<cmd>try|cd -|ec getcwd()|catch|endtry<cr>',                            mode = { 'n', 'v' },  silent = true, desc = 'cd -' },
       { 'c=',                 '<cmd>ProjectRootCD<cr>',                                                mode = { 'n', 'v' },  silent = true, desc = 'ProjectRootCD' },
 
+      -- start explorer
+
+      { 'cs.',                '<cmd>!start %:h<cr>',                                                   mode = { 'n', 'v' },  silent = true, desc = 'start %:h' },
+      { 'csu',                '<cmd>!start ..<cr>',                                                    mode = { 'n', 'v' },  silent = true, desc = 'start ..' },
+      { 'cs=',                '<cmd>exe "!start " .. ProjectRootGet()<cr>',                            mode = { 'n', 'v' },  silent = true, desc = 'start ProjectRootGet' },
+
       -- copy_paste
 
       { '<a-y>',              '"+y',                                                                   mode = { 'n', 'v' },  silent = true, desc = '"+y' },
