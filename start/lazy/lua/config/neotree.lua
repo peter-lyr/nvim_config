@@ -168,6 +168,16 @@ local function find_neotree_winid(source_ft)
   return nil
 end
 
+local function is_neotree_source(source_ft)
+  local bufnr = vim.fn.bufnr()
+  if vim.fn.getbufvar(bufnr, '&filetype') == 'neo-tree' then
+    if string.match(vim.api.nvim_buf_get_name(bufnr), 'neo%-tree ' .. source_ft .. ' %[%d+%]') then
+      return vim.fn.bufwinid(bufnr)
+    end
+  end
+  return nil
+end
+
 -- filesystem
 
 M.filesystem_open = function()
@@ -203,46 +213,38 @@ M.git_status_buffers_open = function()
   local git_status_winid = find_neotree_winid('git_status')
   if not git_status_winid and not buffers_winid then
     vim.cmd('Neotree git_status focus reveal_force_cwd right')
-  end
-  if vim.bo.ft == 'neo-tree' and
-    (string.match(vim.api.nvim_buf_get_name(0), 'neo%-tree buffers %[%d+%]') or
-    string.match(vim.api.nvim_buf_get_name(0), 'neo%-tree git_status %[%d+%]')) then
-    if git_status_winid then
-      vim.cmd('Neotree buffers focus reveal_force_cwd right')
-    else
-      vim.cmd('Neotree git_status focus reveal_force_cwd right')
-    end
-    vim.api.nvim_win_set_width(0, require('neo-tree').config.window.width)
   else
-    local switch = nil
-    if git_status_winid then
+    if is_neotree_source('git_status') then
+      if buffers_winid then
+        vim.fn.win_gotoid(buffers_winid)
+      else
+        vim.cmd('new')
+        vim.cmd('Neotree buffers focus reveal_force_cwd current')
+      end
+    elseif is_neotree_source('buffers') then
+      if git_status_winid then
+        vim.fn.win_gotoid(git_status_winid)
+      else
+        vim.cmd('new')
+        vim.cmd('Neotree git_status focus reveal_force_cwd current')
+      end
+    elseif git_status_winid then
       vim.fn.win_gotoid(git_status_winid)
-      if vim.api.nvim_win_get_width(0) == require('neo-tree').config.window.width then
-        switch = true
-      end
-      vim.cmd('wincmd L')
-      vim.api.nvim_win_set_width(0, require('neo-tree').config.window.width)
-    else
+    elseif buffers_winid then
       vim.fn.win_gotoid(buffers_winid)
-      if vim.api.nvim_win_get_width(0) == require('neo-tree').config.window.width then
-        switch = true
-      end
-      vim.cmd('wincmd L')
-      vim.api.nvim_win_set_width(0, require('neo-tree').config.window.width)
-    end
-    if switch then
-      M.git_status_buffers_open()
     end
   end
+  vim.cmd('set nowinfixheight')
+  vim.cmd('wincmd _')
+  vim.api.nvim_win_set_width(0, require('neo-tree').config.window.width)
 end
 
 -- open close
 
 M.open = function()
   M.filesystem_open()
-  vim.cmd('wincmd b')
+  vim.cmd('wincmd p')
   M.git_status_buffers_open()
-  vim.cmd('wincmd h')
 end
 
 M.close = function()
