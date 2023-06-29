@@ -40,6 +40,14 @@ vim.api.nvim_create_autocmd({ "BufEnter", }, {
   end,
 })
 
+local function check_ft(ft)
+  local fts = {
+    'neo-tree',
+    'aerial',
+  }
+  return vim.tbl_contains(fts, ft) == false
+end
+
 require('lualine').setup({
   options = {
     ignore_focus = {
@@ -239,40 +247,27 @@ require('lualine').setup({
           return filename('lualine_fname_tail_active')
         end,
         cond = function()
-          return #vim.fn.expand('%:~:.') > 0
+          return #vim.fn.expand('%:~:.') > 0 and check_ft(vim.bo.ft)
         end,
         color = { fg = '#834567', }
       },
       {
         function() return require("nvim-navic").get_location() end,
-        cond = function() return package.loaded["nvim-navic"] and require("nvim-navic").is_available() end,
+        cond = function()
+          return package.loaded["nvim-navic"] and require("nvim-navic").is_available() and check_ft(vim.bo.ft)
+        end,
       },
     },
     lualine_x = {
       {
         "filetype",
+        cond = function()
+          return check_ft(vim.bo.ft)
+        end,
         icons_enabled = false,
       },
     },
   },
-  inactive_winbar = {
-    lualine_c = {
-      {
-        function()
-          return filename('lualine_fname_tail_active')
-        end,
-        cond = function()
-          return #vim.fn.expand('%:~:.') > 0
-        end,
-      },
-    },
-    lualine_x = {
-      {
-        "filetype",
-        icons_enabled = false,
-      },
-    },
-  }
 })
 
 -- number go tab or buffer
