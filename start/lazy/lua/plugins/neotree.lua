@@ -2,6 +2,8 @@ return {
   'nvim-neo-tree/neo-tree.nvim',
   lazy = true,
   branch = 'v2.x',
+  tag = '2.66',
+  pin = true,
   event = { "BufReadPost", "BufNew", "BufNewFile",  },
   cmd = {
     'Neotree',
