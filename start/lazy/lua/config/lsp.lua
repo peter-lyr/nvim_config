@@ -18,7 +18,7 @@ local diagnostics = {
   underline = true,
   update_in_insert = false,
   virtual_text = {
-    spacing = 4,
+    spacing = 0,
     source = "if_many",
     prefix = "●",
   },
@@ -98,37 +98,40 @@ lspconfig.marksman.setup({
   }),
 })
 
-vim.keymap.set('n', '[f', vim.diagnostic.open_float)
-vim.keymap.set('n', ']f', vim.diagnostic.setloclist)
-vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
-vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
+vim.keymap.set('n', '[f', vim.diagnostic.open_float, { desc = 'vim.diagnostic.open_float' })
+vim.keymap.set('n', ']f', vim.diagnostic.setloclist, { desc = 'vim.diagnostic.setloclist' })
+vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'vim.diagnostic.goto_prev' })
+vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'vim.diagnostic.goto_next' })
 
 
-vim.keymap.set('n', '<leader>fS', ':LspStart<cr>')
-vim.keymap.set('n', '<leader>fR', ':LspRestart<cr>')
-vim.keymap.set('n', '<leader>fW', function() vim.lsp.stop_client(vim.lsp.get_active_clients({ bufnr = vim.fn.bufnr() })) end)
-vim.keymap.set('n', '<leader>fE', function() vim.lsp.stop_client(vim.lsp.get_active_clients()) end)
-vim.keymap.set('n', '<leader>fD', [[:call feedkeys(':LspStop ')<cr>]])
-vim.keymap.set('n', '<leader>fF', ':LspInfo<cr>')
+vim.keymap.set('n', '<leader>fS', ':LspStart<cr>', { desc = 'LspStart' })
+vim.keymap.set('n', '<leader>fR', ':LspRestart<cr>', { desc = 'LspRestart' })
+vim.keymap.set('n', '<leader>fq', vim.diagnostic.enable, { desc = 'vim.diagnostic.enable' })
+vim.keymap.set('n', '<leader>fQ', vim.diagnostic.disable, { desc = 'vim.diagnostic.disable' })
+vim.keymap.set('n', '<leader>fW', function() vim.lsp.stop_client(vim.lsp.get_active_clients()) end, { desc = 'stop all lsp clients' })
+vim.keymap.set('n', '<leader>fD', [[:call feedkeys(':LspStop ')<cr>]], { desc = 'stop one lsp client of' })
+vim.keymap.set('n', '<leader>fF', ':LspInfo<cr>', { desc = 'LspInfo' })
 
-vim.keymap.set('n', '<leader>fw', ':ClangdSwitchSourceHeader<cr>')
+vim.keymap.set('n', '<leader>fw', ':ClangdSwitchSourceHeader<cr>', { desc = 'ClangdSwitchSourceHeader' })
 
 
 vim.api.nvim_create_autocmd('LspAttach', {
   group = vim.api.nvim_create_augroup('UserLspConfig', {}),
   callback = function(ev)
     vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
-    local opts = { buffer = ev.buf }
-    vim.keymap.set({ 'n', 'v' }, 'K', vim.lsp.buf.definition, opts)
-    vim.keymap.set({ 'n', 'v' }, '<leader>fo', vim.lsp.buf.definition, opts)
-    vim.keymap.set({ 'n', 'v' }, '<leader>fd', vim.lsp.buf.declaration, opts)
-    vim.keymap.set({ 'n', 'v' }, '<leader>fh', vim.lsp.buf.hover, opts)
-    vim.keymap.set({ 'n', 'v' }, '<leader>fi', vim.lsp.buf.implementation, opts)
-    vim.keymap.set({ 'n', 'v' }, '<leader>fs', vim.lsp.buf.signature_help, opts)
-    vim.keymap.set({ 'n', 'v' }, '<leader>fe', vim.lsp.buf.references, opts)
-    vim.keymap.set({ 'n', 'v' }, '<leader><leader>fd', vim.lsp.buf.type_definition, opts)
-    vim.keymap.set({ 'n', 'v' }, '<leader>fn', function() vim.fn.feedkeys(":IncRename " .. vim.fn.expand("<cword>")) end, opts)
-    vim.keymap.set({ 'n', 'v' }, '<leader>ff', function() vim.lsp.buf.format { async = true } end, opts)
-    vim.keymap.set({ 'n', 'v' }, '<leader>fc', vim.lsp.buf.code_action, opts)
+    local opts = function(desc)
+      return { buffer = ev.buf, desc = desc }
+    end
+    vim.keymap.set({ 'n', 'v' }, 'K', vim.lsp.buf.definition, opts('vim.lsp.buf.definition'))
+    vim.keymap.set({ 'n', 'v' }, '<leader>fo', vim.lsp.buf.definition, opts('vim.lsp.buf.definition'))
+    vim.keymap.set({ 'n', 'v' }, '<leader>fd', vim.lsp.buf.declaration, opts('vim.lsp.buf.declaration'))
+    vim.keymap.set({ 'n', 'v' }, '<leader>fh', vim.lsp.buf.hover, opts('vim.lsp.buf.hover'))
+    vim.keymap.set({ 'n', 'v' }, '<leader>fi', vim.lsp.buf.implementation, opts('vim.lsp.buf.implementation'))
+    vim.keymap.set({ 'n', 'v' }, '<leader>fs', vim.lsp.buf.signature_help, opts('vim.lsp.buf.signature_help'))
+    vim.keymap.set({ 'n', 'v' }, '<leader>fe', vim.lsp.buf.references, opts('vim.lsp.buf.references'))
+    vim.keymap.set({ 'n', 'v' }, '<leader><leader>fd', vim.lsp.buf.type_definition, opts('vim.lsp.buf.type_definition'))
+    vim.keymap.set({ 'n', 'v' }, '<leader>fn', function() vim.fn.feedkeys(":IncRename " .. vim.fn.expand("<cword>")) end, opts('lsp rename IncRename'))
+    vim.keymap.set({ 'n', 'v' }, '<leader>ff', function() vim.lsp.buf.format { async = true } end, opts('vim.lsp.buf.format'))
+    vim.keymap.set({ 'n', 'v' }, '<leader>fc', vim.lsp.buf.code_action, opts('vim.lsp.buf.code_action'))
   end,
 })
