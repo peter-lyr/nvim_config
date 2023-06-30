@@ -42,7 +42,6 @@ require('neo-tree').setup({
       ["u"] = "navigate_up",
 
       ["q"] = function()
-        vim.api.nvim_win_set_width(0, 0)
         vim.cmd('wincmd l')
       end,
       ["X"] = "cut_to_clipboard",
@@ -113,8 +112,7 @@ require('neo-tree').setup({
           refresh()
         end,
         ["q"] = function()
-          vim.api.nvim_win_set_width(0, 0)
-          vim.cmd('wincmd p')
+          vim.cmd('wincmd l')
         end,
         ["<tab>"] = function(state)
           cc.open(state, utils.wrap(fs.toggle_directory, state))
@@ -140,8 +138,7 @@ require('neo-tree').setup({
         ["p"] = "git_push",
         ["g"] = "git_commit_and_push",
         ["q"] = function()
-          vim.api.nvim_win_set_width(0, 0)
-          vim.cmd('wincmd p')
+          vim.cmd('wincmd l')
         end,
         ["<tab>"] = function(state, toggle_directory)
           local sta, _ = pcall(cc.open, state, utils.wrap(fs.toggle_directory, state))
