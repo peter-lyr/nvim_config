@@ -9,12 +9,9 @@ return {
     'Neotree',
   },
   keys = {
-    { '<leader>q',             function() require('config.neotree').filesystem_open() end,         mode = { 'n', 'v' }, desc = 'NeoTree open filesystem' },
-    { '<leader><leader>q',     function() require('config.neotree').filesystem_open_reveal() end,  mode = { 'n', 'v' }, desc = 'NeoTree open filesystem' },
-    { '<leader><tab>',         function() require('config.neotree').git_status_buffers_open() end, mode = { 'n', 'v' }, desc = 'NeoTree git_status buffers toggle' },
-
-    { '<rightmouse>',          function() require('config.neotree').open() end,                    mode = { 'n', 'v' }, desc = 'NeoTree open' },
-    { '<leader><leader><tab>', function() require('config.neotree').close() end,                   mode = { 'n', 'v' }, desc = 'NeoTree close' },
+    { '<leader>q',     '<cmd>Neotree filesystem<cr>', mode = { 'n', 'v' }, desc = 'NeoTree open filesystem' },
+    { '<leader><tab>', '<cmd>Neotree git_status<cr>', mode = { 'n', 'v' }, desc = 'NeoTree open git_status' },
+    { '<leader>`',     '<cmd>Neotree buffers<cr>',    mode = { 'n', 'v' }, desc = 'NeoTree open buffers' },
   },
   dependencies = {
     require('wait.plenary'),
