@@ -8,14 +8,17 @@ return {
       tint_background_colors = true,  -- Tint background portions of highlight groups
       -- highlight_ignore_patterns = { "WinSeparator", "Status.*" },  -- Highlight group patterns to ignore, see `string.find`
       window_ignore_function = function(winid)
-        -- local bufid = vim.api.nvim_win_get_buf(winid)
+        local bufid = vim.api.nvim_win_get_buf(winid)
         -- local buftype = vim.api.nvim_buf_get_option(bufid, "buftype")
         -- local floating = vim.api.nvim_win_get_config(winid).relative ~= ""
         --
         -- -- Do not tint `terminal` or floating windows, tint everything else
         -- return buftype == "terminal" or floating
         local floating = vim.api.nvim_win_get_config(winid).relative ~= ""
-        return floating
+        local source_buffer = vim.b[bufid].source_buffer
+        local aerial_buffer = vim.b[bufid].aerial_buffer
+        local aerial = source_buffer or aerial_buffer
+        return floating or aerial
       end
     })
   end
