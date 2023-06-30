@@ -16,12 +16,8 @@ return {
         return floating or source_buffer
       end,
       focus_change_events = {
-        focus = {
-          'BufEnter', 'FocusGained',
-        },
-        unfocus = {
-          'BufLeave', 'FocusLost',
-        }
+        focus = { 'BufEnter', },
+        unfocus = { 'BufLeave', }
       }
     })
   end
