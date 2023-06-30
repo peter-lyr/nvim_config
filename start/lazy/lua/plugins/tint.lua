@@ -17,7 +17,8 @@ return {
         local floating = vim.api.nvim_win_get_config(winid).relative ~= ""
         local source_buffer = vim.b[bufid].source_buffer
         local aerial_buffer = vim.b[bufid].aerial_buffer
-        local aerial = source_buffer and bufid == vim.b[source_buffer].aerial_buffer or aerial_buffer and bufid == vim.b[aerial_buffer].source_buffer
+        local aerial = (source_buffer and bufid == vim.b[source_buffer].aerial_buffer or aerial_buffer and bufid == vim.b[aerial_buffer].source_buffer) and
+        vim.tbl_contains({ source_buffer, aerial_buffer }, vim.fn.bufnr()) == true
         return floating or aerial
       end
     })
