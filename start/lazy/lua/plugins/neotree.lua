@@ -11,7 +11,7 @@ return {
   keys = {
     { '<leader>1', '<cmd>Neotree reveal_force_cwd filesystem<cr>', mode = { 'n', 'v' }, desc = 'NeoTree open filesystem' },
     { '<leader>2', '<cmd>Neotree reveal_force_cwd buffers<cr>',    mode = { 'n', 'v' }, desc = 'NeoTree open buffers' },
-    { '<leader>4', '<cmd>Neotree reveal_force_cwd git_status<cr>', mode = { 'n', 'v' }, desc = 'NeoTree open git_status' },
+    { '<leader>3', '<cmd>Neotree reveal_force_cwd git_status<cr>', mode = { 'n', 'v' }, desc = 'NeoTree open git_status' },
   },
   dependencies = {
     require('wait.plenary'),

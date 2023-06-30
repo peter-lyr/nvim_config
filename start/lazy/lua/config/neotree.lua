@@ -41,9 +41,7 @@ require('neo-tree').setup({
       ["<c-r>"] = "refresh",
       ["u"] = "navigate_up",
 
-      ["q"] = function()
-        vim.cmd('wincmd l')
-      end,
+      ["q"] = "noop",
       ["X"] = "cut_to_clipboard",
       ["x"] = function(state)
         local node = state.tree:get_node()
@@ -111,9 +109,7 @@ require('neo-tree').setup({
           end
           refresh()
         end,
-        ["q"] = function()
-          vim.cmd('wincmd l')
-        end,
+        ["q"] = "noop",
         ["<tab>"] = function(state)
           cc.open(state, utils.wrap(fs.toggle_directory, state))
           vim.cmd('wincmd p')
@@ -137,9 +133,7 @@ require('neo-tree').setup({
         ["c"] = "git_commit",
         ["p"] = "git_push",
         ["g"] = "git_commit_and_push",
-        ["q"] = function()
-          vim.cmd('wincmd l')
-        end,
+        ["q"] = "noop",
         ["<tab>"] = function(state, toggle_directory)
           local sta, _ = pcall(cc.open, state, utils.wrap(fs.toggle_directory, state))
           if not sta then
