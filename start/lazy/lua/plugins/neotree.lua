@@ -17,7 +17,17 @@ return {
     require('wait.plenary'),
     require('wait.web-devicons'),
     'MunifTanjim/nui.nvim',
-    's1n7ax/nvim-window-picker',
+    {
+      's1n7ax/nvim-window-picker',
+      config = function()
+        require('window-picker').setup({
+          bo = {
+            filetype = { 'aerial', 'neo-tree', 'notify' },
+            buftype = { 'terminal' },
+          },
+        })
+      end
+    },
     require('wait.bbye'),
   },
   config = function()
