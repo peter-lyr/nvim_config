@@ -10,16 +10,10 @@ return {
       window_ignore_function = function(winid)
         local bufid = vim.api.nvim_win_get_buf(winid)
         -- local buftype = vim.api.nvim_buf_get_option(bufid, "buftype")
-        -- local floating = vim.api.nvim_win_get_config(winid).relative ~= ""
-        --
-        -- -- Do not tint `terminal` or floating windows, tint everything else
-        -- return buftype == "terminal" or floating
         local floating = vim.api.nvim_win_get_config(winid).relative ~= ""
-        local source_buffer = vim.b[bufid].source_buffer
-        local aerial_buffer = vim.b[bufid].aerial_buffer
-        local aerial = (source_buffer and bufid == vim.b[source_buffer].aerial_buffer or aerial_buffer and bufid == vim.b[aerial_buffer].source_buffer) and
-        vim.tbl_contains({ source_buffer, aerial_buffer }, vim.fn.bufnr()) == true
-        return floating or aerial
+        local filetype = vim.api.nvim_buf_get_option(bufid, "filetype")
+        local source_buffer = vim.b[bufid].aerial_buffer and filetype ~= 'aerial'
+        return floating or source_buffer
       end
     })
   end
