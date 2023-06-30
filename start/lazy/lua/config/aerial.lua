@@ -37,7 +37,7 @@ require('aerial').setup({
   },
   -- backends = { "lsp", "treesitter", "markdown", "man" },
   backends = { "lsp", },
-  post_jump_cmd = [[norm zt]],
+  post_jump_cmd = [[norm zz]],
   close_automatic_events = {},
   close_on_select = false,
   float = {
