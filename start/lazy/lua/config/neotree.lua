@@ -27,7 +27,7 @@ require('neo-tree').setup({
       ["h"] = { "toggle_preview", config = { use_float = true } },
       ["<tab>"] = function(state)
         cc.open(state, utils.wrap(fs.toggle_directory, state))
-        vim.cmd('wincmd h')
+        vim.cmd('wincmd p')
       end,
       ["dj"] = "open_split",
       ["dl"] = "open_vsplit",
@@ -114,11 +114,11 @@ require('neo-tree').setup({
         end,
         ["q"] = function()
           vim.api.nvim_win_set_width(0, 0)
-          vim.cmd('wincmd h')
+          vim.cmd('wincmd p')
         end,
         ["<tab>"] = function(state)
           cc.open(state, utils.wrap(fs.toggle_directory, state))
-          vim.cmd('wincmd l')
+          vim.cmd('wincmd p')
         end,
       },
     },
@@ -141,7 +141,7 @@ require('neo-tree').setup({
         ["g"] = "git_commit_and_push",
         ["q"] = function()
           vim.api.nvim_win_set_width(0, 0)
-          vim.cmd('wincmd h')
+          vim.cmd('wincmd p')
         end,
         ["<tab>"] = function(state, toggle_directory)
           local sta, _ = pcall(cc.open, state, utils.wrap(fs.toggle_directory, state))
@@ -149,7 +149,7 @@ require('neo-tree').setup({
             cc.toggle_directory(state, toggle_directory)
             return
           end
-          vim.cmd('wincmd l')
+          vim.cmd('wincmd p')
         end,
       }
     }
