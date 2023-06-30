@@ -14,7 +14,15 @@ return {
         local filetype = vim.api.nvim_buf_get_option(bufid, "filetype")
         local source_buffer = vim.b[bufid].aerial_buffer and filetype ~= 'aerial'
         return floating or source_buffer
-      end
+      end,
+      focus_change_events = {
+        focus = {
+          'BufEnter', 'FocusGained',
+        },
+        unfocus = {
+          'BufLeave', 'FocusLost',
+        }
+      }
     })
   end
 }
