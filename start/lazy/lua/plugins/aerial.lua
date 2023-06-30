@@ -2,7 +2,7 @@ return {
   'stevearc/aerial.nvim',
   event = { 'LspAttach', },
   keys = {
-    { '<leader>,', function () require('config.aerial').open() end, mode = { 'n', 'v', }, silent = true, desc = 'AerialOpen right' },
+    { '<leader>3', function () require('config.aerial').open() end, mode = { 'n', 'v', }, silent = true, desc = 'AerialOpen right' },
     { ']a', ':<c-u>AerialNext<cr>', mode = { 'n', 'v', }, silent = true, desc = 'AerialNext' },
     { '[a', ':<c-u>AerialPrev<cr>', mode = { 'n', 'v', }, silent = true, desc = 'AerialPrev' },
   },

@@ -13,16 +13,7 @@ return {
         open = function()
           vim.api.nvim_input("<esc><space>q")
         end,
-        size = { height = 0.5 },
-      },
-      {
-        title = "Neo-Tree Git",
-        ft = "neo-tree",
-        filter = function(buf)
-          return vim.b[buf].neo_tree_source == "git_status"
-        end,
-        pinned = true,
-        open = "Neotree position=right git_status",
+        size = { height = 0.62 },
       },
       {
         title = "Neo-Tree Buffers",
@@ -31,7 +22,7 @@ return {
           return vim.b[buf].neo_tree_source == "buffers"
         end,
         pinned = true,
-        open = "Neotree position=top buffers",
+        open = "Neotree position=right buffers",
       },
     },
     right = {
@@ -43,6 +34,16 @@ return {
         end,
         pinned = true,
         open = "AerialOpen right",
+        size = { height = 0.62 },
+      },
+      {
+        title = "Neo-Tree Git",
+        ft = "neo-tree",
+        filter = function(buf)
+          return vim.b[buf].neo_tree_source == "git_status"
+        end,
+        pinned = true,
+        open = "Neotree position=top git_status",
       },
     },
   }
