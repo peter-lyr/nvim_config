@@ -16,11 +16,7 @@ require('aerial').setup({
     ['}'] = 'actions.next',
     ['[['] = 'actions.prev_up',
     [']]'] = 'actions.next_up',
-    -- ['q'] = 'actions.close',
-    ['q'] = function()
-      vim.api.nvim_win_set_width(0, 0)
-      vim.cmd('wincmd p')
-    end,
+    ['q'] = 'actions.close',
     -- ['a'] = 'actions.tree_toggle',
     ['O'] = 'actions.tree_toggle_recursive',
     ['zA'] = 'actions.tree_toggle_recursive',
