@@ -26,6 +26,9 @@ return {
               filetype = { 'aerial', 'neo-tree', 'notify' },
               buftype = { 'terminal' },
             },
+            file_path_contains = {
+              'edgy://',
+            },
           }
         })
       end
