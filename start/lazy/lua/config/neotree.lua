@@ -127,12 +127,12 @@ require('neo-tree').setup({
         ["gp"] = "noop",
         ["gg"] = "noop",
 
-        ["u"] = "git_unstage_file",
-        ["a"] = "git_add_file",
-        ["r"] = "git_revert_file",
-        ["c"] = "git_commit",
-        ["p"] = "git_push",
-        ["g"] = "git_commit_and_push",
+        ["du"] = "git_unstage_file",
+        ["da"] = "git_add_file",
+        ["dr"] = "git_revert_file",
+        ["dc"] = "git_commit",
+        ["dp"] = "git_push",
+        ["dg"] = "git_commit_and_push",
         ["q"] = "noop",
         ["<tab>"] = function(state, toggle_directory)
           local sta, _ = pcall(cc.open, state, utils.wrap(fs.toggle_directory, state))
