@@ -9,9 +9,9 @@ return {
     'Neotree',
   },
   keys = {
-    { '<leader>q',     '<cmd>Neotree filesystem<cr>', mode = { 'n', 'v' }, desc = 'NeoTree open filesystem' },
-    { '<leader><tab>', '<cmd>Neotree git_status<cr>', mode = { 'n', 'v' }, desc = 'NeoTree open git_status' },
-    { '<leader>`',     '<cmd>Neotree buffers<cr>',    mode = { 'n', 'v' }, desc = 'NeoTree open buffers' },
+    { '<leader>q',     '<cmd>Neotree reveal_force_cwd filesystem<cr>', mode = { 'n', 'v' }, desc = 'NeoTree open filesystem' },
+    { '<leader><tab>', '<cmd>Neotree reveal_force_cwd git_status<cr>', mode = { 'n', 'v' }, desc = 'NeoTree open git_status' },
+    { '<leader>`',     '<cmd>Neotree reveal_force_cwd buffers<cr>',    mode = { 'n', 'v' }, desc = 'NeoTree open buffers' },
   },
   dependencies = {
     require('wait.plenary'),
