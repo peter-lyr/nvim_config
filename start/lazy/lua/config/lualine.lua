@@ -268,6 +268,28 @@ require('lualine').setup({
       },
     },
   },
+  inactive_winbar = {
+    lualine_c = {
+      {
+        function()
+          return filename('lualine_fname_tail_active')
+        end,
+        cond = function()
+          return #vim.fn.expand('%:~:.') > 0 and check_ft(vim.bo.ft)
+        end,
+        color = { fg = '#533547', }
+      },
+    },
+    lualine_x = {
+      {
+        "filetype",
+        cond = function()
+          return check_ft(vim.bo.ft)
+        end,
+        icons_enabled = false,
+      },
+    },
+  },
 })
 
 -- number go tab or buffer
