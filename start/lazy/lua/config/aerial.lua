@@ -44,12 +44,3 @@ require('aerial').setup({
     relative = 'editor',
   },
 })
-
-local M = {}
-
-M.open = function()
-  vim.cmd('AerialOpen right')
-  pcall(vim.api.nvim_win_set_width, 0, vim.b[vim.fn.bufnr()].aerial_width)
-end
-
-return M

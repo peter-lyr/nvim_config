@@ -2,6 +2,9 @@ return {
   "folke/edgy.nvim",
   event = "VeryLazy",
   opts = {
+    animate = {
+      enabled = false,
+    },
     left = {
       {
         title = "Neo-Tree",
@@ -36,15 +39,19 @@ return {
     },
     right = {
       {
-        title = "Aerial",
-        ft = "aerial",
-        filter = function(buf)
-          return vim.b[buf].source_buffer
-        end,
+        title = "Minimap",
+        ft = "minimap",
         pinned = true,
         open = function()
           vim.api.nvim_input("<esc><space>4")
         end,
+        size = { height = 0.38 },
+      },
+      {
+        title = "Aerial",
+        ft = "aerial",
+        pinned = true,
+        open = "AerialOpen",
       },
     },
     keys = {
