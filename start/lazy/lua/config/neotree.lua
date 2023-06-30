@@ -126,6 +126,7 @@ require('neo-tree').setup({
         ["gc"] = "noop",
         ["gp"] = "noop",
         ["gg"] = "noop",
+        ["u"] = "noop",
 
         ["du"] = "git_unstage_file",
         ["da"] = "git_add_file",
