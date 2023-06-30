@@ -34,5 +34,16 @@ return {
         open = "Neotree position=top buffers",
       },
     },
+    right = {
+      {
+        title = "Aerial",
+        ft = "aerial",
+        filter = function(buf)
+          return vim.b[buf].neo_tree_source == "source_buffer"
+        end,
+        pinned = true,
+        open = "AerialOpen right",
+      },
+    },
   }
 }
