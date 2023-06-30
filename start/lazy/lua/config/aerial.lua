@@ -1,4 +1,7 @@
 require('aerial').setup({
+  layout = {
+    min_width = 28,
+  },
   keymaps = {
     ['?'] = 'actions.show_help',
     ['o'] = 'actions.jump',
