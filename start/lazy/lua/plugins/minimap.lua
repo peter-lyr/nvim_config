@@ -6,11 +6,13 @@ return {
   keys = {
     { '<leader>4', function()
       vim.cmd('Minimap')
-      vim.loop.new_timer():start(30, 0, function()
+      vim.loop.new_timer():start(50, 0, function()
         vim.schedule(function()
+          local bufnr = vim.fn.bufnr('-MINIMAP-')
           local winnr = vim.fn.bufwinnr('-MINIMAP-')
           if winnr ~= -1 then
             vim.fn.win_gotoid(vim.fn.win_getid(winnr))
+            vim.keymap.set({ 'n', 'v', }, 'q', '<cmd>wincmd p<cr>', { desc = 'enter', buffer = bufnr })
           end
         end)
       end)
