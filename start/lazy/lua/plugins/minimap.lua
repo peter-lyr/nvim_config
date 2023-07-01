@@ -13,7 +13,7 @@ return {
             vim.schedule(function()
               local winnr = vim.fn.bufwinnr('-MINIMAP-')
               if winnr ~= -1 then
-                vim.cmd('MinimapRescan')
+                pcall(vim.cmd, 'MinimapRescan')
                 pcall(vim.fn.win_gotoid, vim.fn.win_getid(winnr))
               end
             end)
@@ -29,6 +29,7 @@ return {
   },
   init = function()
     vim.g.minimap_width = 30
+    vim.g.minimap_block_filetypes = { 'aerial', 'neo-tree', 'help', }
   end,
   config = function()
     vim.api.nvim_create_autocmd({ "WinClosed", }, {
