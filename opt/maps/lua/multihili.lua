@@ -21,8 +21,8 @@ local getcontent = function(line1, col1, line2, col2)
   for lnr = line1, line2 do
     local line = vim.fn.getline(lnr)
     if lnr == line1 and lnr == line2 then
-      local linetemp1 = string.sub(line, col1, col2+1)
-      local linetemp2 = string.sub(line, col1, col2+2)
+      local linetemp1 = string.sub(line, col1, col2 + 1)
+      local linetemp2 = string.sub(line, col1, col2 + 2)
       line = string.sub(line, col1, col2)
       if vim.fn.strdisplaywidth(linetemp1) == vim.fn.strdisplaywidth(line) + 4 and vim.fn.strdisplaywidth(linetemp1) == vim.fn.strdisplaywidth(linetemp2) + 6 then
         line = linetemp2
@@ -31,8 +31,8 @@ local getcontent = function(line1, col1, line2, col2)
       if lnr == line1 then
         line = string.sub(line, col1)
       elseif lnr == line2 then
-        local linetemp1 = string.sub(line, col1, col2+1)
-        local linetemp2 = string.sub(line, col1, col2+2)
+        local linetemp1 = string.sub(line, col1, col2 + 1)
+        local linetemp2 = string.sub(line, col1, col2 + 2)
         line = string.sub(line, 0, col2)
         if vim.fn.strdisplaywidth(linetemp1) == vim.fn.strdisplaywidth(line) + 4 and vim.fn.strdisplaywidth(linetemp1) == vim.fn.strdisplaywidth(linetemp2) + 6 then
           line = linetemp2
@@ -97,11 +97,11 @@ colorinit()
 
 HiLi = {}
 
-local gethilipath = function ()
+local gethilipath = function()
   return require('plenary.path'):new(vim.loop.cwd()):joinpath('.hili')
 end
 
-local gethili = function ()
+local gethili = function()
   local hilipath = gethilipath()
   if not hilipath:exists() then
     return {}
@@ -119,7 +119,7 @@ end
 local savehili = function(content, bg)
   local hili = gethili()
   if bg then
-    hili = vim.tbl_deep_extend('force', hili, { [content] =  bg })
+    hili = vim.tbl_deep_extend('force', hili, { [content] = bg })
   else
     hili[content] = nil
   end
@@ -273,8 +273,14 @@ end
 local hicurword = 1
 local windo = 0
 
+local ignore_fts = { 'minimap' }
+
 vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI', }, {
   callback = function()
+    local filetype = vim.api.nvim_buf_get_option(vim.fn.bufnr(), 'filetype')
+    if vim.tbl_contains(ignore_fts, filetype) == true then
+      return
+    end
     local just_hicword = nil
     local word
     if hicurword == 1 then
@@ -309,7 +315,7 @@ vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI', }, {
 
 local function _()
   rehili()
-  vim.api.nvim_set_hl(0, 'CursorWord', { bg = '#888800', fg = '#000088', bold = true  })
+  vim.api.nvim_set_hl(0, 'CursorWord', { bg = '#888800', fg = '#000088', bold = true })
 end
 
 _()
