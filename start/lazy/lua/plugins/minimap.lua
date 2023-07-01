@@ -22,5 +22,14 @@ return {
   },
   init = function()
     vim.g.minimap_width = 30
+  end,
+  config = function()
+    vim.api.nvim_create_autocmd({ "WinClosed", }, {
+      callback = function()
+        if vim.fn.bufnr() == vim.fn.bufnr('-MINIMAP-') then
+          vim.g.minimap_opening = 1
+        end
+      end,
+    })
   end
 }
