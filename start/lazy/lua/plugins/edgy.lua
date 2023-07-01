@@ -55,6 +55,12 @@ return {
       },
     },
     keys = {
+      ["q"] = function(win)
+        if vim.api.nvim_buf_get_option(vim.fn.bufnr(), "filetype") == 'minimap' then
+          vim.g.minimap_opening = 1
+        end
+        win:close()
+      end,
       ["<leader>wu"] = function(win)
         win:resize("width", 30)
       end,
