@@ -433,6 +433,19 @@ vim.api.nvim_create_autocmd({ "TabEnter", }, {
   end,
 })
 
+-- record last buflisted bufnr
+
+vim.g.lastbufwinnr = 0
+
+vim.api.nvim_create_autocmd({ "BufLeave", }, {
+  callback = function()
+    local bufnr = vim.fn.bufnr()
+    if vim.fn.buflisted(bufnr) ~= 0 then
+      vim.g.lastbufwinnr = vim.fn.win_getid()
+    end
+  end,
+})
+
 -- restore hidden tabs
 
 vim.keymap.set({ 'n', 'v', }, '<a-f7>', function()
@@ -486,6 +499,14 @@ vim.cmd([[
     if a:mousebutton == 'm' && a:mouseclicks == 1
       execute ":Bdelete! " . a:bufnr
     elseif a:mousebutton == 'l' && a:mouseclicks == 1
+      if buflisted(bufnr()) == 0
+        try
+          call win_gotoid(g:lastbufwinnr)
+        catch
+          echomsg 'error! see config/lualine.lua, g:lastbufwinnr: ' .. g:lastbufwinnr
+          return
+        endtry
+      endif
       execute ":buffer " . a:bufnr
     endif
   endfunction
