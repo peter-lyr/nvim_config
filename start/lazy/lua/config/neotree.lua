@@ -26,8 +26,9 @@ require('neo-tree').setup({
 
       ["h"] = { "toggle_preview", config = { use_float = true } },
       ["<tab>"] = function(state)
+        local winid = vim.fn.win_getid()
         cc.open(state, utils.wrap(fs.toggle_directory, state))
-        vim.cmd('wincmd t')
+        vim.fn.win_gotoid(winid)
       end,
       ["dj"] = "open_split",
       ["dl"] = "open_vsplit",
@@ -111,8 +112,12 @@ require('neo-tree').setup({
         end,
         ["q"] = "noop",
         ["<tab>"] = function(state)
-          cc.open(state, utils.wrap(fs.toggle_directory, state))
-          vim.cmd('wincmd p')
+          local node = state.tree:get_node()
+          if node.type == 'file' then
+            local winid = vim.fn.win_getid()
+            cc.open(state, utils.wrap(fs.toggle_directory, state))
+            vim.fn.win_gotoid(winid)
+          end
         end,
       },
     },
@@ -135,13 +140,13 @@ require('neo-tree').setup({
         ["dp"] = "git_push",
         ["dg"] = "git_commit_and_push",
         ["q"] = "noop",
-        ["<tab>"] = function(state, toggle_directory)
-          local sta, _ = pcall(cc.open, state, utils.wrap(fs.toggle_directory, state))
-          if not sta then
-            cc.toggle_directory(state, toggle_directory)
-            return
+        ["<tab>"] = function(state)
+          local node = state.tree:get_node()
+          if node.type == 'file' then
+            local winid = vim.fn.win_getid()
+            cc.open(state, utils.wrap(fs.toggle_directory, state))
+            vim.fn.win_gotoid(winid)
           end
-          vim.cmd('wincmd p')
         end,
       }
     }
