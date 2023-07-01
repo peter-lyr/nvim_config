@@ -294,13 +294,13 @@ require('lualine').setup({
 
 -- record last buflisted bufnr
 
-vim.g.lastbufwinnr = 0
+vim.g.lastbufwinid = 0
 
 vim.api.nvim_create_autocmd({ "BufLeave", }, {
   callback = function()
     local bufnr = vim.fn.bufnr()
     if vim.fn.buflisted(bufnr) ~= 0 then
-      vim.g.lastbufwinnr = vim.fn.win_getid()
+      vim.g.lastbufwinid = vim.fn.win_getid()
     end
   end,
 })
@@ -332,7 +332,7 @@ end
 
 local function go_buffer()
   if vim.fn.buflisted(vim.fn.bufnr()) == 0 then
-      pcall(vim.fn.win_gotoid, vim.g.lastbufwinnr)
+      pcall(vim.fn.win_gotoid, vim.g.lastbufwinid)
   end
   if vim.v.count == 0 then
     vim.cmd([[call feedkeys("\<c-6>")]])
@@ -504,9 +504,9 @@ vim.cmd([[
     elseif a:mousebutton == 'l' && a:mouseclicks == 1
       if buflisted(bufnr()) == 0
         try
-          call win_gotoid(g:lastbufwinnr)
+          call win_gotoid(g:lastbufwinid)
         catch
-          echomsg 'error! see config/lualine.lua, g:lastbufwinnr: ' .. g:lastbufwinnr
+          echomsg 'error! see config/lualine.lua, g:lastbufwinid: ' .. g:lastbufwinid
           return
         endtry
       endif
