@@ -62,7 +62,7 @@ return {
         open = function()
           vim.api.nvim_input("<esc><space>m")
         end,
-        size = { height = 18 },
+        size = { height = 10 },
       },
     },
     keys = {
