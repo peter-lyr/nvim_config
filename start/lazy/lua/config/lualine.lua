@@ -292,6 +292,19 @@ require('lualine').setup({
   },
 })
 
+-- record last buflisted bufnr
+
+vim.g.lastbufwinnr = 0
+
+vim.api.nvim_create_autocmd({ "BufLeave", }, {
+  callback = function()
+    local bufnr = vim.fn.bufnr()
+    if vim.fn.buflisted(bufnr) ~= 0 then
+      vim.g.lastbufwinnr = vim.fn.win_getid()
+    end
+  end,
+})
+
 -- number go tab or buffer
 
 local lasttabnr = vim.fn['tabpagenr']()
@@ -318,6 +331,9 @@ local function go_tab()
 end
 
 local function go_buffer()
+  if vim.fn.buflisted(vim.fn.bufnr()) == 0 then
+      pcall(vim.fn.win_gotoid, vim.g.lastbufwinnr)
+  end
   if vim.v.count == 0 then
     vim.cmd([[call feedkeys("\<c-6>")]])
     return
@@ -430,19 +446,6 @@ end, { desc = 'tabclose next tab' })
 vim.api.nvim_create_autocmd({ "TabEnter", }, {
   callback = function()
     vim.cmd('ProjectRootCD')
-  end,
-})
-
--- record last buflisted bufnr
-
-vim.g.lastbufwinnr = 0
-
-vim.api.nvim_create_autocmd({ "BufLeave", }, {
-  callback = function()
-    local bufnr = vim.fn.bufnr()
-    if vim.fn.buflisted(bufnr) ~= 0 then
-      vim.g.lastbufwinnr = vim.fn.win_getid()
-    end
   end,
 })
 
