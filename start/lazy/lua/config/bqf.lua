@@ -51,7 +51,6 @@ M.toggle = function()
     vim.cmd('ccl')
   else
     vim.cmd('copen')
-    vim.cmd('wincmd J')
   end
 end
 

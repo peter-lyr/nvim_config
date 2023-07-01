@@ -54,6 +54,17 @@ return {
         open = "AerialOpen",
       },
     },
+    bottom = {
+      {
+        title = "QuickFix",
+        ft = "qf",
+        pinned = true,
+        open = function()
+          vim.api.nvim_input("<esc><space>m")
+        end,
+        size = { height = 18 },
+      },
+    },
     keys = {
       ["<leader>wu"] = function(win)
         win:resize("width", 30)
