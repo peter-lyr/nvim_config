@@ -72,6 +72,12 @@ return {
       ["<leader>wo"] = function(win)
         win:resize("width", -30)
       end,
+      ["<leader>wk"] = function(win)
+        win:resize("height", 5)
+      end,
+      ["<leader>wj"] = function(win)
+        win:resize("height", -5)
+      end,
       ["<leader>wi"] = function(win)
         win.view.edgebar:equalize()
       end,
