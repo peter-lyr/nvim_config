@@ -27,7 +27,7 @@ require('neo-tree').setup({
       ["h"] = { "toggle_preview", config = { use_float = true } },
       ["<tab>"] = function(state)
         cc.open(state, utils.wrap(fs.toggle_directory, state))
-        vim.cmd('wincmd p')
+        vim.cmd('wincmd t')
       end,
       ["dj"] = "open_split",
       ["dl"] = "open_vsplit",
