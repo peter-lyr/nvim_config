@@ -40,8 +40,10 @@ M.toggle = function()
       vim.cmd('wincmd p')
       vim.loop.new_timer():start(10, 0, function()
         vim.schedule(function()
-          if vim.bo.ft == 'neo-tree' then
+          if vim.b[vim.fn.bufnr()].neo_tree_source == "git_status" then
             vim.cmd('wincmd l')
+          elseif vim.b[vim.fn.bufnr()].source_buffer then
+            vim.cmd('wincmd h')
           end
         end)
       end)
