@@ -5,3 +5,4 @@ saved_images
 *.lnk
 lazy-lock.json
 *.o
+*.log
