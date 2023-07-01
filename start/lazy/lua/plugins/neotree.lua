@@ -23,7 +23,7 @@ return {
         require('window-picker').setup({
           filter_rules = {
             bo = {
-              filetype = { 'aerial', 'neo-tree', 'notify' },
+              filetype = { 'aerial', 'neo-tree', 'notify', 'minimap', },
               buftype = { 'terminal' },
             },
             file_path_contains = {
