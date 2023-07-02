@@ -40,6 +40,7 @@ return {
     },
   },
   dependencies = {
+    require('plugins.edgy'),
     'wfxr/code-minimap',
   },
   init = function()

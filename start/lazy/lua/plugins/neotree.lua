@@ -14,6 +14,7 @@ return {
     { '<leader>3', '<cmd>Neotree reveal_force_cwd git_status<cr>', mode = { 'n', 'v' }, desc = 'NeoTree open git_status' },
   },
   dependencies = {
+    require('plugins.edgy'),
     require('wait.plenary'),
     require('wait.web-devicons'),
     'MunifTanjim/nui.nvim',

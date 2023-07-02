@@ -10,6 +10,7 @@ return {
   dependencies = {
     require('plugins.treesitter'),
     require('wait.web-devicons'),
+    require('plugins.edgy'),
   },
   config = function()
     require('config.aerial')
