@@ -35,6 +35,7 @@ return {
   end,
   config = function()
     if vim.g.loaded_minimap then
+      vim.g.minimap_autostart = 1
       vim.api.nvim_create_autocmd({ "WinClosed", }, {
         callback = function()
           if vim.fn.bufnr() == vim.fn.bufnr('-MINIMAP-') then
@@ -46,7 +47,7 @@ return {
       })
       vim.api.nvim_create_autocmd({ "BufEnter", }, {
         callback = function()
-          if vim.fn.filereadable(vim.api.nvim_buf_get_name(0)) == 1 then
+          if vim.g.minimap_autostart == 1 and vim.fn.filereadable(vim.api.nvim_buf_get_name(0)) == 1 then
             vim.loop.new_timer():start(10, 0, function()
               vim.schedule(function()
                 vim.cmd('Minimap')
