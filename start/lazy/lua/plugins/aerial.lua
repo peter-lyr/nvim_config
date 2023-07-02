@@ -1,5 +1,6 @@
 return {
   'stevearc/aerial.nvim',
+  lazy = true,
   event = { 'LspAttach', },
   keys = {
     { '<leader>5', '<cmd>AerialOpen right<cr>', mode = { 'n', 'v', }, silent = true, desc = 'AerialOpen right' },
