@@ -65,7 +65,13 @@ M.save = function()
     end
     ::continue::
   end
-  branches_buffers = vim.tbl_deep_extend('force', branches_buffers_old, branches_buffers)
+  local temp = {}
+  for project, branch in pairs(branches_buffers_old) do
+    if path:new(project):exists() then
+      temp[project] = branch
+    end
+  end
+  branches_buffers = vim.tbl_deep_extend('force', temp, branches_buffers)
   if #vim.tbl_keys(branches_buffers) > 0 then
     session_branches:write(vim.inspect(branches_buffers), 'w')
   end
