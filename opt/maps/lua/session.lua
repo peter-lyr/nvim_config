@@ -99,4 +99,10 @@ M.open_branches = function()
   end
 end
 
+vim.api.nvim_create_autocmd({ "ExitPre" }, {
+  callback = function()
+    M.save()
+  end,
+})
+
 return M
