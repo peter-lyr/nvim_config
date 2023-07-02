@@ -25,6 +25,19 @@ return {
       mode = { 'n', 'v' },
       desc = 'Minimap'
     },
+    {
+      '<leader>$',
+      function()
+        vim.g.minimap_autostart = 1 - vim.g.minimap_autostart
+        if vim.g.minimap_autostart == 1 then
+          print('minimap autostart')
+        else
+          print('minimap donot autostart')
+        end
+      end,
+      mode = { 'n', 'v' },
+      desc = 'Minimap'
+    },
   },
   dependencies = {
     'wfxr/code-minimap',
