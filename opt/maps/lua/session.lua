@@ -19,6 +19,20 @@ local function rep(content)
   return content
 end
 
+local function get_branch(project)
+  local head = path:new(project):joinpath('.git', 'HEAD')
+  local branch = 'xxxxxx'
+  if head:exists() then
+    local HEAD = head:read()
+    branch = HEAD:match('ref: refs/heads/(.+)$')
+    if not branch then
+      branch = HEAD:sub(1, 6)
+    end
+    branch = vim.fn.trim(branch)
+  end
+  return branch
+end
+
 M.save = function()
   local sta, data = pcall(loadstring('return ' .. session_branches:read()))
   local last_all_buffers = {}
@@ -34,25 +48,16 @@ M.save = function()
       goto continue
     end
     local project = rep(vim.fn['ProjectRootGet'](fname))
-    local head = path:new(project):joinpath('.git', 'HEAD')
-    local branch = 'xxxxxx'
-    if head:exists() then
-      local HEAD = head:read()
-      branch = HEAD:match('ref: refs/heads/(.+)$')
-      if not branch then
-        branch = HEAD:sub(1, 6)
-      end
-      branch = vim.fn.trim(branch)
-    end
+    local branch = get_branch(project)
     fname = rep(fname)
     table.insert(last_all_buffers, fname)
-    if not vim.tbl_contains(vim.tbl_keys(branches_buffers), project) then
+    if vim.tbl_contains(vim.tbl_keys(branches_buffers), project) == false then
       local f1 = { fname }
       local b1 = {}
       b1[branch] = f1
       branches_buffers[project] = b1
     else
-      if not vim.tbl_contains(vim.tbl_keys(branches_buffers[project]), branch) then
+      if vim.tbl_contains(vim.tbl_keys(branches_buffers[project]), branch) == false then
         branches_buffers[project][branch] = { fname }
       else
         table.insert(branches_buffers[project][branch], fname)
@@ -79,6 +84,19 @@ M.open_last_all = function()
 end
 
 M.open_branches = function()
+  local sta, data = pcall(loadstring('return ' .. session_branches:read()))
+  if sta and #vim.tbl_keys(data) > 0 then
+    vim.ui.select(vim.fn.sort(vim.tbl_keys(data)), { prompt = 'project' }, function(project)
+      local branch = get_branch(project)
+      if vim.tbl_contains(vim.tbl_keys(data[project]), branch) == true then
+        for _, fname in ipairs(data[project][branch]) do
+          vim.cmd('e ' .. fname)
+        end
+      else
+        print('no such branch:', branch)
+      end
+    end)
+  end
 end
 
 return M
