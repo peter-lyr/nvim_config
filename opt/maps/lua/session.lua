@@ -70,6 +70,12 @@ M.save = function()
 end
 
 M.open_last_all = function()
+  local sta, data = pcall(loadstring('return ' .. session_last_all:read()))
+  if sta and #data > 0 then
+    for _, fname in ipairs(data) do
+      vim.cmd('e ' .. fname)
+    end
+  end
 end
 
 M.open_branches = function()
