@@ -25,8 +25,8 @@ end
 M.stack_cur_bufname = function()
   local fname = vim.api.nvim_buf_get_name(0)
   if #fname > 0 and vim.bo.modifiable == true and vim.bo.readonly == false then
-      stack_fpath = fname
-      print('stack file: ' .. vim.fn.expand('%:~:.'))
+    stack_fpath = fname
+    print('stack file: ' .. vim.fn.expand('%:~:.'))
   end
 end
 
@@ -42,7 +42,7 @@ local close_fts = {
 
 M.close = function()
   local buffers = {}
-  for winnr=1, vim.fn.winnr('$') do
+  for winnr = 1, vim.fn.winnr('$') do
     local bufnr = vim.fn.winbufnr(winnr)
     if vim.tbl_contains(close_fts, vim.api.nvim_buf_get_option(bufnr, 'filetype')) == false then
       table.insert(buffers, bufnr)
