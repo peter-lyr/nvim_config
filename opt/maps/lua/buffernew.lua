@@ -30,14 +30,35 @@ M.stack_cur_bufname = function()
   end
 end
 
+-- donot close buf type
+
+local fts = {
+  'neo-tree',
+  'minimap',
+  'aerial',
+  'edgy',
+  'notify',
+}
+
 M.hide = function()
-  M.stack_cur_bufname()
-  vim.cmd([[
-    try
-      hide
-    catch
-    endtry
-  ]])
+  local buffers = {}
+  for winnr=1, vim.fn.winnr('$') do
+    local bufnr = vim.fn.winbufnr(winnr)
+    if vim.tbl_contains(fts, vim.api.nvim_buf_get_option(bufnr, 'filetype')) == false then
+      table.insert(buffers, bufnr)
+      -- print(bufnr, vim.fn.bufname(bufnr), vim.api.nvim_buf_get_option(bufnr, 'filetype'))
+    end
+  end
+  -- print(#buffers)
+  if #buffers > 1 and vim.tbl_contains(buffers, vim.fn.bufnr()) then
+    M.stack_cur_bufname()
+    vim.cmd([[
+      try
+        hide
+      catch
+      endtry
+    ]])
+  end
 end
 
 M.bw_unlisted_buffers = function()
