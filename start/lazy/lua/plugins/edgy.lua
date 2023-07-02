@@ -1,5 +1,6 @@
 return {
   "folke/edgy.nvim",
+  lazy = true,
   event = { "BufReadPost", "BufNew", "BufNewFile",  },
   keys = {
     { '<leader>1', desc = 'NeoTree open filesystem' },
@@ -10,6 +11,12 @@ return {
     { '<leader>5', desc = 'AerialOpen right' },
 
     { '<leader>m', desc = 'bqf toggle' },
+  },
+  dependencies = {
+    require('plugins.neotree'),
+    require('plugins.minimap'),
+    require('plugins.aerial'),
+    require('plugins.bqf'),
   },
   opts = {
     animate = {
