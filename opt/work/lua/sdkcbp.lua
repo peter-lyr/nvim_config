@@ -90,9 +90,7 @@ local cmake_app_do = function(app_cbp)
     nn = 'projects'
   end
   if string.match(app_cbp, 'app/projects') then
-    -- vim.cmd(string.format([[silent !start cmd /c "chcp 65001 & python "%s" "%s" %s & timeout /t 3"]], vim.g.cmake_app_py, mm, nn))
-    vim.cmd(string.format([[silent !start cmd /c "chcp 65001 & python "%s" "%s" %s & pause"]], vim.g.cmake_app_py, mm, nn))
-    -- vim.cmd(string.format([[silent AsyncRun python "%s" "%s" %s]], vim.g.cmake_app_py, mm, nn))
+    vim.cmd(string.format([[silent !start cmd /c "chcp 65001 & python "%s" "%s" %s & timeout /t 3"]], vim.g.cmake_app_py, mm, nn))
   end
 end
 
