@@ -1,6 +1,13 @@
 return {
   "folke/edgy.nvim",
-  event = "VeryLazy",
+  event = { "BufReadPost", "BufNew", "BufNewFile",  },
+  keys = {
+    { '<leader>1', desc = 'NeoTree open filesystem' },
+    { '<leader>2', desc = 'NeoTree open buffers' },
+    { '<leader>3', desc = 'NeoTree open git_status' },
+    { '<leader>4', desc = 'Minimap' },
+    { '<leader>5', desc = 'AerialOpen right' },
+  },
   opts = {
     animate = {
       enabled = false,
