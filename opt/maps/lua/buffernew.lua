@@ -32,7 +32,7 @@ end
 
 -- donot close buf type
 
-local fts = {
+local close_fts = {
   'neo-tree',
   'minimap',
   'aerial',
@@ -40,11 +40,11 @@ local fts = {
   'notify',
 }
 
-M.hide = function()
+M.close = function()
   local buffers = {}
   for winnr=1, vim.fn.winnr('$') do
     local bufnr = vim.fn.winbufnr(winnr)
-    if vim.tbl_contains(fts, vim.api.nvim_buf_get_option(bufnr, 'filetype')) == false then
+    if vim.tbl_contains(close_fts, vim.api.nvim_buf_get_option(bufnr, 'filetype')) == false then
       table.insert(buffers, bufnr)
       -- print(bufnr, vim.fn.bufname(bufnr), vim.api.nvim_buf_get_option(bufnr, 'filetype'))
     end
@@ -54,7 +54,31 @@ M.hide = function()
     M.stack_cur_bufname()
     vim.cmd([[
       try
-        hide
+        close
+      catch
+      endtry
+    ]])
+  end
+end
+
+M.delete = function()
+  if vim.tbl_contains(close_fts, vim.api.nvim_buf_get_option(vim.fn.bufnr(), 'filetype')) == false then
+    M.stack_cur_bufname()
+    vim.cmd([[
+      try
+        Bdelete!
+      catch
+      endtry
+    ]])
+  end
+end
+
+M.wipeout = function()
+  if vim.tbl_contains(close_fts, vim.api.nvim_buf_get_option(vim.fn.bufnr(), 'filetype')) == false then
+    M.stack_cur_bufname()
+    vim.cmd([[
+      try
+        bw!
       catch
       endtry
     ]])

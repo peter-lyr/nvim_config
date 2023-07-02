@@ -145,9 +145,9 @@ return {
 
       -- hide or bw one or more buffers
 
-      { '<leader>xc',         function() require('buffernew').hide() end,                    mode = { 'n', 'v' }, silent = true, desc = 'hide cur buffer' },
-      { '<leader>xx',         '<cmd>Bdelete!<cr>',                                           mode = { 'n', 'v' }, silent = true, desc = 'Bwipeout!' },
-      { '<leader>x.',         '<cmd>bw!<cr>',                                                mode = { 'n', 'v' }, silent = true, desc = 'bw!' },
+      { '<leader>xc',         function() require('buffernew').close() end,                   mode = { 'n', 'v' }, silent = true, desc = 'hide cur buffer' },
+      { '<leader>xd',         function() require('buffernew').delete() end,                  mode = { 'n', 'v' }, silent = true, desc = 'Bwipeout!' },
+      { '<leader>xw',         function() require('buffernew').wipeout() end,                 mode = { 'n', 'v' }, silent = true, desc = 'bw!' },
       { '<leader>xt',         '<cmd>tabclose<cr>',                                           mode = { 'n', 'v' }, silent = true, desc = 'tabclose' },
       { '<leader><del>',      function() require('buffernew').bw_unlisted_buffers() end,     mode = { 'n', 'v' }, silent = true, desc = 'bw_unlisted_buffers' },
       { '<leader>x<bs>',      '<cmd>qa!<cr>',                                                mode = { 'n', 'v' }, silent = true, desc = 'qa!' },
