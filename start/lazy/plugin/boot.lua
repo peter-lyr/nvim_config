@@ -68,5 +68,9 @@ lazy.setup({
       task = "📌",
       lazy = "💤 ",
     },
+    custom_keys = {
+      ["<localleader>l"] = nil,
+      ["<localleader>t"] = nil,
+    },
   },
 })

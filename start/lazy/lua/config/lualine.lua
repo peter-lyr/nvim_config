@@ -292,19 +292,6 @@ require('lualine').setup({
   },
 })
 
--- record last buflisted bufnr
-
-vim.g.lastbufwinid = 0
-
-vim.api.nvim_create_autocmd({ "BufLeave", }, {
-  callback = function()
-    local bufnr = vim.fn.bufnr()
-    if vim.fn.buflisted(bufnr) ~= 0 then
-      vim.g.lastbufwinid = vim.fn.win_getid()
-    end
-  end,
-})
-
 -- number go tab or buffer
 
 local lasttabnr = vim.fn['tabpagenr']()

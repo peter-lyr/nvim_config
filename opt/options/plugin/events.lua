@@ -68,10 +68,24 @@ vim.api.nvim_create_autocmd("BufReadPost", {
   end,
 })
 
+-- record last buflisted bufnr
+
+vim.g.lastbufwinid = 0
+
+vim.api.nvim_create_autocmd({ "BufLeave", }, {
+  callback = function()
+    local bufnr = vim.fn.bufnr()
+    if vim.fn.buflisted(bufnr) ~= 0 then
+      vim.g.lastbufwinid = vim.fn.win_getid()
+    end
+  end,
+})
+
 -- close some filetypes with <q>
 vim.api.nvim_create_autocmd("FileType", {
   group = augroup("close_with_q"),
   pattern = {
+    "lazy",
     "PlenaryTestPopup",
     "help",
     "lspinfo",
@@ -88,7 +102,20 @@ vim.api.nvim_create_autocmd("FileType", {
   },
   callback = function(event)
     vim.bo[event.buf].buflisted = false
-    vim.keymap.set("n", "q", "<cmd>close<cr>", { buffer = event.buf, silent = true })
+    vim.loop.new_timer():start(30, 0, function()
+      vim.schedule(function()
+        vim.keymap.set("n", "q", function()
+          vim.cmd('close')
+          vim.loop.new_timer():start(30, 0, function()
+            vim.schedule(function()
+              if vim.fn.buflisted(vim.fn.bufnr()) == 0 then
+                pcall(vim.fn.win_gotoid, vim.g.lastbufwinid)
+              end
+            end)
+          end)
+        end, { buffer = event.buf, silent = true })
+      end)
+    end)
   end,
 })
 
