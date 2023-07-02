@@ -286,7 +286,16 @@ return {
 
       -- nvim_config
 
-      { '<a-s-f12>',        function() require('config').nvim_config() end,        mode = { 'n', 'v', }, silent = true, desc = 'open nvim_config' },
+      { '<a-s-f12>',        function() require('config').nvim_config() end, mode = { 'n', 'v', }, silent = true, desc = 'open nvim_config' },
+
+      ------------------------
+      -- session.lua
+      ------------------------
+
+      -- last all
+      { '<leader>bi',       function() require('session').save() end,          mode = { 'n', 'v', }, silent = true, desc = 'save session' },
+      { '<leader>bo',       function() require('session').open_last_all() end, mode = { 'n', 'v', }, silent = true, desc = 'open session: last all' },
+      { '<leader>bu',       function() require('session').open_branches() end, mode = { 'n', 'v', }, silent = true, desc = 'open session: branches' },
 
     },
   },
