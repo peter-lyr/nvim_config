@@ -99,7 +99,7 @@ end
 
 M.open_branches = function()
   local sta, data = pcall(loadstring('return ' .. session_branches:read()))
-  if sta and #vim.tbl_keys(data) > 0 then
+  if sta and data and #vim.tbl_keys(data) > 0 then
     vim.ui.select(vim.fn.sort(vim.tbl_keys(data)), { prompt = 'project' }, function(project)
       local branch = get_branch(project)
       if vim.tbl_contains(vim.tbl_keys(data[project]), branch) == true then
