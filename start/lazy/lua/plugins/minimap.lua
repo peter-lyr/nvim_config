@@ -18,7 +18,7 @@ return {
                   if winnr ~= -1 then
                     vim.cmd([[
                       try
-                        MinimapRescan
+                        MinimapRefresh
                       catch
                       endtry
                     ]])
@@ -78,14 +78,15 @@ return {
                 vim.cmd('Minimap')
               end)
             end)
-            vim.loop.new_timer():start(100, 0, function()
+            local cur_bufnr = vim.fn.bufnr()
+            vim.loop.new_timer():start(300, 0, function()
               vim.schedule(function()
-                if minimap_rescan_allow == 1 then
+                if minimap_rescan_allow == 1 and cur_bufnr == vim.fn.bufnr() then
                   minimap_rescan_allow = 0
                   if vim.fn.bufnr() ~= vim.fn.bufnr('-MINIMAP-') then
                     vim.cmd([[
                     try
-                      MinimapRescan
+                      MinimapRefresh
                     catch
                     endtry
                     ]])
