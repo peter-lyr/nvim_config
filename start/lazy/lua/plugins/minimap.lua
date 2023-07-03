@@ -9,21 +9,26 @@ return {
       function()
         if vim.g.loaded_minimap then
           if vim.fn.filereadable(vim.api.nvim_buf_get_name(0)) == 1 then
-            vim.cmd('Minimap')
-            vim.loop.new_timer():start(50, 0, function()
-              vim.schedule(function()
-                local winnr = vim.fn.bufwinnr('-MINIMAP-')
-                if winnr ~= -1 then
-                  vim.cmd([[
-                    try
-                      MinimapRescan
-                    catch
-                    endtry
-                  ]])
-                  pcall(vim.fn.win_gotoid, vim.fn.win_getid(winnr))
-                end
+            local winnr = vim.fn.bufwinnr('-MINIMAP-')
+            if winnr == -1 then
+              vim.cmd('Minimap')
+              vim.loop.new_timer():start(50, 0, function()
+                vim.schedule(function()
+                  winnr = vim.fn.bufwinnr('-MINIMAP-')
+                  if winnr ~= -1 then
+                    vim.cmd([[
+                      try
+                        MinimapRescan
+                      catch
+                      endtry
+                    ]])
+                    pcall(vim.fn.win_gotoid, vim.fn.win_getid(winnr))
+                  end
+                end)
               end)
-            end)
+            else
+              pcall(vim.fn.win_gotoid, vim.fn.win_getid(winnr))
+            end
           end
         end
       end,
