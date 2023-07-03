@@ -14,7 +14,12 @@ return {
               vim.schedule(function()
                 local winnr = vim.fn.bufwinnr('-MINIMAP-')
                 if winnr ~= -1 then
-                  pcall(vim.cmd, 'MinimapRescan')
+                  vim.cmd([[
+                    try
+                      MinimapRescan
+                    catch
+                    endtry
+                  ]])
                   pcall(vim.fn.win_gotoid, vim.fn.win_getid(winnr))
                 end
               end)
@@ -65,6 +70,24 @@ return {
             vim.loop.new_timer():start(10, 0, function()
               vim.schedule(function()
                 vim.cmd('Minimap')
+              end)
+            end)
+          end
+        end,
+      })
+      vim.api.nvim_create_autocmd({ "BufEnter", }, {
+        callback = function()
+          if vim.g.minimap_autostart == 1 and vim.fn.filereadable(vim.api.nvim_buf_get_name(0)) == 1 then
+            vim.loop.new_timer():start(100, 0, function()
+              vim.schedule(function()
+                if vim.fn.bufnr() == vim.fn.bufnr('-MINIMAP-') then
+                  vim.cmd([[
+                    try
+                      MinimapRescan
+                    catch
+                    endtry
+                  ]])
+                end
               end)
             end)
           end
