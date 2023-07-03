@@ -1,5 +1,4 @@
-local file = require('plenary.path'):new(vim.g.boot_lua):parent():parent():parent():parent():joinpath('test.log')
-.filename
+local file = require('plenary.path'):new(vim.g.boot_lua):parent():parent():parent():parent():joinpath('test.log').filename
 
 vim.api.nvim_create_autocmd({
   "BufAdd", "BufDelete", "BufEnter", "BufFilePost", "BufFilePre",
@@ -28,6 +27,6 @@ vim.api.nvim_create_autocmd({
   "WinLeave", "WinNew", "WinScrolled", "WinResized",
 }, {
   callback = function(ev)
-    vim.fn.writefile({ string.format('%d - %s', ev.buf, ev.file) }, file, 'a')
+    vim.fn.writefile({ string.format("%-4d(%-20s) - %s", ev.buf, ev.event, ev.file) }, file, 'a')
   end,
 })
