@@ -11,6 +11,14 @@ if not session_dir:exists() then
   session_dir:mkdir()
 end
 
+if not session_branches:exists() then
+  session_branches:write('{}', 'w')
+end
+
+if not session_last_all:exists() then
+  session_last_all:write('{}', 'w')
+end
+
 -- last all buffers
 
 local function rep(content)
