@@ -85,6 +85,18 @@ M.wipeout = function()
   end
 end
 
+M.tabclose = function()
+  if vim.fn.bufnr('-MINIMAP-') ~= -1 then
+    vim.cmd('MinimapClose')
+  end
+  vim.cmd([[
+    try
+      tabclose!
+    catch
+    endtry
+  ]])
+end
+
 M.bw_unlisted_buffers = function()
   local path = require('plenary.path')
   local bufnrs = vim.tbl_filter(function(b)
