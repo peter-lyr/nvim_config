@@ -113,7 +113,7 @@ return {
         end,
       })
       local minimap_rescan_allow2 = 1
-      vim.api.nvim_create_autocmd({ "VimResized", "WinResized" }, {
+      vim.api.nvim_create_autocmd({ "VimResized", }, {
         callback = function()
           if minimap_rescan_allow2 == 1 then
             minimap_rescan_allow2 = 0
