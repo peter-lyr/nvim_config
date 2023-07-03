@@ -1,6 +1,8 @@
 local file = require('plenary.path'):new(vim.g.boot_lua):parent():parent():parent():parent():joinpath('test.log')
 .filename
 
+local start = os.time()
+
 vim.api.nvim_create_autocmd({
   "BufAdd",
   "BufDelete",
@@ -123,6 +125,6 @@ vim.api.nvim_create_autocmd({
   "WinResized",
 }, {
   callback = function(ev)
-    vim.fn.writefile({ string.format([[%-2d %-20s - "%s"]], ev.buf, ev.event, ev.file) }, file, 'a')
+    vim.fn.writefile({ string.format([[%-3d %-2d %-20s - "%s"]], os.time() - start, ev.buf, ev.event, ev.file) }, file, 'a')
   end,
 })
