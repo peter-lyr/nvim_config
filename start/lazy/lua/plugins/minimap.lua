@@ -107,6 +107,20 @@ return {
           vim.cmd('MinimapClose')
         end,
       })
+      local minimap_rescan_allow2 = 1
+      vim.api.nvim_create_autocmd({ "VimResized" }, {
+        callback = function()
+          if minimap_rescan_allow2 == 1 then
+            minimap_rescan_allow2 = 0
+            vim.cmd('MinimapRefresh')
+            vim.loop.new_timer():start(1800, 0, function()
+              vim.schedule(function()
+                minimap_rescan_allow2 = 1
+              end)
+            end)
+          end
+        end,
+      })
     end
   end
 }
