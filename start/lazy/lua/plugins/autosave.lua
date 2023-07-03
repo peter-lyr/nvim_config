@@ -6,7 +6,8 @@ return {
     require('auto-save').setup({
       execution_message = {
         message = function()
-          return ("AutoSave: saved at " .. vim.fn.strftime("%H:%M:%S"))
+          -- return ("AutoSave: saved at " .. vim.fn.strftime("%H:%M:%S"))
+          return ''
         end,
       }
     })
