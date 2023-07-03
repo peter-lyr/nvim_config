@@ -113,6 +113,14 @@ M.open_branches = function()
   end
 end
 
+vim.api.nvim_create_autocmd({ "BufReadPost", "BufNew", "BufNewFile", }, {
+  callback = function(ev)
+    if #ev.file > 0 then
+      M.save()
+    end
+  end,
+})
+
 vim.api.nvim_create_autocmd({ "ExitPre" }, {
   callback = function()
     M.save()
