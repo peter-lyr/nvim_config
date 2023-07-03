@@ -64,6 +64,7 @@ return {
           end
         end,
       })
+      local minimap_rescan_allow = 1
       vim.api.nvim_create_autocmd({ "BufEnter", }, {
         callback = function()
           if vim.g.minimap_autostart == 1 and vim.fn.filereadable(vim.api.nvim_buf_get_name(0)) == 1 then
@@ -72,21 +73,23 @@ return {
                 vim.cmd('Minimap')
               end)
             end)
-          end
-        end,
-      })
-      vim.api.nvim_create_autocmd({ "BufEnter", }, {
-        callback = function()
-          if vim.g.minimap_autostart == 1 and vim.fn.filereadable(vim.api.nvim_buf_get_name(0)) == 1 then
             vim.loop.new_timer():start(100, 0, function()
               vim.schedule(function()
-                if vim.fn.bufnr() == vim.fn.bufnr('-MINIMAP-') then
-                  vim.cmd([[
+                if minimap_rescan_allow == 1 then
+                  minimap_rescan_allow = 0
+                  if vim.fn.bufnr() ~= vim.fn.bufnr('-MINIMAP-') then
+                    vim.cmd([[
                     try
                       MinimapRescan
                     catch
                     endtry
-                  ]])
+                    ]])
+                  end
+                  vim.loop.new_timer():start(5000, 0, function()
+                    vim.schedule(function()
+                      minimap_rescan_allow = 1
+                    end)
+                  end)
                 end
               end)
             end)
