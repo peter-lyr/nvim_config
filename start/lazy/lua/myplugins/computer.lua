@@ -25,6 +25,10 @@ return {
 
       { '<F6>c', function() require('Windows').path()               end, mode = { 'n', 'v' }, silent = true, desc = 'open env path' },
 
+      -- 声音属性
+
+      { '<F6>d', function() require('Windows').sound()              end, mode = { 'n', 'v' }, silent = true, desc = 'sound' },
+
     },
   },
 }
