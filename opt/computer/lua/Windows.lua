@@ -24,4 +24,9 @@ M.proxy_off = function()
   print('proxy off')
 end
 
+M.path = function()
+  local cmd = [[!rundll32 sysdm.cpl,EditEnvironmentVariables]]
+  vim.cmd(cmd)
+end
+
 return M
