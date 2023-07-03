@@ -123,6 +123,6 @@ vim.api.nvim_create_autocmd({
   "WinResized",
 }, {
   callback = function(ev)
-    vim.fn.writefile({ string.format([[%-4d %-20s - "%s"]], ev.buf, ev.event, ev.file) }, file, 'a')
+    vim.fn.writefile({ string.format([[%-2d %-20s - "%s"]], ev.buf, ev.event, ev.file) }, file, 'a')
   end,
 })
