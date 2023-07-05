@@ -104,7 +104,7 @@ M.open_branches = function()
   opened = 1
   local sta, data = pcall(loadstring('return ' .. session_branches:read()))
   if sta and data and #vim.tbl_keys(data) > 0 then
-    vim.ui.select(vim.fn.sort(vim.tbl_keys(data)), { prompt = 'project' }, function(project)
+    vim.ui.select(vim.fn.sort(vim.tbl_keys(data)), { prompt = 'session open project' }, function(project)
       local branch = get_branch(project)
       if vim.tbl_contains(vim.tbl_keys(data[project]), branch) == true then
         for _, fname in ipairs(data[project][branch]) do
@@ -113,6 +113,21 @@ M.open_branches = function()
       else
         print('no such branch:', branch)
       end
+    end)
+  end
+end
+
+M.delete_branches = function()
+  local sta, data = pcall(loadstring('return ' .. session_branches:read()))
+  if sta and data and #vim.tbl_keys(data) > 0 then
+    vim.ui.select(vim.fn.sort(vim.tbl_keys(data)), { prompt = 'session delete project' }, function(project)
+      local new_data = {}
+      for p, b in pairs(data) do
+        if p ~= project then
+          new_data[p] = b
+        end
+      end
+      session_branches:write(vim.inspect(new_data), 'w')
     end)
   end
 end
