@@ -1,7 +1,9 @@
 vim.g.mapleader = " "
-vim.g.boot_lua = vim.fn.expand('<sfile>')
 
-local pack = vim.fn.expand("$VIMRUNTIME") .. '\\pack\\'
+local vimruntime = vim.fn.expand("$VIMRUNTIME")
+local pack = vimruntime .. '\\pack\\'
+
+vim.g.pack_path = pack
 
 local lazypath = pack .. "lazy\\start\\lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
@@ -35,6 +37,7 @@ lazy.setup({
   lockfile = lockfile,
   performance = {
     rtp = {
+      paths = { string.sub(vimruntime, 1, #vimruntime - 12) .. 'nvim-qt\\runtime' },
       disabled_plugins = {
         "gzip",
         "matchit",

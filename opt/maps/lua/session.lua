@@ -88,7 +88,10 @@ M.save = function()
   end
 end
 
+local opened = nil
+
 M.open_last_all = function()
+  opened = 1
   local sta, data = pcall(loadstring('return ' .. session_last_all:read()))
   if sta and #data > 0 then
     for _, fname in ipairs(data) do
@@ -98,8 +101,9 @@ M.open_last_all = function()
 end
 
 M.open_branches = function()
+  opened = 1
   local sta, data = pcall(loadstring('return ' .. session_branches:read()))
-  if sta and #vim.tbl_keys(data) > 0 then
+  if sta and data and #vim.tbl_keys(data) > 0 then
     vim.ui.select(vim.fn.sort(vim.tbl_keys(data)), { prompt = 'project' }, function(project)
       local branch = get_branch(project)
       if vim.tbl_contains(vim.tbl_keys(data[project]), branch) == true then
@@ -112,6 +116,14 @@ M.open_branches = function()
     end)
   end
 end
+
+vim.api.nvim_create_autocmd({ "BufReadPost", "BufNew", "BufNewFile", }, {
+  callback = function(ev)
+    if opened and #ev.file > 0 then
+      M.save()
+    end
+  end,
+})
 
 vim.api.nvim_create_autocmd({ "ExitPre" }, {
   callback = function()

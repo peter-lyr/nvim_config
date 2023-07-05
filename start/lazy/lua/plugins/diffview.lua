@@ -7,6 +7,7 @@ return {
     require('wait.telescope'),
     require('wait.plenary'),
     require('plugins.treesitter'),
+    require('plugins.minimap'), -- diffviewclose minimap
   },
   keys = {
     { '<leader>gi', function() require('config.diffview').diffviewfilehistory() end, mode = { 'n', 'v', }, silent = true, desc = 'diffview filehistory' },
