@@ -78,11 +78,7 @@ require('neo-tree').setup({
       ["<leader><leader>gy"] = function(state)
         vim.cmd(string.format([[let @+ = '%s']], state.path))
       end,
-      ["df"] = "filter_on_submit",
-      ["dF"] = "clear_filter",
-      ["d/"] = "fuzzy_finder",
       ["Y"] = "copy_to_clipboard",
-      ["ds"] = "fuzzy_sorter",
       ["M"] = "move",
       ["C"] = "copy",
       ["c"] = {
@@ -113,6 +109,10 @@ require('neo-tree').setup({
             refresh()
           end
         end,
+        ["ff"] = "filter_on_submit",
+        ["fF"] = "clear_filter",
+        ["f/"] = "fuzzy_finder",
+        ["fs"] = "fuzzy_sorter",
       },
     },
   },
