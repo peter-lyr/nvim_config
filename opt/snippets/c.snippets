@@ -1,0 +1,38 @@
+snippet jin "printf just int\n"
+	my_printf("%d\n", $1);
+
+snippet jic "printf just int, "
+	my_printf("%d, ", $1);
+
+snippet in "printf int\n"
+	my_printf("$1: %d\n", $1);
+
+snippet ic "printf int,"
+	my_printf("$1: %d, ", $1);
+
+snippet jhn "printf just hex\n"
+	my_printf("%x\n", $1);
+
+snippet jhc "printf just hex,"
+	my_printf("%x, ", $1);
+
+snippet hn "printf hex\n"
+	my_printf("$1: 0x%x\n", $1);
+
+snippet hc "printf hex,"
+	my_printf("$1: 0x%x, ", $1);
+
+snippet hin "printf hex(int)\n"
+	my_printf("$1: 0x%x(%d)\n", $1, $1);
+
+snippet hic "printf hex(int),"
+	my_printf("$1: 0x%x(%d), ", $1, $1);
+
+snippet sn "printf string"
+	my_printf("$1\n");
+
+snippet s "printf string"
+	my_printf("$1");
+
+snippet l "printf line"
+	my_printf("## %s# %d\n", __func__, __LINE__);
