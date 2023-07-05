@@ -1,8 +1,9 @@
 vim.g.mapleader = " "
-vim.g.boot_lua = vim.fn.expand('<sfile>')
 
 local vimruntime = vim.fn.expand("$VIMRUNTIME")
 local pack = vimruntime .. '\\pack\\'
+
+vim.g.pack_path = pack
 
 local lazypath = pack .. "lazy\\start\\lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then

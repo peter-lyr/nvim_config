@@ -1,5 +1,4 @@
-local file = require('plenary.path'):new(vim.g.boot_lua)
-  :parent():parent():parent():parent():joinpath('test.log').filename
+local file = require('plenary.path'):new(vim.g.pack_path):joinpath('nvim_config', 'test.log').filename
 
 vim.api.nvim_create_autocmd({
   "BufAdd",
