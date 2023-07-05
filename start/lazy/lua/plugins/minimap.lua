@@ -59,7 +59,7 @@ return {
   end,
   config = function()
     if vim.g.loaded_minimap then
-      vim.g.minimap_autostart = 1
+      vim.g.minimap_autostart = 0
       vim.api.nvim_create_autocmd({ "WinClosed", }, {
         callback = function()
           if vim.fn.bufnr() == vim.fn.bufnr('-MINIMAP-') then
