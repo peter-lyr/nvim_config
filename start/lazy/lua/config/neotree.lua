@@ -187,6 +187,7 @@ M.openall = function()
       if source == 'git_status' then
         timer:stop()
         flag = 1
+        vim.cmd('wincmd t')
         vim.cmd('wincmd l')
       end
       if flag then
@@ -226,6 +227,7 @@ M.refreshall = function()
       if source == 'git_status' then
         timer:stop()
         flag = 1
+        vim.cmd('wincmd t')
         vim.cmd('wincmd l')
       end
       if flag then
