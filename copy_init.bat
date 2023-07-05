@@ -11,7 +11,7 @@ set nvim_config=%nvim_config%%content%\
 goto begin
 :end
 
-copy /y %nvim_config%copy_init.bat %pack%localappdata\nvim\init.lua
+copy /y %nvim_config%init.lua %pack%localappdata\nvim\init.lua
 
 timeout /t 3
 exit
