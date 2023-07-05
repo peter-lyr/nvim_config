@@ -177,6 +177,31 @@ require('neo-tree').setup({
 
 local M = {}
 
+local function allow()
+  if vim.wo.diff == true or string.match(vim.bo.ft, 'Diffview') then
+    return nil
+  end
+  return 1
+end
+
+M.filesystem = function()
+  if allow() then
+    vim.cmd('Neotree reveal_force_cwd filesystem')
+  end
+end
+
+M.buffers = function()
+  if allow() then
+    vim.cmd('Neotree reveal_force_cwd buffers')
+  end
+end
+
+M.git_status = function()
+  if allow() then
+    vim.cmd('Neotree reveal_force_cwd git_status')
+  end
+end
+
 M.flag = nil
 
 M.openall = function()
