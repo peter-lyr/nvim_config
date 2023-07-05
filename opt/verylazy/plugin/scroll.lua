@@ -16,11 +16,11 @@ ScrollMap = function(char)
         vim.fn.feedkeys(ch)
       end
     end
-    t1:start(0, 20, function()
+    t1:start(0, 50, function()
       vim.schedule(function()
         cnt = cnt + 1
-        if (cnt <= 26 or os.clock() - tick <= 0.040) and finished == 0 then
-          vim.cmd(string.format([[exe "norm \%s"]], key))
+        if (cnt <= 11 or os.clock() - tick <= 0.50) and finished == 0 then
+          vim.cmd(string.format([[exe "norm 5\%s"]], key))
           vim.cmd([[redraw]])
         else
           vim.cmd([[call feedkeys("\<esc>")]])
