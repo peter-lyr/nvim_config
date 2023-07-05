@@ -294,9 +294,10 @@ return {
       ------------------------
 
       -- last all
-      { '<leader>bi',       function() require('session').save() end,          mode = { 'n', 'v', }, silent = true, desc = 'save session' },
-      { '<leader>bo',       function() require('session').open_last_all() end, mode = { 'n', 'v', }, silent = true, desc = 'open session: last all' },
-      { '<leader>bu',       function() require('session').open_branches() end, mode = { 'n', 'v', }, silent = true, desc = 'open session: branches' },
+      { '<leader>bi',       function() require('session').save() end,            mode = { 'n', 'v', }, silent = true, desc = 'save session' },
+      { '<leader>bo',       function() require('session').open_last_all() end,   mode = { 'n', 'v', }, silent = true, desc = 'open session: last all' },
+      { '<leader>bu',       function() require('session').open_branches() end,   mode = { 'n', 'v', }, silent = true, desc = 'open session: branches' },
+      { '<leader>bI',       function() require('session').delete_branches() end, mode = { 'n', 'v', }, silent = true, desc = 'del session: branches' },
 
     },
   },
