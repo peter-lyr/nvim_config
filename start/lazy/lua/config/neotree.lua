@@ -177,20 +177,22 @@ require('neo-tree').setup({
 
 local M = {}
 
+M.flag = nil
+
 M.openall = function()
+  M.flag = nil
   vim.cmd('Neotree reveal_force_cwd filesystem')
   local timer = vim.loop.new_timer()
-  local flag = nil
   timer:start(100, 100, function()
     vim.schedule(function()
       local source = vim.b[vim.fn.bufnr()].neo_tree_source
       if source == 'git_status' then
         timer:stop()
-        flag = 1
+        M.flag = 1
         vim.cmd('wincmd t')
         vim.cmd('wincmd l')
       end
-      if flag then
+      if M.flag then
         return
       end
       if not source then
@@ -203,9 +205,9 @@ M.openall = function()
 end
 
 M.refreshall = function()
+  M.flag = nil
   vim.cmd('Neotree reveal_force_cwd filesystem')
   local timer = vim.loop.new_timer()
-  local flag = nil
   local refresh1 = nil
   local refresh2 = nil
   local refresh3 = nil
@@ -226,11 +228,11 @@ M.refreshall = function()
       end
       if source == 'git_status' then
         timer:stop()
-        flag = 1
+        M.flag = 1
         vim.cmd('wincmd t')
         vim.cmd('wincmd l')
       end
-      if flag then
+      if M.flag then
         return
       end
       if not source then
@@ -241,5 +243,45 @@ M.refreshall = function()
     end)
   end)
 end
+
+M.check = function()
+  local ok1 = nil
+  local ok2 = nil
+  local ok3 = nil
+  local ok = nil
+  for winnr = 1, vim.fn.winnr('$') do
+    local source = vim.b[vim.fn.winbufnr(winnr)].neo_tree_source
+    if source == 'filesystem' then
+      ok1 = 1
+    elseif source == 'buffers' then
+      ok2 = 1
+    elseif source == 'git_status' then
+      ok3 = 1
+    end
+    if ok1 and ok2 and ok3 or (not ok1 and not ok2 and not ok3) then
+      ok = 1
+      break
+    end
+  end
+  return ok
+end
+
+vim.api.nvim_create_autocmd({ "CursorHold", }, {
+  callback = function()
+    if not vim.b[vim.fn.bufnr()].neo_tree_source and not M.check() then
+      local winid = vim.fn.win_getid()
+      M.openall()
+      local timer = vim.loop.new_timer()
+      timer:start(100, 100, function()
+        vim.schedule(function()
+          if M.flag then
+            timer:stop()
+            vim.fn.win_gotoid(winid)
+          end
+        end)
+      end)
+    end
+  end,
+})
 
 return M
