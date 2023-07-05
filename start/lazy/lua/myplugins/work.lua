@@ -47,6 +47,11 @@ return {
 
       { '<leader>vk', '<cmd>TortoisesvN checkout root yes<cr>',    mode = { 'n', 'v', }, silent = true, desc = 'TortoisesvN checkout root yes<cr>', },
 
+      -- fileserv.lua
+
+      { '<c-F5>', function() require('fileserv').upclip() end,   mode = { 'n', 'v', }, silent = true, desc = 'upclip' },
+      { '<c-F6>', function() require('fileserv').downclip() end, mode = { 'n', 'v', }, silent = true, desc = 'downclip' },
+
     }
  },
 }
