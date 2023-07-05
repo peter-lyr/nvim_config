@@ -174,3 +174,70 @@ require('neo-tree').setup({
     }
   },
 })
+
+local M = {}
+
+M.openall = function()
+  vim.cmd('Neotree reveal_force_cwd filesystem')
+  local timer = vim.loop.new_timer()
+  local flag = nil
+  timer:start(100, 100, function()
+    vim.schedule(function()
+      local source = vim.b[vim.fn.bufnr()].neo_tree_source
+      if source == 'git_status' then
+        timer:stop()
+        flag = 1
+        vim.cmd('wincmd l')
+      end
+      if flag then
+        return
+      end
+      if not source then
+        vim.cmd('wincmd t')
+      else
+        vim.cmd('wincmd j')
+      end
+    end)
+  end)
+end
+
+M.refreshall = function()
+  vim.cmd('Neotree reveal_force_cwd filesystem')
+  local timer = vim.loop.new_timer()
+  local flag = nil
+  local refresh1 = nil
+  local refresh2 = nil
+  local refresh3 = nil
+  timer:start(100, 100, function()
+    vim.schedule(function()
+      local source = vim.b[vim.fn.bufnr()].neo_tree_source
+      if source then
+        if not refresh3 and source == 'git_status' then
+          refresh()
+          refresh3 = 1
+        elseif not refresh2 and source == 'buffers' then
+          refresh()
+          refresh2 = 1
+        elseif not refresh1 and source == 'filesystem' then
+          refresh()
+          refresh1 = 1
+        end
+      end
+      if source == 'git_status' then
+        timer:stop()
+        flag = 1
+        vim.cmd('wincmd l')
+      end
+      if flag then
+        return
+      end
+      if not source then
+        vim.cmd('wincmd t')
+      else
+        vim.cmd('wincmd j')
+      end
+    end)
+  end)
+end
+
+return M
