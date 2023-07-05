@@ -1,5 +1,7 @@
 vim.g.neo_tree_remove_legacy_commands = 1
 
+-- require("neo-tree").paste_default_config()
+
 local cc = require("neo-tree.sources.common.commands")
 local utils = require("neo-tree.utils")
 local fs = require("neo-tree.sources.filesystem")
@@ -19,12 +21,18 @@ require('neo-tree').setup({
       [">"] = "noop",
       ["d"] = "noop",
       ["z"] = "noop",
-      ["C"] = "noop",
       ["R"] = "noop",
       ["<bs>"] = "noop",
       ["e"] = "noop",
+      ["f"] = "noop",
+      ["F"] = "noop",
+      ["/"] = "noop",
+      ["y"] = "noop",
+      ["#"] = "noop",
+      ["h"] = "noop",
+      ["l"] = "noop",
 
-      ["h"] = { "toggle_preview", config = { use_float = true } },
+      -- ["h"] = { "toggle_preview", config = { use_float = true } },
       ["<tab>"] = function(state)
         local winid = vim.fn.win_getid()
         cc.open(state, utils.wrap(fs.toggle_directory, state))
@@ -35,9 +43,10 @@ require('neo-tree').setup({
       ["dk"] = "open_tabnew",
       ["D"] = "delete",
       ["do"] = "open",
+      ["a"] = "open",
       ["o"] = "open",
-      ["zm"] = "close_node",
-      ["zM"] = "close_all_nodes",
+      ["m"] = "close_node",
+      ["zm"] = "close_all_nodes",
       ["<F5>"] = "refresh",
       ["<c-r>"] = "refresh",
       ["u"] = "navigate_up",
@@ -69,6 +78,19 @@ require('neo-tree').setup({
       ["<leader><leader>gy"] = function(state)
         vim.cmd(string.format([[let @+ = '%s']], state.path))
       end,
+      ["df"] = "filter_on_submit",
+      ["dF"] = "clear_filter",
+      ["d/"] = "fuzzy_finder",
+      ["Y"] = "copy_to_clipboard",
+      ["ds"] = "fuzzy_sorter",
+      ["M"] = "move",
+      ["C"] = "copy",
+      ["c"] = {
+        "add",
+        config = {
+          show_path = "relative" -- "none", "relative", "absolute"
+        }
+      },
     },
   },
   filesystem = {
