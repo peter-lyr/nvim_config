@@ -1,5 +1,7 @@
 vim.g.neo_tree_remove_legacy_commands = 1
 
+-- require("neo-tree").paste_default_config()
+
 local cc = require("neo-tree.sources.common.commands")
 local utils = require("neo-tree.utils")
 local fs = require("neo-tree.sources.filesystem")
@@ -19,12 +21,18 @@ require('neo-tree').setup({
       [">"] = "noop",
       ["d"] = "noop",
       ["z"] = "noop",
-      ["C"] = "noop",
       ["R"] = "noop",
       ["<bs>"] = "noop",
       ["e"] = "noop",
+      ["f"] = "noop",
+      ["F"] = "noop",
+      ["/"] = "noop",
+      ["y"] = "noop",
+      ["#"] = "noop",
+      ["h"] = "noop",
+      ["l"] = "noop",
 
-      ["h"] = { "toggle_preview", config = { use_float = true } },
+      -- ["h"] = { "toggle_preview", config = { use_float = true } },
       ["<tab>"] = function(state)
         local winid = vim.fn.win_getid()
         cc.open(state, utils.wrap(fs.toggle_directory, state))
@@ -35,9 +43,10 @@ require('neo-tree').setup({
       ["dk"] = "open_tabnew",
       ["D"] = "delete",
       ["do"] = "open",
+      ["a"] = "open",
       ["o"] = "open",
-      ["zm"] = "close_node",
-      ["zM"] = "close_all_nodes",
+      ["m"] = "close_node",
+      ["zm"] = "close_all_nodes",
       ["<F5>"] = "refresh",
       ["<c-r>"] = "refresh",
       ["u"] = "navigate_up",
@@ -69,6 +78,15 @@ require('neo-tree').setup({
       ["<leader><leader>gy"] = function(state)
         vim.cmd(string.format([[let @+ = '%s']], state.path))
       end,
+      ["Y"] = "copy_to_clipboard",
+      ["M"] = "move",
+      ["C"] = "copy",
+      ["c"] = {
+        "add",
+        config = {
+          show_path = "relative" -- "none", "relative", "absolute"
+        }
+      },
     },
   },
   filesystem = {
@@ -91,6 +109,10 @@ require('neo-tree').setup({
             refresh()
           end
         end,
+        ["ff"] = "filter_on_submit",
+        ["fF"] = "clear_filter",
+        ["f/"] = "fuzzy_finder",
+        ["fs"] = "fuzzy_sorter",
       },
     },
   },
@@ -152,3 +174,70 @@ require('neo-tree').setup({
     }
   },
 })
+
+local M = {}
+
+M.openall = function()
+  vim.cmd('Neotree reveal_force_cwd filesystem')
+  local timer = vim.loop.new_timer()
+  local flag = nil
+  timer:start(100, 100, function()
+    vim.schedule(function()
+      local source = vim.b[vim.fn.bufnr()].neo_tree_source
+      if source == 'git_status' then
+        timer:stop()
+        flag = 1
+        vim.cmd('wincmd l')
+      end
+      if flag then
+        return
+      end
+      if not source then
+        vim.cmd('wincmd t')
+      else
+        vim.cmd('wincmd j')
+      end
+    end)
+  end)
+end
+
+M.refreshall = function()
+  vim.cmd('Neotree reveal_force_cwd filesystem')
+  local timer = vim.loop.new_timer()
+  local flag = nil
+  local refresh1 = nil
+  local refresh2 = nil
+  local refresh3 = nil
+  timer:start(100, 100, function()
+    vim.schedule(function()
+      local source = vim.b[vim.fn.bufnr()].neo_tree_source
+      if source then
+        if not refresh3 and source == 'git_status' then
+          refresh()
+          refresh3 = 1
+        elseif not refresh2 and source == 'buffers' then
+          refresh()
+          refresh2 = 1
+        elseif not refresh1 and source == 'filesystem' then
+          refresh()
+          refresh1 = 1
+        end
+      end
+      if source == 'git_status' then
+        timer:stop()
+        flag = 1
+        vim.cmd('wincmd l')
+      end
+      if flag then
+        return
+      end
+      if not source then
+        vim.cmd('wincmd t')
+      else
+        vim.cmd('wincmd j')
+      end
+    end)
+  end)
+end
+
+return M
