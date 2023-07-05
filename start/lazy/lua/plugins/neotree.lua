@@ -37,6 +37,7 @@ return {
       end
     },
     require('wait.bbye'),
+    require('wait.asyncrun'),
   },
   config = function()
     require('config.neotree')

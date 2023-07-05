@@ -8,6 +8,10 @@ local fs = require("neo-tree.sources.filesystem")
 local manager = require("neo-tree.sources.manager")
 local refresh = utils.wrap(manager.refresh, "buffers")
 
+local function asyncrunprepare()
+  vim.cmd([[au User AsyncRunStop lua local l = vim.fn.getqflist(); vim.notify(l[1]['text'] .. '\n' .. l[#l]['text']); vim.cmd('au! User AsyncRunStop')]])
+end
+
 require('neo-tree').setup({
   open_files_do_not_replace_types = { "qf", },
   window = {
@@ -113,6 +117,13 @@ require('neo-tree').setup({
         ["fF"] = "clear_filter",
         ["f/"] = "fuzzy_finder",
         ["fs"] = "fuzzy_sorter",
+        ["dU"] = function(state)
+          local node = state.tree:get_node()
+          if node.type == 'file' then
+            asyncrunprepare()
+            vim.cmd(string.format('AsyncRun upload.bat "%s"', node.path))
+          end
+        end,
       },
     },
   },
