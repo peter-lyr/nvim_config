@@ -1,0 +1,71 @@
+code {
+  background: #ddd;
+}
+
+code * {
+  word-wrap: break-word;
+  word-break: break-all;
+  white-space: pre-wrap;
+}
+
+.highlight pre {
+  line-height: 125%;
+  padding: 6px 0px 6px 12px;
+  margin-bottom: 16px;
+}
+
+img {
+  max-width: 100%;
+}
+
+a {
+  color: #4078c0;
+  text-decoration: none;
+  background: transparent;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+table, th, td {
+  border: 1px solid black;
+}
+
+ol {
+  display: block;
+  list-style-type: decimal;
+  margin-block-start: 6px;
+  margin-block-end: 6px;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  padding-inline-start: 20px;
+}
+
+.mermaid * {
+  font-size: 24px;
+}
+
+blockquote {
+  display: block;
+  margin-block-start: 6px;
+  margin-block-end: 6px;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+}
+
+video {
+  max-width: 600px;
+  min-width: 200px;
+}
+
+audio {
+  max-width: 600px;
+  min-width: 200px;
+}
+
+/* Name.Function */
+/*.highlight .nf {*/
+/*font-size: xx-large;*/
+/*font-weight: bold;*/
+/*}*/
