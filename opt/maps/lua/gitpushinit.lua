@@ -108,7 +108,7 @@ local function get_dirs(fname)
   return dirs
 end
 
-M.initdo = function(dpath)
+M.initdo = function(dpath, run)
   local remote_name = get_fname_tail(dpath)
   if remote_name == '' then
     return
@@ -131,7 +131,7 @@ M.initdo = function(dpath)
     vim.fn.writefile({ remote_name }, fname, "a")
   end
   asyncrunprepare()
-  local cmd = string.gsub(string.format([[AsyncRun 
+  local cmd = string.gsub(string.format([[%s
       cd %s && md %s &&
       cd %s && git init --bare &&
       cd .. &&
@@ -142,6 +142,7 @@ M.initdo = function(dpath)
       git branch -M "main" &&
       git push -u origin "main"
       ]],
+    not run and 'AsyncRun' or '!',
     dpath, remote_name, remote_dname, remote_name), '%s+', ' ')
   vim.cmd(cmd)
 end
