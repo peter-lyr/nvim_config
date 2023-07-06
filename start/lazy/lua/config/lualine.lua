@@ -26,7 +26,22 @@ local curprojectroot = rep(vim.loop.cwd())
 local function get_projectroot(projectroot)
   local temp = vim.fn.tolower(vim.fn.fnamemodify(projectroot, ':t'))
   if #temp >= 15 then
-    return string.sub(temp, 1, 7) .. '…' .. string.sub(temp, #temp-6, #temp)
+    local s1 = ''
+    local s2 = ''
+    for i=15, 3, -1 do
+      s2 = string.sub(temp, #temp-i, #temp)
+      if vim.fn.strdisplaywidth(s2) <= 7 then
+        break
+      end
+    end
+    for i=3, 15 do
+      local s = string.sub(temp, 1, i)
+      if vim.fn.strdisplaywidth(s) > 7 then
+        break
+      end
+      s1 = s
+    end
+    return s1 .. '…' .. s2
   end
   return temp
 end
@@ -177,12 +192,12 @@ require('lualine').setup({
           for _, v in ipairs(vim.api.nvim_list_tabpages()) do
             sta, tmp = pcall(vim.api.nvim_tabpage_get_var, v, 'tabname')
             if sta == true then
-              l = l + #tmp + 4
+              l = l + vim.fn.strdisplaywidth(tmp) + 4
             else
               l = l + 15 + 4
             end
           end
-          return vim.o.columns - l - 2
+          return vim.o.columns - l - 1
         end,
         filetype_names = {
           ['neo-tree'] = 'Neo Tree',
