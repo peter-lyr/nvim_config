@@ -26,7 +26,22 @@ local curprojectroot = rep(vim.loop.cwd())
 local function get_projectroot(projectroot)
   local temp = vim.fn.tolower(vim.fn.fnamemodify(projectroot, ':t'))
   if #temp >= 15 then
-    return string.sub(temp, 1, 7) .. '…' .. string.sub(temp, #temp-6, #temp)
+    local s1 = ''
+    local s2 = ''
+    for i=15, 3, -1 do
+      s2 = string.sub(temp, #temp-i, #temp)
+      if vim.fn.strdisplaywidth(s2) <= 7 then
+        break
+      end
+    end
+    for i=3, 15 do
+      local s = string.sub(temp, 1, i)
+      if vim.fn.strdisplaywidth(s) > 7 then
+        break
+      end
+      s1 = s
+    end
+    return s1 .. '…' .. s2
   end
   return temp
 end
