@@ -4,7 +4,7 @@ local project = ''
 local Path = require("plenary.path")
 local Scan = require("plenary.scandir")
 
-local sdkcbp_dir = require("plenary.path"):new(vim.g.boot_lua):parent():parent():parent():parent():joinpath('opt', 'work', 'autoload', 'sdkcbp')
+local sdkcbp_dir = require("plenary.path"):new(vim.g.pack_path):joinpath('nvim_config', 'opt', 'work', 'autoload', 'sdkcbp')
 
 vim.g.cmake_app_py = sdkcbp_dir:joinpath('cmake_app.py').filename
 vim.g.cmake_others_py = sdkcbp_dir:joinpath('cmake_others.py').filename
