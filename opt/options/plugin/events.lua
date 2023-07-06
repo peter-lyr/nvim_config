@@ -108,7 +108,7 @@ vim.api.nvim_create_autocmd("FileType", {
     vim.loop.new_timer():start(30, 0, function()
       vim.schedule(function()
         vim.keymap.set("n", "q", function()
-          vim.cmd('close')
+          require('buffernew').close()
           vim.loop.new_timer():start(30, 0, function()
             vim.schedule(function()
               if vim.fn.buflisted(vim.fn.bufnr()) == 0 and vim.g.lastbufwinid ~= -1 then
