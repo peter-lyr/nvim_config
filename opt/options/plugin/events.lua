@@ -70,13 +70,15 @@ vim.api.nvim_create_autocmd("BufReadPost", {
 
 -- record last buflisted bufnr
 
-vim.g.lastbufwinid = 0
+vim.g.lastbufwinid = -1
 
 vim.api.nvim_create_autocmd({ "BufLeave", }, {
   callback = function()
     local bufnr = vim.fn.bufnr()
     if vim.fn.buflisted(bufnr) ~= 0 then
       vim.g.lastbufwinid = vim.fn.win_getid()
+    else
+      vim.g.lastbufwinid = -1
     end
   end,
 })
@@ -90,6 +92,7 @@ vim.api.nvim_create_autocmd("FileType", {
     "help",
     "lspinfo",
     "man",
+    "git",
     "notify",
     "qf",
     "spectre_panel",
@@ -108,7 +111,7 @@ vim.api.nvim_create_autocmd("FileType", {
           vim.cmd('close')
           vim.loop.new_timer():start(30, 0, function()
             vim.schedule(function()
-              if vim.fn.buflisted(vim.fn.bufnr()) == 0 then
+              if vim.fn.buflisted(vim.fn.bufnr()) == 0 and vim.g.lastbufwinid ~= -1 then
                 pcall(vim.fn.win_gotoid, vim.g.lastbufwinid)
               end
             end)
