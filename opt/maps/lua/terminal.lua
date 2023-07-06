@@ -81,7 +81,7 @@ local get_dname = function(readablefile)
   return ''
 end
 
-TerminalToggle = function(terminal, chdir)
+M.toggle = function(terminal, chdir)
   if not chdir then
     chdir = ''
   end
@@ -158,7 +158,7 @@ TerminalToggle = function(terminal, chdir)
       vim.cmd(string.format('te %s', terminal))
     end
     if #chdir > 0 then
-      TerminalToggle(terminal, chdir)
+      M.toggle(terminal, chdir)
     end
   end
 end
@@ -188,7 +188,7 @@ local get_paragraph = function(sep)
   return table.concat(paragraph, sep)
 end
 
-TerminalSend = function(terminal, to_send, show) -- show时，send后不hide
+M.send = function(terminal, to_send, show) -- show时，send后不hide
   if vim.g.builtin_terminal_ok == 0 then
     vim.cmd(string.format('silent !start %s', terminal))
     return
@@ -259,13 +259,10 @@ TerminalSend = function(terminal, to_send, show) -- show时，send后不hide
       vim.cmd(string.format('te %s', terminal))
     end
     if #cmd_to_send > 0 then
-      TerminalSend(terminal, cmd_to_send, show)
+      M.send(terminal, cmd_to_send, show)
     end
   end
 end
-
-M.toggle = TerminalToggle
-M.send   = TerminalSend
 
 vim.g.builtin_terminal_ok = 1
 
