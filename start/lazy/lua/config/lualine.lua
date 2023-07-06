@@ -34,12 +34,11 @@ local function get_projectroot(projectroot)
         break
       end
     end
-    for i=3, 15 do
-      local s = string.sub(temp, 1, i)
-      if vim.fn.strdisplaywidth(s) > 7 then
+    for i=15, 3, -1 do
+      s1 = string.sub(temp, 1, i)
+      if vim.fn.strdisplaywidth(s1) <= 7 then
         break
       end
-      s1 = s
     end
     return s1 .. '…' .. s2
   end
