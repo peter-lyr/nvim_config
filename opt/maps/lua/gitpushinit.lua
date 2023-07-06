@@ -108,40 +108,30 @@ local function get_dirs(fname)
   return dirs
 end
 
-M.init = function()
-  local fname = vim.api.nvim_buf_get_name(0)
-  local dirs = get_dirs(fname)
-  if not dirs then
+M.initdo = function(dpath)
+  local remote_name = get_fname_tail(dpath)
+  if remote_name == '' then
     return
   end
-  vim.ui.select(dirs, { prompt = 'git init' }, function(choice)
-    if not choice then
-      return
-    end
-    local dpath = choice
-    local remote_name = get_fname_tail(dpath)
-    if remote_name == '' then
-      return
-    end
-    remote_name = '.git-' .. remote_name
-    local remote_dpath = require('plenary.path').new(dpath):joinpath(remote_name)
-    if remote_dpath:exists() then
-      print('remote path already existed: ' .. remote_dpath)
-      return
-    end
-    local remote_dname = remote_dpath.filename
-    fname = dpath .. '/.gitignore'
-    local fpath = require('plenary.path').new(fname)
-    if fpath:is_file() then
-      local lines = vim.fn.readfile(fname)
-      if vim.tbl_contains(lines, remote_name) == false then
-        vim.fn.writefile({ remote_name }, fname, "a")
-      end
-    else
+  remote_name = '.git-' .. remote_name
+  local remote_dpath = require('plenary.path').new(dpath):joinpath(remote_name)
+  if remote_dpath:exists() then
+    print('remote path already existed: ' .. remote_dpath)
+    return
+  end
+  local remote_dname = remote_dpath.filename
+  local fname = dpath .. '/.gitignore'
+  local fpath = require('plenary.path').new(fname)
+  if fpath:is_file() then
+    local lines = vim.fn.readfile(fname)
+    if vim.tbl_contains(lines, remote_name) == false then
       vim.fn.writefile({ remote_name }, fname, "a")
     end
-    asyncrunprepare()
-    local cmd = string.gsub(string.format([[AsyncRun 
+  else
+    vim.fn.writefile({ remote_name }, fname, "a")
+  end
+  asyncrunprepare()
+  local cmd = string.gsub(string.format([[AsyncRun 
       cd %s && md %s &&
       cd %s && git init --bare &&
       cd .. &&
@@ -152,8 +142,21 @@ M.init = function()
       git branch -M "main" &&
       git push -u origin "main"
       ]],
-      dpath, remote_name, remote_dname, remote_name), '%s+', ' ')
-    vim.cmd(cmd)
+    dpath, remote_name, remote_dname, remote_name), '%s+', ' ')
+  vim.cmd(cmd)
+end
+
+M.init = function()
+  local fname = vim.api.nvim_buf_get_name(0)
+  local dirs = get_dirs(fname)
+  if not dirs then
+    return
+  end
+  vim.ui.select(dirs, { prompt = 'git init' }, function(choice)
+    if not choice then
+      return
+    end
+    M.initdo(choice)
   end)
 end
 

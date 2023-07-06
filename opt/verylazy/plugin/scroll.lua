@@ -70,7 +70,7 @@ LineJumpMap = function(char, dir)
       vim.schedule(function()
         cnt = cnt + 1
         if (cnt <= 11 or os.clock() - tick <= 0.50) and finished == 0 then
-          vim.cmd(string.format([[exe "norm 5%s"]], dir))
+          vim.cmd(string.format([[exe "norm 4%s"]], dir))
           vim.cmd([[redraw]])
         else
           vim.cmd([[call feedkeys("\<esc>")]])
