@@ -28,3 +28,9 @@ start ms-settings:bluetooth
 ```bat
 shutdown /s /t 0
 ```
+
+# 列出git忽略文件
+
+```bat
+git ls-files --exclude-standard --ignored --others
+```
