@@ -1,6 +1,7 @@
 return {
   'iamcco/markdown-preview.nvim',
   lazy = true,
+  build = ":call mkdp#util#install()",
   ft = {
     'markdown',
   },
@@ -15,7 +16,4 @@ return {
     vim.g.mkdp_theme = 'dark'
     vim.g.mkdp_auto_close = 0
   end,
-  config = function()
-    vim.fn['mkdp#util#install']()
-  end
 }
