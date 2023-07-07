@@ -28,6 +28,26 @@ vim.api.nvim_create_autocmd({ "BufEnter" }, {
   end,
 })
 
+vim.api.nvim_create_autocmd({ "VimEnter", }, {
+  callback = function()
+    if vim.fn.exists('g:GuiLoaded') and vim.g.GuiLoaded == 1 then
+      vim.loop.new_timer():start(10, 0, function()
+        vim.schedule(function()
+          vim.fn['GuiWindowFrameless'](1)
+        end)
+      end)
+    end
+  end,
+})
+
+vim.api.nvim_create_autocmd({ "VimLeave", }, {
+  callback = function()
+    if vim.fn.exists('g:GuiLoaded') and vim.g.GuiLoaded == 1 then
+      vim.fn['GuiWindowFrameless'](0)
+    end
+  end,
+})
+
 -- This file is automatically loaded by lazyvim.config.init
 
 local function augroup(name)
@@ -122,15 +142,15 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
--- wrap and check for spell in text filetypes
-vim.api.nvim_create_autocmd("FileType", {
-  group = augroup("wrap_spell"),
-  pattern = { "gitcommit", "markdown" },
-  callback = function()
-    vim.opt_local.wrap = true
-    vim.opt_local.spell = true
-  end,
-})
+-- -- wrap and check for spell in text filetypes
+-- vim.api.nvim_create_autocmd("FileType", {
+--   group = augroup("wrap_spell"),
+--   pattern = { "gitcommit", "markdown" },
+--   callback = function()
+--     vim.opt_local.wrap = true
+--     vim.opt_local.spell = true
+--   end,
+-- })
 
 -- Auto create dir when saving a file, in case some intermediate directory does not exist
 vim.api.nvim_create_autocmd({ "BufWritePre" }, {
