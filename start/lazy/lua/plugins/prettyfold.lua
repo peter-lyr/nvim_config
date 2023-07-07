@@ -8,6 +8,7 @@ return {
     'zf',
   },
   config = function()
+    vim.opt.foldmethod = "indent"
     require('pretty-fold').setup()
   end
 }
