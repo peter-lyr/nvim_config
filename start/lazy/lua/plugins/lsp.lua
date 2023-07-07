@@ -14,6 +14,32 @@ return {
       },
     },
     {
+      "jay-babu/mason-null-ls.nvim",
+      config = function()
+        require("mason-null-ls").setup({
+          ensure_installed = {
+            'black',
+            'isort',
+            'markdownlint',
+          },
+          automatic_installation = false,
+        })
+      end,
+    },
+    {
+      "jose-elias-alvarez/null-ls.nvim",
+      config = function()
+        local nls = require("null-ls")
+        nls.setup({
+          sources = {
+            nls.builtins.formatting.black.with({ extra_args = { "--fast" }, filetypes = { "python" }, }),
+            nls.builtins.formatting.isort.with({ extra_args = { "--profile", "black" }, filetypes = { "python" }, }),
+            nls.builtins.diagnostics.markdownlint.with({ extra_args = { "-r", "~MD013" }, filetypes = { "markdown" }, }),
+          }
+        })
+      end,
+    },
+    {
       'williamboman/mason-lspconfig.nvim',
       opts = {
         ensure_installed = {
@@ -28,10 +54,10 @@ return {
     require('plugins.cmp'),
     'folke/neodev.nvim',
     {
-        "smjonas/inc-rename.nvim",
-        config = function()
-          require("inc_rename").setup()
-        end,
+      "smjonas/inc-rename.nvim",
+      config = function()
+        require("inc_rename").setup()
+      end,
     },
   },
   ft = {
