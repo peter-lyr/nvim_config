@@ -36,7 +36,7 @@ require('aerial').setup({
     ['zX'] = 'actions.tree_sync_folds',
   },
   filter_kind = false,
-  backends = { "lsp", "treesitter", "markdown", "man" },
+  backends = { "markdown", "lsp", "treesitter", "man" },
   -- backends = { "lsp", },
   post_jump_cmd = [[norm zz]],
   close_automatic_events = {},
