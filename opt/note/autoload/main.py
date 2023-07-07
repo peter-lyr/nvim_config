@@ -60,53 +60,58 @@ def get_md_from_file(f):
 
 def get_toc_html(content):
     extensions=[
-            'markdown.extensions.tables',
-            # 'markdown.extensions.extra',
-            # 'pymdownx.magiclink',
-            # 'pymdownx.betterem',
-            # 'pymdownx.tilde',
-            # 'pymdownx.emoji',
-            # 'pymdownx.tasklist',
-            'pymdownx.superfences',
-            # 'pymdownx.saneheaders',
-            # 'pymdownx.highlight',
-            TocExtension(slugify=slugify),
-            MathExtension(enable_dollar_delimiter=True),
-            ]
-    extension_configs={
-            # "pymdownx.magiclink": {
-                # "repo_url_shortener": True,
-                # "repo_url_shorthand": True,
-                # "provider": "github",
-                # "user": "facelessuser",
-                # "repo": "pymdown-extensions"
-                # },
-            # "pymdownx.tilde": {
-                # "subscript": False
-                # },
-            # "pymdownx.emoji": {
-                # "emoji_index": emoji.gemoji,
-                # "emoji_generator": emoji.to_png,
-                # "alt": "short",
-                # "options": {
-                    # "attributes": {
-                        # "align": "absmiddle",
-                        # "height": "20px",
-                        # "width": "20px"
-                        # },
-                    # "image_path": "https://assets-cdn.github.com/images/icons/emoji/unicode/",
-                    # "non_standard_image_path": "https://assets-cdn.github.com/images/icons/emoji/"
-                    # }
-                # },
-            "pymdownx.superfences":{
-                "custom_fences": [{
-                    'name': 'mermaid',
-                    'class': 'mermaid',
-                    'format': pymdownx.superfences.fence_div_format,
-                    # 'format': '!!python/name:pymdownx.superfences.fence_div_format'
-                    }]
-                }
-            }
+        'markdown.extensions.tables',
+        'markdown.extensions.footnotes',
+        'pymdownx.magiclink',
+        'pymdownx.betterem',
+        'pymdownx.tilde',
+        'pymdownx.emoji',
+        'pymdownx.tasklist',
+        'pymdownx.superfences',
+        'pymdownx.saneheaders',
+        'pymdownx.highlight',
+        'pymdownx.progressbar',
+        'pymdownx.mark',
+        'pymdownx.pathconverter',
+        'pymdownx.caret',
+        'pymdownx.arithmatex',
+        TocExtension(slugify=slugify),
+        MathExtension(enable_dollar_delimiter=True),
+    ]
+    extension_configs = {
+        #  "pymdownx.magiclink": {
+        #      "repo_url_shortener": True,
+        #      "repo_url_shorthand": True,
+        #      "provider": "github",
+        #      "user": "facelessuser",
+        #      "repo": "pymdown-extensions"
+        #  },
+        #  "pymdownx.tilde": {
+        #      "subscript": False
+        #  },
+        #  "pymdownx.emoji": {
+        #      "emoji_index": emoji.gemoji,
+        #      "emoji_generator": emoji.to_png,
+        #      "alt": "short",
+        #      "options": {
+        #          "attributes": {
+        #              "align": "absmiddle",
+        #              "height": "20px",
+        #              "width": "20px"
+        #          },
+        #          "image_path": "https://assets-cdn.github.com/images/icons/emoji/unicode/",
+        #          "non_standard_image_path": "https://assets-cdn.github.com/images/icons/emoji/"
+        #      }
+        #  },
+        #  "pymdownx.superfences":{
+        #      "custom_fences": [{
+        #          'name': 'mermaid',
+        #          'class': 'mermaid',
+        #          'format': pymdownx.superfences.fence_div_format,
+        #          # 'format': '!!python/name:pymdownx.superfences.fence_div_format'
+        #      }]
+        #  }
+    }
     md = markdown.Markdown(extensions=extensions, extension_configs=extension_configs)
     html = md.convert(content)
     # toc = md.toc if md.toc_tokens else ''
@@ -120,8 +125,8 @@ def _get_html(toc, html, js):
         '''<html lang="zh">\n''' + \
         ''' <head>\n''' + \
         '''  <meta charset="UTF-8">\n''' + \
-       f'''  <link rel="stylesheet" href="{head}{css_p}">\n''' + \
-       f'''  <link rel="stylesheet" href="{'file:///' if css2_p != 'extra.css' else ''}{css2_p}">\n''' + \
+        f'''  <link rel="stylesheet" href="{head}{css_p}">\n''' + \
+        f'''  <link rel="stylesheet" href="{'file:///' if css2_p != 'extra.css' else ''}{css2_p}">\n''' + \
         '''  <title></title>\n''' + \
         ''' </head>\n''' + \
         ''' <body>\n''' + \
@@ -135,16 +140,16 @@ def get_html(toc, html):
     global with_mathjax, use_chrome
     if '<script type="math/tex' in html:
         js_mathjax = ''' <script type="text/javascript" src='https://cdnjs.cloudflare.com/ajax/''' + \
-                "libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>\n" + \
-                ' <script type="text/x-mathjax-config">MathJax.Hub.Register.StartupHook(' + \
-                '"End",function(){window.status="ready";});</script>\n'
+            "libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>\n" + \
+            ' <script type="text/x-mathjax-config">MathJax.Hub.Register.StartupHook(' + \
+            '"End",function(){window.status="ready";});</script>\n'
         with_mathjax = True
     else:
         js_mathjax = ''
 
     if 'div class="mermaid"' in html:
         js_mermaid = ' <script type="text/javascript" src="https://unpkg.com/mermaid@8.11.0/dist/mermaid.js" crossorigin="anonymous"></script>\n' + \
-                f''' <script type="text/javascript" src="{'file:///' if js_p != 'rd.js' else ''}{js_p}"></script>\n'''
+            f''' <script type="text/javascript" src="{'file:///' if js_p != 'rd.js' else ''}{js_p}"></script>\n'''
         use_chrome = True
     else:
         js_mermaid = ''
@@ -165,15 +170,15 @@ def convert_html_to_pdf(html_f, pdf_f):
     option = '--javascript-delay 1000 ' if with_mathjax else ''
     option = option + '' if use_chrome else '--window-status ready '
     cmd = f'wkhtmltopdf ' + \
-            '--encoding UTF-8 ' + \
-            '--debug-javascript ' + \
-            '--no-stop-slow-scripts ' + \
-            '--page-size A4 ' + \
-            '--minimum-font-size 14 ' + \
-            '--quiet ' + \
-            option + \
-            '--enable-local-file-access ' + \
-            f'"{html_f}" "{pdf_f}"'
+        '--encoding UTF-8 ' + \
+        '--debug-javascript ' + \
+        '--no-stop-slow-scripts ' + \
+        '--page-size A4 ' + \
+        '--minimum-font-size 14 ' + \
+        '--quiet ' + \
+        option + \
+        '--enable-local-file-access ' + \
+        f'"{html_f}" "{pdf_f}"'
     os.system(cmd)
 
 def convert_html_to_docx(html_f, docx_f):
@@ -196,7 +201,7 @@ def render_html_file(html_p):
     pattern = re.compile(r'(<script type="text[^>]*?>[\s\S]*?)</script>')
     html, _ = re.subn(pattern, '', html)
     html = html.replace('</body>', '<script type="text/x-mathjax-config">MathJax.Hub.Register.StartupHook(' + \
-            '"End",function(){window.status="ready";});</script>\n\n </body>')
+        '"End",function(){window.status="ready";});</script>\n\n </body>')
     with open(html_p, 'wb') as f:
         f.write(html.encode('utf-8'))
     driver.quit()
