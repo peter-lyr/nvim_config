@@ -525,3 +525,58 @@ vim.cmd([[
     endif
   endfunction
 ]])
+
+
+
+function Bdft(ftstring)
+  local ftslist = {}
+  for ft in string.gmatch(ftstring, "%a+") do
+    table.insert(ftslist, ft)
+  end
+  local cwd = string.gsub(vim.loop.cwd(), '\\', '/')
+  cwd = vim.fn.tolower(cwd)
+  local curbufnr = vim.fn.bufnr()
+  for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do
+    local name = string.gsub(vim.api.nvim_buf_get_name(bufnr), '\\', '/')
+    if name == '' or vim.fn.match(vim.fn.tolower(name), cwd) == -1 or bufnr == curbufnr then
+      goto continue
+    end
+    local ft = string.match(name, "%.([^.]+)")
+    if vim.tbl_contains(ftslist, ft) == true then
+      vim.cmd('Bdelete! ' .. bufnr)
+    end
+    ::continue::
+  end
+end
+
+vim.cmd([[
+function Bdft(A, L, P)
+  return g:bdfts
+endfu
+command! -complete=customlist,Bdft -nargs=* Bdft call v:lua.Bdft('<args>')
+]])
+
+vim.keymap.set({ 'n', 'v', }, '<leader>xf', function()
+  local bdfts = {}
+  local cwd = string.gsub(vim.fn.tolower(vim.loop.cwd()), '\\', '/')
+  local curbufnr = vim.fn.bufnr()
+  for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do
+    local name = string.gsub(vim.api.nvim_buf_get_name(bufnr), '\\', '/')
+    if name == '' or vim.fn.match(vim.fn.tolower(name), cwd) == -1 or bufnr == curbufnr then
+      goto continue
+    end
+    if vim.api.nvim_buf_is_loaded(bufnr) and vim.fn.filereadable(name) then
+      local ft = string.match(name, "%.([^%.]+)")
+      if ft and #ft > 0 and vim.tbl_contains(bdfts, ft) == false then
+        table.insert(bdfts, ft)
+      end
+    end
+    ::continue::
+  end
+  vim.g.bdfts = bdfts
+  if #vim.g.bdfts == 0 then
+    print('no other filetypes to bw')
+    return
+  end
+  vim.cmd([[call feedkeys(":\<c-u>Bdft ")]])
+end, { desc = 'Bdelete ft' })
