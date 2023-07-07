@@ -51,8 +51,6 @@ vim.api.nvim_create_autocmd({ "VimLeave", }, {
         vim.loop.new_timer():start(10, 0, function()
           vim.schedule(function()
             vim.fn['GuiWindowFrameless'](0)
-            print([[vim.fn['GuiWindowFrameless'](0)]])
-            vim.cmd('sleep')
           end)
         end)
       end
