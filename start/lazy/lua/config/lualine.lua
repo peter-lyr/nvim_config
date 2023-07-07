@@ -517,4 +517,11 @@ vim.cmd([[
       execute ":buffer " . a:bufnr
     endif
   endfunction
+  function! LualineSwitchTab(tabnr, mouseclicks, mousebutton, modifiers)
+    if a:mousebutton == 'm' && a:mouseclicks == 1
+      execute a:tabnr . "tabclose"
+    elseif a:mousebutton == 'l' && a:mouseclicks == 1
+      execute a:tabnr . "tabnext"
+    endif
+  endfunction
 ]])
