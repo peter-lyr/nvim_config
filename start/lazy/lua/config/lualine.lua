@@ -421,22 +421,25 @@ end, { desc = 'Bdelele next buffer' })
 -- Bdelete next or prev tab
 
 vim.keymap.set({ 'n', 'v', }, '<c-f7>', function()
+  local curtab_idx = vim.fn.tabpagenr()
+  if curtab_idx == 1 then
+    return
+  end
   local tabs = vim.fn.tabpagenr('$')
   if tabs == 1 then
     return
   end
-  local curtab_idx = vim.fn.tabpagenr()
   local prevtab_idx = curtab_idx - 1 >= 1 and curtab_idx - 1 or tabs
   vim.cmd(prevtab_idx .. 'tabclose!')
   require('lualine').refresh()
 end, { desc = 'tabclose prev tab' })
 
 vim.keymap.set({ 'n', 'v', }, '<c-f8>', function()
+  local curtab_idx = vim.fn.tabpagenr()
   local tabs = vim.fn.tabpagenr('$')
-  if tabs == 1 then
+  if tabs == 1 or curtab_idx == tabs then
     return
   end
-  local curtab_idx = vim.fn.tabpagenr()
   local nexttab_idx = curtab_idx + 1 <= tabs and curtab_idx + 1 or 1
   vim.cmd(nexttab_idx .. 'tabclose!')
   require('lualine').refresh()
