@@ -10,6 +10,23 @@ require("project_nvim").setup({
   patterns = patterns,
 })
 
+M.refreshhistory = function()
+  local historyfile = require('plenary.path'):new(require('project_nvim.utils.path').historyfile)
+  local lines = historyfile:readlines()
+  local newlines = {}
+  for _, v in ipairs(lines) do
+    local line = vim.fn.tolower(v)
+    line = string.gsub(line, '\\', '/')
+    if vim.tbl_contains(newlines, line) == false and require('plenary.path'):new(line):exists() then
+      table.insert(newlines, line)
+    end
+  end
+  table.sort(newlines)
+  historyfile:write(table.concat(newlines, '\n'), 'w')
+end
+
+M.refreshhistory()
+
 require('telescope').load_extension("projects")
 
 M.open = function()
