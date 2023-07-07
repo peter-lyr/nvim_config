@@ -43,12 +43,19 @@ vim.api.nvim_create_autocmd({ "VimEnter", }, {
 vim.api.nvim_create_autocmd({ "VimLeave", }, {
   callback = function()
     if vim.fn.exists('g:GuiLoaded') and vim.g.GuiLoaded == 1 then
-      vim.fn['GuiWindowMaximized'](0)
-      vim.loop.new_timer():start(10, 0, function()
-        vim.schedule(function()
-          vim.fn['GuiWindowFrameless'](0)
+      if vim.g.GuiWindowMaximized == 1 then
+        vim.fn['GuiWindowMaximized'](0)
+      end
+      if vim.g.GuiWindowFrameless == 1 then
+        vim.fn['GuiWindowFrameless'](0)
+        vim.loop.new_timer():start(10, 0, function()
+          vim.schedule(function()
+            vim.fn['GuiWindowFrameless'](0)
+            print([[vim.fn['GuiWindowFrameless'](0)]])
+            vim.cmd('sleep')
+          end)
         end)
-      end)
+      end
     end
   end,
 })
