@@ -134,10 +134,10 @@ local M = {}
 
 local p = require('plenary.path')
 
-M.telescope_lua_path = p:new(vim.g.pack_path):joinpath('nvim_config', 'start', 'lazy', 'lua', 'config', 'telescope.lua')
+M.nvim_config = p:new(vim.g.pack_path):joinpath('nvim_config')
 
 M.open = function()
-  vim.cmd('e ' .. M.telescope_lua_path.filename)
+  vim.cmd('cd ' .. M.nvim_config.filename .. '|e ' .. 'start/lazy/lua/config/telescope.lua')
 end
 
 return M
