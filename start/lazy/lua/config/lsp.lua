@@ -55,7 +55,10 @@ lspconfig.lua_ls.setup({
     Lua = {
       diagnostics = {
         globals = { 'vim' },
-        disable = { 'incomplete-signature-doc' },
+        disable = {
+          'incomplete-signature-doc',
+          'undefined-global',
+        },
         groupSeverity = {
           strong = 'Warning',
           strict = 'Warning',
