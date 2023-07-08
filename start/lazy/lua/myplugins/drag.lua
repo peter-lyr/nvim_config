@@ -5,6 +5,7 @@ return {
     name = 'drag',
     dir = opt .. 'drag',
     lazy = true,
-    event = { "FocusLost", },
+    require('myplugins.core'), -- maps
+    event = { "FocusLost", 'BufReadPost', },
   },
 }

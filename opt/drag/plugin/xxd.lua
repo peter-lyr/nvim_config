@@ -23,12 +23,19 @@ vim.api.nvim_create_autocmd({ 'BufReadPost' }, {
   end,
 })
 
-vim.keymap.set({ 'n', 'v', }, '<leader>qx', function()
-  if string.match(vim.fn.getline(1), "^00000000:") then
-    if vim.api.nvim_buf_get_option(vim.fn.bufnr(), 'filetype') ~= 'xxd' then
-      vim.cmd('setlocal ft=xxd')
-    end
-    vim.cmd(string.format('!xxd -r "%s" > "%s" && xxd "%s" "%s"', M.txt, M.ori, M.ori, M.temp))
-    vim.fn.setline(1, require('plenary.path'):new(M.temp):readlines())
-  end
-end, { desc = 'xxd save' })
+require('maps').add('<F5>', 'n', function()
+  vim.loop.new_timer():start(10, 0, function()
+    vim.schedule(function()
+      if string.match(vim.fn.getline(1), "^00000000:") then
+        if vim.api.nvim_buf_get_option(vim.fn.bufnr(), 'filetype') ~= 'xxd' then
+          vim.cmd('setlocal ft=xxd')
+        end
+        vim.fn.system(string.format('xxd -r "%s" > "%s" && xxd "%s" "%s"', M.txt, M.ori, M.ori, M.temp))
+        local lines = require('plenary.path'):new(M.temp):readlines()
+        local len = #lines
+        vim.fn.setline(1, lines)
+        vim.fn.deletebufline(vim.fn.bufnr(), len, vim.fn.line('$'))
+      end
+    end)
+  end)
+end, 'xxd save')
