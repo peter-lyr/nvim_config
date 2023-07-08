@@ -124,6 +124,7 @@ return {
       { '<leader>ba',         '<cmd>leftabove vnew<cr>',                                     mode = { 'n', 'v' }, silent = true, desc = 'leftabove vnew' },
       { '<leader>bs',         '<cmd>new<cr>',                                                mode = { 'n', 'v' }, silent = true, desc = 'new' },
       { '<leader>bd',         '<cmd>vnew<cr>',                                               mode = { 'n', 'v' }, silent = true, desc = 'vnew' },
+      { '<leader>bt',         '<cmd>wincmd T<cr>',                                           mode = { 'n', 'v' }, silent = true, desc = 'wincmd T' },
 
       -- clone cur buffer beside
 
