@@ -15,8 +15,6 @@ local filename = function(hl_group)
   end
 end
 
-print(require('plenary.path'):new(vim.fn.expand('%:~:.')):absolute())
-
 local function rep(content)
   content = vim.fn.tolower(content)
   content = string.gsub(content, '/', '\\')
