@@ -21,15 +21,18 @@ M.check = function(ev)
     if string.match(info[2], 'binary') and not string.match(info[1], 'empty') then
       local file = rep(ev.file)
       local ext = string.match(file, '.+%.(%w+)$')
-      local txt = string.format('%s.txt', file)
-      local char = string.format('%s.c', file)
       local ori = file
-      local bak = string.format('%s/bak', vim.fn.fnamemodify(file, ':h'))
-      local path = require('plenary.path'):new(bak)
-      if not path:exists() then
-        vim.fn.mkdir(bak)
+      local xxdout = string.format('%s/xxdout', vim.fn.fnamemodify(file, ':h'))
+      if not require('plenary.path'):new(xxdout):exists() then
+        vim.fn.mkdir(xxdout)
       end
-      bak = string.format('%s\\%s-%s.%s', bak, vim.fn.fnamemodify(file, ':t:r'), vim.fn.strftime('%Y%m%d%H%M%S'), ext)
+      local txt = string.format('%s\\%s-%s.txt', xxdout, vim.fn.fnamemodify(file, ':t:r'), vim.fn.strftime('%Y%m%d%H%M%S'))
+      local char = string.format('%s\\%s-%s.c', xxdout, vim.fn.fnamemodify(file, ':t:r'), vim.fn.strftime('%Y%m%d%H%M%S'))
+      local xxdbak = string.format('%s/xxdbak', vim.fn.fnamemodify(file, ':h'))
+      if not require('plenary.path'):new(xxdbak):exists() then
+        vim.fn.mkdir(xxdbak)
+      end
+      local bak = string.format('%s\\%s-%s.%s', xxdbak, vim.fn.fnamemodify(file, ':t:r'), vim.fn.strftime('%Y%m%d%H%M%S'), ext)
       vim.fn.system(string.format('%s "%s" "%s"', M.xxd_opt, ori, txt))
       vim.fn.system(string.format('cd %s && %s -i "%s" "%s"', vim.fn.fnamemodify(ori, ':h'), M.xxd_opt,
         vim.fn.fnamemodify(ori, ':t'), char))
