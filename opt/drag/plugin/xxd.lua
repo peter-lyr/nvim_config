@@ -21,8 +21,8 @@ vim.api.nvim_create_autocmd({ 'BufReadPost' }, {
       local txt = rep(string.format('%s.txt', ev.file))
       local ori = ev.file
       local bak = string.format('%s.%s.bak.%s', ev.file, vim.fn.strftime('%Y%m%d%H%M%S'), ext)
-      vim.cmd(string.format('!%s "%s" "%s"', M.xdd_opt, ev.file, txt))
-      vim.cmd(string.format('!copy /y "%s" "%s"', ev.file, bak))
+      vim.fn.system(string.format('%s "%s" "%s"', M.xdd_opt, ev.file, txt))
+      vim.fn.system(string.format('copy /y "%s" "%s"', ev.file, bak))
       vim.cmd('e ' .. txt)
       vim.cmd('setlocal ft=xxd')
       vim.cmd(ev.buf .. 'bw!')
