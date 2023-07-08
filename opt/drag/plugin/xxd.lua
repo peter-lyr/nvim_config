@@ -28,7 +28,11 @@ vim.api.nvim_create_autocmd({ 'BufReadPost' }, {
       vim.fn.system(string.format('copy /y "%s" "%s"', ev.file, bak))
       vim.cmd('e ' .. txt)
       vim.cmd('setlocal ft=xxd')
-      vim.cmd(ev.buf .. 'bw!')
+      vim.loop.new_timer():start(1000, 0, function()
+        vim.schedule(function()
+          vim.cmd(ev.buf .. 'bw!')
+        end)
+      end)
       M.dict[txt] = {
         ori,
         char,
