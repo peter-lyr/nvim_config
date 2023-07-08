@@ -212,7 +212,6 @@ function M.dragimage(sel_jpg, dragimagename)
     vim.fn.win_gotoid(cur_winid)
   end
   vim.fn.append(linenr, string.format('![%s{%s}](%s)', only_image_name, absolute_image_hash, image_rel_path))
-  print(linenr, string.format('![%s{%s}](%s)', only_image_name, absolute_image_hash, image_rel_path))
 end
 
 return M
