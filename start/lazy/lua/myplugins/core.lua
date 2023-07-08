@@ -86,7 +86,7 @@ return {
 
       -- jump prev buffer
 
-      { '<leader>wp',         '<c-w>p',                                  mode = { 'n', 'v' }, silent = true, desc = 'wincmd p' },
+      { '<leader>w',          '<c-w>',                                   mode = { 'n', 'v' }, silent = true, desc = 'wincmd' },
 
       -- jump buffer beside
 
