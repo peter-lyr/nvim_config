@@ -246,15 +246,11 @@ M.refreshall = function()
   local timer = vim.loop.new_timer()
   local refresh1 = nil
   local refresh2 = nil
-  local refresh3 = nil
   timer:start(100, 100, function()
     vim.schedule(function()
       local source = vim.b[vim.fn.bufnr()].neo_tree_source
       if source then
-        if not refresh3 and source == 'git_status' then
-          refresh()
-          refresh3 = 1
-        elseif not refresh2 and source == 'buffers' then
+        if not refresh2 and source == 'git_status' then
           refresh()
           refresh2 = 1
         elseif not refresh1 and source == 'filesystem' then
@@ -283,18 +279,15 @@ end
 M.check = function()
   local ok1 = nil
   local ok2 = nil
-  local ok3 = nil
   local ok = nil
   for winnr = 1, vim.fn.winnr('$') do
     local source = vim.b[vim.fn.winbufnr(winnr)].neo_tree_source
     if source == 'filesystem' then
       ok1 = 1
-    elseif source == 'buffers' then
-      ok2 = 1
     elseif source == 'git_status' then
-      ok3 = 1
+      ok2 = 1
     end
-    if ok1 and ok2 and ok3 or (not ok1 and not ok2 and not ok3) then
+    if ok1 and ok2 or (not ok1 and not ok2) then
       ok = 1
       break
     end

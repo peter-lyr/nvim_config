@@ -5,7 +5,7 @@ return {
   cmd = { "Minimap", },
   keys = {
     {
-      '<leader>4',
+      '<leader>3',
       function()
         if vim.g.loaded_minimap then
           if vim.fn.filereadable(vim.api.nvim_buf_get_name(0)) == 1 then
@@ -36,7 +36,7 @@ return {
       desc = 'Minimap'
     },
     {
-      '<leader>$',
+      '<leader>#',
       function()
         vim.g.minimap_autostart = 1 - vim.g.minimap_autostart
         if vim.g.minimap_autostart == 1 then

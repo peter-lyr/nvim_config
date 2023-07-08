@@ -12,8 +12,7 @@ return {
     { '<leader>`', function() require('config.neotree').openall() end,    mode = { 'n', 'v' }, desc = 'NeoTree open all' },
     { '<leader>~', function() require('config.neotree').refreshall() end, mode = { 'n', 'v' }, desc = 'NeoTree refresh all' },
     { '<leader>1', function() require('config.neotree').filesystem() end, mode = { 'n', 'v' }, desc = 'NeoTree open filesystem' },
-    { '<leader>2', function() require('config.neotree').buffers() end,    mode = { 'n', 'v' }, desc = 'NeoTree open buffers' },
-    { '<leader>3', function() require('config.neotree').git_status() end, mode = { 'n', 'v' }, desc = 'NeoTree open git_status' },
+    { '<leader>2', function() require('config.neotree').git_status() end, mode = { 'n', 'v' }, desc = 'NeoTree open git_status' },
   },
   dependencies = {
     require('plugins.edgy'),

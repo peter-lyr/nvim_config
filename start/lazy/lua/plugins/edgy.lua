@@ -1,7 +1,7 @@
 return {
   "folke/edgy.nvim",
   lazy = true,
-  event = { "BufReadPost", "BufNew", "BufNewFile",  },
+  event = { "BufReadPost", "BufNew", "BufNewFile", },
   opts = {
     animate = {
       enabled = false,
@@ -20,15 +20,6 @@ return {
         size = { height = 0.5 },
       },
       {
-        title = "Neo-Tree Buffers",
-        ft = "neo-tree",
-        filter = function(buf)
-          return vim.b[buf].neo_tree_source == "buffers"
-        end,
-        pinned = true,
-        open = "Neotree position=top buffers",
-      },
-      {
         title = "Neo-Tree Git",
         ft = "neo-tree",
         filter = function(buf)
@@ -44,7 +35,7 @@ return {
         ft = "minimap",
         pinned = true,
         open = function()
-          vim.api.nvim_input("<esc><space>4")
+          vim.api.nvim_input("<esc><space>3")
         end,
         size = { height = 0.38 },
       },
