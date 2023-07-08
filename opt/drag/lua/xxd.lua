@@ -26,8 +26,8 @@ M.check = function(ev)
       if not require('plenary.path'):new(xxdout):exists() then
         vim.fn.mkdir(xxdout)
       end
-      local txt = string.format('%s\\%s-%s.txt', xxdout, vim.fn.fnamemodify(file, ':t:r'), vim.fn.strftime('%Y%m%d%H%M%S'))
-      local char = string.format('%s\\%s-%s.c', xxdout, vim.fn.fnamemodify(file, ':t:r'), vim.fn.strftime('%Y%m%d%H%M%S'))
+      local txt = string.format('%s\\%s.txt', xxdout, vim.fn.fnamemodify(file, ':t:r'))
+      local char = string.format('%s\\%s.c', xxdout, vim.fn.fnamemodify(file, ':t:r'))
       local xxdbak = string.format('%s/xxdbak', vim.fn.fnamemodify(file, ':h'))
       if not require('plenary.path'):new(xxdbak):exists() then
         vim.fn.mkdir(xxdbak)
