@@ -6,6 +6,7 @@ return {
   },
   keys = {
     { '<leader>zm', '<cmd>ZenMode<cr>', mode = { 'n', 'v' },  silent = true, desc = 'ZenMode' },
+    { '<leader>zz', function() require("zen-mode").toggle({ window = { width = 1 } }) end, mode = { 'n', 'v' },  silent = true, desc = 'ZenMode max width' },
   },
   opts = {
     window = {
