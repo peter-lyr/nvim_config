@@ -19,15 +19,19 @@ vim.api.nvim_create_autocmd({ 'BufReadPost' }, {
     vim.schedule(function()
       local ext = string.match(ev.file, '.+%.(%w+)$')
       local txt = rep(string.format('%s.txt', ev.file))
+      local char = rep(string.format('%s.c', ev.file))
       local ori = ev.file
       local bak = string.format('%s.%s.bak.%s', ev.file, vim.fn.strftime('%Y%m%d%H%M%S'), ext)
-      vim.fn.system(string.format('%s "%s" "%s"', M.xdd_opt, ev.file, txt))
+      vim.fn.system(string.format('%s "%s" "%s"', M.xdd_opt, ori, txt))
+      vim.fn.system(string.format('cd %s && %s -i "%s" "%s"', vim.fn.fnamemodify(ori, ':h'), M.xdd_opt,
+        vim.fn.fnamemodify(ori, ':t'), char))
       vim.fn.system(string.format('copy /y "%s" "%s"', ev.file, bak))
       vim.cmd('e ' .. txt)
       vim.cmd('setlocal ft=xxd')
       vim.cmd(ev.buf .. 'bw!')
       M.dict[txt] = {
         ori,
+        char,
         bak,
       }
     end)
@@ -42,7 +46,10 @@ require('maps').add('<F5>', 'n', function()
           vim.cmd('setlocal ft=xxd')
         end
         local txt = vim.api.nvim_buf_get_name(0)
-        vim.fn.system(string.format('%s -r "%s" > "%s" && %s "%s" "%s"', M.xdd_opt, txt, M.dict[txt][1], M.xdd_opt, M.dict[txt][1], M.temp))
+        vim.fn.system(string.format('%s -r "%s" > "%s" && %s "%s" "%s"', M.xdd_opt, txt, M.dict[txt][1], M.xdd_opt,
+          M.dict[txt][1], M.temp))
+        vim.fn.system(string.format('cd %s && %s -i "%s" "%s"', vim.fn.fnamemodify(M.dict[txt][1], ':h'), M.xdd_opt,
+          vim.fn.fnamemodify(M.dict[txt][1], ':t'), M.dict[txt][1]))
         local lines = require('plenary.path'):new(M.temp):readlines()
         local len = #lines
         vim.fn.setline(1, lines)
