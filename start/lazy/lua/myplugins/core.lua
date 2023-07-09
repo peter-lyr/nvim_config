@@ -38,6 +38,7 @@ return {
       { 'cs.',                '<cmd>!start %:h<cr>',                                                   mode = { 'n', 'v' },  silent = true, desc = 'start %:h' },
       { 'csu',                '<cmd>!start ..<cr>',                                                    mode = { 'n', 'v' },  silent = true, desc = 'start ..' },
       { 'cs=',                '<cmd>exe "!start " .. ProjectRootGet()<cr>',                            mode = { 'n', 'v' },  silent = true, desc = 'start ProjectRootGet' },
+      { 'csc',                '<cmd>!chcp 65001 && %:p<cr>',                                           mode = { 'n', 'v' },  silent = true, desc = 'system open %:h' },
 
       -- copy_paste
 
