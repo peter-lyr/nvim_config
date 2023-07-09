@@ -18,9 +18,9 @@ return {
       config = function()
         require("mason-null-ls").setup({
           ensure_installed = {
-            'black',
-            'isort',
+            'black', 'isort', -- python
             'markdownlint',
+            'prettier', 'prettierd', -- html
           },
           automatic_installation = false,
         })
@@ -35,6 +35,16 @@ return {
             nls.builtins.formatting.black.with({ extra_args = { "--fast" }, filetypes = { "python" }, }),
             nls.builtins.formatting.isort.with({ extra_args = { "--profile", "black" }, filetypes = { "python" }, }),
             nls.builtins.diagnostics.markdownlint.with({ extra_args = { "-r", "~MD013" }, filetypes = { "markdown" }, }),
+            nls.builtins.formatting.prettier.with {
+              filetypes = { "solidity" },
+              timeout = 10000,
+            },
+            nls.builtins.formatting.prettierd.with {
+              -- condition = function(utils)
+              --   return not utils.root_has_file { ".eslintrc", ".eslintrc.js" }
+              -- end,
+              prefer_local = "node_modules/.bin",
+            },
           }
         })
       end,
