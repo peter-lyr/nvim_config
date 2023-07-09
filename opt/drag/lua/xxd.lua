@@ -73,6 +73,7 @@ require('maps').add('<F5>', 'n', function()
         vim.fn.setline(1, lines)
         vim.fn.deletebufline(vim.fn.bufnr(), len, vim.fn.line('$'))
       end
+      M.check({ buf = vim.fn.bufnr(), file = vim.api.nvim_buf_get_name(0) })
     end)
   end)
 end, 'xxd_save')
