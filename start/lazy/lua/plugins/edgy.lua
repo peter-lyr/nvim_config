@@ -25,7 +25,7 @@ return {
         filter = function(buf)
           return vim.b[buf].neo_tree_source == "git_status"
         end,
-        pinned = true,
+        pinned = false,
         open = "Neotree position=right git_status",
       },
     },
