@@ -33,6 +33,9 @@ M.check = function(ev)
         vim.fn.mkdir(xxdbak)
       end
       local bak = string.format('%s\\%s-%s.%s', xxdbak, vim.fn.fnamemodify(file, ':t:r'), vim.fn.strftime('%Y%m%d%H%M%S'), ext)
+      if vim.tbl_contains(vim.tbl_keys(M.dict), txt) == true then
+        bak = M.dict[txt]
+      end
       vim.fn.system(string.format('%s "%s" "%s"', M.xxd_opt, ori, txt))
       vim.fn.system(string.format('cd %s && %s -i "%s" "%s"', vim.fn.fnamemodify(ori, ':h'), M.xxd_opt,
         vim.fn.fnamemodify(ori, ':t'), char))
