@@ -56,7 +56,7 @@ return {
 
       -- f5
 
-      { '<f5>',               '<cmd>e!<cr>',                                                           mode = { 'n', 'v' },  silent = true, desc = 'e!' },
+      { '<f5>',               function() vim.cmd('e!') end,                                            mode = { 'n', 'v' },  silent = true, desc = 'e!' },
 
       -- record
 
