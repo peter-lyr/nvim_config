@@ -13,7 +13,10 @@ M.minimize = function()
     [[%s/\s\+/ /g]],
     [[g/^$/d]],
     [[%s/>[\s\r\n\t]\+</></g]],
+    [[%s/\n//g]],
     [[%s/<!--.\{-}-->//g]],
+    [[%s/<script[^>]*>.*<\/script>]],
+    [[%s/<style[^>]*>.*<\/style>]],
   }) do
     cmd = cmd .. string.format(f, v)
   end
