@@ -13,6 +13,19 @@ local function rep(content)
   return content
 end
 
+local function systemcd(path)
+  local s = ''
+  if string.sub(path, 2, 2) == ':' then
+    s = s .. string.sub(path, 1, 2) .. ' && '
+  end
+  if require('plenary.path').new(path):is_dir() then
+    s = s .. 'cd ' .. path
+  else
+    s = s .. 'cd ' .. require('plenary.path').new(path):parent().filename
+ end
+  return s
+end
+
 M.check = function(ev)
   vim.schedule(function()
     local info = vim.fn.system(string.format('file -b --mime-type --mime-encoding "%s"', ev.file))
@@ -20,26 +33,17 @@ M.check = function(ev)
     info = vim.fn.split(info, ';')
     if string.match(info[2], 'binary') and not string.match(info[1], 'empty') then
       local file = rep(ev.file)
-      local ext = string.match(file, '.+%.(%w+)$')
-      local ori = file
-      local xxdout = string.format('%s/xxdout', vim.fn.fnamemodify(file, ':h'))
+      local xxdout = string.format('%s\\.xxdout', vim.fn.fnamemodify(file, ':h'))
       if not require('plenary.path'):new(xxdout):exists() then
         vim.fn.mkdir(xxdout)
       end
       local txt = string.format('%s\\%s.txt', xxdout, vim.fn.fnamemodify(file, ':t'))
       local char = string.format('%s\\%s.c', xxdout, vim.fn.fnamemodify(file, ':t'))
-      local xxdbak = string.format('%s/xxdbak', vim.fn.fnamemodify(file, ':h'))
-      if not require('plenary.path'):new(xxdbak):exists() then
-        vim.fn.mkdir(xxdbak)
-      end
-      local bak = string.format('%s\\%s-%s.%s', xxdbak, vim.fn.fnamemodify(file, ':t:r'), vim.fn.strftime('%Y%m%d%H%M%S'), ext)
-      if vim.tbl_contains(vim.tbl_keys(M.dict), txt) == true then
-        bak = M.dict[txt]
-      end
-      vim.fn.system(string.format('%s "%s" "%s"', M.xxd_opt, ori, txt))
-      vim.fn.system(string.format('cd %s && %s -i "%s" "%s"', vim.fn.fnamemodify(ori, ':h'), M.xxd_opt,
-        vim.fn.fnamemodify(ori, ':t'), char))
-      vim.fn.system(string.format('copy /y "%s" "%s"', file, bak))
+      local mod = string.format('%s\\%s', xxdout, vim.fn.fnamemodify(file, ':t'))
+      vim.fn.system(string.format('copy /y "%s" "%s"', file, mod))
+      vim.fn.system(string.format('%s "%s" "%s"', M.xxd_opt, mod, txt))
+      vim.fn.system(string.format('%s && %s -i "%s" "%s"', systemcd(mod), M.xxd_opt,
+        vim.fn.fnamemodify(mod, ':t'), char))
       vim.cmd('e ' .. txt)
       vim.cmd('setlocal ft=xxd')
       vim.loop.new_timer():start(1000, 0, function()
@@ -48,9 +52,8 @@ M.check = function(ev)
         end)
       end)
       M.dict[txt] = {
-        ori,
+        mod,
         char,
-        bak,
       }
     end
   end)
