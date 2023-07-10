@@ -28,13 +28,13 @@ local function get_projectroot(projectroot)
   if #temp >= 15 then
     local s1 = ''
     local s2 = ''
-    for i=15, 3, -1 do
-      s2 = string.sub(temp, #temp-i, #temp)
+    for i = 15, 3, -1 do
+      s2 = string.sub(temp, #temp - i, #temp)
       if vim.fn.strdisplaywidth(s2) <= 7 then
         break
       end
     end
-    for i=15, 3, -1 do
+    for i = 15, 3, -1 do
       s1 = string.sub(temp, 1, i)
       if vim.fn.strdisplaywidth(s1) <= 7 then
         break
@@ -78,7 +78,7 @@ require('lualine').setup({
         function()
           return string.format('%dM', vim.loop.resident_set_memory() / 1024 / 1024)
         end,
-        cond = function ()
+        cond = function()
           return vim.g.GuiWindowFullScreen == 1
         end
       },
@@ -87,7 +87,7 @@ require('lualine').setup({
         function()
           return vim.fn.strftime('%Y-%m-%d %A')
         end,
-        cond = function ()
+        cond = function()
           return vim.g.GuiWindowFullScreen == 1
         end
       },
@@ -95,7 +95,7 @@ require('lualine').setup({
         function()
           return string.gsub(vim.loop.cwd(), '\\', '/')
         end,
-        cond = function ()
+        cond = function()
           return vim.g.GuiWindowFullScreen == 1
         end
       },
@@ -222,7 +222,7 @@ require('lualine').setup({
             if require('plenary.path').new(fname):exists() then
               if vim.fn.buflisted(b) ~= 0 and vim.api.nvim_buf_get_option(b, 'buftype') ~= 'quickfix' or vim.api.nvim_buf_get_option(b, 'buftype') == 'help' then
                 if #curprojectroot == 0 or #fname > 0 and rep(vim.fn['ProjectRootGet'](fname)) == curprojectroot then
-                  buffers[#buffers+1] = b
+                  buffers[#buffers + 1] = b
                 end
               end
             end
@@ -333,7 +333,7 @@ end
 
 local function go_buffer()
   if vim.fn.buflisted(vim.fn.bufnr()) == 0 then
-      pcall(vim.fn.win_gotoid, vim.g.lastbufwinid)
+    pcall(vim.fn.win_gotoid, vim.g.lastbufwinid)
   end
   if vim.v.count == 0 then
     vim.cmd([[call feedkeys("\<c-6>")]])
@@ -373,8 +373,8 @@ vim.keymap.set({ 'n', 'v', }, '<c-h>', function()
   local curbufnr = vim.fn.bufnr()
   local curbufnr_idx = vim.fn.indexof(buffers, string.format('v:val == %d', curbufnr)) + 1
   if curbufnr_idx >= 1 then
-   local prevbufnr = buffers[curbufnr_idx - 1 >= 1 and curbufnr_idx - 1 or #buffers]
-   vim.cmd('b' .. prevbufnr)
+    local prevbufnr = buffers[curbufnr_idx - 1 >= 1 and curbufnr_idx - 1 or #buffers]
+    vim.cmd('b' .. prevbufnr)
   end
 end, { desc = 'prev buffer' })
 
@@ -462,7 +462,7 @@ vim.keymap.set({ 'n', 'v', }, '<a-f7>', function()
   for _, v in ipairs(vim.api.nvim_list_tabpages()) do
     sta, tmp = pcall(vim.api.nvim_tabpage_get_var, v, 'tabname')
     if sta == true then
-      tabs[#tabs+1] = tmp
+      tabs[#tabs + 1] = tmp
     end
   end
   for b = 1, vim.fn.bufnr('$') do
@@ -474,7 +474,7 @@ vim.keymap.set({ 'n', 'v', }, '<a-f7>', function()
         if vim.tbl_contains(tabs, tabname) ~= true then
           vim.cmd('tabnew')
           vim.cmd('e ' .. fname)
-          tabs[#tabs+1] = tabname
+          tabs[#tabs + 1] = tabname
           vim.fn['LualineRenameTab'](tabname)
         end
       end
@@ -487,9 +487,9 @@ vim.keymap.set({ 'n', 'v', }, '<a-f7>', function()
     sta, tmp = pcall(vim.api.nvim_tabpage_get_var, v, 'tabname')
     if sta == true then
       if vim.tbl_contains(tabs, tmp) ~= true then
-        tabs[#tabs+1] = tmp
+        tabs[#tabs + 1] = tmp
       else
-        tabidxs[#tabidxs+1] = k
+        tabidxs[#tabidxs + 1] = k
       end
     end
   end
