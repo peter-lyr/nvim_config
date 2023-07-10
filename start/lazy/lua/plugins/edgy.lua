@@ -17,7 +17,7 @@ return {
         open = function()
           vim.api.nvim_input("<esc><space>1")
         end,
-        size = { height = 0.5 },
+        size = { height = 0.8 },
       },
       {
         title = "Neo-Tree Git",
@@ -25,7 +25,7 @@ return {
         filter = function(buf)
           return vim.b[buf].neo_tree_source == "git_status"
         end,
-        pinned = false,
+        pinned = true,
         open = "Neotree position=right git_status",
       },
     },
