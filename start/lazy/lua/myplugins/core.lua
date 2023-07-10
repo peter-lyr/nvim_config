@@ -87,7 +87,13 @@ return {
 
       -- jump prev buffer
 
-      { '<leader>w',          '<c-w>',                                   mode = { 'n', 'v' }, silent = true, desc = 'wincmd' },
+      { '<leader>wl',         '<c-w>l',                                  mode = { 'n', 'v' }, silent = true, desc = 'wincmd l' },
+      { '<leader>wh',         '<c-w>h',                                  mode = { 'n', 'v' }, silent = true, desc = 'wincmd h' },
+      { '<leader>wj',         '<c-w>j',                                  mode = { 'n', 'v' }, silent = true, desc = 'wincmd j' },
+      { '<leader>wk',         '<c-w>k',                                  mode = { 'n', 'v' }, silent = true, desc = 'wincmd k' },
+      { '<leader>wp',         '<c-w>p',                                  mode = { 'n', 'v' }, silent = true, desc = 'wincmd p' },
+      { '<leader>wx',         '<c-w>x',                                  mode = { 'n', 'v' }, silent = true, desc = 'wincmd x' },
+      { '<leader>wr',         '<c-w>r',                                  mode = { 'n', 'v' }, silent = true, desc = 'wincmd r' },
 
       -- jump buffer beside
 

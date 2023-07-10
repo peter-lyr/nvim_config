@@ -58,19 +58,22 @@ return {
       },
     },
     keys = {
-      ["<leader>wu"] = function(win)
+      ["<a-l>"] = function(win)
         win:resize("width", 30)
       end,
-      ["<leader>wo"] = function(win)
+      ["<a-h>"] = function(win)
         win:resize("width", -30)
       end,
-      ["<leader>wk"] = function(win)
-        win:resize("height", 5)
+      ["<a-k>"] = function(win)
+        win:resize("height", 15)
       end,
-      ["<leader>wj"] = function(win)
-        win:resize("height", -5)
+      ["<a-j>"] = function(win)
+        win:resize("height", -15)
       end,
-      ["<leader>wi"] = function(win)
+      ["<a-i>"] = function(win)
+        win.view.edgebar:equalize()
+      end,
+      ["<leader>we"] = function(win)
         win.view.edgebar:equalize()
       end,
     },
