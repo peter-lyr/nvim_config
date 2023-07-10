@@ -76,29 +76,10 @@ require('lualine').setup({
     lualine_c = {
       {
         function()
-          return string.format('%dM', vim.loop.resident_set_memory() / 1024 / 1024)
-        end,
-        cond = function()
-          return vim.g.GuiWindowFullScreen == 1
+          return string.format("%dM", vim.loop.resident_set_memory() / 1024 / 1024)
         end
       },
       'filesize',
-      {
-        function()
-          return vim.fn.strftime('%Y-%m-%d %A')
-        end,
-        cond = function()
-          return vim.g.GuiWindowFullScreen == 1
-        end
-      },
-      {
-        function()
-          return string.gsub(vim.loop.cwd(), '\\', '/')
-        end,
-        cond = function()
-          return vim.g.GuiWindowFullScreen == 1
-        end
-      },
       {
         function()
           return filename('lualine_fname_tail_active')
@@ -120,6 +101,19 @@ require('lualine').setup({
         cond = function()
           return package.loaded["noice"] and require("noice").api.status.command.has()
         end,
+      },
+      {
+        function()
+          return vim.fn.strftime('%Y-%m-%d %A')
+        end,
+      },
+      {
+        function()
+          return string.gsub(vim.loop.cwd(), '\\', '/')
+        end,
+        cond = function()
+          return vim.o.columns > 200
+        end
       },
       {
         function()
