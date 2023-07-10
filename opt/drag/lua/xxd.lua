@@ -22,7 +22,7 @@ local function systemcd(path)
     s = s .. 'cd ' .. path
   else
     s = s .. 'cd ' .. require('plenary.path').new(path):parent().filename
- end
+  end
   return s
 end
 
@@ -37,7 +37,7 @@ M.check = function(ev)
       if not require('plenary.path'):new(xxdout):exists() then
         vim.fn.mkdir(xxdout)
       end
-      local txt = string.format('%s\\%s.txt', xxdout, vim.fn.fnamemodify(file, ':t'))
+      local txt = string.format('%s\\%s.xxd', xxdout, vim.fn.fnamemodify(file, ':t'))
       local char = string.format('%s\\%s.c', xxdout, vim.fn.fnamemodify(file, ':t'))
       local mod = string.format('%s\\%s', xxdout, vim.fn.fnamemodify(file, ':t'))
       vim.fn.system(string.format('copy /y "%s" "%s"', file, mod))
@@ -67,9 +67,15 @@ require('maps').add('<F5>', 'n', function()
           vim.cmd('setlocal ft=xxd')
         end
         local txt = vim.api.nvim_buf_get_name(0)
+        if vim.tbl_contains(vim.tbl_keys(M.dict), txt) == false then
+          M.dict[txt] = {
+            string.sub(txt, 1, #txt - 4),
+            string.sub(txt, 1, #txt - 4) .. '.c',
+          }
+        end
         vim.fn.system(string.format('%s -r "%s" > "%s" && %s "%s" "%s"', M.xxd_opt, txt, M.dict[txt][1], M.xxd_opt,
           M.dict[txt][1], M.temp))
-        vim.fn.system(string.format('cd %s && %s -i "%s" "%s"', vim.fn.fnamemodify(M.dict[txt][1], ':h'), M.xxd_opt,
+        vim.fn.system(string.format('%s && %s -i "%s" "%s"', systemcd(M.dict[txt][1]), M.xxd_opt,
           vim.fn.fnamemodify(M.dict[txt][1], ':t'), M.dict[txt][2]))
         local lines = require('plenary.path'):new(M.temp):readlines()
         local len = #lines
