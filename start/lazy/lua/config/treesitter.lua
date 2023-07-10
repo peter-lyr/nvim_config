@@ -12,6 +12,14 @@ end
 
 vim.opt.runtimepath:append(parser_path.filename)
 
+local disable = function(lang, buf)
+  local max_filesize = 1000 * 1024
+  local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
+  if ok and stats and stats.size > max_filesize then
+    return true
+  end
+end
+
 require("nvim-treesitter.configs").setup({
   ensure_installed = {
     'c',
@@ -24,13 +32,16 @@ require("nvim-treesitter.configs").setup({
   parser_install_dir = parser_path.filename,
   highlight = {
     enable = true,
+    disable = disable,
     additional_vim_regex_highlighting = false,
   },
   indent = {
     enable = true,
+    disable = disable,
   },
   incremental_selection = {
     enable = true,
+    disable = disable,
     keymaps = {
       init_selection = "qi",
       node_incremental = "qi",
@@ -40,15 +51,17 @@ require("nvim-treesitter.configs").setup({
   },
   rainbow = {
     enable = true,
+    disable = disable,
     extended_mode = true,
     max_file_lines = nil,
   },
   matchup = {
     enable = true,
+    disable = disable,
   },
 })
 
-require"rainbow.internal".defhl()
+require "rainbow.internal".defhl()
 
 require("treesitter-context").setup({
   max_lines = 0,
