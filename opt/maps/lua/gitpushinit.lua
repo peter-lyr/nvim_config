@@ -5,6 +5,7 @@ local function asyncrunprepare()
 end
 
 M.addcommitpush = function()
+  vim.cmd('ProjectRootCD')
   local result = vim.fn.systemlist({ "git", "status", "-s" })
   if #result > 0 then
     vim.notify("git status -s" .. '\n' .. vim.loop.cwd() .. '\n' .. table.concat(result, '\n'))
@@ -23,6 +24,7 @@ M.addcommitpush = function()
 end
 
 M.commitpush = function()
+  vim.cmd('ProjectRootCD')
   local result = vim.fn.systemlist({ "git", "diff", "--staged", "--stat" })
   if #result > 0 then
     vim.notify("git diff --staged --stat" .. '\n' .. vim.loop.cwd() .. '\n' .. table.concat(result, '\n'))
@@ -59,6 +61,7 @@ M.commit = function()
 end
 
 M.push = function()
+  vim.cmd('ProjectRootCD')
   local result = vim.fn.systemlist({ "git", "cherry", "-v" })
   if #result > 0 then
     vim.notify("git cherry -v" .. '\n' .. vim.loop.cwd() .. '\n' .. table.concat(result, '\n'))
@@ -162,6 +165,7 @@ M.init = function()
 end
 
 M.addall = function()
+  vim.cmd('ProjectRootCD')
   asyncrunprepare()
   vim.cmd('AsyncRun git add -A')
 end
