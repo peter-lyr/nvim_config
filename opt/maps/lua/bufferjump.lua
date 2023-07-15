@@ -1,6 +1,6 @@
 local M = {}
 
-M.max_en = 1
+M.max_en = 0
 M.winid = 0
 
 M.check = function()
