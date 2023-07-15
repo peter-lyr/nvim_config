@@ -8,6 +8,13 @@ return {
       '<leader>3',
       function()
         if vim.g.loaded_minimap then
+          if vim.fn.buflisted(vim.fn.bufnr()) == 0 then
+            if vim.g.lastbufwinid ~= -1 then
+              vim.fn.win_gotoid(vim.g.lastbufwinid)
+            else
+              return
+            end
+          end
           if vim.fn.filereadable(vim.api.nvim_buf_get_name(0)) == 1 then
             local winnr = vim.fn.bufwinnr('-MINIMAP-')
             if winnr == -1 then

@@ -32,3 +32,18 @@ require('aerial').setup({
     relative = 'editor',
   },
 })
+
+local M = {}
+
+M.open = function()
+  if vim.fn.buflisted(vim.fn.bufnr()) == 0 then
+    if vim.g.lastbufwinid ~= -1 then
+      vim.fn.win_gotoid(vim.g.lastbufwinid)
+    else
+      return
+    end
+  end
+  vim.cmd('AerialOpen right')
+end
+
+return M
