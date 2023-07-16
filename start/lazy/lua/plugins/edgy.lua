@@ -8,26 +8,42 @@ return {
     },
     left = {
       {
-        title = "Neo-Tree",
-        ft = "neo-tree",
-        filter = function(buf)
-          return vim.b[buf].neo_tree_source == "filesystem"
-        end,
+        title = "Nvim-Tree",
+        ft = "NvimTree",
         pinned = true,
         open = function()
-          vim.api.nvim_input("<esc><space>1")
+          vim.api.nvim_input("<esc><space>q")
         end,
         size = { height = 0.8 },
       },
       {
-        title = "Neo-Tree Git",
-        ft = "neo-tree",
-        filter = function(buf)
-          return vim.b[buf].neo_tree_source == "git_status"
-        end,
+        title = "Fugitive",
+        ft = "fugitive",
         pinned = true,
-        open = "Neotree position=right git_status",
+        size = { height = 0.38 },
+        open = "Git",
       },
+      -- {
+      --   title = "Neo-Tree",
+      --   ft = "neo-tree",
+      --   filter = function(buf)
+      --     return vim.b[buf].neo_tree_source == "filesystem"
+      --   end,
+      --   pinned = true,
+      --   open = function()
+      --     vim.api.nvim_input("<esc><space>1")
+      --   end,
+      --   size = { height = 0.8 },
+      -- },
+      -- {
+      --   title = "Neo-Tree Git",
+      --   ft = "neo-tree",
+      --   filter = function(buf)
+      --     return vim.b[buf].neo_tree_source == "git_status"
+      --   end,
+      --   pinned = true,
+      --   open = "Neotree position=right git_status",
+      -- },
     },
     right = {
       {

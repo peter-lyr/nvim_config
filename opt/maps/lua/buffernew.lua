@@ -33,7 +33,8 @@ end
 -- donot close buf type
 
 local close_fts = {
-  'neo-tree',
+  'NvimTree',
+  'fugitive',
   'minimap',
   'aerial',
   'edgy',

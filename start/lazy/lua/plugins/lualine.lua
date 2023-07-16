@@ -9,6 +9,7 @@ return {
     require('wait.projectroot'),
     require('wait.noice'),
     require('wait.plenary'),
+    require('wait.bbye'),
     {
       "SmiteshP/nvim-navic",
       lazy = true,

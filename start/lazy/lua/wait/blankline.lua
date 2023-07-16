@@ -8,7 +8,6 @@ return {
     filetype_exclude = {
       "qf",
       "help",
-      "neo-tree",
       "lazy",
       "mason",
       "notify",

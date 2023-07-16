@@ -54,20 +54,22 @@ vim.api.nvim_create_autocmd({ "BufEnter", }, {
   end,
 })
 
+local ignore_focus = {
+  ['aerial'] = 'Aerial',
+  ['minimap'] = 'Minimap',
+  ['NvimTree'] = 'NvimTree',
+  ['fugitive'] = 'Fugitive',
+  ['lazy'] = 'Lazy',
+  ['qf'] = 'QuickFix List',
+}
+
 local function check_ft(ft)
-  local fts = {
-    'neo-tree',
-    'aerial',
-  }
-  return vim.tbl_contains(fts, ft) == false
+  return vim.tbl_contains(vim.tbl_keys(ignore_focus), ft) == false
 end
 
 require('lualine').setup({
   options = {
-    ignore_focus = {
-      'neo-tree',
-      'lazy',
-    },
+    ignore_focus = vim.tbl_keys(ignore_focus),
     globalstatus = false,
     component_separators = { left = '', right = '' },
     section_separators = { left = '', right = '' },
@@ -192,10 +194,7 @@ require('lualine').setup({
           end
           return vim.o.columns - l - 1
         end,
-        filetype_names = {
-          ['neo-tree'] = 'Neo Tree',
-          ['lazy'] = 'Lazy',
-        },
+        filetype_names = ignore_focus,
         use_mode_colors = false,
         buffers_color = {
           active = function()

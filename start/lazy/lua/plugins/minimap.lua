@@ -62,7 +62,7 @@ return {
   },
   init = function()
     vim.g.minimap_width = 30
-    vim.g.minimap_block_filetypes = { 'aerial', 'neo-tree', 'help', }
+    vim.g.minimap_block_filetypes = { 'aerial', 'NvimTree', 'fugitive', 'help', }
   end,
   config = function()
     if vim.g.loaded_minimap then
