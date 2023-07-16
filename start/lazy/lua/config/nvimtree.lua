@@ -100,9 +100,6 @@ end
 require('nvim-tree').setup({
   on_attach = on_attach,
   remove_keymaps = true,
-  view = {
-    adaptive_size = 12,
-  },
   update_focused_file = {
     enable = true,
     update_root = true,
