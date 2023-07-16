@@ -20,7 +20,6 @@ return {
         title = "Fugitive",
         ft = "fugitive",
         pinned = true,
-        size = { height = 0.38 },
         open = "Git",
       },
     },
