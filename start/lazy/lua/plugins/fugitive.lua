@@ -8,4 +8,7 @@ return {
   dependencies = {
     require('plugins.edgy'),
   },
+  config = function()
+    require('config.fugitive')
+  end
 }

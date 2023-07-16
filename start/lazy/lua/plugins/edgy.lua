@@ -54,10 +54,10 @@ return {
     },
     keys = {
       ["<a-l>"] = function(win)
-        win:resize("width", 30)
+        win:resize("width", 10)
       end,
       ["<a-h>"] = function(win)
-        win:resize("width", -30)
+        win:resize("width", -10)
       end,
       ["<a-k>"] = function(win)
         win:resize("height", 15)
