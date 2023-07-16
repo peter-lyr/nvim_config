@@ -45,9 +45,6 @@ vim.api.nvim_create_autocmd({ "BufLeave", }, {
       curcol = vim.fn.col('.')
       if win then
         win.view.edgebar:equalize()
-        if vim.fn.line('$') == 3 then
-          win:close()
-        end
       end
     end
   end,
