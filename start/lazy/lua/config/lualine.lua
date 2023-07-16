@@ -461,7 +461,7 @@ vim.keymap.set({ 'n', 'v', }, '<a-f7>', function()
   for b = 1, vim.fn.bufnr('$') do
     if vim.fn.buflisted(b) ~= 0 and vim.api.nvim_buf_get_option(b, 'buftype') ~= 'quickfix' then
       local fname = vim.api.nvim_buf_get_name(b)
-      if #fname > 0 then
+      if #fname > 0 and vim.fn.filereadable(fname) == true then
         fname = vim.api.nvim_buf_get_name(b)
         local tabname = get_projectroot(vim.fn['ProjectRootGet'](vim.api.nvim_buf_get_name(b)))
         if vim.tbl_contains(tabs, tabname) ~= true then
