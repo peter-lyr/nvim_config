@@ -158,6 +158,7 @@ vim.api.nvim_create_autocmd({ "BufEnter", }, {
           vim.loop.new_timer():start(50, 0, function()
             vim.schedule(function()
               vim.cmd(string.format("norm %dgg%d|", curline, curcol))
+              vim.cmd("norm 99zH")
             end)
           end)
         end)
