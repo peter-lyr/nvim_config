@@ -5,7 +5,7 @@ vim.api.nvim_create_autocmd({ "BufEnter", }, {
   callback = function(ev)
     if vim.bo[ev.buf].ft == 'fugitive' then
       local width = 0
-      local height = vim.fn.line('$')
+      local height = math.min(vim.fn.line('$'), vim.opt.lines:get())
       for linenr = 1, height do
         local len = vim.fn.strdisplaywidth(vim.fn.getline(linenr))
         if len > width then
