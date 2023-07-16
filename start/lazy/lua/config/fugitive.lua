@@ -41,9 +41,9 @@ vim.api.nvim_create_autocmd({ "BufLeave", }, {
   callback = function(ev)
     if vim.bo[ev.buf].ft == 'fugitive' then
       local win = require("edgy.editor").get_win()
+      curline = vim.fn.line('.')
+      curcol = vim.fn.col('.')
       if win then
-        curline = vim.fn.line('.')
-        curcol = vim.fn.col('.')
         win.view.edgebar:equalize()
         if vim.fn.line('$') == 3 then
           win:close()
