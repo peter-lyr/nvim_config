@@ -145,6 +145,8 @@ vim.api.nvim_create_autocmd({ "BufEnter", }, {
           width = len
         end
       end
+      local curline = vim.fn.line('.')
+      local curcol = vim.fn.col('.')
       vim.loop.new_timer():start(50, 0, function()
         vim.schedule(function()
           local win = require("edgy.editor").get_win()
@@ -157,6 +159,11 @@ vim.api.nvim_create_autocmd({ "BufEnter", }, {
           if height - win.height > 0 then
             win:resize("height", height - win.height)
           end
+          vim.loop.new_timer():start(50, 0, function()
+            vim.schedule(function()
+              vim.cmd(string.format("norm %dgg%d|", curline, curcol))
+            end)
+          end)
         end)
       end)
     end
@@ -175,7 +182,10 @@ vim.api.nvim_create_autocmd({ "BufLeave", }, {
       end
       local win = require("edgy.editor").get_win()
       if win then
+        local curline = vim.fn.line('.')
+        local curcol = vim.fn.col('.')
         win.view.edgebar:equalize()
+        vim.cmd(string.format("norm %dgg%d|", curline, curcol))
       end
     end
   end,
