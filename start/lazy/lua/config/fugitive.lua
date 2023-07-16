@@ -40,18 +40,14 @@ vim.api.nvim_create_autocmd({ "BufEnter", }, {
 vim.api.nvim_create_autocmd({ "BufLeave", }, {
   callback = function(ev)
     if vim.bo[ev.buf].ft == 'fugitive' then
-      local max = 0
-      for linenr = 1, vim.fn.line('$') do
-        local len = vim.fn.strdisplaywidth(vim.fn.getline(linenr))
-        if len > max then
-          max = len
-        end
-      end
       local win = require("edgy.editor").get_win()
       if win then
         curline = vim.fn.line('.')
         curcol = vim.fn.col('.')
         win.view.edgebar:equalize()
+        if vim.fn.line('$') == 3 then
+          win:close()
+        end
       end
     end
   end,
