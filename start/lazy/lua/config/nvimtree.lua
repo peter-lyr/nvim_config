@@ -188,3 +188,68 @@ vim.api.nvim_create_autocmd({ "BufLeave", }, {
     end
   end,
 })
+
+local flag = nil
+
+local openall = function()
+  flag = nil
+  vim.cmd('NvimTreeFindFile')
+  local timer = vim.loop.new_timer()
+  timer:start(100, 100, function()
+    vim.schedule(function()
+      local ft = vim.bo[vim.fn.bufnr()].ft
+      if ft == 'fugitive' then
+        timer:stop()
+        flag = 1
+        vim.cmd('wincmd t')
+        vim.cmd('wincmd l')
+      end
+      if flag then
+        return
+      end
+      if not ft then
+        vim.cmd('wincmd t')
+      else
+        vim.cmd('wincmd j')
+      end
+    end)
+  end)
+end
+
+local check = function()
+  local ok1 = nil
+  local ok2 = nil
+  local ok = nil
+  for winnr = 1, vim.fn.winnr('$') do
+    local ft = vim.bo[vim.fn.winbufnr(winnr)].ft
+    if ft == 'NvimTree' then
+      ok1 = 1
+    elseif ft == 'fugitive' then
+      ok2 = 1
+    end
+    if ok1 and ok2 or (not ok1 and not ok2) then
+      ok = 1
+      break
+    end
+  end
+  return ok
+end
+
+vim.api.nvim_create_autocmd({ "CursorHold", }, {
+  callback = function()
+    local ft = vim.bo[vim.fn.winbufnr(winnr)].ft
+    if ft ~= 'NvimTree' and ft ~= 'fugitive' and not check() then
+      local winid = vim.fn.win_getid()
+      openall()
+      local timer = vim.loop.new_timer()
+      timer:start(100, 100, function()
+        vim.schedule(function()
+          if flag then
+            timer:stop()
+            vim.fn.win_gotoid(winid)
+          end
+        end)
+      end)
+    end
+  end,
+})
