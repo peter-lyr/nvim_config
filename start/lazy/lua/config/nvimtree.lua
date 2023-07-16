@@ -134,7 +134,7 @@ vim.api.nvim_create_autocmd({ "BufEnter", }, {
   callback = function(ev)
     if vim.bo[ev.buf].ft == 'NvimTree' then
       local width = 0
-      local height = math.min(vim.fn.line('$'), vim.opt.lines:get())
+      local height = math.min(vim.fn.line('$'), vim.opt.lines:get() - 6)
       for linenr = 2, height do
         local len = vim.fn.strdisplaywidth(vim.fn.getline(linenr))
         if len > width then
@@ -159,6 +159,7 @@ vim.api.nvim_create_autocmd({ "BufEnter", }, {
             vim.schedule(function()
               vim.cmd(string.format("norm %dgg%d|", curline, curcol))
               vim.cmd("norm 99zH")
+              vim.cmd("norm zz")
             end)
           end)
         end)
