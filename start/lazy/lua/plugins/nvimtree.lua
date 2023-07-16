@@ -3,7 +3,7 @@ return {
   lazy = true,
   event = { 'FocusLost', },
   keys = {
-    { '<leader>q', '<cmd>NvimTreeFindFile<cr>', mode = { 'n', 'v', }, silent = true, desc = 'NvimTreeFindFile' },
+    { '<leader><tab>', '<cmd>NvimTreeFindFile<cr>', mode = { 'n', 'v', }, silent = true, desc = 'NvimTreeFindFile' },
   },
   dependencies = {
     require('myplugins.core'),   -- terminal
