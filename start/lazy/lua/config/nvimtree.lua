@@ -109,7 +109,6 @@ require('nvim-tree').setup({
     show_on_dirs = true,
   },
   renderer = {
-    group_empty = true,
     highlight_git = true,
     special_files = { "README.md", "readme.md" },
     indent_markers = {
