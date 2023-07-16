@@ -153,8 +153,8 @@ vim.api.nvim_create_autocmd({ "BufEnter", }, {
           if not win then
             return
           end
-          if width - win.width + 4 > 0 then
-            win:resize("width", width - win.width + 4)
+          if width - win.width + 6 > 0 then
+            win:resize("width", width - win.width + 6)
           end
           if height - win.height > 0 then
             win:resize("height", height - win.height)
