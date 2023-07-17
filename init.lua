@@ -25,6 +25,9 @@ local lockfile = pack .. "nvim_config\\lazy-lock.json"
 local lazy = require('lazy')
 
 lazy.setup({
+  -- defaults = {
+  --   lazy = true,
+  -- },
   spec = {
     { import = 'wait' },
     { import = 'plugins' },

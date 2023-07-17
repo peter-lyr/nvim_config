@@ -1,5 +1,6 @@
 return {
   "nvim-neorg/neorg",
+  lazy = true,
   build = ":Neorg sync-parsers",
   dependencies = {
     require('wait.plenary'),
