@@ -34,7 +34,7 @@ local on_attach = function(bufnr)
     return { desc = 'nvim-tree: ' .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
   end
 
-  vim.keymap.set('n', '<c-g>', api.node.show_info_popup, opts('Info'))
+  vim.keymap.set('n', '<c-f>', api.node.show_info_popup, opts('Info'))
 
   vim.keymap.set('n', 'dk', api.node.open.tab, opts('Open: New Tab'))
   vim.keymap.set('n', 'dl', api.node.open.vertical, opts('Open: Vertical Split'))
@@ -79,8 +79,8 @@ local on_attach = function(bufnr)
   vim.keymap.set('n', '<leader>j', api.node.navigate.git.next, opts('Next Git'))
   vim.keymap.set('n', '<leader>m', api.node.navigate.diagnostics.next, opts('Next Diagnostic'))
   vim.keymap.set('n', '<leader>n', api.node.navigate.diagnostics.prev, opts('Prev Diagnostic'))
-  vim.keymap.set('n', 'm', api.node.navigate.opened.prev, opts('Prev Opened'))
-  vim.keymap.set('n', ',', api.node.navigate.opened.next, opts('Next Opened'))
+  vim.keymap.set('n', '<c-i>', api.node.navigate.opened.prev, opts('Prev Opened'))
+  vim.keymap.set('n', '<c-o>', api.node.navigate.opened.next, opts('Next Opened'))
 
   vim.keymap.set('n', 'J', api.node.navigate.sibling.next, opts('Next Sibling'))
   vim.keymap.set('n', 'K', api.node.navigate.sibling.prev, opts('Previous Sibling'))
