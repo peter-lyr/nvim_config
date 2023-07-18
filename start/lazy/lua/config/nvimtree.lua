@@ -89,6 +89,7 @@ local on_attach = function(bufnr)
   vim.keymap.set('n', 'L', api.node.navigate.parent_close, opts('Close Directory'))
 
   vim.keymap.set('n', 'x', api.node.run.system, opts('Run System'))
+  vim.keymap.set('n', '<MiddleMouse>', api.node.run.system, opts('Run System'))
   vim.keymap.set('n', 'gx', api.node.run.cmd, opts('Run Command'))
 
   vim.keymap.set('n', 'f', api.live_filter.start, opts('Filter'))
