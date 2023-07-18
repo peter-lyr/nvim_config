@@ -187,7 +187,9 @@ vim.api.nvim_create_autocmd({ "BufLeave", }, {
 vim.api.nvim_create_autocmd({ "BufEnter", }, {
   callback = function(ev)
     if vim.bo[ev.buf].ft == 'NvimTree' then
-      vim.opt.sidescrolloff = 0
+      vim.cmd([[
+        setlocal sidescrolloff=0
+      ]])
     end
   end,
 })
@@ -205,6 +207,7 @@ local openall = function()
         timer:stop()
         flag = 1
         vim.cmd('wincmd t')
+
         vim.cmd('wincmd l')
       end
       if flag then
