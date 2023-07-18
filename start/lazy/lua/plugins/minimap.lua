@@ -76,6 +76,21 @@ return {
           end
         end,
       })
+      local rescanned_bufnr = 0
+      vim.api.nvim_create_autocmd({ "CursorHold", }, {
+        callback = function()
+          local bufnr = vim.fn.bufnr()
+          if rescanned_bufnr ~= bufnr then
+            rescanned_bufnr = bufnr
+            vim.cmd([[
+              try
+                MinimapRescan
+              catch
+              endtry
+            ]])
+          end
+        end,
+      })
       local minimap_rescan_allow = 1
       local lastbufnr = 0
       vim.api.nvim_create_autocmd({ "BufEnter", }, {
