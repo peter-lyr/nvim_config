@@ -79,6 +79,8 @@ local on_attach = function(bufnr)
   vim.keymap.set('n', '<leader>j', api.node.navigate.git.next, opts('Next Git'))
   vim.keymap.set('n', '<leader>m', api.node.navigate.diagnostics.next, opts('Next Diagnostic'))
   vim.keymap.set('n', '<leader>n', api.node.navigate.diagnostics.prev, opts('Prev Diagnostic'))
+  vim.keymap.set('n', 'm', api.node.navigate.opened.prev, opts('Prev Opened'))
+  vim.keymap.set('n', ',', api.node.navigate.opened.next, opts('Next Opened'))
 
   vim.keymap.set('n', 'J', api.node.navigate.sibling.next, opts('Next Sibling'))
   vim.keymap.set('n', 'K', api.node.navigate.sibling.prev, opts('Previous Sibling'))
@@ -98,6 +100,12 @@ local on_attach = function(bufnr)
   others(bufnr)
 end
 
+vim.cmd([[
+hi NvimTreeOpenedFile guibg=#238789
+hi NvimTreeModifiedFile guibg=#87237f
+hi NvimTreeSpecialFile guifg=brown gui=bold,underline
+]])
+
 require('nvim-tree').setup({
   on_attach = on_attach,
   remove_keymaps = true,
@@ -105,12 +113,22 @@ require('nvim-tree').setup({
     enable = true,
     update_root = true,
   },
+  filters = {
+    dotfiles = true,
+  },
   diagnostics = {
     enable = true,
     show_on_dirs = true,
   },
+  modified = {
+    enable = true,
+    show_on_dirs = false,
+    show_on_open_dirs = false,
+  },
   renderer = {
     highlight_git = true,
+    highlight_opened_files = "name",
+    highlight_modified = "name",
     special_files = { "README.md", "readme.md" },
     indent_markers = {
       enable = true,
