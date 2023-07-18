@@ -184,6 +184,14 @@ vim.api.nvim_create_autocmd({ "BufLeave", }, {
   end,
 })
 
+vim.api.nvim_create_autocmd({ "BufEnter", }, {
+  callback = function(ev)
+    if vim.bo[ev.buf].ft == 'NvimTree' then
+      vim.opt.sidescrolloff = 0
+    end
+  end,
+})
+
 local flag = nil
 
 local openall = function()
