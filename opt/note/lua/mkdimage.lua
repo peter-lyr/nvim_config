@@ -51,7 +51,7 @@ end
 
 function M.getimage(sel_jpg)
   local fname = vim.api.nvim_buf_get_name(0)
-  local projectroot_path = path:new(vim.fn['projectroot#get'](fname))
+  local projectroot_path = path:new(rep(vim.fn['projectroot#get'](fname)))
   if projectroot_path.filename == '' then
     print('not projectroot:', fname)
     return false
@@ -167,7 +167,7 @@ end
 
 function M.dragimage(sel_jpg, dragimagename)
   local fname = vim.api.nvim_buf_get_name(0)
-  local projectroot_path = path:new(vim.fn['projectroot#get'](fname))
+  local projectroot_path = path:new(rep(vim.fn['projectroot#get'](fname)))
   if projectroot_path.filename == '' then
     print([[not projectroot:]], fname)
     return false
