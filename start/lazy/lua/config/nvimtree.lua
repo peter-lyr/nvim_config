@@ -159,6 +159,7 @@ vim.api.nvim_create_autocmd({ "CursorHold", }, {
           win:resize("height", height - win.height)
         end
         vim.cmd(string.format("norm %dgg%d|", curline, curcol))
+        vim.cmd("norm 99zH")
       end
     end
   end,
@@ -177,10 +178,7 @@ vim.api.nvim_create_autocmd({ "BufLeave", }, {
       end
       local win = require("edgy.editor").get_win()
       if win then
-        local curline = vim.fn.line('.')
-        local curcol = vim.fn.col('.')
         win.view.edgebar:equalize()
-        vim.cmd(string.format("norm %dgg%d|", curline, curcol))
       end
     end
   end,
