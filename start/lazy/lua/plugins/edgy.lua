@@ -4,7 +4,7 @@ return {
   event = { "BufReadPost", "BufNew", "BufNewFile", },
   opts = {
     animate = {
-      enabled = true,
+      enabled = false,
     },
     left = {
       {
