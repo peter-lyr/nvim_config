@@ -374,4 +374,19 @@ M.paste_from_clip = function(node)
   require('terminal').send('powershell', cmd, 0)
 end
 
+M.delete = function(node)
+  if node.type == 'file' then
+    vim.cmd('Bdelete ' .. node.absolute_path)
+  elseif node.type == 'directory' then
+    -- if node.has_children == true then
+    -- end
+  end
+end
+
+M.wipeout = function(node)
+  if node.type == 'file' then
+    vim.cmd('Bwipeout ' .. node.absolute_path)
+  end
+end
+
 return M

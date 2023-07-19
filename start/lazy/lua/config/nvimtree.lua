@@ -25,6 +25,9 @@ local others = function(bufnr)
 
   vim.keymap.set('n', 'dy', wrap_node(f.copy_2_clip), opts('copy_2_clip'))
   vim.keymap.set('n', 'dp', wrap_node(f.paste_from_clip), opts('paste_from_clip'))
+
+  vim.keymap.set('n', 'gd', wrap_node(f.delete), opts('bdelete'))
+  vim.keymap.set('n', 'gw', wrap_node(f.wipeout), opts('wipeout'))
 end
 
 local on_attach = function(bufnr)
