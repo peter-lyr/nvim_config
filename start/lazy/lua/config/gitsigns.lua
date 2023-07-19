@@ -58,6 +58,6 @@ require('gitsigns').setup {
     map('n', '<leader>gtw', gs.toggle_word_diff, { desc = 'Gitsigns toggle_word_diff' })
 
     -- Text object
-    map({ 'o', 'x' }, 'ig', ':<C-U>Gitsigns select_hunk<CR>', { desc = 'Gitsigns select_hunk' })
+    map({ 'o', 'x' }, 'g', ':<C-U>Gitsigns select_hunk<CR>', { desc = 'Gitsigns select_hunk' })
   end
 }
