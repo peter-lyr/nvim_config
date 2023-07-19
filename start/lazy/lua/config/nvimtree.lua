@@ -228,7 +228,6 @@ local openall = function()
         timer:stop()
         flag = 1
         vim.cmd('wincmd t')
-
         vim.cmd('wincmd l')
       end
       if flag then
