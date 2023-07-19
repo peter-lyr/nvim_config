@@ -263,9 +263,10 @@ local check = function()
 end
 
 vim.api.nvim_create_autocmd({ "CursorHold", }, {
-  callback = function()
+  callback = function(ev)
     local ft = vim.bo[vim.fn.winbufnr(winnr)].ft
-    if ft ~= 'NvimTree' and ft ~= 'fugitive' and not check() then
+    vim.fn['ProjectRootCD']()
+    if vim.fn['ProjectRootGet'](ev.file) ~= '' and ft ~= 'NvimTree' and ft ~= 'fugitive' and not check() then
       local winid = vim.fn.win_getid()
       openall()
       local timer = vim.loop.new_timer()
