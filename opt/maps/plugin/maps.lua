@@ -56,6 +56,8 @@ vim.keymap.set({ 'v', },          '<c-b>',   'B', { desc = 'B' })
 
 -- esc
 
+vim.keymap.set({ 'v', },          'o',       '<esc>', { desc = 'esc' })
+
 vim.keymap.set({ 'i', 'c', },     'ql',      '<esc><esc>', { desc = 'esc' })
 vim.keymap.set({ 'i', 'c', },     'qL',      '<esc><esc>', { desc = 'esc' })
 vim.keymap.set({ 'i', 'c', },     'Ql',      '<esc><esc>', { desc = 'esc' })
