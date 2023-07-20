@@ -221,8 +221,13 @@ local openall = function()
   flag = nil
   vim.cmd('NvimTreeFindFile')
   local timer = vim.loop.new_timer()
+  local cnt = 0
   timer:start(100, 100, function()
     vim.schedule(function()
+      cnt = cnt + 1
+      if cnt > 30 then
+        timer:stop()
+      end
       local ft = vim.bo[vim.fn.bufnr()].ft
       if ft == 'fugitive' then
         timer:stop()
@@ -236,7 +241,9 @@ local openall = function()
       if not ft then
         vim.cmd('wincmd t')
       else
-        vim.cmd('wincmd j')
+        if pcall(vim.cmd, 'Git') == false then
+          timer:stop()
+        end
       end
     end)
   end)
