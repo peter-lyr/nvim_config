@@ -33,8 +33,7 @@ return {
       hi()
       return ":<C-U>lua require('tsht').nodes({ignore_injections = false})<CR>"
     end
-    vim.keymap.set("o", "im", tsht, { expr = true, silent = true })
-    vim.keymap.set("x", "im", tsht, { expr = true, silent = true })
+    vim.keymap.set({ "o", "x" }, "im", tsht, { expr = true, silent = true })
     vim.keymap.set("n", "zf", function()
       hi()
       require("tsht").nodes({ ignore_injections = false })
