@@ -1,6 +1,8 @@
 local file = require('plenary.path'):new(vim.g.pack_path):joinpath('nvim_config', 'test.log').filename
 
-vim.api.nvim_create_autocmd({
+pcall(vim.api.nvim_del_autocmd, vim.g.test_au1)
+
+vim.g.test_au1 = vim.api.nvim_create_autocmd({
   "BufAdd",
   "BufDelete",
   "BufEnter",
