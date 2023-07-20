@@ -6,7 +6,11 @@ local pack = vimruntime .. '\\pack\\'
 vim.g.pack_path = pack
 
 vim.g.events_log_en = 1
-vim.g.events_log = vim.fn.stdpath('data') .. '\\events_log\\' .. vim.fn.strftime("%Y%m%d-%H%M%S.log")
+local events_log_dir = vim.fn.stdpath('data') .. '\\events_log\\'
+vim.g.events_log = events_log_dir .. vim.fn.strftime("%Y%m%d-%H%M%S.log")
+if vim.fn.isdirecotory(events_log_dir) == 0 then
+  vim.fn.system(string.format('md "%s"', events_log_dir))
+end
 
 function EventsLog(ev)
   if vim.g.events_log_en == 1 then
