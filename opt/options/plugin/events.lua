@@ -1,9 +1,11 @@
 -- sometimes mouse not working
 
+local log_en = 1
+
 vim.api.nvim_create_autocmd({ "BufEnter", }, {
   callback = function(ev)
-    Log(ev)
     vim.opt.mouse = 'a'
+    Log(ev, log_en)
   end,
 })
 
@@ -104,13 +106,14 @@ vim.api.nvim_create_autocmd("BufReadPost", {
 vim.g.lastbufwinid = -1
 
 vim.api.nvim_create_autocmd({ "BufLeave", }, {
-  callback = function()
+  callback = function(ev)
     local bufnr = vim.fn.bufnr()
     if vim.fn.buflisted(bufnr) ~= 0 then
       vim.g.lastbufwinid = vim.fn.win_getid()
     else
       vim.g.lastbufwinid = -1
     end
+    Log(ev, log_en)
   end,
 })
 

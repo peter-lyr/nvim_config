@@ -12,12 +12,12 @@ if vim.fn.isdirectory(events_log_dir) == 0 then
   vim.fn.system(string.format('md "%s"', events_log_dir))
 end
 
-function Log(ev)
-  if vim.g.events_log_en == 1 then
+function Log(ev, en)
+  if vim.g.events_log_en == 1 and en == 1 then
     if ev and ev.buf and ev.event and ev.file then
       vim.fn.writefile({
         string.format([[%3.3f %-2d %-10s "%s"]],
-          os.clock(), ev.buf, ev.event, string.sub(ev.file, #ev.file - 30, #ev.file))
+          os.clock(), ev.buf, ev.event, ev.file)
       }, vim.g.events_log, 'a')
     end
   end
