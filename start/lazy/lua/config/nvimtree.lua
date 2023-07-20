@@ -127,9 +127,12 @@ require('nvim-tree').setup({
   on_attach = on_attach,
   remove_keymaps = true,
   update_focused_file = {
-    enable = true,
+    -- enable = true,
     update_root = true,
   },
+  sync_root_with_cwd = true,
+  reload_on_bufenter = true,
+  respect_buf_cwd = true,
   filters = {
     dotfiles = true,
   },
@@ -215,6 +218,9 @@ vim.api.nvim_create_autocmd({ "BufLeave", }, {
       if win then
         win.view.edgebar:equalize()
       end
+      vim.cmd([[
+        set eventignore=
+      ]])
     end
   end,
 })
@@ -224,6 +230,7 @@ vim.api.nvim_create_autocmd({ "BufEnter", }, {
     if vim.bo[ev.buf].ft == 'NvimTree' then
       vim.cmd([[
         setlocal sidescrolloff=0
+        set eventignore=OptionSet,TextChanged,CursorMoved
       ]])
     end
   end,
