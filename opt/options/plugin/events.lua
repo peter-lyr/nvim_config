@@ -5,7 +5,7 @@ local log_en = 1
 vim.api.nvim_create_autocmd({ "BufEnter", }, {
   callback = function(ev)
     vim.opt.mouse = 'a'
-    EventLog(ev, log_en)
+    EventsLog(ev, log_en)
   end,
 })
 
@@ -113,7 +113,7 @@ vim.api.nvim_create_autocmd({ "BufLeave", }, {
     else
       vim.g.lastbufwinid = -1
     end
-    EventLog(ev, log_en)
+    EventsLog(ev, log_en)
   end,
 })
 
