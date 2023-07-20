@@ -44,10 +44,19 @@ local on_attach = function(bufnr)
   vim.keymap.set('n', 'dj', api.node.open.horizontal, opts('Open: Horizontal Split'))
   vim.keymap.set('n', 'a', api.node.open.edit, opts('Open'))
   vim.keymap.set('n', '<Tab>', function()
-    local curline = vim.fn.line('.')
+    local curline = vim.fn.line('.') + 1
     local curcol = vim.fn.col('.')
     api.node.open.preview()
-    vim.cmd(string.format("norm %dgg%d|", curline, curcol))
+    pcall(vim.cmd, string.format("norm %dgg%d|", curline, curcol))
+  end, opts('Open Preview'))
+  vim.keymap.set('n', '<C-Tab>', function()
+    local curline = vim.fn.line('.')
+    if curline > 1 then
+      curline = curline - 1
+    end
+    local curcol = vim.fn.col('.')
+    api.node.open.preview()
+    pcall(vim.cmd, string.format("norm %dgg%d|", curline, curcol))
   end, opts('Open Preview'))
 
   vim.keymap.set('n', '<2-LeftMouse>', api.node.open.no_window_picker, opts('Open'))
