@@ -2,7 +2,7 @@
 
 vim.api.nvim_create_autocmd({ "BufEnter", }, {
   callback = function(ev)
-    EventsLog(ev)
+    Log(ev)
     vim.opt.mouse = 'a'
   end,
 })
