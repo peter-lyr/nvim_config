@@ -1,7 +1,8 @@
 -- sometimes mouse not working
 
 vim.api.nvim_create_autocmd({ "BufEnter", }, {
-  callback = function()
+  callback = function(ev)
+    EventsLog(ev)
     vim.opt.mouse = 'a'
   end,
 })

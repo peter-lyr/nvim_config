@@ -5,6 +5,19 @@ local pack = vimruntime .. '\\pack\\'
 
 vim.g.pack_path = pack
 
+vim.g.events_log_en = 1
+vim.g.events_log = vim.fn.stdpath('data') .. '\\events_log\\' .. vim.fn.strftime("%Y%m%d-%H%M%S.log")
+
+function EventsLog(ev)
+  if vim.g.events_log_en == 1 then
+    if ev and ev.buf and ev.event and ev.file then
+      vim.fn.writefile({
+        string.format([[%-3.3f %-2d %-20s - "%s"]], os.clock(), ev.buf, ev.event, ev.file)
+      }, vim.g.events_log, 'a')
+    end
+  end
+end
+
 local lazypath = pack .. "lazy\\start\\lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
   vim.fn.system({
