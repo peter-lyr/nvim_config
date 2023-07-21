@@ -4,7 +4,7 @@ vim.api.nvim_create_autocmd({ "CursorHold", }, {
   callback = function(ev)
     if rescanned_bufnr ~= ev.buf then
       rescanned_bufnr = ev.buf
-    if vim.bo[ev.buf].ft == 'fugitive' then
+      if vim.bo[ev.buf].ft == 'fugitive' then
         local width = 0
         local height = math.min(vim.fn.line('$'), vim.opt.lines:get() - 6)
         for linenr = 2, height do
