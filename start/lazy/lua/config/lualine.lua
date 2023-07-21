@@ -442,7 +442,7 @@ end, { desc = 'tabclose next tab' })
 
 vim.api.nvim_create_autocmd({ "TabEnter", }, {
   callback = function()
-    vim.cmd('ProjectRootCD')
+    pcall(vim.call, 'ProjectRootCD')
   end,
 })
 
