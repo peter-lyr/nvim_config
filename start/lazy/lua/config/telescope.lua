@@ -11,12 +11,15 @@ local get_setup_table = function(file_ignore_patterns)
     defaults = {
       layout_strategy = 'horizontal',
       layout_config = {
-        height = 0.99,
-        width = 0.99,
+        horizontal = {
+          preview_cutoff = 0,
+        },
       },
-      -- preview = {
-      --   hide_on_startup = true,
-      -- },
+      preview = {
+        hide_on_startup = true,
+        check_mime_type = true,
+        -- timeout = 2000,
+      },
       mappings = {
         i = {
           ['<a-m>'] = actions.close,
