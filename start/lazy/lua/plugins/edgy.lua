@@ -53,16 +53,24 @@ return {
     },
     keys = {
       ["<a-l>"] = function(win)
-        win:resize("width", 10)
+        if win.width + 2 <= vim.o.columns then
+          win:resize("width", 2)
+        end
       end,
       ["<a-h>"] = function(win)
-        win:resize("width", -10)
+        if win.width - 2 >= require("edgy.config").layout.left.size then
+          win:resize("width", -2)
+        end
       end,
       ["<a-k>"] = function(win)
-        win:resize("height", 15)
+        if win.height + 5 <= vim.o.lines then
+          win:resize("height", 5)
+        end
       end,
       ["<a-j>"] = function(win)
-        win:resize("height", -15)
+        if win.height - 5 >= require("edgy.config").layout.bottom.size then
+          win:resize("height", -5)
+        end
       end,
       ["<a-i>"] = function(win)
         win.view.edgebar:equalize()
