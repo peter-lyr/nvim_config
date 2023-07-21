@@ -299,19 +299,21 @@ pcall(vim.api.nvim_del_autocmd, vim.g.nvimtree_au_cursorhold2)
 vim.g.nvimtree_au_cursorhold2 = vim.api.nvim_create_autocmd({ "CursorHold", }, {
   callback = function(ev)
     local ft = vim.bo[vim.fn.winbufnr(winnr)].ft
-    vim.fn['ProjectRootCD']()
-    if vim.fn['ProjectRootGet'](ev.file) ~= '' and ft ~= 'NvimTree' and ft ~= 'fugitive' and not check() then
-      local winid = vim.fn.win_getid()
-      openall()
-      local timer = vim.loop.new_timer()
-      timer:start(100, 100, function()
-        vim.schedule(function()
-          if flag then
-            timer:stop()
-            vim.fn.win_gotoid(winid)
-          end
+    local sta, _ = pcall(vim.call, 'ProjectRootCD')
+    if sta then
+      if vim.fn['ProjectRootGet'](ev.file) ~= '' and ft ~= 'NvimTree' and ft ~= 'fugitive' and not check() then
+        local winid = vim.fn.win_getid()
+        openall()
+        local timer = vim.loop.new_timer()
+        timer:start(100, 100, function()
+          vim.schedule(function()
+            if flag then
+              timer:stop()
+              vim.fn.win_gotoid(winid)
+            end
+          end)
         end)
-      end)
+      end
     end
   end,
 })
