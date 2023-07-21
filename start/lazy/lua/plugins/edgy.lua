@@ -53,22 +53,22 @@ return {
     },
     keys = {
       ["<a-l>"] = function(win)
-        if win.width + 2 <= vim.o.columns then
+        if win and win.width + 2 <= vim.o.columns then
           win:resize("width", 2)
         end
       end,
       ["<a-h>"] = function(win)
-        if win.width - 2 >= require("edgy.config").layout.left.size then
+        if win and win.width - 2 >= require("edgy.config").layout.left.size then
           win:resize("width", -2)
         end
       end,
       ["<a-k>"] = function(win)
-        if win.height + 5 <= vim.o.lines then
+        if win and win.height + 5 <= vim.o.lines then
           win:resize("height", 5)
         end
       end,
       ["<a-j>"] = function(win)
-        if win.height - 5 >= require("edgy.config").layout.bottom.size then
+        if win and win.height - 5 >= require("edgy.config").layout.bottom.size then
           win:resize("height", -5)
         end
       end,
