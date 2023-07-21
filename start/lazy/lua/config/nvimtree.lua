@@ -28,6 +28,8 @@ local others = function(bufnr)
 
   vim.keymap.set('n', 'gd', wrap_node(f.delete), opts('bdelete'))
   vim.keymap.set('n', 'gw', wrap_node(f.wipeout), opts('wipeout'))
+
+  vim.keymap.set('n', '<leader>=', wrap_node(f.edgy_autosize_toggle), opts('edgy_autosize_toggle'))
 end
 
 local on_attach = function(bufnr)
@@ -170,12 +172,13 @@ require('nvim-tree').setup({
 require('nvim-tree').change_root = require('config.nvimtree-ext').change_root
 
 local rescanned_bufnr = 0
+vim.g.edgy_autosize_en = 1
 
 pcall(vim.api.nvim_del_autocmd, vim.g.nvimtree_au_cursorhold1)
 
 vim.g.nvimtree_au_cursorhold1 = vim.api.nvim_create_autocmd({ "CursorHold", }, {
   callback = function(ev)
-    if rescanned_bufnr ~= ev.buf then
+    if vim.g.edgy_autosize_en == 1 and rescanned_bufnr ~= ev.buf then
       rescanned_bufnr = ev.buf
       if vim.bo[ev.buf].ft == 'NvimTree' then
         local width = 0
@@ -210,7 +213,7 @@ pcall(vim.api.nvim_del_autocmd, vim.g.nvimtree_au_bufleave)
 vim.g.nvimtree_au_bufleave = vim.api.nvim_create_autocmd({ "BufLeave", }, {
   callback = function(ev)
     rescanned_bufnr = ev.buf
-    if vim.bo[ev.buf].ft == 'NvimTree' then
+    if vim.g.edgy_autosize_en == 1 and vim.bo[ev.buf].ft == 'NvimTree' then
       local max = 0
       for linenr = 1, vim.fn.line('$') do
         local len = vim.fn.strdisplaywidth(vim.fn.getline(linenr))

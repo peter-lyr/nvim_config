@@ -1,8 +1,10 @@
 local rescanned_bufnr = 0
 
-vim.api.nvim_create_autocmd({ "CursorHold", }, {
+pcall(vim.api.nvim_del_autocmd, vim.g.fugitive_au_cursorhold)
+
+vim.g.fugitive_au_cursorhold = vim.api.nvim_create_autocmd({ "CursorHold", }, {
   callback = function(ev)
-    if rescanned_bufnr ~= ev.buf then
+    if vim.g.edgy_autosize_en == 1 and rescanned_bufnr ~= ev.buf then
       rescanned_bufnr = ev.buf
       if vim.bo[ev.buf].ft == 'fugitive' then
         local width = 0
@@ -32,10 +34,12 @@ vim.api.nvim_create_autocmd({ "CursorHold", }, {
   end,
 })
 
-vim.api.nvim_create_autocmd({ "BufLeave", }, {
+pcall(vim.api.nvim_del_autocmd, vim.g.fugitive_au_bufleave)
+
+vim.g.fugitive_au_bufleave = vim.api.nvim_create_autocmd({ "BufLeave", }, {
   callback = function(ev)
     rescanned_bufnr = ev.buf
-    if vim.bo[ev.buf].ft == 'fugitive' then
+    if vim.g.edgy_autosize_en == 1 and vim.bo[ev.buf].ft == 'fugitive' then
       local max = 0
       for linenr = 1, vim.fn.line('$') do
         local len = vim.fn.strdisplaywidth(vim.fn.getline(linenr))
@@ -51,9 +55,12 @@ vim.api.nvim_create_autocmd({ "BufLeave", }, {
   end,
 })
 
-vim.api.nvim_create_autocmd({ "BufEnter", }, {
+pcall(vim.api.nvim_del_autocmd, vim.g.fugitive_au_bufenter)
+
+vim.g.fugitive_au_bufenter = vim.api.nvim_create_autocmd({ "BufEnter", }, {
   callback = function(ev)
     if vim.bo[ev.buf].ft == 'fugitive' then
+      vim.keymap.set('n', '<leader>=', require('config.nvimtree-func').edgy_autosize_toggle, { buffer = ev.buf })
       vim.cmd([[
         setlocal sidescrolloff=0
       ]])

@@ -370,7 +370,8 @@ M.paste_from_clip = function(node)
   if not dtarget then
     return
   end
-  local cmd = string.format([[Get-Clipboard -Format FileDropList | ForEach-Object { Copy-Item -Path $_.FullName -Destination "%s" }]], dtarget)
+  local cmd = string.format(
+  [[Get-Clipboard -Format FileDropList | ForEach-Object { Copy-Item -Path $_.FullName -Destination "%s" }]], dtarget)
   require('terminal').send('powershell', cmd, 0)
 end
 
@@ -386,6 +387,14 @@ end
 M.wipeout = function(node)
   if node.type == 'file' then
     vim.cmd('Bwipeout ' .. node.absolute_path)
+  end
+end
+
+M.edgy_autosize_toggle = function()
+  if vim.g.edgy_autosize_en == 1 then
+    vim.g.edgy_autosize_en = 0
+  else
+    vim.g.edgy_autosize_en = 1
   end
 end
 
