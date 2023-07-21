@@ -171,7 +171,9 @@ require('nvim-tree').change_root = require('config.nvimtree-ext').change_root
 
 local rescanned_bufnr = 0
 
-vim.api.nvim_create_autocmd({ "CursorHold", }, {
+pcall(vim.api.nvim_del_autocmd, vim.g.nvimtree_au_cursorhold1)
+
+vim.g.nvimtree_au_cursorhold1 = vim.api.nvim_create_autocmd({ "CursorHold", }, {
   callback = function(ev)
     if rescanned_bufnr ~= ev.buf then
       rescanned_bufnr = ev.buf
@@ -203,7 +205,9 @@ vim.api.nvim_create_autocmd({ "CursorHold", }, {
   end,
 })
 
-vim.api.nvim_create_autocmd({ "BufLeave", }, {
+pcall(vim.api.nvim_del_autocmd, vim.g.nvimtree_au_bufleave)
+
+vim.g.nvimtree_au_bufleave = vim.api.nvim_create_autocmd({ "BufLeave", }, {
   callback = function(ev)
     rescanned_bufnr = ev.buf
     if vim.bo[ev.buf].ft == 'NvimTree' then
@@ -218,19 +222,17 @@ vim.api.nvim_create_autocmd({ "BufLeave", }, {
       if win then
         win.view.edgebar:equalize()
       end
-      vim.cmd([[
-        set eventignore=
-      ]])
     end
   end,
 })
 
-vim.api.nvim_create_autocmd({ "BufEnter", }, {
+pcall(vim.api.nvim_del_autocmd, vim.g.nvimtree_au_bufenter)
+
+vim.g.nvimtree_au_bufenter = vim.api.nvim_create_autocmd({ "BufEnter", }, {
   callback = function(ev)
     if vim.bo[ev.buf].ft == 'NvimTree' then
       vim.cmd([[
         setlocal sidescrolloff=0
-        set eventignore=OptionSet,TextChanged,CursorMoved
       ]])
     end
   end,
@@ -289,7 +291,9 @@ local check = function()
   return ok
 end
 
-vim.api.nvim_create_autocmd({ "CursorHold", }, {
+pcall(vim.api.nvim_del_autocmd, vim.g.nvimtree_au_cursorhold2)
+
+vim.g.nvimtree_au_cursorhold2 = vim.api.nvim_create_autocmd({ "CursorHold", }, {
   callback = function(ev)
     local ft = vim.bo[vim.fn.winbufnr(winnr)].ft
     vim.fn['ProjectRootCD']()
