@@ -14,10 +14,10 @@ return {
   },
   dependencies = {
     require('myplugins.core'),   -- terminal
-    require('wait.projectroot'),
-    require('plugins.fugitive'),
     require('plugins.edgy'),
+    require('plugins.fugitive'),
     require('wait.plenary'),
+    require('wait.projectroot'),
   },
   config = function()
     require('config.nvimtree')
