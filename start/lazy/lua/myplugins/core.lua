@@ -307,6 +307,13 @@ return {
       { '<leader>bu',       function() require('session').open_branches() end,   mode = { 'n', 'v', }, silent = true, desc = 'open session: branches' },
       { '<leader>bI',       function() require('session').delete_branches() end, mode = { 'n', 'v', }, silent = true, desc = 'del session: branches' },
 
+      ------------------------
+      -- oftenfiles.lua
+      ------------------------
+
+      -- open
+      { '<leader>bf',       function() require('oftenfiles').open() end, mode = { 'n', 'v', }, silent = true, desc = 'oftenfiles open' },
+
     },
   },
 }
