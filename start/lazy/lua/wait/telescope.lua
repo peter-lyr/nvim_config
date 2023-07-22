@@ -10,7 +10,7 @@ return {
     { '<leader>sh',         '<cmd>Telescope search_history<cr>',                                                                               mode = { 'n', 'v', }, silent = true, desc = 'Telescope search_history', },
     { '<leader>sc',         '<cmd>Telescope command_history<cr>',                                                                              mode = { 'n', 'v', }, silent = true, desc = 'Telescope command_history', },
     { '<leader>sC',         '<cmd>Telescope commands<cr>',                                                                                     mode = { 'n', 'v', }, silent = true, desc = 'Telescope commands', },
-    { '<leader>so',         '<cmd>Telescope oldfiles<cr>',                                                                                     mode = { 'n', 'v', }, silent = true, desc = 'Telescope oldfiles', },
+    { '<leader>so',         '<cmd>Telescope frecency<cr>',                                                                                     mode = { 'n', 'v', }, silent = true, desc = 'Telescope oldfiles', },
     { '<leader>sb',         '<cmd>Telescope buffers cwd_only=true sort_mru=true ignore_current_buffer=true<cr>',                               mode = { 'n', 'v', }, silent = true, desc = 'Telescope buffers cwd_only', },
     { '<leader>sB',         '<cmd>Telescope buffers<cr>',                                                                                      mode = { 'n', 'v', }, silent = true, desc = 'Telescope buffers', },
 
