@@ -46,3 +46,4 @@ vim.opt.scrolloff       = 4 -- Lines of context
 vim.opt.completeopt     = "menu,menuone,noselect"
 vim.opt.conceallevel    = 3 -- Hide * markup for bold and italic
 vim.opt.list            = true
+vim.opt.shada           = [[!,'1000,<500,s10000,h]]
