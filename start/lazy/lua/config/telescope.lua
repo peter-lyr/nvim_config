@@ -147,7 +147,7 @@ require('telescope').load_extension('fzf')
 local p = require('plenary.path')
 
 vim.g.sqlite_clib_path = p:new(vim.g.pack_path):parent():parent():parent():parent():parent()
-    :joinpath('sqlite3', 'sqlite3.dll').filename
+  :joinpath('sqlite3', 'sqlite3.dll').filename
 
 require('telescope').load_extension('frecency')
 
