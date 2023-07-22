@@ -1,7 +1,5 @@
 local opt = vim.fn.expand('$VIMRUNTIME') .. '\\pack\\nvim_config\\opt\\'
 
--- %s/.*{\s*\([^ ]\+\) *\(.\+,\) *\(mode = {[ 'nvtic,]\+},\) *\(.\+\) *},/\=printf("      { %-30s %-86s %-20s %s },", submatch(1), submatch(2), submatch(3), substitute(trim(submatch(4)), ' \+', ' ' ,'g'))
-
 return {
   {
     name = 'options',
@@ -131,7 +129,7 @@ return {
       { '<leader>ba',         '<cmd>leftabove vnew<cr>',                                     mode = { 'n', 'v' }, silent = true, desc = 'leftabove vnew' },
       { '<leader>bs',         '<cmd>new<cr>',                                                mode = { 'n', 'v' }, silent = true, desc = 'new' },
       { '<leader>bd',         '<cmd>vnew<cr>',                                               mode = { 'n', 'v' }, silent = true, desc = 'vnew' },
-      { '<leader>bt',         '<cmd>wincmd T<cr>',                                           mode = { 'n', 'v' }, silent = true, desc = 'wincmd T' },
+      { '<leader>bm',         '<cmd>wincmd T<cr>',                                           mode = { 'n', 'v' }, silent = true, desc = 'wincmd T' },
 
       -- clone cur buffer beside
 
