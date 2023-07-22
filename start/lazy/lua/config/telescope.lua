@@ -144,9 +144,14 @@ telescope.setup(get_setup_table(t))
 
 require('telescope').load_extension('fzf')
 
-local M = {}
-
 local p = require('plenary.path')
+
+vim.g.sqlite_clib_path = p:new(vim.g.pack_path):parent():parent():parent():parent():parent()
+    :joinpath('sqlite3', 'sqlite3.dll').filename
+
+require('telescope').load_extension('frecency')
+
+local M = {}
 
 M.nvim_config = p:new(vim.g.pack_path):joinpath('nvim_config')
 
