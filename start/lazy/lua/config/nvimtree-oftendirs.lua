@@ -42,4 +42,13 @@ M.open = function()
   end)
 end
 
+M.start = function()
+  vim.ui.select(vim.fn.sort(existsdirs), { prompt = 'oftendirs' }, function(choice)
+    if not choice then
+      return
+    end
+    vim.cmd('!start ' .. choice)
+  end)
+end
+
 return M
