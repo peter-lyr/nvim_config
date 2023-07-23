@@ -53,6 +53,14 @@ int main(int argc, char *argv[])
     sprintf(localappdata, "%s\\%s", pack, "localappdata");
     // printf("localappdata: %s\n", localappdata);
 
+
+    // get temp dir
+
+    char temp[256];
+    // sprintf(temp, "%s\\%s", nvimwin64, "temp");
+    sprintf(temp, "%s\\%s\\%s", pack, "localappdata", "temp");
+    // printf("temp: %s\n", temp);
+
     // get nvim.exe
 
     char nvimexe[256];
@@ -62,7 +70,7 @@ int main(int argc, char *argv[])
     // get cmd
 
     char cmd[576];
-    sprintf(cmd, "set LOCALAPPDATA=%s&& start /d %s /b %s", localappdata, config, nvimexe);
+    sprintf(cmd, "set LOCALAPPDATA=%s&& set TEMP=%s&& start /d %s /b %s", localappdata, temp, config, nvimexe);
 
     // run cmd to open nvim.exe
 
