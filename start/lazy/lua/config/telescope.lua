@@ -86,10 +86,10 @@ local get_setup_table = function(file_ignore_patterns)
     },
     extensions = {
       fzf = {
-        fuzzy = true,                         -- false will only do exact matching
-        override_generic_sorter = true,       -- override the generic sorter
-        override_file_sorter = true,          -- override the file sorter
-        case_mode = "smart_case",             -- or "ignore_case" or "respect_case"
+        fuzzy = true,                   -- false will only do exact matching
+        override_generic_sorter = true, -- override the generic sorter
+        override_file_sorter = true,    -- override the file sorter
+        case_mode = "smart_case",       -- or "ignore_case" or "respect_case"
         -- the default case_mode is "smart_case"
       }
     }
@@ -142,14 +142,19 @@ add(t, {
 
 telescope.setup(get_setup_table(t))
 
-require('telescope').load_extension('fzf')
-
 local p = require('plenary.path')
 
-vim.g.sqlite_clib_path = p:new(vim.g.pack_path):parent():parent():parent():parent():parent()
-  :joinpath('sqlite3', 'sqlite3.dll').filename
+-- fzf
 
-require('telescope').load_extension('frecency')
+telescope.load_extension('fzf')
+
+-- old files
+
+vim.g.sqlite_clib_path = p:new(vim.g.pack_path):parent():parent():parent():parent():parent()
+    :joinpath('sqlite3', 'sqlite3.dll').filename
+
+telescope.load_extension('frecency')
+
 
 local M = {}
 
