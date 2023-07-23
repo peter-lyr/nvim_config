@@ -167,6 +167,12 @@ require('nvim-tree').setup({
       },
     },
   },
+  -- log = {
+  --   enable = true,
+  --   types = {
+  --     dev = true,
+  --   },
+  -- },
 })
 
 require('nvim-tree').change_root = require('config.nvimtree-ext').change_root
@@ -317,3 +323,14 @@ vim.g.nvimtree_au_cursorhold2 = vim.api.nvim_create_autocmd({ "CursorHold", }, {
     end
   end,
 })
+
+-- local log = require("nvim-tree.log")
+--
+-- vim.api.nvim_create_autocmd({ "OptionSet" }, {
+--   callback = function(ev)
+--     log.line("dev", [[%-2d, %-3.3f [%41s] "%8s" (%8s) %18s: '%31s' -> '%31s']], os.clock(), ev.buf,
+--       string.sub(ev.file, #ev.file - 40, #ev.file), vim.v.option_type, vim.v.option_command, ev.match,
+--       string.sub(vim.v.option_old, #vim.v.option_old - 30, #vim.v.option_old),
+--       string.sub(vim.v.option_new, #vim.v.option_new - 30, #vim.v.option_new))
+--   end,
+-- })
