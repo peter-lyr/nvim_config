@@ -61,7 +61,7 @@ M.list = function()
   vim.api.nvim_cmd(vim.api.nvim_parse_cmd("Telescope xray23 list", {}), {})
 end
 
-vim.api.nvim_create_autocmd({ "VimLeavePre", "ExitPre", "QuitPre", }, {
+vim.api.nvim_create_autocmd({ "QuitPre", }, {
   callback = function()
     M.save()
   end,

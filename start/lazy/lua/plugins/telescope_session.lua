@@ -1,7 +1,7 @@
 return {
   "HUAHUAI23/telescope-session.nvim",
   lazy = true,
-  event = { "VimLeavePre", "ExitPre", "QuitPre", },
+  event = { "QuitPre", },
   keys = {
     { '<leader>s<c-o>', function() require('config.telescope_session').open() end,      mode = { 'n', 'v' }, silent = true, desc = 'Telescope session open' },
     { '<leader>s<c-s>', function() require('config.telescope_session').save() end,      mode = { 'n', 'v' }, silent = true, desc = 'Telescope session save' },
