@@ -40,7 +40,7 @@ M.open = function()
   pcall(vim.cmd, 'wall')
   pcall(vim.cmd, '%bwipeout')
   pcall(vim.cmd, 'source ' .. defaul_session)
-  vim.keymap.set({ "n", "v" }, "<leader>s<c-o>", function()
+  vim.keymap.set({ "n", "v" }, "<leader>svo", function()
     print('Can not open default session again!')
   end, { silent = true, desc = 'Telescope session open (canceled!)' })
 end
