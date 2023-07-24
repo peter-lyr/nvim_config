@@ -98,6 +98,38 @@ M.tabclose = function()
   ]])
 end
 
+M.tabbwipeout = function()
+  if vim.fn.bufnr('-MINIMAP-') ~= -1 then
+    vim.cmd('MinimapClose')
+  end
+  local curroot = string.gsub(vim.fn.tolower(vim.fn['ProjectRootGet'](vim.api.nvim_buf_get_name(0))), '\\', '/')
+  vim.cmd([[
+    try
+      tabclose!
+    catch
+    endtry
+  ]])
+  local roots = {}
+  for _, b in ipairs(vim.api.nvim_list_bufs()) do
+    local fname = vim.api.nvim_buf_get_name(b)
+    if require('plenary.path').new(fname):exists() then
+      if vim.fn.buflisted(b) ~= 0 and vim.api.nvim_buf_get_option(b, 'buftype') ~= 'quickfix' or vim.api.nvim_buf_get_option(b, 'buftype') == 'help' then
+        local root = string.gsub(vim.fn.tolower(vim.fn['ProjectRootGet'](vim.api.nvim_buf_get_name(b))), '\\', '/')
+        table.insert(roots, root)
+      end
+    end
+  end
+  if #roots <= 1 then
+    return
+  end
+  for _, b in ipairs(vim.api.nvim_list_bufs()) do
+    local fname = vim.api.nvim_buf_get_name(b)
+    if curroot == string.gsub(vim.fn.tolower(vim.fn['ProjectRootGet'](fname)), '\\', '/') then
+      pcall(vim.cmd, 'bw! ' .. tostring(b))
+    end
+  end
+end
+
 M.bw_unlisted_buffers = function()
   local path = require('plenary.path')
   local bufnrs = vim.tbl_filter(function(b)
