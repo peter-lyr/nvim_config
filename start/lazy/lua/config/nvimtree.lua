@@ -175,6 +175,8 @@ M.setup = function(conf)
   require('nvim-tree').setup(vim.tbl_deep_extend("force", t, conf or {}))
 end
 
+M.setup()
+
 require('nvim-tree').change_root = require('config.nvimtree-ext').change_root
 
 local rescanned_bufnr = 0
