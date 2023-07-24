@@ -1,4 +1,13 @@
-local file = require('plenary.path'):new(vim.g.pack_path):joinpath('nvim_config', 'test.log').filename
+require('config.nvimtree').setup({
+  log = {
+    enable = true,
+    types = {
+      dev = true,
+    },
+  },
+})
+
+local log = require("nvim-tree.log")
 
 pcall(vim.api.nvim_del_autocmd, vim.g.test_au1)
 
@@ -124,6 +133,9 @@ vim.g.test_au1 = vim.api.nvim_create_autocmd({
   "WinResized",
 }, {
   callback = function(ev)
-    vim.fn.writefile({ string.format([[%-3.3f %-2d %-20s - "%s"]], os.clock(), ev.buf, ev.event, ev.file) }, file, 'a')
+    log.line("dev", [[%-2d, %-3.3f [%41s] "%8s" (%8s) %18s: '%31s' -> '%31s']], os.clock(), ev.buf,
+      string.sub(ev.file, #ev.file - 40, #ev.file), vim.v.option_type, vim.v.option_command, ev.match,
+      string.sub(vim.v.option_old, #vim.v.option_old - 30, #vim.v.option_old),
+      string.sub(vim.v.option_new, #vim.v.option_new - 30, #vim.v.option_new))
   end,
 })
