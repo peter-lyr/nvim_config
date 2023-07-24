@@ -1,4 +1,4 @@
--- package.loaded['config.nvimtree-oftendirs'] = nil
+package.loaded['config.nvimtree-oftendirs'] = nil
 
 local M = {}
 
@@ -6,6 +6,7 @@ local nv = require('plenary.path'):new(vim.fn.expand('$VIMRUNTIME')):parent():pa
 
 local dirs = {
   vim.fn.expand([[$HOME]]),
+  vim.fn.expand([[$TEMP]]),
   vim.fn.expand([[$LOCALAPPDATA]]),
   vim.fn.expand([[$VIMRUNTIME\pack]]),
   vim.fn.expand([[$VIMRUNTIME\pack\nvim_config]]),
@@ -48,6 +49,28 @@ M.explorer = function()
       return
     end
     vim.cmd('!explorer ' .. choice)
+  end)
+end
+
+local pathdirs = {}
+
+for pathdir in string.gmatch(vim.fn.expand([[$PATH]]), '([^;]+);') do
+  if vim.fn.isdirectory(pathdir) == 1 then
+    table.insert(pathdirs, pathdir)
+  end
+end
+
+M.openpathdir = function()
+  vim.ui.select(vim.fn.sort(pathdirs), { prompt = 'pathdirs' }, function(choice)
+    if not choice then
+      return
+    end
+    vim.cmd('NvimTreeOpen')
+    vim.loop.new_timer():start(10, 0, function()
+      vim.schedule(function()
+        vim.cmd('cd ' .. choice)
+      end)
+    end)
   end)
 end
 
