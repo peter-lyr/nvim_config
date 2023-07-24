@@ -48,7 +48,7 @@ M.explorer = function()
     if not choice then
       return
     end
-    vim.cmd('!explorer ' .. choice)
+    vim.cmd('!explorer "' .. choice .. '"')
   end)
 end
 

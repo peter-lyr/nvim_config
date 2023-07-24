@@ -33,9 +33,9 @@ return {
 
       -- start explorer
 
-      { 'cs.',                '<cmd>!explorer %:h<cr>',                                                   mode = { 'n', 'v' },  silent = true, desc = 'start %:h' },
+      { 'cs.',                '<cmd>!explorer "%:h"<cr>',                                                   mode = { 'n', 'v' },  silent = true, desc = 'start %:h' },
       { 'csu',                '<cmd>!explorer ..<cr>',                                                    mode = { 'n', 'v' },  silent = true, desc = 'start ..' },
-      { 'cs=',                function() vim.cmd('!explorer ' .. vim.call('ProjectRootGet')) end,         mode = { 'n', 'v' },  silent = true, desc = 'start ProjectRootGet' },
+      { 'cs=',                function() vim.cmd('!explorer "' .. vim.call('ProjectRootGet') .. '"') end,         mode = { 'n', 'v' },  silent = true, desc = 'start ProjectRootGet' },
       { 'csc',                '<cmd>!chcp 65001 && start /min /b cmd /c "%:p"<cr>',                    mode = { 'n', 'v' },  silent = true, desc = 'system open %:h' },
 
       -- copy_paste

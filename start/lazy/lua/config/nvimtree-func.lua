@@ -398,4 +398,12 @@ M.edgy_autosize_toggle = function()
   end
 end
 
+M.explorer = function(node)
+  local dtarget = get_dtarget(node)
+  if not dtarget then
+    return
+  end
+  vim.cmd('!explorer "' .. dtarget .. '"')
+end
+
 return M
