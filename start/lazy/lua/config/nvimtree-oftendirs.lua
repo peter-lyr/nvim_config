@@ -42,12 +42,12 @@ M.open = function()
   end)
 end
 
-M.start = function()
+M.explorer = function()
   vim.ui.select(vim.fn.sort(existsdirs), { prompt = 'oftendirs' }, function(choice)
     if not choice then
       return
     end
-    vim.cmd('!start ' .. choice)
+    vim.cmd('!explorer ' .. choice)
   end)
 end
 
