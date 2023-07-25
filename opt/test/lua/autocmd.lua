@@ -7,6 +7,13 @@ require('config.nvimtree').setup({
   },
 })
 
+local format = function(text)
+  if #text > 40 then
+    return string.sub(text, #text-39, #text)
+  end
+  return text
+end
+
 local log = require("nvim-tree.log")
 
 pcall(vim.api.nvim_del_autocmd, vim.g.test_au1)
@@ -133,9 +140,9 @@ vim.g.test_au1 = vim.api.nvim_create_autocmd({
   "WinResized",
 }, {
   callback = function(ev)
-    log.line("dev", [[%-2d, %-3.3f [%41s] "%8s" (%8s) %18s: '%31s' -> '%31s']], os.clock(), ev.buf,
-      string.sub(ev.file, #ev.file - 40, #ev.file), vim.v.option_type, vim.v.option_command, ev.match,
-      string.sub(vim.v.option_old, #vim.v.option_old - 30, #vim.v.option_old),
-      string.sub(vim.v.option_new, #vim.v.option_new - 30, #vim.v.option_new))
+    log.line("dev", [[%-3d, %-3.3f [ev:%-12s] [fn:%-40s] [ot:%-10s] [oc:%-10s] [m:%-40s]: '%-40s' -> '%-40s']],
+      ev.buf, os.clock(), ev.event, format(ev.file),
+      vim.v.option_type, vim.v.option_command, format(ev.match),
+      format(tostring(vim.v.option_old)), format(tostring(vim.v.option_new)))
   end,
 })
