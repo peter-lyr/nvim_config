@@ -21,5 +21,4 @@ if not exist %pack%localappdata\nvim (
 
 copy /y %nvim_config%init.lua %pack%localappdata\nvim\init.lua
 
-timeout /t 3
 exit
