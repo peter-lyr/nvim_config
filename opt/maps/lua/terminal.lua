@@ -207,7 +207,7 @@ M.send = function(terminal, to_send, show) -- show时，send后不hide
   elseif to_send == 'clipboard' then
     local clipboard = vim.fn.getreg('+')
     clipboard = clipboard:gsub("^%s*(.-)%s*$", "%1") -- trim_string
-    if terminal == 'to_send' then
+    if terminal == 'terminal' then
       cmd_to_send = string.gsub(clipboard, '\n', ' && ')
     elseif terminal == 'powershell' then
       cmd_to_send = string.gsub(clipboard, '\n', '; ')
