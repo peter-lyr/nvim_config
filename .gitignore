@@ -10,3 +10,4 @@ lazy-lock.json
 *.docx
 *.html
 *.pdf
+*.temp
