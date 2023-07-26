@@ -80,5 +80,3 @@ lazy.setup({
     },
   },
 })
-
-require('init.log')
