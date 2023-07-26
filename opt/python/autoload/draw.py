@@ -14,7 +14,7 @@ except:
     import numpy as np
 
 class Analysis():
-    def __init__(self, data_source, mode, data_tmp, *args, **kwargs):
+    def __init__(self, data_source, data_tmp, mode, *args, **kwargs):
         self.mode =mode.split('!')[0]
         self.plot_line = 0 if '!' in mode else 1
         self.data_source = data_source
@@ -197,8 +197,8 @@ class Analysis():
         mp.show()
 
 
-def main(data_source, mode, data_tmp):
-    a = Analysis(data_source, mode, data_tmp)
+def main(data_source, data_tmp, mode):
+    a = Analysis(data_source, data_tmp, mode)
     a.display_xy()
 
 
@@ -211,10 +211,10 @@ if __name__ == '__main__':
     # mode = 'y_2__mean'
     # mode = 'y_3_0_mean'
     # mode = 'y_3_01!' # 不连线
-    # ey: mean_y
+    #  # ey: mean_y
     # iy: min_y
     # ay: max_y
-    # ex: mean_x
+    #  # ex: mean_x
     # ix: min_x
     # ax: max_x
     # l:  last

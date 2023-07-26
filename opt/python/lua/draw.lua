@@ -5,8 +5,8 @@ local draw_py = require('plenary.path'):new(vim.g.pack_path):joinpath('nvim_conf
 
 M.draw = function()
   local fname = vim.api.nvim_buf_get_name(0)
-  local cmd = 'python ' .. draw_py .. ' ' .. fname .. ' y ' .. fname .. '.temp'
-  require('terminal').send('cmd', cmd, 'hide')
+  local cmd = 'python ' .. draw_py .. ' "' .. fname .. '" "' .. fname .. '.temp' .. '" y'
+  require('terminal').send('cmd', cmd, 'show')
 end
 
 return M
