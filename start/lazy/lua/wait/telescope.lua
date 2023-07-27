@@ -13,10 +13,6 @@ return {
     { '<leader>so',         '<cmd>Telescope frecency<cr>',                                                                                     mode = { 'n', 'v', }, silent = true, desc = 'Telescope oldfiles', },
     { '<leader>sb',         '<cmd>Telescope buffers cwd_only=true sort_mru=true ignore_current_buffer=true<cr>',                               mode = { 'n', 'v', }, silent = true, desc = 'Telescope buffers cwd_only', },
     { '<leader>sB',         '<cmd>Telescope buffers<cr>',                                                                                      mode = { 'n', 'v', }, silent = true, desc = 'Telescope buffers', },
-    { '<leader>sj',         '<cmd>Telescope jumplist<cr>',                                                                                     mode = { 'n', 'v', }, silent = true, desc = 'Telescope jumplist', },
-    { '<leader>sd',         '<cmd>Telescope diagnostics<cr>',                                                                                  mode = { 'n', 'v', }, silent = true, desc = 'Telescope diagnostics', },
-    { '<leader>sf',         '<cmd>Telescope filetypes<cr>',                                                                                    mode = { 'n', 'v', }, silent = true, desc = 'Telescope filetypes', },
-    { '<leader>sm',         '<cmd>Telescope keymaps<cr>',                                                                                      mode = { 'n', 'v', }, silent = true, desc = 'Telescope keymaps', },
 
     { '<leader>sl',         '<cmd>Telescope live_grep<cr>',                                                                                    mode = { 'n', 'v', }, silent = true, desc = 'Telescope live_grep', },
     { '<leader>ss',         '<cmd>Telescope grep_string shorten_path=true word_match=-w only_sort_text=true search= grep_open_files=true<cr>', mode = { 'n', 'v', }, silent = true, desc = 'Telescope grep_string', },
@@ -26,7 +22,11 @@ return {
 
     { '<leader><leader>sa', '<cmd>Telescope builtin<cr>',                                                                                      mode = { 'n', 'v', }, silent = true, desc = 'Telescope builtin', },
     { '<leader><leader>sc', '<cmd>Telescope colorscheme<cr>',                                                                                  mode = { 'n', 'v', }, silent = true, desc = 'Telescope colorscheme', },
+    { '<leader><leader>sd', '<cmd>Telescope diagnostics<cr>',                                                                                  mode = { 'n', 'v', }, silent = true, desc = 'Telescope diagnostics', },
+    { '<leader><leader>sf', '<cmd>Telescope filetypes<cr>',                                                                                    mode = { 'n', 'v', }, silent = true, desc = 'Telescope filetypes', },
     { '<leader><leader>sh', '<cmd>Telescope help_tags<cr>',                                                                                    mode = { 'n', 'v', }, silent = true, desc = 'Telescope help_tags', },
+    { '<leader><leader>sj', '<cmd>Telescope jumplist<cr>',                                                                                     mode = { 'n', 'v', }, silent = true, desc = 'Telescope jumplist', },
+    { '<leader><leader>sm', '<cmd>Telescope keymaps<cr>',                                                                                      mode = { 'n', 'v', }, silent = true, desc = 'Telescope keymaps', },
     { '<leader><leader>so', '<cmd>Telescope vim_options<cr>',                                                                                  mode = { 'n', 'v', }, silent = true, desc = 'Telescope vim_options', },
     { '<leader><leader>sp', '<cmd>Telescope planets<cr>',                                                                                      mode = { 'n', 'v', }, silent = true, desc = 'Telescope planets', },
 

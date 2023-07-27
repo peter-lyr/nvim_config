@@ -241,11 +241,12 @@ vim.g.nvimtree_au_bufleave = vim.api.nvim_create_autocmd({ "BufLeave", }, {
 
 pcall(vim.api.nvim_del_autocmd, vim.g.nvimtree_au_bufenter)
 
-vim.g.nvimtree_au_bufenter = vim.api.nvim_create_autocmd({ "BufEnter", }, {
+vim.g.nvimtree_au_bufenter = vim.api.nvim_create_autocmd({ "CursorHold", }, {
   callback = function(ev)
     if vim.bo[ev.buf].ft == 'NvimTree' then
       vim.cmd([[
         setlocal sidescrolloff=0
+        setlocal signcolumn=auto:1
       ]])
     end
   end,
