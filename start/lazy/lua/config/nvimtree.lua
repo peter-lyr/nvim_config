@@ -1,5 +1,7 @@
 local M = {}
 
+-- package.loaded['config.nvimtree-func'] = nil
+
 local f = require('config.nvimtree-func')
 
 local wrap_node = function(fn)
@@ -34,6 +36,8 @@ local others = function(bufnr)
   vim.keymap.set('n', '<leader>=', wrap_node(f.edgy_autosize_toggle), opts('edgy_autosize_toggle'))
 
   vim.keymap.set('n', 'vx', wrap_node(f.explorer), opts('explorer'))
+
+  vim.keymap.set('n', '<del>', wrap_node(f.taskkill), opts('taskkill exe'))
 end
 
 local on_attach = function(bufnr)

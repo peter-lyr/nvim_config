@@ -371,7 +371,7 @@ M.paste_from_clip = function(node)
     return
   end
   local cmd = string.format(
-  [[Get-Clipboard -Format FileDropList | ForEach-Object { Copy-Item -Path $_.FullName -Destination "%s" }]], dtarget)
+    [[Get-Clipboard -Format FileDropList | ForEach-Object { Copy-Item -Path $_.FullName -Destination "%s" }]], dtarget)
   require('terminal').send('powershell', cmd, 0)
 end
 
@@ -404,6 +404,15 @@ M.explorer = function(node)
     return
   end
   vim.cmd('!explorer "' .. dtarget .. '"')
+end
+
+M.taskkill = function(node)
+  if node.type == 'file' then
+    if node.extension == 'exe' then
+      local file = get_fname_tail(node.absolute_path)
+      vim.fn.system('taskkill /f /im ' .. file)
+    end
+  end
 end
 
 return M
