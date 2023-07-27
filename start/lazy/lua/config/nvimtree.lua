@@ -335,14 +335,83 @@ vim.g.nvimtree_au_cursorhold2 = vim.api.nvim_create_autocmd({ "CursorHold", }, {
   end,
 })
 
--- pcall(vim.api.nvim_del_autocmd, vim.g.nvimtree_au_dirchanged)
---
--- vim.g.nvimtree_au_dirchanged = vim.api.nvim_create_autocmd({ "DirChanged", "DirChangedPre", }, {
---   callback = function(ev)
---     if vim.bo[ev.buf].ft == 'NvimTree' then
---       print(vim.loop.cwd(), ev.event)
---     end
---   end,
--- })
+local cwd = string.gsub(vim.fn.tolower(vim.loop.cwd()), '/', '\\')
+local dirs = { cwd }
+local curdir = cwd
+local lastdir = cwd
+local curidx = 1
+
+package.loaded['config.nvimtree'] = nil
+
+pcall(vim.api.nvim_del_autocmd, vim.g.nvimtree_au_dirchanged)
+
+vim.g.nvimtree_au_dirchanged = vim.api.nvim_create_autocmd({ "DirChanged", "DirChangedPre", }, {
+  callback = function(ev)
+    cwd = string.gsub(vim.fn.tolower(vim.loop.cwd()), '/', '\\')
+    if vim.tbl_contains(dirs, cwd) == false then
+      table.insert(dirs, cwd)
+    end
+    if ev.event == 'DirChanged' then
+      curdir = cwd
+    else
+      lastdir = cwd
+    end
+  end,
+})
+
+M.nextdir = function()
+  if #dirs == 0 then
+    return
+  end
+  if curidx == -1 then
+    curidx = vim.fn.indexof(dirs, string.format("v:val == '%s'", curdir))
+  else
+    curidx = curidx + 1
+  end
+  if curidx > #dirs then
+    curidx = 1
+  end
+  vim.cmd('cd ' .. dirs[curidx])
+  local pri = ''
+  for i, dir in ipairs(dirs) do
+    if i == curidx then
+      pri = pri .. ' -> ' .. dir .. '\n'
+    else
+      pri = pri .. '    ' .. dir .. '\n'
+    end
+  end
+  require('notify').dismiss()
+  vim.notify(string.sub(pri, 1, #pri-1))
+end
+
+M.prevdir = function()
+  if #dirs == 0 then
+    return
+  end
+  if curidx == -1 then
+    curidx = vim.fn.indexof(dirs, string.format("v:val == '%s'", curdir))
+  else
+    curidx = curidx - 1
+  end
+  if curidx < 1 then
+    curidx = #dirs
+  end
+  vim.cmd('cd ' .. dirs[curidx])
+  local pri = ''
+  for i, dir in ipairs(dirs) do
+    if i == curidx then
+      pri = pri .. ' -> ' .. dir .. '\n'
+    else
+      pri = pri .. '    ' .. dir .. '\n'
+    end
+  end
+  require('notify').dismiss()
+  vim.notify(string.sub(pri, 1, #pri-1))
+end
+
+M.lastdir = function()
+  vim.cmd('cd ' .. lastdir)
+  print(' -> ' .. lastdir)
+end
 
 return M
