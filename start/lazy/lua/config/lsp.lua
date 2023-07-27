@@ -107,18 +107,20 @@ vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'vim.diagnostic.got
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'vim.diagnostic.goto_next' })
 
 
-vim.keymap.set('n', '<leader>fvs', ':LspStart<cr>', { desc = 'LspStart' })
-vim.keymap.set('n', '<leader>fvr', ':LspRestart<cr>', { desc = 'LspRestart' })
+vim.keymap.set('n', '<leader>fS', ':LspStart<cr>', { desc = 'LspStart' })
+vim.keymap.set('n', '<leader>fR', ':LspRestart<cr>', { desc = 'LspRestart' })
 vim.keymap.set('n', '<leader>fq',  vim.diagnostic.enable, { desc = 'vim.diagnostic.enable' })
 vim.keymap.set('n', '<leader>fvq', vim.diagnostic.disable, { desc = 'vim.diagnostic.disable' })
-vim.keymap.set('n', '<leader>fvw', function() vim.lsp.stop_client(vim.lsp.get_active_clients()) end, { desc = 'stop all lsp clients' })
-vim.keymap.set('n', '<leader>fvd', [[:call feedkeys(':LspStop ')<cr>]], { desc = 'stop one lsp client of' })
-vim.keymap.set('n', '<leader>fvf', ':LspInfo<cr>', { desc = 'LspInfo' })
+vim.keymap.set('n', '<leader>fW', function() vim.lsp.stop_client(vim.lsp.get_active_clients()) end, { desc = 'stop all lsp clients' })
+vim.keymap.set('n', '<leader>fD', [[:call feedkeys(':LspStop ')<cr>]], { desc = 'stop one lsp client of' })
+vim.keymap.set('n', '<leader>fF', ':LspInfo<cr>', { desc = 'LspInfo' })
 
 vim.keymap.set('n', '<leader>fw', ':ClangdSwitchSourceHeader<cr>', { desc = 'ClangdSwitchSourceHeader' })
 
 
-vim.api.nvim_create_autocmd('LspAttach', {
+pcall(vim.api.nvim_del_autocmd, vim.g.lsp_au_lspattach)
+
+vim.g.lsp_au_lspattach = vim.api.nvim_create_autocmd('LspAttach', {
   group = vim.api.nvim_create_augroup('UserLspConfig', {}),
   callback = function(ev)
     vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
@@ -132,7 +134,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
     vim.keymap.set({ 'n', 'v' }, '<leader>fi', vim.lsp.buf.implementation, opts('vim.lsp.buf.implementation'))
     vim.keymap.set({ 'n', 'v' }, '<leader>fs', vim.lsp.buf.signature_help, opts('vim.lsp.buf.signature_help'))
     vim.keymap.set({ 'n', 'v' }, '<leader>fe', vim.lsp.buf.references, opts('vim.lsp.buf.references'))
-    vim.keymap.set({ 'n', 'v' }, '<leader><leader>fd', vim.lsp.buf.type_definition, opts('vim.lsp.buf.type_definition'))
+    vim.keymap.set({ 'n', 'v' }, '<leader>fvd', vim.lsp.buf.type_definition, opts('vim.lsp.buf.type_definition'))
     vim.keymap.set({ 'n', 'v' }, '<leader>fn', function() vim.fn.feedkeys(":IncRename " .. vim.fn.expand("<cword>")) end, opts('lsp rename IncRename'))
     vim.keymap.set({ 'n', 'v' }, '<leader>ff', function() vim.lsp.buf.format { async = true } end, opts('vim.lsp.buf.format'))
     vim.keymap.set({ 'n', 'v' }, '<leader>fc', vim.lsp.buf.code_action, opts('vim.lsp.buf.code_action'))
