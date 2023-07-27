@@ -188,9 +188,9 @@ require('nvim-tree').change_root = require('config.nvimtree-ext').change_root
 local rescanned_bufnr = 0
 vim.g.edgy_autosize_en = 1
 
-pcall(vim.api.nvim_del_autocmd, vim.g.nvimtree_au_cursorhold1)
+pcall(vim.api.nvim_del_autocmd, vim.g.nvimtree_au_cursorhold3)
 
-vim.g.nvimtree_au_cursorhold1 = vim.api.nvim_create_autocmd({ "CursorHold", }, {
+vim.g.nvimtree_au_cursorhold3 = vim.api.nvim_create_autocmd({ "CursorHold", }, {
   callback = function(ev)
     if vim.g.edgy_autosize_en == 1 and rescanned_bufnr ~= ev.buf then
       rescanned_bufnr = ev.buf
