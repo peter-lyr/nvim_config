@@ -314,6 +314,7 @@ pcall(vim.api.nvim_del_autocmd, vim.g.nvimtree_au_cursorhold2)
 vim.g.nvimtree_au_cursorhold2 = vim.api.nvim_create_autocmd({ "CursorHold", }, {
   callback = function(ev)
     local ft = vim.bo[vim.fn.winbufnr(winnr)].ft
+    local cwd = vim.loop.cwd()
     local sta, _ = pcall(vim.call, 'ProjectRootCD')
     if sta then
       if vim.fn['ProjectRootGet'](ev.file) ~= '' and ft ~= 'NvimTree' and ft ~= 'fugitive' and not check() then
@@ -330,7 +331,18 @@ vim.g.nvimtree_au_cursorhold2 = vim.api.nvim_create_autocmd({ "CursorHold", }, {
         end)
       end
     end
+    vim.cmd(string.format('cd %s|cd %s', string.sub(cwd, 1, 2), cwd))
   end,
 })
+
+-- pcall(vim.api.nvim_del_autocmd, vim.g.nvimtree_au_dirchanged)
+--
+-- vim.g.nvimtree_au_dirchanged = vim.api.nvim_create_autocmd({ "DirChanged", "DirChangedPre", }, {
+--   callback = function(ev)
+--     if vim.bo[ev.buf].ft == 'NvimTree' then
+--       print(vim.loop.cwd(), ev.event)
+--     end
+--   end,
+-- })
 
 return M

@@ -26,7 +26,13 @@ return {
 
       -- change_cwd
 
-      { 'c.',                 '<cmd>try|cd %:h|ec getcwd()|catch|endtry<cr>',                          mode = { 'n', 'v' },  silent = true, desc = 'cd %:h' },
+      { 'c.', function()
+        local dir = vim.fn.expand('%:p:h')
+        if #dir > 0 then
+          vim.cmd(string.format('cd %s|cd %s', string.sub(dir, 1, 2), dir))
+        end
+        print(vim.loop.cwd())
+      end, mode = { 'n', 'v' },  silent = true, desc = 'cd %:h' },
       { 'cu',                 '<cmd>try|cd ..|ec getcwd()|catch|endtry<cr>',                           mode = { 'n', 'v' },  silent = true, desc = 'cd ..' },
       { 'c-',                 '<cmd>try|cd -|ec getcwd()|catch|endtry<cr>',                            mode = { 'n', 'v' },  silent = true, desc = 'cd -' },
       { 'c=',                 '<cmd>ProjectRootCD<cr>',                                                mode = { 'n', 'v' },  silent = true, desc = 'ProjectRootCD' },
