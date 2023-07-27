@@ -116,6 +116,7 @@ vim.keymap.set('n', '<leader>fD', [[:call feedkeys(':LspStop ')<cr>]], { desc = 
 vim.keymap.set('n', '<leader>fF', ':LspInfo<cr>', { desc = 'LspInfo' })
 
 vim.keymap.set('n', '<leader>fw', ':ClangdSwitchSourceHeader<cr>', { desc = 'ClangdSwitchSourceHeader' })
+vim.keymap.set('n', '<leader>fp', '=ap', { desc = '=ap' })
 
 
 pcall(vim.api.nvim_del_autocmd, vim.g.lsp_au_lspattach)
