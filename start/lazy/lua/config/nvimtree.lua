@@ -359,6 +359,16 @@ vim.g.nvimtree_au_dirchanged = vim.api.nvim_create_autocmd({ "DirChanged", "DirC
   end,
 })
 
+local notify = function(info)
+  vim.notify(info, 'info', {
+    animate = false,
+    on_open = function(win)
+      local buf = vim.api.nvim_win_get_buf(win)
+      vim.api.nvim_buf_set_option(buf, "filetype", "markdown")
+    end,
+  })
+end
+
 M.nextdir = function()
   if #dirs == 0 then
     return
@@ -375,13 +385,13 @@ M.nextdir = function()
   local pri = ''
   for i, dir in ipairs(dirs) do
     if i == curidx then
-      pri = pri .. ' -> ' .. dir .. '\n'
+      pri = pri .. '# ' .. dir .. '\n'
     else
-      pri = pri .. '    ' .. dir .. '\n'
+      pri = pri .. tostring(i) .. '. ' .. dir .. '\n'
     end
   end
   require('notify').dismiss()
-  vim.notify(string.sub(pri, 1, #pri-1))
+  notify(string.sub(pri, 1, #pri - 1))
 end
 
 M.prevdir = function()
@@ -400,27 +410,77 @@ M.prevdir = function()
   local pri = ''
   for i, dir in ipairs(dirs) do
     if i == curidx then
-      pri = pri .. ' -> ' .. dir .. '\n'
+      pri = pri .. '# ' .. dir .. '\n'
     else
-      pri = pri .. '    ' .. dir .. '\n'
+      pri = pri .. tostring(i) .. '. ' .. dir .. '\n'
     end
   end
   require('notify').dismiss()
-  vim.notify(string.sub(pri, 1, #pri-1))
+  notify(string.sub(pri, 1, #pri - 1))
 end
 
 M.lastdir = function()
   vim.cmd('cd ' .. lastdir)
   local pri = ''
-  for _, dir in ipairs(dirs) do
+  for i, dir in ipairs(dirs) do
     if dir == lastdir then
-      pri = pri .. ' -> ' .. dir .. '\n'
+      pri = pri .. '# ' .. dir .. '\n'
     else
-      pri = pri .. '    ' .. dir .. '\n'
+      pri = pri .. tostring(i) .. '. ' .. dir .. '\n'
     end
   end
   require('notify').dismiss()
-  vim.notify(string.sub(pri, 1, #pri-1))
+  notify(string.sub(pri, 1, #pri - 1))
+end
+
+local chs = {
+  'a', 's', 'd', 'f', 'q', 'w', 'e', 'r', 'j', 'k', 'l', 'h',
+  'n', 'm', 'y', 'u', 'i', 'o', 'p', 'z', 'x', 'c', 'v', 'g',
+  't', 'b',
+}
+
+M.seldir = function()
+  vim.cmd('cd ' .. lastdir)
+  local pri = ''
+  local dict = {}
+  for i, dir in ipairs(dirs) do
+    if dir == curdir then
+      pri = pri .. string.format('%d. # %s', i, dir) .. '\n'
+    else
+      pri = pri .. string.format('%d. [%s] %s', i, chs[i], dir) .. '\n'
+      dict[chs[i]] = dir
+    end
+  end
+  require('notify').dismiss()
+  if #vim.tbl_keys(dict) > 1 then
+    local tbl = vim.tbl_keys(dict)
+    table.sort(tbl)
+    notify('- type char to cd dir: `' .. table.concat(tbl, "`, `") .. '`')
+  end
+  vim.notify(string.sub(pri, 1, #pri - 1), 'info', {
+    animate = false,
+    on_open = function(win)
+      local buf = vim.api.nvim_win_get_buf(win)
+      vim.api.nvim_buf_set_option(buf, "filetype", "markdown")
+      if #vim.tbl_keys(dict) > 1 then
+        vim.loop.new_timer():start(100, 0, function()
+          vim.schedule(function()
+            local ch = vim.fn.getcharstr()
+            local c1 = string.byte(ch, 1)
+            local c2 = string.byte(ch, 2)
+            local c3 = string.byte(ch, 3)
+            local c4 = string.byte(ch, 4)
+            if not c2 and not c3 and not c4 and c1 > 64 and c1 < 123 then
+              if vim.tbl_contains(vim.tbl_keys(dict), ch) == true then
+                vim.cmd('cd ' .. dict[ch])
+                require('notify').dismiss()
+              end
+            end
+          end)
+        end)
+      end
+    end,
+  })
 end
 
 return M
