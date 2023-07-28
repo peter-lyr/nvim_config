@@ -411,7 +411,16 @@ end
 
 M.lastdir = function()
   vim.cmd('cd ' .. lastdir)
-  print(' -> ' .. lastdir)
+  local pri = ''
+  for _, dir in ipairs(dirs) do
+    if dir == lastdir then
+      pri = pri .. ' -> ' .. dir .. '\n'
+    else
+      pri = pri .. '    ' .. dir .. '\n'
+    end
+  end
+  require('notify').dismiss()
+  vim.notify(string.sub(pri, 1, #pri-1))
 end
 
 return M
