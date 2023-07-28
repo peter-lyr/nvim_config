@@ -20,7 +20,7 @@ end
 
 local root = pack .. "lazy\\plugins"
 local readme = pack .. "lazy\\readme"
-local lockfile = pack .. "nvim_config\\lazy-lock.json"
+local lockfile = pack .. "lazy-lock.json"
 
 local lazy = require('lazy')
 
