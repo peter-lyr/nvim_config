@@ -26,16 +26,68 @@ return {
 
       -- change_cwd
 
-      { 'c.', function()
-        local dir = vim.fn.expand('%:p:h')
-        if #dir > 0 then
+      {
+        'q.',
+        function()
+          local dir = vim.fn.expand('%:p:h')
+          if #dir == 0 then
+            return
+          end
           vim.cmd(string.format('cd %s|cd %s', string.sub(dir, 1, 2), dir))
-        end
-        print(vim.loop.cwd())
-      end, mode = { 'n', 'v' },  silent = true, desc = 'cd %:h' },
-      { 'cu',                 '<cmd>try|cd ..|ec getcwd()|catch|endtry<cr>',                           mode = { 'n', 'v' },  silent = true, desc = 'cd ..' },
-      { 'c-',                 '<cmd>try|cd -|ec getcwd()|catch|endtry<cr>',                            mode = { 'n', 'v' },  silent = true, desc = 'cd -' },
-      { 'c=',                 '<cmd>ProjectRootCD<cr>',                                                mode = { 'n', 'v' },  silent = true, desc = 'ProjectRootCD' },
+          require('notify').dismiss()
+          vim.notify(vim.loop.cwd(), 'info', {
+            animate = false,
+            on_open = function(win)
+              local buf = vim.api.nvim_win_get_buf(win)
+              vim.api.nvim_buf_set_option(buf, "filetype", "markdown")
+            end,
+          })
+        end,
+        mode = { 'n', 'v' },
+        silent = true,
+        desc = 'cd %:h'
+      },
+      {
+        'qu',
+        function()
+          local dir = vim.fn.expand('%:p:h')
+          if #dir == 0 then
+            return
+          end
+          vim.cmd('cd ..')
+          require('notify').dismiss()
+          vim.notify(vim.loop.cwd(), 'info', {
+            animate = false,
+            on_open = function(win)
+              local buf = vim.api.nvim_win_get_buf(win)
+              vim.api.nvim_buf_set_option(buf, "filetype", "markdown")
+            end,
+          })
+        end,
+        mode = { 'n', 'v' },
+        silent = true,
+        desc = 'cd ..'
+      },
+      { 'qw',
+        function()
+          local dir = vim.fn.expand('%:p:h')
+          if #dir == 0 then
+            return
+          end
+          vim.cmd('ProjectRootCD')
+          require('notify').dismiss()
+          vim.notify(vim.loop.cwd(), 'info', {
+            animate = false,
+            on_open = function(win)
+              local buf = vim.api.nvim_win_get_buf(win)
+              vim.api.nvim_buf_set_option(buf, "filetype", "markdown")
+            end,
+          })
+        end,
+        mode = { 'n', 'v' },
+        silent = true,
+        desc = 'ProjectRootCD'
+      },
 
       -- start explorer
 
