@@ -351,13 +351,13 @@ package.loaded['config.nvimtree'] = nil
 
 pcall(vim.api.nvim_del_autocmd, vim.g.nvimtree_au_dirchanged)
 
-vim.g.nvimtree_au_dirchanged = vim.api.nvim_create_autocmd({ "DirChanged", }, {
+vim.g.nvimtree_au_dirchanged = vim.api.nvim_create_autocmd({ "DirChanged", "DirChangedPre", }, {
   callback = function(ev)
     cwd = string.gsub(vim.fn.tolower(vim.loop.cwd()), '/', '\\')
-    if vim.tbl_contains(dirs, cwd) == false then
-      table.insert(dirs, cwd)
-    end
     if ev.event == 'DirChanged' then
+      if vim.tbl_contains(dirs, cwd) == false then
+        table.insert(dirs, cwd)
+      end
       curdir = cwd
     else
       lastdir = cwd
@@ -387,7 +387,7 @@ M.switch = function()
   local pri = ''
   for i, dir in ipairs(dirs) do
     if i == curidx then
-      pri = pri .. '## ' .. dir .. '\n'
+      pri = pri .. tostring(i) .. '. `' .. dir .. '`\n'
     else
       pri = pri .. tostring(i) .. '. ' .. dir .. '\n'
     end
@@ -395,7 +395,7 @@ M.switch = function()
   require('notify').dismiss()
   notify('- type to cd dir: `j`, `s` `k`, `w`\n' ..
     '- type `space` to go tree\n' ..
-    '- type `d` to delete `' .. cur .. '`')
+    '- type `d` to delete `' .. tostring(curidx) .. '`')
   vim.notify(string.sub(pri, 1, #pri - 1), 'info', {
     animate = false,
     on_open = function(win)
@@ -417,7 +417,11 @@ M.switch = function()
               require('notify').dismiss()
               vim.cmd('NvimTreeOpen')
             elseif ch == 'd' then
-              table.remove(dirs, curidx)
+              if #dirs <= 2 then
+                notify('leave at least 2.')
+              else
+                table.remove(dirs, curidx)
+              end
               M.switch()
             else
               require('notify').dismiss()
@@ -466,7 +470,7 @@ M.lastdir = function()
   local pri = ''
   for i, dir in ipairs(dirs) do
     if dir == lastdir then
-      pri = pri .. '## ' .. dir .. '\n'
+      pri = pri .. tostring(i) .. '. `' .. dir .. '`\n'
     else
       pri = pri .. tostring(i) .. '. ' .. dir .. '\n'
     end
@@ -487,7 +491,7 @@ M.seldir = function()
   local j = 1
   for i, dir in ipairs(dirs) do
     if dir == curdir then
-      pri = pri .. string.format('%d. ## %s', i, dir) .. '\n'
+      pri = pri .. string.format('%d.   `%s', i, dir) .. '`\n'
     else
       pri = pri .. string.format('%d. [%s] %s', i, chs[j], dir) .. '\n'
       dict[chs[j]] = dir
