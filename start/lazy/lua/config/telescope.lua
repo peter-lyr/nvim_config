@@ -22,53 +22,60 @@ local get_setup_table = function(file_ignore_patterns)
       },
       mappings = {
         i = {
-          ['<a-m>'] = actions.close,
-          ['qm'] = actions.close,
+          ['vm'] = actions.close,
+          ['qq'] = actions.close,
 
           ['<a-j>'] = actions.move_selection_next,
           ['<a-k>'] = actions.move_selection_previous,
 
-          ['<a-;>'] = actions.send_to_qflist + actions.open_qflist,
-          ['q;'] = actions.send_to_qflist + actions.open_qflist,
+          ['dm'] = actions.send_to_qflist + actions.open_qflist,
 
-          ['<c-j>'] = actions.select_horizontal,
-          ['<c-l>'] = actions.select_vertical,
-          ['<c-k>'] = actions.select_tab,
+          ['dj'] = actions.select_horizontal,
+          ['dl'] = actions.select_vertical,
+          ['dk'] = actions.select_tab,
 
           ['<c-o>'] = actions.select_default,
-          ['qo'] = actions.select_default,
+          ['vo'] = actions.select_default,
+          ['<leader><leader>'] = {
+            actions.select_default, type = "action",
+            opts = { nowait = true, silent = true }
+          },
 
-          ['qn'] = actions_layout.toggle_preview,
+          ['vl'] = function(prompt_bufnr)
+            actions_layout.toggle_preview(prompt_bufnr)
+            vim.cmd([[call feedkeys("\<esc>")]])
+          end,
 
-          ['qj'] = function(prompt_bufnr)
+          ['vj'] = function(prompt_bufnr)
             actions.move_selection_next(prompt_bufnr)
             vim.cmd([[call feedkeys("\<esc>")]])
           end,
-          ['qk'] = function(prompt_bufnr)
+          ['vk'] = function(prompt_bufnr)
             actions.move_selection_previous(prompt_bufnr)
             vim.cmd([[call feedkeys("\<esc>")]])
           end,
         },
         n = {
-          ['<a-m>'] = actions.close,
-          ['ql'] = actions.close,
-          ['qm'] = actions.close,
+          ['vm'] = actions.close,
+          ['q'] = {
+            actions.close, type = "action",
+            opts = { nowait = true, silent = true }
+          },
 
-          ['<a-j>'] = actions.move_selection_next,
-          ['<a-k>'] = actions.move_selection_previous,
+          ['dm'] = actions.send_to_qflist + actions.open_qflist,
 
-          ['<a-;>'] = actions.send_to_qflist + actions.open_qflist,
-          ['q;'] = actions.send_to_qflist + actions.open_qflist,
+          ['dj'] = actions.select_horizontal,
+          ['dl'] = actions.select_vertical,
+          ['dk'] = actions.select_tab,
 
-          ['<c-j>'] = actions.select_horizontal,
-          ['<c-l>'] = actions.select_vertical,
-          ['<c-k>'] = actions.select_tab,
-
-          ['qo'] = actions.select_default,
           ['<c-o>'] = actions.select_default,
           ['o'] = actions.select_default,
+          ['<leader>'] = {
+            actions.select_default, type = "action",
+            opts = { nowait = true, silent = true }
+          },
 
-          ['n'] = actions_layout.toggle_preview,
+          ['l'] = actions_layout.toggle_preview,
         }
       },
       file_ignore_patterns = file_ignore_patterns,
