@@ -43,6 +43,8 @@ local others = function(bufnr)
   vim.keymap.set('n', 'vk', M.prevdir, opts('prevdir'))
   vim.keymap.set('n', 'vv', M.lastdir, opts('lastdir'))
   vim.keymap.set('n', 'vl', M.seldir, opts('seldir'))
+  vim.keymap.set('n', 'vh', M.selolddir, opts('selolddir'))
+  vim.keymap.set('n', 'vH', M.delolddir, opts('delolddir'))
   vim.keymap.set('n', 'vw', function() vim.cmd('ProjectRootCD') end, opts('ProjectRootCD'))
 end
 
