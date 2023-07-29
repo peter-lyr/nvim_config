@@ -38,6 +38,12 @@ local others = function(bufnr)
   vim.keymap.set('n', 'vx', wrap_node(f.explorer), opts('explorer'))
 
   vim.keymap.set('n', '<del>', wrap_node(f.taskkill), opts('taskkill exe'))
+
+  vim.keymap.set('n', 'vj', M.nextdir, opts('nextdir'))
+  vim.keymap.set('n', 'vk', M.prevdir, opts('prevdir'))
+  vim.keymap.set('n', 'vv', M.lastdir, opts('lastdir'))
+  vim.keymap.set('n', 'vl', M.seldir, opts('seldir'))
+  vim.keymap.set('n', 'vw', function() vim.cmd('ProjectRootCD') end, opts('ProjectRootCD'))
 end
 
 local on_attach = function(bufnr)
@@ -380,7 +386,8 @@ local switch = function()
     end
   end
   require('notify').dismiss()
-  notify('- type to cd dir: `j`, `k`')
+  notify('- type to cd dir: `j`, `s` `k`, `w`\n' ..
+    '- type `space` to go tree')
   vim.notify(string.sub(pri, 1, #pri - 1), 'info', {
     animate = false,
     on_open = function(win)
@@ -393,14 +400,19 @@ local switch = function()
           local c2 = string.byte(ch, 2)
           local c3 = string.byte(ch, 3)
           local c4 = string.byte(ch, 4)
-          if not c2 and not c3 and not c4 and c1 > 64 and c1 < 123 then
-            if ch == 'k' then
+          if not c2 and not c3 and not c4 and c1 then
+            if ch == 'k' or ch == 'w' then
               M.prevdir()
-            elseif ch == 'j' then
+            elseif ch == 'j' or ch == 's' then
               M.nextdir()
+            elseif ch == ' ' then
+              require('notify').dismiss()
+              vim.cmd('NvimTreeOpen')
             else
               require('notify').dismiss()
             end
+          else
+            require('notify').dismiss()
           end
         end)
       end)
@@ -492,7 +504,11 @@ M.seldir = function()
               if vim.tbl_contains(vim.tbl_keys(dict), ch) == true then
                 vim.cmd('cd ' .. dict[ch])
                 require('notify').dismiss()
+              else
+                require('notify').dismiss()
               end
+            else
+              require('notify').dismiss()
             end
           end)
         end)
