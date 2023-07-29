@@ -562,13 +562,9 @@ M.selolddir = function()
   local dict = {}
   local j = 1
   for i, dir in ipairs(olddirs) do
-    if dir == curdir then
-      pri = pri .. string.format('%d.   `%s', i, dir) .. '`\n'
-    else
-      pri = pri .. string.format('%d. [%s] %s', i, chs[j], dir) .. '\n'
-      dict[chs[j]] = dir
-      j = j + 1
-    end
+    pri = pri .. string.format('%d. [%s] %s', i, chs[j], dir) .. '\n'
+    dict[chs[j]] = dir
+    j = j + 1
   end
   require('notify').dismiss()
   if #vim.tbl_keys(dict) > 0 then
