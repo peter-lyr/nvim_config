@@ -385,7 +385,7 @@ M.nextdir = function()
   local pri = ''
   for i, dir in ipairs(dirs) do
     if i == curidx then
-      pri = pri .. '# ' .. dir .. '\n'
+      pri = pri .. '## ' .. dir .. '\n'
     else
       pri = pri .. tostring(i) .. '. ' .. dir .. '\n'
     end
@@ -410,7 +410,7 @@ M.prevdir = function()
   local pri = ''
   for i, dir in ipairs(dirs) do
     if i == curidx then
-      pri = pri .. '# ' .. dir .. '\n'
+      pri = pri .. '## ' .. dir .. '\n'
     else
       pri = pri .. tostring(i) .. '. ' .. dir .. '\n'
     end
@@ -424,7 +424,7 @@ M.lastdir = function()
   local pri = ''
   for i, dir in ipairs(dirs) do
     if dir == lastdir then
-      pri = pri .. '# ' .. dir .. '\n'
+      pri = pri .. '## ' .. dir .. '\n'
     else
       pri = pri .. tostring(i) .. '. ' .. dir .. '\n'
     end
@@ -440,12 +440,11 @@ local chs = {
 }
 
 M.seldir = function()
-  vim.cmd('cd ' .. lastdir)
   local pri = ''
   local dict = {}
   for i, dir in ipairs(dirs) do
     if dir == curdir then
-      pri = pri .. string.format('%d. # %s', i, dir) .. '\n'
+      pri = pri .. string.format('%d. ## %s', i, dir) .. '\n'
     else
       pri = pri .. string.format('%d. [%s] %s', i, chs[i], dir) .. '\n'
       dict[chs[i]] = dir

@@ -16,7 +16,7 @@ return {
     { 'Z', function() require('config.nvimtree').nextdir() end, mode = { 'n', 'v', }, silent = true, desc = 'nvimtree nextdir' },
     { '<S-Tab>', function() require('config.nvimtree').prevdir() end, mode = { 'n', 'v', }, silent = true, desc = 'nvimtree prevdir' },
     { '<c-s-z>', function() require('config.nvimtree').lastdir() end, mode = { 'n', 'v', }, silent = true, desc = 'nvimtree lastdir' },
-    { '<c-s-x>', function() require('config.nvimtree').seldir() end, mode = { 'n', 'v', }, silent = true, desc = 'nvimtree seldir' },
+    { '<leader>bb', function() require('config.nvimtree').seldir() end, mode = { 'n', 'v', }, silent = true, desc = 'nvimtree seldir' },
   },
   dependencies = {
     require('myplugins.core'),   -- terminal
