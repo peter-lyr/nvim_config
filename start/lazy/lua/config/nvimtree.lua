@@ -351,7 +351,7 @@ package.loaded['config.nvimtree'] = nil
 
 pcall(vim.api.nvim_del_autocmd, vim.g.nvimtree_au_dirchanged)
 
-vim.g.nvimtree_au_dirchanged = vim.api.nvim_create_autocmd({ "DirChanged", "DirChangedPre", }, {
+vim.g.nvimtree_au_dirchanged = vim.api.nvim_create_autocmd({ "DirChanged", }, {
   callback = function(ev)
     cwd = string.gsub(vim.fn.tolower(vim.loop.cwd()), '/', '\\')
     if vim.tbl_contains(dirs, cwd) == false then
@@ -375,8 +375,15 @@ local notify = function(info)
   })
 end
 
-local switch = function()
-  vim.cmd('cd ' .. dirs[curidx])
+M.switch = function()
+  if #dirs < 2 then
+    return
+  end
+  if curidx > #dirs then
+    curidx = #dirs
+  end
+  local cur = dirs[curidx]
+  vim.cmd('cd ' .. cur)
   local pri = ''
   for i, dir in ipairs(dirs) do
     if i == curidx then
@@ -387,7 +394,8 @@ local switch = function()
   end
   require('notify').dismiss()
   notify('- type to cd dir: `j`, `s` `k`, `w`\n' ..
-    '- type `space` to go tree')
+    '- type `space` to go tree\n' ..
+    '- type `d` to delete `' .. cur .. '`')
   vim.notify(string.sub(pri, 1, #pri - 1), 'info', {
     animate = false,
     on_open = function(win)
@@ -408,6 +416,9 @@ local switch = function()
             elseif ch == ' ' then
               require('notify').dismiss()
               vim.cmd('NvimTreeOpen')
+            elseif ch == 'd' then
+              table.remove(dirs, curidx)
+              M.switch()
             else
               require('notify').dismiss()
             end
@@ -432,7 +443,7 @@ M.nextdir = function()
   if curidx > #dirs then
     curidx = 1
   end
-  switch()
+  M.switch()
 end
 
 M.prevdir = function()
@@ -447,7 +458,7 @@ M.prevdir = function()
   if curidx < 1 then
     curidx = #dirs
   end
-  switch()
+  M.switch()
 end
 
 M.lastdir = function()
