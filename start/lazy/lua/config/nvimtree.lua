@@ -96,7 +96,7 @@ local on_attach = function(bufnr)
   vim.keymap.set('n', 'Y', api.fs.copy.relative_path, opts('Copy Relative Path'))
   vim.keymap.set('n', 'y', api.fs.copy.filename, opts('Copy Name'))
 
-  vim.keymap.set('n', 'O', api.tree.change_root_to_node, opts('CD'))
+  vim.keymap.set('n', 'vo', api.tree.change_root_to_node, opts('CD'))
   vim.keymap.set('n', 'u', api.tree.change_root_to_parent, opts('Up'))
 
   vim.keymap.set('n', 'gb', api.tree.toggle_no_buffer_filter, opts('Toggle No Buffer'))
