@@ -22,6 +22,7 @@ return {
     require('myplugins.core'),   -- terminal
     require('plugins.edgy'),
     require('plugins.fugitive'),
+    require('plugins.treesitter'),
     require('wait.plenary'),
     require('wait.projectroot'),
   },
