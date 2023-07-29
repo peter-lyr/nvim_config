@@ -347,7 +347,21 @@ local curdir = cwd
 local lastdir = cwd
 local curidx = 1
 
+local olddirs = {}
+
 package.loaded['config.nvimtree'] = nil
+
+local dirs_txt = require('plenary.path'):new(vim.fn.stdpath('data')):joinpath('nvim-tree-dirs.txt')
+
+for _, line in ipairs(dirs_txt:readlines()) do
+  line = vim.fn.trim(vim.fn.tolower(line))
+  cwd = string.gsub(line, '/', '\\')
+  if #cwd > 0 and vim.tbl_contains(olddirs, cwd) == false and require('plenary.path'):new(cwd):exists() then
+    table.insert(olddirs, cwd)
+  end
+end
+table.sort(olddirs)
+dirs_txt:write(table.concat(olddirs, '\n'), 'w')
 
 pcall(vim.api.nvim_del_autocmd, vim.g.nvimtree_au_dirchanged)
 
@@ -395,7 +409,8 @@ M.switch = function()
   require('notify').dismiss()
   notify('- type to cd dir: `j`, `s` `k`, `w`\n' ..
     '- type `space` to go tree\n' ..
-    '- type `d` to delete `' .. tostring(curidx) .. '`')
+    '- type `d` to delete `' .. tostring(curidx) .. '`\n' ..
+    '- type `a` to add to `stack`')
   vim.notify(string.sub(pri, 1, #pri - 1), 'info', {
     animate = false,
     on_open = function(win)
@@ -421,6 +436,13 @@ M.switch = function()
                 notify('leave at least 2.')
               else
                 table.remove(dirs, curidx)
+              end
+              M.switch()
+            elseif ch == 'a' then
+              dirs_txt:write(cur .. '\n', 'a')
+              notify('saved `' .. tostring(curidx) .. '` to `stack`')
+              if vim.tbl_contains(olddirs, cur) == false then
+                table.insert(olddirs, cur)
               end
               M.switch()
             else
@@ -521,6 +543,102 @@ M.seldir = function()
             if not c2 and not c3 and not c4 and c1 > 64 and c1 < 123 then
               if vim.tbl_contains(vim.tbl_keys(dict), ch) == true then
                 vim.cmd('cd ' .. dict[ch])
+              end
+            end
+          end)
+        end)
+      end
+    end,
+  })
+end
+
+M.selolddir = function()
+  if #olddirs < 1 then
+    return
+  end
+  local pri = ''
+  local dict = {}
+  local j = 1
+  for i, dir in ipairs(olddirs) do
+    if dir == curdir then
+      pri = pri .. string.format('%d.   `%s', i, dir) .. '`\n'
+    else
+      pri = pri .. string.format('%d. [%s] %s', i, chs[j], dir) .. '\n'
+      dict[chs[j]] = dir
+      j = j + 1
+    end
+  end
+  require('notify').dismiss()
+  if #vim.tbl_keys(dict) > 0 then
+    local tbl = vim.tbl_keys(dict)
+    table.sort(tbl)
+    notify('- type char to cd dir:\n`' .. table.concat(tbl, "`, `") .. '`')
+  end
+  vim.notify(string.sub(pri, 1, #pri - 1), 'info', {
+    animate = false,
+    on_open = function(win)
+      local buf = vim.api.nvim_win_get_buf(win)
+      vim.api.nvim_buf_set_option(buf, "filetype", "markdown")
+      if #vim.tbl_keys(dict) > 0 then
+        vim.loop.new_timer():start(100, 0, function()
+          vim.schedule(function()
+            local ch = vim.fn.getcharstr()
+            local c1 = string.byte(ch, 1)
+            local c2 = string.byte(ch, 2)
+            local c3 = string.byte(ch, 3)
+            local c4 = string.byte(ch, 4)
+            require('notify').dismiss()
+            if not c2 and not c3 and not c4 and c1 > 64 and c1 < 123 then
+              if vim.tbl_contains(vim.tbl_keys(dict), ch) == true then
+                vim.cmd('cd ' .. dict[ch])
+              end
+            end
+          end)
+        end)
+      end
+    end,
+  })
+end
+
+M.delolddir = function()
+  if #olddirs < 1 then
+    return
+  end
+  local pri = ''
+  local dict = {}
+  local j = 1
+  for i, dir in ipairs(olddirs) do
+    pri = pri .. string.format('%d. [%s] %s', i, chs[j], dir) .. '\n'
+    dict[chs[j]] = dir
+    j = j + 1
+  end
+  require('notify').dismiss()
+  if #vim.tbl_keys(dict) > 0 then
+    local tbl = vim.tbl_keys(dict)
+    table.sort(tbl)
+    notify('- type char to del in stack dirs:\n`' .. table.concat(tbl, "`, `") .. '`')
+  end
+  vim.notify(string.sub(pri, 1, #pri - 1), 'info', {
+    animate = false,
+    on_open = function(win)
+      local buf = vim.api.nvim_win_get_buf(win)
+      vim.api.nvim_buf_set_option(buf, "filetype", "markdown")
+      if #vim.tbl_keys(dict) > 0 then
+        vim.loop.new_timer():start(100, 0, function()
+          vim.schedule(function()
+            local ch = vim.fn.getcharstr()
+            local c1 = string.byte(ch, 1)
+            local c2 = string.byte(ch, 2)
+            local c3 = string.byte(ch, 3)
+            local c4 = string.byte(ch, 4)
+            require('notify').dismiss()
+            if not c2 and not c3 and not c4 and c1 > 64 and c1 < 123 then
+              if vim.tbl_contains(vim.tbl_keys(dict), ch) == true then
+                notify('del done: `' .. dict[ch] .. '`')
+                table.remove(olddirs, vim.fn.indexof(olddirs, string.format("v:val == '%s'", dict[ch])) + 1)
+                table.sort(olddirs)
+                dirs_txt:write(table.concat(olddirs, '\n'), 'w')
+                M.delolddir()
               end
             end
           end)

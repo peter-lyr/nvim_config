@@ -17,6 +17,8 @@ return {
     { 'qk', function() require('config.nvimtree').prevdir() end, mode = { 'n', 'v', }, silent = true, desc = 'nvimtree prevdir' },
     { 'qq', function() require('config.nvimtree').lastdir() end, mode = { 'n', 'v', }, silent = true, desc = 'nvimtree lastdir' },
     { 'ql', function() require('config.nvimtree').seldir() end, mode = { 'n', 'v', }, silent = true, desc = 'nvimtree seldir' },
+    { 'qh', function() require('config.nvimtree').selolddir() end, mode = { 'n', 'v', }, silent = true, desc = 'nvimtree selolddir' },
+    { 'qH', function() require('config.nvimtree').delolddir() end, mode = { 'n', 'v', }, silent = true, desc = 'nvimtree delolddir' },
   },
   dependencies = {
     require('myplugins.core'),   -- terminal
