@@ -500,15 +500,11 @@ M.seldir = function()
             local c2 = string.byte(ch, 2)
             local c3 = string.byte(ch, 3)
             local c4 = string.byte(ch, 4)
+            require('notify').dismiss()
             if not c2 and not c3 and not c4 and c1 > 64 and c1 < 123 then
               if vim.tbl_contains(vim.tbl_keys(dict), ch) == true then
                 vim.cmd('cd ' .. dict[ch])
-                require('notify').dismiss()
-              else
-                require('notify').dismiss()
               end
-            else
-              require('notify').dismiss()
             end
           end)
         end)
