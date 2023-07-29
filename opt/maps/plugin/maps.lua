@@ -26,9 +26,9 @@ vim.api.nvim_create_autocmd({ "BufLeave", "CmdlineEnter", }, {
 -- cursor
 
 vim.keymap.set({ 't', 'c', 'i' }, '<a-k>',   '<UP>', { desc = 'up' })
-vim.keymap.set({ 't', 'c', 'i' }, 'qk',      '<UP>', { desc = 'up' })
+vim.keymap.set({ 't', 'c', 'i' }, 'vk',      '<UP>', { desc = 'up' })
 vim.keymap.set({ 't', 'c', 'i' }, '<a-j>',   '<DOWN>', { desc = 'down' })
-vim.keymap.set({ 't', 'c', 'i' }, 'qj',      '<DOWN>', { desc = 'down' })
+vim.keymap.set({ 't', 'c', 'i' }, 'vj',      '<DOWN>', { desc = 'down' })
 vim.keymap.set({ 't', 'c', 'i' }, '<a-s-k>', '<UP><UP><UP><UP><UP>', { desc = '5 up' })
 vim.keymap.set({ 't', 'c', 'i' }, '<a-s-j>', '<DOWN><DOWN><DOWN><DOWN><DOWN>', { desc = '5 down' })
 vim.keymap.set({ 't', 'c', 'i' }, '<a-i>',   '<HOME>', { desc = 'home' })
@@ -42,7 +42,6 @@ vim.keymap.set({ 't', 'c', 'i' }, '<a-s-h>', '<c-LEFT>', { desc = 'ctrl left' })
 
 vim.keymap.set({ 'v', },          '<c-l>',   'L', { desc = 'L' })
 vim.keymap.set({ 'v', },          '<c-h>',   'H', { desc = 'H' })
-vim.keymap.set({ 'v', },          '<c-g>',   'G', { desc = 'G' })
 vim.keymap.set({ 'v', },          '<c-m>',   'M', { desc = 'M' })
 vim.keymap.set({ 'v', },          '<c-u>',   'U', { desc = 'U' })
 vim.keymap.set({ 'v', },          '<c-e>',   'E', { desc = 'E' })
@@ -51,32 +50,30 @@ vim.keymap.set({ 'v', },          '<c-b>',   'B', { desc = 'B' })
 
 -- esc
 
-vim.keymap.set({ 'v', },          'o',       '<esc>', { desc = 'esc' })
+vim.keymap.set({ 'v', },          'v',       '<esc><esc><esc>', { desc = 'esc' })
 
-vim.keymap.set({ 'i', 'c', },     'ql',      '<esc><esc>', { desc = 'esc' })
-vim.keymap.set({ 'i', 'c', },     'qL',      '<esc><esc>', { desc = 'esc' })
-vim.keymap.set({ 'i', 'c', },     'Ql',      '<esc><esc>', { desc = 'esc' })
-vim.keymap.set({ 'i', 'c', },     'QL',      '<esc><esc>', { desc = 'esc' })
+vim.keymap.set({ 'i', 'c', },     'vm',      '<esc><esc>', { desc = 'esc' })
+vim.keymap.set({ 'i', 'c', },     'vM',      '<esc><esc>', { desc = 'esc' })
+vim.keymap.set({ 'i', 'c', },     'Vm',      '<esc><esc>', { desc = 'esc' })
+vim.keymap.set({ 'i', 'c', },     'VM',      '<esc><esc>', { desc = 'esc' })
 
-vim.keymap.set({ 't', },          'ql',      '<c-\\><c-n>', { desc = 'esc' })
-vim.keymap.set({ 't', },          'qL',      '<c-\\><c-n>', { desc = 'esc' })
-vim.keymap.set({ 't', },          'Ql',      '<c-\\><c-n>', { desc = 'esc' })
-vim.keymap.set({ 't', },          'QL',      '<c-\\><c-n>', { desc = 'esc' })
+vim.keymap.set({ 't', },          'vm',      '<c-\\><c-n>', { desc = 'esc' })
+vim.keymap.set({ 't', },          'vM',      '<c-\\><c-n>', { desc = 'esc' })
+vim.keymap.set({ 't', },          'Vm',      '<c-\\><c-n>', { desc = 'esc' })
+vim.keymap.set({ 't', },          'VM',      '<c-\\><c-n>', { desc = 'esc' })
 
-vim.keymap.set({ 'i', 'c' },      '<a-m>',   '<esc><esc>', { desc = 'esc' })
 vim.keymap.set({ 't', },          '<esc>',   '<c-\\><c-n>', { desc = 'esc' })
-vim.keymap.set({ 't', },          '<a-m>',   '<c-\\><c-n>', { desc = 'esc' })
 
 -- new line
 
-vim.keymap.set({ 'i', },          'qo',      '<esc>o', { desc = 'new line' })
-vim.keymap.set({ 'i', },          'Qo',      '<esc>o', { desc = 'new line' })
-vim.keymap.set({ 'i', },          'qO',      '<esc>o', { desc = 'new line' })
-vim.keymap.set({ 'i', },          'QO',      '<esc>o', { desc = 'new line' })
+vim.keymap.set({ 'i', },          'vo',      '<esc>o', { desc = 'new line' })
+vim.keymap.set({ 'i', },          'Vo',      '<esc>o', { desc = 'new line' })
+vim.keymap.set({ 'i', },          'vO',      '<esc>o', { desc = 'new line' })
+vim.keymap.set({ 'i', },          'VO',      '<esc>o', { desc = 'new line' })
 
 -- enter
 
-vim.keymap.set({ 't', 'c', },     'qo',      '<cr>', { desc = 'enter' })
-vim.keymap.set({ 't', 'c', },     'Qo',      '<cr>', { desc = 'enter' })
-vim.keymap.set({ 't', 'c', },     'qO',      '<cr>', { desc = 'enter' })
-vim.keymap.set({ 't', 'c', },     'QO',      '<cr>', { desc = 'enter' })
+vim.keymap.set({ 't', 'c', },     'vo',      '<cr>', { desc = 'enter' })
+vim.keymap.set({ 't', 'c', },     'Vo',      '<cr>', { desc = 'enter' })
+vim.keymap.set({ 't', 'c', },     'vO',      '<cr>', { desc = 'enter' })
+vim.keymap.set({ 't', 'c', },     'VO',      '<cr>', { desc = 'enter' })
