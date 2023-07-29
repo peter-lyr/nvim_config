@@ -28,6 +28,21 @@ local get_setup_table = function(file_ignore_patterns)
           ['<a-j>'] = actions.move_selection_next,
           ['<a-k>'] = actions.move_selection_previous,
 
+          ['<c-j>'] = function(prompt_bufnr)
+            actions.move_selection_next(prompt_bufnr)
+            actions.move_selection_next(prompt_bufnr)
+            actions.move_selection_next(prompt_bufnr)
+            actions.move_selection_next(prompt_bufnr)
+            actions.move_selection_next(prompt_bufnr)
+          end,
+          ['<c-k>'] = function(prompt_bufnr)
+            actions.move_selection_previous(prompt_bufnr)
+            actions.move_selection_previous(prompt_bufnr)
+            actions.move_selection_previous(prompt_bufnr)
+            actions.move_selection_previous(prompt_bufnr)
+            actions.move_selection_previous(prompt_bufnr)
+          end,
+
           ['dm'] = actions.send_to_qflist + actions.open_qflist,
 
           ['dj'] = actions.select_horizontal,
@@ -61,6 +76,21 @@ local get_setup_table = function(file_ignore_patterns)
             actions.close, type = "action",
             opts = { nowait = true, silent = true }
           },
+
+          ['<c-j>'] = function(prompt_bufnr)
+            actions.move_selection_next(prompt_bufnr)
+            actions.move_selection_next(prompt_bufnr)
+            actions.move_selection_next(prompt_bufnr)
+            actions.move_selection_next(prompt_bufnr)
+            actions.move_selection_next(prompt_bufnr)
+          end,
+          ['<c-k>'] = function(prompt_bufnr)
+            actions.move_selection_previous(prompt_bufnr)
+            actions.move_selection_previous(prompt_bufnr)
+            actions.move_selection_previous(prompt_bufnr)
+            actions.move_selection_previous(prompt_bufnr)
+            actions.move_selection_previous(prompt_bufnr)
+          end,
 
           ['dm'] = actions.send_to_qflist + actions.open_qflist,
 
