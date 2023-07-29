@@ -33,7 +33,7 @@ local others = function(bufnr)
   vim.keymap.set('n', 'gd', wrap_node(f.delete), opts('bdelete'))
   vim.keymap.set('n', 'gw', wrap_node(f.wipeout), opts('wipeout'))
 
-  vim.keymap.set('n', '<leader>=', wrap_node(f.edgy_autosize_toggle), opts('edgy_autosize_toggle'))
+  vim.keymap.set('n', 'da', wrap_node(f.edgy_autosize_toggle), opts('edgy_autosize_toggle'))
 
   vim.keymap.set('n', 'vx', wrap_node(f.explorer), opts('explorer'))
 
