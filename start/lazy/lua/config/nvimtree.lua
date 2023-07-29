@@ -421,7 +421,7 @@ local switch = function()
 end
 
 M.nextdir = function()
-  if #dirs == 0 then
+  if #dirs < 2 then
     return
   end
   if curidx == -1 then
@@ -436,7 +436,7 @@ M.nextdir = function()
 end
 
 M.prevdir = function()
-  if #dirs == 0 then
+  if #dirs < 2 then
     return
   end
   if curidx == -1 then
