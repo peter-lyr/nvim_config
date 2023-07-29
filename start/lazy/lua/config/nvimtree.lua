@@ -451,7 +451,7 @@ M.seldir = function()
     end
   end
   require('notify').dismiss()
-  if #vim.tbl_keys(dict) > 1 then
+  if #vim.tbl_keys(dict) > 0 then
     local tbl = vim.tbl_keys(dict)
     table.sort(tbl)
     notify('- type char to cd dir: `' .. table.concat(tbl, "`, `") .. '`')
@@ -461,7 +461,7 @@ M.seldir = function()
     on_open = function(win)
       local buf = vim.api.nvim_win_get_buf(win)
       vim.api.nvim_buf_set_option(buf, "filetype", "markdown")
-      if #vim.tbl_keys(dict) > 1 then
+      if #vim.tbl_keys(dict) > 0 then
         vim.loop.new_timer():start(100, 0, function()
           vim.schedule(function()
             local ch = vim.fn.getcharstr()
