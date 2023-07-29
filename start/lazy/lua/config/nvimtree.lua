@@ -391,7 +391,32 @@ M.nextdir = function()
     end
   end
   require('notify').dismiss()
-  notify(string.sub(pri, 1, #pri - 1))
+  notify('- type to cd dir: `j`, `k`')
+  vim.notify(string.sub(pri, 1, #pri - 1), 'info', {
+    animate = false,
+    on_open = function(win)
+      local buf = vim.api.nvim_win_get_buf(win)
+      vim.api.nvim_buf_set_option(buf, "filetype", "markdown")
+      vim.loop.new_timer():start(100, 0, function()
+        vim.schedule(function()
+          local ch = vim.fn.getcharstr()
+          local c1 = string.byte(ch, 1)
+          local c2 = string.byte(ch, 2)
+          local c3 = string.byte(ch, 3)
+          local c4 = string.byte(ch, 4)
+          if not c2 and not c3 and not c4 and c1 > 64 and c1 < 123 then
+            if ch == 'k' then
+              M.prevdir()
+            elseif ch == 'j' then
+              M.nextdir()
+            else
+              require('notify').dismiss()
+            end
+          end
+        end)
+      end)
+    end,
+  })
 end
 
 M.prevdir = function()
@@ -416,7 +441,32 @@ M.prevdir = function()
     end
   end
   require('notify').dismiss()
-  notify(string.sub(pri, 1, #pri - 1))
+  notify('- type to cd dir: `j`, `k`')
+  vim.notify(string.sub(pri, 1, #pri - 1), 'info', {
+    animate = false,
+    on_open = function(win)
+      local buf = vim.api.nvim_win_get_buf(win)
+      vim.api.nvim_buf_set_option(buf, "filetype", "markdown")
+      vim.loop.new_timer():start(100, 0, function()
+        vim.schedule(function()
+          local ch = vim.fn.getcharstr()
+          local c1 = string.byte(ch, 1)
+          local c2 = string.byte(ch, 2)
+          local c3 = string.byte(ch, 3)
+          local c4 = string.byte(ch, 4)
+          if not c2 and not c3 and not c4 and c1 > 64 and c1 < 123 then
+            if ch == 'k' then
+              M.prevdir()
+            elseif ch == 'j' then
+              M.nextdir()
+            else
+              require('notify').dismiss()
+            end
+          end
+        end)
+      end)
+    end,
+  })
 end
 
 M.lastdir = function()
