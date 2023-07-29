@@ -473,12 +473,14 @@ local chs = {
 M.seldir = function()
   local pri = ''
   local dict = {}
+  local j = 1
   for i, dir in ipairs(dirs) do
     if dir == curdir then
       pri = pri .. string.format('%d. ## %s', i, dir) .. '\n'
     else
-      pri = pri .. string.format('%d. [%s] %s', i, chs[i], dir) .. '\n'
-      dict[chs[i]] = dir
+      pri = pri .. string.format('%d. [%s] %s', i, chs[j], dir) .. '\n'
+      dict[chs[j]] = dir
+      j = j + 1
     end
   end
   require('notify').dismiss()
