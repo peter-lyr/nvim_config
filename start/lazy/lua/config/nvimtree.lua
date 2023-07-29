@@ -256,7 +256,7 @@ vim.g.nvimtree_au_bufenter = vim.api.nvim_create_autocmd({ "CursorHold", }, {
     if vim.bo[ev.buf].ft == 'NvimTree' then
       vim.cmd([[
         setlocal sidescrolloff=0
-        setlocal signcolumn=auto:1
+        setlocal signcolumn=yes
       ]])
     end
   end,
