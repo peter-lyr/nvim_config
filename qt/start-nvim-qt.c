@@ -44,38 +44,38 @@ int main(int argc, char *argv[])
     char *nvimwin64 = get_parent_dir(argv[0], 6);
     printf("nvimwin64: %s\n", nvimwin64);
 
-    // // get localappdata dir
-    //
-    // char *pack = get_parent_dir(argv[0], 2);
-    // // printf("pack: %s\n", pack);
-    //
-    // char localappdata[256];
-    // // sprintf(localappdata, "%s\\%s", nvimwin64, "localappdata");
-    // sprintf(localappdata, "%s\\%s", pack, "localappdata");
-    // // printf("localappdata: %s\n", localappdata);
-    //
-    //
-    // // get temp dir
-    //
-    // char temp[256];
-    // // sprintf(temp, "%s\\%s", nvimwin64, "temp");
-    // sprintf(temp, "%s\\%s\\%s", pack, "localappdata", "temp");
-    // // printf("temp: %s\n", temp);
-    //
-    // // get nvim.exe
-    //
-    // char nvimexe[256];
-    // sprintf(nvimexe, "%s\\%s", nvimwin64, "bin\\nvim-qt.exe");
-    // // printf("nvimexe: %s\n", nvimexe);
-    //
-    // // get cmd
-    //
-    // char cmd[576];
-    // sprintf(cmd, "set LOCALAPPDATA=%s&& set TEMP=%s&& set INCLUDE= start /d %s /b %s", localappdata, temp, config, nvimexe);
-    //
-    // // run cmd to open nvim.exe
-    //
-    // system(cmd);
+    // get localappdata dir
+
+    char *pack = get_parent_dir(argv[0], 2);
+    // printf("pack: %s\n", pack);
+
+    char localappdata[256];
+    // sprintf(localappdata, "%s\\%s", nvimwin64, "localappdata");
+    sprintf(localappdata, "%s\\%s", pack, "localappdata");
+    // printf("localappdata: %s\n", localappdata);
+
+
+    // get temp dir
+
+    char temp[256];
+    // sprintf(temp, "%s\\%s", nvimwin64, "temp");
+    sprintf(temp, "%s\\%s\\%s", pack, "localappdata", "temp");
+    // printf("temp: %s\n", temp);
+
+    // get nvim.exe
+
+    char nvimexe[256];
+    sprintf(nvimexe, "%s\\%s", nvimwin64, "bin\\nvim-qt.exe");
+    // printf("nvimexe: %s\n", nvimexe);
+
+    // get cmd
+
+    char cmd[576];
+    sprintf(cmd, "set LOCALAPPDATA=%s&& set TEMP=%s&& start /d %s /b %s", localappdata, temp, config, nvimexe);
+
+    // run cmd to open nvim.exe
+
+    system(cmd);
 
     return 0;
 }
