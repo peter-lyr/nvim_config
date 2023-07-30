@@ -102,7 +102,7 @@ end
 
 pcall(vim.api.nvim_del_autocmd, vim.g.fugitive_au_cursorhold)
 
-vim.g.fugitive_au_cursorhold = vim.api.nvim_create_autocmd({ "CursorHold", }, {
+vim.g.fugitive_au_cursorhold = vim.api.nvim_create_autocmd({ "BufWritePost", }, {
   callback = function()
     M.open(1)
   end,
