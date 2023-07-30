@@ -102,7 +102,7 @@ end
 
 pcall(vim.api.nvim_del_autocmd, vim.g.fugitive_au_bufwritepost)
 
-vim.g.fugitive_au_bufwritepost = vim.api.nvim_create_autocmd({ "BufWritePost", "BufEnter", }, {
+vim.g.fugitive_au_bufwritepost = vim.api.nvim_create_autocmd({ "BufWritePost", }, {
   callback = function()
     M.open(1)
   end,
