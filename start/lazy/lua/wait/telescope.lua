@@ -24,11 +24,11 @@ return {
     { '<leader>sq',         '<cmd>Telescope quickfix<cr>',                                                                                     mode = { 'n', 'v', }, silent = true, desc = 'Telescope quickfix', },
     { '<leader>sQ',         '<cmd>Telescope quickfixhistory<cr>',                                                                              mode = { 'n', 'v', }, silent = true, desc = 'Telescope quickfixhistory', },
 
-    { '<leader><leader>sa', '<cmd>Telescope builtin<cr>',                                                                                      mode = { 'n', 'v', }, silent = true, desc = 'Telescope builtin', },
-    { '<leader><leader>sc', '<cmd>Telescope colorscheme<cr>',                                                                                  mode = { 'n', 'v', }, silent = true, desc = 'Telescope colorscheme', },
-    { '<leader><leader>sh', '<cmd>Telescope help_tags<cr>',                                                                                    mode = { 'n', 'v', }, silent = true, desc = 'Telescope help_tags', },
-    { '<leader><leader>so', '<cmd>Telescope vim_options<cr>',                                                                                  mode = { 'n', 'v', }, silent = true, desc = 'Telescope vim_options', },
-    { '<leader><leader>sp', '<cmd>Telescope planets<cr>',                                                                                      mode = { 'n', 'v', }, silent = true, desc = 'Telescope planets', },
+    { '<leader>sva', '<cmd>Telescope builtin<cr>',                                                                                      mode = { 'n', 'v', }, silent = true, desc = 'Telescope builtin', },
+    { '<leader>svc', '<cmd>Telescope colorscheme<cr>',                                                                                  mode = { 'n', 'v', }, silent = true, desc = 'Telescope colorscheme', },
+    { '<leader>svh', '<cmd>Telescope help_tags<cr>',                                                                                    mode = { 'n', 'v', }, silent = true, desc = 'Telescope help_tags', },
+    { '<leader>svo', '<cmd>Telescope vim_options<cr>',                                                                                  mode = { 'n', 'v', }, silent = true, desc = 'Telescope vim_options', },
+    { '<leader>svp', '<cmd>Telescope planets<cr>',                                                                                      mode = { 'n', 'v', }, silent = true, desc = 'Telescope planets', },
 
     -- { '<leader>gf',         ':<c-u>Telescope git_files<cr>',                                                                                   mode = { 'n', 'v', }, silent = true, desc = 'Telescope git_files', },
     { '<leader>gc',         ':<c-u>Telescope git_commits<cr>',                                                                                 mode = { 'n', 'v', }, silent = true, desc = 'Telescope git_commits', },

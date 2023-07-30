@@ -5,7 +5,7 @@ return {
   cmd = { "Minimap", },
   keys = {
     {
-      '<leader><leader><tab>',
+      '<leader>v<tab>',
       function()
         if vim.g.loaded_minimap then
           if vim.fn.buflisted(vim.fn.bufnr()) == 0 then

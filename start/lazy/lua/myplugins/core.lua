@@ -104,7 +104,7 @@ return {
 
       { '<leader>y',          '<esc>:let @+ = expand("%:t")<cr>',                                      mode = { 'n', 'v' },  silent = true, desc = 'copy %:t to +' },
       { '<leader>gy',         '<esc>:let @+ = substitute(nvim_buf_get_name(0), "/", "\\\\", "g")<cr>', mode = { 'n', 'v' },  silent = true, desc = 'copy fullpath to +' },
-      { '<leader><leader>gy', '<esc>:let @+ = substitute(getcwd(), "/", "\\\\", "g")<cr>',             mode = { 'n', 'v' },  silent = true, desc = 'copy cwd to +' },
+      { '<leader>gvy', '<esc>:let @+ = substitute(getcwd(), "/", "\\\\", "g")<cr>',             mode = { 'n', 'v' },  silent = true, desc = 'copy cwd to +' },
 
       -- cursor
 
@@ -166,15 +166,15 @@ return {
 
       -- toggle win height auto max
 
-      { '<leader><leader>wi', function() require('bufferjump').ii() end, mode = { 'n', 'v' }, silent = true, desc = 'win height auto max disable' },
-      { '<leader><leader>wo', function() require('bufferjump').oo() end, mode = { 'n', 'v' }, silent = true, desc = 'win height auto max enable' },
+      { '<leader>wvi', function() require('bufferjump').ii() end, mode = { 'n', 'v' }, silent = true, desc = 'win height auto max disable' },
+      { '<leader>wvo', function() require('bufferjump').oo() end, mode = { 'n', 'v' }, silent = true, desc = 'win height auto max enable' },
 
       -- toggle winfix width height
 
-      { '<leader><leader>wh', function() require('bufferjump').hh() end, mode = { 'n', 'v' }, silent = true, desc = 'set winfixwidth' },
-      { '<leader><leader>wj', function() require('bufferjump').jj() end, mode = { 'n', 'v' }, silent = true, desc = 'set nowinfixheight' },
-      { '<leader><leader>wk', function() require('bufferjump').kk() end, mode = { 'n', 'v' }, silent = true, desc = 'set winfixheight' },
-      { '<leader><leader>wl', function() require('bufferjump').ll() end, mode = { 'n', 'v' }, silent = true, desc = 'set nowinfixwidth' },
+      { '<leader>wvh', function() require('bufferjump').hh() end, mode = { 'n', 'v' }, silent = true, desc = 'set winfixwidth' },
+      { '<leader>wvj', function() require('bufferjump').jj() end, mode = { 'n', 'v' }, silent = true, desc = 'set nowinfixheight' },
+      { '<leader>wvk', function() require('bufferjump').kk() end, mode = { 'n', 'v' }, silent = true, desc = 'set winfixheight' },
+      { '<leader>wvl', function() require('bufferjump').ll() end, mode = { 'n', 'v' }, silent = true, desc = 'set nowinfixwidth' },
 
       ------------------------
       -- buffernew.lua
