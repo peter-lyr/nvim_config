@@ -67,3 +67,33 @@ vim.g.fugitive_au_bufenter = vim.api.nvim_create_autocmd({ "BufEnter", }, {
     end
   end,
 })
+
+local M = {}
+
+M.open = function()
+  local opened = false
+  local bufnr = -1
+  local bufname = ''
+  for winnr = 1, vim.fn.winnr('$') do
+    bufnr = vim.fn.winbufnr(winnr)
+    local ft = vim.bo[bufnr].ft
+    if ft == 'fugitive' then
+      opened = true
+      bufname = vim.api.nvim_buf_get_name(bufnr)
+      break
+    end
+  end
+  if opened then
+    local curroot = string.gsub(vim.fn.tolower(vim.fn['ProjectRootGet'](vim.api.nvim_buf_get_name(0))), '/', '\\')
+    local fugitiveroot = string.gsub(vim.fn.tolower(string.match(bufname, 'fugitive:\\\\\\(.+)\\.git\\\\')), '/', '\\')
+    if curroot ~= fugitiveroot then
+      vim.cmd('bw!' .. tostring(bufnr))
+    else
+      vim.cmd('Git')
+    end
+  else
+    vim.cmd('Git')
+  end
+end
+
+return M

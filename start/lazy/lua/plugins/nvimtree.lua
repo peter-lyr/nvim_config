@@ -9,7 +9,7 @@ return {
   },
   keys = {
     { '<leader><tab>', '<cmd>NvimTreeFindFile<cr>', mode = { 'n', 'v', }, silent = true, desc = 'NvimTreeFindFile' },
-    { '<leader>q', '<cmd>Git<cr>', mode = { 'n', 'v' }, desc = 'Git' }, -- fugitive
+    { '<leader>q',  function() require('config.fugitive').open() end, mode = { 'n', 'v', }, silent = true, desc = 'Git' },
     { '<leader>se', function() require('config.nvimtree-oftendirs').open() end, mode = { 'n', 'v', }, silent = true, desc = 'nvimtree oftendirs open' },
     { '<leader>sp', function() require('config.nvimtree-oftendirs').openpathdir() end, mode = { 'n', 'v', }, silent = true, desc = 'nvimtree pathdirs open' },
     { '<leader>st', function() require('config.nvimtree-oftendirs').explorer() end, mode = { 'n', 'v', }, silent = true, desc = 'nvimtree oftendirs start' },
