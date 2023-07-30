@@ -264,44 +264,9 @@ vim.g.nvimtree_au_bufenter = vim.api.nvim_create_autocmd({ "CursorHold", "BufEnt
   end,
 })
 
-local flag = nil
-
-local openall = function()
-  flag = nil
-  vim.cmd('NvimTreeFindFile')
-  local timer = vim.loop.new_timer()
-  local cnt = 0
-  timer:start(100, 100, function()
-    vim.schedule(function()
-      cnt = cnt + 1
-      if cnt > 30 then
-        timer:stop()
-      end
-      local ft = vim.bo[vim.fn.bufnr()].ft
-      if ft == 'fugitive' then
-        timer:stop()
-        flag = 1
-        vim.cmd('wincmd t')
-        vim.cmd('wincmd l')
-      end
-      if flag then
-        return
-      end
-      if not ft then
-        vim.cmd('wincmd t')
-      else
-        if pcall(vim.cmd, 'Git') == false then
-          timer:stop()
-        end
-      end
-    end)
-  end)
-end
-
 local check = function()
   local ok1 = nil
   local ok2 = nil
-  local ok = nil
   for winnr = 1, vim.fn.winnr('$') do
     local ft = vim.bo[vim.fn.winbufnr(winnr)].ft
     if ft == 'NvimTree' then
@@ -310,11 +275,10 @@ local check = function()
       ok2 = 1
     end
     if ok1 and ok2 or (not ok1 and not ok2) then
-      ok = 1
-      break
+      return 0
     end
   end
-  return ok
+  return ok1 and 1 or 2
 end
 
 pcall(vim.api.nvim_del_autocmd, vim.g.nvimtree_au_cursorhold2)
@@ -325,18 +289,21 @@ vim.g.nvimtree_au_cursorhold2 = vim.api.nvim_create_autocmd({ "CursorHold", }, {
     local cwd = vim.loop.cwd()
     local sta, _ = pcall(vim.call, 'ProjectRootCD')
     if sta then
-      if vim.fn['ProjectRootGet'](ev.file) ~= '' and ft ~= 'NvimTree' and ft ~= 'fugitive' and not check() then
+      if vim.fn['ProjectRootGet'](ev.file) ~= '' and ft ~= 'NvimTree' and ft ~= 'fugitive' then
         local winid = vim.fn.win_getid()
-        openall()
-        local timer = vim.loop.new_timer()
-        timer:start(100, 100, function()
-          vim.schedule(function()
-            if flag then
-              timer:stop()
+        local res = check()
+        if res == 1 then
+          pcall(vim.cmd, 'Git')
+          vim.loop.new_timer():start(10, 0, function()
+            vim.schedule(function()
+              pcall(vim.cmd, 'e!')
               vim.fn.win_gotoid(winid)
-            end
+            end)
           end)
-        end)
+        elseif res == 2 then
+          pcall(vim.cmd, 'NvimTreeOpen')
+          vim.fn.win_gotoid(winid)
+        end
       end
     end
     vim.cmd(string.format('cd %s|cd %s', string.sub(cwd, 1, 2), cwd))
