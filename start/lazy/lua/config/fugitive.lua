@@ -70,7 +70,7 @@ vim.g.fugitive_au_bufenter = vim.api.nvim_create_autocmd({ "BufEnter", }, {
 
 local M = {}
 
-M.open = function()
+M.open = function(refresh)
   local opened = false
   local bufnr = -1
   local bufname = ''
@@ -88,12 +88,24 @@ M.open = function()
     local fugitiveroot = string.gsub(vim.fn.tolower(string.match(bufname, 'fugitive:\\\\\\(.+)\\.git\\\\')), '/', '\\')
     if curroot ~= fugitiveroot then
       vim.cmd('bw!' .. tostring(bufnr))
+    elseif refresh then
+      vim.fn['fugitive#ReloadStatus']()
     else
       vim.cmd('Git')
     end
   else
-    vim.cmd('Git')
+    if not refresh then
+      vim.cmd('Git')
+    end
   end
 end
+
+pcall(vim.api.nvim_del_autocmd, vim.g.fugitive_au_cursorhold)
+
+vim.g.fugitive_au_cursorhold = vim.api.nvim_create_autocmd({ "CursorHold", }, {
+  callback = function()
+    M.open(1)
+  end,
+})
 
 return M
