@@ -239,6 +239,7 @@ return {
       { '<leader>gvp',        function() require('gitpushinit').push() end,                  mode = { 'n', 'v' }, silent = true, desc = 'git just push' },
       { '<leader>gvg',        [[<c-u>:silent exe '!start cmd /c "git log --all --graph --decorate --oneline && pause"'<cr>]], mode = { 'n', 'v' }, silent = true, desc = 'git graph' },
       { '<leader>gvi',        function() require('gitpushinit').init() end,                  mode = { 'n', 'v' }, silent = true, desc = 'git init' },
+      { '<leader>gvu',        function() require('gitpushinit').pull() end,                  mode = { 'n', 'v' }, silent = true, desc = 'git pull' },
       { '<leader>gA',         function() require('gitpushinit').addall() end,                mode = { 'n', 'v' }, silent = true, desc = 'git add -A' },
 
       ------------------------

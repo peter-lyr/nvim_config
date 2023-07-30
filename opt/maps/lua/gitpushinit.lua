@@ -170,4 +170,10 @@ M.addall = function()
   vim.cmd('AsyncRun git add -A')
 end
 
+M.pull = function()
+  pcall(vim.call, 'ProjectRootCD')
+  asyncrunprepare()
+  vim.cmd('AsyncRun git pull')
+end
+
 return M
