@@ -7,11 +7,10 @@ vim.fn.setreg('w', 'reg w empty')
 vim.keymap.set({ 'c', 'i' },      'vw',      '<c-r>w', { desc = 'paste <cword>' })
 
 vim.keymap.set({ 'c', 'i' },      'vv',      '<c-r>"', { desc = 'paste "' })
-
 vim.keymap.set({ 't', },          'vv',      '<c-\\><c-n>pi', { desc = 'paste "' })
+vim.keymap.set({ 'c', 'i' },      'v v',     'v', { desc = 'just type v' })
 
 vim.keymap.set({ 'c', 'i' },      'vs',      '<c-r>+', { desc = 'paste +' })
-
 vim.keymap.set({ 't', },          'vs',      '<c-\\><c-n>"+pi', { desc = 'paste +' })
 
 vim.api.nvim_create_autocmd({ "BufLeave", "CmdlineEnter", }, {
