@@ -60,7 +60,7 @@ pcall(vim.api.nvim_del_autocmd, vim.g.fugitive_au_bufenter)
 vim.g.fugitive_au_bufenter = vim.api.nvim_create_autocmd({ "BufEnter", }, {
   callback = function(ev)
     if vim.bo[ev.buf].ft == 'fugitive' then
-      vim.keymap.set('n', '<leader>=', require('config.nvimtree-func').edgy_autosize_toggle, { buffer = ev.buf })
+      vim.keymap.set('n', 'da', require('config.nvimtree-func').edgy_autosize_toggle, { buffer = ev.buf })
       vim.cmd([[
         setlocal sidescrolloff=0
       ]])
