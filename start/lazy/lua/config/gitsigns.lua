@@ -1,3 +1,7 @@
+local rf = function()
+  require('config.fugitive').open(1)
+end
+
 require('gitsigns').setup {
   numhl     = true,
   linehl    = false,
@@ -35,14 +39,14 @@ require('gitsigns').setup {
     end, { expr = true, desc = 'Gitsigns prev_hunk' })
 
     -- Actions
-    map('n', '<leader>gs', gs.stage_hunk, { desc = 'Gitsigns stage_hunk' })
+    map('n', '<leader>gs', function() gs.stage_hunk(); rf() end, { desc = 'Gitsigns stage_hunk' })
     map('v', '<leader>gs', function() gs.stage_hunk { vim.fn.line('.'), vim.fn.line('v') } end, { desc = 'Gitsigns stage_hunk' })
-    map('n', '<leader>gS', gs.stage_buffer, { desc = 'Gitsigns stage_buffer' })
+    map('n', '<leader>gS', function() gs.stage_buffer(); rf() end, { desc = 'Gitsigns stage_buffer' })
 
-    map('n', '<leader>gu', gs.undo_stage_hunk, { desc = 'Gitsigns undo_stage_hunk' })
-    map('v', '<leader>gr', function() gs.reset_hunk { vim.fn.line('.'), vim.fn.line('v') } end, { desc = 'Gitsigns reset_hunk' })
-    map('n', '<leader>gr', gs.reset_hunk, { desc = 'Gitsigns reset_hunk' })
-    map('n', '<leader>gR', gs.reset_buffer, { desc = 'Gitsigns reset_buffer' })
+    map('n', '<leader>gu', function() gs.undo_stage_hunk(); rf() end, { desc = 'Gitsigns undo_stage_hunk' })
+    map('v', '<leader>gr', function() gs.reset_hunk { vim.fn.line('.'), vim.fn.line('v') }; rf() end, { desc = 'Gitsigns reset_hunk' })
+    map('n', '<leader>gr', function() gs.reset_hunk(); rf() end, { desc = 'Gitsigns reset_hunk' })
+    map('n', '<leader>gR', function() gs.reset_buffer(); rf() end, { desc = 'Gitsigns reset_buffer' })
 
     map('n', '<leader>gp', gs.preview_hunk, { desc = 'Gitsigns preview_hunk' })
     map('n', '<leader>gb', function() gs.blame_line { full = true } end, { desc = 'Gitsigns blame_line' })
