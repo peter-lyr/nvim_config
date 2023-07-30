@@ -322,6 +322,10 @@ package.loaded['config.nvimtree'] = nil
 
 local dirs_txt = require('plenary.path'):new(vim.fn.stdpath('data')):joinpath('nvim-tree-dirs.txt')
 
+if not dirs_txt:exists() then
+  dirs_txt:touch()
+end
+
 for _, line in ipairs(dirs_txt:readlines()) do
   line = vim.fn.trim(vim.fn.tolower(line))
   cwd = string.gsub(line, '/', '\\')
