@@ -4,7 +4,7 @@ local testtimer = nil
 
 GitpushinitDone = function()
   testtimer:stop()
-  require('config.fugitive').open(1)
+  pcall(vim.call, 'fugitive#ReloadStatus')
   local l = vim.fn.getqflist()
   vim.notify(l[1]['text'] .. '\n' .. l[#l-1]['text'] .. l[#l]['text'])
   vim.cmd('au! User AsyncRunStop')
@@ -17,7 +17,7 @@ local function asyncrunprepare()
     vim.schedule(function()
       local temp = #vim.fn.getqflist()
       if l ~= temp then
-        require('config.fugitive').open(1)
+        pcall(vim.call, 'fugitive#ReloadStatus')
         l = temp
       end
     end)
