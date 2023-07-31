@@ -34,6 +34,7 @@ local others = function(bufnr)
   vim.keymap.set('n', 'gw', wrap_node(f.wipeout), opts('wipeout'))
 
   vim.keymap.set('n', 'da', wrap_node(f.edgy_autosize_toggle), opts('edgy_autosize_toggle'))
+  vim.keymap.set('n', 'ds', wrap_node(f.ausize), opts('edgy_autosize_toggle'))
 
   vim.keymap.set('n', 'vx', wrap_node(f.explorer), opts('explorer'))
 
@@ -203,32 +204,7 @@ vim.g.nvimtree_au_cursorhold3 = vim.api.nvim_create_autocmd({ "CursorHold", }, {
     if (rescanned_bufnr ~= ev.buf or vim.bo[ev.buf].ft == 'NvimTree') then
       rescanned_bufnr = ev.buf
       if vim.bo[ev.buf].ft == 'NvimTree' then
-        local width = 0
-        local height = math.min(vim.fn.line('$'), vim.opt.lines:get() - 9)
-        for linenr = 2, height do
-          local len = vim.fn.strdisplaywidth(vim.fn.getline(linenr))
-          if len > width then
-            width = len
-          end
-        end
-        local win = require("edgy.editor").get_win()
-        if not win then
-          return
-        end
-        local curline = vim.fn.line('.')
-        local curcol = vim.fn.col('.')
-        local temp = 2 + 4
-        if vim.opt.nu:get() == true or vim.opt.rnu:get() == true then
-          temp = temp + #tostring(vim.fn.line('$')) + 1
-        end
-        if width - win.width + temp > 0 then
-          win:resize("width", width - win.width + temp)
-        end
-        if height - win.height > 0 then
-          win:resize("height", height - win.height)
-        end
-        vim.cmd(string.format("norm %dgg%d|", curline, curcol))
-        vim.cmd("norm 99zH")
+        f.ausize(_, 1)
       end
     end
   end,

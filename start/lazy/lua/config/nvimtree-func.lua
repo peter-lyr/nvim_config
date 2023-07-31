@@ -416,4 +416,34 @@ M.taskkill = function(node)
   end
 end
 
+M.ausize = function(node, short_dis)
+  print(node, short_dis)
+  local width = 0
+  local height = math.min(vim.fn.line('$'), vim.opt.lines:get() - 9)
+  for linenr = 2, height do
+    local len = vim.fn.strdisplaywidth(vim.fn.getline(linenr))
+    if len > width then
+      width = len
+    end
+  end
+  local win = require("edgy.editor").get_win()
+  if not win then
+    return
+  end
+  local curline = vim.fn.line('.')
+  local curcol = vim.fn.col('.')
+  local temp = 2 + 4
+  if vim.opt.nu:get() == true or vim.opt.rnu:get() == true then
+    temp = temp + #tostring(vim.fn.line('$')) + 1
+  end
+  if width - win.width + temp > 0 or not short_dis then
+    win:resize("width", width - win.width + temp)
+  end
+  if height - win.height > 0 then
+    win:resize("height", height - win.height)
+  end
+  vim.cmd(string.format("norm %dgg%d|", curline, curcol))
+  vim.cmd("norm 99zH")
+end
+
 return M
