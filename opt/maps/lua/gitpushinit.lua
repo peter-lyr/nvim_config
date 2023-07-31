@@ -6,7 +6,6 @@ GitpushinitDone = function()
   vim.notify(l[1]['text'] .. '\n' .. l[#l]['text'])
   vim.cmd('au! User AsyncRunStop')
 end
-
 local function asyncrunprepare()
   vim.cmd([[au User AsyncRunStop call v:lua.GitpushinitDone()]])
 end
