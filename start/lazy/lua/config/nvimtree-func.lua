@@ -416,7 +416,7 @@ M.taskkill = function(node)
   end
 end
 
-M.ausize = function(node, short_dis)
+M.ausize = function(_, short_dis)
   local width = 0
   local height = math.min(vim.fn.line('$'), vim.opt.lines:get() - 9)
   for linenr = 2, height do
