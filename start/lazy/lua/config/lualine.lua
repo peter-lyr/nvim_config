@@ -342,9 +342,11 @@ end
 
 vim.keymap.set({ 'n', 'v', }, '<f8>', go_tab, { desc = 'go tab' })
 vim.keymap.set({ 'n', 'v', }, '<f2>', go_tab, { desc = 'go tab' })
+vim.keymap.set({ 'n', 'v', }, '<leader>tt', go_tab, { desc = 'go tab' })
 
 vim.keymap.set({ 'n', 'v', }, '<f7>', go_buffer, { desc = 'go buffer' })
 vim.keymap.set({ 'n', 'v', }, '<f1>', go_buffer, { desc = 'go buffer' })
+vim.keymap.set({ 'n', 'v', }, '<leader>bb', go_buffer, { desc = 'go buffer' })
 
 -- go next or prev tab or buffer
 
