@@ -217,8 +217,12 @@ vim.g.nvimtree_au_cursorhold3 = vim.api.nvim_create_autocmd({ "CursorHold", }, {
         end
         local curline = vim.fn.line('.')
         local curcol = vim.fn.col('.')
-        if width - win.width + 6 > 0 then
-          win:resize("width", width - win.width + 6)
+        local temp = 2 + 4
+        if vim.opt.nu:get() == true or vim.opt.rnu:get() == true then
+          temp = temp + #tostring(vim.fn.line('$')) + 1
+        end
+        if width - win.width + temp > 0 then
+          win:resize("width", width - win.width + temp)
         end
         if height - win.height > 0 then
           win:resize("height", height - win.height)
