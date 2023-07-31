@@ -10,8 +10,13 @@ require("project_nvim").setup({
   patterns = patterns,
 })
 
+local historyfile = require('plenary.path'):new(require('project_nvim.utils.path').historyfile)
+
+if not historyfile:exists() then
+  historyfile:touch()
+end
+
 M.refreshhistory = function()
-  local historyfile = require('plenary.path'):new(require('project_nvim.utils.path').historyfile)
   local lines = historyfile:readlines()
   local newlines = {}
   for _, v in ipairs(lines) do
@@ -32,7 +37,8 @@ require('telescope').load_extension("projects")
 M.open = function()
   vim.cmd('Telescope projects')
   vim.cmd([[call feedkeys("\<esc>\<esc>")]])
-  vim.keymap.set({ 'n', 'v' }, '<leader>sp', ':<c-u>Telescope projects<cr>', { silent = true, desc = 'Telescope projects' })
+  vim.keymap.set({ 'n', 'v' }, '<leader>sp', ':<c-u>Telescope projects<cr>',
+    { silent = true, desc = 'Telescope projects' })
   vim.cmd([[call feedkeys(":Telescope projects\<cr>")]])
 end
 
