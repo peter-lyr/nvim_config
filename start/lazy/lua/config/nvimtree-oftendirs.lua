@@ -1,4 +1,4 @@
-package.loaded['config.nvimtree-oftendirs'] = nil
+-- package.loaded['config.nvimtree-oftendirs'] = nil
 
 local M = {}
 

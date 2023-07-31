@@ -318,7 +318,7 @@ local curidx = 1
 
 local olddirs = {}
 
-package.loaded['config.nvimtree'] = nil
+-- package.loaded['config.nvimtree'] = nil
 
 local dirs_txt = require('plenary.path'):new(vim.fn.stdpath('data')):joinpath('nvim-tree-dirs.txt')
 
