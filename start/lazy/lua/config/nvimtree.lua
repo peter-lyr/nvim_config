@@ -204,7 +204,7 @@ vim.g.nvimtree_au_cursorhold3 = vim.api.nvim_create_autocmd({ "CursorHold", }, {
       rescanned_bufnr = ev.buf
       if vim.bo[ev.buf].ft == 'NvimTree' then
         local width = 0
-        local height = math.min(vim.fn.line('$'), vim.opt.lines:get() - 6)
+        local height = math.min(vim.fn.line('$'), vim.opt.lines:get() - 9)
         for linenr = 2, height do
           local len = vim.fn.strdisplaywidth(vim.fn.getline(linenr))
           if len > width then
