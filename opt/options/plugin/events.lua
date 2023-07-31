@@ -146,7 +146,7 @@ vim.api.nvim_create_autocmd("FileType", {
               end
             end)
           end)
-        end, { buffer = event.buf, silent = true })
+        end, { buffer = event.buf, nowait = true, silent = true })
       end)
     end)
   end,
