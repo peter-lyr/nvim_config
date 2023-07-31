@@ -89,7 +89,7 @@ M.open = function(refresh)
     if curroot ~= fugitiveroot then
       vim.cmd('bw!' .. tostring(bufnr))
     elseif refresh then
-      vim.fn['fugitive#ReloadStatus']()
+      pcall(vim.call, 'fugitive#ReloadStatus')
     else
       vim.cmd('Git')
     end
