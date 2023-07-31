@@ -200,7 +200,7 @@ pcall(vim.api.nvim_del_autocmd, vim.g.nvimtree_au_cursorhold3)
 
 vim.g.nvimtree_au_cursorhold3 = vim.api.nvim_create_autocmd({ "CursorHold", }, {
   callback = function(ev)
-    if vim.g.edgy_autosize_en == 1 and rescanned_bufnr ~= ev.buf then
+    if vim.g.edgy_autosize_en == 1 and (rescanned_bufnr ~= ev.buf or vim.bo[ev.buf].ft == 'NvimTree') then
       rescanned_bufnr = ev.buf
       if vim.bo[ev.buf].ft == 'NvimTree' then
         local width = 0
