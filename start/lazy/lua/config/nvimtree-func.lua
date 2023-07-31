@@ -363,6 +363,7 @@ M.copy_2_clip = function()
     files = files .. " " .. '"' .. v.absolute_path .. '"'
   end
   vim.fn.system(string.format('%s%s', copy2clip, files))
+  m.clear_marks()
 end
 
 M.paste_from_clip = function(node)
