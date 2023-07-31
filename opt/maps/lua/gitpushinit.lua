@@ -13,7 +13,7 @@ end
 local function asyncrunprepare()
   testtimer = vim.loop.new_timer()
   local l = 0
-  testtimer:start(0, 100, function()
+  testtimer:start(300, 100, function()
     vim.schedule(function()
       local temp = #vim.fn.getqflist()
       if l ~= temp then
