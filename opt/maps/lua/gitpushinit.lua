@@ -6,7 +6,7 @@ GitpushinitDone = function()
   testtimer:stop()
   require('config.fugitive').open(1)
   local l = vim.fn.getqflist()
-  vim.notify(l[1]['text'] .. '\n' .. l[#l]['text'])
+  vim.notify(l[1]['text'] .. '\n' .. l[#l-1]['text'] .. l[#l]['text'])
   vim.cmd('au! User AsyncRunStop')
 end
 
