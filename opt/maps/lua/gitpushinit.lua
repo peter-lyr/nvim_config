@@ -2,6 +2,8 @@ local M = {}
 
 local testtimer = nil
 
+
+
 GitpushinitDone = function()
   testtimer:stop()
   require('config.fugitive').open(1)
