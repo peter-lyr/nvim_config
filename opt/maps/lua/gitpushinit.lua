@@ -1,28 +1,28 @@
 local M = {}
 
-local gitpushinit_timer
+-- local gitpushinit_timer
 
 GitpushinitDone = function()
   print('GitpushinitDone')
-  gitpushinit_timer:stop()
+  -- gitpushinit_timer:stop()
   local l = vim.fn.getqflist()
   vim.notify(l[1]['text'] .. '\n' .. l[#l]['text'])
   vim.cmd('au! User AsyncRunStop')
 end
 
 local function asyncrunprepare()
-  gitpushinit_timer = vim.loop.new_timer()
-  local cnt = 0
-  gitpushinit_timer:start(0, 50, function()
-    vim.schedule(function()
-      require('config.fugitive').open(1)
-      print(cnt)
-      cnt = cnt + 1
-      if cnt > 200 then
-        gitpushinit_timer:stop()
-      end
-    end)
-  end)
+  -- gitpushinit_timer = vim.loop.new_timer()
+  -- local cnt = 0
+  -- gitpushinit_timer:start(0, 50, function()
+  --   vim.schedule(function()
+  --     require('config.fugitive').open(1)
+  --     print(cnt)
+  --     cnt = cnt + 1
+  --     if cnt > 200 then
+  --       gitpushinit_timer:stop()
+  --     end
+  --   end)
+  -- end)
   vim.cmd([[au User AsyncRunStop call v:lua.GitpushinitDone()]])
 end
 
