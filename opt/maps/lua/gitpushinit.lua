@@ -3,9 +3,9 @@ local M = {}
 local gitpushinit_timer
 
 GitpushinitDone = function()
+  gitpushinit_timer:stop()
   local l = vim.fn.getqflist()
   vim.notify(l[1]['text'] .. '\n' .. l[#l]['text'])
-  gitpushinit_timer:stop()
   vim.cmd('au! User AsyncRunStop')
 end
 
@@ -16,7 +16,7 @@ local function asyncrunprepare()
       require('config.fugitive').open(1)
     end)
   end)
-  vim.cmd([[au User AsyncRunStop v:lua.GitpushinitDone()]])
+  vim.cmd([[au User AsyncRunStop call v:lua.GitpushinitDone()]])
 end
 
 M.addcommitpush = function()
