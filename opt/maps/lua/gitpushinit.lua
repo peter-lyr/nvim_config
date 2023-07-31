@@ -1,7 +1,11 @@
 local M = {}
 
 local function asyncrunprepare()
-  vim.cmd([[au User AsyncRunStop lua local l = vim.fn.getqflist(); vim.notify(l[1]['text'] .. '\n' .. l[#l]['text']); require('config.fugitive').open(1); vim.cmd('au! User AsyncRunStop')]])
+  vim.cmd([[au User AsyncRunStop lua
+  \ local l = vim.fn.getqflist()
+  \ vim.notify(l[1]['text'] .. '\n' .. l[#l]['text'])
+  \ require('config.fugitive').open(1)
+  \ vim.cmd('au! User AsyncRunStop')]])
 end
 
 M.addcommitpush = function()
