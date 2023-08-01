@@ -3,8 +3,9 @@ return {
   lazy = true,
   event = { "CursorHold", "CursorHoldI", },
   config = function()
-    require("dimit").setup({
-      bgcolor = "#000000",
-    })
+    require("config.dimit")
   end,
+  dependencies = {
+    require('plugins.aerial'),
+  },
 }
