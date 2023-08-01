@@ -1,1 +1,1 @@
-[ ] erase bad white space
+- [x] erase bad white space
