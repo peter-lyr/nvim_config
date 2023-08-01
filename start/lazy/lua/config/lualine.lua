@@ -50,6 +50,8 @@ vim.api.nvim_create_autocmd({ "BufEnter", }, {
     curprojectroot = rep(vim.fn['ProjectRootGet'](vim.api.nvim_buf_get_name(0)))
     if #curprojectroot > 0 then
       vim.fn['LualineRenameTab'](get_projectroot(curprojectroot))
+    else
+      vim.fn['LualineRenameTab'](get_projectroot(vim.api.nvim_buf_get_name(0)))
     end
   end,
 })
@@ -230,6 +232,7 @@ require('lualine').setup({
         max_length = function()
           return vim.o.columns
         end,
+        fmt = get_projectroot,
         use_mode_colors = true,
         mode = 2,
         tabs_color = {
