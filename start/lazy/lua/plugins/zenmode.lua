@@ -13,7 +13,7 @@ return {
       desc = 'ZenMode'
     },
     {
-      '<leader><leader><leader>',
+      '<leader><leader>',
       function()
         require("config.zenmode").toggle()
       end,
