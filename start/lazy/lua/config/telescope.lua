@@ -51,10 +51,6 @@ local get_setup_table = function(file_ignore_patterns)
 
           ['<c-o>'] = actions.select_default,
           ['vo'] = actions.select_default,
-          ['<leader><leader>'] = {
-            actions.select_default, type = "action",
-            opts = { nowait = true, silent = true }
-          },
 
           ['vl'] = function(prompt_bufnr)
             actions_layout.toggle_preview(prompt_bufnr)
