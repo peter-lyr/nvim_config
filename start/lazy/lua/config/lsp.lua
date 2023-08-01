@@ -118,10 +118,9 @@ vim.keymap.set('n', '<leader>fF', ':LspInfo<cr>', { desc = 'LspInfo' })
 
 vim.keymap.set('n', '<leader>fw', ':ClangdSwitchSourceHeader<cr>', { desc = 'ClangdSwitchSourceHeader' })
 vim.keymap.set('n', '<leader>fp', function()
-  local curline = vim.fn.line('.')
-  local curcol = vim.fn.col('.')
+  local save_cursor = vim.fn.getpos(".")
   vim.cmd('norm =ap')
-  pcall(vim.cmd, string.format("norm %dgg%d|", curline, curcol))
+  pcall(vim.fn.setpos, '.', save_cursor)
 end, { desc = '=ap' })
 
 

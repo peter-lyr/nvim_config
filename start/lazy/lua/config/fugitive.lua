@@ -19,8 +19,7 @@ vim.g.fugitive_au_cursorhold = vim.api.nvim_create_autocmd({ "CursorHold", }, {
         if not win then
           return
         end
-        local curline = vim.fn.line('.')
-        local curcol = vim.fn.col('.')
+        local save_cursor = vim.fn.getpos(".")
         local ok = nil
         if width - win.width + 6 > 0 then
           win:resize("width", width - win.width + 6)
@@ -31,7 +30,7 @@ vim.g.fugitive_au_cursorhold = vim.api.nvim_create_autocmd({ "CursorHold", }, {
           ok = 1
         end
         if ok then
-          vim.cmd(string.format("norm %dgg%d|", curline, curcol))
+          pcall(vim.fn.setpos, '.', save_cursor)
           vim.cmd("norm 99zH")
         end
       end

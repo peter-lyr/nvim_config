@@ -429,8 +429,7 @@ M.ausize = function(_, short_dis)
   if not win then
     return
   end
-  local curline = vim.fn.line('.')
-  local curcol = vim.fn.col('.')
+  local save_cursor = vim.fn.getpos(".")
   local temp = 2 + 4
   if vim.opt.nu:get() == true or vim.opt.rnu:get() == true then
     temp = temp + #tostring(vim.fn.line('$')) + 1
@@ -445,7 +444,7 @@ M.ausize = function(_, short_dis)
     ok = 1
   end
   if ok then
-    vim.cmd(string.format("norm %dgg%d|", curline, curcol))
+    pcall(vim.fn.setpos, '.', save_cursor)
     vim.cmd("norm 99zH")
   end
 end
