@@ -199,16 +199,16 @@ vim.g.edgy_autosize_en = 1
 
 pcall(vim.api.nvim_del_autocmd, vim.g.nvimtree_au_cursorhold3)
 
--- vim.g.nvimtree_au_cursorhold3 = vim.api.nvim_create_autocmd({ "CursorHold", }, {
---   callback = function(ev)
---     if (rescanned_bufnr ~= ev.buf or vim.bo[ev.buf].ft == 'NvimTree') then
---       rescanned_bufnr = ev.buf
---       if vim.bo[ev.buf].ft == 'NvimTree' then
---         f.ausize(_, 1)
---       end
---     end
---   end,
--- })
+vim.g.nvimtree_au_cursorhold3 = vim.api.nvim_create_autocmd({ "CursorHold", }, {
+  callback = function(ev)
+    if (rescanned_bufnr ~= ev.buf or vim.bo[ev.buf].ft == 'NvimTree') then
+      rescanned_bufnr = ev.buf
+      if vim.bo[ev.buf].ft == 'NvimTree' then
+        f.ausize(_, 1)
+      end
+    end
+  end,
+})
 
 pcall(vim.api.nvim_del_autocmd, vim.g.nvimtree_au_bufleave)
 
@@ -233,16 +233,16 @@ vim.g.nvimtree_au_bufleave = vim.api.nvim_create_autocmd({ "BufLeave", }, {
 
 pcall(vim.api.nvim_del_autocmd, vim.g.nvimtree_au_bufenter)
 
--- vim.g.nvimtree_au_bufenter = vim.api.nvim_create_autocmd({ "CursorHold", "BufEnter", }, {
---   callback = function(ev)
---     if vim.bo[ev.buf].ft == 'NvimTree' then
---       vim.cmd([[
---         setlocal sidescrolloff=0
---         setlocal signcolumn=yes
---       ]])
---     end
---   end,
--- })
+vim.g.nvimtree_au_bufenter = vim.api.nvim_create_autocmd({ "CursorHold", "BufEnter", }, {
+  callback = function(ev)
+    if vim.bo[ev.buf].ft == 'NvimTree' then
+      vim.cmd([[
+        setlocal sidescrolloff=0
+        setlocal signcolumn=yes
+      ]])
+    end
+  end,
+})
 
 local check = function()
   local ok1 = nil
@@ -263,32 +263,32 @@ end
 
 pcall(vim.api.nvim_del_autocmd, vim.g.nvimtree_au_cursorhold2)
 
--- vim.g.nvimtree_au_cursorhold2 = vim.api.nvim_create_autocmd({ "CursorHold", }, {
---   callback = function(ev)
---     local ft = vim.bo[vim.fn.winbufnr(winnr)].ft
---     local cwd = vim.loop.cwd()
---     local sta, _ = pcall(vim.call, 'ProjectRootCD')
---     if sta then
---       if vim.fn['ProjectRootGet'](ev.file) ~= '' and ft ~= 'NvimTree' and ft ~= 'fugitive' then
---         local winid = vim.fn.win_getid()
---         local res = check()
---         if res == 1 then
---           pcall(vim.cmd, 'Git')
---           vim.loop.new_timer():start(10, 0, function()
---             vim.schedule(function()
---               pcall(vim.cmd, 'e!')
---               vim.fn.win_gotoid(winid)
---             end)
---           end)
---         elseif res == 2 then
---           pcall(vim.cmd, 'NvimTreeOpen')
---           vim.fn.win_gotoid(winid)
---         end
---       end
---     end
---     vim.cmd(string.format('cd %s|cd %s', string.sub(cwd, 1, 2), cwd))
---   end,
--- })
+vim.g.nvimtree_au_cursorhold2 = vim.api.nvim_create_autocmd({ "CursorHold", }, {
+  callback = function(ev)
+    local ft = vim.bo[vim.fn.winbufnr(winnr)].ft
+    local cwd = vim.loop.cwd()
+    local sta, _ = pcall(vim.call, 'ProjectRootCD')
+    if sta then
+      if vim.fn['ProjectRootGet'](ev.file) ~= '' and ft ~= 'NvimTree' and ft ~= 'fugitive' then
+        local winid = vim.fn.win_getid()
+        local res = check()
+        if res == 1 then
+          pcall(vim.cmd, 'Git')
+          vim.loop.new_timer():start(10, 0, function()
+            vim.schedule(function()
+              pcall(vim.cmd, 'e!')
+              vim.fn.win_gotoid(winid)
+            end)
+          end)
+        elseif res == 2 then
+          pcall(vim.cmd, 'NvimTreeOpen')
+          vim.fn.win_gotoid(winid)
+        end
+      end
+    end
+    vim.cmd(string.format('cd %s|cd %s', string.sub(cwd, 1, 2), cwd))
+  end,
+})
 
 local cwd = string.gsub(vim.fn.tolower(vim.loop.cwd()), '/', '\\')
 local dirs = { cwd }
