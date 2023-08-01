@@ -18,9 +18,10 @@ return {
       config = function()
         require("mason-null-ls").setup({
           ensure_installed = {
-            'black', 'isort', -- python
+            'black', 'isort',        -- python
             'markdownlint',
             'prettier', 'prettierd', -- html
+            'clang_format',          -- clang_format
           },
           automatic_installation = false,
         })
@@ -45,6 +46,12 @@ return {
               -- end,
               prefer_local = "node_modules/.bin",
             },
+            nls.builtins.formatting.clang_format.with({
+              extra_args = {
+                '--style',
+                '{BasedOnStyle: llvm, IndentWidth: 4}',
+              },
+            }),
           }
         })
       end,
