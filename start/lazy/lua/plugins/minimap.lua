@@ -95,10 +95,17 @@ return {
       local lastbufnr = 0
       vim.api.nvim_create_autocmd({ "BufEnter", }, {
         callback = function(ev)
+          local bufnr = vim.fn.bufnr('-MINIMAP-')
+          if bufnr ~= -1 then
+            if vim.fn.bufnr() == bufnr then
+              require("tint").disable()
+            else
+              require("tint").enable()
+            end
+          end
           if vim.g.minimap_autostart == 1 and lastbufnr ~= ev.buf and #ev.file > 0 and ev.buf ~= vim.fn.bufnr('-MINIMAP-') and vim.api.nvim_buf_get_option(ev.buf, 'buftype') ~= 'nofile' then
             -- print(ev.buf, ev.file, vim.api.nvim_buf_get_option(ev.buf, 'buftype'), '|', vim.api.nvim_buf_get_option(ev.buf, 'filetype'))
             lastbufnr = ev.buf
-            local bufnr = vim.fn.bufnr('-MINIMAP-')
             if bufnr == -1 then
               vim.loop.new_timer():start(10, 0, function()
                 vim.schedule(function()
