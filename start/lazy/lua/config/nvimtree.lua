@@ -1,6 +1,6 @@
 local M = {}
 
--- package.loaded['config.nvimtree-func'] = nil
+package.loaded['config.nvimtree-func'] = nil
 
 local f = require('config.nvimtree-func')
 

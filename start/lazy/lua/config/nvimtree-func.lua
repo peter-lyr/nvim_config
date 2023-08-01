@@ -435,14 +435,19 @@ M.ausize = function(_, short_dis)
   if vim.opt.nu:get() == true or vim.opt.rnu:get() == true then
     temp = temp + #tostring(vim.fn.line('$')) + 1
   end
+  local ok = nil
   if width - win.width + temp > 0 or not short_dis then
     win:resize("width", width - win.width + temp)
+    ok = 1
   end
   if height - win.height > 0 then
     win:resize("height", height - win.height)
+    ok = 1
   end
-  vim.cmd(string.format("norm %dgg%d|", curline, curcol))
-  vim.cmd("norm 99zH")
+  if ok then
+    vim.cmd(string.format("norm %dgg%d|", curline, curcol))
+    vim.cmd("norm 99zH")
+  end
 end
 
 return M
