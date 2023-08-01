@@ -58,7 +58,6 @@ return {
   },
   dependencies = {
     require('plugins.edgy'),
-    require('plugins.shade'),
     'wfxr/code-minimap',
   },
   init = function()
