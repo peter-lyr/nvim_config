@@ -372,8 +372,14 @@ M.paste_from_clip = function(node)
     return
   end
   local cmd = string.format(
-    [[Get-Clipboard -Format FileDropList | ForEach-Object { Copy-Item -Path $_.FullName -Destination "%s" }]], dtarget)
+    [[Get-Clipboard -Format FileDropList | ForEach-Object { Copy-Item -Path $_.FullName -Destination "%s" }]],
+    dtarget)
+  local save_cursor = vim.fn.getpos(".")
   require('terminal').send('powershell', cmd, 0)
+  vim.fn.timer_start(200, function()
+    vim.cmd('wincmd t')
+    pcall(vim.fn.setpos, '.', save_cursor)
+  end)
 end
 
 M.delete = function(node)
