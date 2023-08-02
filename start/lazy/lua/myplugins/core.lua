@@ -91,9 +91,9 @@ return {
 
       -- start explorer
 
-      { 'cs.',                '<cmd>!explorer "%:h"<cr>',                                                   mode = { 'n', 'v' },  silent = true, desc = 'start %:h' },
-      { 'csu',                '<cmd>!explorer ..<cr>',                                                    mode = { 'n', 'v' },  silent = true, desc = 'start ..' },
-      { 'cs=',                function() vim.cmd('!explorer "' .. vim.call('ProjectRootGet') .. '"') end,         mode = { 'n', 'v' },  silent = true, desc = 'start ProjectRootGet' },
+      { 'cs.',                '<cmd>!explorer "%:h"<cr>',                                              mode = { 'n', 'v' },  silent = true, desc = 'start %:h' },
+      { 'csu',                '<cmd>!explorer ..<cr>',                                                 mode = { 'n', 'v' },  silent = true, desc = 'start ..' },
+      { 'csw',                function() vim.cmd('!explorer "' .. vim.call('ProjectRootGet') .. '"') end, mode = { 'n', 'v' },  silent = true, desc = 'start ProjectRootGet' },
       { 'csc',                '<cmd>!chcp 65001 && start /min /b cmd /c "%:p"<cr>',                    mode = { 'n', 'v' },  silent = true, desc = 'system open %:h' },
 
       -- copy_paste
@@ -104,7 +104,7 @@ return {
 
       { '<leader>y',          '<esc>:let @+ = expand("%:t")<cr>',                                      mode = { 'n', 'v' },  silent = true, desc = 'copy %:t to +' },
       { '<leader>gy',         '<esc>:let @+ = substitute(nvim_buf_get_name(0), "/", "\\\\", "g")<cr>', mode = { 'n', 'v' },  silent = true, desc = 'copy fullpath to +' },
-      { '<leader>gvy', '<esc>:let @+ = substitute(getcwd(), "/", "\\\\", "g")<cr>',             mode = { 'n', 'v' },  silent = true, desc = 'copy cwd to +' },
+      { '<leader>gvy', '<esc>:let @+ = substitute(getcwd(), "/", "\\\\", "g")<cr>',                    mode = { 'n', 'v' },  silent = true, desc = 'copy cwd to +' },
 
       -- cursor
 
