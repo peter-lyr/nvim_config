@@ -73,6 +73,9 @@ local get_setup_table = function(file_ignore_patterns)
             opts = { nowait = true, silent = true }
           },
 
+          ['s'] = actions.move_selection_next,
+          ['w'] = actions.move_selection_previous,
+
           ['<c-j>'] = function(prompt_bufnr)
             actions.move_selection_next(prompt_bufnr)
             actions.move_selection_next(prompt_bufnr)
@@ -102,6 +105,7 @@ local get_setup_table = function(file_ignore_patterns)
           },
 
           ['l'] = actions_layout.toggle_preview,
+          ['f'] = actions_layout.toggle_preview,
         }
       },
       file_ignore_patterns = file_ignore_patterns,

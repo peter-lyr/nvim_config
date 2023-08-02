@@ -1,6 +1,6 @@
 - [x] erase bad white space
 - [x] gitsigns diff word smart
-- [ ] telescope n map w s up and down
+- [x] telescope n map w s up and down
 - [x] fugitive height add one more
 - [ ] nvimtree git status signs not working
 - [x] nvimtree create file: strftime("%Y%m%d-%H%M%S.md")
