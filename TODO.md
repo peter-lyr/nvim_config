@@ -3,3 +3,4 @@
 - [ ] telescope n map w s up and down
 - [ ] fugitive height add one more
 - [ ] nvimtree git status signs not working
+- [ ] nvimtree create file: strftime("%Y%m%d-%H%M%S.md")
