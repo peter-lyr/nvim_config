@@ -1,2 +1,4 @@
 - [x] erase bad white space
 - [x] gitsigns diff word smart
+- [ ] telescope n map w s up and down
+- [ ] fugitive height add one more
