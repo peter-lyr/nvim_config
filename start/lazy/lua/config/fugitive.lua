@@ -25,6 +25,7 @@ vim.g.fugitive_au_cursorhold = vim.api.nvim_create_autocmd({ "CursorHold", }, {
           win:resize("width", width - win.width + 6)
           ok = 1
         end
+        height = height + 3
         if height - win.height > 0 then
           win:resize("height", height - win.height)
           ok = 1
