@@ -2,13 +2,19 @@
 
 local M = {}
 
+M.all_dirs = {}
+
+---------------
+-- 1. my dirs
+---------------
+
 local nv = require('plenary.path'):new(vim.fn.expand('$VIMRUNTIME')):parent():parent():parent():parent()
 
-local dirs = {}
-local existsdirs = {}
+local mydirs = {}
+local mydirs_existed = {}
 
-M.init = function()
-  dirs = {
+M.init_mydirs = function()
+  mydirs = {
     vim.fn.expand([[$HOME]]),
     vim.fn.expand([[$TEMP]]),
     vim.fn.expand([[$LOCALAPPDATA]]),
@@ -17,24 +23,28 @@ M.init = function()
     vim.fn.expand([[$VIMRUNTIME\pack\lazy\plugins]]),
     nv.filename,
   }
-  existsdirs = {}
-  for _, dir in ipairs(dirs) do
+  mydirs_existed = {}
+  for _, dir in ipairs(mydirs) do
     if vim.fn.isdirectory(dir) then
-      table.insert(existsdirs, dir)
+      dir = vim.fn.tolower(dir)
+      table.insert(mydirs_existed, dir)
+      table.insert(M.all_dirs, dir)
     end
   end
   for i = 1, 26 do
     local dir = vim.fn.nr2char(64 + i) .. [[:\]]
     if vim.fn.isdirectory(dir) == 1 then
-      table.insert(existsdirs, dir)
+      dir = vim.fn.tolower(dir)
+      table.insert(mydirs_existed, dir)
+      table.insert(M.all_dirs, dir)
     end
   end
 end
 
-M.init()
+M.init_mydirs()
 
-M.open = function()
-  vim.ui.select(vim.fn.sort(existsdirs), { prompt = 'oftendirs' }, function(choice)
+M.open_mydirs = function()
+  vim.ui.select(vim.fn.sort(mydirs_existed), { prompt = 'my dirs' }, function(choice)
     if not choice then
       return
     end
@@ -47,9 +57,9 @@ M.open = function()
   end)
 end
 
-M.reopen = function()
-  M.init()
-  vim.ui.select(vim.fn.sort(existsdirs), { prompt = 're oftendirs' }, function(choice)
+M.reopen_mydirs = function()
+  M.init_mydirs()
+  vim.ui.select(vim.fn.sort(mydirs_existed), { prompt = 'reopen my dirs' }, function(choice)
     if not choice then
       return
     end
@@ -62,25 +72,30 @@ M.reopen = function()
   end)
 end
 
-M.explorer = function()
-  vim.ui.select(vim.fn.sort(existsdirs), { prompt = 'oftendirs' }, function(choice)
-    if not choice then
-      return
-    end
-    vim.cmd('!explorer "' .. choice .. '"')
-  end)
-end
+---------------
+-- 2.1 path dirs
+---------------
 
 local pathdirs = {}
 
-for pathdir in string.gmatch(vim.fn.expand([[$PATH]]), '([^;]+);') do
-  if vim.fn.isdirectory(pathdir) == 1 and vim.tbl_contains(pathdirs, pathdir) == false then
-    table.insert(pathdirs, pathdir)
+M.init_pathdirs = function()
+  for pathdir in string.gmatch(vim.fn.expand([[$PATH]]), '([^;]+);') do
+    if vim.fn.isdirectory(pathdir) == 1 then
+      pathdir = vim.fn.tolower(pathdir)
+      if vim.tbl_contains(pathdirs, pathdir) == false then
+        table.insert(pathdirs, pathdir)
+      end
+      if vim.tbl_contains(M.all_dirs, pathdir) == false then
+        table.insert(M.all_dirs, pathdir)
+      end
+    end
   end
 end
 
-M.openpathdir = function()
-  vim.ui.select(vim.fn.sort(pathdirs), { prompt = 'pathdirs' }, function(choice)
+M.init_pathdirs()
+
+M.open_pathdirs = function()
+  vim.ui.select(vim.fn.sort(pathdirs), { prompt = 'path dirs' }, function(choice)
     if not choice then
       return
     end
@@ -93,34 +108,111 @@ M.openpathdir = function()
   end)
 end
 
-local scan_dir = require("plenary.scandir")
+---------------
+-- 2.2 path exe files
+---------------
+
 local pathfiles = {}
-local exts = {}
-for ext in string.gmatch(vim.fn.expand([[$PATHEXT]]), '([^;]+);') do
-  table.insert(exts, vim.fn.tolower(ext))
-end
-for pathdir in string.gmatch(vim.fn.expand([[$PATH]]), '([^;]+);') do
-  local entries = scan_dir.scan_dir(pathdir, {
-    hidden = false,
-    depth = 1,
-    add_dirs = false,
-    search_pattern = function(e)
-      return vim.tbl_contains(exts, vim.fn.tolower(string.match(e, "(%..+)$")))
-    end
-  })
-  for _, entry in ipairs(entries) do
-    if vim.tbl_contains(pathfiles, entry) == false then
-      table.insert(pathfiles, entry)
+
+M.init_pathfiles = function()
+  local scan_dir = require("plenary.scandir")
+  local exts = {}
+  for ext in string.gmatch(vim.fn.expand([[$PATHEXT]]), '([^;]+);') do
+    table.insert(exts, vim.fn.tolower(ext))
+  end
+  for pathdir in string.gmatch(vim.fn.expand([[$PATH]]), '([^;]+);') do
+    local entries = scan_dir.scan_dir(pathdir, {
+      hidden = false,
+      depth = 1,
+      add_dirs = false,
+      search_pattern = function(e)
+        return vim.tbl_contains(exts, vim.fn.tolower(string.match(e, "(%..+)$")))
+      end
+    })
+    for _, entry in ipairs(entries) do
+      if vim.tbl_contains(pathfiles, entry) == false then
+        table.insert(pathfiles, entry)
+      end
     end
   end
 end
 
-M.openpathexe = function()
-  vim.ui.select(vim.fn.sort(pathfiles), { prompt = 'pathfiles' }, function(choice)
+M.init_pathfiles()
+
+M.open_pathfiles = function()
+  vim.ui.select(vim.fn.sort(pathfiles), { prompt = 'path files' }, function(choice)
     if not choice then
       return
     end
     vim.cmd(string.format([[silent !start cmd /c "%s"]], choice))
+  end)
+end
+
+---------------
+-- 3. often dirs
+---------------
+
+local oftendirs = {}
+local config = require('plenary.path'):new(vim.g.pack_path):joinpath('nvim_config', 'start', 'lazy', 'lua', 'config')
+local oftendir_exe = config:joinpath('nvimtree-oftendirs.exe')
+
+M.init_oftendir = function()
+  local res = true
+  if not oftendir_exe:exists() then
+    vim.cmd(string.format(
+      [[silent !start /b /min cmd /c "gcc %s -Wall -s -ffunction-sections -fdata-sections -Wl,--gc-sections -O3 -o %s"]],
+      config:joinpath('nvimtree-oftendirs.c').filename, config:joinpath('nvimtree-oftendirs').filename))
+    res = nil
+  end
+  local f = io.popen(oftendir_exe.filename)
+  for dir in string.gmatch(f:read("*a"), "([%S ]+)") do
+    dir = vim.fn.tolower(dir)
+    if vim.tbl_contains(oftendirs, dir) == false then
+      table.insert(oftendirs, dir)
+    end
+    if vim.tbl_contains(M.all_dirs, dir) == false then
+      table.insert(M.all_dirs, dir)
+    end
+  end
+  f:close()
+  return res
+end
+
+local exe_created = M.init_oftendir()
+
+M.open_oftendirs = function()
+  if not exe_created or not oftendir_exe:exists() then
+    exe_created = M.init_oftendir()
+    if exe_created then
+      print(oftendir_exe .. ' created!')
+    else
+      print(oftendir_exe .. ' not created!')
+    end
+    return
+  end
+  vim.ui.select(vim.fn.sort(oftendirs), { prompt = 'often dirs' }, function(choice)
+    if not choice then
+      return
+    end
+    vim.cmd('NvimTreeOpen')
+    vim.loop.new_timer():start(10, 0, function()
+      vim.schedule(function()
+        vim.cmd('cd ' .. choice)
+      end)
+    end)
+  end)
+end
+
+---------------
+-- 10. explorer all dirs
+---------------
+
+M.explorer = function()
+  vim.ui.select(vim.fn.sort(M.all_dirs), { prompt = 'explorer all dirs' }, function(choice)
+    if not choice then
+      return
+    end
+    vim.cmd('!explorer "' .. choice .. '"')
   end)
 end
 
