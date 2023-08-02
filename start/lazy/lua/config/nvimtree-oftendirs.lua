@@ -93,4 +93,36 @@ M.openpathdir = function()
   end)
 end
 
+local scan_dir = require("plenary.scandir")
+local pathfiles = {}
+local exts = {}
+for ext in string.gmatch(vim.fn.expand([[$PATHEXT]]), '([^;]+);') do
+  table.insert(exts, vim.fn.tolower(ext))
+end
+for pathdir in string.gmatch(vim.fn.expand([[$PATH]]), '([^;]+);') do
+  local entries = scan_dir.scan_dir(pathdir, {
+    hidden = false,
+    depth = 1,
+    add_dirs = false,
+    search_pattern = function(e)
+      return vim.tbl_contains(exts, vim.fn.tolower(string.match(e, "(%..+)$")))
+    end
+  })
+  for _, entry in ipairs(entries) do
+    if vim.tbl_contains(pathfiles, entry) == false then
+      table.insert(pathfiles, entry)
+    end
+  end
+end
+
+M.openpathexe = function()
+  vim.ui.select(vim.fn.sort(pathfiles), { prompt = 'pathfiles' }, function(choice)
+    if not choice then
+      return
+    end
+    vim.cmd(string.format([[silent !start cmd /c "%s"]], choice))
+    print(string.format([[silent !start cmd /c "%s"]], choice))
+  end)
+end
+
 return M

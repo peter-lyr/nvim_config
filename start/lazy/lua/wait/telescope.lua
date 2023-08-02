@@ -28,7 +28,7 @@ return {
     { '<leader>svc',  '<cmd>Telescope colorscheme<cr>',  mode = { 'n', 'v', }, silent = true, desc = 'Telescope colorscheme', },
     { '<leader>svh',  '<cmd>Telescope help_tags<cr>',    mode = { 'n', 'v', }, silent = true, desc = 'Telescope help_tags', },
     { '<leader>svvo', '<cmd>Telescope vim_options<cr>', mode = { 'n', 'v', }, silent = true, desc = 'Telescope vim_options', },
-    { '<leader>svp',  '<cmd>Telescope planets<cr>',      mode = { 'n', 'v', }, silent = true, desc = 'Telescope planets', },
+    { '<leader>svvp', '<cmd>Telescope planets<cr>',      mode = { 'n', 'v', }, silent = true, desc = 'Telescope planets', },
 
     -- { '<leader>gf',         ':<c-u>Telescope git_files<cr>',                                                                                   mode = { 'n', 'v', }, silent = true, desc = 'Telescope git_files', },
     { '<leader>gc',         ':<c-u>Telescope git_commits<cr>',                                                                                 mode = { 'n', 'v', }, silent = true, desc = 'Telescope git_commits', },
