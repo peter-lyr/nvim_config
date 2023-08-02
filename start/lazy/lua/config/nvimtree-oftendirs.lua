@@ -74,7 +74,7 @@ end
 local pathdirs = {}
 
 for pathdir in string.gmatch(vim.fn.expand([[$PATH]]), '([^;]+);') do
-  if vim.fn.isdirectory(pathdir) == 1 then
+  if vim.fn.isdirectory(pathdir) == 1 and vim.tbl_contains(pathdirs, pathdir) == false then
     table.insert(pathdirs, pathdir)
   end
 end
