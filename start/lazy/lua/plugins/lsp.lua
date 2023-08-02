@@ -50,6 +50,7 @@ return {
               filetypes = {
                 "c",
                 "cpp",
+                "*.h",
               },
               extra_args = {
                 '--style',
