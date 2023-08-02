@@ -11,6 +11,7 @@ return {
     { '<leader><tab>', '<cmd>NvimTreeFindFile<cr>', mode = { 'n', 'v', }, silent = true, desc = 'NvimTreeFindFile' },
     { '<leader>q',  function() require('config.fugitive').open() end, mode = { 'n', 'v', }, silent = true, desc = 'Git' },
     { '<leader>se', function() require('config.nvimtree-oftendirs').open() end, mode = { 'n', 'v', }, silent = true, desc = 'nvimtree oftendirs open' },
+    { '<leader>sve', function() require('config.nvimtree-oftendirs').reopen() end, mode = { 'n', 'v', }, silent = true, desc = 'nvimtree oftendirs reopen' },
     { '<leader>sp', function() require('config.nvimtree-oftendirs').openpathdir() end, mode = { 'n', 'v', }, silent = true, desc = 'nvimtree pathdirs open' },
     { '<leader>st', function() require('config.nvimtree-oftendirs').explorer() end, mode = { 'n', 'v', }, silent = true, desc = 'nvimtree oftendirs start' },
     { 'qj', function() require('config.nvimtree').nextdir() end, mode = { 'n', 'v', }, silent = true, desc = 'nvimtree nextdir' },
