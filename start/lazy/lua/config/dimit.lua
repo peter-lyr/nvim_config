@@ -21,9 +21,9 @@ dimit.dim_inactive = function()
   local current = vim.api.nvim_get_current_win()
   local dim_value = get_highlight_value(config.dim_elements, config.highlight_group)
   for _, w in pairs(vim.api.nvim_list_wins()) do
-    local alt = string.gsub(vim.fn.tolower(vim.fn.expand('#:p')), '/', '\\')
-    local cur = string.gsub(vim.fn.tolower(vim.api.nvim_buf_get_name(vim.fn.winbufnr(w))), '/', '\\')
-    if alt == cur then
+    local alt = vim.fn.bufnr('#')
+    local cur = vim.fn.winbufnr(w)
+    if vim.api.nvim_buf_is_valid(alt) == true and vim.fn.filereadable(vim.api.nvim_buf_get_name(alt)) == 1 and alt == cur then
       dim_value = get_highlight_value(config.dim_elements, "DimitAlt")
     end
     local winhighlights = current == w and "" or dim_value
