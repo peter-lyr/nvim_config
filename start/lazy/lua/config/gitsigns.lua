@@ -2,6 +2,8 @@ local rf = function()
   require('config.fugitive').open(1)
 end
 
+local gs = package.loaded.gitsigns
+
 require('gitsigns').setup {
   numhl     = true,
   linehl    = false,
@@ -17,8 +19,6 @@ require('gitsigns').setup {
   },
 
   on_attach = function(bufnr)
-    local gs = package.loaded.gitsigns
-
     local function map(mode, l, r, opts)
       opts = opts or {}
       opts.buffer = bufnr
@@ -65,3 +65,20 @@ require('gitsigns').setup {
     map({ 'o', 'x' }, 'ig', ':<C-U>Gitsigns select_hunk<CR>', { desc = 'Gitsigns select_hunk' })
   end
 }
+
+pcall(vim.api.nvim_del_autocmd, vim.g.gitsigns_insertenter)
+
+vim.g.gitsigns_insertenter = vim.api.nvim_create_autocmd({ "InsertEnter", }, {
+  callback = function()
+    gs.toggle_word_diff(nil)
+  end,
+})
+
+pcall(vim.api.nvim_del_autocmd, vim.g.gitsigns_insertleave)
+
+vim.g.gitsigns_insertleave = vim.api.nvim_create_autocmd({ "InsertLeave", }, {
+  callback = function()
+    gs.toggle_word_diff(1)
+  end,
+})
+
