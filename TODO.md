@@ -2,3 +2,4 @@
 - [x] gitsigns diff word smart
 - [ ] telescope n map w s up and down
 - [ ] fugitive height add one more
+- [ ] nvimtree git status signs not working
