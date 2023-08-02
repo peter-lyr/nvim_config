@@ -47,6 +47,10 @@ return {
               prefer_local = "node_modules/.bin",
             },
             nls.builtins.formatting.clang_format.with({
+              filetypes = {
+                "c",
+                "cpp",
+              },
               extra_args = {
                 '--style',
                 '{BasedOnStyle: llvm, IndentWidth: 4}',
