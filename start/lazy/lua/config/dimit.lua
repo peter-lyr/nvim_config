@@ -4,6 +4,24 @@ local dimit = require("dimit")
 
 dimit.setup({
   bgcolor = "#000000",
+  dim_elements = {
+    "ColorColumn",
+    "CursorColumn",
+    "CursorLine",
+    "CursorLineFold",
+    "CursorLineNr",
+    "CursorLineSign",
+    "EndOfBuffer",
+    "FoldColumn",
+    "LineNr",
+    "NonText",
+    "Normal",
+    "SignColumn",
+    "VertSplit",
+    "Whitespace",
+    "WinBarNC",
+    -- "WinSeparator",
+  },
 })
 
 if dimit.autocmd ~= nil then
