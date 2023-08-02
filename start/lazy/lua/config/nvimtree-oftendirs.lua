@@ -121,7 +121,6 @@ M.openpathexe = function()
       return
     end
     vim.cmd(string.format([[silent !start cmd /c "%s"]], choice))
-    print(string.format([[silent !start cmd /c "%s"]], choice))
   end)
 end
 
