@@ -1,1 +1,2 @@
 - [x] erase bad white space
+- [x] gitsigns diff word smart
