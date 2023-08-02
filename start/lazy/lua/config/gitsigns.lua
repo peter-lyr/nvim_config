@@ -80,11 +80,13 @@ require('gitsigns').setup {
 }
 
 local word_diff = 1
+local moving = nil
 
 pcall(vim.api.nvim_del_autocmd, vim.g.gitsigns_insertenter)
 
 vim.g.gitsigns_insertenter = vim.api.nvim_create_autocmd({ "InsertEnter", "CursorMoved", }, {
   callback = function()
+    moving = 1
     if word_diff then
       local gs = package.loaded.gitsigns
       word_diff = gs.toggle_word_diff(nil)
@@ -96,7 +98,14 @@ pcall(vim.api.nvim_del_autocmd, vim.g.gitsigns_insertleave)
 
 vim.g.gitsigns_insertleave = vim.api.nvim_create_autocmd({ "CursorHold", }, {
   callback = function()
-    local gs = package.loaded.gitsigns
-    word_diff = gs.toggle_word_diff(1)
+    moving = nil
+    vim.fn.timer_start(500, function()
+      vim.schedule(function()
+        if not moving then
+          local gs = package.loaded.gitsigns
+          word_diff = gs.toggle_word_diff(1)
+        end
+      end)
+    end)
   end,
 })
