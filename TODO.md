@@ -11,3 +11,4 @@
 - [ ] del all other project root file
 - [ ] aerial sidescrolloff=0
 - [ ] K will jump more
+- [ ] paste :p:t like <cword>
