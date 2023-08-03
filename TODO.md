@@ -4,7 +4,7 @@
 - [x] fugitive height add one more
 - [ ] nvimtree git status signs not working
 - [x] nvimtree create file: strftime("%Y%m%d-%H%M%S.md")
-- [ ] make mapping easy to remember
+- [ ] make mapping easy to remember and access
 - [ ] diff two existed files, nvim-diff or bcomp
 - [ ] git add commit and push will stuck
 - [ ] sel and open hidden project root files in tabnew
