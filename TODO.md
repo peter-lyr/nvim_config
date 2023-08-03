@@ -5,6 +5,7 @@
 - [ ] nvimtree git status signs not working
 - [x] nvimtree create file: strftime("%Y%m%d-%H%M%S.md")
 - [ ] make mapping easy to remember and access
+> - [ ] left hand more flexible
 - [ ] diff two existed files, nvim-diff or bcomp
 - [ ] git add commit and push will stuck
 - [ ] sel and open hidden project root files in tabnew
