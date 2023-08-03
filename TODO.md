@@ -6,3 +6,4 @@
 - [x] nvimtree create file: strftime("%Y%m%d-%H%M%S.md")
 - [ ] make mapping easy to remember
 - [ ] diff two existed files, nvim-diff or bcomp
+- [ ] git add commit and push will stuck
