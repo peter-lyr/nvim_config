@@ -9,3 +9,4 @@
 - [ ] git add commit and push will stuck
 - [ ] sel and open hidden project root files in tabnew
 - [ ] del all other project root file
+- [ ] aerial sidescrolloff=0
