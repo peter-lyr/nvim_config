@@ -7,3 +7,4 @@
 - [ ] make mapping easy to remember
 - [ ] diff two existed files, nvim-diff or bcomp
 - [ ] git add commit and push will stuck
+- [ ] sel and open hidden project root files in tabnew
