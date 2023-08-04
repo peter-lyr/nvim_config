@@ -2,7 +2,15 @@ return {
   'ahmedkhalf/project.nvim',
   lazy = true,
   keys = {
-    { '<leader>sk', function() require('config.telescope_projects').open() end, mode = { 'n', 'v' }, silent = true, desc = 'Telescope projects' },
+    {
+      '<leader>sk',
+      function()
+        require('config.telescope_projects').open()
+      end,
+      mode = { 'n', 'v' },
+      silent = true,
+      desc = 'Telescope projects'
+    },
   },
   dependencies = {
     require('wait.telescope'),
