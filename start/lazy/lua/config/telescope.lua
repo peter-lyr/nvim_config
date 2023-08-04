@@ -6,6 +6,8 @@ vim.cmd([[
 autocmd User TelescopePreviewerLoaded setlocal rnu | setlocal number | setlocal wrap
 ]])
 
+-- local fb_actions = require "telescope._extensions.file_browser.actions"
+
 local get_setup_table = function(file_ignore_patterns)
   return {
     defaults = {
@@ -64,16 +66,22 @@ local get_setup_table = function(file_ignore_patterns)
           ['w'] = actions.move_selection_previous,
 
           ['d'] = {
-            actions.move_selection_next + actions.move_selection_next + actions.move_selection_next +
-            actions.move_selection_next + actions.move_selection_next,
+            function(prompt_bufnr)
+              for _ = 1, 5 do
+                actions.move_selection_next(prompt_bufnr)
+              end
+            end,
             type = "action",
-            opts = { nowait = true, silent = true }
+            opts = { nowait = true, silent = true, desc = '5j' }
           },
           ['e'] = {
-            actions.move_selection_previous + actions.move_selection_previous + actions.move_selection_previous +
-            actions.move_selection_previous + actions.move_selection_previous,
+            function(prompt_bufnr)
+              for _ = 1, 5 do
+                actions.move_selection_previous(prompt_bufnr)
+              end
+            end,
             type = "action",
-            opts = { nowait = true, silent = true }
+            opts = { nowait = true, silent = true, desc = '5k' }
           },
 
           ['f'] = actions.send_to_qflist + actions.open_qflist,
@@ -110,7 +118,43 @@ local get_setup_table = function(file_ignore_patterns)
         override_file_sorter = true,    -- override the file sorter
         case_mode = "smart_case",       -- or "ignore_case" or "respect_case"
         -- the default case_mode is "smart_case"
-      }
+      },
+      my_file_browser = {
+        mappings = {
+          ["i"] = {
+            ["<A-c>"] = false,  -- fb_actions.create,
+            ["<S-CR>"] = false, -- fb_actions.create_from_prompt,
+            ["<A-r>"] = false,  -- fb_actions.rename,
+            ["<A-m>"] = false,  -- fb_actions.move,
+            ["<A-y>"] = false,  -- fb_actions.copy,
+            ["<A-d>"] = false,  -- fb_actions.remove,
+            ["<C-o>"] = false,  -- fb_actions.open,
+            ["<C-g>"] = false,  -- fb_actions.goto_parent_dir,
+            ["<C-e>"] = false,  -- fb_actions.goto_home_dir,
+            ["<C-w>"] = false,  -- fb_actions.goto_cwd,
+            ["<C-t>"] = false,  -- fb_actions.change_cwd,
+            ["<C-f>"] = false,  -- fb_actions.toggle_browser,
+            ["<C-h>"] = false,  -- fb_actions.toggle_hidden,
+            ["<C-s>"] = false,  -- fb_actions.toggle_all,
+            ["<bs>"] = false,   -- fb_actions.backspace,
+          },
+          ["n"] = {
+            ["c"] = false, -- fb_actions.create,
+            ["r"] = false, -- fb_actions.rename,
+            ["m"] = false, -- fb_actions.move,
+            ["y"] = false, -- fb_actions.copy,
+            -- ["d"] = false, -- fb_actions.remove,
+            ["o"] = false, -- fb_actions.open,
+            -- ["g"] = false, -- fb_actions.goto_parent_dir,
+            -- ["e"] = false, -- fb_actions.goto_home_dir,
+            -- ["w"] = false, -- fb_actions.goto_cwd,
+            -- ["t"] = false, -- fb_actions.change_cwd,
+            -- ["f"] = false, -- fb_actions.toggle_browser,
+            ["h"] = false, -- fb_actions.toggle_hidden,
+            -- ["s"] = false, -- fb_actions.toggle_all,
+          },
+        },
+      },
     }
   }
 end
@@ -176,7 +220,7 @@ pcall(telescope.load_extension, 'frecency')
 
 -- file browser
 
-pcall(telescope.load_extension, 'file_browser')
+pcall(telescope.load_extension, 'my_file_browser')
 
 local M = {}
 
