@@ -7,6 +7,7 @@ return {
   },
   dependencies = {
     require('plugins.edgy'),
+    require('wait.blankline'),
   },
   config = function()
     require('config.bqf')
