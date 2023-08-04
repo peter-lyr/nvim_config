@@ -5,6 +5,8 @@ return {
     { 's', ':HopChar1<cr>', mode = { 'n', }, silent = true, desc = 'HopChar1' },
   },
   config = function()
-    require('hop').setup()
+    require('hop').setup({
+      keys = 'asdghklqwertyuiopzxcvbnmfj'
+    })
   end,
 }
