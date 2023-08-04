@@ -41,6 +41,10 @@ return {
     { '<leader>fl',         ':<c-u>Telescope lsp_document_symbols<cr>',                                                                        mode = { 'n', 'v', }, silent = true, desc = 'Telescope lsp_document_symbols', },
     { '<leader>fr',         ':<c-u>Telescope lsp_references<cr>',                                                                              mode = { 'n', 'v', }, silent = true, desc = 'Telescope lsp_references', },
 
+    -- file browser
+
+    { '<leader>sa',         '<cmd>Telescope my_file_browser<cr>',                                                                                    mode = { 'n', 'v', }, silent = true, desc = 'Telescope filetypes', },
+
     -- config
 
     { '<leader>sO',         function() require('config.telescope').open() end,                                                                 mode = { 'n', 'v', }, silent = true, desc = 'Telescope config', },
