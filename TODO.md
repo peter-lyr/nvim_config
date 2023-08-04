@@ -13,7 +13,7 @@
 - [ ] aerial sidescrolloff=0
 - [ ] K will jump more
 - [ ] paste :p:t like <cword>
-- [ ] mouse.exe add <UP> <DOWN> <C-U> <C-D>
+- [ ] mouse.exe add <UP> <DOWN> <C-U> <C-D> help telescope
 
 easy access key:
 
