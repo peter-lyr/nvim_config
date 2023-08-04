@@ -16,42 +16,41 @@ local get_setup_table = function(file_ignore_patterns)
         },
       },
       preview = {
-        hide_on_startup = true,
+        hide_on_startup = false,
         check_mime_type = true,
         -- timeout = 2000,
       },
       mappings = {
         i = {
-          ['<c-q>'] = actions.close,
+          ["<C-n>"] = false, -- actions.move_selection_next,
+          ["<C-p>"] = false, -- actions.move_selection_previous,
 
-          ['<c-s>'] = actions.move_selection_next,
-          ['<c-r>'] = actions.move_selection_previous,
+          ["<C-c>"] = false, -- actions.close,
 
-          ['<c-d>'] = {
-            actions.move_selection_next + actions.move_selection_next + actions.move_selection_next +
-            actions.move_selection_next + actions.move_selection_next,
-            type = "action",
-            opts = { nowait = true, silent = true }
-          },
-          ['<c-a>'] = {
-            actions.move_selection_previous + actions.move_selection_previous + actions.move_selection_previous +
-            actions.move_selection_previous + actions.move_selection_previous,
-            type = "action",
-            opts = { nowait = true, silent = true }
-          },
+          ["<C-x>"] = false, -- actions.select_horizontal,
+          ["<C-v>"] = false, -- actions.select_vertical,
+          ["<C-t>"] = false, -- actions.select_tab,
 
-          ['<c-f>'] = actions.send_to_qflist + actions.open_qflist,
+          ["<C-q>"] = false, -- actions.send_to_qflist + actions.open_qflist,
+          ["<M-q>"] = false, -- actions.send_selected_to_qflist + actions.open_qflist,
+          ["<C-l>"] = false, -- actions.complete_tag,
+          ["<C-_>"] = false, -- actions.which_key, -- keys from pressing <C-/>
+          ["<C-w>"] = false, -- { "<c-s-w>", type = "command" },
 
-          ['<c-x>'] = actions.select_horizontal,
-          ['<c-v>'] = actions.select_vertical,
-          ['<c-t>'] = actions.select_tab,
+          -- sometimes use:
+          -- ["<Down>"] = false, -- actions.move_selection_next,
+          -- ["<Up>"] = false, -- actions.move_selection_previous,
 
-          ['<c-e>'] = actions.select_default,
+          -- ["<CR>"] = false, -- actions.select_default,
+          -- ["<C-u>"] = false, -- actions.preview_scrolling_up,
+          -- ["<C-d>"] = false, -- actions.preview_scrolling_down,
 
-          ['<c-g>'] = function(prompt_bufnr)
-            actions_layout.toggle_preview(prompt_bufnr)
-            vim.cmd([[call feedkeys("\<esc>")]])
-          end,
+          -- ["<PageUp>"] = false, -- actions.results_scrolling_up,
+          -- ["<PageDown>"] = false, -- actions.results_scrolling_down,
+
+          -- ["<Tab>"] = false, -- actions.toggle_selection + actions.move_selection_worse,
+          -- ["<S-Tab>"] = false, -- actions.toggle_selection + actions.move_selection_better,
+          -- ["<C-/>"] = false, -- actions.which_key,
         },
         n = {
           ['q'] = {
