@@ -58,6 +58,7 @@ return {
       "nvim-telescope/telescope-frecency.nvim",
       dependencies = {"kkharji/sqlite.lua"}
     },
+    "nvim-telescope/telescope-file-browser.nvim",
   },
   config = function()
     require('config.telescope')

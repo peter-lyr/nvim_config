@@ -174,6 +174,9 @@ vim.g.sqlite_clib_path = p:new(vim.g.pack_path):parent():parent():parent():paren
 
 pcall(telescope.load_extension, 'frecency')
 
+-- file browser
+
+pcall(telescope.load_extension, 'file_browser')
 
 local M = {}
 

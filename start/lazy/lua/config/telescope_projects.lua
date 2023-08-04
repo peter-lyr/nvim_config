@@ -32,14 +32,14 @@ end
 
 M.refreshhistory()
 
-require('telescope').load_extension("projects")
+require('telescope').load_extension("my_projects")
 
 M.open = function()
-  vim.cmd('Telescope projects')
+  vim.cmd('Telescope my_projects')
   vim.cmd([[call feedkeys("\<esc>\<esc>")]])
-  vim.keymap.set({ 'n', 'v' }, '<leader>sk', ':<c-u>Telescope projects<cr>',
-    { silent = true, desc = 'Telescope projects' })
-  vim.cmd([[call feedkeys(":Telescope projects\<cr>")]])
+  vim.keymap.set({ 'n', 'v' }, '<leader>sk', ':<c-u>Telescope my_projects<cr>',
+    { silent = true, desc = 'Telescope my_projects' })
+  vim.cmd([[call feedkeys(":Telescope my_projects\<cr>")]])
 end
 
 return M
