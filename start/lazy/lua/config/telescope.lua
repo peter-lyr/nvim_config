@@ -39,7 +39,7 @@ local get_setup_table = function(file_ignore_patterns)
           ["<C-_>"] = false, -- actions.which_key, -- keys from pressing <C-/>
 
           -- normal <c-w>
-          -- ["<C-w>"] = false, -- { "<c-s-w>", type = "command" },
+          ["<C-w>"] = { "<c-s-w>", type = "command" },
 
           -- sometimes use:
           -- ["<Down>"] = false, -- actions.move_selection_next,
@@ -131,7 +131,7 @@ local get_setup_table = function(file_ignore_patterns)
             ["<C-o>"] = false,  -- fb_actions.open,
             ["<C-g>"] = false,  -- fb_actions.goto_parent_dir,
             ["<C-e>"] = false,  -- fb_actions.goto_home_dir,
-            ["<C-w>"] = false,  -- fb_actions.goto_cwd,
+            ["<C-w>"] = { "<c-s-w>", type = "command" },
             ["<C-t>"] = false,  -- fb_actions.change_cwd,
             ["<C-f>"] = false,  -- fb_actions.toggle_browser,
             ["<C-h>"] = false,  -- fb_actions.toggle_hidden,
