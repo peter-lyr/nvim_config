@@ -35,7 +35,9 @@ local get_setup_table = function(file_ignore_patterns)
           ["<M-q>"] = false, -- actions.send_selected_to_qflist + actions.open_qflist,
           ["<C-l>"] = false, -- actions.complete_tag,
           ["<C-_>"] = false, -- actions.which_key, -- keys from pressing <C-/>
-          ["<C-w>"] = false, -- { "<c-s-w>", type = "command" },
+
+          -- normal <c-w>
+          -- ["<C-w>"] = false, -- { "<c-s-w>", type = "command" },
 
           -- sometimes use:
           -- ["<Down>"] = false, -- actions.move_selection_next,
