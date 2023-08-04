@@ -13,6 +13,7 @@
 - [ ] aerial sidescrolloff=0
 - [ ] K will jump more
 - [ ] paste :p:t like <cword>
+- [ ] mouse.exe add <UP> <DOWN> <C-P> <C-N>
 
 easy access key:
 
