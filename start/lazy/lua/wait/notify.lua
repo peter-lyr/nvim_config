@@ -1,10 +1,8 @@
-vim.notify = require("notify")
-
 return {
   "rcarriga/nvim-notify",
   lazy = true,
   keys = {
-    { '<esc>', function() require('notify').dismiss() end, mode = { 'n', }, silent = true, desc = 'dismiss notification'},
+    { '<esc>', function() require('notify').dismiss() end, mode = { 'n', }, silent = true, desc = 'dismiss notification' },
   },
   config = function()
     require("notify").setup({
@@ -17,5 +15,6 @@ return {
         return math.floor(vim.o.columns * 0.75)
       end,
     })
+    vim.notify = require("notify")
   end,
 }
