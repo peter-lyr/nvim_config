@@ -1,3 +1,5 @@
+vim.notify = require("notify")
+
 return {
   "rcarriga/nvim-notify",
   lazy = true,
