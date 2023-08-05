@@ -1,3 +1,5 @@
+vim.notify = require("notify")
+
 return {
   -- "folke/noice.nvim",
   -- -- "peter-lyr/noice.nvim", -- substititue no preview err, but it will cause another problem.
