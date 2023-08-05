@@ -20,7 +20,7 @@ return {
           'strip -s $dir\\$fileNameWithoutExt.exe &&',
           'upx --best $dir\\$fileNameWithoutExt.exe &&',
           'echo ============================================================ &&',
-          '$dir\\$fileNameWithoutExt'
+          '$dir\\$fileNameWithoutExt.exe'
         },
       },
     })
