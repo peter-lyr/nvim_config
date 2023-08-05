@@ -14,7 +14,7 @@
 - [ ] K will jump more
 - [ ] paste :p:t like <cword>
 - [ ] mouse.exe add <UP> <DOWN> <C-U> <C-D> help telescope
-- [ ] toggle map 1 2 3 4 h j k l
+- [x] toggle map 1 2 3 4 h j k l
 
 # jump window
 
