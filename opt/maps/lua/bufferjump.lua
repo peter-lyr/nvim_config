@@ -67,4 +67,23 @@ M.jj = function()
   print('set nowinfixheight')
 end
 
+local hjkl_en = 0
+
+M.hjkl_toggle = function()
+  if hjkl_en == 0 then
+    vim.keymap.set({ 'n', 'v', }, '1', 'h', { desc = 'h' })
+    vim.keymap.set({ 'n', 'v', }, '2', 'j', { desc = 'j' })
+    vim.keymap.set({ 'n', 'v', }, '3', 'k', { desc = 'k' })
+    vim.keymap.set({ 'n', 'v', }, '4', 'l', { desc = 'l' })
+    hjkl_en = 1
+  else
+    vim.keymap.del({ 'n', 'v', }, '1')
+    vim.keymap.del({ 'n', 'v', }, '2')
+    vim.keymap.del({ 'n', 'v', }, '3')
+    vim.keymap.del({ 'n', 'v', }, '4')
+    hjkl_en = 0
+  end
+  print('hjkl_en: ' .. hjkl_en)
+end
+
 return M

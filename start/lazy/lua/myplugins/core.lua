@@ -143,6 +143,7 @@ return {
 
       -- jump window
 
+      { '<leader><leader>`', function() require('bufferjump').hjkl_toggle() end, mode = { 'n', 'v' }, silent = true, desc = 'toggle map 1 2 3 4 h j k l' },
       { '<leader>`', '<c-w>p',                                  mode = { 'n', 'v' }, silent = true, desc = 'wincmd p' },
       { '<leader>3', function() require('bufferjump').k() end,  mode = { 'n', 'v' }, silent = true, desc = 'wincmd k' },
       { '<leader>2', function() require('bufferjump').j() end,  mode = { 'n', 'v' }, silent = true, desc = 'wincmd j' },
