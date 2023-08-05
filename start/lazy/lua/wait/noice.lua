@@ -1,10 +1,13 @@
 return {
-  "folke/noice.nvim",
+  -- "folke/noice.nvim",
+  "peter-lyr/noice.nvim", -- substititue no preview err
   lazy = true,
   dependencies = {
     "MunifTanjim/nui.nvim",
     require('wait.notify'),
   },
+  commit = "cc005b2",
+  pin = true,
   keys = {
     { "<S-Enter>", function() require("noice").redirect(vim.fn.getcmdline()) end, mode = "c", desc = "Redirect Cmdline" },
     { "<leader>snl", function() require("noice").cmd("last") end, desc = "Noice Last Message" },
