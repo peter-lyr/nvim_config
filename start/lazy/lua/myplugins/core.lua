@@ -141,22 +141,13 @@ return {
       -- bufferjump.lua
       ------------------------
 
-      -- jump prev buffer
+      -- jump window
 
-      { '<leader>wl',         '<c-w>l',                                  mode = { 'n', 'v' }, silent = true, desc = 'wincmd l' },
-      { '<leader>wh',         '<c-w>h',                                  mode = { 'n', 'v' }, silent = true, desc = 'wincmd h' },
-      { '<leader>wj',         '<c-w>j',                                  mode = { 'n', 'v' }, silent = true, desc = 'wincmd j' },
-      { '<leader>wk',         '<c-w>k',                                  mode = { 'n', 'v' }, silent = true, desc = 'wincmd k' },
-      { '<leader>wp',         '<c-w>p',                                  mode = { 'n', 'v' }, silent = true, desc = 'wincmd p' },
-      { '<leader>wx',         '<c-w>x',                                  mode = { 'n', 'v' }, silent = true, desc = 'wincmd x' },
-      { '<leader>wr',         '<c-w>r',                                  mode = { 'n', 'v' }, silent = true, desc = 'wincmd r' },
-
-      -- jump buffer beside
-
-      { '<leader>ww',         function() require('bufferjump').k() end,  mode = { 'n', 'v' }, silent = true, desc = 'wincmd k' },
-      { '<leader>ws',         function() require('bufferjump').j() end,  mode = { 'n', 'v' }, silent = true, desc = 'wincmd j' },
-      { '<leader>a',          '<c-w>h',                                  mode = { 'n', 'v' }, silent = true, desc = 'wincmd h' },
-      { '<leader>d',          '<c-w>l',                                  mode = { 'n', 'v' }, silent = true, desc = 'wincmd l' },
+      { '<leader>`', '<c-w>p',                                  mode = { 'n', 'v' }, silent = true, desc = 'wincmd p' },
+      { '<leader>3', function() require('bufferjump').k() end,  mode = { 'n', 'v' }, silent = true, desc = 'wincmd k' },
+      { '<leader>2', function() require('bufferjump').j() end,  mode = { 'n', 'v' }, silent = true, desc = 'wincmd j' },
+      { '<leader>1', '<c-w>h',                                  mode = { 'n', 'v' }, silent = true, desc = 'wincmd h' },
+      { '<leader>4', '<c-w>l',                                  mode = { 'n', 'v' }, silent = true, desc = 'wincmd l' },
 
       -- win max min equal width height
 

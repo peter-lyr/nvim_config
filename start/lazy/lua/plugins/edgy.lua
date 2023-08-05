@@ -12,7 +12,7 @@ return {
         ft = "NvimTree",
         pinned = true,
         open = function()
-          vim.api.nvim_input("<esc><space><tab>")
+          vim.api.nvim_input("<esc><space><space>1")
         end,
         size = { height = 0.8 },
       },
@@ -29,7 +29,7 @@ return {
         ft = "minimap",
         pinned = true,
         open = function()
-          vim.api.nvim_input("<esc><space><space><tab>")
+          vim.api.nvim_input("<esc><space><space>3")
         end,
         size = { height = 0.38 },
       },
@@ -46,7 +46,7 @@ return {
         ft = "qf",
         pinned = true,
         open = function()
-          vim.api.nvim_input("<esc><space>m")
+          vim.api.nvim_input("<esc>dm")
         end,
         size = { height = 10 },
       },
