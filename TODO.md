@@ -15,6 +15,7 @@
 - [ ] paste :p:t like <cword>
 - [ ] mouse.exe add <UP> <DOWN> <C-U> <C-D> help telescope
 - [x] toggle map 1 2 3 4 h j k l
+- [ ] **ERROR** cmdline mode move cursor not working
 
 # jump window
 
