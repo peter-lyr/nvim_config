@@ -25,7 +25,7 @@ M.c1 = {
   'echo ============================================================ &&',
   'strip -s $dir\\$fileNameWithoutExt.exe &&',
   'echo ============================================================ &&',
-  'upx -q --best $dir\\$fileNameWithoutExt.exe &&',
+  'upx -qq --best $dir\\$fileNameWithoutExt.exe &&',
   'echo ============================================================ &&',
   'echo build done'
 }
