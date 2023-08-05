@@ -98,7 +98,7 @@ return {
 
       -- replace
 
-      { '<c-r>',              ':<c-u>%s/<c-r><c-w>/<c-r><c-w>/g', mode = { 'n', 'v' },  silent = true, desc = 'replace' },
+      { '<c-r>',              ':<c-u>%s/<c-r><c-w>/<c-r><c-w>/g', mode = { 'n', 'v' },  silent = false, desc = 'replace' },
 
       -- copy_paste
 
