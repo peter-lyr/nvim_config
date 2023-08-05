@@ -14,6 +14,7 @@ return {
       require('wait.plenary'),
       require('wait.asyncrun'),
       require('wait.projectroot'),
+      require('wait.notify'),
       require('wait.telescope_ui_select'),
       require('plugins.minimap'), -- tabclose minimap
       'peter-lyr/sha2',

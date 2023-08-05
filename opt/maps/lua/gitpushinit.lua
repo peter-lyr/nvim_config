@@ -6,7 +6,7 @@ GitpushinitDone = function()
   testtimer:stop()
   pcall(vim.call, 'fugitive#ReloadStatus')
   local l = vim.fn.getqflist()
-  vim.notify(l[1]['text'] .. '\n' .. l[#l-1]['text'] .. '\n' .. l[#l]['text'])
+  vim.notify(l[1]['text'] .. '\n' .. l[#l - 1]['text'] .. '\n' .. l[#l]['text'])
   vim.cmd('au! User AsyncRunStop')
 end
 
@@ -29,7 +29,14 @@ M.addcommitpush = function()
   pcall(vim.call, 'ProjectRootCD')
   local result = vim.fn.systemlist({ "git", "status", "-s" })
   if #result > 0 then
-    vim.notify("git status -s" .. '\n' .. vim.loop.cwd() .. '\n' .. table.concat(result, '\n'))
+    vim.notify("git status -s" .. '\n' .. vim.loop.cwd() .. '\n' .. table.concat(result, '\n'), 'info', {
+      animate = false,
+      on_open = function(win)
+        local buf = vim.api.nvim_win_get_buf(win)
+        vim.api.nvim_buf_set_option(buf, "filetype", "markdown")
+      end,
+      timeout = 1000 * 8,
+    })
     local input = vim.fn.input('commit info (Add all and push): ')
     if #input > 0 then
       vim.loop.new_timer():start(10, 0, function()
@@ -48,7 +55,14 @@ M.commitpush = function()
   pcall(vim.call, 'ProjectRootCD')
   local result = vim.fn.systemlist({ "git", "diff", "--staged", "--stat" })
   if #result > 0 then
-    vim.notify("git diff --staged --stat" .. '\n' .. vim.loop.cwd() .. '\n' .. table.concat(result, '\n'))
+    vim.notify("git diff --staged --stat" .. '\n' .. vim.loop.cwd() .. '\n' .. table.concat(result, '\n'), 'info', {
+      animate = false,
+      on_open = function(win)
+        local buf = vim.api.nvim_win_get_buf(win)
+        vim.api.nvim_buf_set_option(buf, "filetype", "markdown")
+      end,
+      timeout = 1000 * 8,
+    })
     local input = vim.fn.input('commit info (commit and push): ')
     if #input > 0 then
       vim.loop.new_timer():start(10, 0, function()
@@ -66,7 +80,14 @@ end
 M.commit = function()
   local result = vim.fn.systemlist({ "git", "diff", "--staged", "--stat" })
   if #result > 0 then
-    vim.notify("git diff --staged --stat" .. '\n' .. vim.loop.cwd() .. '\n' .. table.concat(result, '\n'))
+    vim.notify("git diff --staged --stat" .. '\n' .. vim.loop.cwd() .. '\n' .. table.concat(result, '\n'), 'info', {
+      animate = false,
+      on_open = function(win)
+        local buf = vim.api.nvim_win_get_buf(win)
+        vim.api.nvim_buf_set_option(buf, "filetype", "markdown")
+      end,
+      timeout = 1000 * 8,
+    })
     local input = vim.fn.input('commit info (just commit): ')
     if #input > 0 then
       vim.loop.new_timer():start(10, 0, function()
