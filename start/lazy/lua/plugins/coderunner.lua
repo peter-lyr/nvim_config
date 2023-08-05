@@ -15,10 +15,15 @@ return {
         python = 'python -u',
         c = {
           'cd $dir &&',
+          'pwd &&',
+          'echo ============================================================ &&',
           'taskkill /f /im $fileNameWithoutExt.exe &',
+          'echo ============================================================ &&',
           'gcc $fileName -Wall -s -ffunction-sections -fdata-sections -Wl,--gc-sections -O3 -o $fileNameWithoutExt &&',
+          'echo ============================================================ &&',
           'strip -s $dir\\$fileNameWithoutExt.exe &&',
-          'upx --best $dir\\$fileNameWithoutExt.exe &&',
+          'echo ============================================================ &&',
+          'upx -qq --best $dir\\$fileNameWithoutExt.exe &&',
           'echo ============================================================ &&',
           '$dir\\$fileNameWithoutExt.exe'
         },
