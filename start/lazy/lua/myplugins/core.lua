@@ -96,6 +96,10 @@ return {
       { 'csw',                function() vim.cmd('!explorer "' .. vim.call('ProjectRootGet') .. '"') end, mode = { 'n', 'v' },  silent = true, desc = 'start ProjectRootGet' },
       { 'csc',                '<cmd>!chcp 65001 && start /min /b cmd /c "%:p"<cr>',                    mode = { 'n', 'v' },  silent = true, desc = 'system open %:h' },
 
+      -- replace
+
+      { '<c-r>',              ':<c-u>%s/<c-r><c-w>/<c-r><c-w>/g', mode = { 'n', 'v' },  silent = true, desc = 'replace' },
+
       -- copy_paste
 
       { '<a-y>',              '"+y',                                                                   mode = { 'n', 'v' },  silent = true, desc = '"+y' },
