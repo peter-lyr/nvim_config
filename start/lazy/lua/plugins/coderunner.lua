@@ -10,6 +10,7 @@ return {
   config = function()
     require('code_runner').setup({
       mode = 'float',
+      startinsert = true,
       filetype = {
         python = 'python -u',
         c = {
