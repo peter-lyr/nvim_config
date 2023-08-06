@@ -41,7 +41,7 @@ M.c2 = {
   'echo run last done',
 }
 
-M.cp0 = function(projname)
+M.cp0 = function(projname, curname)
   return table.concat({
     'pwd',
     'echo ============================================================',
@@ -55,16 +55,18 @@ M.cp0 = function(projname)
     'echo ============================================================',
     string.format('upx -qq --best %s.exe', projname),
     'echo ============================================================',
-    string.format('copy %s.exe ..\\%s.exe', projname, projname),
+    string.format('copy %s.exe ..\\%s.exe', projname, curname),
     'echo ============================================================',
     'cd ..',
     'pwd',
     'echo ============================================================',
-    string.format('%s.exe', projname),
+    string.format('echo %s.exe', curname),
+    'echo ============================================================',
+    string.format('%s.exe', curname),
   }, ' && ')
 end
 
-M.cp1 = function(projname)
+M.cp1 = function(projname, curname)
   return table.concat({
     'pwd',
     'echo ============================================================',
@@ -78,17 +80,21 @@ M.cp1 = function(projname)
     'echo ============================================================',
     string.format('upx -qq --best %s.exe', projname),
     'echo ============================================================',
-    string.format('copy %s.exe ..\\%s.exe', projname, projname),
+    string.format('copy %s.exe ..\\%s.exe', projname, curname),
+    'echo ============================================================',
+    string.format('echo %s.exe', curname),
     'echo ============================================================',
     'echo build done',
   }, ' && ')
 end
 
-M.cp2 = function(projname)
+M.cp2 = function(_, curname)
   return table.concat({
     'pwd',
     'echo ============================================================',
-    string.format('%s.exe', projname),
+    string.format('echo %s.exe', curname),
+    'echo ============================================================',
+    string.format('%s.exe', curname),
     'echo ============================================================',
     'echo run last done',
   }, ' && ')
@@ -111,7 +117,7 @@ M.c_level = 0
 M.c_projdir = ''
 
 M.runbuild = function()
-  if vim.bo.ft ~= 'c' then
+  if vim.bo.ft ~= 'c' and vim.bo.ft ~= 'cpp' then
     return
   end
   vim.cmd('ProjectRootCD')
@@ -121,7 +127,8 @@ M.runbuild = function()
   if cmakelists:exists() then
     local content = cmakelists:read()
     local projname = content:match('set%(PROJECT_NAME ([%S]+)%)')
-    if projname == vim.fn.expand('%:p:t:r') then
+    local curname = vim.fn.expand('%:p:t:r')
+    if projname == curname or projname == 'common' then
       cmake_ok = 1
       if dir.filename ~= M.c_projdir or M.c_level ~= 10 then
         M.c_projdir = dir.filename
@@ -131,7 +138,7 @@ M.runbuild = function()
             [dir.filename] = {
               name = "C Proj",
               description = "Project with cmakelists",
-              command = M.cp0(projname)
+              command = M.cp0(projname, curname)
             }
           },
         })
@@ -153,7 +160,7 @@ M.runbuild = function()
 end
 
 M.build = function()
-  if vim.bo.ft ~= 'c' then
+  if vim.bo.ft ~= 'c' and vim.bo.ft ~= 'cpp' then
     return
   end
   vim.cmd('ProjectRootCD')
@@ -163,7 +170,8 @@ M.build = function()
   if cmakelists:exists() then
     local content = cmakelists:read()
     local projname = content:match('set%(PROJECT_NAME ([%S]+)%)')
-    if projname == vim.fn.expand('%:p:t:r') then
+    local curname = vim.fn.expand('%:p:t:r')
+    if projname == curname or projname == 'common' then
       cmake_ok = 1
       if dir.filename ~= M.c_projdir or M.c_level ~= 11 then
         M.c_projdir = dir.filename
@@ -173,7 +181,7 @@ M.build = function()
             [dir.filename] = {
               name = "C Proj",
               description = "Project with cmakelists",
-              command = M.cp1(projname)
+              command = M.cp1(projname, curname)
             }
           },
         })
@@ -195,7 +203,7 @@ M.build = function()
 end
 
 M.run = function()
-  if vim.bo.ft ~= 'c' then
+  if vim.bo.ft ~= 'c' and vim.bo.ft ~= 'cpp' then
     return
   end
   vim.cmd('ProjectRootCD')
@@ -205,7 +213,8 @@ M.run = function()
   if cmakelists:exists() then
     local content = cmakelists:read()
     local projname = content:match('set%(PROJECT_NAME ([%S]+)%)')
-    if projname == vim.fn.expand('%:p:t:r') then
+    local curname = vim.fn.expand('%:p:t:r')
+    if projname == curname or projname == 'common' then
       cmake_ok = 1
       if dir.filename ~= M.c_projdir or M.c_level ~= 12 then
         M.c_projdir = dir.filename
@@ -215,7 +224,7 @@ M.run = function()
             [dir.filename] = {
               name = "C Proj",
               description = "Project with cmakelists",
-              command = M.cp2(projname)
+              command = M.cp2(projname, curname)
             }
           },
         })
