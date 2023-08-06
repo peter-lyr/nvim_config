@@ -1,5 +1,5 @@
 return {
-  'CRAG666/code_runner.nvim',
+  'peter-lyr/code_runner.nvim',
   lazy = true,
   keys = {
     {
