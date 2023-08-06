@@ -193,7 +193,7 @@ M.build = function()
       M.c_level = 0
       require('code_runner').setup({
         filetype = {
-          c = M.c0,
+          c = M.c1,
         },
         project = nil
       })
@@ -236,7 +236,7 @@ M.run = function()
       M.c_level = 0
       require('code_runner').setup({
         filetype = {
-          c = M.c0,
+          c = M.c2,
         },
         project = nil
       })
