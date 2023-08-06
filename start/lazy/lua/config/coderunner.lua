@@ -119,6 +119,7 @@ require('code_runner').setup({
 M.c_level = 0
 
 M.c_projdir = ''
+M.mainfile = ''
 
 M.runbuild = function()
   if vim.bo.ft ~= 'c' and vim.bo.ft ~= 'cpp' then
@@ -135,9 +136,10 @@ M.runbuild = function()
     local curname = vim.fn.expand('%:p:t:r')
     if projname == curname or projname == 'common' then
       cmake_ok = 1
-      if dir.filename ~= M.c_projdir or M.c_level ~= 10 then
+      if dir.filename ~= M.c_projdir or M.c_level ~= 10 or M.mainfile ~= mainfile then
         M.c_projdir = dir.filename
         M.c_level = 10
+        M.mainfile = mainfile
         require('code_runner').setup({
           project = {
             [dir.filename] = {
@@ -179,9 +181,10 @@ M.build = function()
     local curname = vim.fn.expand('%:p:t:r')
     if projname == curname or projname == 'common' then
       cmake_ok = 1
-      if dir.filename ~= M.c_projdir or M.c_level ~= 11 then
+      if dir.filename ~= M.c_projdir or M.c_level ~= 11 or M.mainfile ~= mainfile then
         M.c_projdir = dir.filename
         M.c_level = 11
+        M.mainfile = mainfile
         require('code_runner').setup({
           project = {
             [dir.filename] = {
@@ -223,9 +226,10 @@ M.run = function()
     local curname = vim.fn.expand('%:p:t:r')
     if projname == curname or projname == 'common' then
       cmake_ok = 1
-      if dir.filename ~= M.c_projdir or M.c_level ~= 12 then
+      if dir.filename ~= M.c_projdir or M.c_level ~= 12 or M.mainfile ~= mainfile then
         M.c_projdir = dir.filename
         M.c_level = 12
+        M.mainfile = mainfile
         require('code_runner').setup({
           project = {
             [dir.filename] = {
