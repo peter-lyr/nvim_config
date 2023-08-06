@@ -131,6 +131,7 @@ M.runbuild = function()
   if cmakelists:exists() then
     local content = cmakelists:read()
     local projname = content:match('set%(PROJECT_NAME ([%S]+)%)')
+    local mainfile = content:match('${PROJECT_SOURCE_DIR}/([%w%p]+).c')
     local curname = vim.fn.expand('%:p:t:r')
     if projname == curname or projname == 'common' then
       cmake_ok = 1
@@ -142,7 +143,7 @@ M.runbuild = function()
             [dir.filename] = {
               name = "C Proj",
               description = "Project with cmakelists",
-              command = M.cp0(projname, curname)
+              command = M.cp0(projname, mainfile)
             }
           },
         })
@@ -174,6 +175,7 @@ M.build = function()
   if cmakelists:exists() then
     local content = cmakelists:read()
     local projname = content:match('set%(PROJECT_NAME ([%S]+)%)')
+    local mainfile = content:match('${PROJECT_SOURCE_DIR}/([%w%p]+).c')
     local curname = vim.fn.expand('%:p:t:r')
     if projname == curname or projname == 'common' then
       cmake_ok = 1
@@ -185,7 +187,7 @@ M.build = function()
             [dir.filename] = {
               name = "C Proj",
               description = "Project with cmakelists",
-              command = M.cp1(projname, curname)
+              command = M.cp1(projname, mainfile)
             }
           },
         })
@@ -217,6 +219,7 @@ M.run = function()
   if cmakelists:exists() then
     local content = cmakelists:read()
     local projname = content:match('set%(PROJECT_NAME ([%S]+)%)')
+    local mainfile = content:match('${PROJECT_SOURCE_DIR}/([%w%p]+).c')
     local curname = vim.fn.expand('%:p:t:r')
     if projname == curname or projname == 'common' then
       cmake_ok = 1
@@ -228,7 +231,7 @@ M.run = function()
             [dir.filename] = {
               name = "C Proj",
               description = "Project with cmakelists",
-              command = M.cp2(projname, curname)
+              command = M.cp2(projname, mainfile)
             }
           },
         })
