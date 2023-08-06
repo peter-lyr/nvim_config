@@ -189,8 +189,8 @@ M.build = function()
     end
   end
   if not cmake_ok then
-    if M.c_level ~= 0 then
-      M.c_level = 0
+    if M.c_level ~= 1 then
+      M.c_level = 1
       require('code_runner').setup({
         filetype = {
           c = M.c1,
@@ -232,8 +232,8 @@ M.run = function()
     end
   end
   if not cmake_ok then
-    if M.c_level ~= 0 then
-      M.c_level = 0
+    if M.c_level ~= 2 then
+      M.c_level = 2
       require('code_runner').setup({
         filetype = {
           c = M.c2,
