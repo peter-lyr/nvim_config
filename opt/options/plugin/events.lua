@@ -173,3 +173,15 @@ vim.api.nvim_create_autocmd({ "BufWritePre" }, {
     vim.fn.mkdir(vim.fn.fnamemodify(file, ":p:h"), "p")
   end,
 })
+
+vim.api.nvim_create_autocmd({ "CmdlineLeave" }, {
+  callback = function()
+    vim.opt.cmdheight = 0
+  end,
+})
+
+vim.api.nvim_create_autocmd({ "CmdlineEnter" }, {
+  callback = function()
+    vim.opt.cmdheight = 1
+  end,
+})

@@ -125,7 +125,7 @@ M.mainfile = ''
 
 M.runbuild = function(rebuild_en)
   M.rebuild_en = rebuild_en
-  if vim.bo.ft ~= 'c' and vim.bo.ft ~= 'cpp' then
+  if vim.bo.ft ~= 'c' and vim.bo.ft ~= 'cpp' and vim.fn.expand('%:p:t') ~= 'CMakeLists.txt' then
     return
   end
   vim.cmd('ProjectRootCD')
@@ -171,7 +171,7 @@ end
 
 M.build = function(rebuild_en)
   M.rebuild_en = rebuild_en
-  if vim.bo.ft ~= 'c' and vim.bo.ft ~= 'cpp' then
+  if vim.bo.ft ~= 'c' and vim.bo.ft ~= 'cpp' and vim.fn.expand('%:p:t') ~= 'CMakeLists.txt' then
     return
   end
   vim.cmd('ProjectRootCD')
@@ -216,7 +216,7 @@ M.build = function(rebuild_en)
 end
 
 M.run = function()
-  if vim.bo.ft ~= 'c' and vim.bo.ft ~= 'cpp' then
+  if vim.bo.ft ~= 'c' and vim.bo.ft ~= 'cpp' and vim.fn.expand('%:p:t') ~= 'CMakeLists.txt' then
     return
   end
   vim.cmd('ProjectRootCD')
