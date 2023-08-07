@@ -45,9 +45,8 @@ M.cp0 = function(projname, curname)
   return table.concat({
     'pwd',
     'echo ============================================================',
-    'del /s /q .cache & rd /s /q .cache & del /s /q build & rd /s /q build & cmake -B build -G "MinGW Makefiles" -DCMAKE_EXPORT_COMPILE_COMMANDS=1',
-    'echo ============================================================',
-    'cd build',
+    -- 'del /s /q .cache & rd /s /q .cache & del /s /q build & rd /s /q build & cmake -B build -G "MinGW Makefiles" -DCMAKE_EXPORT_COMPILE_COMMANDS=1 & cd build',
+    'cmake -B build -G "MinGW Makefiles" -DCMAKE_EXPORT_COMPILE_COMMANDS=1 & cd build',
     'echo ============================================================',
     'mingw32-make',
     'echo ============================================================',
@@ -72,9 +71,8 @@ M.cp1 = function(projname, curname)
   return table.concat({
     'pwd',
     'echo ============================================================',
-    'del /s /q .cache & rd /s /q .cache & del /s /q build & rd /s /q build & cmake -B build -G "MinGW Makefiles" -DCMAKE_EXPORT_COMPILE_COMMANDS=1',
-    'echo ============================================================',
-    'cd build',
+    -- 'del /s /q .cache & rd /s /q .cache & del /s /q build & rd /s /q build & cmake -B build -G "MinGW Makefiles" -DCMAKE_EXPORT_COMPILE_COMMANDS=1 & cd build',
+    'cmake -B build -G "MinGW Makefiles" -DCMAKE_EXPORT_COMPILE_COMMANDS=1 & cd build',
     'echo ============================================================',
     'mingw32-make',
     'echo ============================================================',
