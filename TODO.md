@@ -15,7 +15,8 @@
 - [ ] paste :p:t like <cword>
 - [ ] mouse.exe add <UP> <DOWN> <C-U> <C-D> help telescope
 - [x] toggle map 1 2 3 4 h j k l
-- [ ] **ERROR** cmdline mode move cursor not working
+- [x] **ERROR** cmdline mode move cursor not working, `noice.nvim` disable.
+- [ ] drag byd.bin: ISO-8859 text, with very long lines (65536), with no line terminators
 
 # jump window
 
