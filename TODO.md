@@ -18,6 +18,7 @@
 - [x] **ERROR** cmdline mode move cursor not working, `noice.nvim` disable.
 - [ ] drag byd.bin: ISO-8859 text, with very long lines (65536), with no line terminators
 > - output by `Downloader.exe` on v3.0.1 inner ver.
+- [ ] sdkcbp sel one to be executable.
 
 # jump window
 

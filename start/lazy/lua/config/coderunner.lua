@@ -41,12 +41,15 @@ M.c2 = {
   'echo run last done',
 }
 
+M.rebuild_en = nil
+
 M.cp0 = function(projname, curname)
   return table.concat({
     'pwd',
     'echo ============================================================',
-    -- 'del /s /q .cache & rd /s /q .cache & del /s /q build & rd /s /q build & cmake -B build -G "MinGW Makefiles" -DCMAKE_EXPORT_COMPILE_COMMANDS=1 & cd build',
-    'cmake -B build -G "MinGW Makefiles" -DCMAKE_EXPORT_COMPILE_COMMANDS=1 & cd build',
+    M.rebuild_en and
+    'del /s /q .cache & rd /s /q .cache & del /s /q build & rd /s /q build & cmake -B build -G "MinGW Makefiles" -DCMAKE_EXPORT_COMPILE_COMMANDS=1 & cd build'
+    or 'cmake -B build -G "MinGW Makefiles" -DCMAKE_EXPORT_COMPILE_COMMANDS=1 & cd build',
     'echo ============================================================',
     'mingw32-make',
     'echo ============================================================',
@@ -71,8 +74,9 @@ M.cp1 = function(projname, curname)
   return table.concat({
     'pwd',
     'echo ============================================================',
-    -- 'del /s /q .cache & rd /s /q .cache & del /s /q build & rd /s /q build & cmake -B build -G "MinGW Makefiles" -DCMAKE_EXPORT_COMPILE_COMMANDS=1 & cd build',
-    'cmake -B build -G "MinGW Makefiles" -DCMAKE_EXPORT_COMPILE_COMMANDS=1 & cd build',
+    M.rebuild_en and
+    'del /s /q .cache & rd /s /q .cache & del /s /q build & rd /s /q build & cmake -B build -G "MinGW Makefiles" -DCMAKE_EXPORT_COMPILE_COMMANDS=1 & cd build'
+    or 'cmake -B build -G "MinGW Makefiles" -DCMAKE_EXPORT_COMPILE_COMMANDS=1 & cd build',
     'echo ============================================================',
     'mingw32-make',
     'echo ============================================================',
@@ -119,7 +123,8 @@ M.c_level = 0
 M.c_projdir = ''
 M.mainfile = ''
 
-M.runbuild = function()
+M.runbuild = function(rebuild_en)
+  M.rebuild_en = rebuild_en
   if vim.bo.ft ~= 'c' and vim.bo.ft ~= 'cpp' then
     return
   end
@@ -164,7 +169,8 @@ M.runbuild = function()
   vim.cmd('RunCode')
 end
 
-M.build = function()
+M.build = function(rebuild_en)
+  M.rebuild_en = rebuild_en
   if vim.bo.ft ~= 'c' and vim.bo.ft ~= 'cpp' then
     return
   end
