@@ -38,7 +38,7 @@ return {
   --             { find = "AutoSave" },
   --           },
   --         },
-  --         view = "minv",
+  --         view = "mini",
   --       },
   --     },
   --     presets = {
