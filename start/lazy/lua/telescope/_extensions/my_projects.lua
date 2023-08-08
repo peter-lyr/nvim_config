@@ -25,15 +25,28 @@ local config = require("project_nvim.config")
 local function create_finder()
   local results = history.get_recent_projects()
 
+  local maxwidth = 0
+  local width
+  local temp = ''
   -- Reverse results
   for i = 1, math.floor(#results / 2) do
     results[i], results[#results - i + 1] = results[#results - i + 1], results[i]
+    temp = string.gsub(results[i], '/', '\\')
+    width = vim.fn.strdisplaywidth(string.match(temp, '.+\\(.+)'))
+    if maxwidth < width then
+      maxwidth = width
+    end
+    temp = string.gsub(results[#results - i + 1], '/', '\\')
+    width = vim.fn.strdisplaywidth(string.match(temp, '.+\\(.+)'))
+    if maxwidth < width then
+      maxwidth = width
+    end
   end
   local displayer = entry_display.create({
     separator = " ",
     items = {
       {
-        width = 30,
+        width = maxwidth,
       },
       {
         remaining = true,

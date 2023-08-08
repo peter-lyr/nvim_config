@@ -30,7 +30,7 @@ return {
       desc = 'code runner just build'
     },
     {
-      '<leader>rvb',
+      '<leader>rB',
       function()
         require('config.coderunner').build(1)
       end,
