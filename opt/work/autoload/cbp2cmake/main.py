@@ -1,4 +1,5 @@
 import os
+import re
 import sys
 
 def rep(text):
@@ -28,7 +29,25 @@ def get_executable_cbp(project_root):
                     executable_cbp = cbp_files[num - 1]
             except Exception as e:
                 print(e)
-    print(executable_cbp)
+    return executable_cbp
+
+def get_executable_files_and_dirs(project_root, executable_cbp, executable_cbp_dir):
+    patt1 = re.compile('directory="(.+)"')
+    patt2 = re.compile('filename="(.+?[cS])"')
+    with open(executable_cbp, "rb") as fff:
+        content = fff.read().decode("utf-8")
+    directories = []
+    files = []
+    for directory in re.findall(patt1, content):
+        directory = os.path.normpath(os.path.join(executable_cbp_dir, directory)).replace("\\", "/").replace(project_root, "").strip("/")
+        if directory not in directories:
+            directories.append(directory)
+    for file in re.findall(patt2, content):
+        file = os.path.normpath(os.path.join(executable_cbp_dir, file)).replace("\\", "/").replace(project_root, "").strip("/")
+        if file not in files:
+            files.append(file)
+    return files, directories
+
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
@@ -37,4 +56,8 @@ if __name__ == "__main__":
     project_root = rep(sys.argv[1])
 
     executable_cbp = get_executable_cbp(project_root)
-    print(executable_cbp)
+    executable_cbp_dir = os.path.dirname(executable_cbp)
+
+    if executable_cbp:
+        executable_files, executable_dirs = get_executable_files_and_dirs(project_root, executable_cbp, executable_cbp_dir)
+        print(len(executable_files), len(executable_dirs))
