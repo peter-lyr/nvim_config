@@ -20,6 +20,7 @@
 > - output by `Downloader.exe` on v3.0.1 inner ver.
 - [ ] sdkcbp sel one to be executable.
 - [ ] **ERROR** startup open nvimtree hop always go first line.
+> - maybe not.
 
 # jump window
 
