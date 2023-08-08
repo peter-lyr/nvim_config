@@ -26,7 +26,7 @@ def get_executable_cbp(project_root):
         executable_cbp = cbp_files[0]
     elif len(cbp_files) > 1:
         for cbp_file in cbp_files:
-            if os.path.basename(cbp_file) in ['pp.cbp']:
+            if os.path.basename(cbp_file) in ['app.cbp']:
                 executable_cbp = cbp_file
                 break
         else:
@@ -39,9 +39,9 @@ def get_executable_cbp(project_root):
                     executable_cbp = cbp_files[num - 1]
             except Exception as e:
                 print(e)
-    return executable_cbp
+    return executable_cbp, cbp_files
 
-def get_executable_files_and_dirs(project_root, executable_cbp, executable_cbp_dir):
+def get_files_and_dirs(project_root, executable_cbp, executable_cbp_dir):
     patt1 = re.compile('directory="(.+)"')
     patt2 = re.compile('filename="(.+?[cS])"')
     with open(executable_cbp, "rb") as fff:
@@ -65,17 +65,19 @@ if __name__ == "__main__":
 
     project_root = rep(sys.argv[1])
 
-    executable_cbp = get_executable_cbp(project_root)
+    executable_cbp, cbp_files = get_executable_cbp(project_root)
     executable_cbp_dir = os.path.dirname(executable_cbp)
 
     if executable_cbp:
-        executable_files, executable_dirs = get_executable_files_and_dirs(project_root, executable_cbp, executable_cbp_dir)
+        executable_files, executable_dirs = get_files_and_dirs(project_root, executable_cbp, executable_cbp_dir)
         print(len(executable_files), 'files,', len(executable_dirs), 'dirs')
         print('executable_cbp:', executable_cbp)
         with open(os.path.join(project_root, "CMakeLists.txt"), "wb") as ff:
             ff.write(b"cmake_minimum_required(VERSION 3.5)\n")
             ff.write(b"set(PROJECT_NAME proj_name)\n")
             ff.write(b"project(${PROJECT_NAME})\n\n")
+
+            # executable_cbp
             ff.write(("add_executable(${PROJECT_NAME}\n               ${PROJECT_SOURCE_DIR}/%s\n              )\n"
                     % ("\n               ${PROJECT_SOURCE_DIR}/"
                     .join(executable_files))).encode("utf-8"))
@@ -89,9 +91,32 @@ if __name__ == "__main__":
                 for dir in executable_dirs
             ]
             ff.write(("\n".join(dirs).encode("utf-8")) + b"\n\n")
+
+            # other_cbp
+            for other_cbp_file in cbp_files:
+                if other_cbp_file == executable_cbp:
+                    continue
+                other_cbp_dir = os.path.dirname(other_cbp_file)
+
+                other_files, other_dirs = get_files_and_dirs(project_root, other_cbp_file, other_cbp_dir)
+                ff.write(("add_library(%s STATIC ${PROJECT_SOURCE_DIR}/%s)\n"
+                         % (os.path.basename(other_cbp_dir), " ${PROJECT_SOURCE_DIR}/"
+                         .join(other_files))).encode("utf-8"))
+                dirs = [
+                    "target_include_directories(${PROJECT_NAME} PUBLIC ${PROJECT_SOURCE_DIR}/%s)"
+                        % dir.replace("\\", "/")
+                        .replace(project_root, "")
+                        .strip("\\")
+                        .strip("/")
+                        .replace("\\", "/")
+                    for dir in other_dirs
+                ]
+                ff.write(("\n".join(dirs).encode("utf-8")) + b"\n\n")
+
+            # libs
             libs = [
-                "file(GLOB libraries ${CMAKE_CURRENT_SOURCE_DIR}/%s/*.a)" % libDir
-                for libDir in get_libs_a_dirs(project_root)
+                "file(GLOB libraries ${CMAKE_CURRENT_SOURCE_DIR}/%s/*.a)" % libdir
+                for libdir in get_libs_a_dirs(project_root)
             ]
             ff.write(("\n".join(libs).encode("utf-8")) + b"\n")
             ff.write(b"target_link_libraries(${PROJECT_NAME} ${libraries})\n")
