@@ -1,3 +1,5 @@
+package.loaded['config.coderunner'] = nil
+
 local M = {}
 
 local path = require("plenary.path")
@@ -10,9 +12,9 @@ M.c0 = {
   'echo ============================================================ &&',
   'gcc $fileName -Wall -s -ffunction-sections -fdata-sections -Wl,--gc-sections -O3 -o $fileNameWithoutExt &&',
   'echo ============================================================ &&',
-  'strip -s $dir\\$fileNameWithoutExt.exe &&',
+  'strip -s $dir\\$fileNameWithoutExt.exe &',
   'echo ============================================================ &&',
-  'upx -qq --best $dir\\$fileNameWithoutExt.exe &&',
+  'upx -qq --best $dir\\$fileNameWithoutExt.exe &',
   'echo ============================================================ &&',
   '$dir\\$fileNameWithoutExt.exe'
 }
@@ -25,9 +27,9 @@ M.c1 = {
   'echo ============================================================ &&',
   'gcc $fileName -Wall -s -ffunction-sections -fdata-sections -Wl,--gc-sections -O3 -o $fileNameWithoutExt &&',
   'echo ============================================================ &&',
-  'strip -s $dir\\$fileNameWithoutExt.exe &&',
+  'strip -s $dir\\$fileNameWithoutExt.exe &',
   'echo ============================================================ &&',
-  'upx -qq --best $dir\\$fileNameWithoutExt.exe &&',
+  'upx -qq --best $dir\\$fileNameWithoutExt.exe &',
   'echo ============================================================ &&',
   'echo build done'
 }
@@ -53,9 +55,9 @@ M.cp0 = function(projname, curname)
     'echo ============================================================',
     string.format('taskkill /f /im %s.exe & mingw32-make', curname),
     'echo ============================================================',
-    string.format('strip -s %s.exe', projname),
+    string.format('strip -s %s.exe & cd .', projname),
     'echo ============================================================',
-    string.format('upx -qq --best %s.exe', projname),
+    string.format('upx -qq --best %s.exe & cd .', projname),
     'echo ============================================================',
     string.format('copy /y %s.exe ..\\%s.exe', projname, curname),
     'echo ============================================================',
@@ -80,9 +82,9 @@ M.cp1 = function(projname, curname)
     'echo ============================================================',
     string.format('taskkill /f /im %s.exe & mingw32-make', curname),
     'echo ============================================================',
-    string.format('strip -s %s.exe', projname),
+    string.format('strip -s %s.exe & cd .', projname),
     'echo ============================================================',
-    string.format('upx -qq --best %s.exe', projname),
+    string.format('upx -qq --best %s.exe & cd .', projname),
     'echo ============================================================',
     string.format('copy /y %s.exe ..\\%s.exe', projname, curname),
     'echo ============================================================',
@@ -125,45 +127,44 @@ M.mainfile = ''
 
 M.runbuild = function(rebuild_en)
   M.rebuild_en = rebuild_en
-  if vim.bo.ft ~= 'c' and vim.bo.ft ~= 'cpp' and vim.fn.expand('%:p:t') ~= 'CMakeLists.txt' then
-    return
-  end
   vim.cmd('ProjectRootCD')
-  local dir = path:new(vim.api.nvim_buf_get_name(0)):parent()
-  local cmakelists = dir:joinpath('CMakeLists.txt')
-  local cmake_ok = nil
-  if cmakelists:exists() then
-    local content = cmakelists:read()
-    local projname = content:match('set%(PROJECT_NAME ([%S]+)%)')
-    local mainfile = content:match('${PROJECT_SOURCE_DIR}/([%w%p]+).c')
-    local curname = vim.fn.expand('%:p:t:r')
-    if projname == curname or projname == 'common' then
-      cmake_ok = 1
-      if dir.filename ~= M.c_projdir or M.c_level ~= 10 or M.mainfile ~= mainfile then
-        M.c_projdir = dir.filename
-        M.c_level = 10
-        M.mainfile = mainfile
-        require('code_runner').setup({
-          project = {
-            [dir.filename] = {
-              name = "C Proj",
-              description = "Project with cmakelists",
-              command = M.cp0(projname, mainfile)
-            }
-          },
-        })
+  if vim.bo.ft == 'c' or vim.bo.ft == 'cpp' or vim.fn.expand('%:p:t') == 'CMakeLists.txt' then
+    local dir = path:new(vim.api.nvim_buf_get_name(0)):parent()
+    local cmakelists = dir:joinpath('CMakeLists.txt')
+    local cmake_ok = nil
+    if cmakelists:exists() then
+      local content = cmakelists:read()
+      local projname = content:match('set%(PROJECT_NAME ([%S]+)%)')
+      local mainfile = content:match('${PROJECT_SOURCE_DIR}/([%w%p]+).c')
+      local curname = vim.fn.expand('%:p:t:r')
+      if projname == curname or projname == 'common' then
+        cmake_ok = 1
+        if dir.filename ~= M.c_projdir or M.c_level ~= 10 or M.mainfile ~= mainfile then
+          M.c_projdir = dir.filename
+          M.c_level = 10
+          M.mainfile = mainfile
+          require('code_runner').setup({
+            project = {
+              [dir.filename] = {
+                name = "C Proj",
+                description = "Project with cmakelists",
+                command = M.cp0(projname, mainfile)
+              }
+            },
+          })
+        end
       end
     end
-  end
-  if not cmake_ok then
-    if M.c_level ~= 0 then
-      M.c_level = 0
-      require('code_runner').setup({
-        filetype = {
-          c = M.c0,
-        },
-        project = nil
-      })
+    if not cmake_ok then
+      if M.c_level ~= 0 then
+        M.c_level = 0
+        require('code_runner').setup({
+          filetype = {
+            c = M.c0,
+          },
+          project = nil
+        })
+      end
     end
   end
   vim.cmd('RunCode')
@@ -171,90 +172,88 @@ end
 
 M.build = function(rebuild_en)
   M.rebuild_en = rebuild_en
-  if vim.bo.ft ~= 'c' and vim.bo.ft ~= 'cpp' and vim.fn.expand('%:p:t') ~= 'CMakeLists.txt' then
-    return
-  end
   vim.cmd('ProjectRootCD')
-  local dir = path:new(vim.api.nvim_buf_get_name(0)):parent()
-  local cmakelists = dir:joinpath('CMakeLists.txt')
-  local cmake_ok = nil
-  if cmakelists:exists() then
-    local content = cmakelists:read()
-    local projname = content:match('set%(PROJECT_NAME ([%S]+)%)')
-    local mainfile = content:match('${PROJECT_SOURCE_DIR}/([%w%p]+).c')
-    local curname = vim.fn.expand('%:p:t:r')
-    if projname == curname or projname == 'common' then
-      cmake_ok = 1
-      if dir.filename ~= M.c_projdir or M.c_level ~= 11 or M.mainfile ~= mainfile then
-        M.c_projdir = dir.filename
-        M.c_level = 11
-        M.mainfile = mainfile
-        require('code_runner').setup({
-          project = {
-            [dir.filename] = {
-              name = "C Proj",
-              description = "Project with cmakelists",
-              command = M.cp1(projname, mainfile)
-            }
-          },
-        })
+  if vim.bo.ft == 'c' or vim.bo.ft == 'cpp' or vim.fn.expand('%:p:t') == 'CMakeLists.txt' then
+    local dir = path:new(vim.api.nvim_buf_get_name(0)):parent()
+    local cmakelists = dir:joinpath('CMakeLists.txt')
+    local cmake_ok = nil
+    if cmakelists:exists() then
+      local content = cmakelists:read()
+      local projname = content:match('set%(PROJECT_NAME ([%S]+)%)')
+      local mainfile = content:match('${PROJECT_SOURCE_DIR}/([%w%p]+).c')
+      local curname = vim.fn.expand('%:p:t:r')
+      if projname == curname or projname == 'common' then
+        cmake_ok = 1
+        if dir.filename ~= M.c_projdir or M.c_level ~= 11 or M.mainfile ~= mainfile then
+          M.c_projdir = dir.filename
+          M.c_level = 11
+          M.mainfile = mainfile
+          require('code_runner').setup({
+            project = {
+              [dir.filename] = {
+                name = "C Proj",
+                description = "Project with cmakelists",
+                command = M.cp1(projname, mainfile)
+              }
+            },
+          })
+        end
       end
     end
-  end
-  if not cmake_ok then
-    if M.c_level ~= 1 then
-      M.c_level = 1
-      require('code_runner').setup({
-        filetype = {
-          c = M.c1,
-        },
-        project = nil
-      })
+    if not cmake_ok then
+      if M.c_level ~= 1 then
+        M.c_level = 1
+        require('code_runner').setup({
+          filetype = {
+            c = M.c1,
+          },
+          project = nil
+        })
+      end
     end
   end
   vim.cmd('RunCode')
 end
 
 M.run = function()
-  if vim.bo.ft ~= 'c' and vim.bo.ft ~= 'cpp' and vim.fn.expand('%:p:t') ~= 'CMakeLists.txt' then
-    return
-  end
   vim.cmd('ProjectRootCD')
-  local dir = path:new(vim.api.nvim_buf_get_name(0)):parent()
-  local cmakelists = dir:joinpath('CMakeLists.txt')
-  local cmake_ok = nil
-  if cmakelists:exists() then
-    local content = cmakelists:read()
-    local projname = content:match('set%(PROJECT_NAME ([%S]+)%)')
-    local mainfile = content:match('${PROJECT_SOURCE_DIR}/([%w%p]+).c')
-    local curname = vim.fn.expand('%:p:t:r')
-    if projname == curname or projname == 'common' then
-      cmake_ok = 1
-      if dir.filename ~= M.c_projdir or M.c_level ~= 12 or M.mainfile ~= mainfile then
-        M.c_projdir = dir.filename
-        M.c_level = 12
-        M.mainfile = mainfile
-        require('code_runner').setup({
-          project = {
-            [dir.filename] = {
-              name = "C Proj",
-              description = "Project with cmakelists",
-              command = M.cp2(projname, mainfile)
-            }
-          },
-        })
+  if vim.bo.ft == 'c' or vim.bo.ft == 'cpp' or vim.fn.expand('%:p:t') == 'CMakeLists.txt' then
+    local dir = path:new(vim.api.nvim_buf_get_name(0)):parent()
+    local cmakelists = dir:joinpath('CMakeLists.txt')
+    local cmake_ok = nil
+    if cmakelists:exists() then
+      local content = cmakelists:read()
+      local projname = content:match('set%(PROJECT_NAME ([%S]+)%)')
+      local mainfile = content:match('${PROJECT_SOURCE_DIR}/([%w%p]+).c')
+      local curname = vim.fn.expand('%:p:t:r')
+      if projname == curname or projname == 'common' then
+        cmake_ok = 1
+        if dir.filename ~= M.c_projdir or M.c_level ~= 12 or M.mainfile ~= mainfile then
+          M.c_projdir = dir.filename
+          M.c_level = 12
+          M.mainfile = mainfile
+          require('code_runner').setup({
+            project = {
+              [dir.filename] = {
+                name = "C Proj",
+                description = "Project with cmakelists",
+                command = M.cp2(projname, mainfile)
+              }
+            },
+          })
+        end
       end
     end
-  end
-  if not cmake_ok then
-    if M.c_level ~= 2 then
-      M.c_level = 2
-      require('code_runner').setup({
-        filetype = {
-          c = M.c2,
-        },
-        project = nil
-      })
+    if not cmake_ok then
+      if M.c_level ~= 2 then
+        M.c_level = 2
+        require('code_runner').setup({
+          filetype = {
+            c = M.c2,
+          },
+          project = nil
+        })
+      end
     end
   end
   vim.cmd('RunCode')
