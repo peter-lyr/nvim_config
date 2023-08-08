@@ -61,3 +61,22 @@ if __name__ == "__main__":
     if executable_cbp:
         executable_files, executable_dirs = get_executable_files_and_dirs(project_root, executable_cbp, executable_cbp_dir)
         print(len(executable_files), len(executable_dirs))
+        with open(os.path.join(project_root, "CMakeLists.txt"), "wb") as ff:
+            ff.write(b"cmake_minimum_required(VERSION 3.5)\n")
+            ff.write(b"set(PROJECT_NAME proj_name)\n")
+            ff.write(b"project(${PROJECT_NAME})\n\n")
+            ff.write(("add_executable(${PROJECT_NAME}\n" +
+                    "               ${PROJECT_SOURCE_DIR}/%s\n" +
+                    "              )\n"
+                    % ("\n               ${PROJECT_SOURCE_DIR}/"
+                    .join(executable_files))).encode("utf-8"))
+            dirs = [
+                "target_include_directories(${PROJECT_NAME} PUBLIC ${PROJECT_SOURCE_DIR}/%s)"
+                    % dir.replace("\\", "/")
+                    .replace(project_root, "")
+                    .strip("\\")
+                    .strip("/")
+                    .replace("\\", "/")
+                for dir in executable_dirs
+            ]
+            ff.write(("\n".join(dirs).encode("utf-8")) + b"\n\n")
