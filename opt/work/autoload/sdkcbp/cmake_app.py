@@ -94,8 +94,8 @@ with open(os.path.join(rootdir, "CMakeLists.txt"), "wb") as ff:
             xl = key.split("\\")[0]
             ff.write(
                 (
-                    "add_executable(${PROJECT_NAME} ${PROJECT_SOURCE_DIR}/%s)\n"
-                    % (" ${PROJECT_SOURCE_DIR}/".join(files))
+                    "add_executable(${PROJECT_NAME}\n               ${PROJECT_SOURCE_DIR}/%s\n              )\n"
+                    % ("\n               ${PROJECT_SOURCE_DIR}/".join(files))
                 ).encode("utf-8")
             )
             bb = [
