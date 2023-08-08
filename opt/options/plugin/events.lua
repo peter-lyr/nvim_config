@@ -174,14 +174,16 @@ vim.api.nvim_create_autocmd({ "BufWritePre" }, {
   end,
 })
 
-vim.api.nvim_create_autocmd({ "CmdlineLeave" }, {
-  callback = function()
-    vim.opt.cmdheight = 0
-  end,
-})
-
-vim.api.nvim_create_autocmd({ "CmdlineEnter" }, {
-  callback = function()
-    vim.opt.cmdheight = 1
-  end,
-})
+-- vim.opt.cmdheight       = 0
+--
+-- vim.api.nvim_create_autocmd({ "CmdlineLeave" }, {
+--   callback = function()
+--     vim.opt.cmdheight = 1
+--   end,
+-- })
+--
+-- vim.api.nvim_create_autocmd({ "CmdlineEnter" }, {
+--   callback = function()
+--     vim.opt.cmdheight = 1
+--   end,
+-- })
