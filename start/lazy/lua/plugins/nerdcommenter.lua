@@ -1,6 +1,7 @@
 return {
   'preservim/nerdcommenter',
   lazy = true,
+  event = { "BufReadPost", "BufNewFile" },
   init = function()
     vim.g.NERDSpaceDelims = 1
     vim.g.NERDDefaultAlign = "left"
@@ -37,4 +38,15 @@ return {
     { '<leader>cs',        mode = { 'n', 'v', }, },
     { '<leader>cy',        mode = { 'n', 'v', }, },
   },
+  config = function()
+    vim.api.nvim_create_autocmd({ "BufEnter", }, {
+      callback = function()
+        if vim.bo.ft == 'python' then
+          vim.g.NERDSpaceDelims = 0
+        else
+          vim.g.NERDSpaceDelims = 1
+        end
+      end,
+    })
+  end
 }
