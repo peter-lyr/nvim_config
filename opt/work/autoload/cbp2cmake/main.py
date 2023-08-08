@@ -5,6 +5,16 @@ import sys
 def rep(text):
     return text.replace('\\', '/').lower()
 
+def get_libs_a_dirs(project_root):
+    lib_a_files = []
+    for root, _, files in os.walk(project_root):
+        for file in files:
+            if file.endswith(".a"):
+                dir = os.path.dirname(rep(os.path.join(root, file)).replace("\\", "/").replace(project_root, "").strip("/"))
+                if dir not in lib_a_files:
+                    lib_a_files.append(dir)
+    return lib_a_files
+
 def get_executable_cbp(project_root):
     cbp_files = []
     for root, _, files in os.walk(project_root):
@@ -60,14 +70,13 @@ if __name__ == "__main__":
 
     if executable_cbp:
         executable_files, executable_dirs = get_executable_files_and_dirs(project_root, executable_cbp, executable_cbp_dir)
-        print(len(executable_files), len(executable_dirs))
+        print(len(executable_files), 'files,', len(executable_dirs), 'dirs')
+        print('executable_cbp:', executable_cbp)
         with open(os.path.join(project_root, "CMakeLists.txt"), "wb") as ff:
             ff.write(b"cmake_minimum_required(VERSION 3.5)\n")
             ff.write(b"set(PROJECT_NAME proj_name)\n")
             ff.write(b"project(${PROJECT_NAME})\n\n")
-            ff.write(("add_executable(${PROJECT_NAME}\n" +
-                    "               ${PROJECT_SOURCE_DIR}/%s\n" +
-                    "              )\n"
+            ff.write(("add_executable(${PROJECT_NAME}\n               ${PROJECT_SOURCE_DIR}/%s\n              )\n"
                     % ("\n               ${PROJECT_SOURCE_DIR}/"
                     .join(executable_files))).encode("utf-8"))
             dirs = [
@@ -80,3 +89,9 @@ if __name__ == "__main__":
                 for dir in executable_dirs
             ]
             ff.write(("\n".join(dirs).encode("utf-8")) + b"\n\n")
+            libs = [
+                "file(GLOB libraries ${CMAKE_CURRENT_SOURCE_DIR}/%s/*.a)" % libDir
+                for libDir in get_libs_a_dirs(project_root)
+            ]
+            ff.write(("\n".join(libs).encode("utf-8")) + b"\n")
+            ff.write(b"target_link_libraries(${PROJECT_NAME} ${libraries})\n")
