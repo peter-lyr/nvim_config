@@ -212,18 +212,23 @@ pcall(vim.api.nvim_del_autocmd, vim.g.nvimtree_au_bufleave)
 vim.g.nvimtree_au_bufleave = vim.api.nvim_create_autocmd({ "BufLeave", }, {
   callback = function(ev)
     rescanned_bufnr = ev.buf
-    if vim.g.edgy_autosize_en == 1 and vim.bo[ev.buf].ft == 'NvimTree' then
-      local max = 0
-      for linenr = 1, vim.fn.line('$') do
-        local len = vim.fn.strdisplaywidth(vim.fn.getline(linenr))
-        if len > max then
-          max = len
+    if vim.bo[ev.buf].ft == 'NvimTree' then
+      local save_cursor = vim.fn.getpos(".")
+      if vim.g.edgy_autosize_en == 1 then
+        local max = 0
+        for linenr = 1, vim.fn.line('$') do
+          local len = vim.fn.strdisplaywidth(vim.fn.getline(linenr))
+          if len > max then
+            max = len
+          end
+        end
+        local win = require("edgy.editor").get_win()
+        if win then
+          win.view.edgebar:equalize()
         end
       end
-      local win = require("edgy.editor").get_win()
-      if win then
-        win.view.edgebar:equalize()
-      end
+      pcall(vim.fn.setpos, '.', save_cursor)
+      vim.cmd('norm zz')
     end
   end,
 })
