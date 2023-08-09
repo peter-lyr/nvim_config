@@ -17,25 +17,27 @@ M.build = function()
   local cmd = string.format([[chcp 65001 && python "%s" "%s"]], vim.g.cbp2cmake_main_py, project)
   require('terminal').send('cmd', cmd, 'show')
   -- vim.cmd(string.format([[silent !start cmd /c "%s & pause"]], cmd))
-  pcall(vim.fn.timer_stop, cbp2cmake_timer)
-  local bufnr = -1
-  vim.fn.timer_start(30, function()
-    vim.api.nvim_win_set_height(0, 12)
-    vim.cmd('norm G')
-    vim.cmd('wincmd p')
+  if vim.g.builtin_terminal_ok == 1 then
+    pcall(vim.fn.timer_stop, cbp2cmake_timer)
+    local bufnr = -1
     vim.fn.timer_start(30, function()
-      bufnr = vim.fn.bufnr()
-      vim.keymap.set('n', 'q', function()
-        require('terminal').hideall()
-      end, { desc = 'terminal hideall', nowait = true, buffer = bufnr })
+      vim.api.nvim_win_set_height(0, 12)
+      vim.cmd('norm G')
+      vim.cmd('wincmd p')
+      vim.fn.timer_start(30, function()
+        bufnr = vim.fn.bufnr()
+        vim.keymap.set('n', 'q', function()
+          require('terminal').hideall()
+        end, { desc = 'terminal hideall', nowait = true, buffer = bufnr })
+      end)
     end)
-  end)
-  cbp2cmake_timer = vim.fn.timer_start(5000, function()
-    if vim.api.nvim_buf_get_option(vim.fn.bufnr(), 'buftype') ~= 'terminal' then
-      require('terminal').hideall()
-    end
-    pcall(vim.keymap.del, 'n', 'q', { buffer = bufnr })
-  end)
+    cbp2cmake_timer = vim.fn.timer_start(5000, function()
+      if vim.api.nvim_buf_get_option(vim.fn.bufnr(), 'buftype') ~= 'terminal' then
+        require('terminal').hideall()
+      end
+      pcall(vim.keymap.del, 'n', 'q', { buffer = bufnr })
+    end)
+  end
 end
 
 return M

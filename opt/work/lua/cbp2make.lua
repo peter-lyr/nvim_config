@@ -3,7 +3,7 @@ local M = {}
 package.loaded['cbp2make'] = nil
 
 vim.g.cbp2make_main_py = require("plenary.path"):new(vim.g.pack_path):joinpath('nvim_config', 'opt', 'work',
-  'autoload', 'cbp2make'):joinpath('main.py')['filename']
+  'autoload', 'cbp2make'):joinpath('cbp2make.py')['filename']
 
 local cbp2make_timer = -1
 
