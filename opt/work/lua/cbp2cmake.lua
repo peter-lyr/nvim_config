@@ -12,7 +12,9 @@ M.build = function()
     print('no projectroot:', fname)
     return
   end
-  require('terminal').send('cmd', 'python ' .. vim.g.cbp2cmake_main_py .. ' ' .. project, 'show')
+  local cmd = string.format([[chcp 65001 && python "%s" "%s"]], vim.g.cbp2cmake_main_py,  project)
+  require('terminal').send('cmd', cmd, 'show')
+  -- vim.cmd(string.format([[silent !start cmd /c "%s & pause"]], cmd))
 end
 
 return M
