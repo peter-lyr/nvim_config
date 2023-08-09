@@ -2,12 +2,24 @@ local M = {}
 
 package.loaded['cbp2make'] = nil
 
-local cbp2make = require("plenary.path"):new(vim.g.pack_path):joinpath('nvim_config', 'opt', 'work', 'autoload', 'cbp2make')
-vim.g.cbp2make_main_py = cbp2make:joinpath('cbp2make.py').filename
+local cbp2make = require("plenary.path"):new(vim.g.pack_path):joinpath('nvim_config', 'opt', 'work', 'autoload',
+  'cbp2make')
 vim.g.cbp2make_cfg = cbp2make:joinpath('cbp2make.cfg').filename
 
-
 local cbp2make_timer = -1
+
+local function systemcd(path)
+  local s = ''
+  if string.sub(path, 2, 2) == ':' then
+    s = s .. string.sub(path, 1, 2) .. ' && '
+  end
+  if require('plenary.path').new(path):is_dir() then
+    s = s .. 'cd ' .. path
+  else
+    s = s .. 'cd ' .. require('plenary.path').new(path):parent().filename
+  end
+  return s
+end
 
 M.build = function()
   local fname = vim.api.nvim_buf_get_name(0)
@@ -16,7 +28,9 @@ M.build = function()
     print('no projectroot:', fname)
     return
   end
-  local cmd = string.format([[chcp 65001 && python "%s" "%s"]], vim.g.cbp2make_main_py, project)
+
+  local cmd = string.format([[chcp 65001 && %s && cbp2make -cfg "%s" -in "%s" -out Makefile && mingw32-make]],
+    systemcd(project), vim.g.cbp2make_cfg, 'standard.workspace')
   require('terminal').send('cmd', cmd, 'show')
   -- vim.cmd(string.format([[silent !start cmd /c "%s & pause"]], cmd))
   if vim.g.builtin_terminal_ok == 1 then
