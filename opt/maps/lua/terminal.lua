@@ -281,7 +281,7 @@ vim.g.terminal_tableave = vim.api.nvim_create_autocmd({ "TabLeave", }, {
     if vim.api.nvim_buf_get_option(bufnr, 'buftype') == 'terminal' then
       vim.cmd('wincmd k')
       Tabname()
-      vim.cmd('close ' .. bufnr)
+      -- vim.cmd('close ' .. bufnr)
     end
   end,
 })
