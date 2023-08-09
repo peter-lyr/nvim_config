@@ -1,11 +1,11 @@
 local M = {}
 
-package.loaded['cbp2cmake'] = nil
+package.loaded['cbp2make'] = nil
 
-vim.g.cbp2cmake_main_py = require("plenary.path"):new(vim.g.pack_path):joinpath('nvim_config', 'opt', 'work',
-  'autoload', 'cbp2cmake'):joinpath('cbp2cmake.py')['filename']
+vim.g.cbp2make_main_py = require("plenary.path"):new(vim.g.pack_path):joinpath('nvim_config', 'opt', 'work',
+  'autoload', 'cbp2make'):joinpath('main.py')['filename']
 
-local cbp2cmake_timer = -1
+local cbp2make_timer = -1
 
 M.build = function()
   local fname = vim.api.nvim_buf_get_name(0)
@@ -14,10 +14,10 @@ M.build = function()
     print('no projectroot:', fname)
     return
   end
-  local cmd = string.format([[chcp 65001 && python "%s" "%s"]], vim.g.cbp2cmake_main_py, project)
+  local cmd = string.format([[chcp 65001 && python "%s" "%s"]], vim.g.cbp2make_main_py, project)
   require('terminal').send('cmd', cmd, 'show')
   -- vim.cmd(string.format([[silent !start cmd /c "%s & pause"]], cmd))
-  pcall(vim.fn.timer_stop, cbp2cmake_timer)
+  pcall(vim.fn.timer_stop, cbp2make_timer)
   local bufnr = -1
   vim.fn.timer_start(30, function()
     vim.api.nvim_win_set_height(0, 12)
@@ -30,7 +30,7 @@ M.build = function()
       end, { desc = 'terminal hideall', nowait = true, buffer = bufnr })
     end)
   end)
-  cbp2cmake_timer = vim.fn.timer_start(5000, function()
+  cbp2make_timer = vim.fn.timer_start(5000, function()
     if vim.api.nvim_buf_get_option(vim.fn.bufnr(), 'buftype') ~= 'terminal' then
       require('terminal').hideall()
     end
