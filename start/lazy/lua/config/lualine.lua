@@ -45,14 +45,18 @@ local function get_projectroot(projectroot)
   return temp
 end
 
+function Tabname()
+  curprojectroot = rep(vim.fn['ProjectRootGet'](vim.api.nvim_buf_get_name(0)))
+  if #curprojectroot > 0 then
+    vim.fn['LualineRenameTab'](get_projectroot(curprojectroot))
+  else
+    vim.fn['LualineRenameTab'](get_projectroot(vim.api.nvim_buf_get_name(0)))
+  end
+end
+
 vim.api.nvim_create_autocmd({ "BufEnter", }, {
   callback = function()
-    curprojectroot = rep(vim.fn['ProjectRootGet'](vim.api.nvim_buf_get_name(0)))
-    if #curprojectroot > 0 then
-      vim.fn['LualineRenameTab'](get_projectroot(curprojectroot))
-    else
-      vim.fn['LualineRenameTab'](get_projectroot(vim.api.nvim_buf_get_name(0)))
-    end
+    Tabname()
   end,
 })
 

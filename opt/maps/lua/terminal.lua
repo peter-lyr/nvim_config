@@ -265,13 +265,26 @@ M.send = function(terminal, to_send, show) -- show时，send后不hide
 end
 
 M.hideall = function()
-  for winnr=1, vim.fn.winnr('$') do
+  for winnr = 1, vim.fn.winnr('$') do
     local b = vim.fn.winbufnr(winnr)
     if vim.api.nvim_buf_get_option(b, 'buftype') == 'terminal' then
       vim.cmd('close ' .. b)
     end
   end
 end
+
+pcall(vim.api.nvim_del_autocmd, vim.g.terminal_tableave)
+
+vim.g.terminal_tableave = vim.api.nvim_create_autocmd({ "TabLeave", }, {
+  callback = function()
+    local bufnr = vim.fn.bufnr()
+    if vim.api.nvim_buf_get_option(bufnr, 'buftype') == 'terminal' then
+      vim.cmd('wincmd k')
+      Tabname()
+      vim.cmd('close ' .. bufnr)
+    end
+  end,
+})
 
 vim.g.builtin_terminal_ok = 1
 
