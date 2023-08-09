@@ -31,7 +31,9 @@ M.build = function()
     end)
   end)
   cbp2cmake_timer = vim.fn.timer_start(5000, function()
-    require('terminal').hideall()
+    if vim.api.nvim_buf_get_option(vim.fn.bufnr(), 'buftype') ~= 'terminal' then
+      require('terminal').hideall()
+    end
     pcall(vim.keymap.del, 'n', 'q', { buffer = bufnr })
   end)
 end
