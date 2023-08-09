@@ -16,7 +16,12 @@ M.build = function()
   require('terminal').send('cmd', cmd, 'show')
   -- vim.cmd(string.format([[silent !start cmd /c "%s & pause"]], cmd))
   vim.fn.timer_start(30, function()
+    vim.api.nvim_win_set_height(0, 12)
+    vim.cmd('norm G')
     vim.cmd('wincmd p')
+  end)
+  vim.fn.timer_start(5000, function()
+    require('terminal').hideall()
   end)
 end
 

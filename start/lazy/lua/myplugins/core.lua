@@ -306,6 +306,10 @@ return {
       { '<leader><f3>Sc',   function() require('terminal').send('bash',       'clipboard', 'hide') end, mode = { 'n', 'v' }, silent = true, desc = 'send clipboard hide [bash]' },
       { '<leader><f4>Sc',   function() require('terminal').send('powershell', 'clipboard', 'hide') end, mode = { 'n', 'v' }, silent = true, desc = 'send clipboard hide [powershell]' },
 
+      -- hideall
+
+      { '<leader><f5>',     function() require('terminal').hideall()                               end, mode = { 'n', 'v' }, silent = true, desc = 'terminal hide all' },
+
       ------------------------
       -- multihili.lua
       ------------------------
