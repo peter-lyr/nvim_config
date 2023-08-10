@@ -2,6 +2,9 @@ local M = {}
 
 package.loaded['cbp2make'] = nil
 
+local Path = require("plenary.path")
+local Scan = require("plenary.scandir")
+
 local cbp2make = require("plenary.path"):new(vim.g.pack_path):joinpath('nvim_config', 'opt', 'work', 'autoload',
   'cbp2make')
 vim.g.cbp2make_cfg = cbp2make:joinpath('cbp2make.cfg').filename
@@ -21,16 +24,29 @@ local function systemcd(path)
   return s
 end
 
-M.build = function()
-  local fname = vim.api.nvim_buf_get_name(0)
-  local project = string.gsub(vim.fn.tolower(vim.call('ProjectRootGet')), '\\', '/')
-  if #project == 0 then
-    print('no projectroot:', fname)
-    return
-  end
+local rep = function(path)
+  path, _ = string.gsub(path, '\\', '/')
+  return path
+end
 
+local get_workspaces = function(abspath)
+  local workspaces = {}
+  local path = Path:new(abspath)
+  local entries = Scan.scan_dir(path.filename, { hidden = false, depth = 8, add_dirs = false })
+  for _, entry in ipairs(entries) do
+    local entry_path_name = rep(entry)
+    if string.match(entry_path_name, '%.([^%.]+)$') == 'workspace' then
+      if vim.tbl_contains(workspaces, entry_path_name) == false then
+        table.insert(workspaces, entry_path_name)
+      end
+    end
+  end
+  return workspaces
+end
+
+M.build_do = function(project, workspace)
   local cmd = string.format([[chcp 65001 && %s && cbp2make -cfg "%s" -in "%s" -out Makefile && mingw32-make]],
-    systemcd(project), vim.g.cbp2make_cfg, 'standard.workspace')
+    systemcd(project), vim.g.cbp2make_cfg, workspace)
   require('terminal').send('cmd', cmd, 'show')
   -- vim.cmd(string.format([[silent !start cmd /c "%s & pause"]], cmd))
   if vim.g.builtin_terminal_ok == 1 then
@@ -53,6 +69,31 @@ M.build = function()
       end
       pcall(vim.keymap.del, 'n', 'q', { buffer = bufnr })
     end)
+  end
+end
+
+M.build = function()
+  local fname = vim.api.nvim_buf_get_name(0)
+  local project = string.gsub(vim.fn.tolower(vim.call('ProjectRootGet')), '\\', '/')
+  if #project == 0 then
+    print('no projectroot:', fname)
+    return
+  end
+
+  local workspaces = get_workspaces(project)
+  local workspace = workspaces[1]
+  if #workspaces == 0 then
+    vim.notify('No workspace file found. Building...')
+    require('cbp2cmake').build()
+    return
+  elseif #workspaces > 1 then
+    vim.ui.select(workspaces, { prompt = 'select one of them' }, function(_, idx)
+      workspace = workspaces[idx]
+      M.build_do(project, workspace)
+    end)
+    return
+  else
+    M.build_do(project, workspace)
   end
 end
 
