@@ -56,7 +56,8 @@ M.build_do = function(project, workspace)
   if require('config.coderunner').rebuild_en then
     clean = 'mingw32-make clean &'
   end
-  local cmd = string.format([[AsyncRun chcp 65001 && %s && cbp2make -cfg "%s" -in "%s" -out Makefile && %s mingw32-make]],
+  local cmd = string.format(
+    [[AsyncRun chcp 65001 && %s && cbp2make -cfg "%s" -in "%s" -out Makefile && %s mingw32-make]],
     systemcd(project), vim.g.cbp2make_cfg, workspace, clean)
   vim.cmd(cmd)
   -- require('terminal').send('cmd', cmd, 'show')
@@ -69,7 +70,7 @@ M.build_do = function(project, workspace)
   local bufnr = -1
   vim.fn.timer_start(30, function()
     vim.api.nvim_win_set_height(0, 12)
-    vim.cmd('norm G')
+    vim.cmd('norm Gzb')
     vim.fn.win_gotoid(winid)
     vim.fn.timer_start(30, function()
       bufnr = vim.fn.bufnr()
@@ -87,6 +88,14 @@ M.build_do = function(project, workspace)
   -- end
 end
 
+local notify_building = function()
+  if require('config.coderunner').rebuild_en then
+    vim.notify('Re Building...')
+  else
+    vim.notify('Building...')
+  end
+end
+
 M.build = function(workspace)
   local project = string.gsub(vim.fn.tolower(vim.call('ProjectRootGet')), '\\', '/')
   if #project == 0 then
@@ -96,18 +105,18 @@ M.build = function(workspace)
 
   if workspace then
     if type(workspace) == 'string' then
-      vim.notify('Building...')
+      notify_building()
       M.build_do(project, workspace)
     elseif type(workspace) == 'table' then
       local workspaces = workspace
       if #workspaces == 1 then
-        vim.notify('Building...')
+        notify_building()
         M.build_do(project, workspaces[1])
         return
       end
       vim.ui.select(workspaces, { prompt = 'select one of them' }, function(_, idx)
         workspace = workspaces[idx]
-        vim.notify('Building...')
+        notify_building()
         M.build_do(project, workspace)
       end)
     end
@@ -124,12 +133,12 @@ M.build = function(workspace)
   elseif #workspaces > 1 then
     vim.ui.select(workspaces, { prompt = 'select one of them' }, function(_, idx)
       workspace = workspaces[idx]
-      vim.notify('Building...')
+      notify_building()
       M.build_do(project, workspace)
     end)
     return
   else
-    vim.notify('Building...')
+    notify_building()
     M.build_do(project, workspace)
   end
 end
