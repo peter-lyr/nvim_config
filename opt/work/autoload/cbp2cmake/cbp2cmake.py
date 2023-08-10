@@ -55,7 +55,7 @@ def get_executable_cbp(project_root):
 
 def get_files_and_dirs(project_root, executable_cbp, executable_cbp_dir):
     patt1 = re.compile('directory="(.+)"')
-    patt2 = re.compile('filename="(.+?[cS])"')
+    patt2 = re.compile('filename="(.+?[cSp])"')
     with open(executable_cbp, "rb") as fff:
         content = fff.read().decode("utf-8")
     directories = []
@@ -89,12 +89,13 @@ if __name__ == "__main__":
 
     executable_cbp, cbp_files = get_executable_cbp(project_root)
     executable_cbp_dir = os.path.dirname(executable_cbp)
+    print("executable_cbp_dir:", executable_cbp_dir)
 
     if executable_cbp:
         executable_files, executable_dirs = get_files_and_dirs(
             project_root, executable_cbp, executable_cbp_dir
         )
-        print('project_root:', project_root)
+        print("project_root:", project_root)
         print(len(executable_files), "files,", len(executable_dirs), "dirs")
         print("executable_cbp:", executable_cbp)
         with open(os.path.join(project_root, "CMakeLists.txt"), "wb") as ff:
@@ -120,21 +121,22 @@ if __name__ == "__main__":
             ]
             ff.write(("\n".join(dirs).encode("utf-8")) + b"\n\n")
 
-            # other_cbp
-            for other_cbp_file in cbp_files:
-                if other_cbp_file == executable_cbp:
+            # lib_cbp
+            for lib_cbp_file in cbp_files:
+                if lib_cbp_file == executable_cbp:
                     continue
-                other_cbp_dir = os.path.dirname(other_cbp_file)
+                print("lib_cbp_file:", lib_cbp_file)
+                lib_cbp_dir = os.path.dirname(lib_cbp_file)
 
-                other_files, other_dirs = get_files_and_dirs(
-                    project_root, other_cbp_file, other_cbp_dir
+                lib_files, lib_dirs = get_files_and_dirs(
+                    project_root, lib_cbp_file, lib_cbp_dir
                 )
                 ff.write(
                     (
                         "add_library(%s STATIC\n            ${PROJECT_SOURCE_DIR}/%s)\n"
                         % (
-                            os.path.basename(other_cbp_dir),
-                            "\n            ${PROJECT_SOURCE_DIR}/".join(other_files),
+                            os.path.basename(lib_cbp_dir),
+                            "\n            ${PROJECT_SOURCE_DIR}/".join(lib_files),
                         )
                     ).encode("utf-8")
                 )
@@ -145,7 +147,7 @@ if __name__ == "__main__":
                     .strip("\\")
                     .strip("/")
                     .replace("\\", "/")
-                    for dir in other_dirs
+                    for dir in lib_dirs
                 ]
                 ff.write(("\n".join(dirs).encode("utf-8")) + b"\n\n")
 
@@ -154,8 +156,34 @@ if __name__ == "__main__":
                 "file(GLOB libraries ${CMAKE_CURRENT_SOURCE_DIR}/%s/*.a)" % libdir
                 for libdir in get_libs_a_dirs(project_root)
             ]
-            ff.write(("\n".join(libs).encode("utf-8")) + b"\n")
-            ff.write(b"target_link_libraries(${PROJECT_NAME} ${libraries})\n")
+            if len(libs) > 0:
+                ff.write(("\n".join(libs).encode("utf-8")) + b"\n")
+                ff.write(b"target_link_libraries(${PROJECT_NAME} ${libraries})\n")
+
+        # workspace
+        cbps = [
+            fname.replace("/", "\\")
+            for fname in [
+                cbp_file.replace(project_root + "/", "")
+                for cbp_file in cbp_files
+                if cbp_file != executable_cbp
+            ]
+            + [executable_cbp.replace(project_root + "/", "")]
+        ]
+        cbps = [f'    <Project filename="{fname}" />' for fname in cbps]
+        workspace = executable_cbp.split("/")[-2]
+        if "/" not in executable_cbp.replace(project_root + "/", ""):
+            workspace = executable_cbp.split("/")[-1].split(".")[0]
+        with open(
+            rep(os.path.join(project_root, f"{workspace}.workspace")),
+            "wb",
+        ) as ff:
+            ff.write(b'<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>\n')
+            ff.write(b"<CodeBlocks_workspace_file>\n")
+            ff.write(b'  <Workspace title="Workspace">\n')
+            ff.write(("\n".join(cbps).encode("utf-8")) + b"\n")
+            ff.write(b"  </Workspace>\n")
+            ff.write(b"</CodeBlocks_workspace_file>\n")
 
         # can not be in with block!
         os.system(
