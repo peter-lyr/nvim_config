@@ -48,8 +48,8 @@ local others = function(bufnr)
   vim.keymap.set('n', 'vH', M.delolddir, opts('delolddir'))
   vim.keymap.set('n', 'vw', function() vim.cmd('ProjectRootCD') end, opts('ProjectRootCD'))
 
-  vim.keymap.set('n', 'd<tab>', M.diff1, opts('bcomp diff1'))
-  vim.keymap.set('n', 'd`', M.diff2, opts('bcomp diff2'))
+  vim.keymap.set('n', 'd<tab>', wrap_node(f.diff1), opts('bcomp diff1'))
+  vim.keymap.set('n', 'd`', wrap_node(f.diff2), opts('bcomp diff2'))
 end
 
 local on_attach = function(bufnr)
