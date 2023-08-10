@@ -126,8 +126,17 @@ M.c_projdir = ''
 M.mainfile = ''
 
 M.runbuild = function(rebuild_en)
+  pcall(vim.cmd, 'ProjectRootCD')
+  local project = string.gsub(vim.fn.tolower(vim.call('ProjectRootGet')), '\\', '/')
+  if #project ~= 0 then
+    local workspaces = require('cbp2make').get_workspaces(project)
+    if #workspaces > 0 then
+      require('cbp2make').build(workspaces)
+      return
+    end
+    return
+  end
   M.rebuild_en = rebuild_en
-  vim.cmd('ProjectRootCD')
   if vim.bo.ft == 'c' or vim.bo.ft == 'cpp' or vim.fn.expand('%:p:t') == 'CMakeLists.txt' then
     local dir = path:new(vim.api.nvim_buf_get_name(0)):parent()
     local cmakelists = dir:joinpath('CMakeLists.txt')
@@ -171,8 +180,17 @@ M.runbuild = function(rebuild_en)
 end
 
 M.build = function(rebuild_en)
+  pcall(vim.cmd, 'ProjectRootCD')
+  local project = string.gsub(vim.fn.tolower(vim.call('ProjectRootGet')), '\\', '/')
+  if #project ~= 0 then
+    local workspaces = require('cbp2make').get_workspaces(project)
+    if #workspaces > 0 then
+      require('cbp2make').build(workspaces)
+      return
+    end
+    return
+  end
   M.rebuild_en = rebuild_en
-  vim.cmd('ProjectRootCD')
   if vim.bo.ft == 'c' or vim.bo.ft == 'cpp' or vim.fn.expand('%:p:t') == 'CMakeLists.txt' then
     local dir = path:new(vim.api.nvim_buf_get_name(0)):parent()
     local cmakelists = dir:joinpath('CMakeLists.txt')

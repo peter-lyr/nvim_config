@@ -29,7 +29,7 @@ local rep = function(path)
   return path
 end
 
-local get_workspaces = function(abspath)
+M.get_workspaces = function(abspath)
   local workspaces = {}
   local path = Path:new(abspath)
   local entries = Scan.scan_dir(path.filename, { hidden = false, depth = 8, add_dirs = false })
@@ -72,16 +72,35 @@ M.build_do = function(project, workspace)
   end
 end
 
-M.build = function()
-  local fname = vim.api.nvim_buf_get_name(0)
+M.build = function(workspace)
   local project = string.gsub(vim.fn.tolower(vim.call('ProjectRootGet')), '\\', '/')
   if #project == 0 then
-    print('no projectroot:', fname)
+    print('no projectroot:', vim.api.nvim_buf_get_name(0))
     return
   end
 
-  local workspaces = get_workspaces(project)
-  local workspace = workspaces[1]
+  if workspace then
+    if type(workspace) == 'string' then
+      vim.notify('Building...')
+      M.build_do(project, workspace)
+    elseif type(workspace) == 'table' then
+      local workspaces = workspace
+      if #workspaces == 1 then
+        vim.notify('Building...')
+        M.build_do(project, workspace)
+        return
+      end
+      vim.ui.select(workspaces, { prompt = 'select one of them' }, function(_, idx)
+        workspace = workspaces[idx]
+        vim.notify('Building...')
+        M.build_do(project, workspace)
+      end)
+    end
+    return
+  end
+
+  local workspaces = M.get_workspaces(project)
+  workspace = workspaces[1]
   if #workspaces == 0 then
     vim.notify('No workspace file found in ' .. project .. '.')
     vim.notify('Preparing...')
