@@ -44,32 +44,43 @@ M.get_workspaces = function(abspath)
   return workspaces
 end
 
+Cbp2makeBuildDone = function()
+  require('notify').dismiss()
+  vim.notify('Done!')
+  vim.cmd('au! User AsyncRunStop')
+end
+
 M.build_do = function(project, workspace)
-  local cmd = string.format([[chcp 65001 && %s && cbp2make -cfg "%s" -in "%s" -out Makefile && mingw32-make]],
+  vim.cmd([[au User AsyncRunStop call v:lua.Cbp2makeBuildDone()]])
+  local cmd = string.format([[AsyncRun chcp 65001 && %s && cbp2make -cfg "%s" -in "%s" -out Makefile && mingw32-make]],
     systemcd(project), vim.g.cbp2make_cfg, workspace)
-  require('terminal').send('cmd', cmd, 'show')
+  vim.cmd(cmd)
+  -- require('terminal').send('cmd', cmd, 'show')
   -- vim.cmd(string.format([[silent !start cmd /c "%s & pause"]], cmd))
-  if vim.g.builtin_terminal_ok == 1 then
-    pcall(vim.fn.timer_stop, cbp2make_timer)
-    local bufnr = -1
+  -- if vim.g.builtin_terminal_ok == 1 then
+  local winid = vim.fn.win_getid()
+  vim.cmd('copen')
+  vim.cmd('wincmd J')
+  pcall(vim.fn.timer_stop, cbp2make_timer)
+  local bufnr = -1
+  vim.fn.timer_start(30, function()
+    vim.api.nvim_win_set_height(0, 12)
+    vim.cmd('norm G')
+    vim.fn.win_gotoid(winid)
     vim.fn.timer_start(30, function()
-      vim.api.nvim_win_set_height(0, 12)
-      vim.cmd('norm G')
-      vim.cmd('wincmd p')
-      vim.fn.timer_start(30, function()
-        bufnr = vim.fn.bufnr()
-        vim.keymap.set('n', 'q', function()
-          require('terminal').hideall()
-        end, { desc = 'terminal hideall', nowait = true, buffer = bufnr })
-      end)
-    end)
-    cbp2make_timer = vim.fn.timer_start(5000, function()
-      if vim.api.nvim_buf_get_option(vim.fn.bufnr(), 'buftype') ~= 'terminal' then
+      bufnr = vim.fn.bufnr()
+      vim.keymap.set('n', 'q', function()
         require('terminal').hideall()
-      end
-      pcall(vim.keymap.del, 'n', 'q', { buffer = bufnr })
+      end, { desc = 'terminal hideall', nowait = true, buffer = bufnr })
     end)
-  end
+  end)
+  cbp2make_timer = vim.fn.timer_start(5000, function()
+    if vim.api.nvim_buf_get_option(vim.fn.bufnr(), 'buftype') ~= 'terminal' then
+      require('terminal').hideall()
+    end
+    pcall(vim.keymap.del, 'n', 'q', { buffer = bufnr })
+  end)
+  -- end
 end
 
 M.build = function(workspace)
