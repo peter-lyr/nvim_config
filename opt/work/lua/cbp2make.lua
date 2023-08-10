@@ -98,7 +98,7 @@ M.build = function(workspace)
       local workspaces = workspace
       if #workspaces == 1 then
         vim.notify('Building...')
-        M.build_do(project, workspace)
+        M.build_do(project, workspaces[1])
         return
       end
       vim.ui.select(workspaces, { prompt = 'select one of them' }, function(_, idx)
