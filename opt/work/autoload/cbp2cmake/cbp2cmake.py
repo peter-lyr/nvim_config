@@ -94,6 +94,7 @@ if __name__ == "__main__":
         executable_files, executable_dirs = get_files_and_dirs(
             project_root, executable_cbp, executable_cbp_dir
         )
+        print('project_root:', project_root)
         print(len(executable_files), "files,", len(executable_dirs), "dirs")
         print("executable_cbp:", executable_cbp)
         with open(os.path.join(project_root, "CMakeLists.txt"), "wb") as ff:
@@ -130,10 +131,10 @@ if __name__ == "__main__":
                 )
                 ff.write(
                     (
-                        "add_library(%s STATIC ${PROJECT_SOURCE_DIR}/%s)\n"
+                        "add_library(%s STATIC\n            ${PROJECT_SOURCE_DIR}/%s)\n"
                         % (
                             os.path.basename(other_cbp_dir),
-                            " ${PROJECT_SOURCE_DIR}/".join(other_files),
+                            "\n            ${PROJECT_SOURCE_DIR}/".join(other_files),
                         )
                     ).encode("utf-8")
                 )
