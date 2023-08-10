@@ -373,6 +373,14 @@ return {
       -- open
       { '<leader>bf',       function() require('oftenfiles').open() end, mode = { 'n', 'v', }, silent = true, desc = 'oftenfiles open' },
 
+      ------------------------
+      -- bcomp.lua
+      ------------------------
+
+      -- open
+      { '<leader>b<tab>',   function() require('bcomp').diff1() end, mode = { 'n', 'v', }, silent = true, desc = 'diff1' },
+      { '<leader>b`',   function() require('bcomp').diff2() end, mode = { 'n', 'v', }, silent = true, desc = 'diff2' },
+
     },
   },
 }
