@@ -21,7 +21,7 @@ local get_cbps = function(abspath)
   local entries = Scan.scan_dir(path.filename, { hidden = false, depth = 8, add_dirs = false })
   for _, entry in ipairs(entries) do
     local entry_path_name = rep(entry)
-    if string.match(entry_path_name, '%.([^%.]+)$') == 'workspace' then
+    if string.match(entry_path_name, '%.([^%.]+)$') == 'cbp' then
       if vim.tbl_contains(cbps, entry_path_name) == false then
         table.insert(cbps, entry_path_name)
       end
