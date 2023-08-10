@@ -455,4 +455,12 @@ M.ausize = function(_, short_dis)
   end
 end
 
+M.diff1 = function(node)
+  vim.cmd('Bcomp1 ' .. node.absolute_path)
+end
+
+M.diff2 = function(node)
+  vim.cmd('Bcomp2 ' .. node.absolute_path)
+end
+
 return M
