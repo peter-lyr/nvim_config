@@ -6,4 +6,17 @@ return {
     'AsyncStop',
     'AsyncReset',
   },
+  keys = {
+    -- AsyncStop
+    {
+      '<c-s-f9>',
+      function()
+        pcall(vim.cmd, 'AsyncStop')
+      end,
+      mode = { 'n', 'v' },
+      silent = true,
+      desc = 'AsyncStop'
+    },
+
+  }
 }
