@@ -21,6 +21,8 @@
 - [ ] sdkcbp sel one to be executable.
 - [ ] **ERROR** startup open nvimtree hop always go first line.
 > - maybe not.
+- [ ] winfixheight restore
+- [ ] map winheight change
 
 # jump window
 
