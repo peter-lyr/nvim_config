@@ -215,6 +215,13 @@ return {
       { '<leader><del>',      function() require('buffernew').bw_unlisted_buffers() end,     mode = { 'n', 'v' }, silent = true, desc = 'bw_unlisted_buffers' },
       { '<leader>x<bs>',      '<cmd>qa!<cr>',                                                mode = { 'n', 'v' }, silent = true, desc = 'qa!' },
 
+      -- close win around
+
+      { '<leader>xh',         function() require('buffernew').close_win_around('h') end,     mode = { 'n', 'v' }, silent = true, desc = 'close win around h' },
+      { '<leader>xj',         function() require('buffernew').close_win_around('j') end,     mode = { 'n', 'v' }, silent = true, desc = 'close win around j' },
+      { '<leader>xk',         function() require('buffernew').close_win_around('k') end,     mode = { 'n', 'v' }, silent = true, desc = 'close win around k' },
+      { '<leader>xl',         function() require('buffernew').close_win_around('l') end,     mode = { 'n', 'v' }, silent = true, desc = 'close win around l' },
+
       ------------------------
       -- fontsize.lua
       ------------------------

@@ -1,3 +1,5 @@
+-- package.loaded['buffernew'] = nil
+
 local M = {}
 
 local stack_fpath = ''
@@ -145,6 +147,15 @@ M.bw_unlisted_buffers = function()
   for _, v in ipairs(bufnrs) do
     vim.cmd('bw!' .. v)
   end
+end
+
+M.close_win_around = function(dir)
+  local winid = vim.fn.win_getid()
+  vim.cmd('wincmd ' .. dir)
+  if winid ~= vim.fn.win_getid() then
+    M.close()
+  end
+  vim.fn.win_gotoid(winid)
 end
 
 return M
