@@ -154,8 +154,8 @@ M.close_win_around = function(dir)
   vim.cmd('wincmd ' .. dir)
   if winid ~= vim.fn.win_getid() then
     M.close()
+    vim.fn.win_gotoid(winid)
   end
-  vim.fn.win_gotoid(winid)
 end
 
 return M
