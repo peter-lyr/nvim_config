@@ -135,7 +135,6 @@ M.runbuild = function(rebuild_en)
       require('cbp2make').build(workspaces)
       return
     end
-    return
   end
   if vim.bo.ft == 'c' or vim.bo.ft == 'cpp' or vim.fn.expand('%:p:t') == 'CMakeLists.txt' then
     local dir = path:new(vim.api.nvim_buf_get_name(0)):parent()
@@ -189,7 +188,6 @@ M.build = function(rebuild_en)
       require('cbp2make').build(workspaces)
       return
     end
-    return
   end
   if vim.bo.ft == 'c' or vim.bo.ft == 'cpp' or vim.fn.expand('%:p:t') == 'CMakeLists.txt' then
     local dir = path:new(vim.api.nvim_buf_get_name(0)):parent()
