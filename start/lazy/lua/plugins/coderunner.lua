@@ -1,6 +1,7 @@
 return {
   'peter-lyr/code_runner.nvim',
   lazy = true,
+  commit = '3c365982',
   keys = {
     {
       '<leader>rr',
