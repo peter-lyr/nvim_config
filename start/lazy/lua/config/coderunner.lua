@@ -4,6 +4,19 @@ local M = {}
 
 local path = require("plenary.path")
 
+local function systemcd(p)
+  local s = ''
+  if string.sub(p, 2, 2) == ':' then
+    s = s .. string.sub(p, 1, 2) .. ' && '
+  end
+  if require('plenary.path').new(p):is_dir() then
+    s = s .. 'cd ' .. p
+  else
+    s = s .. 'cd ' .. require('plenary.path').new(p):parent().filename
+  end
+  return s
+end
+
 M.c0 = {
   'cd $dir &&',
   'pwd &&',
@@ -45,13 +58,13 @@ M.c2 = {
 
 M.rebuild_en = nil
 
-M.cp0 = function(projname, curname)
+M.cp0 = function(dir, projname, curname)
   return table.concat({
-    'pwd',
-    'echo ============================================================',
     M.rebuild_en and
-    'del /s /q .cache & rd /s /q .cache & del /s /q build & rd /s /q build & cmake -B build -G "MinGW Makefiles" -DCMAKE_EXPORT_COMPILE_COMMANDS=1 & cd build'
-    or 'cmake -B build -G "MinGW Makefiles" -DCMAKE_EXPORT_COMPILE_COMMANDS=1 & cd build',
+    string.format('%s & del /s /q .cache & rd /s /q .cache & del /s /q build & rd /s /q build & cmake -B build -G "MinGW Makefiles" -DCMAKE_EXPORT_COMPILE_COMMANDS=1 & cd build', systemcd(dir))
+    or string.format('%s & cmake -B build -G "MinGW Makefiles" -DCMAKE_EXPORT_COMPILE_COMMANDS=1 & cd build', systemcd(dir)),
+    'echo ============================================================',
+    'pwd',
     'echo ============================================================',
     string.format('taskkill /f /im %s.exe & mingw32-make', curname),
     'echo ============================================================',
@@ -72,13 +85,13 @@ M.cp0 = function(projname, curname)
   }, ' && ')
 end
 
-M.cp1 = function(projname, curname)
+M.cp1 = function(dir, projname, curname)
   return table.concat({
-    'pwd',
-    'echo ============================================================',
     M.rebuild_en and
-    'del /s /q .cache & rd /s /q .cache & del /s /q build & rd /s /q build & cmake -B build -G "MinGW Makefiles" -DCMAKE_EXPORT_COMPILE_COMMANDS=1 & cd build'
-    or 'cmake -B build -G "MinGW Makefiles" -DCMAKE_EXPORT_COMPILE_COMMANDS=1 & cd build',
+    string.format('%s & del /s /q .cache & rd /s /q .cache & del /s /q build & rd /s /q build & cmake -B build -G "MinGW Makefiles" -DCMAKE_EXPORT_COMPILE_COMMANDS=1 & cd build', systemcd(dir))
+    or string.format('%s & cmake -B build -G "MinGW Makefiles" -DCMAKE_EXPORT_COMPILE_COMMANDS=1 & cd build', systemcd(dir)),
+    'echo ============================================================',
+    'pwd',
     'echo ============================================================',
     string.format('taskkill /f /im %s.exe & mingw32-make', curname),
     'echo ============================================================',
@@ -96,8 +109,9 @@ M.cp1 = function(projname, curname)
   }, ' && ')
 end
 
-M.cp2 = function(_, curname)
+M.cp2 = function(dir, curname)
   return table.concat({
+    systemcd(dir),
     'pwd',
     'echo ============================================================',
     string.format('echo %s.exe', curname),
@@ -136,10 +150,10 @@ M.runbuild = function(rebuild_en)
       return
     end
   end
+  local cmake_ok = nil
   if vim.bo.ft == 'c' or vim.bo.ft == 'cpp' or vim.fn.expand('%:p:t') == 'CMakeLists.txt' then
     local dir = path:new(vim.api.nvim_buf_get_name(0)):parent()
     local cmakelists = dir:joinpath('CMakeLists.txt')
-    local cmake_ok = nil
     if cmakelists:exists() then
       local content = cmakelists:read()
       local projname = content:match('set%(PROJECT_NAME ([%S]+)%)')
@@ -152,11 +166,12 @@ M.runbuild = function(rebuild_en)
           M.c_level = 10
           M.mainfile = mainfile
           require('code_runner').setup({
+          filetype = nil,
             project = {
               [dir.filename] = {
                 name = "C Proj",
                 description = "Project with cmakelists",
-                command = M.cp0(projname, mainfile)
+                command = M.cp0(dir.filename, projname, mainfile)
               }
             },
           })
@@ -189,10 +204,10 @@ M.build = function(rebuild_en)
       return
     end
   end
+  local cmake_ok = nil
   if vim.bo.ft == 'c' or vim.bo.ft == 'cpp' or vim.fn.expand('%:p:t') == 'CMakeLists.txt' then
     local dir = path:new(vim.api.nvim_buf_get_name(0)):parent()
     local cmakelists = dir:joinpath('CMakeLists.txt')
-    local cmake_ok = nil
     if cmakelists:exists() then
       local content = cmakelists:read()
       local projname = content:match('set%(PROJECT_NAME ([%S]+)%)')
@@ -209,7 +224,7 @@ M.build = function(rebuild_en)
               [dir.filename] = {
                 name = "C Proj",
                 description = "Project with cmakelists",
-                command = M.cp1(projname, mainfile)
+                command = M.cp1(dir.filename, projname, mainfile)
               }
             },
           })
@@ -253,7 +268,7 @@ M.run = function()
               [dir.filename] = {
                 name = "C Proj",
                 description = "Project with cmakelists",
-                command = M.cp2(projname, mainfile)
+                command = M.cp2(dir.filename, mainfile)
               }
             },
           })
