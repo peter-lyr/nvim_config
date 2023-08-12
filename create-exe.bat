@@ -65,6 +65,3 @@ REM  run exe
 
 REM  %repo%open-with-cmd.exe
 REM  %repo%open-with-ps1.exe
-
-timeout /t 3
-exit
