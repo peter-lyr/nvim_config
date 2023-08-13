@@ -173,8 +173,8 @@ M.init_oftendir = function()
   local res = true
   if not oftendir_exe:exists() then
     vim.cmd(string.format(
-      [[silent !start /b /min cmd /c "gcc %s -Wall -s -ffunction-sections -fdata-sections -Wl,--gc-sections -O3 -o %s"]],
-      config:joinpath('nvimtree-oftendirs.c').filename, config:joinpath('nvimtree-oftendirs').filename))
+      [[silent !start /b /min cmd /c "%s && gcc nvimtree-oftendirs.c -Wall -s -ffunction-sections -fdata-sections -Wl,--gc-sections -O3 -o nvimtree-oftendirs"]],
+      systemcd(config.filename)))
     res = nil
   end
   local f = io.popen(oftendir_exe.filename)
@@ -225,7 +225,7 @@ M.explorer = function()
     if not choice then
       return
     end
-    vim.cmd('!explorer "' .. choice .. '"')
+    vim.cmd(string.format([[silent !start /b /min cmd /c "%s && explorer %s"]], systemcd(choice), choice))
   end)
 end
 
