@@ -1,8 +1,21 @@
--- package.loaded['config.nvimtree-oftendirs'] = nil
+package.loaded['config.nvimtree-oftendirs'] = nil
 
 local M = {}
 
 M.all_dirs = {}
+
+local function systemcd(p)
+  local s = ''
+  if string.sub(p, 2, 2) == ':' then
+    s = s .. string.sub(p, 1, 2) .. ' && '
+  end
+  if require('plenary.path').new(p):is_dir() then
+    s = s .. 'cd ' .. p
+  else
+    s = s .. 'cd ' .. require('plenary.path').new(p):parent().filename
+  end
+  return s
+end
 
 ---------------
 -- 1. my dirs
@@ -144,7 +157,7 @@ M.open_pathfiles = function()
     if not choice then
       return
     end
-    vim.cmd(string.format([[silent !start cmd /c "%s"]], choice))
+    vim.cmd(string.format([[silent !start /b /min cmd /c "%s && %s"]], systemcd(choice), choice))
   end)
 end
 
