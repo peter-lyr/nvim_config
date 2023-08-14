@@ -92,10 +92,10 @@ return {
 
       -- start explorer
 
-      { 'cs.',                '<cmd>!explorer "%:h"<cr>',                                              mode = { 'n', 'v' },  silent = true, desc = 'start %:h' },
-      { 'csu',                '<cmd>!explorer ..<cr>',                                                 mode = { 'n', 'v' },  silent = true, desc = 'start ..' },
-      { 'csw',                function() vim.cmd('!explorer "' .. vim.call('ProjectRootGet') .. '"') end, mode = { 'n', 'v' },  silent = true, desc = 'start ProjectRootGet' },
-      { 'csc',                '<cmd>!chcp 65001 && start /min /b cmd /c "%:p"<cr>',                    mode = { 'n', 'v' },  silent = true, desc = 'system open %:h' },
+      { 'cs.',                function() vim.fn.system( string.format([[start /b cmd /c "explorer "%s""]], vim.fn.substitute(vim.fn.fnamemodify( vim.api.nvim_buf_get_name(0), ":h"), "/", "\\\\", "g"))) end, mode = { 'n', 'v' },  silent = true, desc = 'start %:h' },
+      { 'csu',                function() vim.fn.system([[start /b cmd /c "explorer .."]]) end, mode = { 'n', 'v' },  silent = true, desc = 'start ..' },
+      { 'csw',                function() vim.fn.system(string.format([[start /b cmd /c "explorer "%s""]], vim.call('ProjectRootGet'))) end, mode = { 'n', 'v' },  silent = true, desc = 'start ProjectRootGet' },
+      { 'csc',                function() vim.fn.system(string.format([[chcp 65001 && start /min cmd /c "%s"]], vim.api.nvim_buf_get_name(0))) end, mode = { 'n', 'v' },  silent = true, desc = 'system open %:h' },
 
       -- replace
 
