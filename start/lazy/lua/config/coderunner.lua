@@ -2,6 +2,17 @@ package.loaded['config.coderunner'] = nil
 
 local M = {}
 
+M.numberofcores = 1
+
+local f = io.popen("wmic cpu get NumberOfCores")
+for dir in string.gmatch(f:read("*a"), "([%S ]+)") do
+  local NumberOfCores = vim.fn.str2nr(vim.fn.trim(dir))
+  if NumberOfCores > 0 then
+    M.numberofcores = NumberOfCores
+  end
+end
+f:close()
+
 local path = require("plenary.path")
 
 local function systemcd(p)
@@ -66,7 +77,7 @@ M.cp0 = function(dir, projname, curname)
     'echo ============================================================',
     'pwd',
     'echo ============================================================',
-    string.format('taskkill /f /im %s.exe & mingw32-make', curname),
+    string.format('taskkill /f /im %s.exe & mingw32-make -j%d', curname, M.numberofcores * 2),
     'echo ============================================================',
     string.format('strip -s %s.exe & cd .', projname),
     'echo ============================================================',
@@ -93,7 +104,7 @@ M.cp1 = function(dir, projname, curname)
     'echo ============================================================',
     'pwd',
     'echo ============================================================',
-    string.format('taskkill /f /im %s.exe & mingw32-make', curname),
+    string.format('taskkill /f /im %s.exe & mingw32-make -j%d', curname, M.numberofcores * 2),
     'echo ============================================================',
     string.format('strip -s %s.exe & cd .', projname),
     'echo ============================================================',

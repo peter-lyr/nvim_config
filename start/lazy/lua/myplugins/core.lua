@@ -17,6 +17,7 @@ return {
       require('wait.notify'),
       require('wait.telescope_ui_select'),
       require('plugins.minimap'), -- tabclose minimap
+      require('plugins.coderunner'),
       'peter-lyr/sha2',
     },
     keys = {
