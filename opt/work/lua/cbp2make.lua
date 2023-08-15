@@ -52,16 +52,14 @@ end
 
 M.build_do = function(project, workspace)
   vim.cmd([[au User AsyncRunStop call v:lua.Cbp2makeBuildDone()]])
-  local clean = 'cbp2make'
+  local clean = ''
   if require('config.coderunner').rebuild_en then
-    clean = 'mingw32-make clean &'
+    clean = 'mingw32-make --keep-going clean &'
   end
   local cmd = string.format(
-    [[AsyncRun chcp 65001 && %s && cbp2make -cfg "%s" -in "%s" -out Makefile && %s mingw32-make %d]],
-    systemcd(project), vim.g.cbp2make_cfg, workspace, clean, require("config.coderunner").numberofcores * 2)
+    [[AsyncRun chcp 65001 && %s && cbp2make --wrap-objects --keep-outdir -in "%s" -out Makefile & %s mingw32-make all]],
+    systemcd(project), workspace, clean)
   vim.cmd(cmd)
-  -- require('terminal').send('cmd', cmd, 'show')
-  -- vim.cmd(string.format([[silent !start cmd /c "%s & pause"]], cmd))
   -- if vim.g.builtin_terminal_ok == 1 then
   local winid = vim.fn.win_getid()
   vim.cmd('copen')
