@@ -1,8 +1,21 @@
--- package.loaded['config.nvimtree-oftendirs'] = nil
+package.loaded['config.nvimtree-oftendirs'] = nil
 
 local M = {}
 
 M.all_dirs = {}
+
+local function systemcd(p)
+  local s = ''
+  if string.sub(p, 2, 2) == ':' then
+    s = s .. string.sub(p, 1, 2) .. ' && '
+  end
+  if require('plenary.path').new(p):is_dir() then
+    s = s .. 'cd ' .. p
+  else
+    s = s .. 'cd ' .. require('plenary.path').new(p):parent().filename
+  end
+  return s
+end
 
 ---------------
 -- 1. my dirs
@@ -144,7 +157,7 @@ M.open_pathfiles = function()
     if not choice then
       return
     end
-    vim.cmd(string.format([[silent !start cmd /c "%s"]], choice))
+    vim.cmd(string.format([[silent !start /b /min cmd /c "%s && %s"]], systemcd(choice), choice))
   end)
 end
 
@@ -160,8 +173,8 @@ M.init_oftendir = function()
   local res = true
   if not oftendir_exe:exists() then
     vim.cmd(string.format(
-      [[silent !start /b /min cmd /c "gcc %s -Wall -s -ffunction-sections -fdata-sections -Wl,--gc-sections -O3 -o %s"]],
-      config:joinpath('nvimtree-oftendirs.c').filename, config:joinpath('nvimtree-oftendirs').filename))
+      [[silent !start /b /min cmd /c "%s && gcc nvimtree-oftendirs.c -Wall -s -ffunction-sections -fdata-sections -Wl,--gc-sections -O3 -o nvimtree-oftendirs"]],
+      systemcd(config.filename)))
     res = nil
   end
   local f = io.popen(oftendir_exe.filename)
@@ -212,7 +225,7 @@ M.explorer = function()
     if not choice then
       return
     end
-    vim.cmd('!explorer "' .. choice .. '"')
+    vim.cmd(string.format([[silent !start /b /min cmd /c "%s && explorer %s"]], systemcd(choice), choice))
   end)
 end
 

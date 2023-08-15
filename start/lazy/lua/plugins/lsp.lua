@@ -54,7 +54,7 @@ return {
               },
               extra_args = {
                 '--style',
-                '{BasedOnStyle: llvm, IndentWidth: 4}',
+                '{BasedOnStyle: llvm, IndentWidth: 4, ColumnLimit: 80}',
               },
             }),
           }

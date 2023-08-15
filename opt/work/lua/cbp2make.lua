@@ -57,8 +57,8 @@ M.build_do = function(project, workspace)
     clean = 'mingw32-make clean &'
   end
   local cmd = string.format(
-    [[AsyncRun chcp 65001 && %s && cbp2make -cfg "%s" -in "%s" -out Makefile && %s mingw32-make]],
-    systemcd(project), vim.g.cbp2make_cfg, workspace, clean)
+    [[AsyncRun chcp 65001 && %s && cbp2make -cfg "%s" -in "%s" -out Makefile && %s mingw32-make %d]],
+    systemcd(project), vim.g.cbp2make_cfg, workspace, clean, require("config.coderunner").numberofcores * 2)
   vim.cmd(cmd)
   -- require('terminal').send('cmd', cmd, 'show')
   -- vim.cmd(string.format([[silent !start cmd /c "%s & pause"]], cmd))

@@ -56,15 +56,12 @@ del /f /s /q %repo%cli/neovim.ico.o
 REM  compress exe
 
 strip -s %repo%open-with-cmd.exe
-upx --best %repo%open-with-cmd.exe
+upx -qq --best %repo%open-with-cmd.exe
 
 strip -s %repo%open-with-ps1.exe
-upx --best %repo%open-with-ps1.exe
+upx -qq --best %repo%open-with-ps1.exe
 
 REM  run exe
 
 REM  %repo%open-with-cmd.exe
 REM  %repo%open-with-ps1.exe
-
-timeout /t 3
-exit
