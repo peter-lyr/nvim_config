@@ -52,38 +52,25 @@ end
 
 M.build_do = function(project, workspace)
   vim.cmd([[au User AsyncRunStop call v:lua.Cbp2makeBuildDone()]])
-  local clean = ''
-  if require('config.coderunner').rebuild_en then
-    clean = 'mingw32-make --keep-going clean &'
+  local make = 'mingw32-make all'
+  local rebuild_en = require('config.coderunner').rebuild_en
+  if rebuild_en then
+    make = 'mingw32-make --keep-going clean & mingw32-make all -j ' .. tostring(require('config.coderunner').numberofcores * 2)
   end
   local cmd = string.format(
-    [[AsyncRun chcp 65001 && %s && cbp2make --wrap-objects --keep-outdir -in "%s" -out Makefile & %s mingw32-make all]],
-    systemcd(project), workspace, clean)
-  vim.cmd(cmd)
-  -- if vim.g.builtin_terminal_ok == 1 then
-  local winid = vim.fn.win_getid()
-  vim.cmd('copen')
-  vim.cmd('wincmd J')
-  pcall(vim.fn.timer_stop, cbp2make_timer)
-  local bufnr = -1
-  vim.fn.timer_start(30, function()
-    vim.api.nvim_win_set_height(0, 12)
+    [[chcp 65001 && %s && cbp2make --wrap-objects --keep-outdir -in "%s" -out Makefile & %s]],
+    systemcd(project), workspace, make)
+  if rebuild_en then
+    cmd = string.gsub(cmd, '"', '\\"')
+    vim.fn.system(string.format([[start cmd /c "%s"]], cmd))
+  else
+    vim.cmd('AsyncRun ' .. cmd)
+    local winid = vim.fn.win_getid()
+    vim.cmd('copen')
+    vim.cmd('wincmd J')
     vim.cmd('norm Gzb')
     vim.fn.win_gotoid(winid)
-    vim.fn.timer_start(30, function()
-      bufnr = vim.fn.bufnr()
-      vim.keymap.set('n', 'q', function()
-        require('terminal').hideall()
-      end, { desc = 'terminal hideall', nowait = true, buffer = bufnr })
-    end)
-  end)
-  cbp2make_timer = vim.fn.timer_start(5000, function()
-    if vim.api.nvim_buf_get_option(vim.fn.bufnr(), 'buftype') ~= 'terminal' then
-      require('terminal').hideall()
-    end
-    pcall(vim.keymap.del, 'n', 'q', { buffer = bufnr })
-  end)
-  -- end
+  end
 end
 
 local notify_building = function()
