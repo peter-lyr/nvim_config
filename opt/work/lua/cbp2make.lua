@@ -5,12 +5,6 @@ package.loaded['cbp2make'] = nil
 local Path = require("plenary.path")
 local Scan = require("plenary.scandir")
 
-local cbp2make = require("plenary.path"):new(vim.g.pack_path):joinpath('nvim_config', 'opt', 'work', 'autoload',
-  'cbp2make')
-vim.g.cbp2make_cfg = cbp2make:joinpath('cbp2make.cfg').filename
-
-local cbp2make_timer = -1
-
 local function systemcd(path)
   local s = ''
   if string.sub(path, 2, 2) == ':' then
@@ -55,7 +49,8 @@ M.build_do = function(project, workspace)
   local make = 'mingw32-make all'
   local rebuild_en = require('config.coderunner').rebuild_en
   if rebuild_en then
-    make = 'mingw32-make --keep-going clean & mingw32-make all -j ' .. tostring(require('config.coderunner').numberofcores * 2)
+    make = 'mingw32-make --keep-going clean & mingw32-make all -j ' ..
+    tostring(require('config.coderunner').numberofcores * 2)
   end
   local cmd = string.format(
     [[chcp 65001 && %s && cbp2make --wrap-objects --keep-outdir -in "%s" -out Makefile & %s]],
