@@ -86,6 +86,7 @@ if __name__ == "__main__":
         os._exit(1)
 
     project_root = rep(sys.argv[1])
+    print(project_root, '=====')
 
     executable_cbp, cbp_files = get_executable_cbp(project_root)
     executable_cbp_dir = os.path.dirname(executable_cbp)

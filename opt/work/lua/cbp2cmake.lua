@@ -42,7 +42,7 @@ M.build = function()
     vim.notify('No cbp file found in ' .. project .. '.')
     return
   end
-  local cmd = string.format([[chcp 65001 && python "%s" "%s"]], vim.g.cbp2cmake_main_py, project)
+  local cmd = string.format([[chcp 65001 & python "%s" "%s"]], vim.g.cbp2cmake_main_py, project)
   require('terminal').send('cmd', cmd, 'show')
   -- vim.cmd(string.format([[silent !start cmd /c "%s & pause"]], cmd))
   if vim.g.builtin_terminal_ok == 1 then
