@@ -1,5 +1,7 @@
 local M = {}
 
+local bqf = require("bqf")
+
 local hi = function()
   vim.cmd([[
     hi BqfPreviewBorder guifg=#50a14f ctermfg=71
@@ -9,13 +11,25 @@ end
 
 hi()
 
+pcall(vim.api.nvim_del_autocmd, vim.g.bqf_au_bufenter)
+
+vim.g.bqf_au_bufenter = vim.api.nvim_create_autocmd({ 'BufEnter', }, {
+  callback = function()
+    if vim.bo.ft == 'qf' then
+      if string.match(vim.fn.getline(1), 'mingw32%-make') then
+        bqf.disable()
+      end
+    end
+  end,
+})
+
 vim.api.nvim_create_autocmd({ 'ColorScheme', }, {
   callback = function()
     hi()
   end,
 })
 
-require("bqf").setup({
+bqf.setup({
   auto_resize_height = true,
   preview = {
     win_height = 50,
