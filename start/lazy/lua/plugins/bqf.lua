@@ -8,6 +8,7 @@ return {
   dependencies = {
     require('plugins.edgy'),
     require('wait.blankline'),
+    'benseefeldt/qf-format.nvim',
   },
   config = function()
     require('config.bqf')
