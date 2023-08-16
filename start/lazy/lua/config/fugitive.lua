@@ -120,4 +120,8 @@ vim.g.fugitive_au_bufwritepost = vim.api.nvim_create_autocmd({ "BufWritePost", }
   end,
 })
 
+require('maps').add('<F5>', 'n', function()
+  pcall(vim.call, 'fugitive#ReloadStatus')
+end, 'futigive status fresh')
+
 return M
