@@ -134,10 +134,10 @@ M.get_table = function()
       help_panel = {
         { "n", "q",         actions.close,  { desc = "Close help menu" } },
         { "n", "<esc>",     actions.close,  { desc = "Close help menu" } },
-        { "n", "<leader>3", actions.close,  { desc = "Close help menu" } },
-        { "n", "<leader>2", actions.close,  { desc = "Close help menu" } },
-        { "n", "<leader>1", actions.close,  { desc = "Close help menu" } },
-        { "n", "<leader>4", actions.close,  { desc = "Close help menu" } },
+        { "n", "<c-3>", actions.close,  { desc = "Close help menu" } },
+        { "n", "<c-2>", actions.close,  { desc = "Close help menu" } },
+        { "n", "<c-1>", actions.close,  { desc = "Close help menu" } },
+        { "n", "<c-4>", actions.close,  { desc = "Close help menu" } },
       },
     },
   }

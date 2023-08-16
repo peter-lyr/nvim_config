@@ -8,8 +8,8 @@ return {
     'NvimTreeOpen',
   },
   keys = {
-    { '<leader><leader>1', '<cmd>NvimTreeFindFile<cr>', mode = { 'n', 'v', }, silent = true, desc = 'NvimTreeFindFile' },
-    { '<leader><leader>2', function() require('config.fugitive').open() end, mode = { 'n', 'v', }, silent = true, desc = 'Git' },
+    { '<leader>1', '<cmd>NvimTreeFindFile<cr>', mode = { 'n', 'v', }, silent = true, desc = 'NvimTreeFindFile' },
+    { '<leader>2', function() require('config.fugitive').open() end, mode = { 'n', 'v', }, silent = true, desc = 'Git' },
     { '<leader>sem',  function() require('config.nvimtree-oftendirs').open_mydirs() end, mode = { 'n', 'v', }, silent = true, desc = 'nvimtree open_mydirs' },
     { '<leader>serm', function() require('config.nvimtree-oftendirs').reopen_mydirs() end, mode = { 'n', 'v', }, silent = true, desc = 'nvimtree reopen_mydirs' },
     { '<leader>sep',  function() require('config.nvimtree-oftendirs').open_pathdirs() end, mode = { 'n', 'v', }, silent = true, desc = 'nvimtree open_pathdirs' },

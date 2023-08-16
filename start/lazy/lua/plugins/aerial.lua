@@ -3,7 +3,7 @@ return {
   lazy = true,
   event = { 'LspAttach', },
   keys = {
-    { '<leader><leader>4', function() require('config.aerial').open() end, mode = { 'n', 'v', }, silent = true, desc = 'AerialOpen right' },
+    { '<leader>4', function() require('config.aerial').open() end, mode = { 'n', 'v', }, silent = true, desc = 'AerialOpen right' },
     { ']a',        '<cmd>AerialNext<cr>',                          mode = { 'n', 'v', }, silent = true, desc = 'AerialNext' },
     { '[a',        '<cmd>AerialPrev<cr>',                          mode = { 'n', 'v', }, silent = true, desc = 'AerialPrev' },
   },
