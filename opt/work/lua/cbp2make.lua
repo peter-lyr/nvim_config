@@ -49,15 +49,14 @@ M.build_do = function(project, workspace)
   local make = 'mingw32-make all'
   local rebuild_en = require('config.coderunner').rebuild_en
   if rebuild_en then
-    make = 'mingw32-make --keep-going clean & mingw32-make all -j ' ..
-    tostring(require('config.coderunner').numberofcores * 2)
+    make = make .. ' -B -j20'
   end
   local cmd = string.format(
     [[chcp 65001 && %s && cbp2make --wrap-objects --keep-outdir -in "%s" -out Makefile & %s]],
     systemcd(project), workspace, make)
   if rebuild_en then
     cmd = string.gsub(cmd, '"', '\\"')
-    vim.fn.system(string.format([[start cmd /c "%s"]], cmd))
+    vim.fn.system(string.format([[start cmd /c "%s & pause"]], cmd))
   else
     vim.cmd('AsyncRun ' .. cmd)
     local winid = vim.fn.win_getid()
