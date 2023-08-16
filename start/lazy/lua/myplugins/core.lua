@@ -174,6 +174,11 @@ return {
       { '<leader>wvk', function() require('bufferjump').kk() end, mode = { 'n', 'v' }, silent = true, desc = 'set winfixheight' },
       { '<leader>wvl', function() require('bufferjump').ll() end, mode = { 'n', 'v' }, silent = true, desc = 'set nowinfixwidth' },
 
+      { '<a-s-h>', function() vim.cmd('10wincmd <') end, mode = { 'n', 'v' }, silent = true, desc = '10wincmd <' },
+      { '<a-s-l>', function() vim.cmd('10wincmd >') end, mode = { 'n', 'v' }, silent = true, desc = '10wincmd >' },
+      { '<a-s-j>', function() vim.cmd('5wincmd -') end, mode = { 'n', 'v' }, silent = true, desc = '10wincmd -' },
+      { '<a-s-k>', function() vim.cmd('5wincmd +') end, mode = { 'n', 'v' }, silent = true, desc = '10wincmd +' },
+
       ------------------------
       -- buffernew.lua
       ------------------------
