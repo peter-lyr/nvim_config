@@ -7,7 +7,7 @@ return {
     { 'zf', mode = { 'n', },     desc = 'tree hopper fold manual' },
     { 'im', mode = { 'o', 'x' }, desc = 'tree hopper sel' },
     {
-      'gs',
+      'ga',
       function()
         require('tsht').move({ ignore_injections = false })
       end,
@@ -15,7 +15,7 @@ return {
       desc = 'tree hopper go start'
     },
     {
-      'gf',
+      'gs',
       function()
         require('tsht').move({ side = 'end', ignore_injections = false })
       end,
