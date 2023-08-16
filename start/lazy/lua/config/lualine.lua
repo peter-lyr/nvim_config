@@ -272,7 +272,7 @@ require('lualine').setup({
         end,
       },
     },
-    lualine_y = {
+    lualine_x = {
       {
         function()
           return get_projectroot(vim.call('ProjectRootGet'))
@@ -282,10 +282,10 @@ require('lualine').setup({
         end,
       },
     },
-    lualine_x = {
+    lualine_y = {
       {
         function()
-          return vim.fn.bufnr('%')
+          return vim.fn.bufwinnr(vim.fn.bufnr('%'))
         end,
         cond = function()
           return #vim.fn.expand('%:~:.') > 0
@@ -305,7 +305,7 @@ require('lualine').setup({
         color = { fg = '#533547', }
       },
     },
-    lualine_y = {
+    lualine_x = {
       {
         function()
           return get_projectroot(vim.call('ProjectRootGet'))
@@ -315,10 +315,10 @@ require('lualine').setup({
         end,
       },
     },
-    lualine_x = {
+    lualine_y = {
       {
         function()
-          return vim.fn.bufnr('%')
+          return vim.fn.bufwinnr(vim.fn.bufnr('%'))
         end,
         cond = function()
           return #vim.fn.expand('%:~:.') > 0

@@ -1,5 +1,7 @@
 local M = {}
 
+package.loaded['bufferjump'] = nil
+
 M.max_en = 0
 M.winid = 0
 
@@ -24,6 +26,46 @@ M.j = function()
   M.winid = vim.fn.win_getid()
   vim.cmd('wincmd j')
   M.check()
+end
+
+M.wp = function()
+  local count = vim.v.count
+  local max = vim.fn.winnr('$')
+  if count == 0 then
+    local winnr = vim.fn.winnr() - 1
+    if winnr < 1 then
+      winnr = max
+    end
+    vim.fn.win_gotoid(vim.fn.win_getid(winnr))
+  else
+    if count < 1 then
+      count = 1
+    else if count > max then
+        count = max
+      end
+      vim.fn.win_gotoid(vim.fn.win_getid(count))
+    end
+  end
+end
+
+M.wn = function()
+  local count = vim.v.count
+  local max = vim.fn.winnr('$')
+  if count == 0 then
+    local winnr = vim.fn.winnr() + 1
+    if winnr > max then
+      winnr = 1
+    end
+    vim.fn.win_gotoid(vim.fn.win_getid(winnr))
+  else
+    if count < 1 then
+      count = 1
+    else if count > max then
+        count = max
+      end
+      vim.fn.win_gotoid(vim.fn.win_getid(count))
+    end
+  end
 end
 
 M.oo = function()
