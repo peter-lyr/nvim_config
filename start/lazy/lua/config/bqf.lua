@@ -18,6 +18,8 @@ vim.g.bqf_au_bufenter = vim.api.nvim_create_autocmd({ 'BufEnter', }, {
     if vim.bo.ft == 'qf' then
       if string.match(vim.fn.getline(1), 'mingw32%-make') then
         bqf.disable()
+      else
+        bqf.enable()
       end
     end
   end,
