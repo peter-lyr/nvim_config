@@ -522,6 +522,7 @@ vim.keymap.set({ 'n', 'v', }, '<a-f1>', function()
 end, { desc = 'restore hidden tabs' })
 
 vim.keymap.set({ 'n', 'v', }, '<a-f2>', function()
+  pcall(vim.cmd, 'MinimapClose')
   vim.cmd('tabo')
   vim.cmd('wincmd o')
   local winid = vim.fn.win_getid()
