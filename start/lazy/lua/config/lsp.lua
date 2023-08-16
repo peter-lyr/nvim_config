@@ -28,7 +28,14 @@ local diagnostics = {
 vim.diagnostic.config(diagnostics)
 
 lspconfig.clangd.setup({
-  capabilities = capabilities,
+  capabilities = {
+    textDocument = {
+      completion = {
+        editsNearCursor = true,
+      },
+    },
+    offsetEncoding = 'utf-16',
+  },
   root_dir = root_dir({
     'build',
     '.cache',
