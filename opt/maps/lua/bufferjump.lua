@@ -68,6 +68,18 @@ M.wn = function()
   end
 end
 
+M.main = function()
+  for winnr=1, vim.fn.winnr('$') do
+    local bufnr = vim.fn.winbufnr(winnr)
+    local fname = vim.api.nvim_buf_get_name(bufnr)
+    if vim.fn.filereadable(fname) == 1 then
+      local winid = vim.fn.win_getid(winnr)
+      vim.fn.win_gotoid(winid)
+      break
+    end
+  end
+end
+
 M.oo = function()
   M.max_en = 1
   print('win height auto max enabled')

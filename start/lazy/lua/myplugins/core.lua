@@ -163,8 +163,9 @@ return {
       { '<c-2>', function() require('bufferjump').j() end,  mode = { 'n', 'v' }, silent = true, desc = 'wincmd j' },
       { '<c-1>', '<c-w>h',                                  mode = { 'n', 'v' }, silent = true, desc = 'wincmd h' },
       { '<c-4>', '<c-w>l',                                  mode = { 'n', 'v' }, silent = true, desc = 'wincmd l' },
-      { '<c-f1>', function() require('bufferjump').wp() end,  mode = { 'n', 'v' }, silent = true, desc = 'wincmd l' },
-      { '<c-f2>', function() require('bufferjump').wn() end,  mode = { 'n', 'v' }, silent = true, desc = 'wincmd l' },
+      { '<c-f1>', function() require('bufferjump').wp() end,  mode = { 'n', 'v' }, silent = true, desc = 'winnr prev' },
+      { '<c-f2>', function() require('bufferjump').wn() end,  mode = { 'n', 'v' }, silent = true, desc = 'winnr next' },
+      { '<c-`>', function() require('bufferjump').main() end,  mode = { 'n', 'v' }, silent = true, desc = 'winnr main' },
 
       -- win max min equal width height
 
