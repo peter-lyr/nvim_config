@@ -284,11 +284,12 @@ require('lualine').setup({
     },
     lualine_y = {
       {
-        "filetype",
-        cond = function()
-          return check_ft(vim.bo.ft)
+        function()
+          return vim.fn.bufnr('%')
         end,
-        icons_enabled = false,
+        cond = function()
+          return #vim.fn.expand('%:~:.') > 0
+        end,
       },
     },
   },
@@ -316,11 +317,12 @@ require('lualine').setup({
     },
     lualine_y = {
       {
-        "filetype",
-        cond = function()
-          return check_ft(vim.bo.ft)
+        function()
+          return vim.fn.bufnr('%')
         end,
-        icons_enabled = false,
+        cond = function()
+          return #vim.fn.expand('%:~:.') > 0
+        end,
       },
     },
   },
