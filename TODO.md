@@ -24,6 +24,7 @@
 - [x] winfixheight restore
 - [x] map winheight change
 - [ ] cbp2cmake make common for c
+- [ ] <c-m> win_gotoid(win_getid(bufwinnr(v:cnt)))
 
 # jump window
 
