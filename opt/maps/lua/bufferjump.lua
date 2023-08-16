@@ -48,13 +48,13 @@ M.i = function()
 end
 
 M.hh = function()
-  vim.cmd('set winfixwidth')
-  print('set winfixwidth')
+  vim.cmd('set nowinfixwidth')
+  print('set nowinfixwidth')
 end
 
 M.ll = function()
-  vim.cmd('set nowinfixwidth')
-  print('set nowinfixwidth')
+  vim.cmd('set winfixwidth')
+  print('set winfixwidth')
 end
 
 M.kk = function()
