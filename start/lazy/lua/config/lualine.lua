@@ -479,7 +479,7 @@ vim.api.nvim_create_autocmd({ "TabEnter", }, {
 
 -- restore hidden tabs
 
-vim.keymap.set({ 'n', 'v', }, '<a-f7>', function()
+vim.keymap.set({ 'n', 'v', }, '<a-f1>', function()
   local sta, tmp
   local tabs = {}
   local curtabnr = vim.fn.tabpagenr()
@@ -520,6 +520,28 @@ vim.keymap.set({ 'n', 'v', }, '<a-f7>', function()
     vim.cmd(v .. 'tabclose')
   end
 end, { desc = 'restore hidden tabs' })
+
+vim.keymap.set({ 'n', 'v', }, '<a-f2>', function()
+  vim.cmd('tabo')
+  vim.cmd('wincmd o')
+  local winid = vim.fn.win_getid()
+  local projs = {rep(vim.fn['ProjectRootGet'](vim.api.nvim_buf_get_name(0)))}
+  for b = 1, vim.fn.bufnr('$') do
+    if vim.fn.buflisted(b) ~= 0 and vim.api.nvim_buf_get_option(b, 'buftype') ~= 'quickfix' then
+      local fname = vim.fn.tolower(rep(vim.api.nvim_buf_get_name(b)))
+      if #fname > 0 and vim.fn.filereadable(fname) == 1 then
+        local proj = rep(vim.fn['ProjectRootGet'](fname))
+        if vim.tbl_contains(projs, proj) ~= true then
+          projs[#projs + 1] = proj
+          vim.cmd('split')
+          vim.cmd('e ' .. fname)
+        end
+      end
+    end
+  end
+  vim.fn.win_gotoid(winid)
+  vim.cmd('wincmd H')
+end, { desc = 'buffers workflow' })
 
 vim.opt.laststatus = 3
 
