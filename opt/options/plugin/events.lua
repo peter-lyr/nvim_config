@@ -3,6 +3,9 @@
 vim.api.nvim_create_autocmd({ "BufEnter", }, {
   callback = function()
     vim.opt.mouse = 'a'
+    if vim.api.nvim_win_get_height(0) < 2 then
+      vim.api.nvim_win_set_height(0, 2)
+    end
   end,
 })
 
