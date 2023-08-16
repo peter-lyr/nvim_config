@@ -274,6 +274,16 @@ require('lualine').setup({
     },
     lualine_x = {
       {
+        function()
+          return get_projectroot(vim.call('ProjectRootGet'))
+        end,
+        cond = function()
+          return #vim.fn.expand('%:~:.') > 0
+        end,
+      },
+    },
+    lualine_y = {
+      {
         "filetype",
         cond = function()
           return check_ft(vim.bo.ft)
@@ -295,6 +305,16 @@ require('lualine').setup({
       },
     },
     lualine_x = {
+      {
+        function()
+          return get_projectroot(vim.call('ProjectRootGet'))
+        end,
+        cond = function()
+          return #vim.fn.expand('%:~:.') > 0
+        end,
+      },
+    },
+    lualine_y = {
       {
         "filetype",
         cond = function()
