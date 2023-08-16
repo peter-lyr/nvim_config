@@ -410,7 +410,7 @@ M.explorer = function(node)
   if not dtarget then
     return
   end
-  vim.cmd('!explorer "' .. dtarget .. '"')
+  vim.fn.system(string.format([[start /b cmd /c "explorer "%s""]], dtarget))
 end
 
 M.taskkill = function(node)
