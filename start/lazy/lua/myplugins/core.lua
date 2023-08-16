@@ -96,7 +96,15 @@ return {
       { 'cs.',                function() vim.fn.system( string.format([[start /b cmd /c "explorer "%s""]], vim.fn.substitute(vim.fn.fnamemodify( vim.api.nvim_buf_get_name(0), ":h"), "/", "\\\\", "g"))) end, mode = { 'n', 'v' },  silent = true, desc = 'start %:h' },
       { 'csu',                function() vim.fn.system([[start /b cmd /c "explorer .."]]) end, mode = { 'n', 'v' },  silent = true, desc = 'start ..' },
       { 'csw',                function() vim.fn.system(string.format([[start /b cmd /c "explorer "%s""]], vim.call('ProjectRootGet'))) end, mode = { 'n', 'v' },  silent = true, desc = 'start ProjectRootGet' },
-      { 'csc',                function() vim.fn.system(string.format([[chcp 65001 && start /min cmd /c "%s"]], vim.api.nvim_buf_get_name(0))) end, mode = { 'n', 'v' },  silent = true, desc = 'system open %:h' },
+      { 'csc',                function()
+        local fname = vim.api.nvim_buf_get_name(0)
+        local ext = string.match(fname, "%.([^.]+)$")
+        if vim.tbl_contains({'exe', 'bat'}, ext) == true then
+          vim.fn.system(string.format([[chcp 936 && start cmd /c "%s"]], fname))
+        else
+          vim.fn.system(string.format([[chcp 936 && start /min cmd /c "%s"]], fname))
+        end
+      end, mode = { 'n', 'v' },  silent = true, desc = 'system open %:h' },
 
       -- replace
 
