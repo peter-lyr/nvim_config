@@ -17,6 +17,13 @@ return {
       silent = true,
       desc = 'AsyncStop'
     },
+    {
+      '<leader>v;',
+      ':AsyncRun ',
+      mode = { 'n', 'v' },
+      silent = true,
+      desc = 'AsyncRun'
+    },
 
   }
 }
