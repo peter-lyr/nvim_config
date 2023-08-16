@@ -23,6 +23,7 @@
 > - maybe not.
 - [x] winfixheight restore
 - [x] map winheight change
+- [ ] cbp2cmake make common for c
 
 # jump window
 
