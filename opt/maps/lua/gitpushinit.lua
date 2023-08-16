@@ -1,5 +1,7 @@
 local M = {}
 
+package.loaded['gitpushinit'] = nil
+
 local testtimer = nil
 
 GitpushinitDone = function()
@@ -216,6 +218,22 @@ M.pull = function()
   pcall(vim.call, 'ProjectRootCD')
   asyncrunprepare()
   vim.cmd('AsyncRun git pull')
+end
+
+M.reset_hard = function()
+  local res = vim.fn.input("git reset --hard [N/y]: ", "y")
+  if vim.tbl_contains({ 'y', 'Y', 'yes', 'Yes', 'YES' }, res) == true then
+    asyncrunprepare()
+    vim.cmd('AsyncRun git reset --hard')
+  end
+end
+
+M.reset_hard_clean = function()
+  local res = vim.fn.input("git reset --hard && git clean -fd [N/y]: ", "y")
+  if vim.tbl_contains({ 'y', 'Y', 'yes', 'Yes', 'YES' }, res) == true then
+    asyncrunprepare()
+    vim.cmd('AsyncRun git reset --hard && git clean -fd')
+  end
 end
 
 return M

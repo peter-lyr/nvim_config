@@ -246,6 +246,8 @@ return {
       { '<leader>gvi',        function() require('gitpushinit').init() end,                  mode = { 'n', 'v' }, silent = true, desc = 'git init' },
       { '<leader>gvu',        function() require('gitpushinit').pull() end,                  mode = { 'n', 'v' }, silent = true, desc = 'git pull' },
       { '<leader>gA',         function() require('gitpushinit').addall() end,                mode = { 'n', 'v' }, silent = true, desc = 'git add -A' },
+      { '<leader>gR',        function() require('gitpushinit').reset_hard() end,             mode = { 'n', 'v' }, silent = true, desc = 'git reset --hard' },
+      { '<leader>gvR',       function() require('gitpushinit').reset_hard_clean() end,       mode = { 'n', 'v' }, silent = true, desc = 'git reset --hard && git clean -fd' },
 
       ------------------------
       -- terminal.lua
