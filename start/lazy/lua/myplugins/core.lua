@@ -401,8 +401,28 @@ return {
       ------------------------
 
       -- open
+
       { '<leader>b<tab>',   function() require('bcomp').diff1() end, mode = { 'n', 'v', }, silent = true, desc = 'diff1' },
       { '<leader>b`',   function() require('bcomp').diff2() end, mode = { 'n', 'v', }, silent = true, desc = 'diff2' },
+
+      ------------------------
+      -- toggle option
+      ------------------------
+
+      -- wrap
+
+      { '<leader>tw',
+        function()
+          if vim.o.wrap == false then
+            vim.o.wrap = true
+          else
+            vim.o.wrap = false
+          end
+        end,
+        mode = { 'n', 'v', },
+        silent = true,
+        desc = 'option toggle wrap'
+      },
 
     },
   },
