@@ -43,7 +43,15 @@ return {
 
     -- file browser
 
-    { '<leader>sa',         '<cmd>Telescope my_file_browser<cr>',                                                                                    mode = { 'n', 'v', }, silent = true, desc = 'Telescope filetypes', },
+    { '<leader>sa',         '<cmd>Telescope my_file_browser<cr>',                                                                                    mode = { 'n', 'v', }, silent = true, desc = 'Telescope file_browser', },
+    { '<leader>sva',
+      function()
+        vim.cmd(string.format('Telescope my_file_browser path=%s cwd_to_path=true', vim.fn.expand('%:h')))
+      end,
+      mode = { 'n', 'v', },
+      silent = true,
+      desc = 'Telescope file_browser',
+    },
 
     -- config
 

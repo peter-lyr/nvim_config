@@ -6,7 +6,7 @@ vim.cmd([[
 autocmd User TelescopePreviewerLoaded setlocal rnu | setlocal number | setlocal wrap
 ]])
 
--- local fb_actions = require "telescope._extensions.file_browser.actions"
+local fb_actions = require "telescope._extensions.file_browser.actions"
 
 local get_setup_table = function(file_ignore_patterns)
   return {
@@ -150,7 +150,7 @@ local get_setup_table = function(file_ignore_patterns)
             -- ["w"] = false, -- fb_actions.goto_cwd,
             -- ["t"] = false, -- fb_actions.change_cwd,
             -- ["f"] = false, -- fb_actions.toggle_browser,
-            ["h"] = false, -- fb_actions.toggle_hidden,
+            ["h"] = fb_actions.toggle_hidden,
             -- ["s"] = false, -- fb_actions.toggle_all,
           },
         },
