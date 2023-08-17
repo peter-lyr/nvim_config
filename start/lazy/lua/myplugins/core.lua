@@ -172,6 +172,7 @@ return {
       { '<leader>wo',         '<c-w>_',                                  mode = { 'n', 'v' }, silent = true, desc = 'wincmd _' },
       { '<leader>wu',         '<c-w>|',                                  mode = { 'n', 'v' }, silent = true, desc = 'wincmd |' },
       { '<leader>wi',         function() require('bufferjump').i() end,  mode = { 'n', 'v' }, silent = true, desc = 'wincmd =' },
+      { '<leader>wz',         '<c-w>_<c-w>|',  mode = { 'n', 'v' }, silent = true, desc = 'wincmd =' },
 
       -- toggle win height auto max
 
