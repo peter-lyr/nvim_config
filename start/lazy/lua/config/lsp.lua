@@ -95,12 +95,10 @@ lspconfig.lua_ls.setup {
       format = {
         enable = true,
         defaultConfig = {
-          max_line_length                  = "275",
-          indent_size                      = "2",
-          call_arg_parentheses             = 'remove',
-          trailing_table_separator         = 'always',
-          align_if_branch                  = true,
-          never_indent_before_if_condition = true,
+          max_line_length          = "275",
+          indent_size              = "2",
+          call_arg_parentheses     = 'remove',
+          trailing_table_separator = 'always',
         },
       },
     },
