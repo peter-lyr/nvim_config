@@ -614,7 +614,38 @@ vim.keymap.set({ 'n', 'v', }, '<c-f3>', function()
     end
   end
   vim.fn.win_gotoid(winid)
-end, { desc = 'buffers workflow' })
+end, { desc = 'buffers workflow simple -' })
+
+vim.keymap.set({ 'n', 'v', }, '<c-f4>', function()
+  local winid = vim.fn.win_getid()
+  local projs = {rep(vim.fn['ProjectRootGet'](vim.api.nvim_buf_get_name(0)))}
+  for winnr = 1, vim.fn.bufnr('$') do
+    local bufnr = vim.fn.winbufnr(winnr)
+    if vim.fn.buflisted(bufnr) ~= 0 and vim.api.nvim_buf_get_option(bufnr, 'buftype') ~= 'quickfix' then
+      local fname = vim.fn.tolower(rep(vim.api.nvim_buf_get_name(bufnr)))
+      if #fname > 0 and vim.fn.filereadable(fname) == 1 then
+        local proj = rep(vim.fn['ProjectRootGet'](fname))
+        if vim.tbl_contains(projs, proj) ~= true then
+          projs[#projs + 1] = proj
+        end
+      end
+    end
+  end
+  for b = 1, vim.fn.bufnr('$') do
+    if vim.fn.buflisted(b) ~= 0 and vim.api.nvim_buf_get_option(b, 'buftype') ~= 'quickfix' then
+      local fname = vim.fn.tolower(rep(vim.api.nvim_buf_get_name(b)))
+      if #fname > 0 and vim.fn.filereadable(fname) == 1 then
+        local proj = rep(vim.fn['ProjectRootGet'](fname))
+        if vim.tbl_contains(projs, proj) ~= true then
+          projs[#projs + 1] = proj
+          vim.cmd('split')
+          vim.cmd('e ' .. fname)
+        end
+      end
+    end
+  end
+  vim.fn.win_gotoid(winid)
+end, { desc = 'buffers workflow simple +' })
 
 vim.opt.laststatus = 3
 
