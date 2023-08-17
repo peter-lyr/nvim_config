@@ -123,9 +123,34 @@ if __name__ == "__main__":
             ff.write(("\n".join(dirs).encode("utf-8")) + b"\n\n")
 
             # lib_cbp
+            lib_cbp_files = {}
             for lib_cbp_file in cbp_files:
                 if lib_cbp_file == executable_cbp:
                     continue
+                base_name = os.path.basename(lib_cbp_file)
+                if base_name not in lib_cbp_files.keys():
+                    lib_cbp_files[base_name] = [lib_cbp_file]
+                else:
+                    lib_cbp_files[base_name].append(lib_cbp_file)
+
+            for base_name, lib_cbp_files in lib_cbp_files.items():
+                lib_cbp_file = lib_cbp_files[0]
+                if len(lib_cbp_files) > 1:
+                    l = len(lib_cbp_files)
+                    print('sel as ' + base_name + ':')
+                    for i in range(l):
+                        print(str(i+1) + '. ' + lib_cbp_files[i])
+                    idx = input('> ')
+                    try:
+                        idx = int(idx)
+                        if idx < 1:
+                            idx = 1
+                        elif idx > l:
+                            idx = l
+                        idx -= 1
+                    except:
+                        idx = 0
+                    lib_cbp_file = lib_cbp_files[idx]
                 print("lib_cbp_file:", lib_cbp_file)
                 lib_cbp_dir = os.path.dirname(lib_cbp_file)
 
