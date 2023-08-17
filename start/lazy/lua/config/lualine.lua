@@ -543,6 +543,22 @@ vim.keymap.set({ 'n', 'v', }, '<a-f1>', function()
 end, { desc = 'restore hidden tabs' })
 
 vim.keymap.set({ 'n', 'v', }, '<a-f2>', function()
+  local NvimTree = nil
+  local fugitive = nil
+  local minimap = nil
+  local aerial = nil
+  for winnr=1, vim.fn.winnr('$') do
+  local bufnr = vim.fn.winbufnr(winnr)
+    if vim.bo[bufnr].ft == 'NvimTree' then
+      NvimTree = 1
+    elseif vim.bo[vim.fn.winbufnr(winnr)].ft == 'fugitive' then
+      fugitive = 1
+    elseif vim.bo[vim.fn.winbufnr(winnr)].ft == 'minimap' then
+      minimap = 1
+    elseif vim.bo[vim.fn.winbufnr(winnr)].ft == 'aerial' then
+      aerial = 1
+    end
+  end
   pcall(vim.cmd, 'MinimapClose')
   vim.cmd('tabo')
   vim.cmd('wincmd o')
@@ -563,6 +579,20 @@ vim.keymap.set({ 'n', 'v', }, '<a-f2>', function()
   end
   vim.fn.win_gotoid(winid)
   vim.cmd('wincmd H')
+  if minimap then
+    vim.cmd('Minimap')
+    vim.fn.win_gotoid(winid)
+  end
+  if NvimTree or fugitive then
+    vim.cmd('NvimTreeFindFile')
+    vim.fn.win_gotoid(winid)
+    vim.cmd('G')
+    vim.fn.win_gotoid(winid)
+  end
+  if aerial then
+    vim.cmd('AerialOpen')
+    vim.fn.win_gotoid(winid)
+  end
 end, { desc = 'buffers workflow' })
 
 vim.opt.laststatus = 3
