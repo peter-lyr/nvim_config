@@ -132,6 +132,18 @@ M.tabbwipeout = function()
   end
 end
 
+M.projbwipeout = function()
+  if vim.fn.bufnr('-MINIMAP-') ~= -1 then
+    vim.cmd('MinimapClose')
+  end
+  local curroot = string.gsub(vim.fn.tolower(vim.fn['ProjectRootGet'](vim.api.nvim_buf_get_name(0))), '\\', '/')
+  for _, b in ipairs(vim.api.nvim_list_bufs()) do
+    if curroot == string.gsub(vim.fn.tolower(vim.fn['ProjectRootGet'](vim.api.nvim_buf_get_name(b))), '\\', '/') then
+      pcall(vim.cmd, 'bw! ' .. tostring(b))
+    end
+  end
+end
+
 M.bw_unlisted_buffers = function()
   local path = require('plenary.path')
   local bufnrs = vim.tbl_filter(function(b)

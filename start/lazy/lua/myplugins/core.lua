@@ -229,6 +229,7 @@ return {
       { '<leader>xw',         function() require('buffernew').wipeout() end,                 mode = { 'n', 'v' }, silent = true, desc = 'bw!' },
       { '<leader>xt',         function() require('buffernew').tabclose() end,                mode = { 'n', 'v' }, silent = true, desc = 'tabclose' },
       { '<leader>xvt',        function() require('buffernew').tabbwipeout() end,             mode = { 'n', 'v' }, silent = true, desc = 'tabbwipeout' },
+      { '<leader>xvp',        function() require('buffernew').projbwipeout() end,            mode = { 'n', 'v' }, silent = true, desc = 'tabbwipeout' },
       { '<leader><del>',      function() require('buffernew').bw_unlisted_buffers() end,     mode = { 'n', 'v' }, silent = true, desc = 'bw_unlisted_buffers' },
       { '<leader>x<bs>',      '<cmd>qa!<cr>',                                                mode = { 'n', 'v' }, silent = true, desc = 'qa!' },
 
