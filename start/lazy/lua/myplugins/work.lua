@@ -15,6 +15,10 @@ return {
 
       { '<c-F11>', function() require('cbp2make').build() end, mode = { 'n', 'v', }, silent = true, desc = 'cbp2make build' },
 
+      -- _2cmake
+
+      { '<c-F12>', function() require('_2cmake').build() end, mode = { 'n', 'v', }, silent = true, desc = '_2cmake build' },
+
       -- sdkcbp
 
       { '<c-F9>', function() require('sdkcbp').build() end, mode = { 'n', 'v', }, silent = true, desc = 'sdkcbp build' },
