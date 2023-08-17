@@ -128,7 +128,7 @@ end
 local pathfiles = {}
 
 M.init_pathfiles = function()
-  local scan_dir = require "plenary.scandir"
+  local scan_dir = require 'plenary.scandir'
   local exts = {}
   for ext in string.gmatch(vim.fn.expand [[$PATHEXT]], '([^;]+);') do
     table.insert(exts, vim.fn.tolower(ext))
@@ -139,7 +139,7 @@ M.init_pathfiles = function()
       depth = 1,
       add_dirs = false,
       search_pattern = function(e)
-        return vim.tbl_contains(exts, vim.fn.tolower(string.match(e, "(%..+)$")))
+        return vim.tbl_contains(exts, vim.fn.tolower(string.match(e, '(%..+)$')))
       end,
     })
     for _, entry in ipairs(entries) do
@@ -178,7 +178,7 @@ M.init_oftendir = function()
     res = nil
   end
   local f = io.popen(oftendir_exe.filename)
-  for dir in string.gmatch(f:read "*a", "([%S ]+)") do
+  for dir in string.gmatch(f:read '*a', '([%S ]+)') do
     dir = vim.fn.tolower(dir)
     if vim.tbl_contains(oftendirs, dir) == false then
       table.insert(oftendirs, dir)

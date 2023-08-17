@@ -1,22 +1,22 @@
 -- Inspiration from:
 -- https://github.com/nvim-telescope/telescope-project.nvim
-local has_telescope, telescope = pcall(require, "telescope")
+local has_telescope, telescope = pcall(require, 'telescope')
 
 if not has_telescope then
   return
 end
 
-local finders = require "telescope.finders"
-local pickers = require "telescope.pickers"
-local telescope_config = require "telescope.config".values
-local actions = require "telescope.actions"
-local state = require "telescope.actions.state"
-local builtin = require "telescope.builtin"
-local entry_display = require "telescope.pickers.entry_display"
+local finders = require 'telescope.finders'
+local pickers = require 'telescope.pickers'
+local telescope_config = require 'telescope.config'.values
+local actions = require 'telescope.actions'
+local state = require 'telescope.actions.state'
+local builtin = require 'telescope.builtin'
+local entry_display = require 'telescope.pickers.entry_display'
 
-local history = require "project_nvim.utils.history"
-local project = require "project_nvim.project"
-local config = require "project_nvim.config"
+local history = require 'project_nvim.utils.history'
+local project = require 'project_nvim.project'
+local config = require 'project_nvim.config'
 
 ----------
 -- Actions
@@ -43,7 +43,7 @@ local function create_finder()
     end
   end
   local displayer = entry_display.create {
-    separator = " ",
+    separator = ' ',
     items = {
       {
         width = maxwidth,
@@ -55,18 +55,18 @@ local function create_finder()
   }
 
   local function make_display(entry)
-    return displayer { entry.name, { entry.value, "Comment", }, }
+    return displayer { entry.name, { entry.value, 'Comment', }, }
   end
 
   return finders.new_table {
     results = results,
     entry_maker = function(entry)
-      local name = vim.fn.fnamemodify(entry, ":t")
+      local name = vim.fn.fnamemodify(entry, ':t')
       return {
         display = make_display,
         name = name,
         value = entry,
-        ordinal = name .. " " .. entry,
+        ordinal = name .. ' ' .. entry,
       }
     end,
   }
@@ -84,7 +84,7 @@ local function change_working_directory(prompt_bufnr, prompt)
   else
     actions.close(prompt_bufnr)
   end
-  local cd_successful = project.set_pwd(project_path, "telescope")
+  local cd_successful = project.set_pwd(project_path, 'telescope')
   return project_path, cd_successful
 end
 
@@ -93,7 +93,7 @@ local function find_project_files(prompt_bufnr)
   local opt = {
     cwd = project_path,
     hidden = config.options.show_hidden,
-    mode = "insert",
+    mode = 'insert',
   }
   if cd_successful then
     builtin.find_files(opt)
@@ -108,7 +108,7 @@ local function browse_project_files(prompt_bufnr)
   }
   if cd_successful then
     -- builtin.file_browser(opt)
-    require "telescope".extensions.file_browser.file_browser(opt)
+    require 'telescope'.extensions.file_browser.file_browser(opt)
   end
 end
 
@@ -117,7 +117,7 @@ local function search_in_project_files(prompt_bufnr)
   local opt = {
     cwd = project_path,
     hidden = config.options.show_hidden,
-    mode = "insert",
+    mode = 'insert',
   }
   if cd_successful then
     builtin.live_grep(opt)
@@ -141,7 +141,7 @@ local function delete_project(prompt_bufnr)
     actions.close(prompt_bufnr)
     return
   end
-  local choice = vim.fn.confirm("Delete '" .. selectedEntry.value .. "' from project list?", "&Yes\n&No", 2)
+  local choice = vim.fn.confirm("Delete '" .. selectedEntry.value .. "' from project list?", '&Yes\n&No', 2)
 
   if choice == 1 then
     history.delete_project(selectedEntry)
@@ -159,15 +159,15 @@ local function my_projects(opts)
   opts = opts or {}
 
   pickers.new(opts, {
-    prompt_title = "Recent Projects",
+    prompt_title = 'Recent Projects',
     finder = create_finder(),
     previewer = false,
     sorter = telescope_config.generic_sorter(opts),
     attach_mappings = function(prompt_bufnr, map)
       -- map("n", "f", find_project_files)
-      map("n", "r", browse_project_files, { nowait = true, })
-      map("n", "z", delete_project, { nowait = true, })
-      map("n", "c", search_in_project_files, { nowait = true, })
+      map('n', 'r', browse_project_files, { nowait = true, })
+      map('n', 'z', delete_project, { nowait = true, })
+      map('n', 'c', search_in_project_files, { nowait = true, })
       -- map("n", "r", recent_project_files)
       -- map("n", "w", change_working_directory)
 

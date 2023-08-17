@@ -8,12 +8,12 @@ require 'gitsigns'.setup {
   word_diff = true,
 
   signs     = {
-    add = { text = "▎", },
-    change = { text = "▎", },
-    delete = { text = "", },
-    topdelete = { text = "", },
-    changedelete = { text = "▎", },
-    untracked = { text = "▎", },
+    add = { text = '▎', },
+    change = { text = '▎', },
+    delete = { text = '', },
+    topdelete = { text = '', },
+    changedelete = { text = '▎', },
+    untracked = { text = '▎', },
   },
 
   on_attach = function(bufnr)
@@ -84,7 +84,7 @@ local moving = nil
 
 pcall(vim.api.nvim_del_autocmd, vim.g.gitsigns_insertenter)
 
-vim.g.gitsigns_insertenter = vim.api.nvim_create_autocmd({ "InsertEnter", "CursorMoved", }, {
+vim.g.gitsigns_insertenter = vim.api.nvim_create_autocmd({ 'InsertEnter', 'CursorMoved', }, {
   callback = function()
     moving = 1
     if word_diff then
@@ -96,7 +96,7 @@ vim.g.gitsigns_insertenter = vim.api.nvim_create_autocmd({ "InsertEnter", "Curso
 
 pcall(vim.api.nvim_del_autocmd, vim.g.gitsigns_insertleave)
 
-vim.g.gitsigns_insertleave = vim.api.nvim_create_autocmd({ "CursorHold", }, {
+vim.g.gitsigns_insertleave = vim.api.nvim_create_autocmd({ 'CursorHold', }, {
   callback = function()
     moving = nil
     vim.fn.timer_start(500, function()

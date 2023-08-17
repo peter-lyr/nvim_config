@@ -26,10 +26,10 @@ end
 
 vim.api.nvim_create_user_command('Bcomp1', function(params)
   M.diff1(unpack(params['fargs']))
-end, { nargs = "*", })
+end, { nargs = '*', })
 
 vim.api.nvim_create_user_command('Bcomp2', function(params)
   M.diff2(unpack(params['fargs']))
-end, { nargs = "*", })
+end, { nargs = '*', })
 
 return M

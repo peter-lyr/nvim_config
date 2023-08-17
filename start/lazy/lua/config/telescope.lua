@@ -6,7 +6,7 @@ vim.cmd [[
 autocmd User TelescopePreviewerLoaded setlocal rnu | setlocal number | setlocal wrap
 ]]
 
-local fb_actions = require "telescope._extensions.file_browser.actions"
+local fb_actions = require 'telescope._extensions.file_browser.actions'
 
 local get_setup_table = function(file_ignore_patterns)
   return {
@@ -24,22 +24,22 @@ local get_setup_table = function(file_ignore_patterns)
       },
       mappings = {
         i = {
-          ["<C-n>"] = false, -- actions.move_selection_next,
-          ["<C-p>"] = false, -- actions.move_selection_previous,
+          ['<C-n>'] = false, -- actions.move_selection_next,
+          ['<C-p>'] = false, -- actions.move_selection_previous,
 
-          ["<C-c>"] = false, -- actions.close,
+          ['<C-c>'] = false, -- actions.close,
 
-          ["<C-x>"] = false, -- actions.select_horizontal,
-          ["<C-v>"] = false, -- actions.select_vertical,
-          ["<C-t>"] = false, -- actions.select_tab,
+          ['<C-x>'] = false, -- actions.select_horizontal,
+          ['<C-v>'] = false, -- actions.select_vertical,
+          ['<C-t>'] = false, -- actions.select_tab,
 
-          ["<C-q>"] = false, -- actions.send_to_qflist + actions.open_qflist,
-          ["<M-q>"] = false, -- actions.send_selected_to_qflist + actions.open_qflist,
-          ["<C-l>"] = false, -- actions.complete_tag,
-          ["<C-_>"] = false, -- actions.which_key, -- keys from pressing <C-/>
+          ['<C-q>'] = false, -- actions.send_to_qflist + actions.open_qflist,
+          ['<M-q>'] = false, -- actions.send_selected_to_qflist + actions.open_qflist,
+          ['<C-l>'] = false, -- actions.complete_tag,
+          ['<C-_>'] = false, -- actions.which_key, -- keys from pressing <C-/>
 
           -- normal <c-w>
-          ["<C-w>"] = { "<c-s-w>", type = "command", },
+          ['<C-w>'] = { '<c-s-w>', type = 'command', },
 
           -- sometimes use:
           -- ["<Down>"] = false, -- actions.move_selection_next,
@@ -58,7 +58,7 @@ local get_setup_table = function(file_ignore_patterns)
         },
         n = {
           ['q'] = {
-            actions.close, type = "action",
+            actions.close, type = 'action',
             opts = { nowait = true, silent = true, },
           },
 
@@ -71,7 +71,7 @@ local get_setup_table = function(file_ignore_patterns)
                 actions.move_selection_next(prompt_bufnr)
               end
             end,
-            type = "action",
+            type = 'action',
             opts = { nowait = true, silent = true, desc = '5j', },
           },
           ['e'] = {
@@ -80,7 +80,7 @@ local get_setup_table = function(file_ignore_patterns)
                 actions.move_selection_previous(prompt_bufnr)
               end
             end,
-            type = "action",
+            type = 'action',
             opts = { nowait = true, silent = true, desc = '5k', },
           },
 
@@ -91,7 +91,7 @@ local get_setup_table = function(file_ignore_patterns)
           ['t'] = actions.select_tab,
 
           ['<leader>'] = {
-            actions.select_default, type = "action",
+            actions.select_default, type = 'action',
             opts = { nowait = true, silent = true, },
           },
 
@@ -116,41 +116,41 @@ local get_setup_table = function(file_ignore_patterns)
         fuzzy = true,                   -- false will only do exact matching
         override_generic_sorter = true, -- override the generic sorter
         override_file_sorter = true,    -- override the file sorter
-        case_mode = "smart_case",       -- or "ignore_case" or "respect_case"
+        case_mode = 'smart_case',       -- or "ignore_case" or "respect_case"
         -- the default case_mode is "smart_case"
       },
       my_file_browser = {
         mappings = {
-          ["i"] = {
-            ["<A-c>"] = false,  -- fb_actions.create,
-            ["<S-CR>"] = false, -- fb_actions.create_from_prompt,
-            ["<A-r>"] = false,  -- fb_actions.rename,
-            ["<A-m>"] = false,  -- fb_actions.move,
-            ["<A-y>"] = false,  -- fb_actions.copy,
-            ["<A-d>"] = false,  -- fb_actions.remove,
-            ["<C-o>"] = false,  -- fb_actions.open,
-            ["<C-g>"] = false,  -- fb_actions.goto_parent_dir,
-            ["<C-e>"] = false,  -- fb_actions.goto_home_dir,
-            ["<C-w>"] = { "<c-s-w>", type = "command", },
-            ["<C-t>"] = false,  -- fb_actions.change_cwd,
-            ["<C-f>"] = false,  -- fb_actions.toggle_browser,
-            ["<C-h>"] = false,  -- fb_actions.toggle_hidden,
-            ["<C-s>"] = false,  -- fb_actions.toggle_all,
-            ["<bs>"] = false,   -- fb_actions.backspace,
+          ['i'] = {
+            ['<A-c>'] = false,  -- fb_actions.create,
+            ['<S-CR>'] = false, -- fb_actions.create_from_prompt,
+            ['<A-r>'] = false,  -- fb_actions.rename,
+            ['<A-m>'] = false,  -- fb_actions.move,
+            ['<A-y>'] = false,  -- fb_actions.copy,
+            ['<A-d>'] = false,  -- fb_actions.remove,
+            ['<C-o>'] = false,  -- fb_actions.open,
+            ['<C-g>'] = false,  -- fb_actions.goto_parent_dir,
+            ['<C-e>'] = false,  -- fb_actions.goto_home_dir,
+            ['<C-w>'] = { '<c-s-w>', type = 'command', },
+            ['<C-t>'] = false,  -- fb_actions.change_cwd,
+            ['<C-f>'] = false,  -- fb_actions.toggle_browser,
+            ['<C-h>'] = false,  -- fb_actions.toggle_hidden,
+            ['<C-s>'] = false,  -- fb_actions.toggle_all,
+            ['<bs>'] = false,   -- fb_actions.backspace,
           },
-          ["n"] = {
-            ["c"] = false, -- fb_actions.create,
-            ["r"] = false, -- fb_actions.rename,
-            ["m"] = false, -- fb_actions.move,
-            ["y"] = false, -- fb_actions.copy,
+          ['n'] = {
+            ['c'] = false, -- fb_actions.create,
+            ['r'] = false, -- fb_actions.rename,
+            ['m'] = false, -- fb_actions.move,
+            ['y'] = false, -- fb_actions.copy,
             -- ["d"] = false, -- fb_actions.remove,
-            ["o"] = false, -- fb_actions.open,
+            ['o'] = false, -- fb_actions.open,
             -- ["g"] = false, -- fb_actions.goto_parent_dir,
             -- ["e"] = false, -- fb_actions.goto_home_dir,
             -- ["w"] = false, -- fb_actions.goto_cwd,
             -- ["t"] = false, -- fb_actions.change_cwd,
             -- ["f"] = false, -- fb_actions.toggle_browser,
-            ["h"] = fb_actions.toggle_hidden,
+            ['h'] = fb_actions.toggle_hidden,
             -- ["s"] = false, -- fb_actions.toggle_all,
           },
         },

@@ -62,7 +62,7 @@ end
 require 'maps'.add('<F5>', 'n', function()
   vim.loop.new_timer():start(10, 0, function()
     vim.schedule(function()
-      if string.match(vim.fn.getline(1), "^00000000:") then
+      if string.match(vim.fn.getline(1), '^00000000:') then
         if vim.api.nvim_buf_get_option(vim.fn.bufnr(), 'filetype') ~= 'xxd' then
           vim.cmd 'setlocal ft=xxd'
         end

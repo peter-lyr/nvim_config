@@ -1,12 +1,12 @@
 local M = {}
 
 local patterns = {
-  ".git",
+  '.git',
 }
 
-require "project_nvim".setup {
+require 'project_nvim'.setup {
   manual_mode = false,
-  detection_methods = { "pattern", "lsp", },
+  detection_methods = { 'pattern', 'lsp', },
   patterns = patterns,
 }
 
@@ -32,7 +32,7 @@ end
 
 M.refreshhistory()
 
-require 'telescope'.load_extension "my_projects"
+require 'telescope'.load_extension 'my_projects'
 
 M.open = function()
   vim.cmd 'Telescope my_projects'

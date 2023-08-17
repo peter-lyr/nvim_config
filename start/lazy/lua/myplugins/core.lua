@@ -16,7 +16,7 @@ return {
       require 'wait.projectroot',
       require 'wait.notify',
       require 'wait.telescope_ui_select',
-      require 'plugins.minimap',  -- tabclose minimap
+      require 'plugins.minimap', -- tabclose minimap
       require 'plugins.coderunner',
       'peter-lyr/sha2',
     },
@@ -41,7 +41,7 @@ return {
             animate = false,
             on_open = function(win)
               local buf = vim.api.nvim_win_get_buf(win)
-              vim.api.nvim_buf_set_option(buf, "filetype", "markdown")
+              vim.api.nvim_buf_set_option(buf, 'filetype', 'markdown')
             end,
           })
         end,
@@ -62,7 +62,7 @@ return {
             animate = false,
             on_open = function(win)
               local buf = vim.api.nvim_win_get_buf(win)
-              vim.api.nvim_buf_set_option(buf, "filetype", "markdown")
+              vim.api.nvim_buf_set_option(buf, 'filetype', 'markdown')
             end,
           })
         end,
@@ -83,7 +83,7 @@ return {
             animate = false,
             on_open = function(win)
               local buf = vim.api.nvim_win_get_buf(win)
-              vim.api.nvim_buf_set_option(buf, "filetype", "markdown")
+              vim.api.nvim_buf_set_option(buf, 'filetype', 'markdown')
             end,
           })
         end,
@@ -94,14 +94,14 @@ return {
 
       -- start explorer
 
-      { 'cs.', function() vim.fn.system(string.format([[start /b cmd /c "explorer "%s""]], vim.fn.substitute(vim.fn.fnamemodify(vim.api.nvim_buf_get_name(0), ":h"), "/", "\\\\", "g"))) end,   mode = { 'n', 'v', }, silent = true, desc = 'start %:h', },
-      { 'csu', function() vim.fn.system [[start /b cmd /c "explorer .."]] end,                                                                                                                  mode = { 'n', 'v', }, silent = true, desc = 'start ..', },
-      { 'csw', function() vim.fn.system(string.format([[start /b cmd /c "explorer "%s""]], vim.call 'ProjectRootGet')) end,                                                                     mode = { 'n', 'v', }, silent = true, desc = 'start ProjectRootGet', },
+      { 'cs.', function() vim.fn.system(string.format([[start /b cmd /c "explorer "%s""]], vim.fn.substitute(vim.fn.fnamemodify(vim.api.nvim_buf_get_name(0), ':h'), '/', '\\\\', 'g'))) end, mode = { 'n', 'v', }, silent = true, desc = 'start %:h', },
+      { 'csu', function() vim.fn.system [[start /b cmd /c "explorer .."]] end,                                                                                                                mode = { 'n', 'v', }, silent = true, desc = 'start ..', },
+      { 'csw', function() vim.fn.system(string.format([[start /b cmd /c "explorer "%s""]], vim.call 'ProjectRootGet')) end,                                                                   mode = { 'n', 'v', }, silent = true, desc = 'start ProjectRootGet', },
       {
         'csc',
         function()
           local fname = vim.api.nvim_buf_get_name(0)
-          local ext = string.match(fname, "%.([^.]+)$")
+          local ext = string.match(fname, '%.([^.]+)$')
           if vim.tbl_contains({ 'exe', 'bat', }, ext) == true then
             vim.fn.system(string.format([[chcp 936 && start cmd /c "%s"]], fname))
           else

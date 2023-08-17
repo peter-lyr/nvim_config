@@ -23,7 +23,7 @@ return {
             require 'luasnip.loaders.from_vscode'.lazy_load()
             require 'luasnip.loaders.from_snipmate'.lazy_load {
               paths = {
-                require "plenary.path":new(vim.g.pack_path):joinpath('nvim_config', 'opt', 'snippets').filename, },
+                require 'plenary.path':new(vim.g.pack_path):joinpath('nvim_config', 'opt', 'snippets').filename, },
             }
           end,
         },

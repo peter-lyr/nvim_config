@@ -1,7 +1,7 @@
 return {
   'Pocco81/auto-save.nvim',
   lazy = true,
-  event = { "InsertEnter", "TextChanged", },
+  event = { 'InsertEnter', 'TextChanged', },
   config = function()
     require 'auto-save'.setup {
       execution_message = {

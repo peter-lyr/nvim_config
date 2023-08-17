@@ -1,9 +1,9 @@
 return {
-  "rosstang/dimit.nvim",
+  'rosstang/dimit.nvim',
   lazy = true,
-  event = { "CursorHold", "CursorHoldI", },
+  event = { 'CursorHold', 'CursorHoldI', },
   config = function()
-    require "config.dimit"
+    require 'config.dimit'
   end,
   dependencies = {
     require 'plugins.aerial',

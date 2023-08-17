@@ -67,10 +67,10 @@ return {
       build = 'mingw32-make',
     },
     {
-      "nvim-telescope/telescope-frecency.nvim",
-      dependencies = { "kkharji/sqlite.lua", },
+      'nvim-telescope/telescope-frecency.nvim',
+      dependencies = { 'kkharji/sqlite.lua', },
     },
-    "nvim-telescope/telescope-file-browser.nvim",
+    'nvim-telescope/telescope-file-browser.nvim',
   },
   config = function()
     require 'config.telescope'

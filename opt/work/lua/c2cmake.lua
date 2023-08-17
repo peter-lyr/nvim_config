@@ -2,8 +2,8 @@ local M = {}
 
 package.loaded['c2cmake'] = nil
 
-local Path = require "plenary.path"
-local Scan = require "plenary.scandir"
+local Path = require 'plenary.path'
+local Scan = require 'plenary.scandir'
 
 local c2cmake = Path:new(vim.g.pack_path):joinpath('nvim_config', 'opt', 'work', 'autoload', 'c2cmake')
 local c2cmake_py = c2cmake:joinpath 'c2cmake.py'.filename

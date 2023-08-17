@@ -1,6 +1,6 @@
-local m = require "nvim-tree.marks"
-local p = require "plenary.path"
-local s = require "plenary.scandir"
+local m = require 'nvim-tree.marks'
+local p = require 'plenary.path'
+local s = require 'plenary.scandir'
 
 -- node: { "hidden", "absolute_path", "extension", "git_status", "type", "fs_stat", "executable", "name", "parent" }
 
@@ -29,7 +29,7 @@ local get_dtarget = function(node)
 end
 
 local get_fname_tail = function(fname)
-  fname = string.gsub(fname, "/", "\\")
+  fname = string.gsub(fname, '/', '\\')
   local path = p:new(fname)
   if path:is_file() then
     fname = path:_split()
@@ -70,7 +70,7 @@ end
 
 M.delete_sel = function()
   local marks = m.get_marks()
-  local res = vim.fn.input("Confirm deletion " .. #marks .. " [N/y] ", "y")
+  local res = vim.fn.input('Confirm deletion ' .. #marks .. ' [N/y] ', 'y')
   if vim.tbl_contains({ 'y', 'Y', 'yes', 'Yes', 'YES', }, res) == true then
     for _, v in ipairs(marks) do
       local absolute_path = v['absolute_path']
@@ -78,10 +78,10 @@ M.delete_sel = function()
       if path:is_dir() then
         local entries = s.scan_dir(absolute_path, { hidden = true, depth = 10, add_dirs = false, })
         for _, entry in ipairs(entries) do
-          pcall(vim.cmd, "bw! " .. rep(entry))
+          pcall(vim.cmd, 'bw! ' .. rep(entry))
         end
       else
-        pcall(vim.cmd, "bw! " .. rep(absolute_path))
+        pcall(vim.cmd, 'bw! ' .. rep(absolute_path))
       end
       vim.fn.system(string.format('%s "%s"', recyclebin, absolute_path:match '^(.-)\\*$'))
     end
@@ -98,7 +98,7 @@ M.move_sel = function(node)
     return
   end
   local marks = m.get_marks()
-  local res = vim.fn.input(dtarget .. "\nConfirm movment " .. #marks .. " [N/y] ", "y")
+  local res = vim.fn.input(dtarget .. '\nConfirm movment ' .. #marks .. ' [N/y] ', 'y')
   if vim.tbl_contains({ 'y', 'Y', 'yes', 'Yes', 'YES', }, res) == true then
     for _, v in ipairs(marks) do
       local absolute_path = v['absolute_path']
@@ -107,7 +107,7 @@ M.move_sel = function(node)
         dname = string.format('%s\\%s', dtarget, dname)
         if p:new(dname):exists() then
           vim.cmd 'redraw'
-          local dname_new = vim.fn.input(absolute_path .. " ->\nExisted! Rename? ", dname)
+          local dname_new = vim.fn.input(absolute_path .. ' ->\nExisted! Rename? ', dname)
           if #dname_new > 0 and dname_new ~= dname then
             vim.fn.system(string.format('move "%s" "%s"', string.sub(absolute_path, 1, #absolute_path - 1), dname_new))
           elseif #dname_new == 0 then
@@ -126,7 +126,7 @@ M.move_sel = function(node)
         fname = string.format('%s\\%s', dtarget, fname)
         if p:new(fname):exists() then
           vim.cmd 'redraw'
-          local fname_new = vim.fn.input(absolute_path .. " ->\nExisted! Rename? ", fname)
+          local fname_new = vim.fn.input(absolute_path .. ' ->\nExisted! Rename? ', fname)
           if #fname_new > 0 and fname_new ~= fname then
             vim.fn.system(string.format('move "%s" "%s"', absolute_path, fname_new))
           elseif #fname_new == 0 then
@@ -141,7 +141,7 @@ M.move_sel = function(node)
           vim.fn.system(string.format('move "%s" "%s"', absolute_path, fname))
         end
       end
-      pcall(vim.cmd, "bw! " .. rep(absolute_path))
+      pcall(vim.cmd, 'bw! ' .. rep(absolute_path))
       ::continue::
     end
     m.clear_marks()
@@ -157,7 +157,7 @@ M.copy_sel = function(node)
     return
   end
   local marks = m.get_marks()
-  local res = vim.fn.input(dtarget .. "\nConfirm copy " .. #marks .. " [N/y] ", "y")
+  local res = vim.fn.input(dtarget .. '\nConfirm copy ' .. #marks .. ' [N/y] ', 'y')
   if vim.tbl_contains({ 'y', 'Y', 'yes', 'Yes', 'YES', }, res) == true then
     for _, v in ipairs(marks) do
       local absolute_path = v['absolute_path']
@@ -166,7 +166,7 @@ M.copy_sel = function(node)
         dname = string.format('%s\\%s', dtarget, dname)
         if p:new(dname):exists() then
           vim.cmd 'redraw'
-          local dname_new = vim.fn.input(absolute_path .. " ->\nExisted! Rename? ", dname)
+          local dname_new = vim.fn.input(absolute_path .. ' ->\nExisted! Rename? ', dname)
           if #dname_new > 0 and dname_new ~= dname then
             if string.sub(dname_new, #dname_new, #dname_new) ~= '\\' then
               dname_new = dname_new .. '\\'
@@ -191,7 +191,7 @@ M.copy_sel = function(node)
         fname = string.format('%s\\%s', dtarget, fname)
         if p:new(fname):exists() then
           vim.cmd 'redraw'
-          local fname_new = vim.fn.input(absolute_path .. "\n ->Existed! Rename? ", fname)
+          local fname_new = vim.fn.input(absolute_path .. '\n ->Existed! Rename? ', fname)
           if #fname_new > 0 and fname_new ~= fname then
             vim.fn.system(string.format('copy "%s" "%s"', absolute_path, fname_new))
           elseif #fname_new == 0 then
@@ -249,7 +249,7 @@ M.rename_sel = function(_)
   vim.cmd 'call feedkeys("zR$")'
   local timer = vim.loop.new_timer()
   local tmp1 = 0
-  local pattern = "^[:\\/%w%s%-%._%(%)%[%]一-龥]+$"
+  local pattern = '^[:\\/%w%s%-%._%(%)%[%]一-龥]+$'
   timer:start(100, 100, function()
     vim.schedule(function()
       if (vim.fn.bufwinnr(diff1) == -1 or vim.fn.bufwinnr(diff2) == -1) then
@@ -358,9 +358,9 @@ end
 
 M.copy_2_clip = function()
   local marks = m.get_marks()
-  local files = ""
+  local files = ''
   for _, v in ipairs(marks) do
-    files = files .. " " .. '"' .. v.absolute_path .. '"'
+    files = files .. ' ' .. '"' .. v.absolute_path .. '"'
   end
   vim.fn.system(string.format('%s%s', copy2clip, files))
   m.clear_marks()
@@ -374,7 +374,7 @@ M.paste_from_clip = function(node)
   local cmd = string.format(
     [[Get-Clipboard -Format FileDropList | ForEach-Object { Copy-Item -Path $_.FullName -Destination "%s" }]],
     dtarget)
-  local save_cursor = vim.fn.getpos "."
+  local save_cursor = vim.fn.getpos '.'
   require 'terminal'.send('powershell', cmd, 0)
   vim.fn.timer_start(200, function()
     vim.cmd 'wincmd t'
@@ -431,27 +431,27 @@ M.ausize = function(_, short_dis)
       width = len
     end
   end
-  local win = require "edgy.editor".get_win()
+  local win = require 'edgy.editor'.get_win()
   if not win then
     return
   end
-  local save_cursor = vim.fn.getpos "."
+  local save_cursor = vim.fn.getpos '.'
   local temp = 2 + 4
   if vim.opt.nu:get() == true or vim.opt.rnu:get() == true then
     temp = temp + #tostring(vim.fn.line '$') + 1
   end
   local ok = nil
   if width - win.width + temp > 0 or not short_dis then
-    win:resize("width", width - win.width + temp)
+    win:resize('width', width - win.width + temp)
     ok = 1
   end
   if height - win.height > 0 then
-    win:resize("height", height - win.height)
+    win:resize('height', height - win.height)
     ok = 1
   end
   if ok then
     pcall(vim.fn.setpos, '.', save_cursor)
-    vim.cmd "norm 99zH"
+    vim.cmd 'norm 99zH'
   end
 end
 

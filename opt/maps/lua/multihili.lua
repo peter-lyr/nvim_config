@@ -40,7 +40,7 @@ local getcontent = function(line1, col1, line2, col2)
       end
     end
     local cells = {}
-    for ch in string.gmatch(line, ".") do
+    for ch in string.gmatch(line, '.') do
       if ch == "'" then
         table.insert(cells, [["'"]])
       else
@@ -85,7 +85,7 @@ M.search = function()
 end
 
 local colorinit = function()
-  local light = require "nvim-web-devicons-light"
+  local light = require 'nvim-web-devicons-light'
   local by_filename = light.icons_by_filename
   Colors = {}
   for _, v in pairs(by_filename) do
@@ -288,7 +288,7 @@ vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI', }, {
       if windo == 1 then
         if vim.fn.getbufvar(vim.fn.bufnr(), '&buftype') ~= 'nofile' then
           local winid = vim.fn.win_getid()
-          if string.match(word, "^[%w_一-龥]+$") then
+          if string.match(word, '^[%w_一-龥]+$') then
             vim.cmd(string.format([[keepj windo match CursorWord /\V\<%s\>/]], word))
           else
             vim.cmd [[keepj windo match CursorWord //]]
@@ -304,7 +304,7 @@ vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI', }, {
       vim.cmd [[match CursorWord //]]
     end
     if just_hicword then
-      if string.match(word, "^[%w_一-龥]+$") then
+      if string.match(word, '^[%w_一-龥]+$') then
         vim.cmd(string.format([[match CursorWord /\V\<%s\>/]], word))
       else
         vim.cmd [[match CursorWord //]]

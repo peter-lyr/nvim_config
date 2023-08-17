@@ -1,14 +1,14 @@
-local change_dir = require "nvim-tree.actions.root.change-dir"
-local utils = require "nvim-tree.utils"
+local change_dir = require 'nvim-tree.actions.root.change-dir'
+local utils = require 'nvim-tree.utils'
 local _config = require 'nvim-tree'.config
-local core = require "nvim-tree.core"
+local core = require 'nvim-tree.core'
 
 local M = {}
 
 M.change_root = function(path, bufnr)
   -- skip if current file is in ignore_list
-  if type(bufnr) == "number" then
-    local ft = vim.api.nvim_buf_get_option(bufnr, "filetype") or ""
+  if type(bufnr) == 'number' then
+    local ft = vim.api.nvim_buf_get_option(bufnr, 'filetype') or ''
     for _, value in pairs(_config.update_focused_file.ignore_list) do
       if utils.str_find(path, value) or utils.str_find(ft, value) then
         return
@@ -39,7 +39,7 @@ M.change_root = function(path, bufnr)
   end
   -- otherwise root_dirs
   for _, dir in pairs(_config.root_dirs) do
-    dir = vim.fn.fnamemodify(dir, ":p")
+    dir = vim.fn.fnamemodify(dir, ':p')
     if utils.path_relative(path, dir) ~= path then
       change_dir.fn(dir)
       return
