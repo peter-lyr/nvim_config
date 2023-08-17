@@ -1,4 +1,4 @@
-local path = require("plenary.path")
+local path = require "plenary.path"
 
 local system_cd_string = function(absfolder)
   local fpath = path:new(absfolder)
@@ -25,9 +25,8 @@ local tortoisesvn = function(params)
   if not cmd then
     return
   end
-  local abspath = (root == 'root') and vim.fn['projectroot#get'](vim.api.nvim_buf_get_name(0)) or
-  vim.api.nvim_buf_get_name(0)
-  if yes == 'yes' or vim.tbl_contains({ 'y', 'Y' }, vim.fn.trim(vim.fn.input("Sure to update? [Y/n]: ", 'Y'))) == true then
+  local abspath = (root == 'root') and vim.fn['projectroot#get'](vim.api.nvim_buf_get_name(0)) or vim.api.nvim_buf_get_name(0)
+  if yes == 'yes' or vim.tbl_contains({ 'y', 'Y', }, vim.fn.trim(vim.fn.input("Sure to update? [Y/n]: ", 'Y'))) == true then
     vim.fn.execute(string.format("silent !%s && start tortoiseproc.exe /command:%s /path:\"%s\"",
       system_cd_string(abspath),
       cmd, abspath))

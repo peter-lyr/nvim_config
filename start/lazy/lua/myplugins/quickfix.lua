@@ -1,4 +1,4 @@
-local opt = vim.fn.expand('$VIMRUNTIME') .. '\\pack\\nvim_config\\opt\\'
+local opt = vim.fn.expand '$VIMRUNTIME' .. '\\pack\\nvim_config\\opt\\'
 
 return {
   {
@@ -14,16 +14,16 @@ return {
       {
         'dm',
         function()
-          require('quickfix').toggle()
+          require 'quickfix'.toggle()
         end,
         mode = { 'n', 'v', },
         silent = true,
-        desc = 'qf toggle'
+        desc = 'qf toggle',
       },
 
     },
     init = function()
-      require('quickfix')
-    end
+      require 'quickfix'
+    end,
   },
 }

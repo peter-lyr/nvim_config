@@ -1,4 +1,4 @@
-local opt = vim.fn.expand('$VIMRUNTIME') .. '\\pack\\nvim_config\\opt\\'
+local opt = vim.fn.expand '$VIMRUNTIME' .. '\\pack\\nvim_config\\opt\\'
 
 return {
   {
@@ -6,7 +6,7 @@ return {
     dir = opt .. 'drag',
     lazy = true,
     dependencies = {
-      require('myplugins.core'), -- maps
+      require 'myplugins.core',  -- maps
     },
     event = { "FocusLost", 'BufReadPost', },
   },

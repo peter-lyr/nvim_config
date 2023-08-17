@@ -9,7 +9,7 @@ GitpushinitDone = function()
   pcall(vim.call, 'fugitive#ReloadStatus')
   local l = vim.fn.getqflist()
   vim.notify(l[1]['text'] .. '\n' .. l[#l - 1]['text'] .. '\n' .. l[#l]['text'])
-  vim.cmd('au! User AsyncRunStop')
+  vim.cmd 'au! User AsyncRunStop'
 end
 
 local function asyncrunprepare()
@@ -24,12 +24,12 @@ local function asyncrunprepare()
       end
     end)
   end)
-  vim.cmd([[au User AsyncRunStop call v:lua.GitpushinitDone()]])
+  vim.cmd [[au User AsyncRunStop call v:lua.GitpushinitDone()]]
 end
 
 M.addcommitpush = function()
   pcall(vim.call, 'ProjectRootCD')
-  local result = vim.fn.systemlist({ "git", "status", "-s" })
+  local result = vim.fn.systemlist { "git", "status", "-s", }
   if #result > 0 then
     vim.notify("git status -s" .. '\n' .. vim.loop.cwd() .. '\n' .. table.concat(result, '\n'), 'info', {
       animate = false,
@@ -39,7 +39,7 @@ M.addcommitpush = function()
       end,
       timeout = 1000 * 8,
     })
-    local input = vim.fn.input('commit info (Add all and push): ')
+    local input = vim.fn.input 'commit info (Add all and push): '
     if #input > 0 then
       vim.loop.new_timer():start(10, 0, function()
         vim.schedule(function()
@@ -49,13 +49,13 @@ M.addcommitpush = function()
       end)
     end
   else
-    vim.notify('no changes')
+    vim.notify 'no changes'
   end
 end
 
 M.commitpush = function()
   pcall(vim.call, 'ProjectRootCD')
-  local result = vim.fn.systemlist({ "git", "diff", "--staged", "--stat" })
+  local result = vim.fn.systemlist { "git", "diff", "--staged", "--stat", }
   if #result > 0 then
     vim.notify("git diff --staged --stat" .. '\n' .. vim.loop.cwd() .. '\n' .. table.concat(result, '\n'), 'info', {
       animate = false,
@@ -65,7 +65,7 @@ M.commitpush = function()
       end,
       timeout = 1000 * 8,
     })
-    local input = vim.fn.input('commit info (commit and push): ')
+    local input = vim.fn.input 'commit info (commit and push): '
     if #input > 0 then
       vim.loop.new_timer():start(10, 0, function()
         vim.schedule(function()
@@ -75,12 +75,12 @@ M.commitpush = function()
       end)
     end
   else
-    vim.notify('no staged')
+    vim.notify 'no staged'
   end
 end
 
 M.commit = function()
-  local result = vim.fn.systemlist({ "git", "diff", "--staged", "--stat" })
+  local result = vim.fn.systemlist { "git", "diff", "--staged", "--stat", }
   if #result > 0 then
     vim.notify("git diff --staged --stat" .. '\n' .. vim.loop.cwd() .. '\n' .. table.concat(result, '\n'), 'info', {
       animate = false,
@@ -90,7 +90,7 @@ M.commit = function()
       end,
       timeout = 1000 * 8,
     })
-    local input = vim.fn.input('commit info (just commit): ')
+    local input = vim.fn.input 'commit info (just commit): '
     if #input > 0 then
       vim.loop.new_timer():start(10, 0, function()
         vim.schedule(function()
@@ -100,29 +100,29 @@ M.commit = function()
       end)
     end
   else
-    vim.notify('no staged')
+    vim.notify 'no staged'
   end
 end
 
 M.push = function()
   pcall(vim.call, 'ProjectRootCD')
-  local result = vim.fn.systemlist({ "git", "cherry", "-v" })
+  local result = vim.fn.systemlist { "git", "cherry", "-v", }
   if #result > 0 then
     vim.notify("git cherry -v" .. '\n' .. vim.loop.cwd() .. '\n' .. table.concat(result, '\n'))
     vim.loop.new_timer():start(10, 0, function()
       vim.schedule(function()
         asyncrunprepare()
-        vim.cmd('AsyncRun git push')
+        vim.cmd 'AsyncRun git push'
       end)
     end)
   else
-    vim.notify('cherry empty')
+    vim.notify 'cherry empty'
   end
 end
 
 local function get_fname_tail(fname)
   fname = string.gsub(fname, '\\', '/')
-  local fpath = require('plenary.path'):new(fname)
+  local fpath = require 'plenary.path':new(fname)
   if fpath:is_file() then
     fname = fpath:_split()
     return fname[#fname]
@@ -138,9 +138,9 @@ local function get_fname_tail(fname)
 end
 
 local function get_dirs(fname)
-  local fpath = require('plenary.path'):new(fname)
+  local fpath = require 'plenary.path':new(fname)
   if not fpath:is_file() then
-    vim.cmd('ec "not file"')
+    vim.cmd 'ec "not file"'
     return nil
   end
   local dirs = {}
@@ -161,21 +161,21 @@ M.initdo = function(dpath, run)
     return
   end
   remote_name = '.git-' .. remote_name
-  local remote_dpath = require('plenary.path').new(dpath):joinpath(remote_name)
+  local remote_dpath = require 'plenary.path'.new(dpath):joinpath(remote_name)
   if remote_dpath:exists() then
     print('remote path already existed: ' .. remote_dpath)
     return
   end
   local remote_dname = remote_dpath.filename
   local fname = dpath .. '/.gitignore'
-  local fpath = require('plenary.path').new(fname)
+  local fpath = require 'plenary.path'.new(fname)
   if fpath:is_file() then
     local lines = vim.fn.readfile(fname)
     if vim.tbl_contains(lines, remote_name) == false then
-      vim.fn.writefile({ remote_name }, fname, "a")
+      vim.fn.writefile({ remote_name, }, fname, "a")
     end
   else
-    vim.fn.writefile({ remote_name }, fname, "a")
+    vim.fn.writefile({ remote_name, }, fname, "a")
   end
   asyncrunprepare()
   local cmd = string.gsub(string.format([[%s
@@ -200,7 +200,7 @@ M.init = function()
   if not dirs then
     return
   end
-  vim.ui.select(dirs, { prompt = 'git init' }, function(choice)
+  vim.ui.select(dirs, { prompt = 'git init', }, function(choice)
     if not choice then
       return
     end
@@ -211,28 +211,28 @@ end
 M.addall = function()
   pcall(vim.call, 'ProjectRootCD')
   asyncrunprepare()
-  vim.cmd('AsyncRun git add -A')
+  vim.cmd 'AsyncRun git add -A'
 end
 
 M.pull = function()
   pcall(vim.call, 'ProjectRootCD')
   asyncrunprepare()
-  vim.cmd('AsyncRun git pull')
+  vim.cmd 'AsyncRun git pull'
 end
 
 M.reset_hard = function()
   local res = vim.fn.input("git reset --hard [N/y]: ", "y")
-  if vim.tbl_contains({ 'y', 'Y', 'yes', 'Yes', 'YES' }, res) == true then
+  if vim.tbl_contains({ 'y', 'Y', 'yes', 'Yes', 'YES', }, res) == true then
     asyncrunprepare()
-    vim.cmd('AsyncRun git reset --hard')
+    vim.cmd 'AsyncRun git reset --hard'
   end
 end
 
 M.reset_hard_clean = function()
   local res = vim.fn.input("git reset --hard && git clean -fd [N/y]: ", "y")
-  if vim.tbl_contains({ 'y', 'Y', 'yes', 'Yes', 'YES' }, res) == true then
+  if vim.tbl_contains({ 'y', 'Y', 'yes', 'Yes', 'YES', }, res) == true then
     asyncrunprepare()
-    vim.cmd('AsyncRun git reset --hard && git clean -fd')
+    vim.cmd 'AsyncRun git reset --hard && git clean -fd'
   end
 end
 

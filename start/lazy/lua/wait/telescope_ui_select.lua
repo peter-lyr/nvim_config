@@ -2,9 +2,9 @@ return {
   'nvim-telescope/telescope-ui-select.nvim',
   lazy = true,
   dependencies = {
-    require('wait.telescope'),
+    require 'wait.telescope',
   },
   config = function()
-    require('telescope').load_extension("ui-select")
-  end
+    require 'telescope'.load_extension "ui-select"
+  end,
 }

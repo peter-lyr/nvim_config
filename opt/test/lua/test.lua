@@ -1,4 +1,4 @@
-for winnr=1, vim.fn.winnr('$') do
+for winnr = 1, vim.fn.winnr '$' do
   -- print(winnr)
   local bufnr = vim.fn.winbufnr(winnr)
   -- print(bufnr)

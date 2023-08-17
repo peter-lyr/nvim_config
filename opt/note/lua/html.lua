@@ -8,7 +8,7 @@ M.minimize = function()
     endtry
   ]]
   local cmd = ''
-  for _,  v in ipairs({
+  for _, v in ipairs {
     [[%s/\s\+$\|^\s\+//g]],
     [[%s/\s\+/ /g]],
     [[g/^$/d]],
@@ -17,7 +17,7 @@ M.minimize = function()
     [[%s/<!--.\{-}-->//g]],
     [[%s/<script[^>]*>.*<\/script>]],
     [[%s/<style[^>]*>.*<\/style>]],
-  }) do
+  } do
     cmd = cmd .. string.format(f, v)
   end
   vim.cmd(cmd)

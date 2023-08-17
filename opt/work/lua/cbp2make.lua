@@ -2,18 +2,18 @@ local M = {}
 
 package.loaded['cbp2make'] = nil
 
-local Path = require("plenary.path")
-local Scan = require("plenary.scandir")
+local Path = require "plenary.path"
+local Scan = require "plenary.scandir"
 
 local function systemcd(path)
   local s = ''
   if string.sub(path, 2, 2) == ':' then
     s = s .. string.sub(path, 1, 2) .. ' && '
   end
-  if require('plenary.path').new(path):is_dir() then
+  if require 'plenary.path'.new(path):is_dir() then
     s = s .. 'cd ' .. path
   else
-    s = s .. 'cd ' .. require('plenary.path').new(path):parent().filename
+    s = s .. 'cd ' .. require 'plenary.path'.new(path):parent().filename
   end
   return s
 end
@@ -26,7 +26,7 @@ end
 M.get_workspaces = function(abspath)
   local workspaces = {}
   local path = Path:new(abspath)
-  local entries = Scan.scan_dir(path.filename, { hidden = false, depth = 8, add_dirs = false })
+  local entries = Scan.scan_dir(path.filename, { hidden = false, depth = 8, add_dirs = false, })
   for _, entry in ipairs(entries) do
     local entry_path_name = rep(entry)
     if string.match(entry_path_name, '%.([^%.]+)$') == 'workspace' then
@@ -39,15 +39,15 @@ M.get_workspaces = function(abspath)
 end
 
 Cbp2makeBuildDone = function()
-  require('notify').dismiss()
-  vim.notify('Done!')
-  vim.cmd('au! User AsyncRunStop')
+  require 'notify'.dismiss()
+  vim.notify 'Done!'
+  vim.cmd 'au! User AsyncRunStop'
 end
 
 M.build_do = function(project, workspace)
-  vim.cmd([[au User AsyncRunStop call v:lua.Cbp2makeBuildDone()]])
+  vim.cmd [[au User AsyncRunStop call v:lua.Cbp2makeBuildDone()]]
   local make = 'mingw32-make all'
-  local rebuild_en = require('config.coderunner').rebuild_en
+  local rebuild_en = require 'config.coderunner'.rebuild_en
   if rebuild_en then
     make = make .. ' -B -j20'
   end
@@ -60,23 +60,23 @@ M.build_do = function(project, workspace)
   else
     vim.cmd('AsyncRun ' .. cmd)
     local winid = vim.fn.win_getid()
-    vim.cmd('copen')
-    vim.cmd('wincmd J')
-    vim.cmd('norm Gzb')
+    vim.cmd 'copen'
+    vim.cmd 'wincmd J'
+    vim.cmd 'norm Gzb'
     vim.fn.win_gotoid(winid)
   end
 end
 
 local notify_building = function()
-  if require('config.coderunner').rebuild_en then
-    vim.notify('Re Building...')
+  if require 'config.coderunner'.rebuild_en then
+    vim.notify 'Re Building...'
   else
-    vim.notify('Building...')
+    vim.notify 'Building...'
   end
 end
 
 M.build = function(workspace)
-  local project = string.gsub(vim.fn.tolower(vim.call('ProjectRootGet')), '\\', '/')
+  local project = string.gsub(vim.fn.tolower(vim.call 'ProjectRootGet'), '\\', '/')
   if #project == 0 then
     print('no projectroot:', vim.api.nvim_buf_get_name(0))
     return
@@ -93,7 +93,7 @@ M.build = function(workspace)
         M.build_do(project, workspaces[1])
         return
       end
-      vim.ui.select(workspaces, { prompt = 'select one of them' }, function(_, idx)
+      vim.ui.select(workspaces, { prompt = 'select one of them', }, function(_, idx)
         workspace = workspaces[idx]
         notify_building()
         M.build_do(project, workspace)
@@ -106,11 +106,11 @@ M.build = function(workspace)
   workspace = workspaces[1]
   if #workspaces == 0 then
     vim.notify('No workspace file found in ' .. project .. '.')
-    vim.notify('Preparing...')
-    require('cbp2cmake').build()
+    vim.notify 'Preparing...'
+    require 'cbp2cmake'.build()
     return
   elseif #workspaces > 1 then
-    vim.ui.select(workspaces, { prompt = 'select one of them' }, function(_, idx)
+    vim.ui.select(workspaces, { prompt = 'select one of them', }, function(_, idx)
       workspace = workspaces[idx]
       notify_building()
       M.build_do(project, workspace)

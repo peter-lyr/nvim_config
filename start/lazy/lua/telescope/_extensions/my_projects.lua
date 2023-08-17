@@ -6,17 +6,17 @@ if not has_telescope then
   return
 end
 
-local finders = require("telescope.finders")
-local pickers = require("telescope.pickers")
-local telescope_config = require("telescope.config").values
-local actions = require("telescope.actions")
-local state = require("telescope.actions.state")
-local builtin = require("telescope.builtin")
-local entry_display = require("telescope.pickers.entry_display")
+local finders = require "telescope.finders"
+local pickers = require "telescope.pickers"
+local telescope_config = require "telescope.config".values
+local actions = require "telescope.actions"
+local state = require "telescope.actions.state"
+local builtin = require "telescope.builtin"
+local entry_display = require "telescope.pickers.entry_display"
 
-local history = require("project_nvim.utils.history")
-local project = require("project_nvim.project")
-local config = require("project_nvim.config")
+local history = require "project_nvim.utils.history"
+local project = require "project_nvim.project"
+local config = require "project_nvim.config"
 
 ----------
 -- Actions
@@ -42,7 +42,7 @@ local function create_finder()
       maxwidth = width
     end
   end
-  local displayer = entry_display.create({
+  local displayer = entry_display.create {
     separator = " ",
     items = {
       {
@@ -52,13 +52,13 @@ local function create_finder()
         remaining = true,
       },
     },
-  })
+  }
 
   local function make_display(entry)
-    return displayer({ entry.name, { entry.value, "Comment" } })
+    return displayer { entry.name, { entry.value, "Comment", }, }
   end
 
-  return finders.new_table({
+  return finders.new_table {
     results = results,
     entry_maker = function(entry)
       local name = vim.fn.fnamemodify(entry, ":t")
@@ -69,7 +69,7 @@ local function create_finder()
         ordinal = name .. " " .. entry,
       }
     end,
-  })
+  }
 end
 
 local function change_working_directory(prompt_bufnr, prompt)
@@ -108,7 +108,7 @@ local function browse_project_files(prompt_bufnr)
   }
   if cd_successful then
     -- builtin.file_browser(opt)
-    require("telescope").extensions.file_browser.file_browser(opt)
+    require "telescope".extensions.file_browser.file_browser(opt)
   end
 end
 
@@ -165,9 +165,9 @@ local function my_projects(opts)
     sorter = telescope_config.generic_sorter(opts),
     attach_mappings = function(prompt_bufnr, map)
       -- map("n", "f", find_project_files)
-      map("n", "r", browse_project_files, { nowait = true })
-      map("n", "z", delete_project, { nowait = true })
-      map("n", "c", search_in_project_files, { nowait = true })
+      map("n", "r", browse_project_files, { nowait = true, })
+      map("n", "z", delete_project, { nowait = true, })
+      map("n", "c", search_in_project_files, { nowait = true, })
       -- map("n", "r", recent_project_files)
       -- map("n", "w", change_working_directory)
 
@@ -187,8 +187,8 @@ local function my_projects(opts)
   }):find()
 end
 
-return telescope.register_extension({
+return telescope.register_extension {
   exports = {
     my_projects = my_projects,
   },
-})
+}

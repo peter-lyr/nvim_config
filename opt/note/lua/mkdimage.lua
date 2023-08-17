@@ -1,14 +1,14 @@
 local M = {}
 
-local sha256 = require("sha2")
-local path = require("plenary.path")
+local sha256 = require "sha2"
+local path = require "plenary.path"
 
 local note_dir = path:new(vim.g.pack_path):joinpath('nvim_config', 'opt', 'note', 'autoload')
 
-vim.g.get_clipboard_image_ps1 = note_dir:joinpath('GetClipboardImage.ps1').filename
-vim.g.update_markdown_image_src_py = note_dir:joinpath('update_markdown_image_src.py').filename
+vim.g.get_clipboard_image_ps1 = note_dir:joinpath 'GetClipboardImage.ps1'.filename
+vim.g.update_markdown_image_src_py = note_dir:joinpath 'update_markdown_image_src.py'.filename
 
-local pipe_txt_path = path:new(vim.fn.expand('$TEMP')):joinpath('image_pipe.txt')
+local pipe_txt_path = path:new(vim.fn.expand '$TEMP'):joinpath 'image_pipe.txt'
 
 ------------------
 -- getimage
@@ -56,17 +56,17 @@ function M.getimage(sel_jpg)
     print('not projectroot:', fname)
     return false
   end
-  local datetime = os.date("%Y%m%d-%H%M%S-")
+  local datetime = os.date "%Y%m%d-%H%M%S-"
   local imagetype = sel_jpg == 'sel_jpg' and 'jpg' or 'png'
   local image_name = vim.fn.input(string.format('Input %s image name (no extension needed!): ', imagetype), datetime)
   if #image_name == 0 then
-    print('get image canceled!')
+    print 'get image canceled!'
     return false
   end
   local ft = vim.bo.ft
   local cur_winid = vim.fn.win_getid()
-  local linenr = vim.fn.line('.')
-  local absolute_image_dir_path = projectroot_path:joinpath('saved_images')
+  local linenr = vim.fn.line '.'
+  local absolute_image_dir_path = projectroot_path:joinpath 'saved_images'
   if not absolute_image_dir_path:exists() then
     vim.fn.system(string.format('md "%s"', absolute_image_dir_path.filename))
     print("created ->", rep(absolute_image_dir_path.filename))
@@ -80,7 +80,7 @@ function M.getimage(sel_jpg)
   pipe_txt_path:write('', 'w')
   local cmd = string.format('%s "%s" "%s" "%s"', vim.g.get_clipboard_image_ps1, rep(raw_image_path.filename), sel_jpg,
     rep(pipe_txt_path.filename))
-  require('terminal').send('powershell', cmd, 0)
+  require 'terminal'.send('powershell', cmd, 0)
   local timer = vim.loop.new_timer()
   local timeout = 0
   timer:start(100, 100, function()
@@ -93,7 +93,7 @@ function M.getimage(sel_jpg)
         local raw_image_data = raw_image_path:_read()
         print('save one image:', rep(raw_image_path.filename))
         local absolute_image_hash = string.sub(sha256.sha256(raw_image_data), 1, 8)
-        local _md_path = absolute_image_dir_path:joinpath('_.md')
+        local _md_path = absolute_image_dir_path:joinpath '_.md'
         _md_path:write(
           string.format('![%s-(%d)%s{%s}](%s)\n', only_image_name, #raw_image_data,
             human_readable_fsize(#raw_image_data),
@@ -117,7 +117,7 @@ function M.getimage(sel_jpg)
         vim.fn.append(linenr, string.format('![%s{%s}](%s)', only_image_name, absolute_image_hash, image_rel_path))
       end
       if timeout > 30 then
-        print('get image timeout 3s')
+        print 'get image timeout 3s'
         timer:stop()
       end
     end)
@@ -133,7 +133,7 @@ local get_saved_images_dirname = function(fname)
   local cnt = #dir.filename
   while 1 do
     cnt = #dir.filename
-    local p = dir:joinpath('saved_images')
+    local p = dir:joinpath 'saved_images'
     if p:exists() then
       return dir.filename
     end
@@ -148,17 +148,17 @@ end
 function M.updatesrc()
   local fname = vim.api.nvim_buf_get_name(0)
   if #fname == 0 then
-    print('no fname')
+    print 'no fname'
     return
   end
   local saved_images_dirname = get_saved_images_dirname(fname)
   if not saved_images_dirname then
-    print('no saved_images dir')
+    print 'no saved_images dir'
     return
   end
   local cmd = string.format('python %s "%s" "%s"', rep_reverse(vim.g.update_markdown_image_src_py),
     rep_reverse(saved_images_dirname), rep_reverse(fname))
-  require('terminal').send('cmd', cmd, 0)
+  require 'terminal'.send('cmd', cmd, 0)
 end
 
 ------------------
@@ -172,16 +172,16 @@ function M.dragimage(sel_jpg, dragimagename)
     print([[not projectroot:]], fname)
     return false
   end
-  local datetime = os.date("%Y%m%d-%H%M%S-")
+  local datetime = os.date "%Y%m%d-%H%M%S-"
   local imagetype = sel_jpg == 'sel_jpg' and 'jpg' or 'png'
   local image_name = vim.fn.input(string.format('Input %s image name (no extension needed!): ', imagetype), datetime)
   if #image_name == 0 then
-    print('get image canceled!')
+    print 'get image canceled!'
     return false
   end
   local cur_winid = vim.fn.win_getid()
-  local linenr = vim.fn.line('.')
-  local absolute_image_dir_path = projectroot_path:joinpath('saved_images')
+  local linenr = vim.fn.line '.'
+  local absolute_image_dir_path = projectroot_path:joinpath 'saved_images'
   if not absolute_image_dir_path:exists() then
     vim.fn.system(string.format('md "%s"', absolute_image_dir_path.filename))
     print("created ->", rep(absolute_image_dir_path.filename))
@@ -195,7 +195,7 @@ function M.dragimage(sel_jpg, dragimagename)
   vim.fn.system(string.format('copy "%s" "%s"', dragimagename, rep(raw_image_path.filename)))
   local raw_image_data = raw_image_path:_read()
   local absolute_image_hash = string.sub(sha256.sha256(raw_image_data), 1, 8)
-  local _md_path = absolute_image_dir_path:joinpath('_.md')
+  local _md_path = absolute_image_dir_path:joinpath '_.md'
   _md_path:write(string.format('![%s-(%d)%s{%s}](%s)\n', only_image_name, #raw_image_data,
     human_readable_fsize(#raw_image_data), absolute_image_hash, only_image_name), 'a')
   local projectroot = rep_reverse(projectroot_path.filename)

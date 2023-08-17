@@ -1,3 +1,3 @@
-require('ab')
-require('multihili')
-require('session')
+require 'ab'
+require 'multihili'
+require 'session'

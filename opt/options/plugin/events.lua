@@ -22,7 +22,7 @@ local tab_4_lang = {
   'ld',
 }
 
-vim.api.nvim_create_autocmd({ "BufEnter" }, {
+vim.api.nvim_create_autocmd({ "BufEnter", }, {
   callback = function()
     if vim.tbl_contains(tab_4_lang, vim.opt.filetype:get()) == true then
       vim.opt.tabstop = 4
@@ -38,7 +38,7 @@ vim.api.nvim_create_autocmd({ "BufEnter" }, {
 
 vim.api.nvim_create_autocmd({ "VimEnter", }, {
   callback = function()
-    if vim.fn.exists('g:GuiLoaded') and vim.g.GuiLoaded == 1 then
+    if vim.fn.exists 'g:GuiLoaded' and vim.g.GuiLoaded == 1 then
       vim.loop.new_timer():start(10, 0, function()
         vim.schedule(function()
           vim.fn['GuiWindowFrameless'](1)
@@ -50,7 +50,7 @@ vim.api.nvim_create_autocmd({ "VimEnter", }, {
 
 vim.api.nvim_create_autocmd({ "VimLeave", }, {
   callback = function()
-    if vim.fn.exists('g:GuiLoaded') and vim.g.GuiLoaded == 1 then
+    if vim.fn.exists 'g:GuiLoaded' and vim.g.GuiLoaded == 1 then
       if vim.g.GuiWindowMaximized == 1 then
         vim.fn['GuiWindowMaximized'](0)
       end
@@ -69,18 +69,18 @@ vim.api.nvim_create_autocmd({ "VimLeave", }, {
 -- This file is automatically loaded by lazyvim.config.init
 
 local function augroup(name)
-  return vim.api.nvim_create_augroup("lazyvim_" .. name, { clear = true })
+  return vim.api.nvim_create_augroup("lazyvim_" .. name, { clear = true, })
 end
 
 -- Check if we need to reload the file when it changed
-vim.api.nvim_create_autocmd({ "FocusGained", "TermClose", "TermLeave" }, {
-  group = augroup("checktime"),
+vim.api.nvim_create_autocmd({ "FocusGained", "TermClose", "TermLeave", }, {
+  group = augroup "checktime",
   command = "checktime",
 })
 
 -- Highlight on yank
 vim.api.nvim_create_autocmd("TextYankPost", {
-  group = augroup("highlight_yank"),
+  group = augroup "highlight_yank",
   callback = function()
     vim.highlight.on_yank()
   end,
@@ -96,7 +96,7 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 
 -- go to last loc when opening a buffer
 vim.api.nvim_create_autocmd("BufReadPost", {
-  group = augroup("last_loc"),
+  group = augroup "last_loc",
   callback = function()
     local mark = vim.api.nvim_buf_get_mark(0, '"')
     local lcount = vim.api.nvim_buf_line_count(0)
@@ -123,7 +123,7 @@ vim.api.nvim_create_autocmd({ "BufLeave", }, {
 
 -- close some filetypes with <q>
 vim.api.nvim_create_autocmd("FileType", {
-  group = augroup("close_with_q"),
+  group = augroup "close_with_q",
   pattern = {
     "lazy",
     "PlenaryTestPopup",
@@ -146,7 +146,7 @@ vim.api.nvim_create_autocmd("FileType", {
     vim.loop.new_timer():start(30, 0, function()
       vim.schedule(function()
         vim.keymap.set("n", "q", function()
-          require('buffernew').close()
+          require 'buffernew'.close()
           vim.loop.new_timer():start(30, 0, function()
             vim.schedule(function()
               if vim.fn.buflisted(vim.fn.bufnr()) == 0 and vim.g.lastbufwinid ~= -1 then
@@ -154,7 +154,7 @@ vim.api.nvim_create_autocmd("FileType", {
               end
             end)
           end)
-        end, { buffer = event.buf, nowait = true, silent = true })
+        end, { buffer = event.buf, nowait = true, silent = true, })
       end)
     end)
   end,
@@ -171,10 +171,10 @@ vim.api.nvim_create_autocmd("FileType", {
 -- })
 
 -- Auto create dir when saving a file, in case some intermediate directory does not exist
-vim.api.nvim_create_autocmd({ "BufWritePre" }, {
-  group = augroup("auto_create_dir"),
+vim.api.nvim_create_autocmd({ "BufWritePre", }, {
+  group = augroup "auto_create_dir",
   callback = function(event)
-    if event.match:match("^%w%w+://") then
+    if event.match:match "^%w%w+://" then
       return
     end
     local file = vim.loop.fs_realpath(event.match) or event.match

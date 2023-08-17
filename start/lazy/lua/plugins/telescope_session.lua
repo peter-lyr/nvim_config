@@ -3,16 +3,16 @@ return {
   lazy = true,
   event = { "QuitPre", },
   keys = {
-    { '<leader>svo', function() require('config.telescope_session').open() end,      mode = { 'n', 'v' }, silent = true, desc = 'Telescope session open' },
-    { '<leader>svs', function() require('config.telescope_session').save() end,      mode = { 'n', 'v' }, silent = true, desc = 'Telescope session save' },
-    { '<leader>svvs',     function() require('config.telescope_session').saveinput() end, mode = { 'n', 'v' }, silent = true, desc = 'Telescope session save' },
-    { '<leader>svl', function() require('config.telescope_session').list() end,      mode = { 'n', 'v' }, silent = true, desc = 'Telescope session list' },
+    { '<leader>svo',  function() require 'config.telescope_session'.open() end,       mode = { 'n', 'v', }, silent = true, desc = 'Telescope session open', },
+    { '<leader>svs',  function() require 'config.telescope_session'.save() end,       mode = { 'n', 'v', }, silent = true, desc = 'Telescope session save', },
+    { '<leader>svvs', function() require 'config.telescope_session'.saveinput() end,  mode = { 'n', 'v', }, silent = true, desc = 'Telescope session save', },
+    { '<leader>svl',  function() require 'config.telescope_session'.list() end,       mode = { 'n', 'v', }, silent = true, desc = 'Telescope session list', },
   },
   dependencies = {
-    require('wait.telescope'),
-    require('wait.plenary'),
+    require 'wait.telescope',
+    require 'wait.plenary',
   },
   config = function()
-    require('config.telescope_session')
+    require 'config.telescope_session'
   end,
 }

@@ -5,5 +5,5 @@ return {
     vim.g.rootmarkers = {
       ".git",
     }
-  end
+  end,
 }

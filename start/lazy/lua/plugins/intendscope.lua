@@ -1,7 +1,7 @@
 return {
   'echasnovski/mini.indentscope',
   lazy = true,
-  event = { "BufReadPre", "BufNewFile" },
+  event = { "BufReadPre", "BufNewFile", },
   init = function()
     vim.api.nvim_create_autocmd("FileType", {
       pattern = {
@@ -27,9 +27,9 @@ return {
     })
   end,
   config = function()
-    require('mini.indentscope').setup({
+    require 'mini.indentscope'.setup {
       symbol = "│",
-      options = { try_as_border = true },
-    })
+      options = { try_as_border = true, },
+    }
   end,
 }

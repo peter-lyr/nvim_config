@@ -1,6 +1,6 @@
 local M = {}
 
-M.temp = require('plenary.path'):new(vim.fn.expand('$TEMP')):joinpath('temp_xxd.txt')
+M.temp = require 'plenary.path':new(vim.fn.expand '$TEMP'):joinpath 'temp_xxd.txt'
 
 -- M.xxd_opt = 'xxd -c16 -g2' -- default
 M.xxd_opt = 'xxd'
@@ -18,10 +18,10 @@ local function systemcd(path)
   if string.sub(path, 2, 2) == ':' then
     s = s .. string.sub(path, 1, 2) .. ' && '
   end
-  if require('plenary.path').new(path):is_dir() then
+  if require 'plenary.path'.new(path):is_dir() then
     s = s .. 'cd ' .. path
   else
-    s = s .. 'cd ' .. require('plenary.path').new(path):parent().filename
+    s = s .. 'cd ' .. require 'plenary.path'.new(path):parent().filename
   end
   return s
 end
@@ -34,7 +34,7 @@ M.check = function(ev)
     if info[2] and string.match(info[2], 'binary') and info[1] and not string.match(info[1], 'empty') then
       local file = rep(ev.file)
       local xxdout = string.format('%s\\.xxdout', vim.fn.fnamemodify(file, ':h'))
-      if not require('plenary.path'):new(xxdout):exists() then
+      if not require 'plenary.path':new(xxdout):exists() then
         vim.fn.mkdir(xxdout)
       end
       local txt = string.format('%s\\%s.xxd', xxdout, vim.fn.fnamemodify(file, ':t'))
@@ -45,7 +45,7 @@ M.check = function(ev)
       vim.fn.system(string.format('%s && %s -i "%s" "%s"', systemcd(mod), M.xxd_opt,
         vim.fn.fnamemodify(mod, ':t'), char))
       vim.cmd('e ' .. txt)
-      vim.cmd('setlocal ft=xxd')
+      vim.cmd 'setlocal ft=xxd'
       vim.loop.new_timer():start(1000, 0, function()
         vim.schedule(function()
           vim.cmd(ev.buf .. 'bw!')
@@ -59,12 +59,12 @@ M.check = function(ev)
   end)
 end
 
-require('maps').add('<F5>', 'n', function()
+require 'maps'.add('<F5>', 'n', function()
   vim.loop.new_timer():start(10, 0, function()
     vim.schedule(function()
       if string.match(vim.fn.getline(1), "^00000000:") then
         if vim.api.nvim_buf_get_option(vim.fn.bufnr(), 'filetype') ~= 'xxd' then
-          vim.cmd('setlocal ft=xxd')
+          vim.cmd 'setlocal ft=xxd'
         end
         local txt = vim.api.nvim_buf_get_name(0)
         if vim.tbl_contains(vim.tbl_keys(M.dict), txt) == false then
@@ -77,12 +77,12 @@ require('maps').add('<F5>', 'n', function()
           M.dict[txt][1], M.temp))
         vim.fn.system(string.format('%s && %s -i "%s" "%s"', systemcd(M.dict[txt][1]), M.xxd_opt,
           vim.fn.fnamemodify(M.dict[txt][1], ':t'), M.dict[txt][2]))
-        local lines = require('plenary.path'):new(M.temp):readlines()
+        local lines = require 'plenary.path':new(M.temp):readlines()
         local len = #lines
         vim.fn.setline(1, lines)
-        vim.fn.deletebufline(vim.fn.bufnr(), len, vim.fn.line('$'))
+        vim.fn.deletebufline(vim.fn.bufnr(), len, vim.fn.line '$')
       end
-      M.check({ buf = vim.fn.bufnr(), file = vim.api.nvim_buf_get_name(0) })
+      M.check { buf = vim.fn.bufnr(), file = vim.api.nvim_buf_get_name(0), }
     end)
   end)
 end, 'xxd_save')

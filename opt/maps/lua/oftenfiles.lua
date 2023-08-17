@@ -2,8 +2,8 @@ local M = {}
 
 local files = {
   string.sub(debug.getinfo(1).source, 2),
-  vim.fn.expand([[$HOME\.gitconfig]]),
-  vim.fn.expand([[$HOME\.gitignore_global]]),
+  vim.fn.expand [[$HOME\.gitconfig]],
+  vim.fn.expand [[$HOME\.gitignore_global]],
   -- vim.fn.expand([[$localappdata\nvim\init.lua]]),
 }
 
@@ -16,7 +16,7 @@ for _, file in ipairs(files) do
 end
 
 M.open = function()
-  vim.ui.select(existsfiles, { prompt = 'oftenfiles' }, function(choice)
+  vim.ui.select(existsfiles, { prompt = 'oftenfiles', }, function(choice)
     if not choice then
       return
     end

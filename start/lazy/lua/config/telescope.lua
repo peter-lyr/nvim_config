@@ -1,10 +1,10 @@
-local telescope = require('telescope')
-local actions = require('telescope.actions')
-local actions_layout = require('telescope.actions.layout')
+local telescope = require 'telescope'
+local actions = require 'telescope.actions'
+local actions_layout = require 'telescope.actions.layout'
 
-vim.cmd([[
+vim.cmd [[
 autocmd User TelescopePreviewerLoaded setlocal rnu | setlocal number | setlocal wrap
-]])
+]]
 
 local fb_actions = require "telescope._extensions.file_browser.actions"
 
@@ -39,7 +39,7 @@ local get_setup_table = function(file_ignore_patterns)
           ["<C-_>"] = false, -- actions.which_key, -- keys from pressing <C-/>
 
           -- normal <c-w>
-          ["<C-w>"] = { "<c-s-w>", type = "command" },
+          ["<C-w>"] = { "<c-s-w>", type = "command", },
 
           -- sometimes use:
           -- ["<Down>"] = false, -- actions.move_selection_next,
@@ -59,7 +59,7 @@ local get_setup_table = function(file_ignore_patterns)
         n = {
           ['q'] = {
             actions.close, type = "action",
-            opts = { nowait = true, silent = true }
+            opts = { nowait = true, silent = true, },
           },
 
           ['s'] = actions.move_selection_next,
@@ -72,7 +72,7 @@ local get_setup_table = function(file_ignore_patterns)
               end
             end,
             type = "action",
-            opts = { nowait = true, silent = true, desc = '5j' }
+            opts = { nowait = true, silent = true, desc = '5j', },
           },
           ['e'] = {
             function(prompt_bufnr)
@@ -81,7 +81,7 @@ local get_setup_table = function(file_ignore_patterns)
               end
             end,
             type = "action",
-            opts = { nowait = true, silent = true, desc = '5k' }
+            opts = { nowait = true, silent = true, desc = '5k', },
           },
 
           ['f'] = actions.send_to_qflist + actions.open_qflist,
@@ -92,11 +92,11 @@ local get_setup_table = function(file_ignore_patterns)
 
           ['<leader>'] = {
             actions.select_default, type = "action",
-            opts = { nowait = true, silent = true }
+            opts = { nowait = true, silent = true, },
           },
 
           ['g'] = actions_layout.toggle_preview,
-        }
+        },
       },
       file_ignore_patterns = file_ignore_patterns,
       vimgrep_arguments = {
@@ -131,7 +131,7 @@ local get_setup_table = function(file_ignore_patterns)
             ["<C-o>"] = false,  -- fb_actions.open,
             ["<C-g>"] = false,  -- fb_actions.goto_parent_dir,
             ["<C-e>"] = false,  -- fb_actions.goto_home_dir,
-            ["<C-w>"] = { "<c-s-w>", type = "command" },
+            ["<C-w>"] = { "<c-s-w>", type = "command", },
             ["<C-t>"] = false,  -- fb_actions.change_cwd,
             ["<C-f>"] = false,  -- fb_actions.toggle_browser,
             ["<C-h>"] = false,  -- fb_actions.toggle_hidden,
@@ -155,7 +155,7 @@ local get_setup_table = function(file_ignore_patterns)
           },
         },
       },
-    }
+    },
   }
 end
 
@@ -205,7 +205,7 @@ add(t, {
 
 telescope.setup(get_setup_table(t))
 
-local p = require('plenary.path')
+local p = require 'plenary.path'
 
 -- fzf
 
@@ -224,7 +224,7 @@ pcall(telescope.load_extension, 'my_file_browser')
 
 local M = {}
 
-M.nvim_config = p:new(vim.g.pack_path):joinpath('nvim_config')
+M.nvim_config = p:new(vim.g.pack_path):joinpath 'nvim_config'
 
 M.open = function()
   vim.cmd('cd ' .. M.nvim_config.filename .. '|e ' .. 'start/lazy/lua/config/telescope.lua')

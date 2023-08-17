@@ -8,7 +8,7 @@ M.winid = 0
 M.check = function()
   if M.max_en then
     if vim.opt.winfixheight:get() == false then
-      vim.cmd('wincmd _')
+      vim.cmd 'wincmd _'
       if M.winid ~= vim.fn.win_getid() then
         vim.api.nvim_win_set_height(M.winid, 2)
       end
@@ -18,19 +18,19 @@ end
 
 M.k = function()
   M.winid = vim.fn.win_getid()
-  vim.cmd('wincmd k')
+  vim.cmd 'wincmd k'
   M.check()
 end
 
 M.j = function()
   M.winid = vim.fn.win_getid()
-  vim.cmd('wincmd j')
+  vim.cmd 'wincmd j'
   M.check()
 end
 
 M.wp = function()
   local count = vim.v.count
-  local max = vim.fn.winnr('$')
+  local max = vim.fn.winnr '$'
   if count == 0 then
     local winnr = vim.fn.winnr() - 1
     if winnr < 1 then
@@ -40,7 +40,8 @@ M.wp = function()
   else
     if count < 1 then
       count = 1
-    else if count > max then
+    else
+      if count > max then
         count = max
       end
       vim.fn.win_gotoid(vim.fn.win_getid(count))
@@ -50,7 +51,7 @@ end
 
 M.wn = function()
   local count = vim.v.count
-  local max = vim.fn.winnr('$')
+  local max = vim.fn.winnr '$'
   if count == 0 then
     local winnr = vim.fn.winnr() + 1
     if winnr > max then
@@ -60,7 +61,8 @@ M.wn = function()
   else
     if count < 1 then
       count = 1
-    else if count > max then
+    else
+      if count > max then
         count = max
       end
       vim.fn.win_gotoid(vim.fn.win_getid(count))
@@ -69,7 +71,7 @@ M.wn = function()
 end
 
 M.main = function()
-  for winnr=1, vim.fn.winnr('$') do
+  for winnr = 1, vim.fn.winnr '$' do
     local bufnr = vim.fn.winbufnr(winnr)
     local fname = vim.api.nvim_buf_get_name(bufnr)
     if vim.fn.filereadable(fname) == 1 then
@@ -82,53 +84,53 @@ end
 
 M.oo = function()
   M.max_en = 1
-  print('win height auto max enabled')
+  print 'win height auto max enabled'
 end
 
 M.ii = function()
   M.max_en = nil
-  print('win height auto max disabled')
+  print 'win height auto max disabled'
 end
 
 M.i = function()
-  vim.cmd('wincmd =')
+  vim.cmd 'wincmd ='
   if vim.opt.winfixheight:get() == true then
-    vim.cmd([[
+    vim.cmd [[
       set nowinfixheight
       wincmd =
       set winfixheight
-    ]])
+    ]]
   end
 end
 
 M.hh = function()
-  vim.cmd('set nowinfixwidth')
-  print('set nowinfixwidth')
+  vim.cmd 'set nowinfixwidth'
+  print 'set nowinfixwidth'
 end
 
 M.ll = function()
-  vim.cmd('set winfixwidth')
-  print('set winfixwidth')
+  vim.cmd 'set winfixwidth'
+  print 'set winfixwidth'
 end
 
 M.kk = function()
-  vim.cmd('set winfixheight')
-  print('set winfixheight')
+  vim.cmd 'set winfixheight'
+  print 'set winfixheight'
 end
 
 M.jj = function()
-  vim.cmd('set nowinfixheight')
-  print('set nowinfixheight')
+  vim.cmd 'set nowinfixheight'
+  print 'set nowinfixheight'
 end
 
 local hjkl_en = 0
 
 M.hjkl_toggle = function()
   if hjkl_en == 0 then
-    vim.keymap.set({ 'n', 'v', }, '1', 'h', { desc = 'h' })
-    vim.keymap.set({ 'n', 'v', }, '2', 'j', { desc = 'j' })
-    vim.keymap.set({ 'n', 'v', }, '3', 'k', { desc = 'k' })
-    vim.keymap.set({ 'n', 'v', }, '4', 'l', { desc = 'l' })
+    vim.keymap.set({ 'n', 'v', }, '1', 'h', { desc = 'h', })
+    vim.keymap.set({ 'n', 'v', }, '2', 'j', { desc = 'j', })
+    vim.keymap.set({ 'n', 'v', }, '3', 'k', { desc = 'k', })
+    vim.keymap.set({ 'n', 'v', }, '4', 'l', { desc = 'l', })
     hjkl_en = 1
   else
     vim.keymap.del({ 'n', 'v', }, '1')

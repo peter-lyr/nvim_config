@@ -12,9 +12,9 @@ return {
         ft = "NvimTree",
         pinned = true,
         open = function()
-          vim.api.nvim_input("<esc><space>1")
+          vim.api.nvim_input "<esc><space>1"
         end,
-        size = { height = 0.8 },
+        size = { height = 0.8, },
       },
       {
         title = "Fugitive",
@@ -29,9 +29,9 @@ return {
         ft = "minimap",
         pinned = true,
         open = function()
-          vim.api.nvim_input("<esc><space>3")
+          vim.api.nvim_input "<esc><space>3"
         end,
-        size = { height = 0.38 },
+        size = { height = 0.38, },
       },
       {
         title = "Aerial",
@@ -58,7 +58,7 @@ return {
         end
       end,
       ["<a-h>"] = function(win)
-        if win and win.width - 2 >= require("edgy.config").layout.left.size then
+        if win and win.width - 2 >= require "edgy.config".layout.left.size then
           win:resize("width", -2)
         end
       end,
@@ -68,7 +68,7 @@ return {
         end
       end,
       ["<a-j>"] = function(win)
-        if win and win.height - 5 >= require("edgy.config").layout.bottom.size then
+        if win and win.height - 5 >= require "edgy.config".layout.bottom.size then
           win:resize("height", -5)
         end
       end,
@@ -79,5 +79,5 @@ return {
         win.view.edgebar:equalize()
       end,
     },
-  }
+  },
 }

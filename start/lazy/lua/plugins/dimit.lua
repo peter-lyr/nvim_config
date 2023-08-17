@@ -3,9 +3,9 @@ return {
   lazy = true,
   event = { "CursorHold", "CursorHoldI", },
   config = function()
-    require("config.dimit")
+    require "config.dimit"
   end,
   dependencies = {
-    require('plugins.aerial'),
+    require 'plugins.aerial',
   },
 }

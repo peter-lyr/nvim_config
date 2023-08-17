@@ -1,12 +1,12 @@
 local filename = function(hl_group)
-  local fname = string.gsub(vim.fn.expand('%:~:.'), '\\', '/')
+  local fname = string.gsub(vim.fn.expand '%:~:.', '\\', '/')
   local ext = vim.fn.fnamemodify(fname, ":e")
   local head = vim.fn.fnamemodify(fname, ":h")
   head = string.gsub(head, '%%', '%%%%')
   local tail = vim.fn.fnamemodify(fname, ":t")
   tail = string.gsub(tail, '%%', '%%%%')
-  local icons = require('nvim-web-devicons').get_icons()[ext]
-  local opt = { fg = icons and icons['color'] or '#ffffff', bold = true }
+  local icons = require 'nvim-web-devicons'.get_icons()[ext]
+  local opt = { fg = icons and icons['color'] or '#ffffff', bold = true, }
   vim.api.nvim_set_hl(0, hl_group, opt)
   if head == '.' then
     return string.format('%%#%s#%s', hl_group, tail)
@@ -73,8 +73,8 @@ local function check_ft(ft)
   return vim.tbl_contains(vim.tbl_keys(ignore_focus), ft) == false
 end
 
-local Windows = require('lualine.components.windows')
-local Window = require('lualine.components.windows.window')
+local Windows = require 'lualine.components.windows'
+local Window = require 'lualine.components.windows.window'
 
 --- Override to onl return ffers shown in the windows of the current tab
 function Windows:buffers()
@@ -88,27 +88,27 @@ function Windows:buffers()
   return buffers
 end
 
-require('lualine').setup({
+require 'lualine'.setup {
   options = {
     ignore_focus = vim.tbl_keys(ignore_focus),
     globalstatus = false,
-    component_separators = { left = '', right = '' },
-    section_separators = { left = '', right = '' },
+    component_separators = { left = '', right = '', },
+    section_separators = { left = '', right = '', },
   },
   sections = {
     lualine_c = {
       {
         function()
           return string.format("%dM", vim.loop.resident_set_memory() / 1024 / 1024)
-        end
+        end,
       },
       'filesize',
       {
         function()
-          return filename('lualine_fname_tail_active')
+          return filename 'lualine_fname_tail_active'
         end,
         cond = function()
-          return #vim.fn.expand('%:~:.') > 0
+          return #vim.fn.expand '%:~:.' > 0
         end,
       },
       {
@@ -119,15 +119,15 @@ require('lualine').setup({
     lualine_x = {
       {
         function()
-          return require("noice").api.status.command.get()
+          return require "noice".api.status.command.get()
         end,
         cond = function()
-          return package.loaded["noice"] and require("noice").api.status.command.has()
+          return package.loaded["noice"] and require "noice".api.status.command.has()
         end,
       },
       {
         function()
-          return vim.fn.strftime('%Y-%m-%d %A')
+          return vim.fn.strftime '%Y-%m-%d %A'
         end,
       },
       {
@@ -136,7 +136,7 @@ require('lualine').setup({
         end,
         cond = function()
           return vim.o.columns > 200
-        end
+        end,
       },
       {
         function()
@@ -152,7 +152,7 @@ require('lualine').setup({
         '%m%r',
         cond = function()
           return vim.bo.modifiable == false or vim.bo.readonly == true
-        end
+        end,
       },
       'encoding',
       'fileformat',
@@ -174,7 +174,7 @@ require('lualine').setup({
     },
     lualine_z = {
       function()
-        return " " .. os.date("%R")
+        return " " .. os.date "%R"
       end,
     },
   },
@@ -182,10 +182,10 @@ require('lualine').setup({
     lualine_c = {
       {
         function()
-          return filename('lualine_fname_tail_inactive')
+          return filename 'lualine_fname_tail_inactive'
         end,
         cond = function()
-          return #vim.fn.expand('%:~:.') > 0
+          return #vim.fn.expand '%:~:.' > 0
         end,
       },
     },
@@ -221,19 +221,19 @@ require('lualine').setup({
           active = function()
             local path = vim.fn.bufname()
             local ext = string.match(path, "%.([^.]+)$")
-            local ic, color = require("nvim-web-devicons").get_icon_color(path.filename, ext)
+            local ic, color = require "nvim-web-devicons".get_icon_color(path.filename, ext)
             if ic then
-              return { fg = color, bg = '#234567', gui = 'bold' }
+              return { fg = color, bg = '#234567', gui = 'bold', }
             end
-            return { fg = 'white', bg = '#234567', gui = 'bold' }
+            return { fg = 'white', bg = '#234567', gui = 'bold', }
           end,
-          inactive = { fg = '#888888', bg = '#333333' },
+          inactive = { fg = '#888888', bg = '#333333', },
         },
         show_buffers = function()
           local buffers = {}
           for _, b in ipairs(vim.api.nvim_list_bufs()) do
             local fname = vim.api.nvim_buf_get_name(b)
-            if require('plenary.path').new(fname):exists() then
+            if require 'plenary.path'.new(fname):exists() then
               if vim.fn.buflisted(b) ~= 0 and vim.api.nvim_buf_get_option(b, 'buftype') ~= 'quickfix' or vim.api.nvim_buf_get_option(b, 'buftype') == 'help' then
                 if #curprojectroot == 0 or #fname > 0 and rep(vim.fn['ProjectRootGet'](fname)) == curprojectroot then
                   buffers[#buffers + 1] = b
@@ -258,13 +258,13 @@ require('lualine').setup({
           active = function()
             local path = vim.fn.bufname()
             local ext = string.match(path, "%.([^.]+)$")
-            local ic, color = require("nvim-web-devicons").get_icon_color(path.filename, ext)
+            local ic, color = require "nvim-web-devicons".get_icon_color(path.filename, ext)
             if ic then
-              return { fg = color, gui = 'bold' }
+              return { fg = color, gui = 'bold', }
             end
-            return { fg = 'white', gui = 'bold' }
+            return { fg = 'white', gui = 'bold', }
           end,
-          inactive = { fg = 'gray' },
+          inactive = { fg = 'gray', },
         },
       },
     },
@@ -273,37 +273,37 @@ require('lualine').setup({
     lualine_c = {
       {
         function()
-          return filename('lualine_fname_tail_active')
+          return filename 'lualine_fname_tail_active'
         end,
         cond = function()
-          return #vim.fn.expand('%:~:.') > 0 and check_ft(vim.bo.ft)
+          return #vim.fn.expand '%:~:.' > 0 and check_ft(vim.bo.ft)
         end,
-        color = { fg = '#834567', }
+        color = { fg = '#834567', },
       },
       {
-        function() return require("nvim-navic").get_location() end,
+        function() return require "nvim-navic".get_location() end,
         cond = function()
-          return package.loaded["nvim-navic"] and require("nvim-navic").is_available() and check_ft(vim.bo.ft)
+          return package.loaded["nvim-navic"] and require "nvim-navic".is_available() and check_ft(vim.bo.ft)
         end,
       },
     },
     lualine_x = {
       {
         function()
-          return vim.fn.bufwinnr(vim.fn.bufnr('%'))
+          return vim.fn.bufwinnr(vim.fn.bufnr '%')
         end,
         cond = function()
-          return #vim.fn.expand('%:~:.') > 0
+          return #vim.fn.expand '%:~:.' > 0
         end,
       },
     },
     lualine_y = {
       {
         function()
-          return get_projectroot(vim.call('ProjectRootGet'))
+          return get_projectroot(vim.call 'ProjectRootGet')
         end,
         cond = function()
-          return #vim.fn.expand('%:~:.') > 0
+          return #vim.fn.expand '%:~:.' > 0
         end,
       },
     },
@@ -315,31 +315,31 @@ require('lualine').setup({
     lualine_c = {
       {
         function()
-          return filename('lualine_fname_tail_active')
+          return filename 'lualine_fname_tail_active'
         end,
         cond = function()
-          return #vim.fn.expand('%:~:.') > 0 and check_ft(vim.bo.ft)
+          return #vim.fn.expand '%:~:.' > 0 and check_ft(vim.bo.ft)
         end,
-        color = { fg = '#834567', }
+        color = { fg = '#834567', },
       },
     },
     lualine_x = {
       {
         function()
-          return vim.fn.bufwinnr(vim.fn.bufnr('%'))
+          return vim.fn.bufwinnr(vim.fn.bufnr '%')
         end,
         cond = function()
-          return #vim.fn.expand('%:~:.') > 0
+          return #vim.fn.expand '%:~:.' > 0
         end,
       },
     },
     lualine_y = {
       {
         function()
-          return get_projectroot(vim.call('ProjectRootGet'))
+          return get_projectroot(vim.call 'ProjectRootGet')
         end,
         cond = function()
-          return #vim.fn.expand('%:~:.') > 0
+          return #vim.fn.expand '%:~:.' > 0
         end,
       },
     },
@@ -347,7 +347,7 @@ require('lualine').setup({
       'windows',
     },
   },
-})
+}
 
 -- number go tab or buffer
 
@@ -361,12 +361,12 @@ vim.api.nvim_create_autocmd({ "TabLeave", }, {
 
 local function go_tab()
   if vim.v.count == 0 then
-    if lasttabnr <= vim.fn.tabpagenr('$') then
+    if lasttabnr <= vim.fn.tabpagenr '$' then
       vim.cmd("tabn " .. lasttabnr)
     end
     return
   end
-  local tabs = vim.fn.tabpagenr('$')
+  local tabs = vim.fn.tabpagenr '$'
   if vim.v.count > tabs then
     vim.cmd('tabn ' .. tabs)
   else
@@ -379,10 +379,10 @@ local function go_buffer()
     pcall(vim.fn.win_gotoid, vim.g.lastbufwinid)
   end
   if vim.v.count == 0 then
-    vim.cmd([[call feedkeys("\<c-6>")]])
+    vim.cmd [[call feedkeys("\<c-6>")]]
     return
   end
-  local buffers = require('lualine.components.buffers').bufpos2nr
+  local buffers = require 'lualine.components.buffers'.bufpos2nr
   if vim.v.count > #buffers then
     vim.cmd('LualineBuffersJump! ' .. #buffers)
   else
@@ -390,53 +390,53 @@ local function go_buffer()
   end
 end
 
-vim.keymap.set({ 'n', 'v', }, '<f8>', go_tab, { desc = 'go tab' })
-vim.keymap.set({ 'n', 'v', }, '<f2>', go_tab, { desc = 'go tab' })
-vim.keymap.set({ 'n', 'v', }, '<leader>tt', go_tab, { desc = 'go tab' })
+vim.keymap.set({ 'n', 'v', }, '<f8>', go_tab, { desc = 'go tab', })
+vim.keymap.set({ 'n', 'v', }, '<f2>', go_tab, { desc = 'go tab', })
+vim.keymap.set({ 'n', 'v', }, '<leader>tt', go_tab, { desc = 'go tab', })
 
-vim.keymap.set({ 'n', 'v', }, '<f7>', go_buffer, { desc = 'go buffer' })
-vim.keymap.set({ 'n', 'v', }, '<f1>', go_buffer, { desc = 'go buffer' })
-vim.keymap.set({ 'n', 'v', }, '<leader>bb', go_buffer, { desc = 'go buffer' })
+vim.keymap.set({ 'n', 'v', }, '<f7>', go_buffer, { desc = 'go buffer', })
+vim.keymap.set({ 'n', 'v', }, '<f1>', go_buffer, { desc = 'go buffer', })
+vim.keymap.set({ 'n', 'v', }, '<leader>bb', go_buffer, { desc = 'go buffer', })
 
 -- go next or prev tab or buffer
 
 vim.keymap.set({ 'n', 'v', }, '<bs>', function()
-  local tabs = vim.fn.tabpagenr('$')
+  local tabs = vim.fn.tabpagenr '$'
   local curtab = vim.fn.tabpagenr()
   local nexttab = curtab + 1 <= tabs and curtab + 1 or 1
   vim.cmd("tabn " .. nexttab)
-end, { desc = 'next tab' })
+end, { desc = 'next tab', })
 
 vim.keymap.set({ 'n', 'v', }, '<c-bs>', function()
   local curtab = vim.fn.tabpagenr()
-  local prevtab = curtab - 1 >= 1 and curtab - 1 or vim.fn.tabpagenr('$')
+  local prevtab = curtab - 1 >= 1 and curtab - 1 or vim.fn.tabpagenr '$'
   vim.cmd("tabn " .. prevtab)
-end, { desc = 'prev tab' })
+end, { desc = 'prev tab', })
 
 vim.keymap.set({ 'n', 'v', }, '<c-h>', function()
-  local buffers = require('lualine.components.buffers').bufpos2nr
+  local buffers = require 'lualine.components.buffers'.bufpos2nr
   local curbufnr = vim.fn.bufnr()
   local curbufnr_idx = vim.fn.indexof(buffers, string.format('v:val == %d', curbufnr)) + 1
   if curbufnr_idx >= 1 then
     local prevbufnr = buffers[curbufnr_idx - 1 >= 1 and curbufnr_idx - 1 or #buffers]
     vim.cmd('b' .. prevbufnr)
   end
-end, { desc = 'prev buffer' })
+end, { desc = 'prev buffer', })
 
 vim.keymap.set({ 'n', 'v', }, '<c-l>', function()
-  local buffers = require('lualine.components.buffers').bufpos2nr
+  local buffers = require 'lualine.components.buffers'.bufpos2nr
   local curbufnr = vim.fn.bufnr()
   local curbufnr_idx = vim.fn.indexof(buffers, string.format('v:val == %d', curbufnr)) + 1
   if curbufnr_idx >= 1 then
     local nextbufnr = buffers[curbufnr_idx + 1 <= #buffers and curbufnr_idx + 1 or 1]
     vim.cmd('b' .. nextbufnr)
   end
-end, { desc = 'next buffer' })
+end, { desc = 'next buffer', })
 
 -- Bdelete next or prev buffer
 
 vim.keymap.set({ 'n', 'v', }, '<c-s-h>', function()
-  local buffers = require('lualine.components.buffers').bufpos2nr
+  local buffers = require 'lualine.components.buffers'.bufpos2nr
   local curbufnr = vim.fn.bufnr()
   local curbufnr_idx = vim.fn.indexof(buffers, string.format('v:val == %d', curbufnr)) + 1
   if curbufnr_idx >= 1 then
@@ -444,13 +444,13 @@ vim.keymap.set({ 'n', 'v', }, '<c-s-h>', function()
     if prevbufnr_idx < curbufnr_idx then
       local prevbufnr = buffers[prevbufnr_idx]
       vim.cmd('Bdelete! ' .. vim.api.nvim_buf_get_name(prevbufnr))
-      require('lualine').refresh()
+      require 'lualine'.refresh()
     end
   end
-end, { desc = 'Bdelele prev buffer' })
+end, { desc = 'Bdelele prev buffer', })
 
 vim.keymap.set({ 'n', 'v', }, '<c-s-l>', function()
-  local buffers = require('lualine.components.buffers').bufpos2nr
+  local buffers = require 'lualine.components.buffers'.bufpos2nr
   local curbufnr = vim.fn.bufnr()
   local curbufnr_idx = vim.fn.indexof(buffers, string.format('v:val == %d', curbufnr)) + 1
   if curbufnr_idx >= 1 then
@@ -458,10 +458,10 @@ vim.keymap.set({ 'n', 'v', }, '<c-s-l>', function()
     if nextbufnr_idx > curbufnr_idx then
       local nextbufnr = buffers[nextbufnr_idx]
       vim.cmd('Bdelete! ' .. vim.api.nvim_buf_get_name(nextbufnr))
-      require('lualine').refresh()
+      require 'lualine'.refresh()
     end
   end
-end, { desc = 'Bdelele next buffer' })
+end, { desc = 'Bdelele next buffer', })
 
 -- Bdelete next or prev tab
 
@@ -470,25 +470,25 @@ vim.keymap.set({ 'n', 'v', }, '<c-f7>', function()
   if curtab_idx == 1 then
     return
   end
-  local tabs = vim.fn.tabpagenr('$')
+  local tabs = vim.fn.tabpagenr '$'
   if tabs == 1 then
     return
   end
   local prevtab_idx = curtab_idx - 1 >= 1 and curtab_idx - 1 or tabs
   vim.cmd(prevtab_idx .. 'tabclose!')
-  require('lualine').refresh()
-end, { desc = 'tabclose prev tab' })
+  require 'lualine'.refresh()
+end, { desc = 'tabclose prev tab', })
 
 vim.keymap.set({ 'n', 'v', }, '<c-f8>', function()
   local curtab_idx = vim.fn.tabpagenr()
-  local tabs = vim.fn.tabpagenr('$')
+  local tabs = vim.fn.tabpagenr '$'
   if tabs == 1 or curtab_idx == tabs then
     return
   end
   local nexttab_idx = curtab_idx + 1 <= tabs and curtab_idx + 1 or 1
   vim.cmd(nexttab_idx .. 'tabclose!')
-  require('lualine').refresh()
-end, { desc = 'tabclose next tab' })
+  require 'lualine'.refresh()
+end, { desc = 'tabclose next tab', })
 
 -- auto change dir root
 
@@ -510,13 +510,13 @@ vim.keymap.set({ 'n', 'v', }, '<a-f1>', function()
       tabs[#tabs + 1] = tmp
     end
   end
-  for b = 1, vim.fn.bufnr('$') do
+  for b = 1, vim.fn.bufnr '$' do
     if vim.fn.buflisted(b) ~= 0 and vim.api.nvim_buf_get_option(b, 'buftype') ~= 'quickfix' then
       local fname = vim.fn.tolower(rep(vim.api.nvim_buf_get_name(b)))
       if #fname > 0 and vim.fn.filereadable(fname) == 1 then
         local tabname = get_projectroot(vim.fn['ProjectRootGet'](fname))
         if vim.tbl_contains(tabs, tabname) ~= true then
-          vim.cmd('tabnew')
+          vim.cmd 'tabnew'
           vim.cmd('e ' .. fname)
           tabs[#tabs + 1] = tabname
           vim.fn['LualineRenameTab'](tabname)
@@ -540,15 +540,15 @@ vim.keymap.set({ 'n', 'v', }, '<a-f1>', function()
   for _, v in ipairs(vim.fn.reverse(tabidxs)) do
     vim.cmd(v .. 'tabclose')
   end
-end, { desc = 'restore hidden tabs' })
+end, { desc = 'restore hidden tabs', })
 
 vim.keymap.set({ 'n', 'v', }, '<a-f2>', function()
   local NvimTree = nil
   local fugitive = nil
   local minimap = nil
   local aerial = nil
-  for winnr=1, vim.fn.winnr('$') do
-  local bufnr = vim.fn.winbufnr(winnr)
+  for winnr = 1, vim.fn.winnr '$' do
+    local bufnr = vim.fn.winbufnr(winnr)
     if vim.bo[bufnr].ft == 'NvimTree' then
       NvimTree = 1
     elseif vim.bo[vim.fn.winbufnr(winnr)].ft == 'fugitive' then
@@ -560,45 +560,45 @@ vim.keymap.set({ 'n', 'v', }, '<a-f2>', function()
     end
   end
   pcall(vim.cmd, 'MinimapClose')
-  vim.cmd('tabo')
-  vim.cmd('wincmd o')
+  vim.cmd 'tabo'
+  vim.cmd 'wincmd o'
   local winid = vim.fn.win_getid()
-  local projs = {rep(vim.fn['ProjectRootGet'](vim.api.nvim_buf_get_name(0)))}
-  for b = 1, vim.fn.bufnr('$') do
+  local projs = { rep(vim.fn['ProjectRootGet'](vim.api.nvim_buf_get_name(0))), }
+  for b = 1, vim.fn.bufnr '$' do
     if vim.fn.buflisted(b) ~= 0 and vim.api.nvim_buf_get_option(b, 'buftype') ~= 'quickfix' then
       local fname = vim.fn.tolower(rep(vim.api.nvim_buf_get_name(b)))
       if #fname > 0 and vim.fn.filereadable(fname) == 1 then
         local proj = rep(vim.fn['ProjectRootGet'](fname))
         if vim.tbl_contains(projs, proj) ~= true then
           projs[#projs + 1] = proj
-          vim.cmd('split')
+          vim.cmd 'split'
           vim.cmd('e ' .. fname)
         end
       end
     end
   end
   vim.fn.win_gotoid(winid)
-  vim.cmd('wincmd H')
+  vim.cmd 'wincmd H'
   if minimap then
-    vim.cmd('Minimap')
+    vim.cmd 'Minimap'
     vim.fn.win_gotoid(winid)
   end
   if NvimTree or fugitive then
-    vim.cmd('NvimTreeFindFile')
+    vim.cmd 'NvimTreeFindFile'
     vim.fn.win_gotoid(winid)
-    vim.cmd('G')
+    vim.cmd 'G'
     vim.fn.win_gotoid(winid)
   end
   if aerial then
-    vim.cmd('AerialOpen')
+    vim.cmd 'AerialOpen'
     vim.fn.win_gotoid(winid)
   end
-end, { desc = 'buffers workflow' })
+end, { desc = 'buffers workflow', })
 
 vim.keymap.set({ 'n', 'v', }, '<c-f3>', function()
   local projs = {}
   local winid = vim.fn.win_getid()
-  for winnr = 1, vim.fn.bufnr('$') do
+  for winnr = 1, vim.fn.bufnr '$' do
     local bufnr = vim.fn.winbufnr(winnr)
     if vim.fn.buflisted(bufnr) ~= 0 and vim.api.nvim_buf_get_option(bufnr, 'buftype') ~= 'quickfix' then
       local fname = vim.fn.tolower(rep(vim.api.nvim_buf_get_name(bufnr)))
@@ -608,18 +608,18 @@ vim.keymap.set({ 'n', 'v', }, '<c-f3>', function()
           projs[#projs + 1] = proj
         else
           vim.fn.win_gotoid(vim.fn.win_getid(winnr))
-          vim.cmd('close')
+          vim.cmd 'close'
         end
       end
     end
   end
   vim.fn.win_gotoid(winid)
-end, { desc = 'buffers workflow simple -' })
+end, { desc = 'buffers workflow simple -', })
 
 vim.keymap.set({ 'n', 'v', }, '<c-f4>', function()
   local winid = vim.fn.win_getid()
-  local projs = {rep(vim.fn['ProjectRootGet'](vim.api.nvim_buf_get_name(0)))}
-  for winnr = 1, vim.fn.bufnr('$') do
+  local projs = { rep(vim.fn['ProjectRootGet'](vim.api.nvim_buf_get_name(0))), }
+  for winnr = 1, vim.fn.bufnr '$' do
     local bufnr = vim.fn.winbufnr(winnr)
     if vim.fn.buflisted(bufnr) ~= 0 and vim.api.nvim_buf_get_option(bufnr, 'buftype') ~= 'quickfix' then
       local fname = vim.fn.tolower(rep(vim.api.nvim_buf_get_name(bufnr)))
@@ -631,25 +631,25 @@ vim.keymap.set({ 'n', 'v', }, '<c-f4>', function()
       end
     end
   end
-  for b = 1, vim.fn.bufnr('$') do
+  for b = 1, vim.fn.bufnr '$' do
     if vim.fn.buflisted(b) ~= 0 and vim.api.nvim_buf_get_option(b, 'buftype') ~= 'quickfix' then
       local fname = vim.fn.tolower(rep(vim.api.nvim_buf_get_name(b)))
       if #fname > 0 and vim.fn.filereadable(fname) == 1 then
         local proj = rep(vim.fn['ProjectRootGet'](fname))
         if vim.tbl_contains(projs, proj) ~= true then
           projs[#projs + 1] = proj
-          vim.cmd('split')
+          vim.cmd 'split'
           vim.cmd('e ' .. fname)
         end
       end
     end
   end
   vim.fn.win_gotoid(winid)
-end, { desc = 'buffers workflow simple +' })
+end, { desc = 'buffers workflow simple +', })
 
 vim.opt.laststatus = 3
 
-vim.cmd([[
+vim.cmd [[
   function! LualineSwitchBuffer(bufnr, mouseclicks, mousebutton, modifiers)
     " echomsg '|' .. a:bufnr .. '|' .. a:mouseclicks .. '|' .. a:mousebutton .. '|' .. a:modifiers .. '|'
     if a:mousebutton == 'm' && a:mouseclicks == 1
@@ -677,7 +677,7 @@ vim.cmd([[
     execute a:win_number . 'wincmd w'
     wincmd _
   endfunction
-]])
+]]
 
 
 function Bdft(ftstring)
@@ -701,12 +701,12 @@ function Bdft(ftstring)
   end
 end
 
-vim.cmd([[
+vim.cmd [[
 function Bdft(A, L, P)
   return g:bdfts
 endfu
 command! -complete=customlist,Bdft -nargs=* Bdft call v:lua.Bdft('<args>')
-]])
+]]
 
 vim.keymap.set({ 'n', 'v', }, '<leader>xf', function()
   local bdfts = {}
@@ -727,8 +727,8 @@ vim.keymap.set({ 'n', 'v', }, '<leader>xf', function()
   end
   vim.g.bdfts = bdfts
   if #vim.g.bdfts == 0 then
-    print('no other filetypes to bw')
+    print 'no other filetypes to bw'
     return
   end
-  vim.cmd([[call feedkeys(":\<c-u>Bdft ")]])
-end, { desc = 'Bdelete ft' })
+  vim.cmd [[call feedkeys(":\<c-u>Bdft ")]]
+end, { desc = 'Bdelete ft', })

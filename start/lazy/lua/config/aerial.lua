@@ -1,4 +1,4 @@
-require('aerial').setup({
+require 'aerial'.setup {
   layout = {
     min_width = 28,
   },
@@ -23,7 +23,7 @@ require('aerial').setup({
     ['P'] = 'actions.tree_close_all',
   },
   filter_kind = false,
-  backends = { "markdown", "lsp", "treesitter", "man" },
+  backends = { "markdown", "lsp", "treesitter", "man", },
   -- backends = { "lsp", },
   post_jump_cmd = [[norm zz]],
   close_automatic_events = {},
@@ -31,7 +31,7 @@ require('aerial').setup({
   float = {
     relative = 'editor',
   },
-})
+}
 
 local M = {}
 
@@ -43,7 +43,7 @@ M.open = function()
       return
     end
   end
-  vim.cmd('AerialOpen right')
+  vim.cmd 'AerialOpen right'
 end
 
 return M

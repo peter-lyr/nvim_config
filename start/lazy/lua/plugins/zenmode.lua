@@ -8,23 +8,23 @@ return {
     {
       '<leader>zm',
       '<cmd>ZenMode<cr>',
-      mode = { 'n', 'v' },
+      mode = { 'n', 'v', },
       silent = true,
-      desc = 'ZenMode'
+      desc = 'ZenMode',
     },
     {
       '<leader>zz',
       function()
-        require("config.zenmode").toggle()
+        require "config.zenmode".toggle()
       end,
-      mode = { 'n', 'v' },
+      mode = { 'n', 'v', },
       silent = true,
-      desc = 'ZenMode max width'
+      desc = 'ZenMode max width',
     },
   },
   opts = {
     window = {
       width = 0.62,
     },
-  }
+  },
 }

@@ -13,17 +13,17 @@ return {
       function()
         pcall(vim.cmd, 'AsyncStop')
       end,
-      mode = { 'n', 'v' },
+      mode = { 'n', 'v', },
       silent = true,
-      desc = 'AsyncStop'
+      desc = 'AsyncStop',
     },
     {
       '<leader>v;',
       ':AsyncRun ',
-      mode = { 'n', 'v' },
+      mode = { 'n', 'v', },
       silent = true,
-      desc = 'AsyncRun'
+      desc = 'AsyncRun',
     },
 
-  }
+  },
 }

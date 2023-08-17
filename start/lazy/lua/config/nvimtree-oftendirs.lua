@@ -9,10 +9,10 @@ local function systemcd(p)
   if string.sub(p, 2, 2) == ':' then
     s = s .. string.sub(p, 1, 2) .. ' && '
   end
-  if require('plenary.path').new(p):is_dir() then
+  if require 'plenary.path'.new(p):is_dir() then
     s = s .. 'cd ' .. p
   else
-    s = s .. 'cd ' .. require('plenary.path').new(p):parent().filename
+    s = s .. 'cd ' .. require 'plenary.path'.new(p):parent().filename
   end
   return s
 end
@@ -21,19 +21,19 @@ end
 -- 1. my dirs
 ---------------
 
-local nv = require('plenary.path'):new(vim.fn.expand('$VIMRUNTIME')):parent():parent():parent():parent()
+local nv = require 'plenary.path':new(vim.fn.expand '$VIMRUNTIME'):parent():parent():parent():parent()
 
 local mydirs = {}
 local mydirs_existed = {}
 
 M.init_mydirs = function()
   mydirs = {
-    vim.fn.expand([[$HOME]]),
-    vim.fn.expand([[$TEMP]]),
-    vim.fn.expand([[$LOCALAPPDATA]]),
-    vim.fn.expand([[$VIMRUNTIME\pack]]),
-    vim.fn.expand([[$VIMRUNTIME\pack\nvim_config]]),
-    vim.fn.expand([[$VIMRUNTIME\pack\lazy\plugins]]),
+    vim.fn.expand [[$HOME]],
+    vim.fn.expand [[$TEMP]],
+    vim.fn.expand [[$LOCALAPPDATA]],
+    vim.fn.expand [[$VIMRUNTIME\pack]],
+    vim.fn.expand [[$VIMRUNTIME\pack\nvim_config]],
+    vim.fn.expand [[$VIMRUNTIME\pack\lazy\plugins]],
     nv.filename,
   }
   mydirs_existed = {}
@@ -57,11 +57,11 @@ end
 M.init_mydirs()
 
 M.open_mydirs = function()
-  vim.ui.select(vim.fn.sort(mydirs_existed), { prompt = 'my dirs' }, function(choice)
+  vim.ui.select(vim.fn.sort(mydirs_existed), { prompt = 'my dirs', }, function(choice)
     if not choice then
       return
     end
-    vim.cmd('NvimTreeOpen')
+    vim.cmd 'NvimTreeOpen'
     vim.loop.new_timer():start(10, 0, function()
       vim.schedule(function()
         vim.cmd('cd ' .. choice)
@@ -72,11 +72,11 @@ end
 
 M.reopen_mydirs = function()
   M.init_mydirs()
-  vim.ui.select(vim.fn.sort(mydirs_existed), { prompt = 'reopen my dirs' }, function(choice)
+  vim.ui.select(vim.fn.sort(mydirs_existed), { prompt = 'reopen my dirs', }, function(choice)
     if not choice then
       return
     end
-    vim.cmd('NvimTreeOpen')
+    vim.cmd 'NvimTreeOpen'
     vim.loop.new_timer():start(10, 0, function()
       vim.schedule(function()
         vim.cmd('cd ' .. choice)
@@ -92,7 +92,7 @@ end
 local pathdirs = {}
 
 M.init_pathdirs = function()
-  for pathdir in string.gmatch(vim.fn.expand([[$PATH]]), '([^;]+);') do
+  for pathdir in string.gmatch(vim.fn.expand [[$PATH]], '([^;]+);') do
     if vim.fn.isdirectory(pathdir) == 1 then
       pathdir = vim.fn.tolower(pathdir)
       if vim.tbl_contains(pathdirs, pathdir) == false then
@@ -108,11 +108,11 @@ end
 M.init_pathdirs()
 
 M.open_pathdirs = function()
-  vim.ui.select(vim.fn.sort(pathdirs), { prompt = 'path dirs' }, function(choice)
+  vim.ui.select(vim.fn.sort(pathdirs), { prompt = 'path dirs', }, function(choice)
     if not choice then
       return
     end
-    vim.cmd('NvimTreeOpen')
+    vim.cmd 'NvimTreeOpen'
     vim.loop.new_timer():start(10, 0, function()
       vim.schedule(function()
         vim.cmd('cd ' .. choice)
@@ -128,19 +128,19 @@ end
 local pathfiles = {}
 
 M.init_pathfiles = function()
-  local scan_dir = require("plenary.scandir")
+  local scan_dir = require "plenary.scandir"
   local exts = {}
-  for ext in string.gmatch(vim.fn.expand([[$PATHEXT]]), '([^;]+);') do
+  for ext in string.gmatch(vim.fn.expand [[$PATHEXT]], '([^;]+);') do
     table.insert(exts, vim.fn.tolower(ext))
   end
-  for pathdir in string.gmatch(vim.fn.expand([[$PATH]]), '([^;]+);') do
+  for pathdir in string.gmatch(vim.fn.expand [[$PATH]], '([^;]+);') do
     local entries = scan_dir.scan_dir(pathdir, {
       hidden = false,
       depth = 1,
       add_dirs = false,
       search_pattern = function(e)
         return vim.tbl_contains(exts, vim.fn.tolower(string.match(e, "(%..+)$")))
-      end
+      end,
     })
     for _, entry in ipairs(entries) do
       if vim.tbl_contains(pathfiles, entry) == false then
@@ -153,7 +153,7 @@ end
 M.init_pathfiles()
 
 M.open_pathfiles = function()
-  vim.ui.select(vim.fn.sort(pathfiles), { prompt = 'path files' }, function(choice)
+  vim.ui.select(vim.fn.sort(pathfiles), { prompt = 'path files', }, function(choice)
     if not choice then
       return
     end
@@ -166,8 +166,8 @@ end
 ---------------
 
 local oftendirs = {}
-local config = require('plenary.path'):new(vim.g.pack_path):joinpath('nvim_config', 'start', 'lazy', 'lua', 'config')
-local oftendir_exe = config:joinpath('nvimtree-oftendirs.exe')
+local config = require 'plenary.path':new(vim.g.pack_path):joinpath('nvim_config', 'start', 'lazy', 'lua', 'config')
+local oftendir_exe = config:joinpath 'nvimtree-oftendirs.exe'
 
 M.init_oftendir = function()
   local res = true
@@ -178,7 +178,7 @@ M.init_oftendir = function()
     res = nil
   end
   local f = io.popen(oftendir_exe.filename)
-  for dir in string.gmatch(f:read("*a"), "([%S ]+)") do
+  for dir in string.gmatch(f:read "*a", "([%S ]+)") do
     dir = vim.fn.tolower(dir)
     if vim.tbl_contains(oftendirs, dir) == false then
       table.insert(oftendirs, dir)
@@ -203,11 +203,11 @@ M.open_oftendirs = function()
     end
     return
   end
-  vim.ui.select(vim.fn.sort(oftendirs), { prompt = 'often dirs' }, function(choice)
+  vim.ui.select(vim.fn.sort(oftendirs), { prompt = 'often dirs', }, function(choice)
     if not choice then
       return
     end
-    vim.cmd('NvimTreeOpen')
+    vim.cmd 'NvimTreeOpen'
     vim.loop.new_timer():start(10, 0, function()
       vim.schedule(function()
         vim.cmd('cd ' .. choice)
@@ -221,7 +221,7 @@ end
 ---------------
 
 M.explorer = function()
-  vim.ui.select(vim.fn.sort(M.all_dirs), { prompt = 'explorer all dirs' }, function(choice)
+  vim.ui.select(vim.fn.sort(M.all_dirs), { prompt = 'explorer all dirs', }, function(choice)
     if not choice then
       return
     end

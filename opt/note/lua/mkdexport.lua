@@ -1,7 +1,7 @@
 local M = {}
 
-vim.g.mkdexportpy = require("plenary.path"):new(vim.g.pack_path):joinpath('nvim_config', 'opt', 'note',
-  'autoload'):joinpath('main.py')['filename']
+vim.g.mkdexportpy = require "plenary.path":new(vim.g.pack_path):joinpath('nvim_config', 'opt', 'note',
+  'autoload'):joinpath 'main.py'['filename']
 
 local fts = {
   'pdf',
@@ -11,7 +11,7 @@ local fts = {
 
 local getfiles = function(directory)
   local files = {}
-  local result = require("plenary.scandir").scan_dir(directory, { depth = 1, hidden = 1 })
+  local result = require "plenary.scandir".scan_dir(directory, { depth = 1, hidden = 1, })
   for _, file in ipairs(result) do
     local extension = file:gsub("^.*%.([^.]+)$", "%1")
     if vim.tbl_contains(fts, extension) == true then
@@ -22,11 +22,11 @@ local getfiles = function(directory)
 end
 
 M.create = function()
-  require('terminal').send('cmd', 'python ' .. vim.g.mkdexportpy .. ' ' .. vim.api.nvim_buf_get_name(0), 0)
+  require 'terminal'.send('cmd', 'python ' .. vim.g.mkdexportpy .. ' ' .. vim.api.nvim_buf_get_name(0), 0)
 end
 
 M.delete = function()
-  local fpath = require('plenary.path'):new(vim.api.nvim_buf_get_name(0))
+  local fpath = require 'plenary.path':new(vim.api.nvim_buf_get_name(0))
   if fpath:exists() then
     local curdir = fpath:parent().filename
     curdir = string.gsub(curdir, '/', '\\')

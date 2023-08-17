@@ -2,10 +2,10 @@ local M = {}
 
 -- session dir and file
 
-local path = require('plenary.path')
-local session_dir = path:new(vim.fn.stdpath('data')):joinpath('session')
-local session_last_all = session_dir:joinpath('last_all.txt')
-local session_branches = session_dir:joinpath('branches.txt')
+local path = require 'plenary.path'
+local session_dir = path:new(vim.fn.stdpath 'data'):joinpath 'session'
+local session_last_all = session_dir:joinpath 'last_all.txt'
+local session_branches = session_dir:joinpath 'branches.txt'
 
 if not session_dir:exists() then
   session_dir:mkdir()
@@ -32,7 +32,7 @@ local function get_branch(project)
   local branch = 'xxxxxx'
   if head:exists() then
     local HEAD = head:read()
-    branch = HEAD:match('ref: refs/heads/(.+)$')
+    branch = HEAD:match 'ref: refs/heads/(.+)$'
     if not branch then
       branch = HEAD:sub(1, 6)
     end
@@ -60,13 +60,13 @@ M.save = function()
     fname = rep(fname)
     table.insert(last_all_buffers, fname)
     if vim.tbl_contains(vim.tbl_keys(branches_buffers), project) == false then
-      local f1 = { fname }
+      local f1 = { fname, }
       local b1 = {}
       b1[branch] = f1
       branches_buffers[project] = b1
     else
       if vim.tbl_contains(vim.tbl_keys(branches_buffers[project]), branch) == false then
-        branches_buffers[project][branch] = { fname }
+        branches_buffers[project][branch] = { fname, }
       else
         table.insert(branches_buffers[project][branch], fname)
       end
@@ -104,7 +104,7 @@ M.open_branches = function()
   opened = 1
   local sta, data = pcall(loadstring('return ' .. session_branches:read()))
   if sta and data and #vim.tbl_keys(data) > 0 then
-    vim.ui.select(vim.fn.sort(vim.tbl_keys(data)), { prompt = 'session open project' }, function(project)
+    vim.ui.select(vim.fn.sort(vim.tbl_keys(data)), { prompt = 'session open project', }, function(project)
       local branch = get_branch(project)
       if vim.tbl_contains(vim.tbl_keys(data[project]), branch) == true then
         for _, fname in ipairs(data[project][branch]) do
@@ -120,7 +120,7 @@ end
 M.delete_branches = function()
   local sta, data = pcall(loadstring('return ' .. session_branches:read()))
   if sta and data and #vim.tbl_keys(data) > 0 then
-    vim.ui.select(vim.fn.sort(vim.tbl_keys(data)), { prompt = 'session delete project' }, function(project)
+    vim.ui.select(vim.fn.sort(vim.tbl_keys(data)), { prompt = 'session delete project', }, function(project)
       local new_data = {}
       for p, b in pairs(data) do
         if p ~= project then
@@ -140,7 +140,7 @@ vim.api.nvim_create_autocmd({ "BufReadPost", "BufNew", "BufNewFile", }, {
   end,
 })
 
-vim.api.nvim_create_autocmd({ "ExitPre" }, {
+vim.api.nvim_create_autocmd({ "ExitPre", }, {
   callback = function()
     M.save()
   end,

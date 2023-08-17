@@ -2,9 +2,9 @@
 
 local M = {}
 
-require('telescope').load_extension('xray23')
+require 'telescope'.load_extension 'xray23'
 
-local sessionDir = require('session-manage'):new().sessionDir
+local sessionDir = require 'session-manage':new().sessionDir
 sessionDir = string.gsub(sessionDir, "/", "\\")
 if vim.fn.isdirectory(sessionDir) == 0 then
   vim.fn.mkdir(sessionDir, "p")
@@ -14,10 +14,10 @@ local defaul_session = sessionDir .. "\\default.vim"
 local function prepare()
   local eventignore = vim.opt.eventignore:get()
   vim.opt.eventignore = "all"
-  vim.cmd('MinimapClose')
+  vim.cmd 'MinimapClose'
   for _, b in ipairs(vim.api.nvim_list_bufs()) do
     local fname = vim.api.nvim_buf_get_name(b)
-    if require('plenary.path').new(fname):exists() then
+    if require 'plenary.path'.new(fname):exists() then
       if vim.fn.buflisted(b) == 0 or vim.tbl_contains({ 'nofile', 'terminal', 'help', 'quickfix', }, vim.api.nvim_buf_get_option(b, 'buftype')) == true then
         pcall(vim.cmd, 'bw! ' .. b)
       end
@@ -40,9 +40,9 @@ M.open = function()
   pcall(vim.cmd, 'wall')
   pcall(vim.cmd, '%bwipeout')
   pcall(vim.cmd, 'source ' .. defaul_session)
-  vim.keymap.set({ "n", "v" }, "<leader>svo", function()
-    print('Can not open default session again!')
-  end, { silent = true, desc = 'Telescope session open (canceled!)' })
+  vim.keymap.set({ "n", "v", }, "<leader>svo", function()
+    print 'Can not open default session again!'
+  end, { silent = true, desc = 'Telescope session open (canceled!)', })
 end
 
 M.save = function()

@@ -1,6 +1,6 @@
 local change_dir = require "nvim-tree.actions.root.change-dir"
 local utils = require "nvim-tree.utils"
-local _config = require('nvim-tree').config
+local _config = require 'nvim-tree'.config
 local core = require "nvim-tree.core"
 
 local M = {}

@@ -2,145 +2,145 @@ local M = {}
 
 package.loaded['config.nvimtree-func'] = nil
 
-local f = require('config.nvimtree-func')
+local f = require 'config.nvimtree-func'
 
 local wrap_node = function(fn)
   return function(node, ...)
-    node = node or require("nvim-tree.lib").get_node_at_cursor()
+    node = node or require "nvim-tree.lib".get_node_at_cursor()
     fn(node, ...)
   end
 end
 
 local others = function(bufnr)
   local function opts(desc)
-    return { desc = 'nvim-tree: ' .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
+    return { desc = 'nvim-tree: ' .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true, }
   end
-  vim.keymap.set('n', '<c-f9>', wrap_node(f.test), opts('test'))
+  vim.keymap.set('n', '<c-f9>', wrap_node(f.test), opts 'test')
 
-  vim.keymap.set('n', '\'', wrap_node(f.toggle_sel), opts('toggle_sel'))
-  vim.keymap.set('n', '"', wrap_node(f.toggle_sel_up), opts('toggle_sel_up'))
+  vim.keymap.set('n', '\'', wrap_node(f.toggle_sel), opts 'toggle_sel')
+  vim.keymap.set('n', '"', wrap_node(f.toggle_sel_up), opts 'toggle_sel_up')
 
-  vim.keymap.set('n', 'de', wrap_node(f.empty_sel), opts('empty_sel'))
+  vim.keymap.set('n', 'de', wrap_node(f.empty_sel), opts 'empty_sel')
 
-  vim.keymap.set('n', 'dd', wrap_node(f.delete_sel), opts('delete_sel'))
-  vim.keymap.set('n', 'dm', wrap_node(f.move_sel), opts('move_sel'))
-  vim.keymap.set('n', 'dc', wrap_node(f.copy_sel), opts('copy_sel'))
-  vim.keymap.set('n', 'dr', wrap_node(f.rename_sel), opts('rename_sel'))
+  vim.keymap.set('n', 'dd', wrap_node(f.delete_sel), opts 'delete_sel')
+  vim.keymap.set('n', 'dm', wrap_node(f.move_sel), opts 'move_sel')
+  vim.keymap.set('n', 'dc', wrap_node(f.copy_sel), opts 'copy_sel')
+  vim.keymap.set('n', 'dr', wrap_node(f.rename_sel), opts 'rename_sel')
 
-  vim.keymap.set('n', 'dy', wrap_node(f.copy_2_clip), opts('copy_2_clip'))
-  vim.keymap.set('n', 'dp', wrap_node(f.paste_from_clip), opts('paste_from_clip'))
+  vim.keymap.set('n', 'dy', wrap_node(f.copy_2_clip), opts 'copy_2_clip')
+  vim.keymap.set('n', 'dp', wrap_node(f.paste_from_clip), opts 'paste_from_clip')
 
-  vim.keymap.set('n', 'gd', wrap_node(f.delete), opts('bdelete'))
-  vim.keymap.set('n', 'gw', wrap_node(f.wipeout), opts('wipeout'))
+  vim.keymap.set('n', 'gd', wrap_node(f.delete), opts 'bdelete')
+  vim.keymap.set('n', 'gw', wrap_node(f.wipeout), opts 'wipeout')
 
-  vim.keymap.set('n', 'da', wrap_node(f.edgy_autosize_toggle), opts('edgy_autosize_toggle'))
-  vim.keymap.set('n', 'ds', wrap_node(f.ausize), opts('edgy_autosize_toggle'))
+  vim.keymap.set('n', 'da', wrap_node(f.edgy_autosize_toggle), opts 'edgy_autosize_toggle')
+  vim.keymap.set('n', 'ds', wrap_node(f.ausize), opts 'edgy_autosize_toggle')
 
-  vim.keymap.set('n', 'vx', wrap_node(f.explorer), opts('explorer'))
+  vim.keymap.set('n', 'vx', wrap_node(f.explorer), opts 'explorer')
 
-  vim.keymap.set('n', '<del>', wrap_node(f.taskkill), opts('taskkill exe'))
+  vim.keymap.set('n', '<del>', wrap_node(f.taskkill), opts 'taskkill exe')
 
-  vim.keymap.set('n', 'vj', M.nextdir, opts('nextdir'))
-  vim.keymap.set('n', 'vk', M.prevdir, opts('prevdir'))
-  vim.keymap.set('n', 'vv', M.lastdir, opts('lastdir'))
-  vim.keymap.set('n', 'vl', M.seldir, opts('seldir'))
-  vim.keymap.set('n', 'vh', M.selolddir, opts('selolddir'))
-  vim.keymap.set('n', 'vH', M.delolddir, opts('delolddir'))
-  vim.keymap.set('n', 'vw', function() vim.cmd('ProjectRootCD') end, opts('ProjectRootCD'))
+  vim.keymap.set('n', 'vj', M.nextdir, opts 'nextdir')
+  vim.keymap.set('n', 'vk', M.prevdir, opts 'prevdir')
+  vim.keymap.set('n', 'vv', M.lastdir, opts 'lastdir')
+  vim.keymap.set('n', 'vl', M.seldir, opts 'seldir')
+  vim.keymap.set('n', 'vh', M.selolddir, opts 'selolddir')
+  vim.keymap.set('n', 'vH', M.delolddir, opts 'delolddir')
+  vim.keymap.set('n', 'vw', function() vim.cmd 'ProjectRootCD' end, opts 'ProjectRootCD')
 
-  vim.keymap.set('n', 'd<tab>', wrap_node(f.diff1), opts('bcomp diff1'))
-  vim.keymap.set('n', 'd`', wrap_node(f.diff2), opts('bcomp diff2'))
+  vim.keymap.set('n', 'd<tab>', wrap_node(f.diff1), opts 'bcomp diff1')
+  vim.keymap.set('n', 'd`', wrap_node(f.diff2), opts 'bcomp diff2')
 end
 
 local on_attach = function(bufnr)
-  local api = require('nvim-tree.api')
+  local api = require 'nvim-tree.api'
 
   local function opts(desc)
-    return { desc = 'nvim-tree: ' .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
+    return { desc = 'nvim-tree: ' .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true, }
   end
 
-  vim.keymap.set('n', '<c-f>', api.node.show_info_popup, opts('Info'))
+  vim.keymap.set('n', '<c-f>', api.node.show_info_popup, opts 'Info')
 
-  vim.keymap.set('n', 'dk', api.node.open.tab, opts('Open: New Tab'))
-  vim.keymap.set('n', 'dl', api.node.open.vertical, opts('Open: Vertical Split'))
-  vim.keymap.set('n', 'dj', api.node.open.horizontal, opts('Open: Horizontal Split'))
-  vim.keymap.set('n', 'a', api.node.open.edit, opts('Open'))
+  vim.keymap.set('n', 'dk', api.node.open.tab, opts 'Open: New Tab')
+  vim.keymap.set('n', 'dl', api.node.open.vertical, opts 'Open: Vertical Split')
+  vim.keymap.set('n', 'dj', api.node.open.horizontal, opts 'Open: Horizontal Split')
+  vim.keymap.set('n', 'a', api.node.open.edit, opts 'Open')
   vim.keymap.set('n', '<Tab>', function()
-    local save_cursor = vim.fn.getpos(".")
+    local save_cursor = vim.fn.getpos "."
     api.node.open.preview()
     pcall(vim.fn.setpos, '.', save_cursor)
-    vim.cmd('norm j')
-  end, opts('Open Preview'))
+    vim.cmd 'norm j'
+  end, opts 'Open Preview')
   vim.keymap.set('n', '<C-Tab>', function()
-    local save_cursor = vim.fn.getpos(".")
+    local save_cursor = vim.fn.getpos "."
     api.node.open.preview()
     pcall(vim.fn.setpos, '.', save_cursor)
-    vim.cmd('norm k')
-  end, opts('Open Preview'))
+    vim.cmd 'norm k'
+  end, opts 'Open Preview')
 
-  vim.keymap.set('n', '<2-LeftMouse>', api.node.open.no_window_picker, opts('Open'))
-  vim.keymap.set('n', '<CR>', api.node.open.no_window_picker, opts('Open: No Window Picker'))
-  vim.keymap.set('n', 'o', api.node.open.no_window_picker, opts('Open: No Window Picker'))
-  vim.keymap.set('n', 'do', api.node.open.no_window_picker, opts('Open: No Window Picker'))
+  vim.keymap.set('n', '<2-LeftMouse>', api.node.open.no_window_picker, opts 'Open')
+  vim.keymap.set('n', '<CR>', api.node.open.no_window_picker, opts 'Open: No Window Picker')
+  vim.keymap.set('n', 'o', api.node.open.no_window_picker, opts 'Open: No Window Picker')
+  vim.keymap.set('n', 'do', api.node.open.no_window_picker, opts 'Open: No Window Picker')
 
-  vim.keymap.set('n', 'c', api.fs.create, opts('Create'))
-  vim.keymap.set('n', 'D', api.fs.remove, opts('Delete'))
-  vim.keymap.set('n', 'C', api.fs.copy.node, opts('Copy'))
-  vim.keymap.set('n', 'X', api.fs.cut, opts('Cut'))
-  vim.keymap.set('n', 'p', api.fs.paste, opts('Paste'))
+  vim.keymap.set('n', 'c', api.fs.create, opts 'Create')
+  vim.keymap.set('n', 'D', api.fs.remove, opts 'Delete')
+  vim.keymap.set('n', 'C', api.fs.copy.node, opts 'Copy')
+  vim.keymap.set('n', 'X', api.fs.cut, opts 'Cut')
+  vim.keymap.set('n', 'p', api.fs.paste, opts 'Paste')
 
-  vim.keymap.set('n', 'gr', api.fs.rename_sub, opts('Rename: Omit Filename'))
-  vim.keymap.set('n', 'R', api.fs.rename, opts('Rename'))
-  vim.keymap.set('n', 'r', api.fs.rename_basename, opts('Rename: Basename'))
+  vim.keymap.set('n', 'gr', api.fs.rename_sub, opts 'Rename: Omit Filename')
+  vim.keymap.set('n', 'R', api.fs.rename, opts 'Rename')
+  vim.keymap.set('n', 'r', api.fs.rename_basename, opts 'Rename: Basename')
 
-  vim.keymap.set('n', 'gy', api.fs.copy.absolute_path, opts('Copy Absolute Path'))
-  vim.keymap.set('n', 'Y', api.fs.copy.relative_path, opts('Copy Relative Path'))
-  vim.keymap.set('n', 'y', api.fs.copy.filename, opts('Copy Name'))
+  vim.keymap.set('n', 'gy', api.fs.copy.absolute_path, opts 'Copy Absolute Path')
+  vim.keymap.set('n', 'Y', api.fs.copy.relative_path, opts 'Copy Relative Path')
+  vim.keymap.set('n', 'y', api.fs.copy.filename, opts 'Copy Name')
 
-  vim.keymap.set('n', 'vo', api.tree.change_root_to_node, opts('CD'))
-  vim.keymap.set('n', 'u', api.tree.change_root_to_parent, opts('Up'))
+  vim.keymap.set('n', 'vo', api.tree.change_root_to_node, opts 'CD')
+  vim.keymap.set('n', 'u', api.tree.change_root_to_parent, opts 'Up')
 
-  vim.keymap.set('n', 'gb', api.tree.toggle_no_buffer_filter, opts('Toggle No Buffer'))
-  vim.keymap.set('n', 'g.', api.tree.toggle_git_clean_filter, opts('Toggle Git Clean'))
-  vim.keymap.set('n', '?', api.tree.toggle_help, opts('Help'))
-  vim.keymap.set('n', '.', api.tree.toggle_hidden_filter, opts('Toggle Dotfiles'))
-  vim.keymap.set('n', 'i', api.tree.toggle_gitignore_filter, opts('Toggle Git Ignore'))
+  vim.keymap.set('n', 'gb', api.tree.toggle_no_buffer_filter, opts 'Toggle No Buffer')
+  vim.keymap.set('n', 'g.', api.tree.toggle_git_clean_filter, opts 'Toggle Git Clean')
+  vim.keymap.set('n', '?', api.tree.toggle_help, opts 'Help')
+  vim.keymap.set('n', '.', api.tree.toggle_hidden_filter, opts 'Toggle Dotfiles')
+  vim.keymap.set('n', 'i', api.tree.toggle_gitignore_filter, opts 'Toggle Git Ignore')
 
-  vim.keymap.set('n', '<c-r>', api.tree.reload, opts('Refresh'))
-  vim.keymap.set('n', 'E', api.tree.expand_all, opts('Expand All'))
-  vim.keymap.set('n', 'W', api.tree.collapse_all, opts('Collapse'))
-  vim.keymap.set('n', 'q', api.tree.close, opts('Close'))
+  vim.keymap.set('n', '<c-r>', api.tree.reload, opts 'Refresh')
+  vim.keymap.set('n', 'E', api.tree.expand_all, opts 'Expand All')
+  vim.keymap.set('n', 'W', api.tree.collapse_all, opts 'Collapse')
+  vim.keymap.set('n', 'q', api.tree.close, opts 'Close')
 
-  vim.keymap.set('n', '<leader>k', api.node.navigate.git.prev, opts('Prev Git'))
-  vim.keymap.set('n', '<leader>j', api.node.navigate.git.next, opts('Next Git'))
-  vim.keymap.set('n', '<leader>m', api.node.navigate.diagnostics.next, opts('Next Diagnostic'))
-  vim.keymap.set('n', '<leader>n', api.node.navigate.diagnostics.prev, opts('Prev Diagnostic'))
-  vim.keymap.set('n', '<c-i>', api.node.navigate.opened.prev, opts('Prev Opened'))
-  vim.keymap.set('n', '<c-o>', api.node.navigate.opened.next, opts('Next Opened'))
+  vim.keymap.set('n', '<leader>k', api.node.navigate.git.prev, opts 'Prev Git')
+  vim.keymap.set('n', '<leader>j', api.node.navigate.git.next, opts 'Next Git')
+  vim.keymap.set('n', '<leader>m', api.node.navigate.diagnostics.next, opts 'Next Diagnostic')
+  vim.keymap.set('n', '<leader>n', api.node.navigate.diagnostics.prev, opts 'Prev Diagnostic')
+  vim.keymap.set('n', '<c-i>', api.node.navigate.opened.prev, opts 'Prev Opened')
+  vim.keymap.set('n', '<c-o>', api.node.navigate.opened.next, opts 'Next Opened')
 
-  vim.keymap.set('n', '<a-m>', api.node.navigate.sibling.next, opts('Next Sibling'))
-  vim.keymap.set('n', '<a-n>', api.node.navigate.sibling.prev, opts('Previous Sibling'))
-  vim.keymap.set('n', '<c-m>', api.node.navigate.sibling.last, opts('Last Sibling'))
-  vim.keymap.set('n', '<c-n>', api.node.navigate.sibling.first, opts('First Sibling'))
+  vim.keymap.set('n', '<a-m>', api.node.navigate.sibling.next, opts 'Next Sibling')
+  vim.keymap.set('n', '<a-n>', api.node.navigate.sibling.prev, opts 'Previous Sibling')
+  vim.keymap.set('n', '<c-m>', api.node.navigate.sibling.last, opts 'Last Sibling')
+  vim.keymap.set('n', '<c-n>', api.node.navigate.sibling.first, opts 'First Sibling')
 
-  vim.keymap.set('n', '<c-h>', api.node.navigate.parent, opts('Parent Directory'))
-  vim.keymap.set('n', '<c-u>', api.node.navigate.parent_close, opts('Close Directory'))
+  vim.keymap.set('n', '<c-h>', api.node.navigate.parent, opts 'Parent Directory')
+  vim.keymap.set('n', '<c-u>', api.node.navigate.parent_close, opts 'Close Directory')
 
-  vim.keymap.set('n', 'x', api.node.run.system, opts('Run System'))
-  vim.keymap.set('n', '<MiddleMouse>', api.node.run.system, opts('Run System'))
-  vim.keymap.set('n', 'gx', api.node.run.cmd, opts('Run Command'))
+  vim.keymap.set('n', 'x', api.node.run.system, opts 'Run System')
+  vim.keymap.set('n', '<MiddleMouse>', api.node.run.system, opts 'Run System')
+  vim.keymap.set('n', 'gx', api.node.run.cmd, opts 'Run Command')
 
-  vim.keymap.set('n', 'f', api.live_filter.start, opts('Filter'))
-  vim.keymap.set('n', 'gf', api.live_filter.clear, opts('Clean Filter'))
+  vim.keymap.set('n', 'f', api.live_filter.start, opts 'Filter')
+  vim.keymap.set('n', 'gf', api.live_filter.clear, opts 'Clean Filter')
 
   others(bufnr)
 end
 
-vim.cmd([[
+vim.cmd [[
 hi NvimTreeOpenedFile guibg=#238789
 hi NvimTreeModifiedFile guibg=#87237f
 hi NvimTreeSpecialFile guifg=brown gui=bold,underline
-]])
+]]
 
 local t = {
   on_attach = on_attach,
@@ -168,7 +168,7 @@ local t = {
     highlight_git = true,
     highlight_opened_files = "name",
     highlight_modified = "name",
-    special_files = { "README.md", "readme.md" },
+    special_files = { "README.md", "readme.md", },
     indent_markers = {
       enable = true,
     },
@@ -179,7 +179,7 @@ local t = {
         chars = "ASDFQWERJKLHNMYUIOPZXCVGTB1234789056",
         exclude = {
           filetype = { "notify", "packer", "qf", "diff", "fugitive", "fugitiveblame", "minimap", "aerial", },
-          buftype = { "nofile", "terminal", "help" },
+          buftype = { "nofile", "terminal", "help", },
         },
       },
     },
@@ -187,12 +187,12 @@ local t = {
 }
 
 M.setup = function(conf)
-  require('nvim-tree').setup(vim.tbl_deep_extend("force", t, conf or {}))
+  require 'nvim-tree'.setup(vim.tbl_deep_extend("force", t, conf or {}))
 end
 
 M.setup()
 
-require('nvim-tree').change_root = require('config.nvimtree-ext').change_root
+require 'nvim-tree'.change_root = require 'config.nvimtree-ext'.change_root
 
 local rescanned_bufnr = 0
 vim.g.edgy_autosize_en = 1
@@ -216,22 +216,22 @@ vim.g.nvimtree_au_bufleave = vim.api.nvim_create_autocmd({ "BufLeave", }, {
   callback = function(ev)
     rescanned_bufnr = ev.buf
     if vim.bo[ev.buf].ft == 'NvimTree' then
-      local save_cursor = vim.fn.getpos(".")
+      local save_cursor = vim.fn.getpos "."
       if vim.g.edgy_autosize_en == 1 then
         local max = 0
-        for linenr = 1, vim.fn.line('$') do
+        for linenr = 1, vim.fn.line '$' do
           local len = vim.fn.strdisplaywidth(vim.fn.getline(linenr))
           if len > max then
             max = len
           end
         end
-        local win = require("edgy.editor").get_win()
+        local win = require "edgy.editor".get_win()
         if win then
           win.view.edgebar:equalize()
         end
       end
       pcall(vim.fn.setpos, '.', save_cursor)
-      vim.cmd('norm zz')
+      vim.cmd 'norm zz'
     end
   end,
 })
@@ -241,10 +241,10 @@ pcall(vim.api.nvim_del_autocmd, vim.g.nvimtree_au_bufenter)
 vim.g.nvimtree_au_bufenter = vim.api.nvim_create_autocmd({ "CursorHold", "BufEnter", }, {
   callback = function(ev)
     if vim.bo[ev.buf].ft == 'NvimTree' then
-      vim.cmd([[
+      vim.cmd [[
         setlocal sidescrolloff=0
         setlocal signcolumn=yes
-      ]])
+      ]]
     end
   end,
 })
@@ -252,7 +252,7 @@ vim.g.nvimtree_au_bufenter = vim.api.nvim_create_autocmd({ "CursorHold", "BufEnt
 local check = function()
   local ok1 = nil
   local ok2 = nil
-  for winnr = 1, vim.fn.winnr('$') do
+  for winnr = 1, vim.fn.winnr '$' do
     local ft = vim.bo[vim.fn.winbufnr(winnr)].ft
     if ft == 'NvimTree' then
       ok1 = 1
@@ -296,7 +296,7 @@ vim.g.nvimtree_au_cursorhold2 = vim.api.nvim_create_autocmd({ "CursorHold", }, {
 })
 
 local cwd = string.gsub(vim.fn.tolower(vim.loop.cwd()), '/', '\\')
-local dirs = { cwd }
+local dirs = { cwd, }
 local curdir = cwd
 local lastdir = cwd
 local curidx = 1
@@ -305,7 +305,7 @@ local olddirs = {}
 
 -- package.loaded['config.nvimtree'] = nil
 
-local dirs_txt = require('plenary.path'):new(vim.fn.stdpath('data')):joinpath('nvim-tree-dirs.txt')
+local dirs_txt = require 'plenary.path':new(vim.fn.stdpath 'data'):joinpath 'nvim-tree-dirs.txt'
 
 if not dirs_txt:exists() then
   dirs_txt:touch()
@@ -314,7 +314,7 @@ end
 for _, line in ipairs(dirs_txt:readlines()) do
   line = vim.fn.trim(vim.fn.tolower(line))
   cwd = string.gsub(line, '/', '\\')
-  if #cwd > 0 and vim.tbl_contains(olddirs, cwd) == false and require('plenary.path'):new(cwd):exists() then
+  if #cwd > 0 and vim.tbl_contains(olddirs, cwd) == false and require 'plenary.path':new(cwd):exists() then
     table.insert(olddirs, cwd)
   end
 end
@@ -364,7 +364,7 @@ M.switch = function()
       pri = pri .. tostring(i) .. '. ' .. dir .. '\n'
     end
   end
-  require('notify').dismiss()
+  require 'notify'.dismiss()
   notify('- type to cd dir: `j`, `s` `k`, `w`\n' ..
     '- type `space` to go tree\n' ..
     '- type `d` to delete `' .. tostring(curidx) .. '`\n' ..
@@ -387,11 +387,11 @@ M.switch = function()
             elseif ch == 'j' or ch == 's' then
               M.nextdir()
             elseif ch == ' ' then
-              require('notify').dismiss()
-              vim.cmd('NvimTreeOpen')
+              require 'notify'.dismiss()
+              vim.cmd 'NvimTreeOpen'
             elseif ch == 'd' then
               if #dirs <= 2 then
-                notify('leave at least 2.')
+                notify 'leave at least 2.'
               else
                 table.remove(dirs, curidx)
               end
@@ -404,10 +404,10 @@ M.switch = function()
               end
               M.switch()
             else
-              require('notify').dismiss()
+              require 'notify'.dismiss()
             end
           else
-            require('notify').dismiss()
+            require 'notify'.dismiss()
           end
         end)
       end)
@@ -455,7 +455,7 @@ M.lastdir = function()
       pri = pri .. tostring(i) .. '. ' .. dir .. '\n'
     end
   end
-  require('notify').dismiss()
+  require 'notify'.dismiss()
   notify(string.sub(pri, 1, #pri - 1))
 end
 
@@ -478,7 +478,7 @@ M.seldir = function()
       j = j + 1
     end
   end
-  require('notify').dismiss()
+  require 'notify'.dismiss()
   if #vim.tbl_keys(dict) > 0 then
     local tbl = vim.tbl_keys(dict)
     table.sort(tbl)
@@ -497,7 +497,7 @@ M.seldir = function()
             local c2 = string.byte(ch, 2)
             local c3 = string.byte(ch, 3)
             local c4 = string.byte(ch, 4)
-            require('notify').dismiss()
+            require 'notify'.dismiss()
             if not c2 and not c3 and not c4 and c1 > 64 and c1 < 123 then
               if vim.tbl_contains(vim.tbl_keys(dict), ch) == true then
                 vim.cmd('cd ' .. dict[ch])
@@ -522,7 +522,7 @@ M.selolddir = function()
     dict[chs[j]] = dir
     j = j + 1
   end
-  require('notify').dismiss()
+  require 'notify'.dismiss()
   if #vim.tbl_keys(dict) > 0 then
     local tbl = vim.tbl_keys(dict)
     table.sort(tbl)
@@ -541,7 +541,7 @@ M.selolddir = function()
             local c2 = string.byte(ch, 2)
             local c3 = string.byte(ch, 3)
             local c4 = string.byte(ch, 4)
-            require('notify').dismiss()
+            require 'notify'.dismiss()
             if not c2 and not c3 and not c4 and c1 > 64 and c1 < 123 then
               if vim.tbl_contains(vim.tbl_keys(dict), ch) == true then
                 vim.cmd('cd ' .. dict[ch])
@@ -566,7 +566,7 @@ M.delolddir = function()
     dict[chs[j]] = dir
     j = j + 1
   end
-  require('notify').dismiss()
+  require 'notify'.dismiss()
   if #vim.tbl_keys(dict) > 0 then
     local tbl = vim.tbl_keys(dict)
     table.sort(tbl)
@@ -585,7 +585,7 @@ M.delolddir = function()
             local c2 = string.byte(ch, 2)
             local c3 = string.byte(ch, 3)
             local c4 = string.byte(ch, 4)
-            require('notify').dismiss()
+            require 'notify'.dismiss()
             if not c2 and not c3 and not c4 and c1 > 64 and c1 < 123 then
               if vim.tbl_contains(vim.tbl_keys(dict), ch) == true then
                 notify('del done: `' .. dict[ch] .. '`')

@@ -2,10 +2,10 @@ local M = {}
 
 -- package.loaded['terminal'] = nil
 
-vim.api.nvim_create_autocmd({ "BufLeave" }, {
+vim.api.nvim_create_autocmd({ "BufLeave", }, {
   callback = function()
     local fname = vim.api.nvim_buf_get_name(0)
-    if require("plenary.path"):new(fname):exists() then
+    if require "plenary.path":new(fname):exists() then
       vim.g.bufleave_readable_file = fname
     end
   end,
@@ -33,7 +33,7 @@ local is_bufname_terminal = function(bufname, terminal)
 end
 
 local try_goto_terminal = function()
-  for i = 1, vim.fn.winnr('$') do
+  for i = 1, vim.fn.winnr '$' do
     local bufnr = vim.fn.winbufnr(i)
     local buftype = vim.fn.getbufvar(bufnr, '&buftype')
     if buftype == 'terminal' then
@@ -60,7 +60,7 @@ end
 
 local is_hide_en = function()
   local cnt = 0
-  for i = 1, vim.fn.winnr('$') do
+  for i = 1, vim.fn.winnr '$' do
     if vim.fn.getbufvar(vim.fn.winbufnr(i), '&buftype') ~= 'nofile' then
       cnt = cnt + 1
     end
@@ -76,7 +76,7 @@ local get_dname = function(readablefile)
     return ''
   end
   local fname = string.gsub(readablefile, "\\", '/')
-  local path = require("plenary.path"):new(fname)
+  local path = require "plenary.path":new(fname)
   if path:is_file() then
     return path:parent()['filename']
   end
@@ -118,7 +118,7 @@ M.toggle = function(terminal, chdir)
       chdir = string.gsub(chdir, "\\", '/')
       vim.api.nvim_chan_send(vim.b.terminal_job_id, string.format('cd %s', chdir))
       if terminal == 'ipython' then
-        vim.fn.feedkeys([[:call feedkeys("i\<cr>\<esc>")]])
+        vim.fn.feedkeys [[:call feedkeys("i\<cr>\<esc>")]]
         local t0 = os.clock()
         while os.clock() - t0 <= 0.02 do
         end
@@ -167,7 +167,7 @@ end
 
 local get_paragraph = function(sep)
   local paragraph = {}
-  local linenr = vim.fn.line('.')
+  local linenr = vim.fn.line '.'
   local lines = 0
   for i = linenr, 1, -1 do
     local line = vim.fn.getline(i)
@@ -178,7 +178,7 @@ local get_paragraph = function(sep)
       break
     end
   end
-  for i = linenr + 1, vim.fn.line('$') do
+  for i = linenr + 1, vim.fn.line '$' do
     local line = vim.fn.getline(i)
     if #line > 0 then
       table.insert(paragraph, line)
@@ -197,17 +197,17 @@ M.send = function(terminal, to_send, show) -- show时，send后不hide
   end
   local cmd_to_send = ''
   if to_send == 'curline' then
-    cmd_to_send = vim.fn.getline('.')
+    cmd_to_send = vim.fn.getline '.'
   elseif to_send == 'paragraph' then
     if terminal == 'terminal' then
-      cmd_to_send = get_paragraph(' && ')
+      cmd_to_send = get_paragraph ' && '
     elseif terminal == 'powershell' then
-      cmd_to_send = get_paragraph('; ')
+      cmd_to_send = get_paragraph '; '
     else
-      cmd_to_send = get_paragraph('\n')
+      cmd_to_send = get_paragraph '\n'
     end
   elseif to_send == 'clipboard' then
-    local clipboard = vim.fn.getreg('+')
+    local clipboard = vim.fn.getreg '+'
     clipboard = clipboard:gsub("^%s*(.-)%s*$", "%1") -- trim_string
     if terminal == 'terminal' then
       cmd_to_send = string.gsub(clipboard, '\n', ' && ')
@@ -228,7 +228,7 @@ M.send = function(terminal, to_send, show) -- show时，send后不hide
   if certain then
     vim.api.nvim_chan_send(vim.b.terminal_job_id, cmd_to_send)
     if terminal == 'ipython' then
-      vim.fn.feedkeys([[:call feedkeys("i\<cr>\<esc>")]])
+      vim.fn.feedkeys [[:call feedkeys("i\<cr>\<esc>")]]
       local t0 = os.clock()
       while os.clock() - t0 <= 0.02 do
       end
@@ -268,12 +268,12 @@ end
 
 M.hideall = function()
   local winid = vim.fn.win_getid()
-  for winnr = 1, vim.fn.winnr('$') do
+  for winnr = 1, vim.fn.winnr '$' do
     local b = vim.fn.winbufnr(winnr)
     if vim.fn.buflisted(b) ~= 0 and 1 then
       if vim.api.nvim_buf_get_option(b, 'buftype') == 'terminal' then
         vim.fn.win_gotoid(vim.fn.win_getid(winnr))
-        vim.cmd('close')
+        vim.cmd 'close'
       end
     end
   end
@@ -287,7 +287,7 @@ vim.g.terminal_tableave = vim.api.nvim_create_autocmd({ "TabLeave", }, {
     local bufnr = vim.fn.bufnr()
     if vim.fn.buflisted(bufnr) ~= 0 and 1 then
       if vim.api.nvim_buf_get_option(bufnr, 'buftype') == 'terminal' then
-        vim.cmd('wincmd k')
+        vim.cmd 'wincmd k'
         Tabname()
         -- vim.cmd(string.format('close', bufnr))
       end

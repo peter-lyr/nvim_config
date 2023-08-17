@@ -21,9 +21,9 @@ ScrollMap = function(char)
         cnt = cnt + 1
         if (cnt <= 11 or os.clock() - tick <= 0.50) and finished == 0 then
           vim.cmd(string.format([[exe "norm 5\%s"]], key))
-          vim.cmd([[redraw]])
+          vim.cmd [[redraw]]
         else
-          vim.cmd([[call feedkeys("\<esc>")]])
+          vim.cmd [[call feedkeys("\<esc>")]]
           finish()
         end
         if flag == 1 then
@@ -35,7 +35,7 @@ ScrollMap = function(char)
           local c2 = string.byte(ch, 2)
           local c3 = string.byte(ch, 3)
           local c4 = string.byte(ch, 4)
-          if not (c1 == (vim.fn.char2nr(char) - vim.fn.char2nr('a') + 1) and not c2 and not c3 and not c4) then
+          if not (c1 == (vim.fn.char2nr(char) - vim.fn.char2nr 'a' + 1) and not c2 and not c3 and not c4) then
             -- print(string.format("%d[%f](%s %s %s %s)==", cnt, os.clock() - start, tostring(c1), tostring(c2),
             --   tostring(c3), tostring(c4)))
             finish(ch)
@@ -43,11 +43,11 @@ ScrollMap = function(char)
         end
       end)
     end)
-  end, { desc = 'instance ScrollMap' })
+  end, { desc = 'instance ScrollMap', })
 end
 
-ScrollMap('e')
-ScrollMap('y')
+ScrollMap 'e'
+ScrollMap 'y'
 
 LineJumpMap = function(char, dir)
   local key = string.format('<c-%s>', char)
@@ -71,9 +71,9 @@ LineJumpMap = function(char, dir)
         cnt = cnt + 1
         if (cnt <= 11 or os.clock() - tick <= 0.50) and finished == 0 then
           vim.cmd(string.format([[exe "norm 4%s"]], dir))
-          vim.cmd([[redraw]])
+          vim.cmd [[redraw]]
         else
-          vim.cmd([[call feedkeys("\<esc>")]])
+          vim.cmd [[call feedkeys("\<esc>")]]
           finish()
         end
         if flag == 1 then
@@ -85,13 +85,13 @@ LineJumpMap = function(char, dir)
           local c2 = string.byte(ch, 2)
           local c3 = string.byte(ch, 3)
           local c4 = string.byte(ch, 4)
-          if not (c1 == (vim.fn.char2nr(char) - vim.fn.char2nr('a') + 1) and not c2 and not c3 and not c4) then
+          if not (c1 == (vim.fn.char2nr(char) - vim.fn.char2nr 'a' + 1) and not c2 and not c3 and not c4) then
             finish(ch)
           end
         end
       end)
     end)
-  end, { desc = 'instance LineJumpMap' })
+  end, { desc = 'instance LineJumpMap', })
 end
 
 LineJumpMap('g', 'j')

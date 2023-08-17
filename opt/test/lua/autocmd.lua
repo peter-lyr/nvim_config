@@ -1,20 +1,20 @@
-require('config.nvimtree').setup({
+require 'config.nvimtree'.setup {
   log = {
     enable = true,
     types = {
       dev = true,
     },
   },
-})
+}
 
 local format = function(text)
   if #text > 40 then
-    return string.sub(text, #text-39, #text)
+    return string.sub(text, #text - 39, #text)
   end
   return text
 end
 
-local log = require("nvim-tree.log")
+local log = require "nvim-tree.log"
 
 pcall(vim.api.nvim_del_autocmd, vim.g.test_au1)
 

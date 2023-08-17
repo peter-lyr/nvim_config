@@ -9,6 +9,6 @@ return {
   },
   config = function()
     vim.opt.foldmethod = "indent"
-    require('pretty-fold').setup()
-  end
+    require 'pretty-fold'.setup()
+  end,
 }

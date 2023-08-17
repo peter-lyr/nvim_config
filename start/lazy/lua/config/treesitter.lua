@@ -1,10 +1,10 @@
-local data_path = require("plenary.path"):new(vim.fn.expand("$VIMRUNTIME")):joinpath("pack", "data")
+local data_path = require "plenary.path":new(vim.fn.expand "$VIMRUNTIME"):joinpath("pack", "data")
 
 if not data_path:exists() then
   vim.fn.mkdir(data_path.filename)
 end
 
-local parser_path = data_path:joinpath("treesitter-parser")
+local parser_path = data_path:joinpath "treesitter-parser"
 
 if not parser_path:exists() then
   vim.fn.mkdir(parser_path.filename)
@@ -21,7 +21,7 @@ local disable = function(_, buf)
   end
 end
 
-require("nvim-treesitter.configs").setup({
+require "nvim-treesitter.configs".setup {
   ensure_installed = {
     'c',
     'python',
@@ -60,11 +60,11 @@ require("nvim-treesitter.configs").setup({
     enable = true,
     disable = disable,
   },
-})
+}
 
 require "rainbow.internal".defhl()
 
-require("treesitter-context").setup({
+require "treesitter-context".setup {
   on_attach = function()
     local max_filesize = 1000 * 1024
     local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(0))
@@ -72,10 +72,10 @@ require("treesitter-context").setup({
       return false
     end
     return true
-  end
-})
+  end,
+}
 
-require("match-up").setup({})
+require "match-up".setup {}
 
 -- solve diffview close err
 
@@ -85,9 +85,9 @@ if package.loaded['plugins.diffview'] then
       vim.loop.new_timer():start(50, 0, function()
         vim.schedule(function()
           if string.match(vim.bo.ft, "Diffview") or vim.opt.diff:get() == true then
-            vim.cmd('TSDisable rainbow')
+            vim.cmd 'TSDisable rainbow'
           else
-            vim.cmd('TSEnable rainbow')
+            vim.cmd 'TSEnable rainbow'
           end
         end)
       end)

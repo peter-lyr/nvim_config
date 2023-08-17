@@ -5,18 +5,18 @@ return {
     {
       '<leader>sk',
       function()
-        require('config.telescope_projects').open()
+        require 'config.telescope_projects'.open()
       end,
-      mode = { 'n', 'v' },
+      mode = { 'n', 'v', },
       silent = true,
-      desc = 'Telescope projects'
+      desc = 'Telescope projects',
     },
   },
   dependencies = {
-    require('wait.telescope'),
-    require('wait.plenary'),
+    require 'wait.telescope',
+    require 'wait.plenary',
   },
   config = function()
-    require('config.telescope_projects')
+    require 'config.telescope_projects'
   end,
 }

@@ -13,7 +13,7 @@ M.is_saved_images = function(ev, last_ev)
   local curext = string.match(ev.file, '.+%.(%w+)$')
   local lastext = string.match(last_ev.file, '.+%.(%w+)$')
   if curext and #curext ~= 0 and vim.tbl_contains({ 'jpg', 'png', }, curext) == true then
-    if lastext and #lastext ~= 0 and vim.tbl_contains({ 'md' }, lastext) == true then
+    if lastext and #lastext ~= 0 and vim.tbl_contains({ 'md', }, lastext) == true then
       return true
     end
   end
@@ -40,8 +40,8 @@ M.bufenter = function(ev)
         vim.cmd('bw! ' .. M.readpre_ev.buf)
       end)
     end)
-    require('mkdimage').dragimage('sel_png', M.readpre_ev.file)
-    vim.cmd('w!')
+    require 'mkdimage'.dragimage('sel_png', M.readpre_ev.file)
+    vim.cmd 'w!'
   end
 end
 

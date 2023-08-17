@@ -3,11 +3,11 @@ return {
   lazy = true,
   build = ":Neorg sync-parsers",
   dependencies = {
-    require('wait.plenary'),
-    require('plugins.treesitter'),
+    require 'wait.plenary',
+    require 'plugins.treesitter',
   },
   config = function()
-    require("neorg").setup {
+    require "neorg".setup {
       load = {
         ["core.defaults"] = {},
         ["core.concealer"] = {},
