@@ -73,6 +73,21 @@ local function check_ft(ft)
   return vim.tbl_contains(vim.tbl_keys(ignore_focus), ft) == false
 end
 
+local Windows = require('lualine.components.windows')
+local Window = require('lualine.components.windows.window')
+
+--- Override to onl return ffers shown in the windows of the current tab
+function Windows:buffers()
+  local tabnr = vim.api.nvim_get_current_tabpage()
+  local buffers = {}
+  for _, winnr in ipairs(vim.api.nvim_tabpage_list_wins(tabnr)) do
+    if not self:should_hide(winnr) and Window:is_current() then
+      buffers[#buffers + 1] = self:new_buffer(winnr)
+    end
+  end
+  return buffers
+end
+
 require('lualine').setup({
   options = {
     ignore_focus = vim.tbl_keys(ignore_focus),
@@ -272,6 +287,16 @@ require('lualine').setup({
         end,
       },
     },
+    lualine_x = {
+      {
+        function()
+          return vim.fn.bufwinnr(vim.fn.bufnr('%'))
+        end,
+        cond = function()
+          return #vim.fn.expand('%:~:.') > 0
+        end,
+      },
+    },
     lualine_y = {
       {
         function()
@@ -283,14 +308,7 @@ require('lualine').setup({
       },
     },
     lualine_z = {
-      {
-        function()
-          return vim.fn.bufwinnr(vim.fn.bufnr('%'))
-        end,
-        cond = function()
-          return #vim.fn.expand('%:~:.') > 0
-        end,
-      },
+      'windows',
     },
   },
   inactive_winbar = {
@@ -305,6 +323,16 @@ require('lualine').setup({
         color = { fg = '#834567', }
       },
     },
+    lualine_x = {
+      {
+        function()
+          return vim.fn.bufwinnr(vim.fn.bufnr('%'))
+        end,
+        cond = function()
+          return #vim.fn.expand('%:~:.') > 0
+        end,
+      },
+    },
     lualine_y = {
       {
         function()
@@ -316,14 +344,7 @@ require('lualine').setup({
       },
     },
     lualine_z = {
-      {
-        function()
-          return vim.fn.bufwinnr(vim.fn.bufnr('%'))
-        end,
-        cond = function()
-          return #vim.fn.expand('%:~:.') > 0
-        end,
-      },
+      'windows',
     },
   },
 })
@@ -570,8 +591,11 @@ vim.cmd([[
       execute a:tabnr . "tabnext"
     endif
   endfunction
+  function! LualineSwitchWindow(win_number, mouseclicks, mousebutton, modifiers)
+    execute a:win_number . 'wincmd w'
+    wincmd _
+  endfunction
 ]])
-
 
 
 function Bdft(ftstring)
