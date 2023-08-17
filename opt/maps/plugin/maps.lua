@@ -61,10 +61,10 @@ vim.keymap.set({ 'v', }, '<c-b>', 'B', { desc = 'B' })
 
 -- esc
 
-vim.keymap.set({ 'v',      }, 'qq',    '<esc><esc><esc>', { desc = 'esc' })
-vim.keymap.set({ 't',      }, '<esc>', '<c-\\><c-n>', { desc = 'esc' })
-vim.keymap.set({ 'i', 'c', }, 'sf',    '<esc><esc>', { desc = 'esc' })
-vim.keymap.set({ 't',      }, 'sf',    '<c-\\><c-n>', { desc = 'esc' })
+vim.keymap.set({ 'v', }, 'qq',    '<esc><esc><esc>', { desc = 'esc' })
+vim.keymap.set({ 't', }, '<esc>', '<c-\\><c-n>', { desc = 'esc' })
+vim.keymap.set({ 'i', }, 'sf',    '<esc><esc>', { desc = 'esc' })
+vim.keymap.set({ 't', }, 'sf',    '<c-\\><c-n>', { desc = 'esc' })
 
 -- new line
 
