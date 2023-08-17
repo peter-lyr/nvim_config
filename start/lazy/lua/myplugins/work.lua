@@ -7,17 +7,13 @@ return {
     lazy = true,
     keys = {
 
-      -- cbp2cmake
+      -- c2cmake
 
-      { '<c-F10>', function() require('cbp2cmake').build() end, mode = { 'n', 'v', }, silent = true, desc = 'cbp2cmake build' },
+      { '<c-F10>', function() require('c2cmake').c2cmake() end, mode = { 'n', 'v', }, silent = true, desc = 'cbp2cmake build' },
 
       -- cbp2make
 
       { '<c-F11>', function() require('cbp2make').build() end, mode = { 'n', 'v', }, silent = true, desc = 'cbp2make build' },
-
-      -- _2cmake
-
-      { '<c-F12>', function() require('_2cmake').build() end, mode = { 'n', 'v', }, silent = true, desc = '_2cmake build' },
 
       -- sdkcbp
 
