@@ -595,6 +595,27 @@ vim.keymap.set({ 'n', 'v', }, '<a-f2>', function()
   end
 end, { desc = 'buffers workflow' })
 
+vim.keymap.set({ 'n', 'v', }, '<c-f3>', function()
+  local projs = {}
+  local winid = vim.fn.win_getid()
+  for winnr = 1, vim.fn.bufnr('$') do
+    local bufnr = vim.fn.winbufnr(winnr)
+    if vim.fn.buflisted(bufnr) ~= 0 and vim.api.nvim_buf_get_option(bufnr, 'buftype') ~= 'quickfix' then
+      local fname = vim.fn.tolower(rep(vim.api.nvim_buf_get_name(bufnr)))
+      if #fname > 0 and vim.fn.filereadable(fname) == 1 then
+        local proj = rep(vim.fn['ProjectRootGet'](fname))
+        if vim.tbl_contains(projs, proj) ~= true then
+          projs[#projs + 1] = proj
+        else
+          vim.fn.win_gotoid(vim.fn.win_getid(winnr))
+          vim.cmd('close')
+        end
+      end
+    end
+  end
+  vim.fn.win_gotoid(winid)
+end, { desc = 'buffers workflow' })
+
 vim.opt.laststatus = 3
 
 vim.cmd([[
