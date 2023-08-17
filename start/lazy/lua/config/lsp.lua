@@ -9,9 +9,9 @@ local root_dir = function(root_files)
   end
 end
 
-for name, icon in pairs(require "lazyvim.config".icons.diagnostics) do
-  name = "DiagnosticSign" .. name
-  vim.fn.sign_define(name, { text = icon, texthl = name, numhl = "", })
+for name, icon in pairs(require 'lazyvim.config'.icons.diagnostics) do
+  name = 'DiagnosticSign' .. name
+  vim.fn.sign_define(name, { text = icon, texthl = name, numhl = '', })
 end
 
 local diagnostics = {
@@ -19,8 +19,8 @@ local diagnostics = {
   update_in_insert = false,
   virtual_text = {
     spacing = 0,
-    source = "if_many",
-    prefix = "●",
+    source = 'if_many',
+    prefix = '●',
   },
   severity_sort = true,
 }
@@ -95,10 +95,11 @@ lspconfig.lua_ls.setup {
       format = {
         enable = true,
         defaultConfig = {
-          max_line_length          = "275",
-          indent_size              = "2",
+          max_line_length          = '275',
+          indent_size              = '2',
           call_arg_parentheses     = 'remove',
           trailing_table_separator = 'always',
+          quote_style              = 'single',
         },
       },
     },
@@ -136,7 +137,7 @@ vim.keymap.set('n', '<leader>fF', ':LspInfo<cr>', { desc = 'LspInfo', })
 
 vim.keymap.set('n', '<leader>fw', ':ClangdSwitchSourceHeader<cr>', { desc = 'ClangdSwitchSourceHeader', })
 vim.keymap.set('n', '<leader>fp', function()
-  local save_cursor = vim.fn.getpos "."
+  local save_cursor = vim.fn.getpos '.'
   vim.cmd 'norm =ap'
   pcall(vim.fn.setpos, '.', save_cursor)
 end, { desc = '=ap', })
@@ -160,13 +161,13 @@ vim.g.lsp_au_lspattach = vim.api.nvim_create_autocmd('LspAttach', {
     vim.keymap.set({ 'n', 'v', }, '<leader>fe', vim.lsp.buf.references, opts 'vim.lsp.buf.references')
     vim.keymap.set({ 'n', 'v', }, '<leader>fvd', vim.lsp.buf.type_definition, opts 'vim.lsp.buf.type_definition')
     vim.keymap.set({ 'n', 'v', }, '<leader>fn', function()
-      vim.fn.feedkeys(":IncRename " .. vim.fn.expand "<cword>")
+      vim.fn.feedkeys(':IncRename ' .. vim.fn.expand '<cword>')
     end, opts 'lsp rename IncRename')
     vim.keymap.set({ 'n', 'v', }, '<leader>ff', function()
       vim.lsp.buf.format {
         async = true,
         filter = function(client)
-          return client.name ~= "clangd"
+          return client.name ~= 'clangd'
         end,
       }
     end, opts 'vim.lsp.buf.format')
