@@ -25,10 +25,10 @@ return {
                   if winnr ~= -1 then
                     vim.cmd [[
                       try
-                        MinimapRefresh
+                      MinimapRefresh
                       catch
                       endtry
-                    ]]
+                      ]]
                     pcall(vim.fn.win_gotoid, vim.fn.win_getid(winnr))
                   end
                 end)
@@ -71,7 +71,7 @@ return {
         callback = function()
           if vim.fn.bufnr() == vim.fn.bufnr '-MINIMAP-' then
             if vim.fn.expand '<afile>' == tostring(vim.fn.win_getid()) then
-              vim.cmd 'MinimapClose'
+              pcall(vim.cmd, 'MinimapClose')
             end
           end
         end,
@@ -84,10 +84,10 @@ return {
             rescanned_bufnr = bufnr
             vim.cmd [[
               try
-                MinimapRescan
+              MinimapRescan
               catch
               endtry
-            ]]
+              ]]
           end
         end,
       })
@@ -113,7 +113,7 @@ return {
                   if vim.fn.bufnr() ~= vim.fn.bufnr '-MINIMAP-' then
                     vim.cmd [[
                     try
-                      MinimapRefresh
+                    MinimapRefresh
                     catch
                     endtry
                     ]]
@@ -131,7 +131,7 @@ return {
       })
       vim.api.nvim_create_autocmd({ "TabLeave", }, {
         callback = function()
-          vim.cmd 'MinimapClose'
+          pcall(vim.cmd, 'MinimapClose')
         end,
       })
       local minimap_rescan_allow2 = 1

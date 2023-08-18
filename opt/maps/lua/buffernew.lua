@@ -90,19 +90,19 @@ end
 
 M.tabclose = function()
   if vim.fn.bufnr '-MINIMAP-' ~= -1 then
-    vim.cmd 'MinimapClose'
+    pcall(vim.cmd, 'MinimapClose')
   end
   vim.cmd [[
     try
-      tabclose!
+    tabclose!
     catch
     endtry
-  ]]
+    ]]
 end
 
 M.tabbwipeout = function()
   if vim.fn.bufnr '-MINIMAP-' ~= -1 then
-    vim.cmd 'MinimapClose'
+  pcall(vim.cmd, 'MinimapClose')
   end
   local curroot = string.gsub(vim.fn.tolower(vim.fn['ProjectRootGet'](vim.api.nvim_buf_get_name(0))), '\\', '/')
   vim.cmd [[
@@ -134,7 +134,7 @@ end
 
 M.projbwipeout = function()
   if vim.fn.bufnr '-MINIMAP-' ~= -1 then
-    vim.cmd 'MinimapClose'
+    pcall(vim.cmd, 'MinimapClose')
   end
   local curroot = string.gsub(vim.fn.tolower(vim.fn['ProjectRootGet'](vim.api.nvim_buf_get_name(0))), '\\', '/')
   for _, b in ipairs(vim.api.nvim_list_bufs()) do

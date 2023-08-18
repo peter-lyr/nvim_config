@@ -14,7 +14,7 @@ local defaul_session = sessionDir .. "\\default.vim"
 local function prepare()
   local eventignore = vim.opt.eventignore:get()
   vim.opt.eventignore = "all"
-  vim.cmd 'MinimapClose'
+  pcall(vim.cmd, 'MinimapClose')
   for _, b in ipairs(vim.api.nvim_list_bufs()) do
     local fname = vim.api.nvim_buf_get_name(b)
     if require 'plenary.path'.new(fname):exists() then
