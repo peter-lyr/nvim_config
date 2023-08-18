@@ -2,6 +2,8 @@ return {
   'lewis6991/gitsigns.nvim',
   event = { 'BufReadPre', 'BufNewFile', },
   keys = {
+    '<leader>g',
+
     { 'ig',           ':<C-U>Gitsigns select_hunk<CR>',                                     mode = { 'o', 'x', }, silent = true, desc = 'Gitsigns select_hunk', },
     { 'ag',           ':<C-U>Gitsigns select_hunk<CR>',                                     mode = { 'o', 'x', }, silent = true, desc = 'Gitsigns select_hunk', },
     { '<leader>j',    desc = 'Gitsigns next_hunk', },

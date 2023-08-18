@@ -8,6 +8,8 @@ return {
     'LazyGitConfig',
   },
   keys = {
+    '<leader>g',
+
     { '<leader>gll', ':<c-u>LazyGit<cr>',                  mode = { 'n', 'v', }, silent = true, desc = 'LazyGit', },
     { '<leader>glf', ':<c-u>LazyGitFilterCurrentFile<cr>', mode = { 'n', 'v', }, silent = true, desc = 'LazyGitFilterCurrentFile', },
     { '<leader>glg', ':<c-u>LazyGitFilter<cr>',            mode = { 'n', 'v', }, silent = true, desc = 'LazyGitFilter', },

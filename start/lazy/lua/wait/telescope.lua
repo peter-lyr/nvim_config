@@ -6,6 +6,8 @@ return {
     'Telescope',
   },
   keys = {
+    '<leader>g',
+
     { '<leader>s<leader>', '<cmd>Telescope find_files<cr>',                                                                                   mode = { 'n', 'v', }, silent = true, desc = 'Telescope find_files', },
     { '<leader>sh',        '<cmd>Telescope search_history<cr>',                                                                               mode = { 'n', 'v', }, silent = true, desc = 'Telescope search_history', },
     { '<leader>sc',        '<cmd>Telescope command_history<cr>',                                                                              mode = { 'n', 'v', }, silent = true, desc = 'Telescope command_history', },

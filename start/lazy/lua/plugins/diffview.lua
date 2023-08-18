@@ -11,6 +11,8 @@ return {
     require 'plugins.whichkey',
   },
   keys = {
+    '<leader>g',
+
     { '<leader>gvi', function() require 'config.diffview'.diffviewfilehistory() end, mode = { 'n', 'v', }, silent = true, desc = 'Diffview filehistory', },
     { '<leader>gvo', function() require 'config.diffview'.diffviewopen() end,        mode = { 'n', 'v', }, silent = true, desc = 'Diffview open', },
     { '<leader>gvq', function() require 'config.diffview'.diffviewclose() end,       mode = { 'n', 'v', }, silent = true, desc = 'Diffview close', },

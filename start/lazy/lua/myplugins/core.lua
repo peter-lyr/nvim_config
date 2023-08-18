@@ -274,6 +274,8 @@ return {
       -- gitpushinit.lua
       ------------------------
 
+      '<leader>g',
+
       { '<leader>ga',          function() require 'gitpushinit'.addcommitpush() end,                                           mode = { 'n', 'v', }, silent = true,  desc = 'gitpushinit.lua add all commit and push', },
       { '<leader>gc',          function() require 'gitpushinit'.commitpush() end,                                              mode = { 'n', 'v', }, silent = true,  desc = 'gitpushinit.lua commit and push', },
       { '<leader>ggc',         function() require 'gitpushinit'.commit() end,                                                  mode = { 'n', 'v', }, silent = true,  desc = 'gitpushinit.lua just commit', },
@@ -442,5 +444,8 @@ return {
       },
 
     },
+    config = function()
+      require 'gitpushinit'
+    end
   },
 }
