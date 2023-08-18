@@ -1,5 +1,5 @@
 return {
-  "kdheepak/lazygit.nvim",
+  'kdheepak/lazygit.nvim',
   lazy = true,
   cmd = {
     'LazyGit',
@@ -17,10 +17,11 @@ return {
     { '<leader>glj', ':<c-u>Telescope lazygit<cr>',        mode = { 'n', 'v', }, silent = true, desc = 'Telescope lazygit', },
   },
   dependencies = {
-    "nvim-telescope/telescope.nvim",
-    "nvim-lua/plenary.nvim",
+    'nvim-telescope/telescope.nvim',
+    'nvim-lua/plenary.nvim',
+    require 'plugins.whichkey',
   },
   config = function()
-    require "config.lazygit"
+    require 'config.lazygit'
   end,
 }

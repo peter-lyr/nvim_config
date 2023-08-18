@@ -2,6 +2,8 @@ local M = {}
 
 package.loaded['gitpushinit'] = nil
 
+require 'which-key'.register { ['<leader>gg'] = { name = 'gitpushinit.lua', }, }
+
 local testtimer = nil
 
 GitpushinitDone = function()

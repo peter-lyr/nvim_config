@@ -19,6 +19,7 @@ return {
       require 'plugins.minimap', -- tabclose minimap
       require 'plugins.coderunner',
       'peter-lyr/sha2',
+      require 'plugins.whichkey',
     },
     keys = {
 

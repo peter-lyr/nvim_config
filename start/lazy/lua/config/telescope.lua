@@ -6,6 +6,8 @@ vim.cmd [[
 autocmd User TelescopePreviewerLoaded setlocal rnu | setlocal number | setlocal wrap
 ]]
 
+require 'which-key'.register { ['<leader>gt'] = { name = 'Telescope', }, }
+
 local fb_actions = require 'telescope._extensions.file_browser.actions'
 
 local get_setup_table = function(file_ignore_patterns)

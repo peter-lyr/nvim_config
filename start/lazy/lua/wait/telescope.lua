@@ -64,6 +64,7 @@ return {
       dependencies = { 'kkharji/sqlite.lua', },
     },
     'nvim-telescope/telescope-file-browser.nvim',
+    require 'plugins.whichkey',
   },
   config = function()
     require 'config.telescope'

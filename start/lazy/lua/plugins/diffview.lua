@@ -8,15 +8,16 @@ return {
     require 'wait.plenary',
     require 'plugins.treesitter',
     require 'plugins.minimap', -- diffviewclose minimap
+    require 'plugins.whichkey',
   },
   keys = {
-    { '<leader>gvi', function() require 'config.diffview'.diffviewfilehistory() end, mode = { 'n', 'v', }, silent = true, desc = 'diffview filehistory', },
-    { '<leader>gvo', function() require 'config.diffview'.diffviewopen() end,        mode = { 'n', 'v', }, silent = true, desc = 'diffview open', },
-    { '<leader>gvq', function() require 'config.diffview'.diffviewclose() end,       mode = { 'n', 'v', }, silent = true, desc = 'diffview close', },
-    { '<leader>gvc', function() require 'config.diffview'.toggle_cnt() end,          mode = { 'n', 'v', }, silent = true, desc = 'diffview toggle_cnt', },
+    { '<leader>gvi', function() require 'config.diffview'.diffviewfilehistory() end, mode = { 'n', 'v', }, silent = true, desc = 'Diffview filehistory', },
+    { '<leader>gvo', function() require 'config.diffview'.diffviewopen() end,        mode = { 'n', 'v', }, silent = true, desc = 'Diffview open', },
+    { '<leader>gvq', function() require 'config.diffview'.diffviewclose() end,       mode = { 'n', 'v', }, silent = true, desc = 'Diffview close', },
+    { '<leader>gvc', function() require 'config.diffview'.toggle_cnt() end,          mode = { 'n', 'v', }, silent = true, desc = 'Diffview toggle_cnt', },
     -- { '<leader>gve',  ':<c-u>DiffviewRefresh<cr>',                                    mode = { 'n', 'v', }, silent = true, desc = 'DiffviewRefresh', },
     -- { '<leader>gvl',  ':<c-u>DiffviewToggleFiles<cr>',                                mode = { 'n', 'v', }, silent = true, desc = 'DiffviewToggleFiles', },
-    { '<leader>gvw', ':<c-u>Telescope git_diffs diff_commits<cr>',                   mode = { 'n', 'v', }, silent = true, desc = 'Telescope git_diffs diff_commits', },
+    { '<leader>gvw', ':<c-u>Telescope git_diffs diff_commits<cr>',                   mode = { 'n', 'v', }, silent = true, desc = 'Diffview Telescope git_diffs diff_commits', },
   },
   config = function()
     require 'config.diffview'

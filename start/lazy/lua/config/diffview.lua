@@ -3,6 +3,8 @@ local actions = require "diffview.actions"
 
 local M = {}
 
+require 'which-key'.register { ['<leader>gv'] = { name = 'Diffview', }, }
+
 M.diffviewfilehistory = function()
   vim.cmd 'DiffviewFileHistory'
 end

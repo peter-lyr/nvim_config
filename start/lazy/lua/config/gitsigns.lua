@@ -34,7 +34,7 @@ vim.g.gitsigns_insertenter = vim.api.nvim_create_autocmd({ 'InsertEnter', 'Curso
   end,
 })
 
-require 'which-key'.register { ['<leader>gm'] = { name = 'Gitsigns', }, }
+require 'which-key'.register { ['<leader>gl'] = { name = 'LazyGit', }, }
 
 pcall(vim.api.nvim_del_autocmd, vim.g.gitsigns_insertleave)
 
