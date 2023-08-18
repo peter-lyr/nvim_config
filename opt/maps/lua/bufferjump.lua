@@ -103,19 +103,43 @@ M.i = function()
   end
 end
 
+local gotoid = function(winid)
+  if vim.api.nvim_win_get_height(winid) < 2 then
+    vim.api.nvim_win_set_height(winid, 2)
+  end
+  vim.fn.win_gotoid(winid)
+end
+
+local isallow = function(winnr)
+  local bufnr = vim.fn.winbufnr(winnr)
+  if vim.api.nvim_buf_is_valid(bufnr) then
+    local ft = vim.api.nvim_buf_get_option(bufnr, 'filetype')
+    if ft ~= 'NvimTree' and ft ~= 'fugitive' and ft ~= 'minimap' and ft ~= 'aerial' then
+      if vim.opt.winfixwidth:get() == true or vim.opt.winfixheight:get() == true then
+        return 1
+      end
+    end
+  end
+  return nil
+end
+
+local gofixwin = function(winnr)
+  gotoid(vim.fn.win_getid(winnr))
+  return isallow(winnr)
+end
+
 M.ix = function(x)
   local winid = vim.fn.win_getid()
   if x == 9 then
     for winnr = 1, vim.fn.winnr '$' do
-      vim.fn.win_gotoid(vim.fn.win_getid(winnr))
+      gotoid(vim.fn.win_getid(winnr))
       if vim.opt.winfixheight:get() == true then
         vim.cmd [[
           set nowinfixheight
           wincmd =
           set winfixheight
           ]]
-      end
-      if vim.opt.winfixwidth:get() == true then
+      elseif vim.opt.winfixwidth:get() == true then
         vim.cmd [[
           set nowinfixwidth
           wincmd =
@@ -125,7 +149,7 @@ M.ix = function(x)
     end
   elseif x == 10 then
     for winnr = 1, vim.fn.winnr '$' do
-      vim.fn.win_gotoid(vim.fn.win_getid(winnr))
+      gotoid(vim.fn.win_getid(winnr))
       vim.cmd [[
         set nowinfixheight
         set nowinfixwidth
@@ -134,42 +158,32 @@ M.ix = function(x)
     vim.cmd 'wincmd ='
   elseif x == 11 then
     for winnr = vim.fn.winnr() - 1, 1, -1 do
-      vim.fn.win_gotoid(vim.fn.win_getid(winnr))
-      local bufnr = vim.fn.winbufnr(winnr)
-      if vim.api.nvim_buf_is_valid(bufnr) then
-        local ft = vim.api.nvim_buf_get_option(bufnr, "filetype")
-        if ft ~= 'NvimTree' and ft ~= 'fugitive' and ft ~= 'minimap' and ft ~= 'aerial' then
-          if vim.opt.winfixwidth:get() == true or vim.opt.winfixheight:get() == true then
-            return
-          end
-        end
+      if gofixwin(winnr) then
+        return
       end
     end
   elseif x == 12 then
     for winnr = vim.fn.winnr() + 1, vim.fn.winnr '$' do
-      vim.fn.win_gotoid(vim.fn.win_getid(winnr))
-      local bufnr = vim.fn.winbufnr(winnr)
-      if vim.api.nvim_buf_is_valid(bufnr) then
-        local ft = vim.api.nvim_buf_get_option(bufnr, "filetype")
-        if ft ~= 'NvimTree' and ft ~= 'fugitive' and ft ~= 'minimap' and ft ~= 'aerial' then
-          if vim.opt.winfixwidth:get() == true or vim.opt.winfixheight:get() == true then
-            return
-          end
-        end
+      if gofixwin(winnr) then
+        return
       end
     end
   else
     for winnr = 1, vim.fn.winnr '$' do
-      vim.fn.win_gotoid(vim.fn.win_getid(winnr))
-      if vim.opt.winfixheight:get() == true then
-        vim.api.nvim_win_set_height(0, x * 7)
-      end
-      if vim.opt.winfixwidth:get() == true then
-        vim.api.nvim_win_set_width(0, x * 20)
+      if isallow(winr) then
+        local cur_winid = vim.fn.win_getid(winnr)
+        if vim.api.nvim_get_option_value('winfixheight', { win = cur_winid, scope = 'global', }) == true then
+          vim.api.nvim_win_set_height(cur_winid, x * 7)
+        end
+        if vim.api.nvim_get_option_value('winfixwidth', { win = cur_winid, scope = 'global', }) == true then
+          gotoid(cur_winid)
+          vim.cmd 'wincmd h'
+          vim.api.nvim_win_set_width(0, vim.api.nvim_win_get_width(0) - x * 20 + vim.api.nvim_win_get_width(cur_winid))
+        end
       end
     end
   end
-  vim.fn.win_gotoid(winid)
+  gotoid(winid)
 end
 
 M.hh = function()
