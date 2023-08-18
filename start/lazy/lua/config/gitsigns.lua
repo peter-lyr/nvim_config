@@ -1,3 +1,5 @@
+package.loaded['config.gitsigns'] = nil
+
 local rf = function()
   require 'config.fugitive'.open(1)
 end
@@ -15,68 +17,9 @@ require 'gitsigns'.setup {
     changedelete = { text = '▎', },
     untracked = { text = '▎', },
   },
-
-  on_attach = function(bufnr)
-    local gs = package.loaded.gitsigns
-
-    local function map(mode, l, r, opts)
-      opts = opts or {}
-      opts.buffer = bufnr
-      vim.keymap.set(mode, l, r, opts)
-    end
-
-    -- Navigation
-    map('n', '<leader>j', function()
-      if vim.wo.diff then return ']c' end
-      vim.schedule(function() gs.next_hunk() end)
-      return '<Ignore>'
-    end, { expr = true, desc = 'Gitsigns next_hunk', })
-    map('n', '<leader>k', function()
-      if vim.wo.diff then return '[c' end
-      vim.schedule(function() gs.prev_hunk() end)
-      return '<Ignore>'
-    end, { expr = true, desc = 'Gitsigns prev_hunk', })
-
-    -- Actions
-    map('n', '<leader>gs', function()
-      gs.stage_hunk(); rf()
-    end, { desc = 'Gitsigns stage_hunk', })
-    map('v', '<leader>gs', function() gs.stage_hunk { vim.fn.line '.', vim.fn.line 'v', } end, { desc = 'Gitsigns stage_hunk', })
-    map('n', '<leader>gms', function()
-      gs.stage_buffer(); rf()
-    end, { desc = 'Gitsigns stage_buffer', })
-    map('n', '<leader>gu', function()
-      gs.undo_stage_hunk(); rf()
-    end, { desc = 'Gitsigns undo_stage_hunk', })
-    map('v', '<leader>gr', function()
-      gs.reset_hunk { vim.fn.line '.', vim.fn.line 'v', }; rf()
-    end, { desc = 'Gitsigns reset_hunk', })
-    map('n', '<leader>gr', function()
-      gs.reset_hunk(); rf()
-    end, { desc = 'Gitsigns reset_hunk', })
-    map('n', '<leader>gmr', function()
-      gs.reset_buffer(); rf()
-    end, { desc = 'Gitsigns reset_buffer', })
-
-    map('n', '<leader>gmp', gs.preview_hunk, { desc = 'Gitsigns preview_hunk', })
-    map('n', '<leader>gmb', function() gs.blame_line { full = true, } end, { desc = 'Gitsigns blame_line', })
-
-    map('n', '<leader>gd', gs.diffthis, { desc = 'Gitsigns diffthis', })
-    map('n', '<leader>gmd', function() gs.diffthis '~' end, { desc = 'Gitsigns diffthis', })
-
-    map('n', '<leader>gmtb', gs.toggle_current_line_blame, { desc = 'Gitsigns toggle_current_line_blame', })
-    map('n', '<leader>gmtd', gs.toggle_deleted, { desc = 'Gitsigns toggle_deleted', })
-    map('n', '<leader>gmtn', gs.toggle_numhl, { desc = 'Gitsigns toggle_numhl', })
-    map('n', '<leader>gmtl', gs.toggle_linehl, { desc = 'Gitsigns toggle_linehl', })
-    map('n', '<leader>gmts', gs.toggle_signs, { desc = 'Gitsigns toggle_signs', })
-    map('n', '<leader>gmtw', gs.toggle_word_diff, { desc = 'Gitsigns toggle_word_diff', })
-
-    -- Text object
-    map({ 'o', 'x', }, 'ig', ':<C-U>Gitsigns select_hunk<CR>', { desc = 'Gitsigns select_hunk', })
-    map({ 'o', 'x', }, 'ag', ':<C-U>Gitsigns select_hunk<CR>', { desc = 'Gitsigns select_hunk', })
-  end,
 }
 
+local word_diff_en = 1
 local word_diff = 1
 local moving = nil
 
@@ -86,11 +29,12 @@ vim.g.gitsigns_insertenter = vim.api.nvim_create_autocmd({ 'InsertEnter', 'Curso
   callback = function()
     moving = 1
     if word_diff then
-      local gs = package.loaded.gitsigns
-      word_diff = gs.toggle_word_diff(nil)
+      word_diff = require 'gitsigns'.toggle_word_diff(nil)
     end
   end,
 })
+
+require 'which-key'.register { ['<leader>gm'] = { name = 'Gitsigns', }, }
 
 pcall(vim.api.nvim_del_autocmd, vim.g.gitsigns_insertleave)
 
@@ -100,10 +44,134 @@ vim.g.gitsigns_insertleave = vim.api.nvim_create_autocmd({ 'CursorHold', }, {
     vim.fn.timer_start(500, function()
       vim.schedule(function()
         if not moving then
-          local gs = package.loaded.gitsigns
-          word_diff = gs.toggle_word_diff(1)
+          if word_diff_en == 1 then
+            word_diff = require 'gitsigns'.toggle_word_diff(1)
+          end
         end
       end)
     end)
   end,
 })
+
+M = {}
+
+vim.keymap.set('n', '<leader>j', function()
+  if vim.wo.diff then
+    return ']c'
+  end
+  vim.schedule(function()
+    require 'gitsigns'.next_hunk()
+  end)
+  return '<Ignore>'
+end, { expr = true, desc = 'Gitsigns next_hunk', })
+
+vim.keymap.set('n', '<leader>k', function()
+  if vim.wo.diff then
+    return '[c'
+  end
+  vim.schedule(function()
+    require 'gitsigns'.prev_hunk()
+  end)
+  return '<Ignore>'
+end, { expr = true, desc = 'Gitsigns prev_hunk', })
+
+M.next_hunk = function()
+  if vim.wo.diff then
+    return ']c'
+  end
+  vim.schedule(function()
+    require 'gitsigns'.next_hunk()
+  end)
+  return '<Ignore>'
+end
+
+M.prev_hunk = function()
+  if vim.wo.diff then
+    return '[c'
+  end
+  vim.schedule(function()
+    require 'gitsigns'.prev_hunk()
+  end)
+  return '<Ignore>'
+end
+
+M.stage_hunk = function()
+  require 'gitsigns'.stage_hunk()
+  rf()
+end
+
+M.stage_hunk_v = function()
+  require 'gitsigns'.stage_hunk { vim.fn.line '.', vim.fn.line 'v', }
+end
+
+M.stage_buffer = function()
+  require 'gitsigns'.stage_buffer()
+  rf()
+end
+
+M.undo_stage_hunk = function()
+  require 'gitsigns'.undo_stage_hunk()
+  rf()
+end
+
+M.reset_hunk = function()
+  require 'gitsigns'.reset_hunk { vim.fn.line '.', vim.fn.line 'v', }
+  rf()
+end
+
+M.reset_hunk_v = function()
+  require 'gitsigns'.reset_hunk()
+  rf()
+end
+
+M.reset_buffer = function()
+  require 'gitsigns'.reset_buffer()
+  rf()
+end
+
+M.preview_hunk = function()
+  require 'gitsigns'.preview_hunk()
+end
+
+M.blame_line = function()
+  require 'gitsigns'.blame_line { full = true, }
+end
+
+M.diffthis = function()
+  require 'gitsigns'.diffthis()
+end
+
+M.diffthis_l = function()
+  require 'gitsigns'.diffthis '~'
+end
+
+M.toggle_current_line_blame = function()
+  require 'gitsigns'.toggle_current_line_blame()
+end
+
+M.toggle_deleted = function()
+  require 'gitsigns'.toggle_deleted()
+end
+
+M.toggle_numhl = function()
+  require 'gitsigns'.toggle_numhl()
+end
+
+M.toggle_linehl = function()
+  require 'gitsigns'.toggle_linehl()
+end
+
+M.toggle_signs = function()
+  require 'gitsigns'.toggle_signs()
+end
+
+M.toggle_word_diff = function()
+  local temp = require 'gitsigns'.toggle_word_diff()
+  if temp == false then
+    word_diff_en = 0
+  else
+    word_diff_en = 1
+  end
+end
+
+return M
