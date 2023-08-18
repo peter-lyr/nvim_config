@@ -26,6 +26,7 @@
 - [ ] cbp2cmake make common for c
 - [x] <c-f2> win_gotoid(win_getid(bufwinnr(v:cnt)))
 - [ ] <c-1> ... make one key map, like `qk`
+- [ ] **ERROR** height 1 winenter error
 
 # jump window
 
