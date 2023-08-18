@@ -112,13 +112,13 @@ M.open = function(refresh)
   end
 end
 
-pcall(vim.api.nvim_del_autocmd, vim.g.fugitive_au_bufwritepost)
-
-vim.g.fugitive_au_bufwritepost = vim.api.nvim_create_autocmd({ "BufWritePost", }, {
-  callback = function()
-    M.open(1)
-  end,
-})
+-- pcall(vim.api.nvim_del_autocmd, vim.g.fugitive_au_bufwritepost)
+--
+-- vim.g.fugitive_au_bufwritepost = vim.api.nvim_create_autocmd({ "BufWritePost", }, {
+--   callback = function()
+--     M.open(1)
+--   end,
+-- })
 
 require 'maps'.add('<F5>', 'n', function()
   pcall(vim.call, 'fugitive#ReloadStatus')
