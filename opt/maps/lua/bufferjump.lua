@@ -103,6 +103,76 @@ M.i = function()
   end
 end
 
+M.ix = function(x)
+  local winid = vim.fn.win_getid()
+  if x == 9 then
+    for winnr = 1, vim.fn.winnr '$' do
+      vim.fn.win_gotoid(vim.fn.win_getid(winnr))
+      print(vim.fn.win_getid(), '---')
+      if vim.opt.winfixheight:get() == true then
+        vim.cmd [[
+          set nowinfixheight
+          wincmd =
+          set winfixheight
+          ]]
+      end
+      if vim.opt.winfixwidth:get() == true then
+        vim.cmd [[
+          set nowinfixwidth
+          wincmd =
+          set winfixwidth
+          ]]
+      end
+    end
+  elseif x == 10 then
+    for winnr = 1, vim.fn.winnr '$' do
+      vim.fn.win_gotoid(vim.fn.win_getid(winnr))
+      vim.cmd [[
+        set nowinfixheight
+        set nowinfixwidth
+        ]]
+    end
+    vim.cmd 'wincmd ='
+  elseif x == 11 then
+    for winnr = vim.fn.winnr() - 1, 1, -1 do
+      vim.fn.win_gotoid(vim.fn.win_getid(winnr))
+      local bufnr = vim.fn.winbufnr(winnr)
+      if vim.api.nvim_buf_is_valid(bufnr) then
+        local ft = vim.api.nvim_buf_get_option(bufnr, "filetype")
+        if ft ~= 'NvimTree' and ft ~= 'fugitive' and ft ~= 'minimap' and ft ~= 'aerial' then
+          if vim.opt.winfixwidth:get() == true or vim.opt.winfixheight:get() == true then
+            return
+          end
+        end
+      end
+    end
+  elseif x == 12 then
+    for winnr = vim.fn.winnr() + 1, vim.fn.winnr '$' do
+      vim.fn.win_gotoid(vim.fn.win_getid(winnr))
+      local bufnr = vim.fn.winbufnr(winnr)
+      if vim.api.nvim_buf_is_valid(bufnr) then
+        local ft = vim.api.nvim_buf_get_option(bufnr, "filetype")
+        if ft ~= 'NvimTree' and ft ~= 'fugitive' and ft ~= 'minimap' and ft ~= 'aerial' then
+          if vim.opt.winfixwidth:get() == true or vim.opt.winfixheight:get() == true then
+            return
+          end
+        end
+      end
+    end
+  else
+    for winnr = 1, vim.fn.winnr '$' do
+      vim.fn.win_gotoid(vim.fn.win_getid(winnr))
+      if vim.opt.winfixheight:get() == true then
+        vim.api.nvim_win_set_height(0, x * 7)
+      end
+      if vim.opt.winfixwidth:get() == true then
+        vim.api.nvim_win_set_width(0, x * 20)
+      end
+    end
+  end
+  vim.fn.win_gotoid(winid)
+end
+
 M.hh = function()
   vim.cmd 'set nowinfixwidth'
   print 'set nowinfixwidth'
