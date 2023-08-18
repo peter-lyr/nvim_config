@@ -27,6 +27,7 @@
 - [x] <c-f2> win_gotoid(win_getid(bufwinnr(v:cnt)))
 - [ ] <c-1> ... make one key map, like `qk`
 - [ ] **ERROR** height 1 winenter error
+- [ ] nvim crashed and error with Minimap
 
 # jump window
 
