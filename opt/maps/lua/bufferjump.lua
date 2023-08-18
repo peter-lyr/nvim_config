@@ -16,13 +16,42 @@ M.check = function()
   end
 end
 
+local isallow = function(winnr)
+  local bufnr = vim.fn.winbufnr(winnr)
+  if vim.api.nvim_buf_is_valid(bufnr) then
+    local ft = vim.api.nvim_buf_get_option(bufnr, 'filetype')
+    if vim.tbl_contains({ 'NvimTree', 'fugitive', 'minimap', 'aerial', 'edgy', }, ft) == true then
+      return nil
+    end
+  end
+  return 1
+end
+
+M.height2 = function()
+  local winids = {}
+  for winnr = 1, vim.fn.winnr() do
+    if isallow(winnr) then
+      local winid = vim.fn.win_getid(winid)
+      if vim.api.nvim_win_get_height(winid) < 2 then
+        vim.api.nvim_win_set_height(winid, 2)
+        winids[#winids + 1] = winid
+      end
+    end
+  end
+  for _, winid in pairs(winids) do
+    vim.api.nvim_win_set_height(winid, 1)
+  end
+end
+
 M.k = function()
+  M.height2()
   M.winid = vim.fn.win_getid()
   vim.cmd 'wincmd k'
   M.check()
 end
 
 M.j = function()
+  M.height2()
   M.winid = vim.fn.win_getid()
   vim.cmd 'wincmd j'
   M.check()
@@ -108,17 +137,6 @@ local gotoid = function(winid)
     vim.api.nvim_win_set_height(winid, 2)
   end
   vim.fn.win_gotoid(winid)
-end
-
-local isallow = function(winnr)
-  local bufnr = vim.fn.winbufnr(winnr)
-  if vim.api.nvim_buf_is_valid(bufnr) then
-    local ft = vim.api.nvim_buf_get_option(bufnr, 'filetype')
-    if vim.tbl_contains({ 'NvimTree', 'fugitive', 'minimap', 'aerial', 'edgy', }, ft) == true then
-      return nil
-    end
-  end
-  return 1
 end
 
 M.ix = function(x)
