@@ -188,7 +188,7 @@ return {
       { '<leader>w8',          function() require 'bufferjump'.ix(7) end,                                                      mode = { 'n', 'v', }, silent = true,  desc = 'fix win back size 7', },
       { '<leader>w9',          function() require 'bufferjump'.ix(8) end,                                                      mode = { 'n', 'v', }, silent = true,  desc = 'fix win back size 8', },
       { '<leader>w0',          function() require 'bufferjump'.ix(9) end,                                                      mode = { 'n', 'v', }, silent = true,  desc = 'fix win back size =', },
-      { '<leader>w-',          function() require 'bufferjump'.ix(10) end,                                                     mode = { 'n', 'v', }, silent = true,  desc = 'fix win back size no' },
+      { '<leader>w-',          function() require 'bufferjump'.ix(10) end,                                                     mode = { 'n', 'v', }, silent = true,  desc = 'fix win back size no', },
       { '<leader>wh',          function() require 'bufferjump'.ix(11) end,                                                     mode = { 'n', 'v', }, silent = true,  desc = 'fix win back size prev', },
       { '<leader>wl',          function() require 'bufferjump'.ix(12) end,                                                     mode = { 'n', 'v', }, silent = true,  desc = 'fix win back size next', },
       { '<leader>wz',          '<c-w>_<c-w>|',                                                                                 mode = { 'n', 'v', }, silent = true,  desc = 'wincmd =', },
@@ -273,16 +273,16 @@ return {
       -- gitpushinit.lua
       ------------------------
 
-      { '<leader>gva',         function() require 'gitpushinit'.addcommitpush() end,                                           mode = { 'n', 'v', }, silent = true,  desc = 'git add all commit and push', },
-      { '<leader>gvc',         function() require 'gitpushinit'.commitpush() end,                                              mode = { 'n', 'v', }, silent = true,  desc = 'git commit and push', },
-      { '<leader>gvvc',        function() require 'gitpushinit'.commit() end,                                                  mode = { 'n', 'v', }, silent = true,  desc = 'git just commit', },
-      { '<leader>gvp',         function() require 'gitpushinit'.push() end,                                                    mode = { 'n', 'v', }, silent = true,  desc = 'git just push', },
-      { '<leader>gvg',         [[<c-u>:silent exe '!start cmd /c "git log --all --graph --decorate --oneline && pause"'<cr>]], mode = { 'n', 'v', }, silent = true,  desc = 'git graph', },
-      { '<leader>gvi',         function() require 'gitpushinit'.init() end,                                                    mode = { 'n', 'v', }, silent = true,  desc = 'git init', },
-      { '<leader>gvu',         function() require 'gitpushinit'.pull() end,                                                    mode = { 'n', 'v', }, silent = true,  desc = 'git pull', },
-      { '<leader>gA',          function() require 'gitpushinit'.addall() end,                                                  mode = { 'n', 'v', }, silent = true,  desc = 'git add -A', },
-      { '<leader>gvr',         function() require 'gitpushinit'.reset_hard() end,                                              mode = { 'n', 'v', }, silent = true,  desc = 'git reset --hard', },
-      { '<leader>gvR',         function() require 'gitpushinit'.reset_hard_clean() end,                                        mode = { 'n', 'v', }, silent = true,  desc = 'git reset --hard && git clean -fd', },
+      { '<leader>ga',          function() require 'gitpushinit'.addcommitpush() end,                                           mode = { 'n', 'v', }, silent = true,  desc = 'gitpushinit.lua add all commit and push', },
+      { '<leader>gc',          function() require 'gitpushinit'.commitpush() end,                                              mode = { 'n', 'v', }, silent = true,  desc = 'gitpushinit.lua commit and push', },
+      { '<leader>ggc',         function() require 'gitpushinit'.commit() end,                                                  mode = { 'n', 'v', }, silent = true,  desc = 'gitpushinit.lua just commit', },
+      { '<leader>ggs',         function() require 'gitpushinit'.push() end,                                                    mode = { 'n', 'v', }, silent = true,  desc = 'gitpushinit.lua just push', },
+      { '<leader>ggg',         [[<c-u>:silent exe '!start cmd /c "git log --all --graph --decorate --oneline && pause"'<cr>]], mode = { 'n', 'v', }, silent = true,  desc = 'gitpushinit.lua graph', },
+      { '<leader>ggv',         function() require 'gitpushinit'.init() end,                                                    mode = { 'n', 'v', }, silent = true,  desc = 'gitpushinit.lua init', },
+      { '<leader>ggf',         function() require 'gitpushinit'.pull() end,                                                    mode = { 'n', 'v', }, silent = true,  desc = 'gitpushinit.lua pull', },
+      { '<leader>gga',         function() require 'gitpushinit'.addall() end,                                                  mode = { 'n', 'v', }, silent = true,  desc = 'gitpushinit.lua add -A', },
+      { '<leader>ggr',         function() require 'gitpushinit'.reset_hard() end,                                              mode = { 'n', 'v', }, silent = true,  desc = 'gitpushinit.lua reset --hard', },
+      { '<leader>ggd',         function() require 'gitpushinit'.reset_hard_clean() end,                                        mode = { 'n', 'v', }, silent = true,  desc = 'gitpushinit.lua reset --hard && git clean -fd', },
 
       ------------------------
       -- terminal.lua

@@ -28,11 +28,12 @@ return {
     { '<leader>svvo',      '<cmd>Telescope vim_options<cr>',                                                                                  mode = { 'n', 'v', }, silent = true, desc = 'Telescope vim_options', },
     { '<leader>svvp',      '<cmd>Telescope planets<cr>',                                                                                      mode = { 'n', 'v', }, silent = true, desc = 'Telescope planets', },
 
-    -- { '<leader>gf',         ':<c-u>Telescope git_files<cr>',                                                                                   mode = { 'n', 'v', }, silent = true, desc = 'Telescope git_files', },
-    { '<leader>gc',        ':<c-u>Telescope git_commits<cr>',                                                                                 mode = { 'n', 'v', }, silent = true, desc = 'Telescope git_commits', },
-    { '<leader>gb',        ':<c-u>Telescope git_bcommits<cr>',                                                                                mode = { 'n', 'v', }, silent = true, desc = 'Telescope git_bcommits', },
+    -- git
+
+    { '<leader>gf',        ':<c-u>Telescope git_status<cr>',                                                                                  mode = { 'n', 'v', }, silent = true, desc = 'Telescope git_status', },
     { '<leader>gh',        ':<c-u>Telescope git_branches<cr>',                                                                                mode = { 'n', 'v', }, silent = true, desc = 'Telescope git_branches', },
-    { '<leader>gj',        ':<c-u>Telescope git_status<cr>',                                                                                  mode = { 'n', 'v', }, silent = true, desc = 'Telescope git_status', },
+    { '<leader>gtc',       ':<c-u>Telescope git_commits<cr>',                                                                                 mode = { 'n', 'v', }, silent = true, desc = 'Telescope git_commits', },
+    { '<leader>gtb',       ':<c-u>Telescope git_bcommits<cr>',                                                                                mode = { 'n', 'v', }, silent = true, desc = 'Telescope git_bcommits', },
 
     -- lsp
 
