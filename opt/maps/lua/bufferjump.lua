@@ -108,7 +108,6 @@ M.ix = function(x)
   if x == 9 then
     for winnr = 1, vim.fn.winnr '$' do
       vim.fn.win_gotoid(vim.fn.win_getid(winnr))
-      print(vim.fn.win_getid(), '---')
       if vim.opt.winfixheight:get() == true then
         vim.cmd [[
           set nowinfixheight
