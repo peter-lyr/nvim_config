@@ -116,11 +116,11 @@ local isallow = function(winnr)
     local ft = vim.api.nvim_buf_get_option(bufnr, 'filetype')
     if ft ~= 'NvimTree' and ft ~= 'fugitive' and ft ~= 'minimap' and ft ~= 'aerial' then
       if vim.opt.winfixwidth:get() == true or vim.opt.winfixheight:get() == true then
-        return 1
+        return nil
       end
     end
   end
-  return nil
+  return 1
 end
 
 local gofixwin = function(winnr)
@@ -170,7 +170,7 @@ M.ix = function(x)
     end
   else
     for winnr = 1, vim.fn.winnr '$' do
-      if isallow(winr) then
+      if isallow(winnr) then
         local cur_winid = vim.fn.win_getid(winnr)
         if vim.api.nvim_get_option_value('winfixheight', { win = cur_winid, scope = 'global', }) == true then
           vim.api.nvim_win_set_height(cur_winid, x * 7)
@@ -178,6 +178,7 @@ M.ix = function(x)
         if vim.api.nvim_get_option_value('winfixwidth', { win = cur_winid, scope = 'global', }) == true then
           gotoid(cur_winid)
           vim.cmd 'wincmd h'
+          print 'wincmd h'
           vim.api.nvim_win_set_width(0, vim.api.nvim_win_get_width(0) - x * 20 + vim.api.nvim_win_get_width(cur_winid))
         end
       end
