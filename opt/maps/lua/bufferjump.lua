@@ -114,18 +114,11 @@ local isallow = function(winnr)
   local bufnr = vim.fn.winbufnr(winnr)
   if vim.api.nvim_buf_is_valid(bufnr) then
     local ft = vim.api.nvim_buf_get_option(bufnr, 'filetype')
-    if ft ~= 'NvimTree' and ft ~= 'fugitive' and ft ~= 'minimap' and ft ~= 'aerial' then
-      if vim.opt.winfixwidth:get() == true or vim.opt.winfixheight:get() == true then
-        return nil
-      end
+    if vim.tbl_contains({ 'NvimTree', 'fugitive', 'minimap', 'aerial', 'edgy', }, ft) == true then
+      return nil
     end
   end
   return 1
-end
-
-local gofixwin = function(winnr)
-  gotoid(vim.fn.win_getid(winnr))
-  return isallow(winnr)
 end
 
 M.ix = function(x)
@@ -158,16 +151,28 @@ M.ix = function(x)
     vim.cmd 'wincmd ='
   elseif x == 11 then
     for winnr = vim.fn.winnr() - 1, 1, -1 do
-      if gofixwin(winnr) then
-        return
+      if isallow(winnr) then
+        local cur_winid = vim.fn.win_getid(winnr)
+        if vim.api.nvim_get_option_value('winfixheight', { win = cur_winid, scope = 'global', }) == true
+            or vim.api.nvim_get_option_value('winfixwidth', { win = cur_winid, scope = 'global', }) == true then
+          gotoid(vim.fn.win_getid(winnr))
+          return
+        end
       end
     end
+    return
   elseif x == 12 then
     for winnr = vim.fn.winnr() + 1, vim.fn.winnr '$' do
-      if gofixwin(winnr) then
-        return
+      if isallow(winnr) then
+        local cur_winid = vim.fn.win_getid(winnr)
+        if vim.api.nvim_get_option_value('winfixheight', { win = cur_winid, scope = 'global', }) == true
+            or vim.api.nvim_get_option_value('winfixwidth', { win = cur_winid, scope = 'global', }) == true then
+          gotoid(cur_winid)
+          return
+        end
       end
     end
+    return
   else
     for winnr = 1, vim.fn.winnr '$' do
       if isallow(winnr) then
@@ -178,7 +183,6 @@ M.ix = function(x)
         if vim.api.nvim_get_option_value('winfixwidth', { win = cur_winid, scope = 'global', }) == true then
           gotoid(cur_winid)
           vim.cmd 'wincmd h'
-          print 'wincmd h'
           vim.api.nvim_win_set_width(0, vim.api.nvim_win_get_width(0) - x * 20 + vim.api.nvim_win_get_width(cur_winid))
         end
       end
