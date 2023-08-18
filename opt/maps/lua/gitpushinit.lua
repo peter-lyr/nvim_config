@@ -31,13 +31,13 @@ end
 
 M.addcommitpush = function()
   pcall(vim.call, 'ProjectRootCD')
-  local result = vim.fn.systemlist { "git", "status", "-s", }
+  local result = vim.fn.systemlist { 'git', 'status', '-s', }
   if #result > 0 then
-    vim.notify("git status -s" .. '\n' .. vim.loop.cwd() .. '\n' .. table.concat(result, '\n'), 'info', {
+    vim.notify('git status -s' .. '\n' .. vim.loop.cwd() .. '\n' .. table.concat(result, '\n'), 'info', {
       animate = false,
       on_open = function(win)
         local buf = vim.api.nvim_win_get_buf(win)
-        vim.api.nvim_buf_set_option(buf, "filetype", "markdown")
+        vim.api.nvim_buf_set_option(buf, 'filetype', 'markdown')
       end,
       timeout = 1000 * 8,
     })
@@ -57,13 +57,13 @@ end
 
 M.commitpush = function()
   pcall(vim.call, 'ProjectRootCD')
-  local result = vim.fn.systemlist { "git", "diff", "--staged", "--stat", }
+  local result = vim.fn.systemlist { 'git', 'diff', '--staged', '--stat', }
   if #result > 0 then
-    vim.notify("git diff --staged --stat" .. '\n' .. vim.loop.cwd() .. '\n' .. table.concat(result, '\n'), 'info', {
+    vim.notify('git diff --staged --stat' .. '\n' .. vim.loop.cwd() .. '\n' .. table.concat(result, '\n'), 'info', {
       animate = false,
       on_open = function(win)
         local buf = vim.api.nvim_win_get_buf(win)
-        vim.api.nvim_buf_set_option(buf, "filetype", "markdown")
+        vim.api.nvim_buf_set_option(buf, 'filetype', 'markdown')
       end,
       timeout = 1000 * 8,
     })
@@ -82,13 +82,13 @@ M.commitpush = function()
 end
 
 M.commit = function()
-  local result = vim.fn.systemlist { "git", "diff", "--staged", "--stat", }
+  local result = vim.fn.systemlist { 'git', 'diff', '--staged', '--stat', }
   if #result > 0 then
-    vim.notify("git diff --staged --stat" .. '\n' .. vim.loop.cwd() .. '\n' .. table.concat(result, '\n'), 'info', {
+    vim.notify('git diff --staged --stat' .. '\n' .. vim.loop.cwd() .. '\n' .. table.concat(result, '\n'), 'info', {
       animate = false,
       on_open = function(win)
         local buf = vim.api.nvim_win_get_buf(win)
-        vim.api.nvim_buf_set_option(buf, "filetype", "markdown")
+        vim.api.nvim_buf_set_option(buf, 'filetype', 'markdown')
       end,
       timeout = 1000 * 8,
     })
@@ -108,9 +108,9 @@ end
 
 M.push = function()
   pcall(vim.call, 'ProjectRootCD')
-  local result = vim.fn.systemlist { "git", "cherry", "-v", }
+  local result = vim.fn.systemlist { 'git', 'cherry', '-v', }
   if #result > 0 then
-    vim.notify("git cherry -v" .. '\n' .. vim.loop.cwd() .. '\n' .. table.concat(result, '\n'))
+    vim.notify('git cherry -v' .. '\n' .. vim.loop.cwd() .. '\n' .. table.concat(result, '\n'))
     vim.loop.new_timer():start(10, 0, function()
       vim.schedule(function()
         asyncrunprepare()
@@ -174,10 +174,10 @@ M.initdo = function(dpath, run)
   if fpath:is_file() then
     local lines = vim.fn.readfile(fname)
     if vim.tbl_contains(lines, remote_name) == false then
-      vim.fn.writefile({ remote_name, }, fname, "a")
+      vim.fn.writefile({ remote_name, }, fname, 'a')
     end
   else
-    vim.fn.writefile({ remote_name, }, fname, "a")
+    vim.fn.writefile({ remote_name, }, fname, 'a')
   end
   asyncrunprepare()
   local cmd = string.gsub(string.format([[%s
@@ -223,7 +223,7 @@ M.pull = function()
 end
 
 M.reset_hard = function()
-  local res = vim.fn.input("git reset --hard [N/y]: ", "y")
+  local res = vim.fn.input('git reset --hard [N/y]: ', 'y')
   if vim.tbl_contains({ 'y', 'Y', 'yes', 'Yes', 'YES', }, res) == true then
     asyncrunprepare()
     vim.cmd 'AsyncRun git reset --hard'
@@ -231,7 +231,7 @@ M.reset_hard = function()
 end
 
 M.reset_hard_clean = function()
-  local res = vim.fn.input("git reset --hard && git clean -fd [N/y]: ", "y")
+  local res = vim.fn.input('git reset --hard && git clean -fd [N/y]: ', 'y')
   if vim.tbl_contains({ 'y', 'Y', 'yes', 'Yes', 'YES', }, res) == true then
     asyncrunprepare()
     vim.cmd 'AsyncRun git reset --hard && git clean -fd'
