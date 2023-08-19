@@ -91,10 +91,16 @@ return {
           end
         end,
       })
+      local scrolloff = vim.opt.scrolloff
       local minimap_rescan_allow = 1
       local lastbufnr = 0
       vim.api.nvim_create_autocmd({ "BufEnter", }, {
         callback = function(ev)
+          if vim.bo.ft == 'minimap' then
+            vim.opt.scrolloff = 99
+          else
+            vim.opt.scrolloff = scrolloff
+          end
           local bufnr = vim.fn.bufnr '-MINIMAP-'
           if vim.g.minimap_autostart == 1 and lastbufnr ~= ev.buf and #ev.file > 0 and ev.buf ~= vim.fn.bufnr '-MINIMAP-' and vim.api.nvim_buf_get_option(ev.buf, 'buftype') ~= 'nofile' then
             -- print(ev.buf, ev.file, vim.api.nvim_buf_get_option(ev.buf, 'buftype'), '|', vim.api.nvim_buf_get_option(ev.buf, 'filetype'))
