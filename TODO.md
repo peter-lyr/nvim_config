@@ -28,6 +28,7 @@
 - [ ] <c-1> ... make one key map, like `qk`
 - [ ] **ERROR** height 1 winenter error
 - [x] nvim crashed and error with Minimap
+- [ ] leader rr cbp2make build res wrong on work1 server 150 yonex
 
 # jump window
 
