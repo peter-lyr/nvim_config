@@ -137,9 +137,48 @@ local gotoid = function(winid)
   vim.fn.win_gotoid(winid)
 end
 
+pcall(vim.api.nvim_del_autocmd, vim.g.bufferjump_au_bufenter)
+
+M.au = function()
+  vim.g.bufferjump_au_bufenter = vim.api.nvim_create_autocmd({ 'CursorHold', }, {
+    callback = function(ev)
+      if M.x ~= -1 and vim.api.nvim_buf_get_option(ev.buf, 'buftype') ~= 'quickfix' then
+        for winnr = 1, vim.fn.winnr '$' do
+          if isallow(winnr) then
+            local cur_winid = vim.fn.win_getid(winnr)
+            if vim.api.nvim_get_option_value('winfixheight', { win = cur_winid, scope = 'global', }) == true then
+              if vim.api.nvim_win_get_height(cur_winid) ~= M.x * 7 then
+                M.ix(M.x)
+                vim.fn.timer_start(500, function()
+                  M.ix(M.x)
+                end)
+                return
+              end
+            end
+            if vim.api.nvim_get_option_value('winfixwidth', { win = cur_winid, scope = 'global', }) == true then
+              if vim.api.nvim_win_get_width(cur_winid) ~= M.x * 20 then
+                M.ix(M.x)
+                vim.fn.timer_start(500, function()
+                  M.ix(M.x)
+                end)
+                return
+              end
+            end
+          end
+        end
+      end
+    end,
+  })
+end
+
+M.au()
+
+M.x = -1
+
 M.ix = function(x)
   local winid = vim.fn.win_getid()
   if x == 9 then
+    pcall(vim.api.nvim_del_autocmd, vim.g.bufferjump_au_bufenter)
     for winnr = 1, vim.fn.winnr '$' do
       gotoid(vim.fn.win_getid(winnr))
       if vim.opt.winfixheight:get() == true then
@@ -156,7 +195,11 @@ M.ix = function(x)
           ]]
       end
     end
+    vim.fn.timer_start(800, function()
+      M.au()
+    end)
   elseif x == 10 then
+    M.x = -1
     for winnr = 1, vim.fn.winnr '$' do
       gotoid(vim.fn.win_getid(winnr))
       vim.cmd [[
@@ -190,6 +233,7 @@ M.ix = function(x)
     end
     return
   else
+    M.x = x
     local cnt = 1
     for winnr = 1, vim.fn.winnr '$' do
       if isallow(winnr) then

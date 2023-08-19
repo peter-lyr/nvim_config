@@ -68,13 +68,37 @@ local open = function()
   end
 end
 
-pcall(vim.api.nvim_del_autocmd, vim.g.events_au_bufenter2)
+pcall(vim.api.nvim_del_autocmd, vim.g.quickfix_au_bufenter)
 
-vim.g.events_au_bufenter2 = vim.api.nvim_create_autocmd({ 'BufEnter', }, {
+vim.g.quickfix_au_bufenter = vim.api.nvim_create_autocmd({ 'BufEnter', }, {
   callback = function(ev)
     if vim.api.nvim_buf_get_option(ev.buf, 'buftype') == 'quickfix' then
       vim.keymap.set('n', 'o', open, { buffer = ev.buf, nowait = true, silent = true, })
       vim.keymap.set('n', 'a', open, { buffer = ev.buf, nowait = true, silent = true, })
+    end
+  end,
+})
+
+M.allow = nil
+
+pcall(vim.api.nvim_del_autocmd, vim.g.quickfix_au_bufleave)
+
+vim.g.quickfix_au_bufleave = vim.api.nvim_create_autocmd({ 'BufLeave', }, {
+  callback = function()
+    M.allow = 1
+  end,
+})
+
+pcall(vim.api.nvim_del_autocmd, vim.g.quickfix_au_bufenter)
+
+vim.g.quickfix_au_bufenter = vim.api.nvim_create_autocmd({ 'CursorHold', }, {
+  callback = function(ev)
+    if vim.api.nvim_buf_get_option(ev.buf, 'buftype') == 'quickfix' and M.allow then
+      M.allow = nil
+      vim.cmd 'wincmd J'
+      vim.fn.timer_start(20, function()
+        require('bufferjump').i()
+      end)
     end
   end,
 })
