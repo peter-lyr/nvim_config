@@ -4,6 +4,8 @@ local M = {}
 
 vim.g.qf_before_winid = -1
 
+M.allow = nil
+
 M.toggle = function()
   if vim.api.nvim_buf_get_option(vim.fn.bufnr(), 'buftype') == 'quickfix' then
     vim.cmd 'ccl'
@@ -13,8 +15,9 @@ M.toggle = function()
   else
     vim.g.qf_before_winid = vim.fn.win_getid()
     vim.cmd 'copen'
+    M.allow = nil
     vim.cmd 'wincmd J'
-    vim.fn.timer_start(100, function()
+    vim.fn.timer_start(20, function()
       vim.api.nvim_win_set_height(0, 15)
       vim.cmd 'set winfixheight'
       vim.keymap.set('n', 'q', function()
@@ -79,8 +82,6 @@ vim.g.quickfix_au_bufenter = vim.api.nvim_create_autocmd({ 'BufEnter', }, {
   end,
 })
 
-M.allow = nil
-
 pcall(vim.api.nvim_del_autocmd, vim.g.quickfix_au_bufleave)
 
 vim.g.quickfix_au_bufleave = vim.api.nvim_create_autocmd({ 'BufLeave', }, {
@@ -97,7 +98,7 @@ vim.g.quickfix_au_bufenter = vim.api.nvim_create_autocmd({ 'CursorHold', }, {
       M.allow = nil
       vim.cmd 'wincmd J'
       vim.fn.timer_start(20, function()
-        require('bufferjump').i()
+        require 'bufferjump'.i()
       end)
     end
   end,
