@@ -190,6 +190,7 @@ M.ix = function(x)
     end
     return
   else
+    local cnt = 1
     for winnr = 1, vim.fn.winnr '$' do
       if isallow(winnr) then
         local cur_winid = vim.fn.win_getid(winnr)
@@ -197,14 +198,22 @@ M.ix = function(x)
           vim.api.nvim_win_set_height(cur_winid, x * 7)
         end
         if vim.api.nvim_get_option_value('winfixwidth', { win = cur_winid, scope = 'global', }) == true then
-          local temp = vim.api.nvim_win_get_width(cur_winid)
-          if temp ~= x * 20 then
-            vim.api.nvim_win_set_width(cur_winid, x * 20)
-            gotoid(cur_winid)
-            vim.cmd 'e!'
-            if temp == vim.api.nvim_win_get_width(0) then
+          cnt = cnt + 1
+        end
+      end
+    end
+    for _ = 1, cnt do
+      for winnr = 1, vim.fn.winnr '$' do
+        if isallow(winnr) then
+          local cur_winid = vim.fn.win_getid(winnr)
+          if vim.api.nvim_get_option_value('winfixwidth', { win = cur_winid, scope = 'global', }) == true then
+            local temp = vim.api.nvim_win_get_width(cur_winid)
+            if temp ~= x * 20 then
+              gotoid(cur_winid)
+              vim.cmd 'e!'
               vim.cmd 'wincmd h'
               vim.api.nvim_win_set_width(0, vim.api.nvim_win_get_width(0) - x * 20 + vim.api.nvim_win_get_width(cur_winid))
+              vim.cmd 'e!'
             end
           end
         end
