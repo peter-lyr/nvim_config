@@ -86,7 +86,7 @@ if __name__ == "__main__":
         os._exit(1)
 
     project_root = rep(sys.argv[1])
-    print(project_root, '=====')
+    print(project_root, "=====")
 
     executable_cbp, cbp_files = get_executable_cbp(project_root)
     executable_cbp_dir = os.path.dirname(executable_cbp)
@@ -137,10 +137,10 @@ if __name__ == "__main__":
                 lib_cbp_file = lib_cbp_files[0]
                 if len(lib_cbp_files) > 1:
                     l = len(lib_cbp_files)
-                    print('sel as ' + base_name + ':')
+                    print("sel as " + base_name + ":")
                     for i in range(l):
-                        print(str(i+1) + '. ' + lib_cbp_files[i])
-                    idx = input('> ')
+                        print(str(i + 1) + ". " + lib_cbp_files[i])
+                    idx = input("> ")
                     try:
                         idx = int(idx)
                         if idx < 1:
@@ -167,12 +167,15 @@ if __name__ == "__main__":
                     ).encode("utf-8")
                 )
                 dirs = [
-                    "target_include_directories(${PROJECT_NAME} PUBLIC ${PROJECT_SOURCE_DIR}/%s)"
-                    % dir.replace("\\", "/")
-                    .replace(project_root, "")
-                    .strip("\\")
-                    .strip("/")
-                    .replace("\\", "/")
+                    "target_include_directories(%s PUBLIC ${PROJECT_SOURCE_DIR}/%s)"
+                    % (
+                        os.path.basename(lib_cbp_dir),
+                        dir.replace("\\", "/")
+                        .replace(project_root, "")
+                        .strip("\\")
+                        .strip("/")
+                        .replace("\\", "/"),
+                    )
                     for dir in lib_dirs
                 ]
                 ff.write(("\n".join(dirs).encode("utf-8")) + b"\n\n")
