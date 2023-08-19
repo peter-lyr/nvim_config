@@ -62,6 +62,7 @@ local open = function()
           pcall(vim.api.nvim_win_set_cursor, 0, mark)
         end
       end
+      vim.cmd 'ccl'
     end
   else
   end
