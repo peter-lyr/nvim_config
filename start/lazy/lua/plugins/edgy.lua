@@ -40,17 +40,6 @@ return {
         open = "AerialOpen",
       },
     },
-    -- bottom = {
-    --   {
-    --     title = "QuickFix",
-    --     ft = "qf",
-    --     pinned = true,
-    --     open = function()
-    --       vim.api.nvim_input("<esc>dm")
-    --     end,
-    --     size = { height = 10 },
-    --   },
-    -- },
     keys = {
       ["<a-l>"] = function(win)
         if win and win.width + 2 <= vim.o.columns then
