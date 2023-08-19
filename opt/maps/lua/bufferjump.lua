@@ -233,7 +233,11 @@ M.ix = function(x)
     end
     return
   else
-    M.x = x
+    if x > 0 then
+      M.x = x
+    else
+      M.x = -1
+    end
     local cnt = 1
     for winnr = 1, vim.fn.winnr '$' do
       if isallow(winnr) then
