@@ -70,20 +70,21 @@ vim.api.nvim_create_autocmd({ 'QuitPre', }, {
   end,
 })
 
-vim.api.nvim_create_autocmd({ 'SessionLoadPost', }, {
-  callback = function()
-    vim.fn.timer_start(100, function()
-      vim.cmd 'Minimap'
-      vim.cmd 'NvimTreeOpen'
-      vim.cmd 'G'
-      vim.cmd 'wincmd l'
-    end)
-  end,
-  once = true,
-})
-
-vim.fn.timer_start(100, function()
-  M.open()
-end)
+M.all = function()
+  vim.api.nvim_create_autocmd({ 'SessionLoadPost', }, {
+    callback = function()
+      vim.fn.timer_start(100, function()
+        vim.cmd 'Minimap'
+        vim.cmd 'NvimTreeOpen'
+        vim.cmd 'G'
+        vim.cmd 'wincmd l'
+      end)
+    end,
+    once = true,
+  })
+  vim.fn.timer_start(100, function()
+    M.open()
+  end)
+end
 
 return M
