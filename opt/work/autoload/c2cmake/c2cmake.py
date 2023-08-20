@@ -1,8 +1,32 @@
 import os
 import sys
 
+from matplotlib import shutil
+
 def rep(text):
     return text.replace("\\", "/").lower().rstrip('/')
+
+def rm_build_dirs(project_root):
+    rms = ['build', '.cache']
+    for root, dirs, _ in os.walk(project_root):
+        for r in rms:
+            if r in dirs:
+                r = os.path.join(root, "build")
+                shutil.rmtree(r)
+                print(f"Deleted {r}")
+
+
+def is_test_dir(f):
+    l = f.split('/')
+    for _f in l:
+        if not _f:
+            return 0
+        if _f[0] == '.':
+            return 1
+        for _I in ['test', 'bak']:
+            if _I in _f:
+                return 1
+    return 0
 
 def check(project_root):
     I = []
@@ -16,20 +40,22 @@ def check(project_root):
         for file in files:
             if file.split('.')[-1] in ['c', 'h', 'cpp']:
                 if file.split('.')[-1] in ['c', 'cpp']:
-                    f = rep(os.path.join(root, file)).replace(project_root + '/', '')
-                    for i in I:
-                        if f in i:
-                            break
-                    else:
-                        F.append(f)
-                d = rep(root).replace(project_root, '')
-                d = d.lstrip('/')
-                if d not in D:
-                    for i in I:
-                        if d in i:
-                            break
-                    else:
-                        D.append(d)
+                    f = rep(os.path.join(root, file)).replace(project_root + '/', '').strip('/')
+                    if not is_test_dir(f):
+                        for i in I:
+                            if f in i:
+                                break
+                        else:
+                            F.append(f)
+                d = rep(root).replace(project_root, '').strip('/')
+                if not is_test_dir(d):
+                    d = d.lstrip('/')
+                    if d not in D:
+                        for i in I:
+                            if d in i:
+                                break
+                        else:
+                            D.append(d)
     return D, F
 
 
@@ -39,10 +65,18 @@ if __name__ == "__main__":
 
     project_root = rep(sys.argv[1])
 
+    rm_build_dirs(project_root)
+
     D, F = check(project_root)
 
     if not F:
         os._exit(3)
+
+    os.system(
+        "cd "
+        + project_root
+        + r' && del /s /q .cache & rd /s /q .cache & del /s /q build & rd /s /q build'
+    )
 
     sels = [project_root]
     print("create CMakeLists.txt at which one:")
@@ -78,13 +112,15 @@ if __name__ == "__main__":
 
     D, F = check(project_root)
 
+    print(len(F))
+
     if len(F) == 0:
         print('no c source files!')
         os._exit(2)
 
     with open(os.path.join(project_root, "CMakeLists.txt"), "wb") as ff:
         ff.write(b"cmake_minimum_required(VERSION 3.5)\n")
-        ff.write(b"set(PROJECT_NAME proj_name)\n")
+        ff.write(b"set(PROJECT_NAME common)\n")
         ff.write(b"project(${PROJECT_NAME})\n\n")
 
         ff.write(b"add_executable(${PROJECT_NAME}\n")
@@ -106,6 +142,5 @@ if __name__ == "__main__":
     os.system(
         "cd "
         + project_root
-        + r' && del /s /q .cache & rd /s /q .cache & del /s /q build & rd /s /q build & cmake -B build -G "MinGW Makefiles" -DCMAKE_EXPORT_COMPILE_COMMANDS=1 && cd build & copy compile_commands.json ..\ /y & cd ..'
-        # + r' && del /s /q build\\CMakeCache.txt & cmake -B build -G "MinGW Makefiles" -DCMAKE_EXPORT_COMPILE_COMMANDS=1 && cd build & copy compile_commands.json ..\ /y & cd ..'
+        + r' & cmake -B build -G "MinGW Makefiles" -DCMAKE_EXPORT_COMPILE_COMMANDS=1 && cd build & copy compile_commands.json ..\ /y & cd ..'
     )
