@@ -5,7 +5,7 @@ return {
     name = 'quickfix',
     dir = opt .. 'quickfix',
     dependencies = {
-      -- 'benseefeldt/qf-format.nvim',
+      require 'myplugins.core', -- maps.add
     },
     keys = {
 

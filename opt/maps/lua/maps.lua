@@ -2,7 +2,7 @@ local M = {}
 
 local function callback_rhs(lhs, mode)
   for _, v in ipairs(vim.api.nvim_get_keymap(mode)) do
-    if v.lhs == lhs then
+    if vim.fn.tolower(v.lhs) == vim.fn.tolower(lhs) then
       local callback = nil
       local rhs = nil
       if v.callback then

@@ -104,4 +104,8 @@ vim.g.quickfix_au_cursorhold = vim.api.nvim_create_autocmd({ 'CursorHold', }, {
   end,
 })
 
+require 'maps'.add('<esc>', 'n', function()
+  vim.cmd('ccl')
+end, 'ccl')
+
 return M
