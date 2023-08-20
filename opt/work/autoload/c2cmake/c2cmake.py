@@ -1,6 +1,8 @@
 import os
 import sys
 
+from matplotlib import path
+
 
 def rep(text):
     return text.replace("\\", "/").lower().rstrip('/')
@@ -36,6 +38,10 @@ if __name__ == "__main__":
                     else:
                         D.append(d)
 
+    if len(F) == 0:
+        print('no c source files!')
+        os._exit(2)
+
     with open(os.path.join(project_root, "CMakeLists.txt"), "wb") as ff:
         ff.write(b"cmake_minimum_required(VERSION 3.5)\n")
         ff.write(b"set(PROJECT_NAME proj_name)\n")
@@ -45,11 +51,12 @@ if __name__ == "__main__":
             f = "               ${PROJECT_SOURCE_DIR}/" + f.replace(' ', '\\ ') + "\n"
             ff.write(f.encode('utf-8'))
         ff.write(b"              )\n")
-        ff.write(b"target_include_directories(${PROJECT_NAME} PUBLIC\n")
-        for d in D:
-            d = "                           ${PROJECT_SOURCE_DIR}/" + d.replace(' ', '\\ ') + "\n"
-            ff.write(d.encode('utf-8'))
-        ff.write(b"                          )\n")
+        if len(D) > 0:
+            ff.write(b"target_include_directories(${PROJECT_NAME} PUBLIC\n")
+            for d in D:
+                d = "                           ${PROJECT_SOURCE_DIR}/" + d.replace(' ', '\\ ') + "\n"
+                ff.write(d.encode('utf-8'))
+            ff.write(b"                          )\n")
 
     # can not be in with block!
     os.system(
