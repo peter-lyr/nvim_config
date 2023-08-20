@@ -2,6 +2,8 @@ import os
 import re
 import sys
 
+from numpy import lib
+
 
 def rep(text):
     return text.replace("\\", "/").lower()
@@ -86,7 +88,6 @@ if __name__ == "__main__":
         os._exit(1)
 
     project_root = rep(sys.argv[1])
-    print(project_root, "=====")
 
     executable_cbp, cbp_files = get_executable_cbp(project_root)
     executable_cbp_dir = os.path.dirname(executable_cbp)
@@ -105,22 +106,17 @@ if __name__ == "__main__":
             ff.write(b"project(${PROJECT_NAME})\n\n")
 
             # executable_cbp
-            ff.write(
-                (
-                    "add_executable(${PROJECT_NAME}\n               ${PROJECT_SOURCE_DIR}/%s\n              )\n"
-                    % ("\n               ${PROJECT_SOURCE_DIR}/".join(executable_files))
-                ).encode("utf-8")
-            )
-            dirs = [
-                "target_include_directories(${PROJECT_NAME} PUBLIC ${PROJECT_SOURCE_DIR}/%s)"
-                % dir.replace("\\", "/")
-                .replace(project_root, "")
-                .strip("\\")
-                .strip("/")
-                .replace("\\", "/")
-                for dir in executable_dirs
-            ]
-            ff.write(("\n".join(dirs).encode("utf-8")) + b"\n\n")
+            ff.write(b"add_executable(${PROJECT_NAME}\n")
+            for f in executable_files:
+                f = "              \"${PROJECT_SOURCE_DIR}/" + f + "\"\n"
+                ff.write(f.encode('utf-8'))
+            ff.write(b"              )\n")
+            ff.write(b"target_include_directories(${PROJECT_NAME} PUBLIC\n")
+            for d in executable_dirs:
+                d = d.replace("\\", "/").replace(project_root, "").strip("\\").strip("/").replace("\\", "/")
+                d = "                          \"${PROJECT_SOURCE_DIR}/" + d + "\"\n"
+                ff.write(d.encode('utf-8'))
+            ff.write(b"                          )\n")
 
             # lib_cbp
             lib_cbp_files = {}
@@ -157,36 +153,26 @@ if __name__ == "__main__":
                 lib_files, lib_dirs = get_files_and_dirs(
                     project_root, lib_cbp_file, lib_cbp_dir
                 )
-                ff.write(
-                    (
-                        "add_library(%s STATIC\n            ${PROJECT_SOURCE_DIR}/%s)\n"
-                        % (
-                            os.path.basename(lib_cbp_dir),
-                            "\n            ${PROJECT_SOURCE_DIR}/".join(lib_files),
-                        )
-                    ).encode("utf-8")
-                )
-                dirs = [
-                    "target_include_directories(%s PUBLIC ${PROJECT_SOURCE_DIR}/%s)"
-                    % (
-                        os.path.basename(lib_cbp_dir),
-                        dir.replace("\\", "/")
-                        .replace(project_root, "")
-                        .strip("\\")
-                        .strip("/")
-                        .replace("\\", "/"),
-                    )
-                    for dir in lib_dirs
-                ]
-                ff.write(("\n".join(dirs).encode("utf-8")) + b"\n\n")
+                ff.write(("add_library(%s STATIC\n" % os.path.basename(lib_cbp_dir)).encode('utf-8'))
+                for lib_file in lib_files:
+                    lib_file = '           "${PROJECT_SOURCE_DIR}/%s"' % lib_file
+                    ff.write(lib_file.encode('utf-8'))
+                ff.write(b"           )\n")
+                ff.write(("target_include_directories(%s PUBLIC" % os.path.basename(lib_cbp_dir)).encode('utf-8'))
+                for lib_dir in lib_dirs:
+                    lib_dir = lib_dir.replace("\\", "/").replace(project_root, "").strip("\\").strip("/").replace("\\", "/")
+                    lib_dir = '                            "${PROJECT_SOURCE_DIR}/%s"' % lib_dir
+                    ff.write(lib_dir.encode('utf-8'))
+                ff.write(b"                            )\n")
 
             # libs
-            libs = [
-                "file(GLOB libraries ${CMAKE_CURRENT_SOURCE_DIR}/%s/*.a)" % libdir
-                for libdir in get_libs_a_dirs(project_root)
-            ]
-            if len(libs) > 0:
-                ff.write(("\n".join(libs).encode("utf-8")) + b"\n")
+            libs = get_libs_a_dirs(project_root)
+            if libs:
+                ff.write(b"\nfile(GLOB libraries\n")
+                for lib in libs:
+                    lib = "    \"${CMAKE_CURRENT_SOURCE_DIR}/%s/*.a\"\n" % lib
+                    ff.write(lib.encode('utf-8'))
+                ff.write(b"    )\n")
                 ff.write(b"target_link_libraries(${PROJECT_NAME} ${libraries})\n")
 
         # workspace

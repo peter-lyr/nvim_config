@@ -1,11 +1,36 @@
 import os
 import sys
 
-from matplotlib import path
-
-
 def rep(text):
     return text.replace("\\", "/").lower().rstrip('/')
+
+def check(project_root):
+    I = []
+    res = os.popen('git ls-files --exclude-standard --ignored --others').read()
+    for line in res.splitlines():
+        I.append(rep(line))
+
+    D = ['']
+    F = []
+    for root, _, files in os.walk(project_root):
+        for file in files:
+            if file.split('.')[-1] in ['c', 'h', 'cpp']:
+                if file.split('.')[-1] in ['c', 'cpp']:
+                    f = rep(os.path.join(root, file)).replace(project_root + '/', '')
+                    for i in I:
+                        if f in i:
+                            break
+                    else:
+                        F.append(f)
+                d = rep(root).replace(project_root, '')
+                d = d.lstrip('/')
+                if d not in D:
+                    for i in I:
+                        if d in i:
+                            break
+                    else:
+                        D.append(d)
+    return D, F
 
 
 if __name__ == "__main__":
@@ -14,29 +39,44 @@ if __name__ == "__main__":
 
     project_root = rep(sys.argv[1])
 
-    I = []
-    res = os.popen('git ls-files --exclude-standard --ignored --others').read()
-    for line in res.splitlines():
-        I.append(rep(line))
+    D, F = check(project_root)
 
-    D = []
-    F = []
-    for root, dirs, files in os.walk(project_root):
-        for file in files:
-            if file.split('.')[-1] in ['c', 'h']:
-                f = rep(os.path.join(root, file)).replace(project_root + '/', '')
-                for i in I:
-                    if f in i:
-                        break
-                else:
-                    F.append(f)
-                d = rep(root).replace(project_root + '/', '')
-                if d not in D:
-                    for i in I:
-                        if d in i:
-                            break
-                    else:
-                        D.append(d)
+    if not F:
+        os._exit(3)
+
+    sels = [project_root]
+    print("create CMakeLists.txt at which one:")
+    print("1. %s" % sels[0])
+    for dir in D:
+        dir = rep(os.path.join(project_root, dir))
+        if dir not in sels:
+            sels.append(dir)
+            print("%d. %s" % (len(sels), dir))
+        while dir != project_root:
+            dir = rep(os.path.dirname(dir))
+            if dir not in sels:
+                sels.append(dir)
+                print("%d. %s" % (len(sels), dir))
+    idx = 0
+    l = len(sels)
+    if l > 1:
+        idx = input("> ")
+        if idx == 'exit':
+            os._exit(4)
+        try:
+            idx = int(idx)
+            if idx < 1:
+                idx = 1
+            elif idx > l:
+                idx = l
+            idx -= 1
+        except:
+            idx = 0
+    project_root = sels[idx]
+
+    print("project_root:", project_root)
+
+    D, F = check(project_root)
 
     if len(F) == 0:
         print('no c source files!')
@@ -46,17 +86,21 @@ if __name__ == "__main__":
         ff.write(b"cmake_minimum_required(VERSION 3.5)\n")
         ff.write(b"set(PROJECT_NAME proj_name)\n")
         ff.write(b"project(${PROJECT_NAME})\n\n")
+
         ff.write(b"add_executable(${PROJECT_NAME}\n")
         for f in F:
-            f = "               ${PROJECT_SOURCE_DIR}/" + f.replace(' ', '\\ ') + "\n"
+            f = "              \"${PROJECT_SOURCE_DIR}/" + f + "\"\n"
             ff.write(f.encode('utf-8'))
         ff.write(b"              )\n")
-        if len(D) > 0:
-            ff.write(b"target_include_directories(${PROJECT_NAME} PUBLIC\n")
-            for d in D:
-                d = "                           ${PROJECT_SOURCE_DIR}/" + d.replace(' ', '\\ ') + "\n"
-                ff.write(d.encode('utf-8'))
-            ff.write(b"                          )\n")
+
+        ff.write(b"target_include_directories(${PROJECT_NAME} PUBLIC\n")
+        for d in D:
+            if not d:
+                d = "                          \"${PROJECT_SOURCE_DIR}" + "\"\n"
+            else:
+                d = "                          \"${PROJECT_SOURCE_DIR}/" + d + "\"\n"
+            ff.write(d.encode('utf-8'))
+        ff.write(b"                          )\n")
 
     # can not be in with block!
     os.system(

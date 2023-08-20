@@ -29,6 +29,19 @@ local get_cbps = function(abspath)
   return cbps
 end
 
+local function systemcd(p)
+  local s = ''
+  if string.sub(p, 2, 2) == ':' then
+    s = s .. string.sub(p, 1, 2) .. ' && '
+  end
+  if require 'plenary.path'.new(p):is_dir() then
+    s = s .. 'cd ' .. p .. ' && '
+  else
+    s = s .. 'cd ' .. require 'plenary.path'.new(p):parent().filename .. ' && '
+  end
+  return s
+end
+
 M.c2cmake = function()
   local fname = vim.api.nvim_buf_get_name(0)
   local project = string.gsub(vim.fn.tolower(vim.call 'ProjectRootGet'), '\\', '/')
@@ -39,11 +52,11 @@ M.c2cmake = function()
   local cbps = get_cbps(project)
   if #cbps < 1 then
     vim.notify 'c2cmake'
-    local cmd = string.format([[chcp 936 && python "%s" "%s"]], c2cmake_py, project)
+    local cmd = string.format([[chcp 936 && %s python "%s" "%s"]], systemcd(project), c2cmake_py, project)
     vim.cmd(string.format([[silent !start cmd /c "%s & pause"]], cmd))
   else
     vim.notify 'cbp2cmake'
-    local cmd = string.format([[chcp 65001 & python "%s" "%s"]], cbp2cmake_py, project)
+    local cmd = string.format([[chcp 936 && %s python "%s" "%s"]], systemcd(project), cbp2cmake_py, project)
     vim.cmd(string.format([[silent !start cmd /c "%s & pause"]], cmd))
   end
 end
