@@ -1,9 +1,9 @@
 local filename = function(hl_group)
   local fname = string.gsub(vim.fn.expand '%:~:.', '\\', '/')
-  local ext = vim.fn.fnamemodify(fname, ":e")
-  local head = vim.fn.fnamemodify(fname, ":h")
+  local ext = vim.fn.fnamemodify(fname, ':e')
+  local head = vim.fn.fnamemodify(fname, ':h')
   head = string.gsub(head, '%%', '%%%%')
-  local tail = vim.fn.fnamemodify(fname, ":t")
+  local tail = vim.fn.fnamemodify(fname, ':t')
   tail = string.gsub(tail, '%%', '%%%%')
   local icons = require 'nvim-web-devicons'.get_icons()[ext]
   local opt = { fg = icons and icons['color'] or '#ffffff', bold = true, }
@@ -54,7 +54,7 @@ function Tabname()
   end
 end
 
-vim.api.nvim_create_autocmd({ "BufEnter", }, {
+vim.api.nvim_create_autocmd({ 'BufEnter', }, {
   callback = function()
     Tabname()
   end,
@@ -99,7 +99,7 @@ require 'lualine'.setup {
     lualine_c = {
       {
         function()
-          return string.format("%dM", vim.loop.resident_set_memory() / 1024 / 1024)
+          return string.format('%dM', vim.loop.resident_set_memory() / 1024 / 1024)
         end,
       },
       'filesize',
@@ -112,17 +112,17 @@ require 'lualine'.setup {
         end,
       },
       {
-        "filetype",
+        'filetype',
         icon_only = true,
       },
     },
     lualine_x = {
       {
         function()
-          return require "noice".api.status.command.get()
+          return require 'noice'.api.status.command.get()
         end,
         cond = function()
-          return package.loaded["noice"] and require "noice".api.status.command.has()
+          return package.loaded['noice'] and require 'noice'.api.status.command.has()
         end,
       },
       {
@@ -157,15 +157,15 @@ require 'lualine'.setup {
       'encoding',
       'fileformat',
       {
-        "progress",
-        separator = " ",
+        'progress',
+        separator = ' ',
         padding = {
           left = 1,
           right = 0,
         },
       },
       {
-        "location",
+        'location',
         padding = {
           left = 0,
           right = 1,
@@ -174,7 +174,7 @@ require 'lualine'.setup {
     },
     lualine_z = {
       function()
-        return " " .. os.date "%R"
+        return ' ' .. os.date '%R'
       end,
     },
   },
@@ -191,7 +191,7 @@ require 'lualine'.setup {
     },
     lualine_x = {
       {
-        "filetype",
+        'filetype',
         icons_enabled = false,
       },
     },
@@ -220,8 +220,8 @@ require 'lualine'.setup {
         buffers_color = {
           active = function()
             local path = vim.fn.bufname()
-            local ext = string.match(path, "%.([^.]+)$")
-            local ic, color = require "nvim-web-devicons".get_icon_color(path.filename, ext)
+            local ext = string.match(path, '%.([^.]+)$')
+            local ic, color = require 'nvim-web-devicons'.get_icon_color(path.filename, ext)
             if ic then
               return { fg = color, bg = '#234567', gui = 'bold', }
             end
@@ -257,8 +257,8 @@ require 'lualine'.setup {
         tabs_color = {
           active = function()
             local path = vim.fn.bufname()
-            local ext = string.match(path, "%.([^.]+)$")
-            local ic, color = require "nvim-web-devicons".get_icon_color(path.filename, ext)
+            local ext = string.match(path, '%.([^.]+)$')
+            local ic, color = require 'nvim-web-devicons'.get_icon_color(path.filename, ext)
             if ic then
               return { fg = color, gui = 'bold', }
             end
@@ -281,9 +281,9 @@ require 'lualine'.setup {
         color = { fg = '#834567', },
       },
       {
-        function() return require "nvim-navic".get_location() end,
+        function() return require 'nvim-navic'.get_location() end,
         cond = function()
-          return package.loaded["nvim-navic"] and require "nvim-navic".is_available() and check_ft(vim.bo.ft)
+          return package.loaded['nvim-navic'] and require 'nvim-navic'.is_available() and check_ft(vim.bo.ft)
         end,
       },
     },
@@ -302,13 +302,19 @@ require 'lualine'.setup {
         function()
           return get_projectroot(vim.call 'ProjectRootGet')
         end,
+        color = { fg = '#7674f2', gui = 'bold', },
         cond = function()
           return #vim.fn.expand '%:~:.' > 0
         end,
       },
     },
     lualine_z = {
-      'windows',
+      {
+        'windows',
+        windows_color = {
+          active = { fg = 'gray', bg = 'none', },
+        },
+      },
     },
   },
   inactive_winbar = {
@@ -338,13 +344,19 @@ require 'lualine'.setup {
         function()
           return get_projectroot(vim.call 'ProjectRootGet')
         end,
+        color = { fg = '#7674f2', gui = 'bold', },
         cond = function()
           return #vim.fn.expand '%:~:.' > 0
         end,
       },
     },
     lualine_z = {
-      'windows',
+      {
+        'windows',
+        windows_color = {
+          active = { fg = 'gray', bg = 'none', },
+        },
+      },
     },
   },
 }
@@ -353,7 +365,7 @@ require 'lualine'.setup {
 
 local lasttabnr = vim.fn['tabpagenr']()
 
-vim.api.nvim_create_autocmd({ "TabLeave", }, {
+vim.api.nvim_create_autocmd({ 'TabLeave', }, {
   callback = function()
     lasttabnr = vim.fn.tabpagenr()
   end,
@@ -362,7 +374,7 @@ vim.api.nvim_create_autocmd({ "TabLeave", }, {
 local function go_tab()
   if vim.v.count == 0 then
     if lasttabnr <= vim.fn.tabpagenr '$' then
-      vim.cmd("tabn " .. lasttabnr)
+      vim.cmd('tabn ' .. lasttabnr)
     end
     return
   end
@@ -404,13 +416,13 @@ vim.keymap.set({ 'n', 'v', }, '<bs>', function()
   local tabs = vim.fn.tabpagenr '$'
   local curtab = vim.fn.tabpagenr()
   local nexttab = curtab + 1 <= tabs and curtab + 1 or 1
-  vim.cmd("tabn " .. nexttab)
+  vim.cmd('tabn ' .. nexttab)
 end, { desc = 'next tab', })
 
 vim.keymap.set({ 'n', 'v', }, '<c-bs>', function()
   local curtab = vim.fn.tabpagenr()
   local prevtab = curtab - 1 >= 1 and curtab - 1 or vim.fn.tabpagenr '$'
-  vim.cmd("tabn " .. prevtab)
+  vim.cmd('tabn ' .. prevtab)
 end, { desc = 'prev tab', })
 
 vim.keymap.set({ 'n', 'v', }, '<c-h>', function()
@@ -492,7 +504,7 @@ end, { desc = 'tabclose next tab', })
 
 -- auto change dir root
 
-vim.api.nvim_create_autocmd({ "TabEnter", }, {
+vim.api.nvim_create_autocmd({ 'TabEnter', }, {
   callback = function()
     pcall(vim.call, 'ProjectRootCD')
   end,
@@ -682,7 +694,7 @@ vim.cmd [[
 
 function Bdft(ftstring)
   local ftslist = {}
-  for ft in string.gmatch(ftstring, "%a+") do
+  for ft in string.gmatch(ftstring, '%a+') do
     table.insert(ftslist, ft)
   end
   local cwd = string.gsub(vim.loop.cwd(), '\\', '/')
@@ -693,7 +705,7 @@ function Bdft(ftstring)
     if name == '' or vim.fn.match(vim.fn.tolower(name), cwd) == -1 or bufnr == curbufnr then
       goto continue
     end
-    local ft = string.match(name, "%.([^.]+)")
+    local ft = string.match(name, '%.([^.]+)')
     if vim.tbl_contains(ftslist, ft) == true then
       vim.cmd('Bdelete! ' .. bufnr)
     end
@@ -718,7 +730,7 @@ vim.keymap.set({ 'n', 'v', }, '<leader>xf', function()
       goto continue
     end
     if vim.api.nvim_buf_is_loaded(bufnr) and vim.fn.filereadable(name) then
-      local ft = string.match(name, "%.([^%.]+)")
+      local ft = string.match(name, '%.([^%.]+)')
       if ft and #ft > 0 and vim.tbl_contains(bdfts, ft) == false then
         table.insert(bdfts, ft)
       end
