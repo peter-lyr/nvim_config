@@ -90,9 +90,9 @@ vim.g.quickfix_au_bufleave = vim.api.nvim_create_autocmd({ 'BufLeave', }, {
   end,
 })
 
-pcall(vim.api.nvim_del_autocmd, vim.g.quickfix_au_bufenter)
+pcall(vim.api.nvim_del_autocmd, vim.g.quickfix_au_cursorhold)
 
-vim.g.quickfix_au_bufenter = vim.api.nvim_create_autocmd({ 'CursorHold', }, {
+vim.g.quickfix_au_cursorhold = vim.api.nvim_create_autocmd({ 'CursorHold', }, {
   callback = function(ev)
     if vim.api.nvim_buf_get_option(ev.buf, 'buftype') == 'quickfix' and M.allow then
       M.allow = nil
