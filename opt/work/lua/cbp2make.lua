@@ -107,7 +107,7 @@ M.build = function(workspace)
   if #workspaces == 0 then
     vim.notify('No workspace file found in ' .. project .. '.')
     vim.notify 'Preparing...'
-    require 'cbp2cmake'.build()
+    require 'c2cmake'.c2cmake()
     return
   elseif #workspaces > 1 then
     vim.ui.select(workspaces, { prompt = 'select one of them', }, function(_, idx)
