@@ -1,7 +1,7 @@
 import os
 import sys
 
-from matplotlib import shutil
+import shutil
 
 def rep(text):
     return text.replace("\\", "/").lower().rstrip('/')

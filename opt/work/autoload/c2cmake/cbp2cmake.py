@@ -2,8 +2,6 @@ import os
 import re
 import sys
 
-from numpy import lib
-
 
 def rep(text):
     return text.replace("\\", "/").lower()
