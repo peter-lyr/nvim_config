@@ -760,3 +760,7 @@ vim.keymap.set({ 'n', 'v', }, '<leader>xf', function()
   end
   vim.cmd [[call feedkeys(":\<c-u>Bdft ")]]
 end, { desc = 'Bdelete ft', })
+
+vim.cmd [[
+  hi WinSeparator guibg=black guifg=gray
+]]
