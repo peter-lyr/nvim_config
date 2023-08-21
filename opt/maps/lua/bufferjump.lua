@@ -156,7 +156,7 @@ M.au = function()
               end
             end
             if vim.api.nvim_get_option_value('winfixwidth', { win = cur_winid, scope = 'global', }) == true then
-              if vim.api.nvim_win_get_width(cur_winid) ~= M.x * 20 then
+              if vim.api.nvim_win_get_width(cur_winid) ~= M.x * 17 then
                 M.ix(M.x)
                 vim.fn.timer_start(500, function()
                   M.ix(M.x)
@@ -256,11 +256,11 @@ M.ix = function(x)
           local cur_winid = vim.fn.win_getid(winnr)
           if vim.api.nvim_get_option_value('winfixwidth', { win = cur_winid, scope = 'global', }) == true then
             local temp = vim.api.nvim_win_get_width(cur_winid)
-            if temp ~= x * 20 then
+            if temp ~= x * 17 then
               gotoid(cur_winid)
               vim.cmd 'e!'
               vim.cmd 'wincmd h'
-              vim.api.nvim_win_set_width(0, vim.api.nvim_win_get_width(0) - x * 20 + vim.api.nvim_win_get_width(cur_winid))
+              vim.api.nvim_win_set_width(0, vim.api.nvim_win_get_width(0) - x * 17 + vim.api.nvim_win_get_width(cur_winid))
               vim.cmd 'e!'
             end
           end
