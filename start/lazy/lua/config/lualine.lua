@@ -124,15 +124,17 @@ require 'lualine'.setup {
       'filesize',
       {
         function()
-          return filename 'lualine_fname_tail_active'
+          return filename 'lualine_'
         end,
         cond = function()
           return #vim.fn.expand '%:~:.' > 0
         end,
       },
       {
-        'filetype',
-        icon_only = true,
+        function() return require 'nvim-navic'.get_location() end,
+        cond = function()
+          return package.loaded['nvim-navic'] and require 'nvim-navic'.is_available() and check_ft(vim.bo.ft)
+        end,
       },
     },
     lualine_x = {
@@ -148,6 +150,7 @@ require 'lualine'.setup {
         function()
           return vim.fn.strftime '%Y-%m-%d %A'
         end,
+        color = { fg = '#833863', },
       },
       {
         function()
@@ -156,6 +159,7 @@ require 'lualine'.setup {
         cond = function()
           return vim.o.columns > 200
         end,
+        color = { fg = '#437863', },
       },
       {
         function()
@@ -235,7 +239,8 @@ require 'lualine'.setup {
           for _, b in ipairs(vim.api.nvim_list_bufs()) do
             local fname = vim.api.nvim_buf_get_name(b)
             if require 'plenary.path'.new(fname):exists() then
-              if vim.fn.buflisted(b) ~= 0 and vim.api.nvim_buf_get_option(b, 'buftype') ~= 'quickfix' or vim.api.nvim_buf_get_option(b, 'buftype') == 'help' then
+              if vim.fn.buflisted(b) ~= 0 and vim.api.nvim_buf_get_option(b, 'buftype') ~= 'quickfix'
+                  or vim.api.nvim_buf_get_option(b, 'buftype') == 'help' then
                 if #curprojectroot == 0 or #fname > 0 and rep(vim.fn['ProjectRootGet'](fname)) == curprojectroot then
                   buffers[#buffers + 1] = b
                 end
@@ -274,17 +279,10 @@ require 'lualine'.setup {
     lualine_c = {
       {
         function()
-          return filename 'lualine_fname_tail_active'
+          return filename 'lualine_'
         end,
         cond = function()
           return #vim.fn.expand '%:~:.' > 0 and check_ft(vim.bo.ft)
-        end,
-        -- color = { fg = '#834567', },
-      },
-      {
-        function() return require 'nvim-navic'.get_location() end,
-        cond = function()
-          return package.loaded['nvim-navic'] and require 'nvim-navic'.is_available() and check_ft(vim.bo.ft)
         end,
       },
     },
@@ -296,6 +294,7 @@ require 'lualine'.setup {
         cond = function()
           return #vim.fn.expand '%:~:.' > 0
         end,
+        color = { fg = '#834567', gui = 'bold', },
       },
     },
     lualine_y = {
@@ -322,12 +321,11 @@ require 'lualine'.setup {
     lualine_c = {
       {
         function()
-          return filename 'lualine_fname_tail_active'
+          return filename 'lualine_'
         end,
         cond = function()
           return #vim.fn.expand '%:~:.' > 0 and check_ft(vim.bo.ft)
         end,
-        color = { fg = '#834567', },
       },
     },
     lualine_x = {
@@ -338,6 +336,7 @@ require 'lualine'.setup {
         cond = function()
           return #vim.fn.expand '%:~:.' > 0
         end,
+        color = { fg = '#834567', gui = 'bold', },
       },
     },
     lualine_y = {
