@@ -289,23 +289,23 @@ require 'lualine'.setup {
     lualine_x = {
       {
         function()
-          return vim.fn.bufwinnr(vim.fn.bufnr '%')
-        end,
-        cond = function()
-          return #vim.fn.expand '%:~:.' > 0
-        end,
-        color = { fg = '#834567', gui = 'bold', },
-      },
-    },
-    lualine_y = {
-      {
-        function()
           return get_projectroot(vim.call 'ProjectRootGet')
         end,
         color = { fg = '#7674f2', gui = 'bold', },
         cond = function()
           return #vim.fn.expand '%:~:.' > 0
         end,
+      },
+    },
+    lualine_y = {
+      {
+        function()
+          return vim.fn.bufwinnr(vim.fn.bufnr '%')
+        end,
+        cond = function()
+          return #vim.fn.expand '%:~:.' > 0
+        end,
+        color = { fg = '#834567', gui = 'bold', },
       },
     },
     lualine_z = {
@@ -331,23 +331,23 @@ require 'lualine'.setup {
     lualine_x = {
       {
         function()
-          return vim.fn.bufwinnr(vim.fn.bufnr '%')
-        end,
-        cond = function()
-          return #vim.fn.expand '%:~:.' > 0
-        end,
-        color = { fg = '#834567', gui = 'bold', },
-      },
-    },
-    lualine_y = {
-      {
-        function()
           return get_projectroot(vim.call 'ProjectRootGet')
         end,
         color = { fg = '#7674f2', gui = 'bold', },
         cond = function()
           return #vim.fn.expand '%:~:.' > 0
         end,
+      },
+    },
+    lualine_y = {
+      {
+        function()
+          return vim.fn.bufwinnr(vim.fn.bufnr '%')
+        end,
+        cond = function()
+          return #vim.fn.expand '%:~:.' > 0
+        end,
+        color = { fg = '#834567', gui = 'bold', },
       },
     },
     lualine_z = {
