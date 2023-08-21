@@ -34,3 +34,9 @@ shutdown /s /t 0
 ```bat
 git ls-files --exclude-standard --ignored --others
 ```
+
+# rg
+
+```dos
+rg --no-heading --with-filename --line-number --column --smart-case --fixed-strings --no-ignore -g "!*.js" winminheight
+```
