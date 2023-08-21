@@ -42,7 +42,25 @@ local function get_projectroot(projectroot)
     end
     return s1 .. '…' .. s2
   end
-  return temp
+  local updir = vim.fn.tolower(vim.fn.fnamemodify(projectroot, ':h:t'))
+  if #updir >= 15 then
+    local s1 = ''
+    local s2 = ''
+    for i = 15, 3, -1 do
+      s2 = string.sub(updir, #updir - i, #updir)
+      if vim.fn.strdisplaywidth(s2) <= 7 then
+        break
+      end
+    end
+    for i = 15, 3, -1 do
+      s1 = string.sub(updir, 1, i)
+      if vim.fn.strdisplaywidth(s1) <= 7 then
+        break
+      end
+    end
+    return s1 .. '…' .. s2
+  end
+  return updir .. '/' .. temp
 end
 
 function Tabname()
@@ -210,7 +228,7 @@ require 'lualine'.setup {
             if sta == true then
               l = l + vim.fn.strdisplaywidth(tmp) + 4
             else
-              l = l + 15 + 4
+              l = l + 30 + 4
             end
           end
           return vim.o.columns - l - 1
