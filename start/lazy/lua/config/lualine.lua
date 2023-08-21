@@ -531,6 +531,9 @@ vim.api.nvim_create_autocmd({ 'TabEnter', }, {
 -- restore hidden tabs
 
 vim.keymap.set({ 'n', 'v', }, '<a-f1>', function()
+  pcall(vim.cmd, 'MinimapClose')
+  vim.cmd 'tabo'
+  vim.cmd 'wincmd o'
   local sta, tmp
   local tabs = {}
   local curtabnr = vim.fn.tabpagenr()
