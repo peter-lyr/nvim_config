@@ -7,6 +7,7 @@ local filename = function(hl_group)
   tail = string.gsub(tail, '%%', '%%%%')
   local icons = require 'nvim-web-devicons'.get_icons()[ext]
   local opt = { fg = icons and icons['color'] or '#ffffff', bold = true, }
+  hl_group = hl_group .. '_' .. ext
   vim.api.nvim_set_hl(0, hl_group, opt)
   if head == '.' then
     return string.format('%%#%s#%s', hl_group, tail)
