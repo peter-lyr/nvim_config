@@ -47,9 +47,8 @@ dimit.dim_inactive = function()
     --     alt == cur then
     --   dim_value = get_highlight_value(config.dim_elements, "DimitAlt")
     -- end
-    -- local winhighlights = current == w and "" or dim_value
-    -- vim.api.nvim_win_set_option(w, "winhighlight", winhighlights)
-    vim.api.nvim_win_set_option(w, "winhighlight", dim_value)
+    local winhighlights = current == w and "" or dim_value
+    vim.api.nvim_win_set_option(w, "winhighlight", winhighlights)
   end
 end
 
