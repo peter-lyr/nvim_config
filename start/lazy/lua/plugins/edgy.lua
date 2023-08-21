@@ -1,5 +1,5 @@
 return {
-  "folke/edgy.nvim",
+  "peter-lyr/edgy.nvim",
   lazy = true,
   event = { "BufReadPost", "BufNew", "BufNewFile", },
   opts = {
