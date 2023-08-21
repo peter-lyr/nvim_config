@@ -36,7 +36,7 @@ dimit.dim_inactive = function()
   local config = dimit.config
   vim.api.nvim_set_hl(0, config.highlight_group, { bg = config.bgcolor, })
   -- vim.api.nvim_set_hl(0, "DimitAlt", { bg = '#111101', })
-  -- local current = vim.api.nvim_get_current_win()
+  local current = vim.api.nvim_get_current_win()
   local dim_value = get_highlight_value(config.dim_elements, config.highlight_group)
   for _, w in pairs(vim.api.nvim_list_wins()) do
     -- local alt = vim.fn.bufnr '#'
