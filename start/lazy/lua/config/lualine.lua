@@ -512,7 +512,7 @@ vim.api.nvim_create_autocmd({ 'TabEnter', }, {
 
 -- restore hidden tabs
 
-vim.keymap.set({ 'n', 'v', }, 'qw1', function()
+vim.keymap.set({ 'n', 'v', }, '<leader>q1', function()
   pcall(vim.cmd, 'MinimapClose')
   vim.cmd 'tabo'
   vim.cmd 'wincmd o'
@@ -557,7 +557,7 @@ vim.keymap.set({ 'n', 'v', }, 'qw1', function()
   end
 end, { desc = 'restore hidden tabs', })
 
-vim.keymap.set({ 'n', 'v', }, 'qw2', function()
+vim.keymap.set({ 'n', 'v', }, '<leader>q2', function()
   local NvimTree = nil
   local fugitive = nil
   local minimap = nil
@@ -610,7 +610,7 @@ vim.keymap.set({ 'n', 'v', }, 'qw2', function()
   end
 end, { desc = 'buffers workflow', })
 
-vim.keymap.set({ 'n', 'v', }, 'qw3', function()
+vim.keymap.set({ 'n', 'v', }, '<leader>q3', function()
   local projs = {}
   local winid = vim.fn.win_getid()
   local winids = {}
@@ -635,7 +635,7 @@ vim.keymap.set({ 'n', 'v', }, 'qw3', function()
   vim.fn.win_gotoid(winid)
 end, { desc = 'buffers workflow simple -', })
 
-vim.keymap.set({ 'n', 'v', }, 'qw4', function()
+vim.keymap.set({ 'n', 'v', }, '<leader>q4', function()
   local winid = vim.fn.win_getid()
   local projs = { rep(vim.fn['ProjectRootGet'](vim.api.nvim_buf_get_name(0))), }
   for winnr = 1, vim.fn.bufnr '$' do
