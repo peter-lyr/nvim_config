@@ -238,6 +238,17 @@ M.ix = function(x)
     else
       M.x = -1
     end
+    if x == 1 then
+      x = 4
+    elseif x == 2 then
+      x = 8
+    else
+      if x >= 6 then
+        x = x - 1
+      elseif x >= 3 then
+        x = x - 2
+      end
+    end
     local cnt = 1
     for winnr = 1, vim.fn.winnr '$' do
       if isallow(winnr) then
