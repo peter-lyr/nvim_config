@@ -42,33 +42,31 @@ end
 M.wp = function()
   local count = vim.v.count
   local max = vim.fn.winnr '$'
+  local winid = 0
   if count == 0 then
     local winnr = vim.fn.winnr() - 1
     if winnr < 1 then
       winnr = max
     end
-    local winid = vim.fn.win_getid(winnr)
+    winid = vim.fn.win_getid(winnr)
     if vim.api.nvim_win_get_height(winid) < 2 then
       vim.api.nvim_win_set_height(winid, 2)
     end
-    vim.fn.win_gotoid(winid)
   else
-    if count < 1 then
-      count = 1
-    else
-      if count > max then
-        count = max
-      end
-      local winid = vim.fn.win_getid(count)
-      if vim.api.nvim_win_get_height(winid) < 2 then
-        vim.api.nvim_win_set_height(winid, 2)
-      end
-      vim.fn.win_gotoid(winid)
+    if count > max then
+      count = max
+    end
+    winid = vim.fn.win_getid(count)
+    if vim.api.nvim_win_get_height(winid) < 2 then
+      vim.api.nvim_win_set_height(winid, 2)
     end
   end
+  vim.fn.win_gotoid(winid)
+  vim.cmd 'wincmd _'
 end
 
 M.wn = function()
+  local winid = 0
   local count = vim.v.count
   local max = vim.fn.winnr '$'
   if count == 0 then
@@ -76,25 +74,21 @@ M.wn = function()
     if winnr > max then
       winnr = 1
     end
-    local winid = vim.fn.win_getid(winnr)
+    winid = vim.fn.win_getid(winnr)
     if vim.api.nvim_win_get_height(winid) < 2 then
       vim.api.nvim_win_set_height(winid, 2)
     end
-    vim.fn.win_gotoid(winid)
   else
-    if count < 1 then
-      count = 1
-    else
-      if count > max then
-        count = max
-      end
-      local winid = vim.fn.win_getid(count)
-      if vim.api.nvim_win_get_height(winid) < 2 then
-        vim.api.nvim_win_set_height(winid, 2)
-      end
-      vim.fn.win_gotoid(winid)
+    if count > max then
+      count = max
+    end
+    winid = vim.fn.win_getid(count)
+    if vim.api.nvim_win_get_height(winid) < 2 then
+      vim.api.nvim_win_set_height(winid, 2)
     end
   end
+  vim.fn.win_gotoid(winid)
+  vim.cmd 'wincmd _'
 end
 
 M.main = function()
