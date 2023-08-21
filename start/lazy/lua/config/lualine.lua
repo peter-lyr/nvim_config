@@ -686,8 +686,17 @@ vim.cmd [[
     endif
   endfunction
   function! LualineSwitchWindow(win_number, mouseclicks, mousebutton, modifiers)
-    execute a:win_number . 'wincmd w'
-    wincmd _
+    if a:mousebutton == 'm' && a:mouseclicks == 1
+      let winid = win_getid()
+      execute a:win_number . 'wincmd w'
+      if filereadable(nvim_buf_get_name(0))
+        execute 'close'
+      endif
+      call win_gotoid(winid)
+    elseif a:mousebutton == 'l' && a:mouseclicks == 1
+      execute a:win_number . 'wincmd w'
+      wincmd _
+    endif
   endfunction
 ]]
 
