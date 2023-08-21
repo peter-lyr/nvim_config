@@ -35,20 +35,21 @@ end
 dimit.dim_inactive = function()
   local config = dimit.config
   vim.api.nvim_set_hl(0, config.highlight_group, { bg = config.bgcolor, })
-  vim.api.nvim_set_hl(0, "DimitAlt", { bg = '#111101', })
-  local current = vim.api.nvim_get_current_win()
+  -- vim.api.nvim_set_hl(0, "DimitAlt", { bg = '#111101', })
+  -- local current = vim.api.nvim_get_current_win()
   local dim_value = get_highlight_value(config.dim_elements, config.highlight_group)
   for _, w in pairs(vim.api.nvim_list_wins()) do
-    local alt = vim.fn.bufnr '#'
-    local cur = vim.fn.winbufnr(w)
-    if vim.api.nvim_buf_is_valid(alt) == true and
-        vim.api.nvim_buf_get_option(alt, 'modifiable') == true and
-        vim.fn.filereadable(vim.api.nvim_buf_get_name(alt)) == 1 and
-        alt == cur then
-      dim_value = get_highlight_value(config.dim_elements, "DimitAlt")
-    end
-    local winhighlights = current == w and "" or dim_value
-    vim.api.nvim_win_set_option(w, "winhighlight", winhighlights)
+    -- local alt = vim.fn.bufnr '#'
+    -- local cur = vim.fn.winbufnr(w)
+    -- if vim.api.nvim_buf_is_valid(alt) == true and
+    --     vim.api.nvim_buf_get_option(alt, 'modifiable') == true and
+    --     vim.fn.filereadable(vim.api.nvim_buf_get_name(alt)) == 1 and
+    --     alt == cur then
+    --   dim_value = get_highlight_value(config.dim_elements, "DimitAlt")
+    -- end
+    -- local winhighlights = current == w and "" or dim_value
+    -- vim.api.nvim_win_set_option(w, "winhighlight", winhighlights)
+    vim.api.nvim_win_set_option(w, "winhighlight", dim_value)
   end
 end
 
