@@ -196,24 +196,6 @@ require 'lualine'.setup {
       end,
     },
   },
-  inactive_sections = {
-    lualine_c = {
-      {
-        function()
-          return filename 'lualine_fname_tail_inactive'
-        end,
-        cond = function()
-          return #vim.fn.expand '%:~:.' > 0
-        end,
-      },
-    },
-    lualine_x = {
-      {
-        'filetype',
-        icons_enabled = false,
-      },
-    },
-  },
   tabline = {
     lualine_c = {
       {
@@ -296,7 +278,7 @@ require 'lualine'.setup {
         cond = function()
           return #vim.fn.expand '%:~:.' > 0 and check_ft(vim.bo.ft)
         end,
-        color = { fg = '#834567', },
+        -- color = { fg = '#834567', },
       },
       {
         function() return require 'nvim-navic'.get_location() end,
