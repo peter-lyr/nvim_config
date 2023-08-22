@@ -683,6 +683,21 @@ vim.cmd [[
         endtry
       endif
       execute ":buffer " . a:bufnr
+    elseif a:mousebutton == 'r' && a:mouseclicks == 1
+      if buflisted(bufnr()) == 0
+        try
+          call win_gotoid(g:lastbufwinid)
+        catch
+          echomsg 'error! see config/lualine.lua, g:lastbufwinid: ' .. g:lastbufwinid
+          return
+        endtry
+      endif
+      let curbufnr = bufnr()
+      execute ":buffer " . a:bufnr
+      let winid = win_getid()
+      NvimTreeFindFile
+      call win_gotoid(winid)
+      execute ":buffer " . curbufnr
     endif
   endfunction
   function! LualineSwitchTab(tabnr, mouseclicks, mousebutton, modifiers)
