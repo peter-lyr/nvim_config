@@ -112,7 +112,7 @@ local get_setup_table = function(file_ignore_patterns)
         '--smart-case',
         '--fixed-strings',
         '-g',
-        '!*.js'
+        '!*.js',
       },
       wrap_results = false,
     },
@@ -212,25 +212,32 @@ telescope.setup(get_setup_table(t))
 
 local M = {}
 
+M.all = function(all)
+  if all == 1 then
+    local temp = {}
+    telescope.setup(get_setup_table(temp))
+  else
+    telescope.setup(get_setup_table(t))
+  end
+end
+
 M.find_files = function()
-  telescope.setup(get_setup_table(t))
+  M.all(0)
   vim.cmd 'Telescope find_files'
 end
 
 M.find_files_all = function()
-  local temp = {}
-  telescope.setup(get_setup_table(temp))
+  M.all(1)
   vim.cmd 'Telescope find_files find_command=fd,--no-ignore,--hidden'
 end
 
 M.live_grep = function()
-  telescope.setup(get_setup_table(t))
+  M.all(0)
   vim.cmd 'Telescope live_grep'
 end
 
 M.live_grep_all = function()
-  local temp = {}
-  telescope.setup(get_setup_table(temp))
+  M.all(1)
   vim.cmd 'Telescope live_grep vimgrep_arguments=rg,--color=never,--no-heading,--with-filename,--line-number,--column,--smart-case,-g,*'
 end
 

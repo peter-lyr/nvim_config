@@ -89,11 +89,13 @@ local function change_working_directory(prompt_bufnr, prompt)
 end
 
 local function find_project_files(prompt_bufnr)
+  require 'config.telescope'.all(1)
   local project_path, cd_successful = change_working_directory(prompt_bufnr, true)
   local opt = {
     cwd = project_path,
     hidden = config.options.show_hidden,
     mode = 'insert',
+    find_command = { 'fd', '--no-ignore', '--hidden', },
   }
   if cd_successful then
     builtin.find_files(opt)
