@@ -10,6 +10,7 @@ return {
     require 'wait.noice',
     require 'wait.plenary',
     require 'wait.bbye',
+    require 'plugins.nvimtree',
     {
       'SmiteshP/nvim-navic',
       lazy = true,
