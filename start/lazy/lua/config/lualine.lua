@@ -705,6 +705,11 @@ vim.cmd [[
     elseif a:mousebutton == 'l' && a:mouseclicks == 1
       execute a:win_number . 'wincmd w'
       wincmd _
+    elseif a:mousebutton == 'r' && a:mouseclicks == 1
+      let winid = win_getid()
+      execute a:win_number . 'wincmd w'
+      NvimTreeFindFile
+      call win_gotoid(winid)
     endif
   endfunction
 ]]
