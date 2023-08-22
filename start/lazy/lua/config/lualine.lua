@@ -140,7 +140,7 @@ require 'lualine'.setup {
       {
         function() return require 'nvim-navic'.get_location() end,
         cond = function()
-          return package.loaded['nvim-navic'] and reqire 'nvim-navic'.is_available() and check_ft(vim.bo.ft)
+          return package.loaded['nvim-navic'] and require 'nvim-navic'.is_available() and check_ft(vim.bo.ft)
         end,
       },
     },
