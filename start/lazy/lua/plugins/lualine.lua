@@ -11,6 +11,7 @@ return {
     require 'wait.plenary',
     require 'wait.bbye',
     require 'plugins.nvimtree',
+    require 'plugins.minimap',
     {
       'SmiteshP/nvim-navic',
       lazy = true,

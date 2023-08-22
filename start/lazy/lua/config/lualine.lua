@@ -129,11 +129,16 @@ require 'lualine'.setup {
         cond = function()
           return #vim.fn.expand '%:~:.' > 0
         end,
+        on_click = function(mouseclicks, mousebutton, modifiers)
+          if mousebutton == 'l' and mouseclicks == 1 then
+            vim.cmd 'Minimap'
+          end
+        end
       },
       {
         function() return require 'nvim-navic'.get_location() end,
         cond = function()
-          return package.loaded['nvim-navic'] and require 'nvim-navic'.is_available() and check_ft(vim.bo.ft)
+          return package.loaded['nvim-navic'] and reqire 'nvim-navic'.is_available() and check_ft(vim.bo.ft)
         end,
       },
     },
