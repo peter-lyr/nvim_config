@@ -210,6 +210,30 @@ add(t, {
 
 telescope.setup(get_setup_table(t))
 
+local M = {}
+
+M.find_files = function()
+  telescope.setup(get_setup_table(t))
+  vim.cmd 'Telescope find_files'
+end
+
+M.find_files_all = function()
+  local temp = {}
+  telescope.setup(get_setup_table(temp))
+  vim.cmd 'Telescope find_files find_command=fd,--no-ignore,--hidden'
+end
+
+M.live_grep = function()
+  telescope.setup(get_setup_table(t))
+  vim.cmd 'Telescope live_grep'
+end
+
+M.live_grep_all = function()
+  local temp = {}
+  telescope.setup(get_setup_table(temp))
+  vim.cmd 'Telescope live_grep vimgrep_arguments=rg,--color=never,--no-heading,--with-filename,--line-number,--column,--smart-case,-g,*'
+end
+
 local p = require 'plenary.path'
 
 -- fzf
@@ -226,8 +250,6 @@ pcall(telescope.load_extension, 'frecency')
 -- file browser
 
 pcall(telescope.load_extension, 'my_file_browser')
-
-local M = {}
 
 M.nvim_config = p:new(vim.g.pack_path):joinpath 'nvim_config'
 

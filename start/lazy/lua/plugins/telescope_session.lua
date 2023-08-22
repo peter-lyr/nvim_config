@@ -1,16 +1,16 @@
 return {
-  "HUAHUAI23/telescope-session.nvim",
+  'HUAHUAI23/telescope-session.nvim',
   lazy = true,
-  event = { "QuitPre", },
+  event = { 'QuitPre', },
   cmd = {
     -- 'MySessionOpen',
   },
   keys = {
-    { '<leader>svr',  function() require 'config.telescope_session'.all() end,       mode = { 'n', 'v', }, silent = true, desc = 'Telescope session open', },
-    { '<leader>svo',  function() require 'config.telescope_session'.open() end,       mode = { 'n', 'v', }, silent = true, desc = 'Telescope session open', },
-    { '<leader>svs',  function() require 'config.telescope_session'.save() end,       mode = { 'n', 'v', }, silent = true, desc = 'Telescope session save', },
-    { '<leader>svvs', function() require 'config.telescope_session'.saveinput() end,  mode = { 'n', 'v', }, silent = true, desc = 'Telescope session save', },
-    { '<leader>svl',  function() require 'config.telescope_session'.list() end,       mode = { 'n', 'v', }, silent = true, desc = 'Telescope session list', },
+    { '<leader>sir',  function() require 'config.telescope_session'.all() end,       mode = { 'n', 'v', }, silent = true, desc = 'Telescope session open', },
+    { '<leader>sio',  function() require 'config.telescope_session'.open() end,      mode = { 'n', 'v', }, silent = true, desc = 'Telescope session open', },
+    { '<leader>sis',  function() require 'config.telescope_session'.save() end,      mode = { 'n', 'v', }, silent = true, desc = 'Telescope session save', },
+    { '<leader>sivs', function() require 'config.telescope_session'.saveinput() end, mode = { 'n', 'v', }, silent = true, desc = 'Telescope session save', },
+    { '<leader>sil',  function() require 'config.telescope_session'.list() end,      mode = { 'n', 'v', }, silent = true, desc = 'Telescope session list', },
   },
   dependencies = {
     require 'wait.telescope',
