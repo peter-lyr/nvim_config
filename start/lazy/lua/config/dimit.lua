@@ -35,11 +35,11 @@ end
 dimit.dim_inactive = function()
   local config = dimit.config
   vim.api.nvim_set_hl(0, config.highlight_group, { bg = config.bgcolor, })
-  -- vim.api.nvim_set_hl(0, "DimitAlt", { bg = '#111101', })
   local current = vim.api.nvim_get_current_win()
-  local curunreadable = 0
-  if vim.fn.filereadable(vim.api.nvim_buf_get_name(0)) == 0 then
-    curunreadable = 1
+  local minimap = 0
+  local bufnr = vim.fn.bufnr()
+  if vim.fn.filereadable(vim.api.nvim_buf_get_name(0)) == 0 and vim.fn.bufnr '-MINIMAP-' == bufnr then
+    minimap = 1
   end
   local dim_value = get_highlight_value(config.dim_elements, config.highlight_group)
   for _, w in pairs(vim.api.nvim_list_wins()) do
@@ -52,8 +52,8 @@ dimit.dim_inactive = function()
     --   dim_value = get_highlight_value(config.dim_elements, "DimitAlt")
     -- end
     local winhighlights = current == w and '' or dim_value
-    if curunreadable == 1 then
-      if vim.tbl_contains(require('bufferjump').last_readable_winids, w) == true then
+    if minimap == 1 then
+      if vim.tbl_contains(require 'bufferjump'.last_readable_winids, w) == true then
         winhighlights = ''
       end
     end
