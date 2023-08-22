@@ -22,7 +22,7 @@ return {
       },
 
     },
-    init = function()
+    config = function()
       require 'quickfix'
     end,
   },
