@@ -315,20 +315,20 @@ M.hjkl_toggle = function()
   print('hjkl_en: ' .. hjkl_en)
 end
 
-local last_readable_bufnrs = {}
+M.last_readable_winids = {}
 
 pcall(vim.api.nvim_del_autocmd, vim.g.bufferjump_au_bufleave)
 
 vim.g.bufferjump_au_bufleave = vim.api.nvim_create_autocmd({ "BufLeave", }, {
   callback = function(ev)
     if vim.fn.filereadable(ev.file) == 1 then
-      local bufnr = ev.buf
-      if vim.tbl_contains(last_readable_bufnrs) == false then
-        if #last_readable_bufnrs < 2 then
-          last_readable_bufnrs[#last_readable_bufnrs+1] = bufnr
+      local winid = vim.fn.win_getid(vim.fn.bufwinnr(ev.buf))
+      if vim.tbl_contains(M.last_readable_winids, winid) == false then
+        if #M.last_readable_winids < 2 then
+          M.last_readable_winids[#M.last_readable_winids+1] = winid
         else
-          last_readable_bufnrs[1] = last_readable_bufnrs[2]
-          last_readable_bufnrs[2] = bufnr
+          M.last_readable_winids[1] = M.last_readable_winids[2]
+          M.last_readable_winids[2] = winid
         end
       end
     end
@@ -336,15 +336,15 @@ vim.g.bufferjump_au_bufleave = vim.api.nvim_create_autocmd({ "BufLeave", }, {
 })
 
 M.p = function()
-  if #last_readable_bufnrs == 0 then
+  if #M.last_readable_winids == 0 then
     return
-  elseif #last_readable_bufnrs == 1 then
-    pcall(vim.fn.win_gotoid, vim.fn.win_getid(vim.fn.bufwinnr(last_readable_bufnrs[1])))
+  elseif #M.last_readable_winids == 1 then
+    pcall(vim.fn.win_gotoid, M.last_readable_winids[1])
   else
-    if last_readable_bufnrs[2] == vim.fn.bufnr() then
-      pcall(vim.fn.win_gotoid, vim.fn.win_getid(vim.fn.bufwinnr(last_readable_bufnrs[1])))
+    if M.last_readable_winids[2] == vim.fn.win_getid(vim.fn.bufwinnr(vim.fn.bufnr())) then
+      pcall(vim.fn.win_gotoid, M.last_readable_winids[1])
     else
-      pcall(vim.fn.win_gotoid, vim.fn.win_getid(vim.fn.bufwinnr(last_readable_bufnrs[2])))
+      pcall(vim.fn.win_gotoid, M.last_readable_winids[2])
     end
   end
 end

@@ -1,25 +1,25 @@
 local M = {}
 
-local dimit = require "dimit"
+local dimit = require 'dimit'
 
 dimit.setup {
-  bgcolor = "#000000",
+  bgcolor = '#000000',
   dim_elements = {
-    "ColorColumn",
-    "CursorColumn",
-    "CursorLine",
-    "CursorLineFold",
-    "CursorLineNr",
-    "CursorLineSign",
-    "EndOfBuffer",
-    "FoldColumn",
-    "LineNr",
-    "NonText",
-    "Normal",
-    "SignColumn",
-    "VertSplit",
-    "Whitespace",
-    "WinBarNC",
+    'ColorColumn',
+    'CursorColumn',
+    'CursorLine',
+    'CursorLineFold',
+    'CursorLineNr',
+    'CursorLineSign',
+    'EndOfBuffer',
+    'FoldColumn',
+    'LineNr',
+    'NonText',
+    'Normal',
+    'SignColumn',
+    'VertSplit',
+    'Whitespace',
+    'WinBarNC',
     -- "WinSeparator",
   },
 }
@@ -29,7 +29,7 @@ if dimit.autocmd ~= nil then
 end
 
 local get_highlight_value = function(dim_elements, hlgroup)
-  return table.concat(dim_elements, ":" .. hlgroup .. ",") .. ":" .. hlgroup
+  return table.concat(dim_elements, ':' .. hlgroup .. ',') .. ':' .. hlgroup
 end
 
 dimit.dim_inactive = function()
@@ -37,6 +37,10 @@ dimit.dim_inactive = function()
   vim.api.nvim_set_hl(0, config.highlight_group, { bg = config.bgcolor, })
   -- vim.api.nvim_set_hl(0, "DimitAlt", { bg = '#111101', })
   local current = vim.api.nvim_get_current_win()
+  local curunreadable = 0
+  if vim.fn.filereadable(vim.api.nvim_buf_get_name(0)) == 0 then
+    curunreadable = 1
+  end
   local dim_value = get_highlight_value(config.dim_elements, config.highlight_group)
   for _, w in pairs(vim.api.nvim_list_wins()) do
     -- local alt = vim.fn.bufnr '#'
@@ -47,15 +51,20 @@ dimit.dim_inactive = function()
     --     alt == cur then
     --   dim_value = get_highlight_value(config.dim_elements, "DimitAlt")
     -- end
-    local winhighlights = current == w and "" or dim_value
-    vim.api.nvim_win_set_option(w, "winhighlight", winhighlights)
+    local winhighlights = current == w and '' or dim_value
+    if curunreadable == 1 then
+      if vim.tbl_contains(require('bufferjump').last_readable_winids, w) == true then
+        winhighlights = ''
+      end
+    end
+    vim.api.nvim_win_set_option(w, 'winhighlight', winhighlights)
   end
 end
 
-vim.api.nvim_create_autocmd({ "WinEnter", "BufWinEnter", "WinClosed", }, {
+vim.api.nvim_create_autocmd({ 'WinEnter', 'BufWinEnter', 'WinClosed', }, {
   callback = function()
     vim.schedule(function()
-      if not string.match(vim.bo.ft, "aerial") then
+      if not string.match(vim.bo.ft, 'aerial') then
         dimit.dim_inactive()
       end
     end)
