@@ -132,6 +132,8 @@ require 'lualine'.setup {
         on_click = function(mouseclicks, mousebutton, modifiers)
           if mousebutton == 'l' and mouseclicks == 1 then
             vim.cmd 'Minimap'
+          elseif mousebutton == 'm' and mouseclicks == 1 then
+            vim.cmd 'MinimapClose'
           end
         end
       },
