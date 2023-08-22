@@ -315,4 +315,38 @@ M.hjkl_toggle = function()
   print('hjkl_en: ' .. hjkl_en)
 end
 
+local last_readable_bufnrs = {}
+
+pcall(vim.api.nvim_del_autocmd, vim.g.bufferjump_au_bufleave)
+
+vim.g.bufferjump_au_bufleave = vim.api.nvim_create_autocmd({ "BufLeave", }, {
+  callback = function(ev)
+    if vim.fn.filereadable(ev.file) == 1 then
+      local bufnr = ev.buf
+      if vim.tbl_contains(last_readable_bufnrs) == false then
+        if #last_readable_bufnrs < 2 then
+          last_readable_bufnrs[#last_readable_bufnrs+1] = bufnr
+        else
+          last_readable_bufnrs[1] = last_readable_bufnrs[2]
+          last_readable_bufnrs[2] = bufnr
+        end
+      end
+    end
+  end,
+})
+
+M.p = function()
+  if #last_readable_bufnrs == 0 then
+    return
+  elseif #last_readable_bufnrs == 1 then
+    pcall(vim.fn.win_gotoid, vim.fn.win_getid(vim.fn.bufwinnr(last_readable_bufnrs[1])))
+  else
+    if last_readable_bufnrs[2] == vim.fn.bufnr() then
+      pcall(vim.fn.win_gotoid, vim.fn.win_getid(vim.fn.bufwinnr(last_readable_bufnrs[1])))
+    else
+      pcall(vim.fn.win_gotoid, vim.fn.win_getid(vim.fn.bufwinnr(last_readable_bufnrs[2])))
+    end
+  end
+end
+
 return M
