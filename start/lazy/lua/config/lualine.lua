@@ -347,6 +347,14 @@ require 'lualine'.setup {
         cond = function()
           return #vim.fn.expand '%:~:.' > 0
         end,
+        on_click = function(mouseclicks, mousebutton, modifiers)
+          if mousebutton == 'l' and mouseclicks == 1 then
+            local winid = vim.fn.win_getid()
+            require 'config.fugitive'.open(1, vim.call 'ProjectRootGet')
+            vim.fn.win_gotoid(winid)
+          elseif mousebutton == 'm' and mouseclicks == 1 then
+          end
+        end,
       },
     },
     lualine_y = {

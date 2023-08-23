@@ -87,7 +87,7 @@ vim.g.fugitive_au_bufenter = vim.api.nvim_create_autocmd({ 'BufEnter', }, {
 
 local M = {}
 
-M.open = function(refresh)
+M.open = function(refresh, root)
   local opened = false
   local bufnr = -1
   local bufname = ''
@@ -101,7 +101,10 @@ M.open = function(refresh)
     end
   end
   if opened then
-    local curroot = string.gsub(vim.fn.tolower(vim.fn['ProjectRootGet'](vim.api.nvim_buf_get_name(0))), '/', '\\')
+    local curroot = root
+    if not root then
+      curroot = string.gsub(vim.fn.tolower(vim.fn['ProjectRootGet'](vim.api.nvim_buf_get_name(0))), '/', '\\')
+    end
     local fugitiveroot = string.gsub(vim.fn.tolower(string.match(bufname, 'fugitive:\\\\\\(.+)\\.git\\\\')), '/', '\\')
     if curroot ~= fugitiveroot then
       vim.cmd('bw!' .. tostring(bufnr))
