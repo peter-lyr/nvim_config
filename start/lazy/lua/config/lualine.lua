@@ -144,8 +144,10 @@ require 'lualine'.setup {
         end,
         on_click = function(mouseclicks, mousebutton, modifiers)
           if mousebutton == 'l' and mouseclicks == 1 then
+            local winid = vim.fn.win_getid()
             vim.cmd 'AerialCloseAll'
             vim.cmd 'AerialOpen right'
+            vim.fn.win_gotoid(winid)
             vim.fn.timer_start(10, function()
               vim.cmd 'wincmd ='
             end)
