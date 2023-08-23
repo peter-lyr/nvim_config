@@ -715,43 +715,48 @@ function LualineSwitchBuffer(bufnr, mouseclicks, mousebutton, modifiers)
   end
 end
 
+function LualineSwitchTab(tabnr, mouseclicks, mousebutton, modifiers)
+  if mousebutton == 'm' and mouseclicks == 1 then
+    vim.cmd(tabnr .. 'tabclose')
+  elseif mousebutton == 'l' and mouseclicks == 1 then
+    vim.cmd(tabnr .. 'tabnext')
+  elseif mousebutton == 'r' and mouseclicks == 1 then
+    require 'bufferjump'.i()
+  end
+end
+
+function LualineSwitchWindow(win_number, mouseclicks, mousebutton, modifiers)
+  if mousebutton == 'm' and mouseclicks == 1 then
+    local winid = vim.fn.win_getid()
+    vim.cmd(win_number .. 'wincmd w')
+    if vim.fn.filereadable(vim.api.nvim_buf_get_name(0)) == 1 then
+      vim.cmd 'close'
+      vim.fn.win_gotoid(winid)
+    else
+      vim.fn.feedkeys 'q'
+    end
+  elseif mousebutton == 'l' and mouseclicks == 1 then
+    vim.cmd(win_number .. 'wincmd w')
+    require 'bufferjump'.o()
+  elseif mousebutton == 'r' and mouseclicks == 1 then
+      local winid = vim.fn.win_getid()
+      vim.cmd(win_number .. 'wincmd w')
+      vim.cmd 'NvimTreeFindFile'
+      vim.fn.win_gotoid(winid)
+  end
+end
+
 vim.cmd [[
   function! LualineSwitchBuffer(bufnr, mouseclicks, mousebutton, modifiers)
     call v:lua.LualineSwitchBuffer(a:bufnr, a:mouseclicks, a:mousebutton, a:modifiers)
   endfunction
   function! LualineSwitchTab(tabnr, mouseclicks, mousebutton, modifiers)
-    if a:mousebutton == 'm' && a:mouseclicks == 1
-      execute a:tabnr . "tabclose"
-    elseif a:mousebutton == 'l' && a:mouseclicks == 1
-      execute a:tabnr . "tabnext"
-    elseif a:mousebutton == 'r' && a:mouseclicks == 1
-      execute 'wincmd ='
-      let g:max_en = 0
-    endif
+    call v:lua.LualineSwitchTab(a:tabnr, a:mouseclicks, a:mousebutton, a:modifiers)
   endfunction
   function! LualineSwitchWindow(win_number, mouseclicks, mousebutton, modifiers)
-    if a:mousebutton == 'm' && a:mouseclicks == 1
-      let winid = win_getid()
-      execute a:win_number . 'wincmd w'
-      if filereadable(nvim_buf_get_name(0))
-        execute 'close'
-        call win_gotoid(winid)
-      else
-        call feedkeys("q")
-      endif
-    elseif a:mousebutton == 'l' && a:mouseclicks == 1
-      execute a:win_number . 'wincmd w'
-      wincmd _
-      let g:max_en = 1
-    elseif a:mousebutton == 'r' && a:mouseclicks == 1
-      let winid = win_getid()
-      execute a:win_number . 'wincmd w'
-      NvimTreeFindFile
-      call win_gotoid(winid)
-    endif
+    call v:lua.LualineSwitchWindow(a:win_number, a:mouseclicks, a:mousebutton, a:modifiers)
   endfunction
 ]]
-
 
 function Bdft(ftstring)
   local ftslist = {}
