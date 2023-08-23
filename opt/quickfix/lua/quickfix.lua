@@ -6,6 +6,10 @@ vim.g.qf_before_winid = -1
 
 M.allow = nil
 
+M.last_en = false
+M.lastline = -1
+M.lastcol = -1
+
 M.toggle = function()
   if vim.api.nvim_buf_get_option(vim.fn.bufnr(), 'buftype') == 'quickfix' then
     vim.cmd 'ccl'
@@ -18,8 +22,11 @@ M.toggle = function()
     M.allow = nil
     vim.cmd 'wincmd J'
     vim.fn.timer_start(20, function()
+      if M.lastline ~= -1 and M.lastcol ~= -1 then
+        vim.cmd(string.format('norm %dgg%d|', M.lastline, M.lastcol))
+      end
+      M.last_en = true
       vim.api.nvim_win_set_height(0, 15)
-      vim.cmd 'set winfixheight'
       vim.keymap.set('n', 'q', function()
         vim.schedule(function()
           vim.cmd 'ccl'
@@ -105,8 +112,21 @@ vim.g.quickfix_au_cursorhold = vim.api.nvim_create_autocmd({ 'CursorHold', }, {
   end,
 })
 
+pcall(vim.api.nvim_del_autocmd, vim.g.quickfix_au_cursormoved)
+
+vim.g.quickfix_au_cursormoved = vim.api.nvim_create_autocmd({ 'CursorMoved', }, {
+  callback = function(ev)
+    if vim.api.nvim_buf_get_option(ev.buf, 'buftype') == 'quickfix' and M.last_en == true then
+      M.lastline = vim.fn.line '.'
+      M.lastcol = vim.fn.col '.'
+    else
+      M.last_en = false
+    end
+  end,
+})
+
 require 'maps'.add('<esc>', 'n', function()
-  vim.cmd('ccl')
+  vim.cmd 'ccl'
 end, 'ccl')
 
 return M
