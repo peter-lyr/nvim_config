@@ -2,7 +2,7 @@ local rescanned_bufnr = 0
 
 pcall(vim.api.nvim_del_autocmd, vim.g.fugitive_au_cursorhold)
 
-vim.g.fugitive_au_cursorhold = vim.api.nvim_create_autocmd({ "CursorHold", }, {
+vim.g.fugitive_au_cursorhold = vim.api.nvim_create_autocmd({ 'CursorHold', }, {
   callback = function(ev)
     if vim.g.edgy_autosize_en == 1 and rescanned_bufnr ~= ev.buf then
       rescanned_bufnr = ev.buf
@@ -15,26 +15,31 @@ vim.g.fugitive_au_cursorhold = vim.api.nvim_create_autocmd({ "CursorHold", }, {
             width = len
           end
         end
-        local win = require "edgy.editor".get_win()
+        local win = require 'edgy.editor'.get_win()
         if not win then
           return
         end
-        local save_cursor = vim.fn.getpos "."
-        local ok = nil
+        local save_cursor = vim.fn.getpos '.'
+        local width_en = nil
+        local height_en = nil
         if width - win.width + 6 > 0 then
-          win:resize("width", width - win.width + 6)
-          ok = 1
+          width_en = 1
         end
-        if height > 3 then
-          height = height + 3
+        if height - win.height + 6 > 0 then
+          height_en = 1
         end
-        if height - win.height > 0 then
-          win:resize("height", height - win.height)
-          ok = 1
+        if height_en then
+          win:resize('height', (height - win.height) * 2 + 6)
         end
-        if ok then
+        if width_en then
+          win:resize('width', width - win.width + 6)
+        end
+        if width_en or height_en then
           pcall(vim.fn.setpos, '.', save_cursor)
-          vim.cmd "norm 99zH"
+          vim.fn.timer_start(100, function()
+            vim.cmd 'norm 99zH'
+            vim.cmd 'norm zb'
+          end)
         end
       end
     end
@@ -43,11 +48,11 @@ vim.g.fugitive_au_cursorhold = vim.api.nvim_create_autocmd({ "CursorHold", }, {
 
 pcall(vim.api.nvim_del_autocmd, vim.g.fugitive_au_bufleave)
 
-vim.g.fugitive_au_bufleave = vim.api.nvim_create_autocmd({ "BufLeave", }, {
+vim.g.fugitive_au_bufleave = vim.api.nvim_create_autocmd({ 'BufLeave', }, {
   callback = function(ev)
     rescanned_bufnr = ev.buf
     if vim.bo[ev.buf].ft == 'fugitive' then
-      local save_cursor = vim.fn.getpos "."
+      local save_cursor = vim.fn.getpos '.'
       if vim.g.edgy_autosize_en == 1 then
         local max = 0
         for linenr = 1, vim.fn.line '$' do
@@ -56,7 +61,7 @@ vim.g.fugitive_au_bufleave = vim.api.nvim_create_autocmd({ "BufLeave", }, {
             max = len
           end
         end
-        local win = require "edgy.editor".get_win()
+        local win = require 'edgy.editor'.get_win()
         if win then
           win.view.edgebar:equalize()
         end
@@ -69,7 +74,7 @@ vim.g.fugitive_au_bufleave = vim.api.nvim_create_autocmd({ "BufLeave", }, {
 
 pcall(vim.api.nvim_del_autocmd, vim.g.fugitive_au_bufenter)
 
-vim.g.fugitive_au_bufenter = vim.api.nvim_create_autocmd({ "BufEnter", }, {
+vim.g.fugitive_au_bufenter = vim.api.nvim_create_autocmd({ 'BufEnter', }, {
   callback = function(ev)
     if vim.bo[ev.buf].ft == 'fugitive' then
       vim.keymap.set('n', 'da', require 'config.nvimtree-func'.edgy_autosize_toggle, { buffer = ev.buf, })
