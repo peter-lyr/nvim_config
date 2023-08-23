@@ -6,6 +6,7 @@ return {
     dir = opt .. 'quickfix',
     dependencies = {
       require 'myplugins.core', -- maps.add
+      require 'plugins.lualine',
     },
     keys = {
 
