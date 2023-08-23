@@ -135,7 +135,7 @@ require 'lualine'.setup {
           elseif mousebutton == 'm' and mouseclicks == 1 then
             vim.cmd 'MinimapClose'
           end
-        end
+        end,
       },
       {
         function() return require 'nvim-navic'.get_location() end,
@@ -144,11 +144,15 @@ require 'lualine'.setup {
         end,
         on_click = function(mouseclicks, mousebutton, modifiers)
           if mousebutton == 'l' and mouseclicks == 1 then
-            vim.cmd 'AerialOpenAll'
+            vim.cmd 'AerialCloseAll'
+            vim.cmd 'AerialOpen right'
+            vim.fn.timer_start(10, function()
+              vim.cmd 'wincmd ='
+            end)
           elseif mousebutton == 'm' and mouseclicks == 1 then
             vim.cmd 'AerialCloseAll'
           end
-        end
+        end,
       },
     },
     lualine_x = {

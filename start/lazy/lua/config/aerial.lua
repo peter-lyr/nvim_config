@@ -1,3 +1,5 @@
+package.loaded['config.aerial'] = nil
+
 require 'aerial'.setup {
   layout = {
     min_width = 28,
@@ -23,7 +25,7 @@ require 'aerial'.setup {
     ['P'] = 'actions.tree_close_all',
   },
   filter_kind = false,
-  backends = { "markdown", "lsp", "treesitter", "man", },
+  backends = { 'markdown', 'lsp', 'treesitter', 'man', },
   -- backends = { "lsp", },
   post_jump_cmd = [[norm zz]],
   close_automatic_events = {},
@@ -43,12 +45,16 @@ M.open = function()
       return
     end
   end
+  vim.cmd 'AerialCloseAll'
   vim.cmd 'AerialOpen right'
+  vim.fn.timer_start(10, function()
+    vim.cmd 'wincmd ='
+  end)
 end
 
 local scrolloff = vim.opt.scrolloff
 
-vim.api.nvim_create_autocmd({ "BufEnter", }, {
+vim.api.nvim_create_autocmd({ 'BufEnter', }, {
   callback = function()
     if vim.bo.ft == 'aerial' then
       vim.opt.scrolloff = 99
