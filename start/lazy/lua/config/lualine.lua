@@ -142,6 +142,13 @@ require 'lualine'.setup {
         cond = function()
           return package.loaded['nvim-navic'] and require 'nvim-navic'.is_available() and check_ft(vim.bo.ft)
         end,
+        on_click = function(mouseclicks, mousebutton, modifiers)
+          if mousebutton == 'l' and mouseclicks == 1 then
+            vim.cmd 'AerialOpenAll'
+          elseif mousebutton == 'm' and mouseclicks == 1 then
+            vim.cmd 'AerialCloseAll'
+          end
+        end
       },
     },
     lualine_x = {
