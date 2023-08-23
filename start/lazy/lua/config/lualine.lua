@@ -35,6 +35,18 @@ function WinFixHeighDis()
   end)
 end
 
+function Buffer(bufnr)
+  WinFixHeighEn()
+  if type(bufnr) == 'string' then
+    vim.cmd('e ' .. bufnr)
+  else
+    if vim.api.nvim_buf_is_valid(bufnr) then
+      vim.cmd('b' .. tostring(bufnr))
+    end
+  end
+  WinFixHeighDis()
+end
+
 local function rep(content)
   content = vim.fn.tolower(content)
   content = string.gsub(content, '/', '\\')
@@ -470,9 +482,7 @@ vim.keymap.set({ 'n', 'v', }, '<c-h>', function()
   local curbufnr_idx = vim.fn.indexof(buffers, string.format('v:val == %d', curbufnr)) + 1
   if curbufnr_idx >= 1 then
     local prevbufnr = buffers[curbufnr_idx - 1 >= 1 and curbufnr_idx - 1 or #buffers]
-    WinFixHeighEn()
-    vim.cmd('b' .. prevbufnr)
-    WinFixHeighDis()
+    Buffer(prevbufnr)
   end
 end, { desc = 'prev buffer', })
 
@@ -482,9 +492,7 @@ vim.keymap.set({ 'n', 'v', }, '<c-l>', function()
   local curbufnr_idx = vim.fn.indexof(buffers, string.format('v:val == %d', curbufnr)) + 1
   if curbufnr_idx >= 1 then
     local nextbufnr = buffers[curbufnr_idx + 1 <= #buffers and curbufnr_idx + 1 or 1]
-    WinFixHeighEn()
-    vim.cmd('b' .. nextbufnr)
-    WinFixHeighDis()
+    Buffer(nextbufnr)
   end
 end, { desc = 'next buffer', })
 
@@ -721,9 +729,7 @@ function LualineSwitchBuffer(bufnr, mouseclicks, mousebutton, modifiers)
         return
       end
     end
-    WinFixHeighEn()
-    vim.cmd(':buffer ' .. tostring(bufnr))
-    WinFixHeighDis()
+    Buffer(bufnr)
   elseif mousebutton == 'r' and mouseclicks == 1 then
     if vim.fn.buflisted(vim.fn.bufnr()) == 0 then
       if not pcall(vim.fn.win_gotoid, vim.g.lastbufwinid) then
