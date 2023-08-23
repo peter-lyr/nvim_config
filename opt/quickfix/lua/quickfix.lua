@@ -10,6 +10,19 @@ M.last_en = false
 M.lastline = -1
 M.lastcol = -1
 
+local winheight = 1
+local winwidth = 1
+
+function SaveWinSize()
+  winheight = vim.api.nvim_win_get_height(0)
+  winwidth = vim.api.nvim_win_get_width(0)
+end
+
+function RestoreWinSize()
+  vim.api.nvim_win_set_height(0, winheight)
+  vim.api.nvim_win_set_width(0, winwidth)
+end
+
 M.toggle = function()
   if vim.api.nvim_buf_get_option(vim.fn.bufnr(), 'buftype') == 'quickfix' then
     vim.cmd 'ccl'
@@ -18,6 +31,7 @@ M.toggle = function()
     end
   else
     vim.g.qf_before_winid = vim.fn.win_getid()
+    SaveWinSize()
     vim.cmd 'copen'
     M.allow = nil
     vim.cmd 'wincmd J'
@@ -32,6 +46,7 @@ M.toggle = function()
           vim.cmd 'ccl'
           if vim.api.nvim_win_is_valid(vim.g.qf_before_winid) == true then
             vim.fn.win_gotoid(vim.g.qf_before_winid)
+            RestoreWinSize()
           end
         end)
       end, { buffer = vim.fn.bufnr(), nowait = true, silent = true, })
