@@ -31,7 +31,7 @@ return {
         open = function()
           vim.api.nvim_input "<esc><space>3"
         end,
-        size = { height = 0.38, },
+        size = { height = 0.62, },
       },
       {
         title = "Aerial",

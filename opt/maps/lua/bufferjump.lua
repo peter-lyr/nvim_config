@@ -212,7 +212,9 @@ M.ix = function(x)
       if isallow(winnr) then
         local cur_winid = vim.fn.win_getid(winnr)
         if vim.api.nvim_get_option_value('winfixheight', { win = cur_winid, scope = 'global', }) == true then
-          vim.api.nvim_win_set_height(cur_winid, x * 7)
+          if vim.g.WinFixHeighEnTimer == 0 then
+            vim.api.nvim_win_set_height(cur_winid, x * 7)
+          end
         end
         if vim.api.nvim_get_option_value('winfixwidth', { win = cur_winid, scope = 'global', }) == true then
           cnt = cnt + 1

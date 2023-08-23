@@ -16,11 +16,11 @@ local filename = function(hl_group)
   end
 end
 
-local WinFixHeighEnTimer = 0
+vim.g.WinFixHeighEnTimer = 0
 local winfixheight = -1
 
 function WinFixHeighEn()
-  pcall(vim.fn.timer_stop, WinFixHeighEnTimer)
+  pcall(vim.fn.timer_stop, vim.g.WinFixHeighEnTimer)
   if winfixheight ~= -1 then
     vim.opt.winfixheight = winfixheight
   end
@@ -30,8 +30,9 @@ function WinFixHeighEn()
 end
 
 function WinFixHeighDis()
-  WinFixHeighEnTimer = vim.fn.timer_start(2000, function()
+  vim.g.WinFixHeighEnTimer = vim.fn.timer_start(2000, function()
     vim.opt.winfixheight = winfixheight
+    vim.g.WinFixHeighEnTimer = 0
   end)
 end
 
