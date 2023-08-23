@@ -10,8 +10,8 @@ M.last_en = false
 M.lastline = -1
 M.lastcol = -1
 
-local winheight = 1
-local winwidth = 1
+local winheight = -1
+local winwidth = -1
 
 function SaveWinSize()
   winheight = vim.api.nvim_win_get_height(0)
@@ -19,8 +19,10 @@ function SaveWinSize()
 end
 
 function RestoreWinSize()
-  vim.api.nvim_win_set_height(0, winheight)
-  vim.api.nvim_win_set_width(0, winwidth)
+  if winheight ~= -1 and winwidth ~= -1 then
+    vim.api.nvim_win_set_height(0, winheight)
+    vim.api.nvim_win_set_width(0, winwidth)
+  end
 end
 
 M.toggle = function()
@@ -28,6 +30,7 @@ M.toggle = function()
     vim.cmd 'ccl'
     if vim.api.nvim_win_is_valid(vim.g.qf_before_winid) == true then
       vim.fn.win_gotoid(vim.g.qf_before_winid)
+      RestoreWinSize()
     end
   else
     vim.g.qf_before_winid = vim.fn.win_getid()
@@ -35,7 +38,7 @@ M.toggle = function()
     vim.cmd 'copen'
     M.allow = nil
     vim.cmd 'wincmd J'
-    vim.fn.timer_start(20, function()
+    vim.fn.timer_start(10, function()
       if M.lastline ~= -1 and M.lastcol ~= -1 then
         vim.cmd(string.format('norm %dgg%d|', M.lastline, M.lastcol))
       end

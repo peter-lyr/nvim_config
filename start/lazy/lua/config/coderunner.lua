@@ -137,7 +137,7 @@ end
 
 require 'code_runner'.setup {
   -- mode = 'float',
-  startinsert = true,
+  startinsert = false,
   filetype = {
     python = 'python -u',
     c = M.c0,
