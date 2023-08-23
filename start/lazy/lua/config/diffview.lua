@@ -11,9 +11,9 @@ M.diffviewfilehistory = function(mode)
   if mode == 0 then
     vim.cmd 'DiffviewFileHistory'
   elseif mode == 1 then
-    vim.cmd 'DiffviewFileHistory --max_count=64'
+    vim.cmd 'DiffviewFileHistory --max-count=64'
   elseif mode == 2 then
-    vim.cmd 'DiffviewFileHistory --max_count=238778'
+    vim.cmd 'DiffviewFileHistory --max-count=238778'
   elseif mode == 3 then
     vim.cmd 'DiffviewFileHistory --walk-reflogs --range=stash'
   elseif mode == 4 then
