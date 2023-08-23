@@ -10,6 +10,8 @@ require 'project_nvim'.setup {
   patterns = patterns,
 }
 
+vim.cmd 'autocmd BufRead * lua require("project_nvim.utils.history").write_projects_to_history()'
+
 local historyfile = require 'plenary.path':new(require 'project_nvim.utils.path'.historyfile)
 
 if not historyfile:exists() then
