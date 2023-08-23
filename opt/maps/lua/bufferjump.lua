@@ -2,19 +2,7 @@ local M = {}
 
 package.loaded['bufferjump'] = nil
 
-M.max_en = 0
 M.winid = 0
-
-M.check = function()
-  if M.max_en then
-    if vim.opt.winfixheight:get() == false then
-      vim.cmd 'wincmd _'
-      if M.winid ~= vim.fn.win_getid() then
-        vim.api.nvim_win_set_height(M.winid, 2)
-      end
-    end
-  end
-end
 
 local isallow = function(winnr)
   local bufnr = vim.fn.winbufnr(winnr)
@@ -27,17 +15,11 @@ local isallow = function(winnr)
   return 1
 end
 
--- M.k = function()
---   M.winid = vim.fn.win_getid()
---   vim.cmd 'wincmd k'
---   M.check()
--- end
---
--- M.j = function()
---   M.winid = vim.fn.win_getid()
---   vim.cmd 'wincmd j'
---   M.check()
--- end
+M.max_try = function()
+  if vim.g.max_en == 1 then
+    vim.cmd 'wincmd _'
+  end
+end
 
 M.wp = function()
   local count = vim.v.count
@@ -62,7 +44,7 @@ M.wp = function()
     end
   end
   vim.fn.win_gotoid(winid)
-  vim.cmd 'wincmd _'
+  M.max_try()
 end
 
 M.wn = function()
@@ -88,7 +70,7 @@ M.wn = function()
     end
   end
   vim.fn.win_gotoid(winid)
-  vim.cmd 'wincmd _'
+  M.max_try()
 end
 
 M.main = function()
@@ -103,17 +85,8 @@ M.main = function()
   end
 end
 
-M.oo = function()
-  M.max_en = 1
-  print 'win height auto max enabled'
-end
-
-M.ii = function()
-  M.max_en = nil
-  print 'win height auto max disabled'
-end
-
 M.i = function()
+  vim.g.max_en = 0
   vim.cmd 'wincmd ='
   if vim.opt.winfixheight:get() == true then
     vim.cmd [[
@@ -122,6 +95,16 @@ M.i = function()
       set winfixheight
     ]]
   end
+end
+
+M.o = function()
+  vim.g.max_en = 1
+  vim.cmd 'wincmd _'
+end
+
+M.z = function()
+  M.o()
+  vim.cmd 'wincmd |'
 end
 
 local gotoid = function(winid)
@@ -319,13 +302,13 @@ M.last_readable_winids = {}
 
 pcall(vim.api.nvim_del_autocmd, vim.g.bufferjump_au_bufleave)
 
-vim.g.bufferjump_au_bufleave = vim.api.nvim_create_autocmd({ "BufLeave", }, {
+vim.g.bufferjump_au_bufleave = vim.api.nvim_create_autocmd({ 'BufLeave', }, {
   callback = function(ev)
     if vim.fn.filereadable(ev.file) == 1 then
       local winid = vim.fn.win_getid(vim.fn.bufwinnr(ev.buf))
       if vim.tbl_contains(M.last_readable_winids, winid) == false then
         if #M.last_readable_winids < 2 then
-          M.last_readable_winids[#M.last_readable_winids+1] = winid
+          M.last_readable_winids[#M.last_readable_winids + 1] = winid
         else
           M.last_readable_winids[1] = M.last_readable_winids[2]
           M.last_readable_winids[2] = winid

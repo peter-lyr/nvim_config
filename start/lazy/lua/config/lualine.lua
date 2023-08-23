@@ -714,6 +714,7 @@ vim.cmd [[
       execute a:tabnr . "tabnext"
     elseif a:mousebutton == 'r' && a:mouseclicks == 1
       execute 'wincmd ='
+      let g:max_en = 0
     endif
   endfunction
   function! LualineSwitchWindow(win_number, mouseclicks, mousebutton, modifiers)
@@ -727,6 +728,7 @@ vim.cmd [[
     elseif a:mousebutton == 'l' && a:mouseclicks == 1
       execute a:win_number . 'wincmd w'
       wincmd _
+      let g:max_en = 1
     elseif a:mousebutton == 'r' && a:mouseclicks == 1
       let winid = win_getid()
       execute a:win_number . 'wincmd w'

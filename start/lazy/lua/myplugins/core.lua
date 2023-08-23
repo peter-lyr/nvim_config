@@ -165,9 +165,7 @@ return {
       -- jump window
 
       { '<leader><leader>`',   function() require 'bufferjump'.hjkl_toggle() end,                       mode = { 'n', 'v', }, silent = true,  desc = 'toggle map 1 2 3 4 h j k l', },
-      { '<leader>`',           function() require 'bufferjump'.p() end,                                                                mode = { 'n', 'v', }, silent = true,  desc = 'wincmd p', },
-      -- { '<c-3>',               function() require 'bufferjump'.k() end,                                 mode = { 'n', 'v', }, silent = true,  desc = 'wincmd k', },
-      -- { '<c-2>',               function() require 'bufferjump'.j() end,                                 mode = { 'n', 'v', }, silent = true,  desc = 'wincmd j', },
+      { '<leader>`',           function() require 'bufferjump'.p() end,                                 mode = { 'n', 'v', }, silent = true,  desc = 'wincmd p', },
       { '<c-1>',               '<c-w>h',                                                                mode = { 'n', 'v', }, silent = true,  desc = 'wincmd h', },
       { '<c-4>',               '<c-w>l',                                                                mode = { 'n', 'v', }, silent = true,  desc = 'wincmd l', },
       { '<c-2>',               function() require 'bufferjump'.wp() end,                                mode = { 'n', 'v', }, silent = true,  desc = 'winnr prev', },
@@ -176,7 +174,7 @@ return {
 
       -- win max min equal width height
 
-      { '<leader>wo',          '<c-w>_',                                                                mode = { 'n', 'v', }, silent = true,  desc = 'wincmd _', },
+      { '<leader>wo',          function() require 'bufferjump'.o() end,                                 mode = { 'n', 'v', }, silent = true,  desc = 'wincmd _', },
       { '<leader>wu',          '<c-w>|',                                                                mode = { 'n', 'v', }, silent = true,  desc = 'wincmd |', },
       { '<leader>wi',          function() require 'bufferjump'.i() end,                                 mode = { 'n', 'v', }, silent = true,  desc = 'wincmd =', },
       { '<leader>w1',          function() require 'bufferjump'.ix(0) end,                               mode = { 'n', 'v', }, silent = true,  desc = 'fix win back size 0', },
@@ -192,12 +190,7 @@ return {
       { '<leader>w-',          function() require 'bufferjump'.ix(10) end,                              mode = { 'n', 'v', }, silent = true,  desc = 'fix win back size no', },
       { '<leader>wh',          function() require 'bufferjump'.ix(11) end,                              mode = { 'n', 'v', }, silent = true,  desc = 'fix win back size prev', },
       { '<leader>wl',          function() require 'bufferjump'.ix(12) end,                              mode = { 'n', 'v', }, silent = true,  desc = 'fix win back size next', },
-      { '<leader>wz',          '<c-w>_<c-w>|',                                                          mode = { 'n', 'v', }, silent = true,  desc = 'wincmd =', },
-
-      -- toggle win height auto max
-
-      { '<leader>wvi',         function() require 'bufferjump'.ii() end,                                mode = { 'n', 'v', }, silent = true,  desc = 'win height auto max disable', },
-      { '<leader>wvo',         function() require 'bufferjump'.oo() end,                                mode = { 'n', 'v', }, silent = true,  desc = 'win height auto max enable', },
+      { '<leader>wk',          function() require 'bufferjump'.z() end,                                                          mode = { 'n', 'v', }, silent = true,  desc = 'wincmd _|', },
 
       -- toggle winfix width height
 
