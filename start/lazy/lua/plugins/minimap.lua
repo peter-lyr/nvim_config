@@ -1,8 +1,8 @@
 return {
   'wfxr/minimap.vim',
   lazy = true,
-  event = { "BufReadPost", "BufNewFile", },
-  cmd = { "Minimap", },
+  event = { 'BufReadPost', 'BufNewFile', },
+  cmd = { 'Minimap', },
   keys = {
     {
       '<leader>3',
@@ -67,7 +67,7 @@ return {
   config = function()
     if vim.g.loaded_minimap then
       vim.g.minimap_autostart = 0
-      vim.api.nvim_create_autocmd({ "WinClosed", }, {
+      vim.api.nvim_create_autocmd({ 'WinClosed', }, {
         callback = function()
           if vim.fn.bufnr() == vim.fn.bufnr '-MINIMAP-' then
             if vim.fn.expand '<afile>' == tostring(vim.fn.win_getid()) then
@@ -77,7 +77,7 @@ return {
         end,
       })
       local rescanned_bufnr = 0
-      vim.api.nvim_create_autocmd({ "CursorHold", }, {
+      vim.api.nvim_create_autocmd({ 'CursorHold', }, {
         callback = function()
           local bufnr = vim.fn.bufnr()
           if rescanned_bufnr ~= bufnr then
@@ -92,15 +92,22 @@ return {
         end,
       })
       local scrolloff = vim.opt.scrolloff
-      local minimap_rescan_allow = 1
-      local lastbufnr = 0
-      vim.api.nvim_create_autocmd({ "BufEnter", }, {
-        callback = function(ev)
+      local sidescrolloff = vim.opt.sidescrolloff
+      vim.api.nvim_create_autocmd({ 'CursorMoved', }, {
+        callback = function()
           if vim.bo.ft == 'minimap' then
             vim.opt.scrolloff = 99
+            vim.opt.sidescrolloff = 0
           else
             vim.opt.scrolloff = scrolloff
+            vim.opt.sidescrolloff = sidescrolloff
           end
+        end,
+      })
+      local minimap_rescan_allow = 1
+      local lastbufnr = 0
+      vim.api.nvim_create_autocmd({ 'BufEnter', }, {
+        callback = function(ev)
           local bufnr = vim.fn.bufnr '-MINIMAP-'
           if vim.g.minimap_autostart == 1 and lastbufnr ~= ev.buf and #ev.file > 0 and ev.buf ~= vim.fn.bufnr '-MINIMAP-' and vim.api.nvim_buf_get_option(ev.buf, 'buftype') ~= 'nofile' then
             -- print(ev.buf, ev.file, vim.api.nvim_buf_get_option(ev.buf, 'buftype'), '|', vim.api.nvim_buf_get_option(ev.buf, 'filetype'))
@@ -135,13 +142,13 @@ return {
           end
         end,
       })
-      vim.api.nvim_create_autocmd({ "TabLeave", }, {
+      vim.api.nvim_create_autocmd({ 'TabLeave', }, {
         callback = function()
           pcall(vim.cmd, 'MinimapClose')
         end,
       })
       local minimap_rescan_allow2 = 1
-      vim.api.nvim_create_autocmd({ "VimResized", }, {
+      vim.api.nvim_create_autocmd({ 'VimResized', }, {
         callback = function()
           if minimap_rescan_allow2 == 1 then
             minimap_rescan_allow2 = 0
