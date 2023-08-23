@@ -4,8 +4,8 @@ local M = {}
 
 M.numberofcores = 1
 
-local f = io.popen "wmic cpu get NumberOfCores"
-for dir in string.gmatch(f:read "*a", "([%S ]+)") do
+local f = io.popen 'wmic cpu get NumberOfCores'
+for dir in string.gmatch(f:read '*a', '([%S ]+)') do
   local NumberOfCores = vim.fn.str2nr(vim.fn.trim(dir))
   if NumberOfCores > 0 then
     M.numberofcores = NumberOfCores
@@ -13,7 +13,7 @@ for dir in string.gmatch(f:read "*a", "([%S ]+)") do
 end
 f:close()
 
-local path = require "plenary.path"
+local path = require 'plenary.path'
 
 local function systemcd(p)
   local s = ''
@@ -152,6 +152,45 @@ M.c_level = 0
 M.c_projdir = ''
 M.mainfile = ''
 
+local winheight = -1
+local winwidth = -1
+
+function SaveWinSize()
+  winheight = vim.api.nvim_win_get_height(0)
+  winwidth = vim.api.nvim_win_get_width(0)
+end
+
+function RestoreWinSize()
+  if winheight ~= -1 and winwidth ~= -1 then
+    vim.api.nvim_win_set_height(0, winheight)
+    vim.api.nvim_win_set_width(0, winwidth)
+  end
+end
+
+local before_winid = -1
+
+local function quit()
+  vim.schedule(function()
+    if vim.api.nvim_win_is_valid(before_winid) == true then
+      vim.fn.win_gotoid(before_winid)
+      RestoreWinSize()
+    end
+  end)
+end
+
+M.finish = function()
+  before_winid = vim.fn.win_getid()
+  SaveWinSize()
+  vim.cmd 'RunCode'
+  vim.cmd 'norm Gzz'
+  vim.fn.timer_start(100, function()
+    vim.api.nvim_win_set_height(0, 15)
+    local opt = { buffer = vim.fn.bufnr(), nowait = true, silent = true, }
+    vim.keymap.set('n', 'q', quit, opt)
+    vim.keymap.set('n', '<esc>', quit, opt)
+  end)
+end
+
 M.runbuild = function(rebuild_en)
   M.rebuild_en = rebuild_en
   pcall(vim.cmd, 'ProjectRootCD')
@@ -182,8 +221,8 @@ M.runbuild = function(rebuild_en)
             filetype = nil,
             project = {
               [dir.filename] = {
-                name = "C Proj",
-                description = "Project with cmakelists",
+                name = 'C Proj',
+                description = 'Project with cmakelists',
                 command = M.cp0(dir.filename, projname, mainfile),
               },
             },
@@ -203,7 +242,7 @@ M.runbuild = function(rebuild_en)
       end
     end
   end
-  vim.cmd 'RunCode'
+  M.finish()
 end
 
 M.build = function(rebuild_en)
@@ -235,8 +274,8 @@ M.build = function(rebuild_en)
           require 'code_runner'.setup {
             project = {
               [dir.filename] = {
-                name = "C Proj",
-                description = "Project with cmakelists",
+                name = 'C Proj',
+                description = 'Project with cmakelists',
                 command = M.cp1(dir.filename, projname, mainfile),
               },
             },
@@ -256,7 +295,7 @@ M.build = function(rebuild_en)
       end
     end
   end
-  vim.cmd 'RunCode'
+  M.finish()
 end
 
 M.run = function()
@@ -279,8 +318,8 @@ M.run = function()
           require 'code_runner'.setup {
             project = {
               [dir.filename] = {
-                name = "C Proj",
-                description = "Project with cmakelists",
+                name = 'C Proj',
+                description = 'Project with cmakelists',
                 command = M.cp2(dir.filename, mainfile),
               },
             },
@@ -300,7 +339,7 @@ M.run = function()
       end
     end
   end
-  vim.cmd 'RunCode'
+  M.finish()
 end
 
 return M
