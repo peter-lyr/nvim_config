@@ -730,8 +730,10 @@ vim.cmd [[
       execute a:win_number . 'wincmd w'
       if filereadable(nvim_buf_get_name(0))
         execute 'close'
+        call win_gotoid(winid)
+      else
+        call feedkeys("q")
       endif
-      call win_gotoid(winid)
     elseif a:mousebutton == 'l' && a:mouseclicks == 1
       execute a:win_number . 'wincmd w'
       wincmd _
