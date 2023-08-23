@@ -16,6 +16,18 @@ local filename = function(hl_group)
   end
 end
 
+function WinFixHeighEn()
+  local winfixheight = vim.opt.winfixheight:get()
+  vim.cmd 'set winfixheight'
+  return winfixheight
+end
+
+function WinFixHeighDis(winfixheight)
+  vim.fn.timer_start(2000, function()
+    vim.opt.winfixheight = winfixheight
+  end)
+end
+
 local function rep(content)
   content = vim.fn.tolower(content)
   content = string.gsub(content, '/', '\\')
@@ -451,7 +463,9 @@ vim.keymap.set({ 'n', 'v', }, '<c-h>', function()
   local curbufnr_idx = vim.fn.indexof(buffers, string.format('v:val == %d', curbufnr)) + 1
   if curbufnr_idx >= 1 then
     local prevbufnr = buffers[curbufnr_idx - 1 >= 1 and curbufnr_idx - 1 or #buffers]
+    local winfixheight = WinFixHeighEn()
     vim.cmd('b' .. prevbufnr)
+    WinFixHeighDis(winfixheight)
   end
 end, { desc = 'prev buffer', })
 
@@ -461,7 +475,9 @@ vim.keymap.set({ 'n', 'v', }, '<c-l>', function()
   local curbufnr_idx = vim.fn.indexof(buffers, string.format('v:val == %d', curbufnr)) + 1
   if curbufnr_idx >= 1 then
     local nextbufnr = buffers[curbufnr_idx + 1 <= #buffers and curbufnr_idx + 1 or 1]
+    local winfixheight = WinFixHeighEn()
     vim.cmd('b' .. nextbufnr)
+    WinFixHeighDis(winfixheight)
   end
 end, { desc = 'next buffer', })
 
@@ -698,7 +714,9 @@ function LualineSwitchBuffer(bufnr, mouseclicks, mousebutton, modifiers)
         return
       end
     end
+    local winfixheight = WinFixHeighEn()
     vim.cmd(':buffer ' .. tostring(bufnr))
+    WinFixHeighDis(winfixheight)
   elseif mousebutton == 'r' and mouseclicks == 1 then
     if vim.fn.buflisted(vim.fn.bufnr()) == 0 then
       if not pcall(vim.fn.win_gotoid, vim.g.lastbufwinid) then
@@ -707,11 +725,13 @@ function LualineSwitchBuffer(bufnr, mouseclicks, mousebutton, modifiers)
       end
     end
     local curbufnr = vim.fn.bufnr()
+    local winfixheight = WinFixHeighEn()
     vim.cmd(':buffer ' .. tostring(bufnr))
     local winid = vim.fn.win_getid()
     vim.cmd 'NvimTreeFindFile'
     vim.fn.win_gotoid(winid)
     vim.cmd(':buffer ' .. tostring(curbufnr))
+    WinFixHeighDis(winfixheight)
   end
 end
 
@@ -739,10 +759,10 @@ function LualineSwitchWindow(win_number, mouseclicks, mousebutton, modifiers)
     vim.cmd(win_number .. 'wincmd w')
     require 'bufferjump'.o()
   elseif mousebutton == 'r' and mouseclicks == 1 then
-      local winid = vim.fn.win_getid()
-      vim.cmd(win_number .. 'wincmd w')
-      vim.cmd 'NvimTreeFindFile'
-      vim.fn.win_gotoid(winid)
+    local winid = vim.fn.win_getid()
+    vim.cmd(win_number .. 'wincmd w')
+    vim.cmd 'NvimTreeFindFile'
+    vim.fn.win_gotoid(winid)
   end
 end
 
