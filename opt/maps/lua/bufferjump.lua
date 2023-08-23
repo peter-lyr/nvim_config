@@ -231,7 +231,7 @@ M.ix = function(x)
               vim.fn.win_gotoid(cur_winid)
               vim.cmd 'e!'
               vim.cmd 'wincmd h'
-              vim.api.nvim_win_set_width(0, vim.api.nvim_win_get_width(0) - x * 17 + 2 + vim.api.nvim_win_get_width(cur_winid))
+              vim.api.nvim_win_set_width(0, vim.api.nvim_win_get_width(0) - (x * 17 + 2) + vim.api.nvim_win_get_width(cur_winid))
               vim.cmd 'e!'
             end
           end
