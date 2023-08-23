@@ -688,37 +688,36 @@ end, { desc = 'buffers workflow simple +', })
 
 vim.opt.laststatus = 3
 
+function LualineSwitchBuffer(bufnr, mouseclicks, mousebutton, modifiers)
+  if mousebutton == 'm' and mouseclicks == 1 then
+    vim.cmd(':Bdelete! ' .. tostring(bufnr))
+  elseif mousebutton == 'l' and mouseclicks == 1 then
+    if vim.fn.buflisted(vim.fn.bufnr()) == 0 then
+      if not pcall(vim.fn.win_gotoid, vim.g.lastbufwinid) then
+        print('error! see config/lualine.lua, g:lastbufwinid:', vim.g.lastbufwinid)
+        return
+      end
+    end
+    vim.cmd(':buffer ' .. tostring(bufnr))
+  elseif mousebutton == 'r' and mouseclicks == 1 then
+    if vim.fn.buflisted(vim.fn.bufnr()) == 0 then
+      if not pcall(vim.fn.win_gotoid, vim.g.lastbufwinid) then
+        print('error! see config/lualine.lua, g:lastbufwinid:', vim.g.lastbufwinid)
+        return
+      end
+    end
+    local curbufnr = vim.fn.bufnr()
+    vim.cmd(':buffer ' .. tostring(bufnr))
+    local winid = vim.fn.win_getid()
+    vim.cmd 'NvimTreeFindFile'
+    vim.fn.win_gotoid(winid)
+    vim.cmd(':buffer ' .. tostring(curbufnr))
+  end
+end
+
 vim.cmd [[
   function! LualineSwitchBuffer(bufnr, mouseclicks, mousebutton, modifiers)
-    " echomsg '|' .. a:bufnr .. '|' .. a:mouseclicks .. '|' .. a:mousebutton .. '|' .. a:modifiers .. '|'
-    if a:mousebutton == 'm' && a:mouseclicks == 1
-      execute ":Bdelete! " . a:bufnr
-    elseif a:mousebutton == 'l' && a:mouseclicks == 1
-      if buflisted(bufnr()) == 0
-        try
-          call win_gotoid(g:lastbufwinid)
-        catch
-          echomsg 'error! see config/lualine.lua, g:lastbufwinid: ' .. g:lastbufwinid
-          return
-        endtry
-      endif
-      execute ":buffer " . a:bufnr
-    elseif a:mousebutton == 'r' && a:mouseclicks == 1
-      if buflisted(bufnr()) == 0
-        try
-          call win_gotoid(g:lastbufwinid)
-        catch
-          echomsg 'error! see config/lualine.lua, g:lastbufwinid: ' .. g:lastbufwinid
-          return
-        endtry
-      endif
-      let curbufnr = bufnr()
-      execute ":buffer " . a:bufnr
-      let winid = win_getid()
-      NvimTreeFindFile
-      call win_gotoid(winid)
-      execute ":buffer " . curbufnr
-    endif
+    call v:lua.LualineSwitchBuffer(a:bufnr, a:mouseclicks, a:mousebutton, a:modifiers)
   endfunction
   function! LualineSwitchTab(tabnr, mouseclicks, mousebutton, modifiers)
     if a:mousebutton == 'm' && a:mouseclicks == 1
