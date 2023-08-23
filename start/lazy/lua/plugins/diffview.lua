@@ -29,7 +29,7 @@ return {
     { '<leader>gvb', function() require 'config.diffview'.diffviewfilehistory(4) end, mode = { 'n', 'v', }, silent = true, desc = 'Diffview filehistory base', },
     { '<leader>gvr', function() require 'config.diffview'.diffviewfilehistory(5) end, mode = { 'n', 'v', }, silent = true, desc = 'Diffview filehistory range', },
     { '<leader>gvo', function() require 'config.diffview'.diffviewopen() end,         mode = { 'n', 'v', }, silent = true, desc = 'Diffview open', },
-    { '<leader>gvl', 'DiffviewRefresh',                                               mode = { 'n', 'v', }, silent = true, desc = 'Diffview refresh', },
+    { '<leader>gvl', ':<c-u>DiffviewRefresh<cr>',                                     mode = { 'n', 'v', }, silent = true, desc = 'Diffview refresh', },
     { '<leader>gvq', function() require 'config.diffview'.diffviewclose() end,        mode = { 'n', 'v', }, silent = true, desc = 'Diffview close', },
     { '<leader>gvw', ':<c-u>Telescope git_diffs diff_commits<cr>',                    mode = { 'n', 'v', }, silent = true, desc = 'Diffview Telescope git_diffs diff_commits', },
   },
