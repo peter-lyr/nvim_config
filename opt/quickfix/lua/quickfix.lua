@@ -56,7 +56,9 @@ local open = function()
     if vim.api.nvim_win_is_valid(vim.g.qf_before_winid) == true then
       vim.fn.win_gotoid(vim.g.qf_before_winid)
       vim.cmd('e ' .. cfile)
+      vim.cmd 'ccl'
       if line ~= 0 and col ~= 0 then
+        vim.cmd 'wincmd _'
         vim.cmd(string.format('norm %dgg%d|', line, col))
       else
         local mark = vim.api.nvim_buf_get_mark(0, '"')
@@ -65,9 +67,7 @@ local open = function()
           pcall(vim.api.nvim_win_set_cursor, 0, mark)
         end
       end
-      vim.cmd 'ccl'
     end
-  else
   end
 end
 
