@@ -31,17 +31,11 @@ M.wp = function()
       winnr = max
     end
     winid = vim.fn.win_getid(winnr)
-    if vim.api.nvim_win_get_height(winid) < 2 then
-      vim.api.nvim_win_set_height(winid, 2)
-    end
   else
     if count > max then
       count = max
     end
     winid = vim.fn.win_getid(count)
-    if vim.api.nvim_win_get_height(winid) < 2 then
-      vim.api.nvim_win_set_height(winid, 2)
-    end
   end
   vim.fn.win_gotoid(winid)
   M.max_try()
@@ -57,17 +51,11 @@ M.wn = function()
       winnr = 1
     end
     winid = vim.fn.win_getid(winnr)
-    if vim.api.nvim_win_get_height(winid) < 2 then
-      vim.api.nvim_win_set_height(winid, 2)
-    end
   else
     if count > max then
       count = max
     end
     winid = vim.fn.win_getid(count)
-    if vim.api.nvim_win_get_height(winid) < 2 then
-      vim.api.nvim_win_set_height(winid, 2)
-    end
   end
   vim.fn.win_gotoid(winid)
   M.max_try()
@@ -105,13 +93,6 @@ end
 M.z = function()
   M.o()
   vim.cmd 'wincmd |'
-end
-
-local gotoid = function(winid)
-  if vim.api.nvim_win_get_height(winid) < 2 then
-    vim.api.nvim_win_set_height(winid, 2)
-  end
-  vim.fn.win_gotoid(winid)
 end
 
 pcall(vim.api.nvim_del_autocmd, vim.g.bufferjump_au_bufenter)
@@ -157,7 +138,7 @@ M.ix = function(x)
   if x == 9 then
     pcall(vim.api.nvim_del_autocmd, vim.g.bufferjump_au_bufenter)
     for winnr = 1, vim.fn.winnr '$' do
-      gotoid(vim.fn.win_getid(winnr))
+      vim.fn.win_gotoid(vim.fn.win_getid(winnr))
       if vim.opt.winfixheight:get() == true then
         vim.cmd [[
           set nowinfixheight
@@ -178,7 +159,7 @@ M.ix = function(x)
   elseif x == 10 then
     M.x = -1
     for winnr = 1, vim.fn.winnr '$' do
-      gotoid(vim.fn.win_getid(winnr))
+      vim.fn.win_gotoid(vim.fn.win_getid(winnr))
       vim.cmd [[
         set nowinfixheight
         set nowinfixwidth
@@ -191,7 +172,7 @@ M.ix = function(x)
         local cur_winid = vim.fn.win_getid(winnr)
         if vim.api.nvim_get_option_value('winfixheight', { win = cur_winid, scope = 'global', }) == true
             or vim.api.nvim_get_option_value('winfixwidth', { win = cur_winid, scope = 'global', }) == true then
-          gotoid(vim.fn.win_getid(winnr))
+          vim.fn.win_gotoid(vim.fn.win_getid(winnr))
           return
         end
       end
@@ -203,7 +184,7 @@ M.ix = function(x)
         local cur_winid = vim.fn.win_getid(winnr)
         if vim.api.nvim_get_option_value('winfixheight', { win = cur_winid, scope = 'global', }) == true
             or vim.api.nvim_get_option_value('winfixwidth', { win = cur_winid, scope = 'global', }) == true then
-          gotoid(cur_winid)
+          vim.fn.win_gotoid(cur_winid)
           return
         end
       end
@@ -245,7 +226,7 @@ M.ix = function(x)
           if vim.api.nvim_get_option_value('winfixwidth', { win = cur_winid, scope = 'global', }) == true then
             local temp = vim.api.nvim_win_get_width(cur_winid)
             if temp ~= x * 17 then
-              gotoid(cur_winid)
+              vim.fn.win_gotoid(cur_winid)
               vim.cmd 'e!'
               vim.cmd 'wincmd h'
               vim.api.nvim_win_set_width(0, vim.api.nvim_win_get_width(0) - x * 17 + vim.api.nvim_win_get_width(cur_winid))
@@ -256,7 +237,7 @@ M.ix = function(x)
       end
     end
   end
-  gotoid(winid)
+  vim.fn.win_gotoid(winid)
 end
 
 M.hh = function()
