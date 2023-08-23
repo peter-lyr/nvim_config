@@ -203,6 +203,14 @@ return {
       { '<a-s-j>',             function() vim.cmd '5wincmd -' end,                                      mode = { 'n', 'v', }, silent = true,  desc = '10wincmd -', },
       { '<a-s-k>',             function() vim.cmd '5wincmd +' end,                                      mode = { 'n', 'v', }, silent = true,  desc = '10wincmd +', },
 
+      -- change win around
+
+      { '<leader>wa',          function() require 'bufferjump'.change_win_around 'h' end,               mode = { 'n', 'v', }, silent = true,  desc = 'change win around h', },
+      { '<leader>ws',          function() require 'bufferjump'.change_win_around 'j' end,               mode = { 'n', 'v', }, silent = true,  desc = 'change win around j', },
+      { '<leader>ww',          function() require 'bufferjump'.change_win_around 'k' end,               mode = { 'n', 'v', }, silent = true,  desc = 'change win around k', },
+      { '<leader>wd',          function() require 'bufferjump'.change_win_around 'l' end,               mode = { 'n', 'v', }, silent = true,  desc = 'change win around l', },
+      { '<leader>wz',          function() require 'bufferjump'.change_win_around_last() end,            mode = { 'n', 'v', }, silent = true,  desc = 'change win around l', },
+
       ------------------------
       -- buffernew.lua
       ------------------------

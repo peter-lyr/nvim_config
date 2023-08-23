@@ -8,11 +8,11 @@ local isallow = function(winnr)
   local bufnr = vim.fn.winbufnr(winnr)
   if vim.api.nvim_buf_is_valid(bufnr) then
     local ft = vim.api.nvim_buf_get_option(bufnr, 'filetype')
-    if vim.tbl_contains({ 'NvimTree', 'fugitive', 'minimap', 'aerial', 'edgy', }, ft) == true then
-      return nil
+    if vim.tbl_contains({ 'NvimTree', 'fugitive', 'minimap', 'aerial', 'edgy', }, ft) == false then
+      return 1
     end
   end
-  return 1
+  return nil
 end
 
 M.max_try = function()
@@ -311,6 +311,45 @@ M.p = function()
       pcall(vim.fn.win_gotoid, M.last_readable_winids[1])
     else
       pcall(vim.fn.win_gotoid, M.last_readable_winids[2])
+    end
+  end
+end
+
+local winnr1, winid1, bufnr1, winnr2, winid2, bufnr2
+local changed = 1
+
+M.change_win_around = function(dir)
+  changed = 0
+  winnr1 = vim.fn.winnr()
+  if not isallow(winnr1) then
+    return
+  end
+  winid1 = vim.fn.win_getid()
+  bufnr1 = vim.fn.bufnr()
+  vim.cmd('wincmd ' .. dir)
+  winid2 = vim.fn.win_getid()
+  winnr2 = vim.fn.winnr()
+  if winid1 ~= winid2 and isallow(winnr2) then
+    bufnr2 = vim.fn.bufnr()
+    Buffer(bufnr1)
+    vim.fn.win_gotoid(winid1)
+    Buffer(bufnr2)
+    vim.fn.win_gotoid(winid2)
+  end
+end
+
+M.change_win_around_last = function()
+  if not isallow(winnr1) or not isallow(winnr1) then
+    return
+  end
+  if vim.fn.win_gotoid(winid1) == 1 then
+    Buffer(bufnr1)
+    vim.fn.win_gotoid(winid2)
+    Buffer(bufnr2)
+    bufnr1, bufnr2 = bufnr2, bufnr1
+    changed = 1 - changed
+    if changed == 1 then
+      vim.fn.win_gotoid(vim.fn.win_getid(vim.fn.bufwinnr(bufnr2)))
     end
   end
 end
