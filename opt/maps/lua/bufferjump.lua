@@ -61,16 +61,19 @@ M.wn = function()
   M.max_try()
 end
 
-M.main = function()
+M.getmain = function()
   for winnr = 1, vim.fn.winnr '$' do
     local bufnr = vim.fn.winbufnr(winnr)
     local fname = vim.api.nvim_buf_get_name(bufnr)
     if vim.fn.filereadable(fname) == 1 then
       local winid = vim.fn.win_getid(winnr)
-      vim.fn.win_gotoid(winid)
-      break
+      return winid
     end
   end
+end
+
+M.main = function()
+  vim.fn.win_gotoid(M.getmain())
 end
 
 M.i = function()
@@ -101,9 +104,10 @@ M.au = function()
   vim.g.bufferjump_au_bufenter = vim.api.nvim_create_autocmd({ 'CursorHold', }, {
     callback = function(ev)
       if M.x ~= -1 and vim.api.nvim_buf_get_option(ev.buf, 'buftype') ~= 'quickfix' then
+        local main = M.getmain()
         for winnr = 1, vim.fn.winnr '$' do
-          if isallow(winnr) then
-            local cur_winid = vim.fn.win_getid(winnr)
+          local cur_winid = vim.fn.win_getid(winnr)
+          if isallow(winnr) and main ~= cur_winid then
             if vim.api.nvim_get_option_value('winfixheight', { win = cur_winid, scope = 'global', }) == true then
               if vim.api.nvim_win_get_height(cur_winid) ~= M.x * 7 + 2 then
                 M.ix(M.x)
@@ -208,8 +212,9 @@ M.ix = function(x)
       end
     end
     local cnt = 1
+    local main = M.getmain()
     for winnr = 1, vim.fn.winnr '$' do
-      if isallow(winnr) then
+      if isallow(winnr) and main ~= cur_winid then
         local cur_winid = vim.fn.win_getid(winnr)
         if vim.api.nvim_get_option_value('winfixheight', { win = cur_winid, scope = 'global', }) == true then
           if vim.g.WinFixHeighEnTimer == 0 then
@@ -223,7 +228,7 @@ M.ix = function(x)
     end
     for _ = 1, cnt do
       for winnr = 1, vim.fn.winnr '$' do
-        if isallow(winnr) then
+        if isallow(winnr) and main ~= cur_winid then
           local cur_winid = vim.fn.win_getid(winnr)
           if vim.api.nvim_get_option_value('winfixwidth', { win = cur_winid, scope = 'global', }) == true then
             local temp = vim.api.nvim_win_get_width(cur_winid)
