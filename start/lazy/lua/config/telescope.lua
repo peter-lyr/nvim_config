@@ -110,6 +110,7 @@ local get_setup_table = function(file_ignore_patterns)
         '--line-number',
         '--column',
         '--smart-case',
+        '--fixed-string',
       },
       wrap_results = false,
     },
@@ -235,7 +236,7 @@ end
 
 M.live_grep_all = function()
   M.all(1)
-  vim.cmd 'Telescope live_grep vimgrep_arguments=rg,--color=never,--no-heading,--with-filename,--line-number,--column,--smart-case,-g,*'
+  vim.cmd 'Telescope live_grep vimgrep_arguments=rg,--color=never,--no-heading,--with-filename,--line-number,--column,--smart-case,--fixed-string,-g,*'
 end
 
 local p = require 'plenary.path'
