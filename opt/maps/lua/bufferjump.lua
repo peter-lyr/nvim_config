@@ -331,10 +331,14 @@ M.change_win_around = function(dir)
   winnr2 = vim.fn.winnr()
   if winid1 ~= winid2 and isallow(winnr2) then
     bufnr2 = vim.fn.bufnr()
-    Buffer(bufnr1)
+    vim.cmd('b' .. tostring(bufnr1))
     vim.fn.win_gotoid(winid1)
-    Buffer(bufnr2)
+    vim.cmd 'set nowinfixheight'
+    vim.cmd 'set nowinfixwidth'
+    vim.cmd('b' .. tostring(bufnr2))
     vim.fn.win_gotoid(winid2)
+    vim.cmd 'set nowinfixheight'
+    vim.cmd 'set nowinfixwidth'
   end
 end
 
@@ -343,13 +347,19 @@ M.change_win_around_last = function()
     return
   end
   if vim.fn.win_gotoid(winid1) == 1 then
-    Buffer(bufnr1)
+    vim.cmd 'set nowinfixheight'
+    vim.cmd 'set nowinfixwidth'
+    vim.cmd('b' .. tostring(bufnr1))
     vim.fn.win_gotoid(winid2)
-    Buffer(bufnr2)
+    vim.cmd 'set nowinfixheight'
+    vim.cmd 'set nowinfixwidth'
+    vim.cmd('b' .. tostring(bufnr1))
     bufnr1, bufnr2 = bufnr2, bufnr1
     changed = 1 - changed
     if changed == 1 then
       vim.fn.win_gotoid(vim.fn.win_getid(vim.fn.bufwinnr(bufnr2)))
+      vim.cmd 'set nowinfixheight'
+      vim.cmd 'set nowinfixwidth'
     end
   end
 end
