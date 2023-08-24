@@ -174,9 +174,11 @@ M.ix = function(x)
     for winnr = vim.fn.winnr() - 1, 1, -1 do
       if isallow(winnr) then
         local cur_winid = vim.fn.win_getid(winnr)
-        if vim.api.nvim_get_option_value('winfixheight', { win = cur_winid, scope = 'global', }) == true
-            or vim.api.nvim_get_option_value('winfixwidth', { win = cur_winid, scope = 'global', }) == true then
-          vim.fn.win_gotoid(vim.fn.win_getid(winnr))
+        local fixh = vim.api.nvim_get_option_value('winfixheight', { win = cur_winid, scope = 'global', })
+        local fixw = vim.api.nvim_get_option_value('winfixwidth', { win = cur_winid, scope = 'global', })
+        if fixh == true or fixw == true then
+          vim.fn.win_gotoid(cur_winid)
+          print(string.format("%d: winfixheight: %s, winfixwidth: %s", cur_winid, tostring(fixh), tostring(fixw)))
           return
         end
       end
@@ -186,9 +188,11 @@ M.ix = function(x)
     for winnr = vim.fn.winnr() + 1, vim.fn.winnr '$' do
       if isallow(winnr) then
         local cur_winid = vim.fn.win_getid(winnr)
-        if vim.api.nvim_get_option_value('winfixheight', { win = cur_winid, scope = 'global', }) == true
-            or vim.api.nvim_get_option_value('winfixwidth', { win = cur_winid, scope = 'global', }) == true then
+        local fixh = vim.api.nvim_get_option_value('winfixheight', { win = cur_winid, scope = 'global', })
+        local fixw = vim.api.nvim_get_option_value('winfixwidth', { win = cur_winid, scope = 'global', })
+        if fixh == true or fixw == true then
           vim.fn.win_gotoid(cur_winid)
+          print(string.format("%d: winfixheight: %s, winfixwidth: %s", cur_winid, tostring(fixh), tostring(fixw)))
           return
         end
       end
