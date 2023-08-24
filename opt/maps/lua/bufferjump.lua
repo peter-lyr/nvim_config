@@ -214,8 +214,8 @@ M.ix = function(x)
     local cnt = 1
     local main = M.getmain()
     for winnr = 1, vim.fn.winnr '$' do
+      local cur_winid = vim.fn.win_getid(winnr)
       if isallow(winnr) and main ~= cur_winid then
-        local cur_winid = vim.fn.win_getid(winnr)
         if vim.api.nvim_get_option_value('winfixheight', { win = cur_winid, scope = 'global', }) == true then
           if vim.g.WinFixHeighEnTimer == 0 then
             vim.api.nvim_win_set_height(cur_winid, x * 7 + 2)
@@ -228,8 +228,8 @@ M.ix = function(x)
     end
     for _ = 1, cnt do
       for winnr = 1, vim.fn.winnr '$' do
+        local cur_winid = vim.fn.win_getid(winnr)
         if isallow(winnr) and main ~= cur_winid then
-          local cur_winid = vim.fn.win_getid(winnr)
           if vim.api.nvim_get_option_value('winfixwidth', { win = cur_winid, scope = 'global', }) == true then
             local temp = vim.api.nvim_win_get_width(cur_winid)
             if temp ~= x * 17 + 2 then
