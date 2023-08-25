@@ -11,9 +11,12 @@ def rm_build_dirs(project_root):
     for root, dirs, _ in os.walk(project_root):
         for r in rms:
             if r in dirs:
-                r = os.path.join(root, "build")
-                shutil.rmtree(r)
-                print(f"Deleted {r}")
+                r = os.path.join(root, r)
+                try:
+                    print(f"{r} Deleting...")
+                    shutil.rmtree(r)
+                except Exception as e:
+                    print(e)
 
 
 def is_test_dir(f):
