@@ -33,7 +33,7 @@ M.check = function(ev)
     local info = vim.fn.system(string.format('file -b --mime-type --mime-encoding "%s"', ev.file))
     info = string.gsub(info, '%s', '')
     info = vim.fn.split(info, ';')
-    if info[2] and string.match(info[2], 'binary') or info[1] and not string.match(info[1], 'empty') then
+    if info[2] and string.match(info[2], 'binary') and info[1] and not string.match(info[1], 'empty') then
       local file = rep(ev.file)
       local xxdout = string.format('%s\\.xxdout', vim.fn.fnamemodify(file, ':h'))
       if not require 'plenary.path':new(xxdout):exists() then
