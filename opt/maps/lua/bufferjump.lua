@@ -362,7 +362,7 @@ M.change_win_around_last = function()
     vim.fn.win_gotoid(winid2)
     vim.cmd 'set nowinfixheight'
     vim.cmd 'set nowinfixwidth'
-    vim.cmd('b' .. tostring(bufnr1))
+    vim.cmd('b' .. tostring(bufnr2))
     bufnr1, bufnr2 = bufnr2, bufnr1
     changed = 1 - changed
     if changed == 1 then
