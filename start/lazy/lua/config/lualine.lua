@@ -572,7 +572,7 @@ vim.api.nvim_create_autocmd({ 'TabEnter', }, {
 
 -- restore hidden tabs
 
-vim.keymap.set({ 'n', 'v', }, '<leader>q1', function()
+local function tabsworkflow()
   pcall(vim.cmd, 'MinimapClose')
   vim.cmd 'tabo'
   vim.cmd 'wincmd o'
@@ -615,62 +615,115 @@ vim.keymap.set({ 'n', 'v', }, '<leader>q1', function()
   for _, v in ipairs(vim.fn.reverse(tabidxs)) do
     vim.cmd(v .. 'tabclose')
   end
-end, { desc = 'restore hidden tabs', })
+end
 
-vim.keymap.set({ 'n', 'v', }, '<leader>q2', function()
-  local NvimTree = nil
-  local fugitive = nil
-  local minimap = nil
-  local aerial = nil
-  for winnr = 1, vim.fn.winnr '$' do
-    local bufnr = vim.fn.winbufnr(winnr)
-    if vim.bo[bufnr].ft == 'NvimTree' then
-      NvimTree = 1
-    elseif vim.bo[vim.fn.winbufnr(winnr)].ft == 'fugitive' then
-      fugitive = 1
-    elseif vim.bo[vim.fn.winbufnr(winnr)].ft == 'minimap' then
-      minimap = 1
-    elseif vim.bo[vim.fn.winbufnr(winnr)].ft == 'aerial' then
-      aerial = 1
+vim.keymap.set({ 'n', 'v', }, '<c-q><c-t>', tabsworkflow, { desc = 'tabsworkflow', })
+vim.keymap.set({ 'n', 'v', }, '<c-q>t', tabsworkflow, { desc = 'tabsworkflow', })
+
+local fts = {
+  'fugitive',
+  'NvimTree',
+  'minimap',
+  'aerial',
+  'edgy',
+}
+
+local function onetabworkflow()
+  vim.cmd 'tabonly'
+  if vim.fn.filereadable(vim.api.nvim_buf_get_name(0)) ~= 1 then
+    for winnr = 1, vim.fn.winnr '$' do
+      local bufnr = vim.fn.winbufnr(winnr)
+      local ft = vim.bo[bufnr].ft
+      if vim.tbl_contains(fts, ft) ~= true then
+        vim.fn.win_gotoid(vim.fn.win_getid(winnr))
+      end
     end
   end
-  pcall(vim.cmd, 'MinimapClose')
-  vim.cmd 'tabo'
-  vim.cmd 'wincmd o'
-  local winid = vim.fn.win_getid()
-  local projs = { rep(vim.fn['ProjectRootGet'](vim.api.nvim_buf_get_name(0))), }
-  for b = 1, vim.fn.bufnr '$' do
-    if vim.fn.buflisted(b) ~= 0 and vim.api.nvim_buf_get_option(b, 'buftype') ~= 'quickfix' then
-      local fname = vim.fn.tolower(rep(vim.api.nvim_buf_get_name(b)))
+  local cur_winnr = vim.fn.winnr()
+  local cur_bufnr = vim.fn.bufnr()
+  local cur_winid = vim.fn.win_getid()
+  local cur_fname = vim.api.nvim_buf_get_name(cur_bufnr)
+  local winids = {}
+  for winnr = 1, vim.fn.winnr '$' do
+    local bufnr = vim.fn.winbufnr(winnr)
+    local ft = vim.bo[bufnr].ft
+    if vim.tbl_contains(fts, ft) ~= true and winnr ~= cur_winnr then
+      winids[#winids + 1] = vim.fn.win_getid(winnr)
+    end
+  end
+  for _, winid in ipairs(winids) do
+    vim.fn.win_gotoid(winid)
+    pcall(vim.cmd, 'close')
+  end
+  vim.fn.win_gotoid(cur_winid)
+  local projs = { rep(vim.call('ProjectRootGet', cur_fname)), }
+  local bufnrs = {}
+  for bufnr = 1, vim.fn.bufnr '$' do
+    if vim.fn.buflisted(bufnr) ~= 0 and vim.api.nvim_buf_get_option(bufnr, 'buftype') ~= 'quickfix' then
+      local fname = vim.fn.tolower(rep(vim.api.nvim_buf_get_name(bufnr)))
       if #fname > 0 and vim.fn.filereadable(fname) == 1 then
-        local proj = rep(vim.fn['ProjectRootGet'](fname))
+        local proj = rep(vim.call('ProjectRootGet', fname))
         if vim.tbl_contains(projs, proj) ~= true then
           projs[#projs + 1] = proj
-          vim.cmd 'split'
-          vim.cmd('e ' .. fname)
+          bufnrs[#bufnrs + 1] = bufnr
         end
       end
     end
   end
-  vim.fn.win_gotoid(winid)
-  vim.cmd 'wincmd H'
-  if minimap then
-    vim.cmd 'Minimap'
-    vim.fn.win_gotoid(winid)
+  if #bufnrs > 0 then
+    local first_proj = vim.fn.filereadable(cur_fname)
+    for _, bufnr in ipairs(bufnrs) do
+      if first_proj == true then
+        first_proj = nil
+      else
+        vim.cmd 'split'
+      end
+      vim.cmd('b' .. tostring(bufnr))
+    end
+    vim.fn.win_gotoid(cur_winid)
+    vim.cmd 'wincmd H'
   end
-  if NvimTree or fugitive then
-    vim.cmd 'NvimTreeFindFile'
-    vim.fn.win_gotoid(winid)
-    vim.cmd 'G'
-    vim.fn.win_gotoid(winid)
-  end
-  if aerial then
-    vim.cmd 'AerialOpen'
-    vim.fn.win_gotoid(winid)
-  end
-end, { desc = 'buffers workflow', })
+end
 
-vim.keymap.set({ 'n', 'v', }, '<leader>q3', function()
+vim.keymap.set({ 'n', 'v', }, '<c-q>q', onetabworkflow, { desc = 'onetabworkflow', })
+vim.keymap.set({ 'n', 'v', }, '<c-q><c-q>', onetabworkflow, { desc = 'onetabworkflow', })
+vim.keymap.set({ 'n', 'v', }, '<c-w><c-q>', '<nop>', { desc = '', })
+vim.keymap.set({ 'n', 'v', }, '<c-w>q', '<nop>', { desc = '', })
+
+local function onetabonlycur()
+  vim.cmd 'tabonly'
+  if vim.fn.filereadable(vim.api.nvim_buf_get_name(0)) ~= 1 then
+    for winnr = 1, vim.fn.winnr '$' do
+      local bufnr = vim.fn.winbufnr(winnr)
+      local ft = vim.bo[bufnr].ft
+      if vim.tbl_contains(fts, ft) ~= true then
+        vim.fn.win_gotoid(vim.fn.win_getid(winnr))
+      end
+    end
+  end
+  local cur_winnr = vim.fn.winnr()
+  local cur_bufnr = vim.fn.bufnr()
+  local cur_winid = vim.fn.win_getid()
+  local cur_fname = vim.api.nvim_buf_get_name(cur_bufnr)
+  local winids = {}
+  for winnr = 1, vim.fn.winnr '$' do
+    local bufnr = vim.fn.winbufnr(winnr)
+    local ft = vim.bo[bufnr].ft
+    if vim.tbl_contains(fts, ft) ~= true and winnr ~= cur_winnr then
+      winids[#winids + 1] = vim.fn.win_getid(winnr)
+    end
+  end
+  for _, winid in ipairs(winids) do
+    vim.fn.win_gotoid(winid)
+    pcall(vim.cmd, 'close')
+  end
+  vim.fn.win_gotoid(cur_winid)
+end
+
+vim.keymap.set({ 'n', 'v', }, '<c-q>w', onetabonlycur, { desc = 'onetabonlycur', })
+vim.keymap.set({ 'n', 'v', }, '<c-q><c-w>', onetabonlycur, { desc = 'onetabonlycur', })
+
+local function onetabnodupl()
   local projs = {}
   local winid = vim.fn.win_getid()
   local winids = {}
@@ -693,9 +746,12 @@ vim.keymap.set({ 'n', 'v', }, '<leader>q3', function()
     vim.cmd 'close'
   end
   vim.fn.win_gotoid(winid)
-end, { desc = 'buffers workflow simple -', })
+end
 
-vim.keymap.set({ 'n', 'v', }, '<leader>q4', function()
+vim.keymap.set({ 'n', 'v', }, '<c-q>e', onetabnodupl, { desc = 'onetabnodupl', })
+vim.keymap.set({ 'n', 'v', }, '<c-q><c-e>', onetabnodupl, { desc = 'onetabnodupl', })
+
+local function onetabothers()
   local winid = vim.fn.win_getid()
   local projs = { rep(vim.fn['ProjectRootGet'](vim.api.nvim_buf_get_name(0))), }
   for winnr = 1, vim.fn.bufnr '$' do
@@ -724,7 +780,10 @@ vim.keymap.set({ 'n', 'v', }, '<leader>q4', function()
     end
   end
   vim.fn.win_gotoid(winid)
-end, { desc = 'buffers workflow simple +', })
+end
+
+vim.keymap.set({ 'n', 'v', }, '<c-q>r', onetabothers, { desc = 'onetabothers', })
+vim.keymap.set({ 'n', 'v', }, '<c-q><c-r>', onetabothers, { desc = 'onetabothers', })
 
 vim.opt.laststatus = 3
 
