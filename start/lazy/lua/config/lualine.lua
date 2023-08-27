@@ -644,11 +644,15 @@ local function onetabworkflow()
   local cur_winid = vim.fn.win_getid()
   local cur_fname = vim.api.nvim_buf_get_name(cur_bufnr)
   local winids = {}
+  local bufnr_dict = {}
   for winnr = 1, vim.fn.winnr '$' do
     local bufnr = vim.fn.winbufnr(winnr)
     local ft = vim.bo[bufnr].ft
     if vim.tbl_contains(fts, ft) ~= true and winnr ~= cur_winnr then
       winids[#winids + 1] = vim.fn.win_getid(winnr)
+      local fname = rep(vim.api.nvim_buf_get_name(bufnr))
+      local proj = rep(vim.call('ProjectRootGet', fname))
+      bufnr_dict[proj] = bufnr
     end
   end
   for _, winid in ipairs(winids) do
@@ -665,7 +669,11 @@ local function onetabworkflow()
         local proj = rep(vim.call('ProjectRootGet', fname))
         if vim.tbl_contains(projs, proj) ~= true then
           projs[#projs + 1] = proj
-          bufnrs[#bufnrs + 1] = bufnr
+          if vim.tbl_contains(vim.tbl_keys(bufnr_dict), proj) == true then
+            bufnrs[#bufnrs + 1] = bufnr_dict[proj]
+          else
+            bufnrs[#bufnrs + 1] = bufnr
+          end
         end
       end
     end
