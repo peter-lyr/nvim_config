@@ -702,9 +702,7 @@ local function onetabonlycur()
     end
   end
   local cur_winnr = vim.fn.winnr()
-  local cur_bufnr = vim.fn.bufnr()
   local cur_winid = vim.fn.win_getid()
-  local cur_fname = vim.api.nvim_buf_get_name(cur_bufnr)
   local winids = {}
   for winnr = 1, vim.fn.winnr '$' do
     local bufnr = vim.fn.winbufnr(winnr)
