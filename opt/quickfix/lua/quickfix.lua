@@ -43,7 +43,9 @@ M.toggle = function()
         vim.cmd(string.format('norm %dgg%d|', M.lastline, M.lastcol))
       end
       M.last_en = true
-      vim.api.nvim_win_set_height(0, 15)
+      if vim.api.nvim_win_get_height(0) < 15 then
+        vim.api.nvim_win_set_height(0, 15)
+      end
       vim.keymap.set('n', 'q', function()
         vim.schedule(function()
           vim.cmd 'ccl'
