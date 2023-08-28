@@ -100,35 +100,39 @@ end
 
 pcall(vim.api.nvim_del_autocmd, vim.g.bufferjump_au_bufenter)
 
-M.au = function()
-  vim.g.bufferjump_au_bufenter = vim.api.nvim_create_autocmd({ 'CursorHold', }, {
-    callback = function(ev)
-      if M.x ~= -1 and vim.api.nvim_buf_get_option(ev.buf, 'buftype') ~= 'quickfix' then
-        local main = M.getmain()
-        for winnr = 1, vim.fn.winnr '$' do
-          local cur_winid = vim.fn.win_getid(winnr)
-          if isallow(winnr) and main ~= cur_winid then
-            if vim.api.nvim_get_option_value('winfixheight', { win = cur_winid, scope = 'global', }) == true then
-              if vim.api.nvim_win_get_height(cur_winid) ~= M.x * 7 + 2 then
-                M.ix(M.x)
-                vim.fn.timer_start(500, function()
-                  M.ix(M.x)
-                end)
-                return
-              end
-            end
-            if vim.api.nvim_get_option_value('winfixwidth', { win = cur_winid, scope = 'global', }) == true then
-              if vim.api.nvim_win_get_width(cur_winid) ~= M.x * 17 + 2 then
-                M.ix(M.x)
-                vim.fn.timer_start(500, function()
-                  M.ix(M.x)
-                end)
-                return
-              end
-            end
+M.au_do = function(ev)
+  if M.x ~= -1 and vim.api.nvim_buf_get_option(ev.buf, 'buftype') ~= 'quickfix' then
+    local main = M.getmain()
+    for winnr = 1, vim.fn.winnr '$' do
+      local cur_winid = vim.fn.win_getid(winnr)
+      if isallow(winnr) and main ~= cur_winid then
+        if vim.api.nvim_get_option_value('winfixheight', { win = cur_winid, scope = 'global', }) == true then
+          if vim.api.nvim_win_get_height(cur_winid) ~= M.x * 7 + 2 then
+            M.ix(M.x)
+            vim.fn.timer_start(500, function()
+              M.ix(M.x)
+            end)
+            return
+          end
+        end
+        if vim.api.nvim_get_option_value('winfixwidth', { win = cur_winid, scope = 'global', }) == true then
+          if vim.api.nvim_win_get_width(cur_winid) ~= M.x * 17 + 2 then
+            M.ix(M.x)
+            vim.fn.timer_start(500, function()
+              M.ix(M.x)
+            end)
+            return
           end
         end
       end
+    end
+  end
+end
+
+M.au = function()
+  vim.g.bufferjump_au_bufenter = vim.api.nvim_create_autocmd({ 'CursorHold', }, {
+    callback = function(ev)
+      M.au_do(ev)
     end,
   })
 end
