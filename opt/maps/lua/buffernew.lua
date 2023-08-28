@@ -102,7 +102,7 @@ end
 
 M.tabbwipeout = function()
   if vim.fn.bufnr '-MINIMAP-' ~= -1 then
-  pcall(vim.cmd, 'MinimapClose')
+    pcall(vim.cmd, 'MinimapClose')
   end
   local curroot = string.gsub(vim.fn.tolower(vim.fn['ProjectRootGet'](vim.api.nvim_buf_get_name(0))), '\\', '/')
   vim.cmd [[
@@ -149,7 +149,9 @@ M.bw_unlisted_buffers = function()
   local bufnrs = vim.tbl_filter(function(b)
     if 1 ~= vim.fn.buflisted(b) then
       local pfname = path:new(vim.api.nvim_buf_get_name(b))
-      if pfname:exists() and not pfname:is_dir() then
+      if (
+            string.match(pfname.filename, 'diffview://')
+            or pfname:exists()) and not pfname:is_dir() then
         return true
       end
       return false
