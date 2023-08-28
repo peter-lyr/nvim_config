@@ -62,6 +62,9 @@ M.build_do = function(project, workspace)
     local winid = vim.fn.win_getid()
     vim.cmd 'copen'
     vim.cmd 'wincmd J'
+    if vim.api.nvim_win_get_height(0) < 15 then
+      vim.api.nvim_win_set_height(0, 15)
+    end
     vim.cmd 'norm Gzb'
     vim.fn.win_gotoid(winid)
   end

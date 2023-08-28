@@ -206,6 +206,10 @@ add(t, {
 --   '%.S',
 -- })
 
+add(t, {
+  '%.log',
+})
+
 telescope.setup(get_setup_table(t))
 
 local M = {}
