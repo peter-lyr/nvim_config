@@ -702,15 +702,17 @@ vim.keymap.set({ 'n', 'v', }, '<c-q><c-q>', onetabworkflow, { desc = 'onetabwork
 vim.keymap.set({ 'n', 'v', }, '<c-w><c-q>', '<nop>', { desc = '', })
 vim.keymap.set({ 'n', 'v', }, '<c-w>q', '<nop>', { desc = '', })
 
-local fixbufnr = -1
+local fixbufnrs = {}
 
 local function fixthisbuf()
-  fixbufnr = vim.fn.bufnr()
+  local proj = rep(vim.fn['ProjectRootGet'](vim.api.nvim_buf_get_name(0)))
+  fixbufnrs[proj] = vim.fn.bufnr()
 end
 
 local function gofixbuf()
-  if vim.api.nvim_buf_is_valid(fixbufnr) == true then
-    Buffer(fixbufnr)
+  local proj = rep(vim.fn['ProjectRootGet'](vim.api.nvim_buf_get_name(0)))
+  if fixbufnrs[proj] and vim.api.nvim_buf_is_valid(fixbufnrs[proj]) == true then
+    Buffer(fixbufnrs[proj])
   end
 end
 
