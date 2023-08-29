@@ -347,7 +347,7 @@ require 'lualine'.setup {
         function()
           return get_projectroot(vim.call 'ProjectRootGet')
         end,
-        color = { fg = '#000000', bg = 'gray', gui = 'bold', },
+        color = { fg = '#cfcfaf', bg = 'gray', gui = 'bold', },
         cond = function()
           return #vim.fn.expand '%:~:.' > 0
         end,
