@@ -21,6 +21,8 @@ vim.api.nvim_create_autocmd({ 'BufLeave', 'CmdlineEnter', }, {
 
 -- cursor
 
+vim.keymap.set({ 'n', 'v', }, '<Space>', '<Nop>', { silent = true, })
+
 vim.keymap.set({ 'n', 'v', }, 'k', "(v:count == 0 && &wrap) ? 'gk' : 'k'", { expr = true, silent = true, })
 vim.keymap.set({ 'n', 'v', }, 'j', "(v:count == 0 && &wrap) ? 'gj' : 'j'", { expr = true, silent = true, })
 
