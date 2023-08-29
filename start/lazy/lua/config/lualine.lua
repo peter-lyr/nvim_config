@@ -702,6 +702,23 @@ vim.keymap.set({ 'n', 'v', }, '<c-q><c-q>', onetabworkflow, { desc = 'onetabwork
 vim.keymap.set({ 'n', 'v', }, '<c-w><c-q>', '<nop>', { desc = '', })
 vim.keymap.set({ 'n', 'v', }, '<c-w>q', '<nop>', { desc = '', })
 
+local fixbufnr = -1
+
+local function fixthisbuf()
+  fixbufnr = vim.fn.bufnr()
+end
+
+local function gofixbuf()
+  if vim.api.nvim_buf_is_valid(fixbufnr) == true then
+    Buffer(fixbufnr)
+  end
+end
+
+vim.keymap.set({ 'n', 'v', }, '<c-q>f', fixthisbuf, { desc = 'fixthisbuf', })
+vim.keymap.set({ 'n', 'v', }, '<c-q><c-f>', fixthisbuf, { desc = 'fixthisbuf', })
+vim.keymap.set({ 'n', 'v', }, '<c-q><c-g>', gofixbuf, { desc = 'gofixbuf', })
+vim.keymap.set({ 'n', 'v', }, '<c-q>g', gofixbuf, { desc = 'gofixbuf', })
+
 local function onetabonlycur()
   vim.cmd 'tabonly'
   if vim.fn.filereadable(vim.api.nvim_buf_get_name(0)) ~= 1 then
