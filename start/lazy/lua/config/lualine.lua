@@ -142,6 +142,7 @@ end
 require 'lualine'.setup {
   options = {
     ignore_focus = vim.tbl_keys(ignore_focus),
+    theme = 'onedark',
     globalstatus = false,
     -- component_separators = { left = '', right = '', },
     component_separators = '',
