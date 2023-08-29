@@ -338,6 +338,7 @@ require 'lualine'.setup {
         cond = function()
           return #vim.fn.expand '%:~:.' > 0 and check_ft(vim.bo.ft)
         end,
+        color = { bg = 'gray', fg = '#000000', gui = 'bold', },
       },
     },
     lualine_x = {
@@ -345,7 +346,7 @@ require 'lualine'.setup {
         function()
           return get_projectroot(vim.call 'ProjectRootGet')
         end,
-        color = { fg = '#7674f2', gui = 'bold', },
+        color = { fg = '#000000', bg = 'gray', gui = 'bold', },
         cond = function()
           return #vim.fn.expand '%:~:.' > 0
         end,
@@ -367,14 +368,14 @@ require 'lualine'.setup {
         cond = function()
           return #vim.fn.expand '%:~:.' > 0
         end,
-        color = { fg = '#834567', gui = 'bold', },
+        color = { fg = '#834567', bg = 'gray', gui = 'bold', },
       },
     },
     lualine_z = {
       {
         'windows',
         windows_color = {
-          active = { fg = 'gray', bg = 'none', },
+          active = { bg = 'gray', gui = 'bold', },
         },
       },
     },
