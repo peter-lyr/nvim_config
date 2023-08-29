@@ -10,7 +10,7 @@ vim.keymap.set({ 't', }, '<c-v>', '<c-\\><c-n>pi', { desc = 'paste "', })
 vim.keymap.set({ 'c', 'i', }, '<c-c>', '<c-r>+', { desc = 'paste +', })
 vim.keymap.set({ 't', }, '<c-c>', '<c-\\><c-n>"+pi', { desc = 'paste +', })
 
-vim.api.nvim_create_autocmd({ "BufLeave", "CmdlineEnter", }, {
+vim.api.nvim_create_autocmd({ 'BufLeave', 'CmdlineEnter', }, {
   callback = function()
     local word = vim.fn.expand '<cword>'
     if #word > 0 then
@@ -20,6 +20,9 @@ vim.api.nvim_create_autocmd({ "BufLeave", "CmdlineEnter", }, {
 })
 
 -- cursor
+
+vim.keymap.set({ 'n', 'v', }, 'k', "(v:count == 0 && &wrap) ? 'gk' : 'k'", { expr = true, silent = true, })
+vim.keymap.set({ 'n', 'v', }, 'j', "(v:count == 0 && &wrap) ? 'gj' : 'j'", { expr = true, silent = true, })
 
 vim.keymap.set({ 't', 'c', 'i', }, '<a-k>', '<UP>', { desc = 'up', })
 vim.keymap.set({ 't', 'c', 'i', }, '<a-j>', '<DOWN>', { desc = 'down', })
