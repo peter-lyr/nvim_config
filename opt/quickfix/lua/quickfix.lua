@@ -85,7 +85,9 @@ local open = function()
       vim.fn.win_gotoid(vim.g.qf_before_winid)
       vim.cmd 'ccl'
       Buffer(cfile)
+      local bufferjump = require 'bufferjump'
       if line ~= 0 and col ~= 0 then
+        bufferjump.ix(bufferjump.x)
         vim.cmd 'wincmd _'
         vim.cmd(string.format('norm %dgg%d|', line, col))
         vim.cmd 'norm zz'
