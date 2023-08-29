@@ -127,6 +127,8 @@ if __name__ == "__main__":
                 else:
                     lib_cbp_files[base_name].append(lib_cbp_file)
 
+            lib_cbp_files_list = []
+
             for base_name, lib_cbp_files in lib_cbp_files.items():
                 lib_cbp_file = lib_cbp_files[0]
                 if len(lib_cbp_files) > 1:
@@ -146,6 +148,7 @@ if __name__ == "__main__":
                         idx = 0
                     lib_cbp_file = lib_cbp_files[idx]
                 print("lib_cbp_file:", lib_cbp_file)
+                lib_cbp_files_list.append(lib_cbp_file)
                 lib_cbp_dir = os.path.dirname(lib_cbp_file)
 
                 lib_files, lib_dirs = get_files_and_dirs(
@@ -178,8 +181,7 @@ if __name__ == "__main__":
             fname.replace("/", "\\")
             for fname in [
                 cbp_file.replace(project_root + "/", "")
-                for cbp_file in cbp_files
-                if cbp_file != executable_cbp
+                for cbp_file in lib_cbp_files_list
             ]
             + [executable_cbp.replace(project_root + "/", "")]
         ]
