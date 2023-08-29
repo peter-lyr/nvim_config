@@ -39,13 +39,14 @@ return {
     vim.api.nvim_set_hl(0, 'CmpGhostText', { link = 'Comment', default = true, })
     local cmp = require 'cmp'
     local types = require 'cmp.types'
+    local luasnip = require 'luasnip'
     cmp.setup {
       completion = {
         completeopt = 'menu,menuone,noinsert',
       },
       snippet = {
         expand = function(args)
-          require 'luasnip'.lsp_expand(args.body)
+          luasnip.lsp_expand(args.body)
         end,
       },
       window = {
