@@ -144,7 +144,7 @@ require 'lualine'.setup {
     ignore_focus = vim.tbl_keys(ignore_focus),
     globalstatus = false,
     -- component_separators = { left = '', right = '', },
-    component_separators = '|',
+    component_separators = '',
     -- section_separators = { left = '', right = '', },
     section_separators = '',
   },
