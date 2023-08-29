@@ -107,6 +107,11 @@ pcall(vim.api.nvim_del_autocmd, vim.g.quickfix_au_bufenter)
 vim.g.quickfix_au_bufenter = vim.api.nvim_create_autocmd({ 'BufEnter', }, {
   callback = function(ev)
     if vim.api.nvim_buf_get_option(ev.buf, 'buftype') == 'quickfix' then
+      if string.match(vim.fn.getline(1), 'cbp2make') then
+        vim.cmd 'set wrap'
+      else
+        vim.cmd 'set nowrap'
+      end
       vim.keymap.set('n', 'o', open, { buffer = ev.buf, nowait = true, silent = true, })
       vim.keymap.set('n', 'a', open, { buffer = ev.buf, nowait = true, silent = true, })
     end
