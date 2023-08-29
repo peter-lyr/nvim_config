@@ -17,6 +17,7 @@ require 'gitsigns'.setup {
     changedelete = { text = '~', },
     untracked = { text = '?', },
   },
+  sign_priority = 100;
 }
 
 local word_diff_en = 1
