@@ -74,7 +74,12 @@ return {
       },
     },
     require 'plugins.cmp',
-    'folke/neodev.nvim',
+    {
+      'folke/neodev.nvim',
+      config = function()
+        require('neodev').setup()
+      end
+    },
     {
       "smjonas/inc-rename.nvim",
       config = function()
