@@ -46,7 +46,7 @@ end
 
 M.build_do = function(project, workspace)
   vim.cmd [[au User AsyncRunStop call v:lua.Cbp2makeBuildDone()]]
-  local make = 'mingw32-make all'
+  local make = 'mingw32-make --no-print-directory all'
   local rebuild_en = require 'config.coderunner'.rebuild_en
   if rebuild_en then
     make = make .. ' -B -j20'
