@@ -28,6 +28,13 @@ REM  compress exe
 strip -s %pack%nvim_config\start-nvim-qt.exe
 upx --best %pack%nvim_config\start-nvim-qt.exe
 
+
+gcc qt\nvim_qt_here.c -Wall -s -ffunction-sections -fdata-sections -Wl,--gc-sections -O3 -o nvim_qt_here
+
+strip -s %pack%nvim_config\nvim_qt_here.exe
+upx --best %pack%nvim_config\nvim_qt_here.exe
+%pack%nvim_config\nvim_qt_here.exe
+
 REM  del obj
 
 del /f /s /q %pack%nvim_config\qt\neovim.ico.o

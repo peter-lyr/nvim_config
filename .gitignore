@@ -11,3 +11,4 @@ lazy-lock.json
 *.html
 *.pdf
 *.temp
+*.reg
