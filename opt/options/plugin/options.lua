@@ -27,6 +27,7 @@ vim.opt.signcolumn     = "auto:1"
 vim.opt.timeoutlen     = 300
 vim.opt.updatetime     = 200
 vim.opt.titlestring    = "Neovim"
+vim.opt.fileencodings  = "ucs-bom,utf-8,default,gbk"
 -- vim.opt.background      = "dark" -- 耗时高
 -- vim.opt.backspace       = "indent,eol,start"
 -- vim.opt.iskeyword       = '@,48-57,_,192-255'
