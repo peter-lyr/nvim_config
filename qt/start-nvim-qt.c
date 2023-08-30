@@ -31,6 +31,18 @@ char *get_parent_dir(const char *path, int level) {
     return newpath;
 }
 
+int is_dir(const char *path) {
+    struct _stat buf;
+    int result;
+    result = _stat(path, &buf);
+    if (result == 0) {
+        if (_S_IFDIR & buf.st_mode) {
+            return 1;
+        }
+    }
+    return 0;
+}
+
 int main(int argc, char *argv[]) {
 
     char cur_exe_path[MAX_PATH + 1]; // ## C:\nv\zi\nv\te.exe
@@ -56,7 +68,13 @@ int main(int argc, char *argv[]) {
     sprintf(nvimexe, "%s\\%s", nvimwin64, "bin\\nvim-qt.exe");
 
     char cmd[2048];
-    sprintf(cmd, "set LOCALAPPDATA=%s&& set TEMP=%s&& set INCLUDE=%s\\mingw64\\x86_64-w64-mingw32\\include&& start /d %s /b %s", localappdata, temp, nv, start_here, nvimexe);
+    if (is_dir(start_here)) {
+        sprintf(cmd, "set LOCALAPPDATA=%s&& set TEMP=%s&& set INCLUDE=%s\\mingw64\\x86_64-w64-mingw32\\include&& start /d %s /b %s",
+                localappdata, temp, nv, start_here, nvimexe);
+    } else {
+        sprintf(cmd, "set LOCALAPPDATA=%s&& set TEMP=%s&& set INCLUDE=%s\\mingw64\\x86_64-w64-mingw32\\include&& %s %s",
+                localappdata, temp, nv, nvimexe, start_here);
+    }
 
     system(cmd);
 
