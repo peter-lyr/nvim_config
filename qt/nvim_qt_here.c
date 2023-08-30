@@ -82,5 +82,18 @@ int main(int argc, char *argv[]) {
 
     fclose(fp);
 
+    char rm_nvim_config_reg[2560];
+    sprintf(rm_nvim_config_reg, "%s\\%s", nvim_config, "rm_nvim_qt_here.reg");
+    printf("rm_nvim_config_reg: %s\n", rm_nvim_config_reg);
+
+    fp = fopen(rm_nvim_config_reg, "w+");
+
+    fprintf(fp, "Windows Registry Editor Version 5.00\n"
+                "[-HKEY_LOCAL_MACHINE\\SOFTWARE\\Classes\\Directory\\background\\shell\\nvimqt_here]\n"
+                "[-HKEY_LOCAL_MACHINE\\SOFTWARE\\Classes\\Folder\\shell\\nvimqtPrompt]\n"
+                "[-HKEY_LOCAL_MACHINE\\SOFTWARE\\Classes\\Directory\\shell\\nvimqt_here]\n");
+
+    fclose(fp);
+
     return 0;
 }
