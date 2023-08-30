@@ -177,3 +177,9 @@ vim.g.lsp_au_lspattach = vim.api.nvim_create_autocmd('LspAttach', {
 })
 
 vim.keymap.set('n', '<leader>fve', [[<cmd>%s/\s\+$//<cr>]], { desc = 'erase bad white space', })
+
+vim.keymap.set('n', '<leader>fC', function()
+  vim.cmd [[
+    call feedkeys("\<esc>:!clang-format -i \<c-r>=nvim_buf_get_name(0)\<cr> --style=\"{BasedOnStyle: llvm, IndentWidth: 4, ColumnLimit: 200, SortIncludes: true}\"")
+  ]]
+end, { desc = 'erase bad white space', })
