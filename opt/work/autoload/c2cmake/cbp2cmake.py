@@ -50,7 +50,12 @@ def get_executable_cbp(project_root):
                     executable_cbp = cbp_files[num - 1]
             except Exception as e:
                 print(e)
-    return executable_cbp, cbp_files
+    cbp_files_2 = []
+    executable_cbp_dir = os.path.dirname(executable_cbp)
+    for cbp_file in cbp_files:
+        if executable_cbp_dir != os.path.dirname(cbp_file):
+            cbp_files_2.append(cbp_file)
+    return executable_cbp, cbp_files_2
 
 
 def get_files_and_dirs(project_root, executable_cbp, executable_cbp_dir):
