@@ -180,6 +180,6 @@ vim.keymap.set('n', '<leader>fve', [[<cmd>%s/\s\+$//<cr>]], { desc = 'erase bad 
 
 vim.keymap.set('n', '<leader>fC', function()
   vim.cmd [[
-    call feedkeys("\<esc>:!clang-format -i \<c-r>=nvim_buf_get_name(0)\<cr> --style=\"{BasedOnStyle: llvm, IndentWidth: 4, ColumnLimit: 200, SortIncludes: true}\"")
+    call feedkeys("\<esc>:silent !clang-format -i \<c-r>=nvim_buf_get_name(0)\<cr> --style=\"{BasedOnStyle: llvm, IndentWidth: 4, ColumnLimit: 200, SortIncludes: true}\"")
   ]]
-end, { desc = 'erase bad white space', })
+end, { desc = 'clang-format ...', silent = true, })
