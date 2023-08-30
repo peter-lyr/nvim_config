@@ -50,7 +50,12 @@ def get_executable_cbp(project_root):
                     executable_cbp = cbp_files[num - 1]
             except Exception as e:
                 print(e)
-    return executable_cbp, cbp_files
+    cbp_files_2 = []
+    executable_cbp_dir = os.path.dirname(executable_cbp)
+    for cbp_file in cbp_files:
+        if executable_cbp_dir != os.path.dirname(cbp_file):
+            cbp_files_2.append(cbp_file)
+    return executable_cbp, cbp_files_2
 
 
 def get_files_and_dirs(project_root, executable_cbp, executable_cbp_dir):
@@ -156,13 +161,13 @@ if __name__ == "__main__":
                 )
                 ff.write(("add_library(%s STATIC\n" % os.path.basename(lib_cbp_dir)).encode('utf-8'))
                 for lib_file in lib_files:
-                    lib_file = '           "${PROJECT_SOURCE_DIR}/%s"' % lib_file
+                    lib_file = '           "${PROJECT_SOURCE_DIR}/%s"\n' % lib_file
                     ff.write(lib_file.encode('utf-8'))
                 ff.write(b"           )\n")
-                ff.write(("target_include_directories(%s PUBLIC" % os.path.basename(lib_cbp_dir)).encode('utf-8'))
+                ff.write(("target_include_directories(%s PUBLIC\n" % os.path.basename(lib_cbp_dir)).encode('utf-8'))
                 for lib_dir in lib_dirs:
                     lib_dir = lib_dir.replace("\\", "/").replace(project_root, "").strip("\\").strip("/").replace("\\", "/")
-                    lib_dir = '                            "${PROJECT_SOURCE_DIR}/%s"' % lib_dir
+                    lib_dir = '                            "${PROJECT_SOURCE_DIR}/%s"\n' % lib_dir
                     ff.write(lib_dir.encode('utf-8'))
                 ff.write(b"                            )\n")
 
