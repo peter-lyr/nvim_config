@@ -243,6 +243,11 @@ M.live_grep_all = function()
   vim.cmd 'Telescope live_grep vimgrep_arguments=rg,--color=never,--no-heading,--with-filename,--line-number,--column,--smart-case,--fixed-strings,-g,*'
 end
 
+M.live_grep_def = function()
+  M.all(0)
+  vim.cmd [[ call feedkeys("\<esc>:Telescope live_grep cwd=\<c-r>=expand('%:p:h')\<cr>") ]]
+end
+
 local p = require 'plenary.path'
 
 -- fzf
