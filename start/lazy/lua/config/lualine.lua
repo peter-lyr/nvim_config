@@ -175,6 +175,14 @@ require 'lualine'.setup {
         color = { fg = 'gray', },
       },
     },
+    {
+      'progress',
+      separator = ' ',
+      padding = {
+        left = 1,
+        right = 0,
+      },
+    },
     lualine_z = {
       function()
         return ' ' .. os.date '%R'
