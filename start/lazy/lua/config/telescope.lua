@@ -249,6 +249,9 @@ M.live_grep_def = function()
   vim.cmd [[ call feedkeys("\<esc>:Telescope live_grep cwd=\<c-r>=expand('%:p:h')\<cr>") ]]
 end
 
+-- 匹配中文
+-- [\u4e00-\u9fa5]+
+
 local p = require 'plenary.path'
 
 -- fzf
