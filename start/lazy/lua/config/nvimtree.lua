@@ -270,6 +270,9 @@ pcall(vim.api.nvim_del_autocmd, vim.g.nvimtree_au_cursorhold2)
 
 vim.g.nvimtree_au_cursorhold2 = vim.api.nvim_create_autocmd({ "CursorHold", }, {
   callback = function(ev)
+    if vim.fn.tabpagenr('$') == 1 then
+      return
+    end
     local ft = vim.bo[vim.fn.winbufnr(winnr)].ft
     local cwd = vim.loop.cwd()
     local sta, _ = pcall(vim.call, 'ProjectRootCD')
