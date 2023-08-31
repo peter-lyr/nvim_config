@@ -195,14 +195,6 @@ require 'lualine'.setup {
     lualine_x = {
       {
         function()
-          return require 'noice'.api.status.command.get()
-        end,
-        cond = function()
-          return package.loaded['noice'] and require 'noice'.api.status.command.has()
-        end,
-      },
-      {
-        function()
           return vim.fn.strftime '%Y-%m-%d %A'
         end,
         color = { fg = '#833863', },
@@ -215,14 +207,6 @@ require 'lualine'.setup {
           return vim.o.columns > 200
         end,
         color = { fg = '#437863', },
-      },
-      {
-        function()
-          return 'recording @' .. vim.fn.reg_recording()
-        end,
-        cond = function()
-          return #vim.fn.reg_recording() > 0
-        end,
       },
     },
     lualine_y = {
