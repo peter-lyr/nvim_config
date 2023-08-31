@@ -23,7 +23,7 @@ local tab_4_lang = {
 }
 
 vim.api.nvim_create_autocmd({ 'BufEnter', }, {
-  callback = function()
+  callback = function(ev)
     if vim.tbl_contains(tab_4_lang, vim.opt.filetype:get()) == true then
       vim.opt.tabstop = 4
       vim.opt.softtabstop = 4
@@ -32,6 +32,14 @@ vim.api.nvim_create_autocmd({ 'BufEnter', }, {
       vim.opt.tabstop = 2
       vim.opt.softtabstop = 2
       vim.opt.shiftwidth = 2
+    end
+    if vim.fn.bufname() == '' then
+      if vim.api.nvim_buf_get_option(ev.buf, 'buftype') == '' then
+        vim.api.nvim_buf_set_option(ev.buf, 'buftype', 'nofile')
+      end
+    end
+    if vim.api.nvim_buf_get_option(ev.buf, 'buftype') == 'help' then
+      vim.cmd 'setlocal nu'
     end
   end,
 })

@@ -62,7 +62,9 @@ return {
   },
   init = function()
     vim.g.minimap_width = 30
-    vim.g.minimap_block_filetypes = { 'aerial', 'NvimTree', 'fugitive', 'help', }
+    vim.g.minimap_block_filetypes = { 'aerial', 'NvimTree', 'fugitive', }
+    -- vim.g.minimap_block_buftypes = { 'nofile', 'nowrite', 'quickfix', 'terminal', 'prompt', }
+    vim.g.minimap_block_buftypes = { 'quickfix', 'prompt', }
   end,
   config = function()
     if vim.g.loaded_minimap then
@@ -109,7 +111,9 @@ return {
       vim.api.nvim_create_autocmd({ 'BufEnter', }, {
         callback = function(ev)
           local bufnr = vim.fn.bufnr '-MINIMAP-'
-          if vim.g.minimap_autostart == 1 and lastbufnr ~= ev.buf and #ev.file > 0 and ev.buf ~= vim.fn.bufnr '-MINIMAP-' and vim.api.nvim_buf_get_option(ev.buf, 'buftype') ~= 'nofile' then
+          if vim.g.minimap_autostart == 1 and lastbufnr ~= ev.buf and #ev.file > 0 and
+              ev.buf ~= vim.fn.bufnr '-MINIMAP-' and
+              vim.api.nvim_buf_get_option(ev.buf, 'buftype') ~= 'nofile' then
             -- print(ev.buf, ev.file, vim.api.nvim_buf_get_option(ev.buf, 'buftype'), '|', vim.api.nvim_buf_get_option(ev.buf, 'filetype'))
             lastbufnr = ev.buf
             if bufnr == -1 then

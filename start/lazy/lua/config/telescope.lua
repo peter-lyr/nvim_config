@@ -275,15 +275,4 @@ M.open = function()
   vim.cmd('cd ' .. M.nvim_config.filename .. '|e ' .. 'start/lazy/lua/config/telescope.lua')
 end
 
-vim.api.nvim_create_autocmd({ 'BufEnter', }, {
-  callback = function()
-    if vim.fn.bufname() == '' then
-      local bufnr = vim.fn.bufnr()
-      if vim.api.nvim_buf_get_option(bufnr, 'buftype') == '' then
-        vim.api.nvim_buf_set_option(bufnr, 'buftype', 'nofile')
-      end
-    end
-  end,
-})
-
 return M
