@@ -13,6 +13,7 @@ local fb_actions = require 'telescope._extensions.file_browser.actions'
 local get_setup_table = function(file_ignore_patterns)
   return {
     defaults = {
+      winblend = 10,
       layout_strategy = 'horizontal',
       layout_config = {
         horizontal = {
