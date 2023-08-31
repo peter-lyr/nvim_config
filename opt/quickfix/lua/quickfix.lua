@@ -39,7 +39,7 @@ M.toggle = function()
     M.allow = nil
     vim.cmd 'wincmd J'
     vim.fn.timer_start(10, function()
-      vim.cmd 'wincmd _'
+      vim.cmd 'wincmd ='
       if M.lastline ~= -1 and M.lastcol ~= -1 then
         vim.cmd(string.format('norm %dgg%d|', M.lastline, M.lastcol))
       end
@@ -88,7 +88,7 @@ local open = function()
       local bufferjump = require 'bufferjump'
       if line ~= 0 and col ~= 0 then
         bufferjump.ix(bufferjump.x)
-        vim.cmd 'wincmd _'
+        vim.cmd 'wincmd ='
         vim.cmd(string.format('norm %dgg%d|', line, col))
         vim.cmd 'norm zz'
       else
@@ -133,7 +133,7 @@ vim.g.quickfix_au_cursorhold = vim.api.nvim_create_autocmd({ 'CursorHold', }, {
     if vim.api.nvim_buf_get_option(ev.buf, 'buftype') == 'quickfix' and M.allow then
       M.allow = nil
       vim.cmd 'wincmd J'
-      vim.cmd 'wincmd _'
+      vim.cmd 'wincmd ='
     end
   end,
 })
