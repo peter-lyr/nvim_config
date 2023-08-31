@@ -9,13 +9,13 @@ return {
     local augend = require 'dial.augend'
     require 'dial.config'.augends:register_group {
       default = {
-        augend.constant.alias.Alpha,
-        augend.constant.alias.alpha,
+        -- augend.constant.alias.Alpha,
+        -- augend.constant.alias.alpha,
         augend.constant.alias.de_weekday,
         augend.constant.alias.de_weekday_full,
         augend.constant.new { elements = { '&&', '||', }, word = false, },
-        augend.constant.new { elements = { '<', '>', }, word = false, },
-        augend.constant.new { elements = { '<=', '>=', }, word = false, },
+        augend.constant.new { elements = { '<', '>', }, },
+        augend.constant.new { elements = { '<=', '>=', }, },
         augend.constant.new { elements = { '==', '!=', }, word = false, },
         augend.constant.new { elements = { '++', '--', }, word = false, },
         augend.constant.new { elements = { '[ ]', '[x]', }, word = false, },
