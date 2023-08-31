@@ -35,6 +35,7 @@ return {
         augend.constant.new { elements = { 'prev_', 'next_', }, word = false, },
         augend.constant.new { elements = { 'Prev', 'Next', }, word = false, },
         -- c
+        augend.constant.new { elements = { '%d', '%s', }, word = false, },
         augend.constant.new { elements = { 'signed', 'unsigned', }, },
         augend.constant.new { elements = { 'u8', 'u16', 'u32', }, },
         augend.constant.new { elements = { 's8', 's16', 's32', }, },
