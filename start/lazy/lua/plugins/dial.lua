@@ -15,6 +15,8 @@ return {
         augend.constant.alias.de_weekday_full,
         augend.constant.new { elements = { '&&', '||', }, word = false, },
         augend.constant.new { elements = { '<', '>', }, },
+        augend.constant.new { elements = { '+', '-', }, },
+        augend.constant.new { elements = { '*', '/', }, },
         augend.constant.new { elements = { '<=', '>=', }, },
         augend.constant.new { elements = { '==', '!=', }, word = false, },
         augend.constant.new { elements = { '++', '--', }, word = false, },
