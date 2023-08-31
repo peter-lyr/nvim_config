@@ -112,7 +112,7 @@ local get_setup_table = function(file_ignore_patterns)
         '--smart-case',
         '--fixed-strings',
       },
-      wrap_results = false,
+      wrap_results = true,
     },
     extensions = {
       fzf = {
