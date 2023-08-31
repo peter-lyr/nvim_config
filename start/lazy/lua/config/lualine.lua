@@ -149,6 +149,38 @@ require 'lualine'.setup {
     -- section_separators = { left = '', right = '', },
     section_separators = '',
   },
+  inactive_sections = {
+    lualine_a = {
+    },
+    lualine_b = {
+    },
+    lualine_c = {
+    },
+    lualine_x = {
+      {
+        function()
+          return vim.fn.strftime '%Y-%m-%d %A'
+        end,
+        color = { fg = 'gray', },
+      },
+    },
+    lualine_y = {
+      {
+        function()
+          return string.gsub(vim.loop.cwd(), '\\', '/')
+        end,
+        cond = function()
+          return vim.o.columns > 200
+        end,
+        color = { fg = 'gray', },
+      },
+    },
+    lualine_z = {
+      function()
+        return ' ' .. os.date '%R'
+      end,
+    },
+  },
   sections = {
     lualine_c = {
       {
