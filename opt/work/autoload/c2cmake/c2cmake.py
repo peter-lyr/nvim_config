@@ -8,15 +8,15 @@ def rep(text):
 
 def rm_build_dirs(project_root):
     rms = ['build', '.cache']
-    for root, dirs, _ in os.walk(project_root):
+    for dirs in os.listdir(project_root):
         for r in rms:
             if r in dirs:
-                r = os.path.join(root, r)
+                r = rep(os.path.join(project_root, r))
                 try:
-                    print(f"{r} Deleting...")
                     shutil.rmtree(r)
-                except Exception as e:
-                    print(e)
+                    print(f"Deleted {r}")
+                except:
+                    pass
 
 
 def is_test_dir(f):

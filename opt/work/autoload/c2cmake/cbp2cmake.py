@@ -2,9 +2,24 @@ import os
 import re
 import sys
 
+import shutil
+
 
 def rep(text):
     return text.replace("\\", "/").lower()
+
+
+def rm_build_dirs(project_root):
+    rms = ['build', '.cache']
+    for dirs in os.listdir(project_root):
+        for r in rms:
+            if r in dirs:
+                r = rep(os.path.join(project_root, r))
+                try:
+                    shutil.rmtree(r)
+                    print(f"Deleted {r}")
+                except:
+                    pass
 
 
 def get_libs_a_dirs(project_root):
@@ -91,6 +106,8 @@ if __name__ == "__main__":
         os._exit(1)
 
     project_root = rep(sys.argv[1])
+
+    rm_build_dirs(project_root)
 
     executable_cbp, cbp_files = get_executable_cbp(project_root)
     executable_cbp_dir = os.path.dirname(executable_cbp)
