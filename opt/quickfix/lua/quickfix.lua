@@ -114,6 +114,9 @@ vim.g.quickfix_au_bufenter = vim.api.nvim_create_autocmd({ 'BufEnter', }, {
       end
       vim.keymap.set('n', 'o', open, { buffer = ev.buf, nowait = true, silent = true, })
       vim.keymap.set('n', 'a', open, { buffer = ev.buf, nowait = true, silent = true, })
+      vim.cmd [[
+        setlocal scrolloff=0
+      ]]
     end
   end,
 })

@@ -93,16 +93,13 @@ return {
           end
         end,
       })
-      local scrolloff = vim.opt.scrolloff
-      local sidescrolloff = vim.opt.sidescrolloff
       vim.api.nvim_create_autocmd({ 'CursorMoved', }, {
         callback = function()
           if vim.bo.ft == 'minimap' then
-            vim.opt.scrolloff = 99
-            vim.opt.sidescrolloff = 0
-          else
-            vim.opt.scrolloff = scrolloff
-            vim.opt.sidescrolloff = sidescrolloff
+            vim.cmd [[
+              setlocal scrolloff=99
+              setlocal sidescrolloff=0
+            ]]
           end
         end,
       })

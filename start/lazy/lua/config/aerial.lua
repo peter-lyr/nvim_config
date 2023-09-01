@@ -58,9 +58,9 @@ local scrolloff = vim.opt.scrolloff
 vim.api.nvim_create_autocmd({ 'BufEnter', }, {
   callback = function()
     if vim.bo.ft == 'aerial' then
-      vim.opt.scrolloff = 99
-    else
-      vim.opt.scrolloff = scrolloff
+      vim.cmd [[
+        setlocal scrolloff=99
+      ]]
     end
   end,
 })
