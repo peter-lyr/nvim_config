@@ -23,6 +23,7 @@ return {
     { '<leader>sl',         function() require 'config.telescope'.live_grep() end,                                                             mode = { 'n', 'v', }, silent = true, desc = 'Telescope live_grep', },
     { '<leader>svl',        function() require 'config.telescope'.live_grep_all() end,                                                         mode = { 'n', 'v', }, silent = true, desc = 'Telescope live_grep all', },
     { '<leader>sL',         function() require 'config.telescope'.live_grep_def() end,                                                         mode = { 'n', 'v', }, silent = true, desc = 'Telescope live_grep def', },
+    { '<leader>s<c-l>',     function() require 'config.telescope'.live_grep_rg() end,                                                          mode = { 'n', 'v', }, silent = true, desc = 'Telescope live_grep rg', },
     { '<leader>ss',         '<cmd>Telescope grep_string shorten_path=true word_match=-w only_sort_text=true search= grep_open_files=true<cr>', mode = { 'n', 'v', }, silent = true, desc = 'Telescope grep_string', },
     { '<leader>sz',         '<cmd>Telescope current_buffer_fuzzy_find<cr>',                                                                    mode = { 'n', 'v', }, silent = true, desc = 'Telescope current_buffer_fuzzy_find', },
     { '<leader>sq',         '<cmd>Telescope quickfix<cr>',                                                                                     mode = { 'n', 'v', }, silent = true, desc = 'Telescope quickfix', },
