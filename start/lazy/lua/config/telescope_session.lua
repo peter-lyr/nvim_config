@@ -74,10 +74,16 @@ M.all = function()
   vim.api.nvim_create_autocmd({ 'SessionLoadPost', }, {
     callback = function()
       vim.fn.timer_start(100, function()
-        vim.cmd 'Minimap'
-        vim.cmd 'NvimTreeOpen'
         vim.cmd 'G'
+        vim.cmd 'NvimTreeOpen'
         vim.cmd 'wincmd l'
+        vim.cmd 'AerialOpen'
+        vim.cmd 'wincmd t'
+        vim.cmd 'wincmd l'
+        vim.cmd 'Minimap'
+        vim.cmd 'wincmd t'
+        vim.cmd 'wincmd l'
+        vim.cmd 'wincmd ='
       end)
     end,
     once = true,
