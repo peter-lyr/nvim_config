@@ -53,8 +53,6 @@ M.open = function()
   end)
 end
 
-local scrolloff = vim.opt.scrolloff
-
 vim.api.nvim_create_autocmd({ 'BufEnter', }, {
   callback = function()
     if vim.bo.ft == 'aerial' then
