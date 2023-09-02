@@ -191,9 +191,18 @@ require 'lualine'.setup {
       },
     },
     lualine_z = {
-      function()
-        return ' ' .. os.date '%R'
-      end,
+      {
+        function()
+          return ' ' .. os.date '%R'
+        end,
+        on_click = function(mouseclicks, mousebutton, modifiers)
+          if mousebutton == 'l' and mouseclicks == 1 then
+            require 'quickfix'.toggle()
+          elseif mousebutton == 'm' and mouseclicks == 1 then
+            vim.cmd 'cclose'
+          end
+        end,
+      },
     },
   },
   sections = {
@@ -282,9 +291,18 @@ require 'lualine'.setup {
       },
     },
     lualine_z = {
-      function()
-        return ' ' .. os.date '%R'
-      end,
+      {
+        function()
+          return ' ' .. os.date '%R'
+        end,
+        on_click = function(mouseclicks, mousebutton, modifiers)
+          if mousebutton == 'l' and mouseclicks == 1 then
+            require 'quickfix'.toggle()
+          elseif mousebutton == 'm' and mouseclicks == 1 then
+            vim.cmd 'cclose'
+          end
+        end,
+      },
     },
   },
   tabline = {
