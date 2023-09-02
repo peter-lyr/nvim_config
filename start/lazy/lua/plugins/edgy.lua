@@ -13,7 +13,7 @@ return {
         open = function()
           vim.api.nvim_input "<esc><space>1"
         end,
-        size = { height = 0.8, },
+        size = { height = 0.7, },
       },
       {
         title = "Fugitive",
@@ -40,7 +40,7 @@ return {
       {
         title = "QuickFix",
         ft = "qf",
-        size = { height = 0.4 },
+        size = { height = 0.3 },
         open = "copen",
       },
     },
