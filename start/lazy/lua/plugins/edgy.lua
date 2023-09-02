@@ -10,7 +10,6 @@ return {
       {
         title = "Nvim-Tree",
         ft = "NvimTree",
-        pinned = true,
         open = function()
           vim.api.nvim_input "<esc><space>1"
         end,
@@ -19,7 +18,6 @@ return {
       {
         title = "Fugitive",
         ft = "fugitive",
-        pinned = true,
         open = "Git",
       },
     },
@@ -27,7 +25,6 @@ return {
       {
         title = "Minimap",
         ft = "minimap",
-        pinned = true,
         open = function()
           vim.api.nvim_input "<esc><space>3"
         end,
@@ -36,8 +33,15 @@ return {
       {
         title = "Aerial",
         ft = "aerial",
-        pinned = true,
         open = "AerialOpen",
+      },
+    },
+    bottom = {
+      {
+        title = "QuickFix",
+        ft = "qf",
+        size = { height = 0.4 },
+        open = "copen",
       },
     },
     keys = {

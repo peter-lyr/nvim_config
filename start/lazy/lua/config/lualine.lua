@@ -661,6 +661,7 @@ local fts = {
   'minimap',
   'aerial',
   'edgy',
+  'qf',
 }
 
 local function onetabworkflow()
