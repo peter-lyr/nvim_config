@@ -254,8 +254,39 @@ end
 -- 匹配中文
 -- [\u4e00-\u9fa5]+
 
+local function get_dirs(fname)
+  local fpath = require 'plenary.path':new(fname)
+  if not fpath:is_file() then
+    vim.cmd 'ec "not file"'
+    return nil
+  end
+  local dirs = {}
+  for _ = 1, 24 do
+    fpath = fpath:parent()
+    local name = string.gsub(fpath.filename, '\\', '/')
+    table.insert(dirs, name)
+    if not string.match(name, '/') then
+      break
+    end
+  end
+  return dirs
+end
+
 M.live_grep_rg = function()
-  vim.cmd [[ call feedkeys("\<esc>:AsyncRun rg --no-heading --with-filename --line-number --column --smart-case --no-ignore -g !*.js [\u4e00-\u9fa5]+ \<c-r>=expand('%:p:h')\<cr>") ]]
+  local fname = vim.api.nvim_buf_get_name(0)
+  local dirs = get_dirs(fname)
+  if not dirs then
+    return
+  end
+  vim.ui.select(dirs, { prompt = 'telescope_rg_path', }, function(choice)
+    if not choice then
+      return
+    end
+    local cmd = vim.fn.input('telescope_rg_patt: ', [[[\u4e00-\u9fa5]+]])
+    if #cmd > 0 then
+      vim.cmd(string.format('AsyncRun rg --no-heading --with-filename --line-number --column --smart-case --no-ignore -g !*.js %s %s', cmd, choice))
+    end
+  end)
 end
 
 local p = require 'plenary.path'
