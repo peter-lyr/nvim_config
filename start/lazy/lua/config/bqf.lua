@@ -1,5 +1,7 @@
 local M = {}
 
+package.loaded['config.bqf'] = nil
+
 local bqf = require 'bqf'
 
 local hi = function()

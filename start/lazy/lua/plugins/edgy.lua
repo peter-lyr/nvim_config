@@ -40,7 +40,7 @@ return {
       {
         title = "QuickFix",
         ft = "qf",
-        size = { height = 0.3 },
+        size = { height = 0.2 },
         open = "copen",
       },
     },
