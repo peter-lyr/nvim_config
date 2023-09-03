@@ -4,6 +4,8 @@ return {
   {
     name = 'quickfix',
     dir = opt .. 'quickfix',
+    lazy = true,
+    event = { 'BufReadPost', 'BufNewFile', },
     dependencies = {
       require 'myplugins.core', -- maps.add
       require 'plugins.lualine',

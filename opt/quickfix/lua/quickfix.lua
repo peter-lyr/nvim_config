@@ -124,7 +124,8 @@ pcall(vim.api.nvim_del_autocmd, vim.g.quickfix_au_bufenter)
 
 vim.g.quickfix_au_bufenter = vim.api.nvim_create_autocmd({ 'BufEnter', }, {
   callback = function(ev)
-    if vim.api.nvim_buf_get_option(ev.buf, 'buftype') == 'quickfix' then
+    local buftype = vim.api.nvim_buf_get_option(ev.buf, 'buftype')
+    if buftype == 'quickfix' then
       if string.match(vim.fn.getline(1), 'cbp2make') then
         vim.cmd 'set wrap'
       else
@@ -136,6 +137,8 @@ vim.g.quickfix_au_bufenter = vim.api.nvim_create_autocmd({ 'BufEnter', }, {
       vim.cmd [[
         setlocal scrolloff=0
       ]]
+    end
+    if vim.tbl_contains({'quickfix', 'nofile'}, buftype) == true then
       nodupl()
       vim.fn.timer_start(500, nodupl)
     end
