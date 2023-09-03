@@ -25,6 +25,24 @@ M.lastcol = -1
 --   end
 -- end
 
+local function wait()
+  vim.fn.timer_start(10, function()
+    if M.lastline ~= -1 and M.lastcol ~= -1 and (vim.fn.line '.' == 1 or vim.fn.col '.' == 1) then
+      vim.cmd(string.format('norm %dgg%d|', M.lastline, M.lastcol))
+    end
+    M.last_en = true
+    vim.keymap.set('n', 'q', function()
+      vim.schedule(function()
+        vim.cmd 'ccl'
+        if vim.api.nvim_win_is_valid(vim.g.qf_before_winid) == true then
+          vim.fn.win_gotoid(vim.g.qf_before_winid)
+          -- RestoreWinSize()
+        end
+      end)
+    end, { buffer = vim.fn.bufnr(), nowait = true, silent = true, })
+  end)
+end
+
 M.toggle = function()
   if vim.api.nvim_buf_get_option(vim.fn.bufnr(), 'buftype') == 'quickfix' then
     vim.cmd 'ccl'
@@ -37,22 +55,7 @@ M.toggle = function()
     -- SaveWinSize()
     vim.cmd 'copen'
     M.allow = nil
-    vim.fn.timer_start(10, function()
-      if M.lastline ~= -1 and M.lastcol ~= -1 then
-        vim.cmd(string.format('norm %dgg%d|', M.lastline, M.lastcol))
-        vim.cmd 'norm zz'
-      end
-      M.last_en = true
-      vim.keymap.set('n', 'q', function()
-        vim.schedule(function()
-          vim.cmd 'ccl'
-          if vim.api.nvim_win_is_valid(vim.g.qf_before_winid) == true then
-            vim.fn.win_gotoid(vim.g.qf_before_winid)
-            -- RestoreWinSize()
-          end
-        end)
-      end, { buffer = vim.fn.bufnr(), nowait = true, silent = true, })
-    end)
+    wait()
   end
 end
 
@@ -88,7 +91,6 @@ local open = function(ccl)
         -- bufferjump.ix(bufferjump.x)
         -- vim.cmd 'wincmd ='
         vim.cmd(string.format('norm %dgg%d|', line, col))
-        vim.cmd 'norm zz'
       else
         local mark = vim.api.nvim_buf_get_mark(0, '"')
         local lcount = vim.api.nvim_buf_line_count(0)
@@ -110,6 +112,7 @@ local function nodupl()
   local L = vim.fn.getqflist()
   local D = {}
   local notempty = 0
+  local different = nil
   for _, i in ipairs(L) do
     i.text = vim.fn.trim(i.text)
     if vim.tbl_contains(D, i.text) == false or (#i.text == 0 and notempty == 0) then
@@ -118,10 +121,14 @@ local function nodupl()
       if #i.text > 0 then
         notempty = 1
       end
+    else
+      different = 1
     end
   end
-  vim.fn.setqflist(l, 'r')
-  vim.fn.setqflist({}, 'a', { title = title, })
+  if different then
+    vim.fn.setqflist(l, 'r')
+    vim.fn.setqflist({}, 'a', { title = title, })
+  end
 end
 
 pcall(vim.api.nvim_del_autocmd, vim.g.quickfix_au_bufenter)
@@ -142,9 +149,10 @@ vim.g.quickfix_au_bufenter = vim.api.nvim_create_autocmd({ 'BufEnter', }, {
         setlocal scrolloff=0
       ]]
     end
-    if vim.tbl_contains({'quickfix', 'nofile'}, buftype) == true then
+    if vim.tbl_contains({ 'quickfix', 'nofile', }, buftype) == true then
+      M.allow = nil
       nodupl()
-      vim.fn.timer_start(500, nodupl)
+      wait()
     end
   end,
 })
