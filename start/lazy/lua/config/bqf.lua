@@ -43,8 +43,8 @@ vim.api.nvim_create_autocmd({ 'ColorScheme', }, {
 bqf.setup {
   auto_resize_height = true,
   preview = {
-    win_height = vim.o.lines * percent / 100 - 3,
-    win_vheight = vim.o.lines * percent / 100 - 3,
+    win_height = vim.fn.float2nr(vim.o.lines * percent / 100 - 3),
+    win_vheight = vim.fn.float2nr(vim.o.lines * percent / 100 - 3),
     wrap = true,
   },
 }
