@@ -85,6 +85,11 @@ local function open_ccl()
   open(1)
 end
 
+local function click_open()
+  vim.cmd [[call feedkeys("\<LeftMouse>")]]
+  open()
+end
+
 local function nodupl()
   local title = vim.fn.getqflist { title = 0, }.title
   local l = {}
@@ -121,7 +126,7 @@ vim.g.quickfix_au_bufenter = vim.api.nvim_create_autocmd({ 'BufEnter', }, {
       end
       vim.keymap.set('n', 'o', open_ccl, { buffer = ev.buf, nowait = true, silent = true, })
       vim.keymap.set('n', 'a', open_ccl, { buffer = ev.buf, nowait = true, silent = true, })
-      vim.keymap.set('n', '<2-LeftMouse>', open, { buffer = ev.buf, nowait = true, silent = true, })
+      vim.keymap.set('n', '<2-LeftMouse>', click_open, { buffer = ev.buf, nowait = true, silent = true, })
       vim.cmd [[
         setlocal scrolloff=0
       ]]
