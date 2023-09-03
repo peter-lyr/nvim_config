@@ -73,7 +73,10 @@ M.getmain = function()
 end
 
 M.main = function()
-  vim.fn.win_gotoid(M.getmain())
+  local winid = M.getmain()
+  if winid then
+    vim.fn.win_gotoid(winid)
+  end
 end
 
 M.i = function()
