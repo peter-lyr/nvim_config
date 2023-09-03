@@ -10,3 +10,17 @@ for winnr = 1, vim.fn.winnr '$' do
   -- print(winid)
   print(winnr, vim.fn.bufwinnr(bufnr))
 end
+
+local title = vim.fn.getqflist { title = 0, }.title
+local l = {}
+local L = vim.fn.getqflist()
+local D = {}
+for _, i in ipairs(L) do
+  if vim.tbl_contains(D, i.text) == false then
+    i.text = vim.fn.trim(i.text)
+    D[#D + 1] = i.text
+    l[#l + 1] = i
+  end
+end
+vim.fn.setqflist(l, 'r')
+vim.fn.setqflist({}, 'a', { title = title, })

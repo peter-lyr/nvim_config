@@ -104,6 +104,22 @@ local function open_ccl()
   open(1)
 end
 
+local function nodupl()
+  local title = vim.fn.getqflist { title = 0, }.title
+  local l = {}
+  local L = vim.fn.getqflist()
+  local D = {}
+  for _, i in ipairs(L) do
+    if vim.tbl_contains(D, i.text) == false then
+      i.text = vim.fn.trim(i.text)
+      D[#D + 1] = i.text
+      l[#l + 1] = i
+    end
+  end
+  vim.fn.setqflist(l, 'r')
+  vim.fn.setqflist({}, 'a', { title = title, })
+end
+
 pcall(vim.api.nvim_del_autocmd, vim.g.quickfix_au_bufenter)
 
 vim.g.quickfix_au_bufenter = vim.api.nvim_create_autocmd({ 'BufEnter', }, {
@@ -120,6 +136,8 @@ vim.g.quickfix_au_bufenter = vim.api.nvim_create_autocmd({ 'BufEnter', }, {
       vim.cmd [[
         setlocal scrolloff=0
       ]]
+      nodupl()
+      vim.fn.timer_start(500, nodupl)
     end
   end,
 })
