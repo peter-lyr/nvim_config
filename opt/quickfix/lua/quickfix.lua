@@ -127,8 +127,6 @@ vim.g.quickfix_au_bufenter = vim.api.nvim_create_autocmd({ 'BufEnter', }, {
       vim.cmd [[
         setlocal scrolloff=0
       ]]
-    end
-    if vim.tbl_contains({ 'quickfix', 'nofile', }, buftype) == true then
       M.allow = nil
       nodupl()
       wait()
