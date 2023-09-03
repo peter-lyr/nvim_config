@@ -89,13 +89,11 @@ local function nodupl()
   local title = vim.fn.getqflist { title = 0, }.title
   local l = {}
   local L = vim.fn.getqflist()
-  local D = {}
   local notempty = 0
   local different = nil
   for _, i in ipairs(L) do
     i.text = vim.fn.trim(i.text)
-    if vim.tbl_contains(D, i.text) == false or (#i.text == 0 and notempty == 0) then
-      D[#D + 1] = i.text
+    if vim.tbl_contains(l, i.text) == false or (#i.text == 0 and notempty == 0) then
       l[#l + 1] = i
       if #i.text > 0 then
         notempty = 1
