@@ -255,7 +255,7 @@ end
 -- [\u4e00-\u9fa5]+
 
 M.live_grep_rg = function()
-  vim.cmd [[ call feedkeys("\<esc>:AsyncRun rg --no-heading --with-filename --line-number --column --smart-case [\u4e00-\u9fa5]+ \<c-r>=expand('%:p:h')\<cr>") ]]
+  vim.cmd [[ call feedkeys("\<esc>:AsyncRun rg --no-heading --with-filename --line-number --column --smart-case --no-ignore -g !*.js [\u4e00-\u9fa5]+ \<c-r>=expand('%:p:h')\<cr>") ]]
 end
 
 local p = require 'plenary.path'
