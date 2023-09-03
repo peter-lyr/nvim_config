@@ -10,21 +10,6 @@ M.last_en = false
 M.lastline = -1
 M.lastcol = -1
 
--- local winheight = -1
--- local winwidth = -1
-
--- function SaveWinSize()
---   winheight = vim.api.nvim_win_get_height(0)
---   winwidth = vim.api.nvim_win_get_width(0)
--- end
-
--- function RestoreWinSize()
---   if winheight ~= -1 and winwidth ~= -1 then
---     vim.api.nvim_win_set_height(0, winheight)
---     vim.api.nvim_win_set_width(0, winwidth)
---   end
--- end
-
 local function wait()
   vim.fn.timer_start(10, function()
     if M.lastline ~= -1 and M.lastcol ~= -1 and (vim.fn.line '.' == 1 or vim.fn.col '.' == 1) then
@@ -36,7 +21,6 @@ local function wait()
         vim.cmd 'ccl'
         if vim.api.nvim_win_is_valid(vim.g.qf_before_winid) == true then
           vim.fn.win_gotoid(vim.g.qf_before_winid)
-          -- RestoreWinSize()
         end
       end)
     end, { buffer = vim.fn.bufnr(), nowait = true, silent = true, })
@@ -48,11 +32,9 @@ M.toggle = function()
     vim.cmd 'ccl'
     if vim.api.nvim_win_is_valid(vim.g.qf_before_winid) == true then
       vim.fn.win_gotoid(vim.g.qf_before_winid)
-      -- RestoreWinSize()
     end
   else
     vim.g.qf_before_winid = vim.fn.win_getid()
-    -- SaveWinSize()
     vim.cmd 'copen'
     M.allow = nil
     wait()
@@ -86,10 +68,7 @@ local open = function(ccl)
         vim.cmd 'ccl'
       end
       Buffer(cfile)
-      -- local bufferjump = require 'bufferjump'
       if line ~= 0 and col ~= 0 then
-        -- bufferjump.ix(bufferjump.x)
-        -- vim.cmd 'wincmd ='
         vim.cmd(string.format('norm %dgg%d|', line, col))
       else
         local mark = vim.api.nvim_buf_get_mark(0, '"')
