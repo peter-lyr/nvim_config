@@ -284,7 +284,7 @@ M.live_grep_rg = function()
     end
     local cmd = vim.fn.input('telescope_rg_patt: ', [[[\u4e00-\u9fa5]+]])
     if #cmd > 0 then
-      vim.cmd(string.format('AsyncRun rg --no-heading --with-filename --line-number --column --smart-case --no-ignore -g !*.js %s %s', cmd, choice))
+      vim.cmd(string.format('AsyncRun rg --no-heading --with-filename --line-number --column --smart-case --no-ignore -g !*.js %s "%s"', cmd, choice))
     end
   end)
 end
