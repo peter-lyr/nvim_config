@@ -282,10 +282,17 @@ M.live_grep_rg = function()
     if not choice then
       return
     end
-    local cmd = vim.fn.input('telescope_rg_patt: ', [[[\u4e00-\u9fa5]+]])
-    if #cmd > 0 then
-      vim.cmd(string.format('AsyncRun rg --no-heading --with-filename --line-number --column --smart-case --no-ignore -g !*.js %s "%s"', cmd, choice))
-    end
+    local path = choice
+    vim.ui.select({'--fixed-strings', ''}, { prompt = 'telescope_rg_fixed_strings', }, function(choice)
+      if not choice then
+        return
+      end
+      local fixed_strings = choice
+      local cmd = vim.fn.input('telescope_rg_patt: ', [[[\u4e00-\u9fa5]+]])
+      if #cmd > 0 then
+        vim.cmd(string.format('AsyncRun rg --no-heading --with-filename --line-number --column --smart-case --no-ignore %s -g !*.js %s "%s"', fixed_strings, cmd, path))
+      end
+    end)
   end)
 end
 
