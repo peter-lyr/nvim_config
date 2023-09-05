@@ -139,6 +139,16 @@ function Windows:buffers()
   return buffers
 end
 
+vim.g.lualine_sort = 1
+
+local function sort(bufnr1, bufnr2)
+  return rep(vim.api.nvim_buf_get_name(bufnr1)) < rep(vim.api.nvim_buf_get_name(bufnr2))
+end
+
+local function sort_r(bufnr1, bufnr2)
+  return rep(vim.api.nvim_buf_get_name(bufnr1)) > rep(vim.api.nvim_buf_get_name(bufnr2))
+end
+
 require 'lualine'.setup {
   options = {
     ignore_focus = vim.tbl_keys(ignore_focus),
@@ -225,6 +235,17 @@ require 'lualine'.setup {
             vim.cmd 'Minimap'
           elseif mousebutton == 'm' and mouseclicks == 1 then
             vim.cmd 'MinimapClose'
+          elseif mousebutton == 'r' and mouseclicks == 1 then
+            if vim.g.lualine_sort == 0 then
+              vim.g.lualine_sort = 1
+              print('sort')
+            elseif vim.g.lualine_sort == 1 then
+              vim.g.lualine_sort = 2
+              print('sort reverse')
+            else
+              vim.g.lualine_sort = 0
+              print('no sort')
+            end
           end
         end,
       },
@@ -350,6 +371,12 @@ require 'lualine'.setup {
                 end
               end
             end
+          end
+          if vim.g.lualine_sort == 0 then
+          elseif vim.g.lualine_sort == 1 then
+            table.sort(buffers, sort)
+          elseif vim.g.lualine_sort == 2 then
+            table.sort(buffers, sort_r)
           end
           return buffers
         end,
