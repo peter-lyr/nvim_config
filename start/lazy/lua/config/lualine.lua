@@ -139,7 +139,7 @@ function Windows:buffers()
   return buffers
 end
 
-vim.g.lualine_sort = 1
+vim.g.lualine_sort = 3
 
 local function sort(bufnr1, bufnr2)
   return rep(vim.api.nvim_buf_get_name(bufnr1)) < rep(vim.api.nvim_buf_get_name(bufnr2))
@@ -147,6 +147,42 @@ end
 
 local function sort_r(bufnr1, bufnr2)
   return rep(vim.api.nvim_buf_get_name(bufnr1)) > rep(vim.api.nvim_buf_get_name(bufnr2))
+end
+
+local function sort_ft(bufnr1, bufnr2)
+  local path1 = rep(vim.api.nvim_buf_get_name(bufnr1))
+  local path2 = rep(vim.api.nvim_buf_get_name(bufnr2))
+  local ft1 = string.match(path1, '.+%.(%w+)$')
+  local ft2 = string.match(path2, '.+%.(%w+)$')
+  if ft1 == ft2 then
+    local fname1 = string.match(path1, '.+%\\(.+)$')
+    local fname2 = string.match(path2, '.+%\\(.+)$')
+    if fname1 == fname2 then
+      return path1 > path2
+    else
+      return fname1 > fname2
+    end
+  else
+    return ft1 > ft2
+  end
+end
+
+local function sort_ft_r(bufnr1, bufnr2)
+  local path1 = rep(vim.api.nvim_buf_get_name(bufnr1))
+  local path2 = rep(vim.api.nvim_buf_get_name(bufnr2))
+  local ft1 = string.match(path1, '.+%.(%w+)$')
+  local ft2 = string.match(path2, '.+%.(%w+)$')
+  if ft1 == ft2 then
+    local fname1 = string.match(path1, '.+%\\(.+)$')
+    local fname2 = string.match(path2, '.+%\\(.+)$')
+    if fname1 == fname2 then
+      return path1 < path2
+    else
+      return fname1 < fname2
+    end
+  else
+    return ft1 < ft2
+  end
 end
 
 require 'lualine'.setup {
@@ -238,13 +274,19 @@ require 'lualine'.setup {
           elseif mousebutton == 'r' and mouseclicks == 1 then
             if vim.g.lualine_sort == 0 then
               vim.g.lualine_sort = 1
-              print('sort')
+              print 'sort'
             elseif vim.g.lualine_sort == 1 then
               vim.g.lualine_sort = 2
-              print('sort reverse')
+              print 'sort reverse'
+            elseif vim.g.lualine_sort == 2 then
+              vim.g.lualine_sort = 3
+              print 'sort ft'
+            elseif vim.g.lualine_sort == 3 then
+              vim.g.lualine_sort = 4
+              print 'sort ft reverse'
             else
               vim.g.lualine_sort = 0
-              print('no sort')
+              print 'no sort'
             end
           end
         end,
@@ -377,6 +419,10 @@ require 'lualine'.setup {
             table.sort(buffers, sort)
           elseif vim.g.lualine_sort == 2 then
             table.sort(buffers, sort_r)
+          elseif vim.g.lualine_sort == 3 then
+            table.sort(buffers, sort_ft)
+          elseif vim.g.lualine_sort == 4 then
+            table.sort(buffers, sort_ft_r)
           end
           return buffers
         end,
