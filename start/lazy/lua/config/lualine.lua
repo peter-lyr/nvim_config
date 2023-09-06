@@ -49,7 +49,7 @@ function Buffer(bufnr)
 end
 
 local function rep(content)
-  -- content = vim.fn.tolower(content)
+  content = vim.fn.tolower(content)
   content = string.gsub(content, '/', '\\')
   return content
 end
@@ -141,17 +141,23 @@ end
 
 vim.g.lualine_sort = 3
 
+local function sort_rep(content)
+  content = vim.fn.tolower(content)
+  content = string.gsub(content, '/', '\\')
+  return content
+end
+
 local function sort(bufnr1, bufnr2)
-  return rep(vim.api.nvim_buf_get_name(bufnr1)) < rep(vim.api.nvim_buf_get_name(bufnr2))
+  return sort_rep(vim.api.nvim_buf_get_name(bufnr1)) < sort_rep(vim.api.nvim_buf_get_name(bufnr2))
 end
 
 local function sort_r(bufnr1, bufnr2)
-  return rep(vim.api.nvim_buf_get_name(bufnr1)) > rep(vim.api.nvim_buf_get_name(bufnr2))
+  return sort_rep(vim.api.nvim_buf_get_name(bufnr1)) > sort_rep(vim.api.nvim_buf_get_name(bufnr2))
 end
 
 local function sort_ft(bufnr1, bufnr2)
-  local path1 = rep(vim.api.nvim_buf_get_name(bufnr1))
-  local path2 = rep(vim.api.nvim_buf_get_name(bufnr2))
+  local path1 = sort_rep(vim.api.nvim_buf_get_name(bufnr1))
+  local path2 = sort_rep(vim.api.nvim_buf_get_name(bufnr2))
   local ft1 = string.match(path1, '.+%.(%w+)$')
   local ft2 = string.match(path2, '.+%.(%w+)$')
   if ft1 == ft2 then
@@ -168,8 +174,8 @@ local function sort_ft(bufnr1, bufnr2)
 end
 
 local function sort_ft_r(bufnr1, bufnr2)
-  local path1 = rep(vim.api.nvim_buf_get_name(bufnr1))
-  local path2 = rep(vim.api.nvim_buf_get_name(bufnr2))
+  local path1 = sort_rep(vim.api.nvim_buf_get_name(bufnr1))
+  local path2 = sort_rep(vim.api.nvim_buf_get_name(bufnr2))
   local ft1 = string.match(path1, '.+%.(%w+)$')
   local ft2 = string.match(path2, '.+%.(%w+)$')
   if ft1 == ft2 then
