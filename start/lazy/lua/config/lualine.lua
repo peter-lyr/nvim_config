@@ -49,7 +49,7 @@ function Buffer(bufnr)
 end
 
 local function rep(content)
-  content = vim.fn.tolower(content)
+  -- content = vim.fn.tolower(content)
   content = string.gsub(content, '/', '\\')
   return content
 end
