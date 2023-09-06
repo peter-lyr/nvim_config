@@ -158,12 +158,12 @@ local function sort_ft(bufnr1, bufnr2)
     local fname1 = string.match(path1, '.+%\\(.+)$')
     local fname2 = string.match(path2, '.+%\\(.+)$')
     if fname1 == fname2 then
-      return path1 > path2
+      return path1 < path2
     else
-      return fname1 > fname2
+      return fname1 < fname2
     end
   else
-    return ft1 > ft2
+    return ft1 < ft2
   end
 end
 
@@ -176,12 +176,12 @@ local function sort_ft_r(bufnr1, bufnr2)
     local fname1 = string.match(path1, '.+%\\(.+)$')
     local fname2 = string.match(path2, '.+%\\(.+)$')
     if fname1 == fname2 then
-      return path1 < path2
+      return path1 > path2
     else
-      return fname1 < fname2
+      return fname1 > fname2
     end
   else
-    return ft1 < ft2
+    return ft1 > ft2
   end
 end
 
