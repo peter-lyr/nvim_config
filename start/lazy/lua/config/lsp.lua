@@ -155,8 +155,11 @@ vim.g.lsp_au_lspattach = vim.api.nvim_create_autocmd('LspAttach', {
     end
     vim.keymap.set({ 'n', 'v', }, 'K', vim.lsp.buf.definition, opts 'vim.lsp.buf.definition')
     vim.keymap.set({ 'n', 'v', }, '<leader>fo', vim.lsp.buf.definition, opts 'vim.lsp.buf.definition')
+    vim.keymap.set({ 'n', 'v', }, '<F12>', vim.lsp.buf.definition, opts 'vim.lsp.buf.definition')
     vim.keymap.set({ 'n', 'v', }, '<leader>fd', vim.lsp.buf.declaration, opts 'vim.lsp.buf.declaration')
+    vim.keymap.set({ 'n', 'v', }, '<C-F12>', vim.lsp.buf.declaration, opts 'vim.lsp.buf.declaration')
     vim.keymap.set({ 'n', 'v', }, '<leader>fh', vim.lsp.buf.hover, opts 'vim.lsp.buf.hover')
+    vim.keymap.set({ 'n', 'v', }, '<A-F12>', vim.lsp.buf.hover, opts 'vim.lsp.buf.hover')
     vim.keymap.set({ 'n', 'v', }, '<leader>fi', vim.lsp.buf.implementation, opts 'vim.lsp.buf.implementation')
     vim.keymap.set({ 'n', 'v', }, '<leader>fs', vim.lsp.buf.signature_help, opts 'vim.lsp.buf.signature_help')
     vim.keymap.set({ 'n', 'v', }, '<leader>fe', vim.lsp.buf.references, opts 'vim.lsp.buf.references')
