@@ -142,7 +142,6 @@ end
 vim.g.lualine_sort = 3
 
 local function sort_rep(content)
-  content = vim.fn.tolower(content)
   content = string.gsub(content, '/', '\\')
   return content
 end
