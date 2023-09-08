@@ -137,6 +137,7 @@ vim.keymap.set('n', '<leader>fD', [[:call feedkeys(':LspStop ')<cr>]], { desc = 
 vim.keymap.set('n', '<leader>fF', ':LspInfo<cr>', { desc = 'LspInfo', })
 
 vim.keymap.set('n', '<leader>fw', ':ClangdSwitchSourceHeader<cr>', { desc = 'ClangdSwitchSourceHeader', })
+vim.keymap.set('n', '<F11>', ':ClangdSwitchSourceHeader<cr>', { desc = 'ClangdSwitchSourceHeader', })
 vim.keymap.set('n', '<leader>fp', function()
   local save_cursor = vim.fn.getpos '.'
   vim.cmd 'norm =ap'
