@@ -24,8 +24,8 @@ return {
     }
   end,
   keys = {
-    { '<leader>co',        "vip:call nerdcommenter#Comment('x', 'invert')<CR>", mode = { 'n', }, desc = 'comment invert', },
-    { '<leader>cp',        "vip:call nerdcommenter#Comment('x', 'toggle')<CR>", mode = { 'n', }, desc = 'comment a paragraph', },
+    { '<leader>co',        "}kvip:call nerdcommenter#Comment('x', 'invert')<CR>", mode = { 'n', }, desc = 'comment invert', },
+    { '<leader>cp',        "}kvip:call nerdcommenter#Comment('x', 'toggle')<CR>", mode = { 'n', }, desc = 'comment a paragraph', },
     { '<leader>c}',        "V}k:call nerdcommenter#Comment('x', 'toggle')<CR>", mode = { 'n', }, desc = 'comment paragraph till end', },
     { '<leader>c{',        "V{j:call nerdcommenter#Comment('x', 'toggle')<CR>", mode = { 'n', }, desc = 'comment paragraph till start', },
     { '<leader>cG',        "VG:call nerdcommenter#Comment('x', 'toggle')<CR>",  mode = { 'n', }, desc = 'comment till end of line', },
