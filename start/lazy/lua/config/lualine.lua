@@ -154,21 +154,44 @@ local function sort_r(bufnr1, bufnr2)
   return sort_rep(vim.api.nvim_buf_get_name(bufnr1)) > sort_rep(vim.api.nvim_buf_get_name(bufnr2))
 end
 
+local function sort_fname(path1, path2)
+  local fname1 = string.match(path1, '.+%\\(.+)$')
+  local fname2 = string.match(path2, '.+%\\(.+)$')
+  if fname1 and fname2 and fname1 == fname2 then
+    return path1 < path2
+  else
+    if not fname1 or not fname2 then
+      return path1 < path2
+    end
+    return fname1 < fname2
+  end
+end
+
 local function sort_ft(bufnr1, bufnr2)
   local path1 = sort_rep(vim.api.nvim_buf_get_name(bufnr1))
   local path2 = sort_rep(vim.api.nvim_buf_get_name(bufnr2))
   local ft1 = string.match(path1, '.+%.(%w+)$')
   local ft2 = string.match(path2, '.+%.(%w+)$')
-  if ft1 == ft2 then
-    local fname1 = string.match(path1, '.+%\\(.+)$')
-    local fname2 = string.match(path2, '.+%\\(.+)$')
-    if fname1 == fname2 then
-      return path1 < path2
-    else
-      return fname1 < fname2
-    end
+  if ft1 and ft2 and ft1 == ft2 then
+    return sort_fname(path1, path2)
   else
+    if not ft1 or not ft2 then
+      return sort_fname(path1, path2)
+    end
     return ft1 < ft2
+  end
+end
+
+local function sort_fname_r(path1, path2)
+  local fname1 = string.match(path1, '.+%\\(.+)$')
+  local fname2 = string.match(path2, '.+%\\(.+)$')
+  if fname1 and fname2 and fname1 == fname2 then
+    return path1 < path2
+  else
+    if not fname1 or not fname2 then
+      return path1 > path2
+    end
+    return fname1 > fname2
   end
 end
 
@@ -177,15 +200,12 @@ local function sort_ft_r(bufnr1, bufnr2)
   local path2 = sort_rep(vim.api.nvim_buf_get_name(bufnr2))
   local ft1 = string.match(path1, '.+%.(%w+)$')
   local ft2 = string.match(path2, '.+%.(%w+)$')
-  if ft1 == ft2 then
-    local fname1 = string.match(path1, '.+%\\(.+)$')
-    local fname2 = string.match(path2, '.+%\\(.+)$')
-    if fname1 == fname2 then
-      return path1 > path2
-    else
-      return fname1 > fname2
-    end
+  if ft1 and ft2 and ft1 == ft2 then
+    return sort_fname_r(path1, path2)
   else
+    if not ft1 or not ft2 then
+      return sort_fname_r(path1, path2)
+    end
     return ft1 > ft2
   end
 end
