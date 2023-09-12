@@ -118,11 +118,12 @@ vim.g.quickfix_au_bufenter = vim.api.nvim_create_autocmd({ 'BufEnter', }, {
   callback = function(ev)
     local buftype = vim.api.nvim_buf_get_option(ev.buf, 'buftype')
     if buftype == 'quickfix' then
-      if string.match(vim.fn.getline(1), 'cbp2make') then
-        vim.o.wrap = true
-      else
-        vim.o.wrap = false
-      end
+      -- if string.match(vim.fn.getline(1), 'cbp2make') then
+      --   vim.o.wrap = true
+      -- else
+      --   vim.o.wrap = false
+      -- end
+      vim.o.wrap = false
       vim.keymap.set('n', 'o', open_ccl, { buffer = ev.buf, nowait = true, silent = true, })
       vim.keymap.set('n', 'a', open_ccl, { buffer = ev.buf, nowait = true, silent = true, })
       vim.keymap.set('n', '<2-LeftMouse>', click_open, { buffer = ev.buf, nowait = true, silent = true, })
