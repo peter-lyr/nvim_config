@@ -98,7 +98,7 @@ local function nodupl()
   local different = nil
   for _, i in ipairs(L) do
     i.text = vim.fn.trim(i.text)
-    local d = string.format("%d-%d-%d-%s", i.bufnr, i.col, i.lnum, i.text)
+    local d = string.format('%d-%d-%d-%s', i.bufnr, i.col, i.lnum, i.text)
     if vim.tbl_contains(D, d) == false or #i.text == 0 then
       l[#l + 1] = i
       D[#D + 1] = d
@@ -119,9 +119,9 @@ vim.g.quickfix_au_bufenter = vim.api.nvim_create_autocmd({ 'BufEnter', }, {
     local buftype = vim.api.nvim_buf_get_option(ev.buf, 'buftype')
     if buftype == 'quickfix' then
       if string.match(vim.fn.getline(1), 'cbp2make') then
-        vim.cmd 'set wrap'
+        vim.o.wrap = true
       else
-        vim.cmd 'set nowrap'
+        vim.o.wrap = false
       end
       vim.keymap.set('n', 'o', open_ccl, { buffer = ev.buf, nowait = true, silent = true, })
       vim.keymap.set('n', 'a', open_ccl, { buffer = ev.buf, nowait = true, silent = true, })
