@@ -1,7 +1,13 @@
 return {
   'neovim/nvim-lspconfig',
   lazy = true,
-  -- event = { "BufReadPost", "BufNewFile", },
+  ft = {
+    'c', 'cpp',
+    'python',
+    'md',
+    'lua',
+    'vim',
+  },
   cmd = {
     'LspInfo', 'LspInstall', 'LspLog', 'LspRestart', 'LspStart', 'LspStop',
     'Mason',
@@ -86,13 +92,6 @@ return {
         require "inc_rename".setup()
       end,
     },
-  },
-  ft = {
-    'c', 'cpp',
-    'python',
-    'md',
-    'lua',
-    'vim',
   },
   config = function()
     require 'config.lsp'
