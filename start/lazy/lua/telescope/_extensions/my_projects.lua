@@ -126,6 +126,18 @@ local function search_in_project_files(prompt_bufnr)
   end
 end
 
+local function git_status(prompt_bufnr)
+  local project_path, cd_successful = change_working_directory(prompt_bufnr, true)
+  local opt = {
+    cwd = project_path,
+    hidden = config.options.show_hidden,
+    mode = 'insert',
+  }
+  if cd_successful then
+    builtin.git_status(opt)
+  end
+end
+
 -- local function recent_project_files(prompt_bufnr)
 --   local _, cd_successful = change_working_directory(prompt_bufnr, true)
 --   local opt = {
@@ -170,6 +182,7 @@ local function my_projects(opts)
       map('n', 'r', browse_project_files, { nowait = true, })
       map('n', 'z', delete_project, { nowait = true, })
       map('n', 'c', search_in_project_files, { nowait = true, })
+      map('n', 'b', git_status, { nowait = true, })
       -- map("n", "r", recent_project_files)
       -- map("n", "w", change_working_directory)
 

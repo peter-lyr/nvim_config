@@ -249,7 +249,7 @@ M.rename_sel = function(_)
   vim.cmd 'call feedkeys("zR$")'
   local timer = vim.loop.new_timer()
   local tmp1 = 0
-  local pattern = '^[:\\/%w%s%-%._%(%)%[%]一-龥]+$'
+  local pattern = '^[:\\/%w%s%-%._%(%)%[%]一-龥& ]+$'
   timer:start(100, 100, function()
     vim.schedule(function()
       if (vim.fn.bufwinnr(diff1) == -1 or vim.fn.bufwinnr(diff2) == -1) then
