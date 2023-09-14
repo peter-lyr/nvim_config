@@ -137,7 +137,7 @@ vim.keymap.set('n', '<leader>fD', [[:call feedkeys(':LspStop ')<cr>]], { desc = 
 vim.keymap.set('n', '<leader>fF', ':LspInfo<cr>', { desc = 'LspInfo', })
 
 vim.keymap.set('n', '<leader>fw', ':ClangdSwitchSourceHeader<cr>', { desc = 'ClangdSwitchSourceHeader', })
-vim.keymap.set('n', '<F11>', ':ClangdSwitchSourceHeader<cr>', { desc = 'ClangdSwitchSourceHeader', })
+vim.keymap.set({ 'n', 'v', }, '<F11>', ':ClangdSwitchSourceHeader<cr>', { desc = 'ClangdSwitchSourceHeader', })
 vim.keymap.set('n', '<leader>fp', function()
   local save_cursor = vim.fn.getpos '.'
   vim.cmd 'norm =ap'
@@ -164,7 +164,7 @@ vim.g.lsp_au_lspattach = vim.api.nvim_create_autocmd('LspAttach', {
     vim.keymap.set({ 'n', 'v', }, '<leader>fi', vim.lsp.buf.implementation, opts 'vim.lsp.buf.implementation')
     vim.keymap.set({ 'n', 'v', }, '<leader>fs', vim.lsp.buf.signature_help, opts 'vim.lsp.buf.signature_help')
     vim.keymap.set({ 'n', 'v', }, '<leader>fe', vim.lsp.buf.references, opts 'vim.lsp.buf.references')
-    vim.keymap.set({ 'n', 'v', }, '<S-F12>',    vim.lsp.buf.references, opts 'vim.lsp.buf.references')
+    vim.keymap.set({ 'n', 'v', }, '<S-F12>', vim.lsp.buf.references, opts 'vim.lsp.buf.references')
     vim.keymap.set({ 'n', 'v', }, '<leader>fvd', vim.lsp.buf.type_definition, opts 'vim.lsp.buf.type_definition')
     vim.keymap.set({ 'n', 'v', }, '<leader>fn', function()
       vim.fn.feedkeys(':IncRename ' .. vim.fn.expand '<cword>')

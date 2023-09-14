@@ -3,13 +3,18 @@
 pcall(vim.api.nvim_del_autocmd, vim.g.events_au_bufenter)
 
 vim.g.events_au_bufenter = vim.api.nvim_create_autocmd({ 'BufEnter', }, {
-  callback = function()
+  callback = function(ev)
     vim.opt.mouse = 'a'
     pcall(vim.cmd, 'ProjectRootCD')
     if vim.api.nvim_win_get_height(0) < 2 then
       if vim.bo.modifiable == true and #vim.api.nvim_buf_get_name(0) > 0 and vim.fn.filereadable(vim.api.nvim_buf_get_name(0)) then
         pcall(vim.api.nvim_win_wet_height, 0, 2)
       end
+    end
+    if vim.api.nvim_buf_get_option(ev.buf, 'buftype') == 'nofile' then
+      vim.cmd [[
+        setlocal signcolumn=no
+      ]]
     end
   end,
 })
