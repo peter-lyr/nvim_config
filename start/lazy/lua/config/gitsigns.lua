@@ -1,11 +1,11 @@
 package.loaded['config.gitsigns'] = nil
 
 require 'gitsigns'.setup {
-  numhl     = true,
-  linehl    = false,
-  word_diff = true,
+  numhl         = true,
+  linehl        = false,
+  word_diff     = true,
 
-  signs     = {
+  signs         = {
     add = { text = '+', },
     change = { text = '~', },
     delete = { text = '_', },
@@ -13,7 +13,7 @@ require 'gitsigns'.setup {
     changedelete = { text = '', },
     untracked = { text = '?', },
   },
-  sign_priority = 100;
+  sign_priority = 100,
 }
 
 local word_diff_en = 1

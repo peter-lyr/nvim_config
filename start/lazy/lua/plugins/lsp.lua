@@ -20,9 +20,9 @@ return {
       },
     },
     {
-      "jay-babu/mason-null-ls.nvim",
+      'jay-babu/mason-null-ls.nvim',
       config = function()
-        require "mason-null-ls".setup {
+        require 'mason-null-ls'.setup {
           ensure_installed = {
             'black', 'isort',        -- python
             'markdownlint',
@@ -34,29 +34,29 @@ return {
       end,
     },
     {
-      "jose-elias-alvarez/null-ls.nvim",
+      'jose-elias-alvarez/null-ls.nvim',
       config = function()
-        local nls = require "null-ls"
+        local nls = require 'null-ls'
         nls.setup {
           sources = {
-            nls.builtins.formatting.black.with { extra_args = { "--fast", }, filetypes = { "python", }, },
-            nls.builtins.formatting.isort.with { extra_args = { "--profile", "black", }, filetypes = { "python", }, },
-            nls.builtins.diagnostics.markdownlint.with { extra_args = { "-r", "~MD013", }, filetypes = { "markdown", }, },
+            nls.builtins.formatting.black.with { extra_args = { '--fast', }, filetypes = { 'python', }, },
+            nls.builtins.formatting.isort.with { extra_args = { '--profile', 'black', }, filetypes = { 'python', }, },
+            nls.builtins.diagnostics.markdownlint.with { extra_args = { '-r', '~MD013', }, filetypes = { 'markdown', }, },
             nls.builtins.formatting.prettier.with {
-              filetypes = { "solidity", },
+              filetypes = { 'solidity', },
               timeout = 10000,
             },
             nls.builtins.formatting.prettierd.with {
               -- condition = function(utils)
               --   return not utils.root_has_file { ".eslintrc", ".eslintrc.js" }
               -- end,
-              prefer_local = "node_modules/.bin",
+              prefer_local = 'node_modules/.bin',
             },
             nls.builtins.formatting.clang_format.with {
               filetypes = {
-                "c",
-                "cpp",
-                "*.h",
+                'c',
+                'cpp',
+                '*.h',
               },
               extra_args = {
                 '--style',
@@ -83,13 +83,13 @@ return {
     {
       'folke/neodev.nvim',
       config = function()
-        require('neodev').setup()
-      end
+        require 'neodev'.setup()
+      end,
     },
     {
-      "smjonas/inc-rename.nvim",
+      'smjonas/inc-rename.nvim',
       config = function()
-        require "inc_rename".setup()
+        require 'inc_rename'.setup()
       end,
     },
   },

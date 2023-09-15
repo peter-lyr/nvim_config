@@ -19,7 +19,6 @@ return {
     { '<leader>gs',   function() require 'config.gitsigns'.stage_hunk_v() end,              mode = { 'v', },      silent = true, desc = 'Gitsigns stage_hunk visual', },
     { '<leader>gms',  function() require 'config.gitsigns'.stage_buffer() end,              mode = { 'n', },      silent = true, desc = 'Gitsigns stage_buffer', },
     { '<leader>gu',   function() require 'config.gitsigns'.undo_stage_hunk() end,           mode = { 'n', },      silent = true, desc = 'Gitsigns undo_stage_hunk', },
-
     { '<leader>gmb',  function() require 'config.gitsigns'.blame_line() end,                mode = { 'n', },      silent = true, desc = 'Gitsigns blame_line', },
     { '<leader>gmp',  function() require 'config.gitsigns'.preview_hunk() end,              mode = { 'n', },      silent = true, desc = 'Gitsigns preview_hunk', },
     { '<leader>gmtb', function() require 'config.gitsigns'.toggle_current_line_blame() end, mode = { 'n', },      silent = true, desc = 'Gitsigns toggle_current_line_blame', },
