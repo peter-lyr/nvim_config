@@ -44,8 +44,8 @@ local get_setup_table = function(file_ignore_patterns)
           -- normal <c-w>
           ['<C-w>'] = { '<c-s-w>', type = 'command', },
 
-          ["<c-m>"] = actions.move_selection_next,
-          ["<c-,>"] = actions.move_selection_previous,
+          ["<c-'>"] = actions.move_selection_next,
+          ["<c-;>"] = actions.move_selection_previous,
           ['<c-j>'] = {
             function(prompt_bufnr)
               for _ = 1, 5 do
