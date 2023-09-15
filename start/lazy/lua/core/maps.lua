@@ -5,6 +5,10 @@ return {
   dir = opt .. 'maps',
   lazy = true,
   event = { 'CmdlineEnter', 'InsertEnter', 'ModeChanged', },
+  dependencies = {
+    require 'plugins.projectroot',
+    require 'plugins.notify',
+  },
   keys = {
 
     -- record
@@ -43,6 +47,11 @@ return {
     { 'caa',                 '"+ca',                                                            mode = { 'n', },      silent = true,  desc = '"+ca', },
     { '<a-p>',               '"+p',                                                             mode = { 'n', 'v', }, silent = true,  desc = '"+p', },
     { '<a-s-p>',             '"+P',                                                             mode = { 'n', 'v', }, silent = true,  desc = '"+P', },
+
+    -- change_dir.lua
+    { 'q.',                  function() require 'change_dir'.cur() end,                         mode = { 'n', 'v', }, silent = true,  desc = 'cd %:h', },
+    { 'qu',                  function() require 'change_dir'.up() end,                          mode = { 'n', 'v', }, silent = true,  desc = 'cd ..', },
+    { 'qw',                  function() require 'change_dir'.cwd() end,                         mode = { 'n', 'v', }, silent = true,  desc = 'cd cwd', },
 
   },
 }
