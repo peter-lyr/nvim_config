@@ -1,10 +1,12 @@
 return {
   'folke/which-key.nvim',
-  event = "VeryLazy",
+  event = 'VeryLazy',
   init = function()
     vim.o.timeout = true
     vim.o.timeoutlen = 300
   end,
-  opts = {
-  },
+  config = function()
+    require 'which-key'.setup {}
+    require 'which-key'.register { ['<leader>g'] = { name = 'Git prefix', }, }
+  end,
 }
