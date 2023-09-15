@@ -31,8 +31,6 @@ vim.g.gitsigns_au_insertenter = vim.api.nvim_create_autocmd({ 'InsertEnter', 'Cu
   end,
 })
 
-require 'which-key'.register { ['<leader>gm'] = { name = 'Gitsigns', }, }
-
 pcall(vim.api.nvim_del_autocmd, vim.g.gitsigns_au_insertleave)
 
 vim.g.gitsigns_au_insertleave = vim.api.nvim_create_autocmd({ 'CursorHold', }, {
