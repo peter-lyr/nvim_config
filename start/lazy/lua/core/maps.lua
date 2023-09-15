@@ -53,5 +53,13 @@ return {
     { 'qu',                  function() require 'change_dir'.up() end,                          mode = { 'n', 'v', }, silent = true,  desc = 'cd ..', },
     { 'qw',                  function() require 'change_dir'.cwd() end,                         mode = { 'n', 'v', }, silent = true,  desc = 'cd cwd', },
 
+    -- font_size.lua
+    { '<c-=>',               function() require 'font_size'.up() end,                           mode = { 'n', 'v', }, silent = true,  desc = 'font_size up', },
+    { '<c-->',               function() require 'font_size'.down() end,                         mode = { 'n', 'v', }, silent = true,  desc = 'font_size down', },
+    { '<c-0><c-0>',          function() require 'font_size'.normal() end,                       mode = { 'n', 'v', }, silent = true,  desc = 'font_size normal', },
+    { '<c-0>_',              function() require 'font_size'.min() end,                          mode = { 'n', 'v', }, silent = true,  desc = 'font_size min', },
+    { '<c-0><c-->',          function() require 'font_size'.frameless() end,                    mode = { 'n', 'v', }, silent = true,  desc = 'font_size frameless', },
+    { '<c-0><c-=>',          function() require 'font_size'.fullscreen() end,                   mode = { 'n', 'v', }, silent = true,  desc = 'font_size fullscreen', },
+
   },
 }
