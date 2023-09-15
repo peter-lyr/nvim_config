@@ -1,9 +1,7 @@
 return {
   'nvim-treesitter/nvim-treesitter',
   lazy = true,
-  tag = 'v0.9.1',
-  commit = '63260da1',
-  pin = true,
+  version = "*", -- last release
   build = ':TSUpdate',
   event = { 'BufReadPost', 'BufNewFile', },
   dependencies = {
