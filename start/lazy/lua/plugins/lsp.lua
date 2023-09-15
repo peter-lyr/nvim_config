@@ -93,6 +93,9 @@ return {
       end,
     },
   },
+  init = function()
+    require 'which-key'.register { ['<leader>f'] = { name = 'Lsp', }, }
+  end,
   config = function()
     require 'config.lsp'
   end,
