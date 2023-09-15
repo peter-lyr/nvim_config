@@ -60,3 +60,5 @@ vim.keymap.set({ 't', 'c', 'i', }, '<a-s-a>', '<c-LEFT>', { desc = 'ctrl left', 
 -- esc
 
 vim.keymap.set({ 't', }, '<esc>', '<c-\\><c-n>', { desc = 'esc', })
+vim.keymap.set({ 't', }, '<c-l>', '<c-\\><c-n>', { desc = 'esc', })
+vim.keymap.set({ 'i', 'c', }, '<c-l>', '<esc>', { desc = 'esc', })
