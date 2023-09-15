@@ -44,6 +44,27 @@ local get_setup_table = function(file_ignore_patterns)
           -- normal <c-w>
           ['<C-w>'] = { '<c-s-w>', type = 'command', },
 
+          ["<c-m>"] = actions.move_selection_next,
+          ["<c-,>"] = actions.move_selection_previous,
+          ['<c-j>'] = {
+            function(prompt_bufnr)
+              for _ = 1, 5 do
+                actions.move_selection_next(prompt_bufnr)
+              end
+            end,
+            type = 'action',
+            opts = { nowait = true, silent = true, desc = '5j', },
+          },
+          ['<c-k>'] = {
+            function(prompt_bufnr)
+              for _ = 1, 5 do
+                actions.move_selection_previous(prompt_bufnr)
+              end
+            end,
+            type = 'action',
+            opts = { nowait = true, silent = true, desc = '5k', },
+          },
+
           -- sometimes use:
           -- ["<Down>"] = false, -- actions.move_selection_next,
           -- ["<Up>"] = false, -- actions.move_selection_previous,
@@ -60,6 +81,10 @@ local get_setup_table = function(file_ignore_patterns)
           -- ["<C-/>"] = false, -- actions.which_key,
         },
         n = {
+          ['<c-l>'] = {
+            actions.close, type = 'action',
+            opts = { nowait = true, silent = true, },
+          },
           ['q'] = {
             actions.close, type = 'action',
             opts = { nowait = true, silent = true, },
@@ -77,7 +102,25 @@ local get_setup_table = function(file_ignore_patterns)
             type = 'action',
             opts = { nowait = true, silent = true, desc = '5j', },
           },
+          ['<c-j>'] = {
+            function(prompt_bufnr)
+              for _ = 1, 5 do
+                actions.move_selection_next(prompt_bufnr)
+              end
+            end,
+            type = 'action',
+            opts = { nowait = true, silent = true, desc = '5j', },
+          },
           ['e'] = {
+            function(prompt_bufnr)
+              for _ = 1, 5 do
+                actions.move_selection_previous(prompt_bufnr)
+              end
+            end,
+            type = 'action',
+            opts = { nowait = true, silent = true, desc = '5k', },
+          },
+          ['<c-k>'] = {
             function(prompt_bufnr)
               for _ = 1, 5 do
                 actions.move_selection_previous(prompt_bufnr)
