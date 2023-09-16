@@ -22,7 +22,7 @@ TelescopeKeys = {
   { '<leader>svc',        '<cmd>Telescope commands<cr>',                                                                                    mode = { 'n', 'v', }, silent = true, desc = 'Telescope commands', },
   { '<leader>so',         '<cmd>Telescope frecency<cr>',                                                                                    mode = { 'n', 'v', }, silent = true, desc = 'Telescope oldfiles', },
   { '<leader>svb',        '<cmd>Telescope buffers cwd_only=true sort_mru=true ignore_current_buffer=true<cr>',                              mode = { 'n', 'v', }, silent = true, desc = 'Telescope buffers cwd_only', },
-  { '<leader>sj',         '<cmd>Telescope jumplist<cr>',                                                                                    mode = { 'n', 'v', }, silent = true, desc = 'Telescope jumplist', },
+  { '<leader>sj',         '<cmd>Telescope jumplist show_line=false<cr>',                                                                                    mode = { 'n', 'v', }, silent = true, desc = 'Telescope jumplist', },
   { '<leader>sd',         '<cmd>Telescope diagnostics<cr>',                                                                                 mode = { 'n', 'v', }, silent = true, desc = 'Telescope diagnostics', },
   { '<leader>sf',         '<cmd>Telescope filetypes<cr>',                                                                                   mode = { 'n', 'v', }, silent = true, desc = 'Telescope filetypes', },
   { '<leader>sz',         '<cmd>Telescope current_buffer_fuzzy_find<cr>',                                                                   mode = { 'n', 'v', }, silent = true, desc = 'Telescope current_buffer_fuzzy_find', },
