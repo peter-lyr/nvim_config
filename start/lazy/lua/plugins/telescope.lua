@@ -7,7 +7,7 @@ TelescopeKeysLess = {
 }
 
 TelescopeKeysMore = {
-  { '<leader>s<leader>', function() require 'config.telescope'.find_files() end, mode = { 'n', 'v', }, silent = true, desc = 'Telescope find_files', },
+  { '<leader>sa',         '<cmd>Telescope my_file_browser<cr>',                                                                             mode = { 'n', 'v', }, silent = true, desc = 'Telescope file_browser', },
   { '<leader>gf',        ':<c-u>Telescope git_status<cr>',                       mode = { 'n', 'v', }, silent = true, desc = 'Telescope git_status', },
   { '<leader>sb',        '<cmd>Telescope buffers<cr>',                           mode = { 'n', 'v', }, silent = true, desc = 'Telescope buffers', },
 }
@@ -15,6 +15,7 @@ TelescopeKeysMore = {
 TelescopeKeys = {
 
   { '<leader>sk',         function() require 'config.telescope'.open_project() end,                                                         mode = { 'n', 'v', }, silent = true, desc = 'Telescope projects', },
+  { '<leader>s<leader>', function() require 'config.telescope'.find_files() end, mode = { 'n', 'v', }, silent = true, desc = 'Telescope find_files', },
   { '<leader>sv<leader>', function() require 'config.telescope'.find_files_all() end,                                                       mode = { 'n', 'v', }, silent = true, desc = 'Telescope find_files all', },
   { '<leader>sh',         '<cmd>Telescope search_history<cr>',                                                                              mode = { 'n', 'v', }, silent = true, desc = 'Telescope search_history', },
   { '<leader>sc',         '<cmd>Telescope command_history<cr>',                                                                             mode = { 'n', 'v', }, silent = true, desc = 'Telescope command_history', },
@@ -40,7 +41,6 @@ TelescopeKeys = {
   { '<leader>fr',         ':<c-u>Telescope lsp_references<cr>',                                                                             mode = { 'n', 'v', }, silent = true, desc = 'Telescope lsp_references', },
 
   -- file browser
-  { '<leader>sa',         '<cmd>Telescope my_file_browser<cr>',                                                                             mode = { 'n', 'v', }, silent = true, desc = 'Telescope file_browser', },
   { '<leader>sva',        function() vim.cmd(string.format('Telescope my_file_browser path=%s cwd_to_path=true', vim.fn.expand '%:h')) end, mode = { 'n', 'v', }, silent = true, desc = 'Telescope file_browser cur', },
 
   -- config
