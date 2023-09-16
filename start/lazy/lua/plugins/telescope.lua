@@ -14,6 +14,7 @@ TelescopeKeysMore = {
 
 TelescopeKeys = {
 
+  { '<leader>sk',         function() require 'config.telescope'.open_project() end,                                                         mode = { 'n', 'v', }, silent = true, desc = 'Telescope projects', },
   { '<leader>sv<leader>', function() require 'config.telescope'.find_files_all() end,                                                       mode = { 'n', 'v', }, silent = true, desc = 'Telescope find_files all', },
   { '<leader>sh',         '<cmd>Telescope search_history<cr>',                                                                              mode = { 'n', 'v', }, silent = true, desc = 'Telescope search_history', },
   { '<leader>sc',         '<cmd>Telescope command_history<cr>',                                                                             mode = { 'n', 'v', }, silent = true, desc = 'Telescope command_history', },
@@ -97,6 +98,7 @@ return {
     'nvim-telescope/telescope-file-browser.nvim',
     require 'plugins.whichkey',
     'nvim-telescope/telescope-ui-select.nvim',
+    'ahmedkhalf/project.nvim',
   },
   init = function()
     require 'which-key'.register { ['<leader>s'] = { name = 'Telescope', }, }
