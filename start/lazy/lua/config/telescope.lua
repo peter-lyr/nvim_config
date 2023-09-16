@@ -398,4 +398,28 @@ M.open = function()
   vim.cmd('cd ' .. M.nvim_config.filename .. '|e ' .. 'start/lazy/lua/config/telescope.lua')
 end
 
+-- ui-select
+
+require 'telescope'.load_extension 'ui-select'
+
+--------------------
+-- ui_all
+--------------------
+
+local descs = {}
+local keys = {}
+for i=1, #TelescopeKeys do
+  descs[#descs+1] = TelescopeKeys[i]['desc']
+  keys[#keys+1] = vim.fn.substitute(TelescopeKeys[i][1], '<leader>', ' ', 'g')
+end
+
+M.ui_all = function()
+  vim.ui.select(descs, { prompt = 'telescope all', }, function(choice, idx)
+    if not choice then
+      return
+    end
+    vim.cmd(string.format([[call feedkeys("%s")]], keys[idx]))
+  end)
+end
+
 return M
