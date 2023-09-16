@@ -45,7 +45,7 @@ local get_setup_table = function(file_ignore_patterns)
           ['<C-w>'] = { '<c-s-w>', type = 'command', },
 
           ["<c-'>"] = actions.move_selection_next,
-          ["<c-;>"] = actions.move_selection_previous,
+          ['<c-;>'] = actions.move_selection_previous,
           ['<c-j>'] = {
             function(prompt_bufnr)
               for _ = 1, 5 do
@@ -73,8 +73,36 @@ local get_setup_table = function(file_ignore_patterns)
           -- ["<C-u>"] = false, -- actions.preview_scrolling_up,
           -- ["<C-d>"] = false, -- actions.preview_scrolling_down,
 
-          -- ["<PageUp>"] = false, -- actions.results_scrolling_up,
-          -- ["<PageDown>"] = false, -- actions.results_scrolling_down,
+          ['<PageUp>'] = {
+            function(prompt_bufnr)
+              for _ = 1, 5 do
+                actions.move_selection_previous(prompt_bufnr)
+              end
+            end,
+            type = 'action',
+            opts = { nowait = true, silent = true, desc = '5k', },
+          },
+          ['<PageDown>'] = {
+            function(prompt_bufnr)
+              for _ = 1, 5 do
+                actions.move_selection_next(prompt_bufnr)
+              end
+            end,
+            type = 'action',
+            opts = { nowait = true, silent = true, desc = '5j', },
+          },
+
+          ['<ScrollWheelDown>'] = actions.move_selection_next,
+          ['<ScrollWheelUp>'] = actions.move_selection_previous,
+          ['<LeftMouse>'] = {
+            actions.select_default, type = 'action',
+            opts = { nowait = true, silent = true, },
+          },
+          ['<RightMouse>'] = actions_layout.toggle_preview,
+          ['<MiddleMouse>'] = {
+            actions.close, type = 'action',
+            opts = { nowait = true, silent = true, },
+          },
 
           -- ["<Tab>"] = false, -- actions.toggle_selection + actions.move_selection_worse,
           -- ["<S-Tab>"] = false, -- actions.toggle_selection + actions.move_selection_better,
@@ -142,6 +170,19 @@ local get_setup_table = function(file_ignore_patterns)
           },
 
           ['g'] = actions_layout.toggle_preview,
+
+          ['<ScrollWheelDown>'] = actions.move_selection_next,
+          ['<ScrollWheelUp>'] = actions.move_selection_previous,
+          ['<LeftMouse>'] = {
+            actions.select_default, type = 'action',
+            opts = { nowait = true, silent = true, },
+          },
+          ['<RightMouse>'] = actions_layout.toggle_preview,
+          ['<MiddleMouse>'] = {
+            actions.close, type = 'action',
+            opts = { nowait = true, silent = true, },
+          },
+
         },
       },
       file_ignore_patterns = file_ignore_patterns,
@@ -337,16 +378,13 @@ M.live_grep_rg = function()
   end)
 end
 
-local p = require 'plenary.path'
-
 -- fzf
 
 pcall(telescope.load_extension, 'fzf')
 
 -- old files
 
-vim.g.sqlite_clib_path = p:new(vim.g.pack_path):parent():parent():parent():parent():parent()
-    :joinpath('sqlite3', 'sqlite3.dll').filename
+vim.g.sqlite_clib_path = require 'plenary.path':new(vim.g.pack_path):parent():parent():parent():parent():parent():joinpath('sqlite3', 'sqlite3.dll').filename
 
 pcall(telescope.load_extension, 'frecency')
 
@@ -354,7 +392,7 @@ pcall(telescope.load_extension, 'frecency')
 
 pcall(telescope.load_extension, 'my_file_browser')
 
-M.nvim_config = p:new(vim.g.pack_path):joinpath 'nvim_config'
+M.nvim_config = require 'plenary.path':new(vim.g.pack_path):joinpath 'nvim_config'
 
 M.open = function()
   vim.cmd('cd ' .. M.nvim_config.filename .. '|e ' .. 'start/lazy/lua/config/telescope.lua')
