@@ -37,4 +37,24 @@ M.copy_left = function()
   vim.cmd 'leftabove vsplit'
 end
 
+M.new_tab = function()
+  vim.cmd 'tabnew'
+end
+
+M.new_up = function()
+  vim.cmd 'leftabove new'
+end
+
+M.new_down = function()
+  vim.cmd 'new'
+end
+
+M.new_right = function()
+  vim.cmd 'vnew'
+end
+
+M.new_left = function()
+  vim.cmd 'leftabove vnew'
+end
+
 return M
