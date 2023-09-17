@@ -2,7 +2,11 @@ return {
   'preservim/nerdcommenter',
   lazy = true,
   event = { 'BufReadPost', 'BufNewFile', },
+  dependencies = {
+    require 'plugins.whichkey',
+  },
   init = function()
+    require 'which-key'.register { ['<leader>c'] = { name = 'NerdCommenter', }, }
     vim.g.NERDSpaceDelims = 1
     vim.g.NERDDefaultAlign = 'left'
     vim.g.NERDCommentEmptyLines = 1
