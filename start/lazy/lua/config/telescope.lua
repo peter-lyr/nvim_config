@@ -279,6 +279,7 @@ local get_setup_table = function(file_ignore_patterns)
         select_buffer = true,
         prompt_path = true,
         collapse_dirs = true,
+        files = false,
         mappings = {
           ['i'] = {
             ['<A-c>'] = fb_actions.create,
