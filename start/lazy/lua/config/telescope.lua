@@ -64,6 +64,8 @@ local get_setup_table = function(file_ignore_patterns)
 
           ["<c-'>"] = actions.move_selection_next,
           ['<c-;>'] = actions.move_selection_previous,
+          ["<a-j>"] = actions.move_selection_next,
+          ['<a-k>'] = actions.move_selection_previous,
           ['<f1>'] = actions.move_selection_next,
           ['<f2>'] = actions.move_selection_previous,
           ['<f3>'] = {
