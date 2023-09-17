@@ -208,6 +208,10 @@ local get_setup_table = function(file_ignore_patterns)
         -- the default case_mode is "smart_case"
       },
       my_file_browser = {
+        grouped = true,
+        select_buffer = true,
+        prompt_path = true,
+        collapse_dirs = true,
         mappings = {
           ['i'] = {
             ['<A-c>'] = false,  -- fb_actions.create,
