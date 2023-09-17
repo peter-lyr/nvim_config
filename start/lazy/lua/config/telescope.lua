@@ -68,6 +68,24 @@ local get_setup_table = function(file_ignore_patterns)
           ['<a-k>'] = actions.move_selection_previous,
           ['<f1>'] = actions.move_selection_next,
           ['<f2>'] = actions.move_selection_previous,
+          ["<a-s-j>"] = {
+            function(prompt_bufnr)
+              for _ = 1, 5 do
+                actions.move_selection_next(prompt_bufnr)
+              end
+            end,
+            type = 'action',
+            opts = { nowait = true, silent = true, desc = '5j', },
+          },
+          ['<a-s-k>'] = {
+            function(prompt_bufnr)
+              for _ = 1, 5 do
+                actions.move_selection_previous(prompt_bufnr)
+              end
+            end,
+            type = 'action',
+            opts = { nowait = true, silent = true, desc = '5k', },
+          },
           ['<f3>'] = {
             function(prompt_bufnr)
               for _ = 1, 5 do
