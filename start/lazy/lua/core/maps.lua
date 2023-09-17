@@ -84,6 +84,12 @@ return {
     { '<leader>gga', function() require 'git_push'.addall() end,           mode = { 'n', 'v', }, silent = true, desc = 'Git Push add -A', },
     { '<leader>ggr', function() require 'git_push'.reset_hard() end,       mode = { 'n', 'v', }, silent = true, desc = 'Git Push reset --hard', },
     { '<leader>ggd', function() require 'git_push'.reset_hard_clean() end, mode = { 'n', 'v', }, silent = true, desc = 'Git Push reset --hard && git clean -fd', },
+
+    -- window.lua
+    { '<a-s-h>',     function() require 'window'.height_less() end,        mode = { 'n', 'v', }, silent = true, desc = 'Window 10wincmd <', },
+    { '<a-s-l>',     function() require 'window'.height_more() end,        mode = { 'n', 'v', }, silent = true, desc = 'Window 10wincmd >', },
+    { '<a-s-j>',     function() require 'window'.width_less() end,         mode = { 'n', 'v', }, silent = true, desc = 'Window 10wincmd -', },
+    { '<a-s-k>',     function() require 'window'.width_more() end,         mode = { 'n', 'v', }, silent = true, desc = 'Window 10wincmd +', },
   },
   init = function()
     require 'which-key'.register { ['<leader>gg'] = { name = 'Git Push', }, }
