@@ -47,6 +47,11 @@ return {
     { '<a-p>',               '"+p',                                           mode = { 'n', 'v', }, silent = true,  desc = '"+p', },
     { '<a-s-p>',             '"+P',                                           mode = { 'n', 'v', }, silent = true,  desc = '"+P', },
 
+    -- yank.lua
+    { '<leader>y<leader>',   function() require 'yank'.fname() end,           mode = { 'n', 'v', }, silent = true,  desc = 'copy %:t to +', },
+    { '<leader>yg',          function() require 'yank'.absfname() end,        mode = { 'n', 'v', }, silent = true,  desc = 'copy fullpath to +', },
+    { '<leader>yw',          function() require 'yank'.cwd() end,             mode = { 'n', 'v', }, silent = true,  desc = 'copy cwd to +', },
+
     -- change_dir.lua
     { 'q.',                  function() require 'change_dir'.cur() end,       mode = { 'n', 'v', }, silent = true,  desc = 'cd %:h', },
     { 'qu',                  function() require 'change_dir'.up() end,        mode = { 'n', 'v', }, silent = true,  desc = 'cd ..', },
@@ -82,5 +87,6 @@ return {
   },
   init = function()
     require 'which-key'.register { ['<leader>gg'] = { name = 'Git Push', }, }
+    require 'which-key'.register { ['<leader>y'] = { name = 'Yank', }, }
   end,
 }
