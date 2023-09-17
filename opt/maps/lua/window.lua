@@ -16,4 +16,25 @@ M.width_less = function()
   vim.cmd '5wincmd -'
 end
 
+M.copy_tab = function()
+  vim.cmd 'wincmd s'
+  vim.cmd 'wincmd T'
+end
+
+M.copy_up = function()
+  vim.cmd 'leftabove split'
+end
+
+M.copy_down = function()
+  vim.cmd 'split'
+end
+
+M.copy_right = function()
+  vim.cmd 'vsplit'
+end
+
+M.copy_left = function()
+  vim.cmd 'leftabove vsplit'
+end
+
 return M

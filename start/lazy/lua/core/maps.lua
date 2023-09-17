@@ -74,25 +74,31 @@ return {
 
     -- git_push.lua
     '<leader>gg',
-    { '<leader>ga',  function() require 'git_push'.addcommitpush() end,    mode = { 'n', 'v', }, silent = true, desc = 'Git Push add all commit and push', },
-    { '<leader>gc',  function() require 'git_push'.commitpush() end,       mode = { 'n', 'v', }, silent = true, desc = 'Git Push commit and push', },
-    { '<leader>ggc', function() require 'git_push'.commit() end,           mode = { 'n', 'v', }, silent = true, desc = 'Git Push just commit', },
-    { '<leader>ggs', function() require 'git_push'.push() end,             mode = { 'n', 'v', }, silent = true, desc = 'Git Push just push', },
-    { '<leader>ggg', function() require 'git_push'.graph() end,            mode = { 'n', 'v', }, silent = true, desc = 'Git Push graph', },
-    { '<leader>ggv', function() require 'git_push'.init() end,             mode = { 'n', 'v', }, silent = true, desc = 'Git Push init', },
-    { '<leader>ggf', function() require 'git_push'.pull() end,             mode = { 'n', 'v', }, silent = true, desc = 'Git Push pull', },
-    { '<leader>gga', function() require 'git_push'.addall() end,           mode = { 'n', 'v', }, silent = true, desc = 'Git Push add -A', },
-    { '<leader>ggr', function() require 'git_push'.reset_hard() end,       mode = { 'n', 'v', }, silent = true, desc = 'Git Push reset --hard', },
-    { '<leader>ggd', function() require 'git_push'.reset_hard_clean() end, mode = { 'n', 'v', }, silent = true, desc = 'Git Push reset --hard && git clean -fd', },
+    { '<leader>ga',     function() require 'git_push'.addcommitpush() end,    mode = { 'n', 'v', }, silent = true, desc = 'Git Push add all commit and push', },
+    { '<leader>gc',     function() require 'git_push'.commitpush() end,       mode = { 'n', 'v', }, silent = true, desc = 'Git Push commit and push', },
+    { '<leader>ggc',    function() require 'git_push'.commit() end,           mode = { 'n', 'v', }, silent = true, desc = 'Git Push just commit', },
+    { '<leader>ggs',    function() require 'git_push'.push() end,             mode = { 'n', 'v', }, silent = true, desc = 'Git Push just push', },
+    { '<leader>ggg',    function() require 'git_push'.graph() end,            mode = { 'n', 'v', }, silent = true, desc = 'Git Push graph', },
+    { '<leader>ggv',    function() require 'git_push'.init() end,             mode = { 'n', 'v', }, silent = true, desc = 'Git Push init', },
+    { '<leader>ggf',    function() require 'git_push'.pull() end,             mode = { 'n', 'v', }, silent = true, desc = 'Git Push pull', },
+    { '<leader>gga',    function() require 'git_push'.addall() end,           mode = { 'n', 'v', }, silent = true, desc = 'Git Push add -A', },
+    { '<leader>ggr',    function() require 'git_push'.reset_hard() end,       mode = { 'n', 'v', }, silent = true, desc = 'Git Push reset --hard', },
+    { '<leader>ggd',    function() require 'git_push'.reset_hard_clean() end, mode = { 'n', 'v', }, silent = true, desc = 'Git Push reset --hard && git clean -fd', },
 
     -- window.lua
-    { '<a-s-h>',     function() require 'window'.height_less() end,        mode = { 'n', 'v', }, silent = true, desc = 'Window 10wincmd <', },
-    { '<a-s-l>',     function() require 'window'.height_more() end,        mode = { 'n', 'v', }, silent = true, desc = 'Window 10wincmd >', },
-    { '<a-s-j>',     function() require 'window'.width_less() end,         mode = { 'n', 'v', }, silent = true, desc = 'Window 10wincmd -', },
-    { '<a-s-k>',     function() require 'window'.width_more() end,         mode = { 'n', 'v', }, silent = true, desc = 'Window 10wincmd +', },
+    { '<a-s-h>',        function() require 'window'.height_less() end,        mode = { 'n', 'v', }, silent = true, desc = 'Window 10wincmd <', },
+    { '<a-s-l>',        function() require 'window'.height_more() end,        mode = { 'n', 'v', }, silent = true, desc = 'Window 10wincmd >', },
+    { '<a-s-j>',        function() require 'window'.width_less() end,         mode = { 'n', 'v', }, silent = true, desc = 'Window 10wincmd -', },
+    { '<a-s-k>',        function() require 'window'.width_more() end,         mode = { 'n', 'v', }, silent = true, desc = 'Window 10wincmd +', },
+    { '<leader>w<c-i>', function() require 'window'.copy_tab() end,           mode = { 'n', 'v', }, silent = true, desc = 'wincmd T', },
+    { '<leader>w<c-h>', function() require 'window'.copy_left() end,          mode = { 'n', 'v', }, silent = true, desc = 'leftabove vsplit', },
+    { '<leader>w<c-j>', function() require 'window'.copy_down() end,          mode = { 'n', 'v', }, silent = true, desc = 'split', },
+    { '<leader>w<c-k>', function() require 'window'.copy_up() end,            mode = { 'n', 'v', }, silent = true, desc = 'leftabove split', },
+    { '<leader>w<c-l>', function() require 'window'.copy_right() end,         mode = { 'n', 'v', }, silent = true, desc = 'vsplit', },
   },
   init = function()
     require 'which-key'.register { ['<leader>gg'] = { name = 'Git Push', }, }
     require 'which-key'.register { ['<leader>y'] = { name = 'Yank', }, }
+    require 'which-key'.register { ['<leader>w'] = { name = 'Window', }, }
   end,
 }
