@@ -6,8 +6,10 @@ return {
   lazy = true,
   event = { 'CmdlineEnter', 'InsertEnter', 'ModeChanged', },
   dependencies = {
-    require 'plugins.projectroot',
+    require 'plugins.asyncrun',
     require 'plugins.notify',
+    require 'plugins.projectroot',
+    require 'plugins.whichkey',
   },
   keys = {
 
@@ -65,5 +67,20 @@ return {
     { 'csc',                 function() require 'start'.system_cur() end,     mode = { 'n', 'v', }, silent = true,  desc = 'start system_cur', },
     { '<leader>s.',          function() require 'start'.source_lua_vim() end, mode = { 'n', 'v', }, silent = true,  desc = 'source vim or lua', },
 
+    -- git_push.lua
+    '<leader>gg',
+    { '<leader>ga',  function() require 'git_push'.addcommitpush() end,    mode = { 'n', 'v', }, silent = true, desc = 'Git Push add all commit and push', },
+    { '<leader>gc',  function() require 'git_push'.commitpush() end,       mode = { 'n', 'v', }, silent = true, desc = 'Git Push commit and push', },
+    { '<leader>ggc', function() require 'git_push'.commit() end,           mode = { 'n', 'v', }, silent = true, desc = 'Git Push just commit', },
+    { '<leader>ggs', function() require 'git_push'.push() end,             mode = { 'n', 'v', }, silent = true, desc = 'Git Push just push', },
+    { '<leader>ggg', function() require 'git_push'.graph() end,            mode = { 'n', 'v', }, silent = true, desc = 'Git Push graph', },
+    { '<leader>ggv', function() require 'git_push'.init() end,             mode = { 'n', 'v', }, silent = true, desc = 'Git Push init', },
+    { '<leader>ggf', function() require 'git_push'.pull() end,             mode = { 'n', 'v', }, silent = true, desc = 'Git Push pull', },
+    { '<leader>gga', function() require 'git_push'.addall() end,           mode = { 'n', 'v', }, silent = true, desc = 'Git Push add -A', },
+    { '<leader>ggr', function() require 'git_push'.reset_hard() end,       mode = { 'n', 'v', }, silent = true, desc = 'Git Push reset --hard', },
+    { '<leader>ggd', function() require 'git_push'.reset_hard_clean() end, mode = { 'n', 'v', }, silent = true, desc = 'Git Push reset --hard && git clean -fd', },
   },
+  init = function()
+    require 'which-key'.register { ['<leader>gg'] = { name = 'Git Push', }, }
+  end,
 }
