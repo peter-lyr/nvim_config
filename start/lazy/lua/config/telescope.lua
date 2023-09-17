@@ -27,25 +27,63 @@ local get_setup_table = function(file_ignore_patterns)
       },
       mappings = {
         i = {
-          ['<C-n>'] = false, -- actions.move_selection_next,
-          ['<C-p>'] = false, -- actions.move_selection_previous,
+          ['<C-n>'] = actions.move_selection_next,
+          ['<C-p>'] = actions.move_selection_previous,
 
-          ['<C-c>'] = false, -- actions.close,
+          ['<C-c>'] = actions.close,
 
-          ['<C-x>'] = false, -- actions.select_horizontal,
-          ['<C-v>'] = false, -- actions.select_vertical,
-          ['<C-t>'] = false, -- actions.select_tab,
+          ['<Down>'] = actions.move_selection_next,
+          ['<Up>'] = actions.move_selection_previous,
 
-          ['<C-q>'] = false, -- actions.send_to_qflist + actions.open_qflist,
-          ['<M-q>'] = false, -- actions.send_selected_to_qflist + actions.open_qflist,
-          ['<C-l>'] = false, -- actions.complete_tag,
-          ['<C-_>'] = false, -- actions.which_key, -- keys from pressing <C-/>
+          ['<CR>'] = actions.select_default,
+          ['<C-x>'] = actions.select_horizontal,
+          ['<C-v>'] = actions.select_vertical,
+          ['<C-t>'] = actions.select_tab,
 
-          -- normal <c-w>
+          ['<C-u>'] = actions.preview_scrolling_up,
+          ['<C-d>'] = actions.preview_scrolling_down,
+
+          -- ['<PageUp>'] = actions.results_scrolling_up,
+          -- ['<PageDown>'] = actions.results_scrolling_down,
+
+          -- ['<Tab>'] = actions.toggle_selection + actions.move_selection_worse,
+          -- ['<S-Tab>'] = actions.toggle_selection + actions.move_selection_better,
+          ['<C-q>'] = actions.send_to_qflist + actions.open_qflist,
+          ['<M-q>'] = actions.send_selected_to_qflist + actions.open_qflist,
+          -- ['<C-l>'] = actions.complete_tag,
+          ['<C-/>'] = actions.which_key,
+          ['<C-_>'] = actions.which_key, -- keys from pressing <C-/>
           ['<C-w>'] = { '<c-s-w>', type = 'command', },
+
+          -- disable c-j because we dont want to allow new lines #2123
+          -- ['<C-j>'] = actions.nop,
+
+          ['<c-l>'] = { '<esc>', type = 'command', },
+
+          ['<F5>'] = actions_layout.toggle_preview,
 
           ["<c-'>"] = actions.move_selection_next,
           ['<c-;>'] = actions.move_selection_previous,
+          ['<f1>'] = actions.move_selection_next,
+          ['<f2>'] = actions.move_selection_previous,
+          ['<f3>'] = {
+            function(prompt_bufnr)
+              for _ = 1, 5 do
+                actions.move_selection_next(prompt_bufnr)
+              end
+            end,
+            type = 'action',
+            opts = { nowait = true, silent = true, desc = '5j', },
+          },
+          ['<f4>'] = {
+            function(prompt_bufnr)
+              for _ = 1, 5 do
+                actions.move_selection_previous(prompt_bufnr)
+              end
+            end,
+            type = 'action',
+            opts = { nowait = true, silent = true, desc = '5k', },
+          },
           ['<c-j>'] = {
             function(prompt_bufnr)
               for _ = 1, 5 do
@@ -56,24 +94,6 @@ local get_setup_table = function(file_ignore_patterns)
             opts = { nowait = true, silent = true, desc = '5j', },
           },
           ['<c-k>'] = {
-            function(prompt_bufnr)
-              for _ = 1, 5 do
-                actions.move_selection_previous(prompt_bufnr)
-              end
-            end,
-            type = 'action',
-            opts = { nowait = true, silent = true, desc = '5k', },
-          },
-
-          -- sometimes use:
-          -- ["<Down>"] = false, -- actions.move_selection_next,
-          -- ["<Up>"] = false, -- actions.move_selection_previous,
-
-          -- ["<CR>"] = false, -- actions.select_default,
-          -- ["<C-u>"] = false, -- actions.preview_scrolling_up,
-          -- ["<C-d>"] = false, -- actions.preview_scrolling_down,
-
-          ['<PageUp>'] = {
             function(prompt_bufnr)
               for _ = 1, 5 do
                 actions.move_selection_previous(prompt_bufnr)
@@ -91,6 +111,15 @@ local get_setup_table = function(file_ignore_patterns)
             type = 'action',
             opts = { nowait = true, silent = true, desc = '5j', },
           },
+          ['<PageUp>'] = {
+            function(prompt_bufnr)
+              for _ = 1, 5 do
+                actions.move_selection_previous(prompt_bufnr)
+              end
+            end,
+            type = 'action',
+            opts = { nowait = true, silent = true, desc = '5k', },
+          },
 
           ['<ScrollWheelDown>'] = actions.move_selection_next,
           ['<ScrollWheelUp>'] = actions.move_selection_previous,
@@ -104,24 +133,57 @@ local get_setup_table = function(file_ignore_patterns)
             opts = { nowait = true, silent = true, },
           },
 
-          -- ["<Tab>"] = false, -- actions.toggle_selection + actions.move_selection_worse,
-          -- ["<S-Tab>"] = false, -- actions.toggle_selection + actions.move_selection_better,
-          -- ["<C-/>"] = false, -- actions.which_key,
         },
+
         n = {
+          ['<esc>'] = actions.close,
+          ['<CR>'] = actions.select_default,
+          ['<C-x>'] = actions.select_horizontal,
+          ['<C-v>'] = actions.select_vertical,
+          ['<C-t>'] = actions.select_tab,
+
+          -- ['<Tab>'] = actions.toggle_selection + actions.move_selection_worse,
+          -- ['<S-Tab>'] = actions.toggle_selection + actions.move_selection_better,
+          ['<C-q>'] = actions.send_to_qflist + actions.open_qflist,
+          ['<M-q>'] = actions.send_selected_to_qflist + actions.open_qflist,
+
+          -- TODO: This would be weird if we switch the ordering.
+          ['j'] = actions.move_selection_next,
+          ['k'] = actions.move_selection_previous,
+          ['H'] = actions.move_to_top,
+          ['M'] = actions.move_to_middle,
+          ['L'] = actions.move_to_bottom,
+
+          ['<Down>'] = actions.move_selection_next,
+          ['<Up>'] = actions.move_selection_previous,
+          -- ['gg'] = actions.move_to_top,
+          ['G'] = actions.move_to_bottom,
+
+          ['<C-u>'] = actions.preview_scrolling_up,
+          ['<C-d>'] = actions.preview_scrolling_down,
+
+          -- ['<PageUp>'] = actions.results_scrolling_up,
+          -- ['<PageDown>'] = actions.results_scrolling_down,
+
+          ['?'] = actions.which_key,
+
           ['<c-l>'] = {
             actions.close, type = 'action',
             opts = { nowait = true, silent = true, },
           },
-          ['q'] = {
-            actions.close, type = 'action',
+
+          ['<leader>'] = {
+            actions.select_default, type = 'action',
             opts = { nowait = true, silent = true, },
           },
 
-          ['s'] = actions.move_selection_next,
-          ['w'] = actions.move_selection_previous,
+          ['<F5>'] = actions_layout.toggle_preview,
 
-          ['d'] = {
+          ["<c-'>"] = actions.move_selection_next,
+          ['<c-;>'] = actions.move_selection_previous,
+          ['<f1>'] = actions.move_selection_next,
+          ['<f2>'] = actions.move_selection_previous,
+          ['<f3>'] = {
             function(prompt_bufnr)
               for _ = 1, 5 do
                 actions.move_selection_next(prompt_bufnr)
@@ -129,6 +191,15 @@ local get_setup_table = function(file_ignore_patterns)
             end,
             type = 'action',
             opts = { nowait = true, silent = true, desc = '5j', },
+          },
+          ['<f4>'] = {
+            function(prompt_bufnr)
+              for _ = 1, 5 do
+                actions.move_selection_previous(prompt_bufnr)
+              end
+            end,
+            type = 'action',
+            opts = { nowait = true, silent = true, desc = '5k', },
           },
           ['<c-j>'] = {
             function(prompt_bufnr)
@@ -139,15 +210,6 @@ local get_setup_table = function(file_ignore_patterns)
             type = 'action',
             opts = { nowait = true, silent = true, desc = '5j', },
           },
-          ['e'] = {
-            function(prompt_bufnr)
-              for _ = 1, 5 do
-                actions.move_selection_previous(prompt_bufnr)
-              end
-            end,
-            type = 'action',
-            opts = { nowait = true, silent = true, desc = '5k', },
-          },
           ['<c-k>'] = {
             function(prompt_bufnr)
               for _ = 1, 5 do
@@ -157,19 +219,24 @@ local get_setup_table = function(file_ignore_patterns)
             type = 'action',
             opts = { nowait = true, silent = true, desc = '5k', },
           },
-
-          ['f'] = actions.send_to_qflist + actions.open_qflist,
-
-          ['x'] = actions.select_horizontal,
-          ['v'] = actions.select_vertical,
-          ['t'] = actions.select_tab,
-
-          ['<leader>'] = {
-            actions.select_default, type = 'action',
-            opts = { nowait = true, silent = true, },
+          ['<PageDown>'] = {
+            function(prompt_bufnr)
+              for _ = 1, 5 do
+                actions.move_selection_next(prompt_bufnr)
+              end
+            end,
+            type = 'action',
+            opts = { nowait = true, silent = true, desc = '5j', },
           },
-
-          ['g'] = actions_layout.toggle_preview,
+          ['<PageUp>'] = {
+            function(prompt_bufnr)
+              for _ = 1, 5 do
+                actions.move_selection_previous(prompt_bufnr)
+              end
+            end,
+            type = 'action',
+            opts = { nowait = true, silent = true, desc = '5k', },
+          },
 
           ['<ScrollWheelDown>'] = actions.move_selection_next,
           ['<ScrollWheelUp>'] = actions.move_selection_previous,
@@ -214,36 +281,37 @@ local get_setup_table = function(file_ignore_patterns)
         collapse_dirs = true,
         mappings = {
           ['i'] = {
-            ['<A-c>'] = false,  -- fb_actions.create,
-            ['<S-CR>'] = false, -- fb_actions.create_from_prompt,
-            ['<A-r>'] = false,  -- fb_actions.rename,
-            ['<A-m>'] = false,  -- fb_actions.move,
-            ['<A-y>'] = false,  -- fb_actions.copy,
-            ['<A-d>'] = false,  -- fb_actions.remove,
-            ['<C-o>'] = false,  -- fb_actions.open,
-            ['<C-g>'] = false,  -- fb_actions.goto_parent_dir,
-            ['<C-e>'] = false,  -- fb_actions.goto_home_dir,
-            ['<C-w>'] = { '<c-s-w>', type = 'command', },
-            ['<C-t>'] = false,  -- fb_actions.change_cwd,
-            ['<C-f>'] = false,  -- fb_actions.toggle_browser,
-            ['<C-h>'] = false,  -- fb_actions.toggle_hidden,
-            ['<C-s>'] = false,  -- fb_actions.toggle_all,
-            ['<bs>'] = false,   -- fb_actions.backspace,
+            ['<A-c>'] = fb_actions.create,
+            ['<S-CR>'] = fb_actions.create_from_prompt,
+            ['<A-r>'] = fb_actions.rename,
+            ['<A-m>'] = fb_actions.move,
+            ['<A-y>'] = fb_actions.copy,
+            ['<A-d>'] = fb_actions.remove,
+            ['<C-o>'] = fb_actions.open,
+            ['<C-g>'] = fb_actions.goto_parent_dir,
+            ['<C-e>'] = fb_actions.goto_home_dir,
+            ['<C-w>'] = fb_actions.goto_cwd,
+            ['<C-t>'] = fb_actions.change_cwd,
+            ['<C-f>'] = fb_actions.toggle_browser,
+            ['<C-h>'] = fb_actions.toggle_hidden,
+            ['<C-s>'] = fb_actions.toggle_all,
+            ['<bs>'] = fb_actions.backspace,
           },
           ['n'] = {
-            ['c'] = false, -- fb_actions.create,
-            ['r'] = false, -- fb_actions.rename,
-            ['m'] = false, -- fb_actions.move,
-            ['y'] = false, -- fb_actions.copy,
-            -- ["d"] = false, -- fb_actions.remove,
-            ['o'] = false, -- fb_actions.open,
-            -- ["g"] = false, -- fb_actions.goto_parent_dir,
-            -- ["e"] = false, -- fb_actions.goto_home_dir,
-            -- ["w"] = false, -- fb_actions.goto_cwd,
-            -- ["t"] = false, -- fb_actions.change_cwd,
-            -- ["f"] = false, -- fb_actions.toggle_browser,
+            ['c'] = fb_actions.create,
+            ['r'] = fb_actions.rename,
+            ['m'] = fb_actions.move,
+            ['y'] = fb_actions.copy,
+            ['d'] = fb_actions.remove,
+            ['o'] = fb_actions.open,
+            ['g'] = fb_actions.goto_parent_dir,
+            ['e'] = fb_actions.goto_home_dir,
+            ['w'] = fb_actions.goto_cwd,
+            ['t'] = fb_actions.change_cwd,
+            ['f'] = fb_actions.toggle_browser,
             ['h'] = fb_actions.toggle_hidden,
-            -- ["s"] = false, -- fb_actions.toggle_all,
+            ['s'] = fb_actions.toggle_all,
+            ['<leader>'] = fb_actions.open,
           },
         },
       },
@@ -412,9 +480,9 @@ require 'telescope'.load_extension 'ui-select'
 
 local descs = {}
 local keys = {}
-for i=1, #TelescopeKeys do
-  descs[#descs+1] = TelescopeKeys[i]['desc']
-  keys[#keys+1] = vim.fn.substitute(TelescopeKeys[i][1], '<leader>', ' ', 'g')
+for i = 1, #TelescopeKeys do
+  descs[#descs + 1] = TelescopeKeys[i]['desc']
+  keys[#keys + 1] = vim.fn.substitute(TelescopeKeys[i][1], '<leader>', ' ', 'g')
 end
 
 M.ui_all = function()
