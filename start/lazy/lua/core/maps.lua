@@ -100,6 +100,9 @@ return {
     { '<leader>w<a-j>', function() require 'window'.new_down() end,           mode = { 'n', 'v', }, silent = true, desc = 'Window new_down', },
     { '<leader>w<a-k>', function() require 'window'.new_up() end,             mode = { 'n', 'v', }, silent = true, desc = 'Window new_up', },
     { '<leader>w<a-l>', function() require 'window'.new_right() end,          mode = { 'n', 'v', }, silent = true, desc = 'Window new_right', },
+
+    -- lazygit
+    { '<leader>gl',     '<cmd>silent !start lazygit<cr>',                     mode = { 'n', 'v', }, silent = true, desc = 'lazygit', },
   },
   init = function()
     require 'which-key'.register { ['<leader>gg'] = { name = 'Git Push', }, }
