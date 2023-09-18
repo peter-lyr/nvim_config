@@ -15,6 +15,9 @@ vim.opt.cursorcolumn   = true
 vim.cmd [[
   hi CursorLine   guifg=NONE guibg=#4a4a4a
   hi CursorColumn guifg=NONE guibg=#4a4a4a
+  hi Comment           gui=NONE
+  hi @comment          gui=NONE
+  hi @lsp.type.comment gui=NONE
 ]]
 vim.opt.termguicolors = true
 vim.opt.splitright    = true
