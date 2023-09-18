@@ -30,35 +30,35 @@ vim.g.events_au_bufenter = vim.api.nvim_create_autocmd({ 'BufEnter', }, {
   end,
 })
 
--- vim.api.nvim_create_autocmd({ 'VimEnter', }, {
---   callback = function()
---     if vim.fn.exists 'g:GuiLoaded' and vim.g.GuiLoaded == 1 then
---       vim.loop.new_timer():start(10, 0, function()
---         vim.schedule(function()
---           vim.fn['GuiWindowFrameless'](1)
---         end)
---       end)
---     end
---   end,
--- })
--- 
--- vim.api.nvim_create_autocmd({ 'VimLeave', }, {
---   callback = function()
---     if vim.fn.exists 'g:GuiLoaded' and vim.g.GuiLoaded == 1 then
---       if vim.g.GuiWindowMaximized == 1 then
---         vim.fn['GuiWindowMaximized'](0)
---       end
---       if vim.g.GuiWindowFrameless == 1 then
---         vim.fn['GuiWindowFrameless'](0)
---         vim.loop.new_timer():start(10, 0, function()
---           vim.schedule(function()
---             vim.fn['GuiWindowFrameless'](0)
---           end)
---         end)
---       end
---     end
---   end,
--- })
+vim.api.nvim_create_autocmd({ 'VimEnter', }, {
+  callback = function()
+    if vim.fn.exists 'g:GuiLoaded' and vim.g.GuiLoaded == 1 then
+      vim.loop.new_timer():start(10, 0, function()
+        vim.schedule(function()
+          vim.fn['GuiWindowFrameless'](1)
+        end)
+      end)
+    end
+  end,
+})
+
+vim.api.nvim_create_autocmd({ 'VimLeave', }, {
+  callback = function()
+    if vim.fn.exists 'g:GuiLoaded' and vim.g.GuiLoaded == 1 then
+      if vim.g.GuiWindowMaximized == 1 then
+        vim.fn['GuiWindowMaximized'](0)
+      end
+      if vim.g.GuiWindowFrameless == 1 then
+        vim.fn['GuiWindowFrameless'](0)
+        vim.loop.new_timer():start(10, 0, function()
+          vim.schedule(function()
+            vim.fn['GuiWindowFrameless'](0)
+          end)
+        end)
+      end
+    end
+  end,
+})
 
 local function augroup(name)
   return vim.api.nvim_create_augroup('events_' .. name, { clear = true, })
