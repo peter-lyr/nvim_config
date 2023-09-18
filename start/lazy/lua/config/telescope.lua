@@ -156,7 +156,6 @@ local get_setup_table = function(file_ignore_patterns)
         },
 
         n = {
-          ['<esc>'] = actions.close,
           ['<CR>'] = actions.select_default,
           ['<C-x>'] = actions.select_horizontal,
           ['<C-v>'] = actions.select_vertical,
@@ -196,6 +195,8 @@ local get_setup_table = function(file_ignore_patterns)
             actions.select_default, type = 'action',
             opts = { nowait = true, silent = true, },
           },
+          ['q'] = actions.close,
+          ['<esc>'] = actions.close,
 
           ['<F5>'] = actions_layout.toggle_preview,
 
