@@ -426,9 +426,6 @@ M.live_grep_def = function()
   vim.cmd [[ call feedkeys("\<esc>:Telescope live_grep cwd=\<c-r>=expand('%:p:h')\<cr>") ]]
 end
 
--- 匹配中文
--- [\u4e00-\u9fa5]+
-
 local function get_dirs(fname)
   local fpath = require 'plenary.path':new(fname)
   if not fpath:is_file() then
@@ -471,11 +468,123 @@ M.live_grep_rg = function()
   end)
 end
 
+--------------------
+-- telescope
+--------------------
+
+M.search_history = function()
+  vim.cmd('Telescope search_history')
+end
+
+M.command_history = function()
+  vim.cmd('Telescope command_history')
+end
+
+M.commands = function()
+  vim.cmd('Telescope commands')
+end
+
+M.frecency = function()
+  vim.cmd('Telescope frecency')
+end
+
+M.buffers_cur = function()
+  vim.cmd('Telescope buffers cwd_only=true sort_mru=true ignore_current_buffer=true')
+end
+
+M.jumplist = function()
+  vim.cmd('Telescope jumplist show_line=false')
+end
+
+M.diagnostics = function()
+  vim.cmd('Telescope diagnostics')
+end
+
+M.filetypes = function()
+  vim.cmd('Telescope filetypes')
+end
+
+M.current_buffer_fuzzy_find = function()
+  vim.cmd('Telescope current_buffer_fuzzy_find')
+end
+
+M.quickfix = function()
+  vim.cmd('Telescope quickfix')
+end
+
+M.quickfixhistory = function()
+  vim.cmd('Telescope quickfixhistory')
+end
+
+M.builtin = function()
+  vim.cmd('Telescope builtin')
+end
+
+M.colorscheme = function()
+  vim.cmd('Telescope colorscheme')
+end
+
+M.git_branches = function()
+  vim.cmd('Telescope git_branches')
+end
+
+M.git_commits = function()
+  vim.cmd('Telescope git_commits')
+end
+
+M.git_bcommits = function()
+  vim.cmd('Telescope git_bcommits')
+end
+
+M.lsp_document_symbols = function()
+  vim.cmd('Telescope lsp_document_symbols')
+end
+
+M.lsp_references = function()
+  vim.cmd('Telescope lsp_references')
+end
+
+M.help_tags = function()
+  vim.cmd('Telescope help_tags')
+end
+
+M.vim_options = function()
+  vim.cmd('Telescope vim_options')
+end
+
+M.planets = function()
+  vim.cmd('Telescope planets')
+end
+
+M.grep_string = function()
+  vim.cmd('Telescope grep_string shorten_path=true word_match=-w only_sort_text=true search= grep_open_files=true')
+end
+
+M.keymaps = function()
+  vim.cmd('Telescope keymaps')
+end
+
+M.my_file_browser = function()
+  vim.cmd('Telescope my_file_browser')
+end
+
+M.git_status = function()
+  vim.cmd('Telescope git_status')
+end
+
+M.buffers = function()
+  vim.cmd('Telescope buffers')
+end
+
+--------------------
 -- fzf
+--------------------
 
 pcall(telescope.load_extension, 'fzf')
 
+--------------------
 -- old files
+--------------------
 
 vim.g.sqlite_clib_path = require 'plenary.path':new(vim.g.pack_path):parent():parent():parent():parent():parent():joinpath('sqlite3', 'sqlite3.dll').filename
 
@@ -565,7 +674,7 @@ M.refreshhistory()
 
 require 'telescope'.load_extension 'my_projects'
 
-M.open_project = function()
+M.my_projects = function()
   vim.cmd 'Telescope my_projects'
   vim.cmd [[call feedkeys("\<esc>\<esc>")]]
   vim.keymap.set({ 'n', 'v', }, '<leader>sk', ':<c-u>Telescope my_projects<cr>',
