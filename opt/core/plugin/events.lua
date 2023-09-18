@@ -95,3 +95,31 @@ vim.api.nvim_create_autocmd({ 'BufWritePre', }, {
     vim.fn.mkdir(vim.fn.fnamemodify(file, ':p:h'), 'p')
   end,
 })
+
+-- close some filetypes with <q>
+vim.api.nvim_create_autocmd('FileType', {
+  group = augroup 'close_with_q',
+  pattern = {
+    'lazy',
+    'help',
+    'lspinfo',
+    'man',
+    'mason',
+    'git',
+    'notify',
+    'qf',
+    'spectre_panel',
+    'startuptime',
+    'checkhealth',
+  },
+  callback = function(ev)
+    vim.bo[ev.buf].buflisted = false
+    vim.loop.new_timer():start(30, 0, function()
+      vim.schedule(function()
+        vim.keymap.set('n', 'q', function()
+          vim.cmd 'close'
+        end, { buffer = ev.buf, nowait = true, silent = true, })
+      end)
+    end)
+  end,
+})
