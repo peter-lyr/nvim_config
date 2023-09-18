@@ -64,11 +64,11 @@ local get_setup_table = function(file_ignore_patterns)
 
           ["<c-'>"] = actions.move_selection_next,
           ['<c-;>'] = actions.move_selection_previous,
-          ["<a-j>"] = actions.move_selection_next,
+          ['<a-j>'] = actions.move_selection_next,
           ['<a-k>'] = actions.move_selection_previous,
           ['<f1>'] = actions.move_selection_next,
           ['<f2>'] = actions.move_selection_previous,
-          ["<a-s-j>"] = {
+          ['<a-s-j>'] = {
             function(prompt_bufnr)
               for _ = 1, 5 do
                 actions.move_selection_next(prompt_bufnr)
@@ -481,9 +481,19 @@ vim.g.sqlite_clib_path = require 'plenary.path':new(vim.g.pack_path):parent():pa
 
 pcall(telescope.load_extension, 'frecency')
 
+--------------------
 -- file browser
+--------------------
 
 pcall(telescope.load_extension, 'my_file_browser')
+
+M.file_browser_cur = function()
+  vim.cmd(string.format('Telescope my_file_browser path=%s cwd_to_path=true files=true', vim.fn.expand '%:h'))
+end
+
+--------------------
+-- open config
+--------------------
 
 M.nvim_config = require 'plenary.path':new(vim.g.pack_path):joinpath 'nvim_config'
 
