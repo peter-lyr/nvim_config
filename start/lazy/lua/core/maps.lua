@@ -53,9 +53,9 @@ return {
     { '<leader>yw',          function() require 'yank'.cwd() end,             mode = { 'n', 'v', }, silent = true,  desc = 'copy cwd to +', },
 
     -- change_dir.lua
-    { 'q.',                  function() require 'change_dir'.cur() end,       mode = { 'n', 'v', }, silent = true,  desc = 'cd %:h', },
-    { 'qu',                  function() require 'change_dir'.up() end,        mode = { 'n', 'v', }, silent = true,  desc = 'cd ..', },
-    { 'qw',                  function() require 'change_dir'.cwd() end,       mode = { 'n', 'v', }, silent = true,  desc = 'cd cwd', },
+    { 'c.',                  function() require 'change_dir'.cur() end,       mode = { 'n', },      silent = true,  desc = 'cd %:h', },
+    { 'cu',                  function() require 'change_dir'.up() end,        mode = { 'n', },      silent = true,  desc = 'cd ..', },
+    { 'c<c-w>',              function() require 'change_dir'.cwd() end,       mode = { 'n', },      silent = true,  desc = 'cd cwd', },
 
     -- font_size.lua
     { '<c-=>',               function() require 'font_size'.up() end,         mode = { 'n', 'v', }, silent = true,  desc = 'font_size up', },
@@ -66,10 +66,10 @@ return {
     { '<c-0><c-=>',          function() require 'font_size'.fullscreen() end, mode = { 'n', 'v', }, silent = true,  desc = 'font_size fullscreen', },
 
     -- start.lua
-    { 'cs.',                 function() require 'start'.explorer_cur() end,   mode = { 'n', 'v', }, silent = true,  desc = 'start explorer_cur', },
-    { 'csu',                 function() require 'start'.explorer_up() end,    mode = { 'n', 'v', }, silent = true,  desc = 'start explorer_up', },
-    { 'csw',                 function() require 'start'.explorer_cwd() end,   mode = { 'n', 'v', }, silent = true,  desc = 'start explorer_cwd', },
-    { 'csc',                 function() require 'start'.system_cur() end,     mode = { 'n', 'v', }, silent = true,  desc = 'start system_cur', },
+    { 'cs.',                 function() require 'start'.explorer_cur() end,   mode = { 'n', },      silent = true,  desc = 'start explorer_cur', },
+    { 'csu',                 function() require 'start'.explorer_up() end,    mode = { 'n', },      silent = true,  desc = 'start explorer_up', },
+    { 'csw',                 function() require 'start'.explorer_cwd() end,   mode = { 'n', },      silent = true,  desc = 'start explorer_cwd', },
+    { 'csc',                 function() require 'start'.system_cur() end,     mode = { 'n', },      silent = true,  desc = 'start system_cur', },
     { '<leader>s.',          function() require 'start'.source_lua_vim() end, mode = { 'n', 'v', }, silent = true,  desc = 'source vim or lua', },
 
     -- git_push.lua
