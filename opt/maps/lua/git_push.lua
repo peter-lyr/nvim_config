@@ -2,11 +2,9 @@ local M = {}
 
 package.loaded['git_push'] = nil
 
-require 'which-key'.register { ['<leader>gg'] = { name = 'git_push.lua', }, }
-
 local git_push_timer = nil
 
-git_push_done = function()
+GitPushDone = function()
   git_push_timer:stop()
   pcall(vim.call, 'fugitive#ReloadStatus')
   local l = vim.fn.getqflist()
@@ -26,7 +24,7 @@ local function asyncrunprepare()
       end
     end)
   end)
-  vim.cmd [[au User AsyncRunStop call v:lua.git_push_done()]]
+  vim.cmd [[au User AsyncRunStop call v:lua.GitPushDone()]]
 end
 
 M.addcommitpush = function()
