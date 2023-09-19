@@ -107,6 +107,7 @@ vim.api.nvim_create_autocmd('FileType', {
     'mason',
     'git',
     'notify',
+    'fugitive',
     'qf',
     'spectre_panel',
     'startuptime',
@@ -117,7 +118,10 @@ vim.api.nvim_create_autocmd('FileType', {
     vim.loop.new_timer():start(30, 0, function()
       vim.schedule(function()
         vim.keymap.set('n', 'q', function()
-          vim.cmd 'close'
+          pcall(vim.cmd, 'close')
+        end, { buffer = ev.buf, nowait = true, silent = true, })
+        vim.keymap.set('n', '<esc>', function()
+          pcall(vim.cmd, 'close')
         end, { buffer = ev.buf, nowait = true, silent = true, })
       end)
     end)

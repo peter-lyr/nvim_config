@@ -4,10 +4,10 @@ local M = {}
 
 local bufleave_readable_file = ''
 
-vim.api.nvim_create_autocmd({ "BufLeave", }, {
+vim.api.nvim_create_autocmd({ 'BufLeave', }, {
   callback = function()
     local fname = vim.api.nvim_buf_get_name(0)
-    if require "plenary.path":new(fname):exists() then
+    if require 'plenary.path':new(fname):exists() then
       bufleave_readable_file = fname
     end
   end,
@@ -77,12 +77,23 @@ local get_dname = function(readablefile)
   if #readablefile == 0 then
     return ''
   end
-  local fname = string.gsub(readablefile, "\\", '/')
-  local path = require "plenary.path":new(fname)
+  local fname = string.gsub(readablefile, '\\', '/')
+  local path = require 'plenary.path':new(fname)
   if path:is_file() then
     return path:parent()['filename']
   end
   return ''
+end
+
+local function map_q_close()
+  local buf = vim.fn.bufnr()
+  vim.bo[buf].buflisted = false
+  vim.keymap.set('n', 'q', function()
+    pcall(vim.cmd, 'close')
+  end, { buffer = buf, nowait = true, silent = true, })
+  vim.keymap.set('n', '<esc>', function()
+    pcall(vim.cmd, 'close')
+  end, { buffer = buf, nowait = true, silent = true, })
 end
 
 M.toggle = function(terminal, chdir)
@@ -92,7 +103,7 @@ M.toggle = function(terminal, chdir)
   if vim.g.builtin_terminal_ok == 0 then
     if chdir == '.' then
       chdir = get_dname(vim.api.nvim_buf_get_name(0))
-      chdir = string.gsub(chdir, "/", '\\')
+      chdir = string.gsub(chdir, '/', '\\')
     elseif chdir == 'u' then
       chdir = '..'
     elseif chdir == '-' then
@@ -117,7 +128,7 @@ M.toggle = function(terminal, chdir)
       elseif chdir == 'cwd' then
         chdir = vim.fn.getcwd()
       end
-      chdir = string.gsub(chdir, "\\", '/')
+      chdir = string.gsub(chdir, '\\', '/')
       vim.api.nvim_chan_send(vim.b.terminal_job_id, string.format('cd %s', chdir))
       if terminal == 'ipython' then
         vim.fn.feedkeys [[:call feedkeys("i\<cr>\<esc>")]]
@@ -128,6 +139,7 @@ M.toggle = function(terminal, chdir)
       else
         vim.cmd [[call feedkeys("i\<cr>\<esc>")]]
       end
+      map_q_close()
       return
     else
       if #terminal_bufnrs == 1 then
@@ -145,7 +157,8 @@ M.toggle = function(terminal, chdir)
       end
       return
     else
-      vim.cmd(string.format("b%d", terminal_bufnrs[bnr_idx]))
+      vim.cmd(string.format('b%d', terminal_bufnrs[bnr_idx]))
+      map_q_close()
     end
   else
     if terminal_bufnrs then
@@ -154,13 +167,14 @@ M.toggle = function(terminal, chdir)
           vim.cmd 'split'
         end
       end
-      vim.cmd(string.format("b%d", terminal_bufnrs[1]))
+      vim.cmd(string.format('b%d', terminal_bufnrs[1]))
     else
       if not one then
         vim.cmd 'split'
       end
       vim.cmd(string.format('te %s', terminal))
     end
+    map_q_close()
     if #chdir > 0 then
       M.toggle(terminal, chdir)
     end
@@ -210,7 +224,7 @@ M.send = function(terminal, to_send, show) -- show时，send后不hide
     end
   elseif to_send == 'clipboard' then
     local clipboard = vim.fn.getreg '+'
-    clipboard = clipboard:gsub("^%s*(.-)%s*$", "%1") -- trim_string
+    clipboard = clipboard:gsub('^%s*(.-)%s*$', '%1') -- trim_string
     if terminal == 'terminal' then
       cmd_to_send = string.gsub(clipboard, '\n', ' && ')
     elseif terminal == 'powershell' then
@@ -255,7 +269,7 @@ M.send = function(terminal, to_send, show) -- show时，send后不hide
           vim.cmd 'split'
         end
       end
-      vim.cmd(string.format("b%d", terminal_bufnrs[1]))
+      vim.cmd(string.format('b%d', terminal_bufnrs[1]))
     else
       if not one then
         vim.cmd 'split'
