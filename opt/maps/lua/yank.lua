@@ -16,7 +16,7 @@ end
 
 M.absfname = function()
   vim.cmd 'let @+ = substitute(nvim_buf_get_name(0), "/", "\\\\", "g")'
-  vim.notify(vim.fn.substitute(nvim_buf_get_name(0), '/', '\\\\', 'g'), 'info', {
+  vim.notify(vim.fn.substitute(vim.api.nvim_buf_get_name(0), '/', '\\\\', 'g'), 'info', {
     animate = false,
     on_open = function(win)
       local buf = vim.api.nvim_win_get_buf(win)
@@ -28,7 +28,7 @@ end
 
 M.cwd = function()
   vim.cmd 'let @+ = substitute(getcwd(), "/", "\\\\", "g")'
-  vim.notify(vim.fn.substitute(getcwd(), '/', '\\\\', 'g'), 'info', {
+  vim.notify(vim.fn.substitute(vim.loop.cwd(), '/', '\\\\', 'g'), 'info', {
     animate = false,
     on_open = function(win)
       local buf = vim.api.nvim_win_get_buf(win)
