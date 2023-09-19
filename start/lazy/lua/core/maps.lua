@@ -35,13 +35,13 @@ return {
     { '<c-k>',               '5k',                                            mode = { 'n', 'v', }, silent = true,  desc = '5k', },
 
     -- copy_paste
-    { '<a-y>',               '"+y',                                           mode = { 'v', },      silent = true,  desc = '"+y', },
+    { '<a-y>',               '"+y',                                           mode = { 'n', 'v', }, silent = true,  desc = '"+y', },
     { 'yii',                 '"+yi',                                          mode = { 'n', },      silent = true,  desc = '"+yi', },
     { 'yaa',                 '"+ya',                                          mode = { 'n', },      silent = true,  desc = '"+ya', },
-    { '<a-d>',               '"+d',                                           mode = { 'v', },      silent = true,  desc = '"+d', },
+    { '<a-d>',               '"+d',                                           mode = { 'n', 'v', }, silent = true,  desc = '"+d', },
     { 'dii',                 '"+di',                                          mode = { 'n', },      silent = true,  desc = '"+di', },
     { 'daa',                 '"+da',                                          mode = { 'n', },      silent = true,  desc = '"+da', },
-    { '<a-c>',               '"+c',                                           mode = { 'v', },      silent = true,  desc = '"+c', },
+    { '<a-c>',               '"+c',                                           mode = { 'n', 'v', }, silent = true,  desc = '"+c', },
     { 'cii',                 '"+ci',                                          mode = { 'n', },      silent = true,  desc = '"+ci', },
     { 'caa',                 '"+ca',                                          mode = { 'n', },      silent = true,  desc = '"+ca', },
     { '<a-p>',               '"+p',                                           mode = { 'n', 'v', }, silent = true,  desc = '"+p', },
