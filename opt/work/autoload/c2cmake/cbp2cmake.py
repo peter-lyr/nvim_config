@@ -38,6 +38,23 @@ def get_libs_a_dirs(project_root):
     return lib_a_files
 
 
+def sel(as_executable_cbps):
+    res = input(
+        "Type number to choose one of cbp as executable\n"
+        + "\n".join([str(i + 1) + ". " + v for i, v in enumerate(as_executable_cbps)])
+        + "\n"
+        ">> "
+    )
+    try:
+        num = int(res)
+        if num in [i + 1 for i, _ in enumerate(as_executable_cbps)]:
+            executable_cbp = as_executable_cbps[num - 1]
+            return executable_cbp
+    except Exception as e:
+        print(e)
+    return ''
+
+
 def get_executable_cbp(project_root):
     cbp_files = []
     for root, _, files in os.walk(project_root):
@@ -45,31 +62,25 @@ def get_executable_cbp(project_root):
             if file.endswith(".cbp"):
                 cbp_files.append(rep(os.path.join(root, file)))
     executable_cbp = ""
+    cbp_files_2 = []
     if len(cbp_files) == 1:
         executable_cbp = cbp_files[0]
     elif len(cbp_files) > 1:
+        app_cbps = []
         for cbp_file in cbp_files:
             if os.path.basename(cbp_file) in ["app.cbp"]:
-                executable_cbp = cbp_file
-                break
+                app_cbps.append(cbp_file)
+        if len(app_cbps) > 1:
+            executable_cbp = sel(app_cbps)
+            for cbp_file in cbp_files:
+                if cbp_file not in app_cbps:
+                    cbp_files_2.append(cbp_file)
         else:
-            res = input(
-                "Type number to choose one of cbp as executable\n"
-                + "\n".join([str(i + 1) + ". " + v for i, v in enumerate(cbp_files)])
-                + "\n"
-                ">> "
-            )
-            try:
-                num = int(res)
-                if num in [i + 1 for i, _ in enumerate(cbp_files)]:
-                    executable_cbp = cbp_files[num - 1]
-            except Exception as e:
-                print(e)
-    cbp_files_2 = []
-    executable_cbp_dir = os.path.dirname(executable_cbp)
-    for cbp_file in cbp_files:
-        if executable_cbp_dir != os.path.dirname(cbp_file):
-            cbp_files_2.append(cbp_file)
+            executable_cbp = sel(cbp_files)
+            executable_cbp_dir = os.path.dirname(executable_cbp)
+            for cbp_file in cbp_files:
+                if executable_cbp_dir != os.path.dirname(cbp_file):
+                    cbp_files_2.append(cbp_file)
     return executable_cbp, cbp_files_2
 
 
