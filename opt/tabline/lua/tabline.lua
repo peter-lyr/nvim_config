@@ -63,8 +63,8 @@ M.refresh_tabline_hl_cur = function()
         items[#items + 1] = '%#tblfil#' .. '%' .. tostring(bufnr) .. '@SwitchBuffer@ ' .. tostring(i) .. ' ' .. only_name
       end
     end
-    local temp = vim.fn.join(items, ' ')
-    temp = temp .. '%=%#tblfil#' .. vim.loop.cwd() .. ' '
+    local temp = vim.fn.join(items, ' ') .. ' '
+    temp = temp .. '%=%#tblfil#' .. ' ' .. vim.loop.cwd() .. ' '
     vim.opt.tabline = temp
   end
 end
