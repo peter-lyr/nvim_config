@@ -44,8 +44,8 @@ M.refresh_tabline = function()
 end
 
 vim.cmd [[
-  hi tabline_sel  guifg=#e6646e gui=bold
-  hi tabline_fill guifg=none
+  hi tblsel guifg=#e6646e gui=bold
+  hi tblfil guifg=none
 ]]
 
 M.refresh_tabline_hl_cur = function()
@@ -58,13 +58,13 @@ M.refresh_tabline_hl_cur = function()
         only_name = string.match(only_name, '.+%\\(.+)$')
       end
       if vim.fn.bufnr() == bufnr then
-        items[#items + 1] = '%#tabline_sel#' .. '%' .. tostring(bufnr) .. '@SwitchBuffer@ ' .. tostring(i) .. ' ' .. only_name
+        items[#items + 1] = '%#tblsel#' .. '%' .. tostring(bufnr) .. '@SwitchBuffer@ ' .. tostring(i) .. ' ' .. only_name
       else
-        items[#items + 1] = '%#tabline_fill#' .. '%' .. tostring(bufnr) .. '@SwitchBuffer@ ' .. tostring(i) .. ' ' .. only_name
+        items[#items + 1] = '%#tblfil#' .. '%' .. tostring(bufnr) .. '@SwitchBuffer@ ' .. tostring(i) .. ' ' .. only_name
       end
     end
     local temp = vim.fn.join(items, ' ')
-    temp = temp .. '%=%#tabline_fill#' .. vim.loop.cwd() .. ' '
+    temp = temp .. '%=%#tblfil#' .. vim.loop.cwd() .. ' '
     vim.opt.tabline = temp
   end
 end
