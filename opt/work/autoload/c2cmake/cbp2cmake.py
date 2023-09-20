@@ -75,6 +75,25 @@ def get_executable_cbp(project_root):
             for cbp_file in cbp_files:
                 if cbp_file not in app_cbps:
                     cbp_files_2.append(cbp_file)
+            print('selected executable_cbp:', executable_cbp)
+            app_cbps.remove(executable_cbp)
+            workspaces = []
+            for app_cbp in app_cbps:
+                workspace = app_cbp.split("/")[-2]
+                if "/" not in app_cbp.replace(project_root + "/", ""):
+                    workspace = app_cbp.split("/")[-1].split(".")[0]
+                if os.path.exists(f'{workspace}.workspace'):
+                    workspaces.append(workspace)
+            if len(workspaces):
+                res = input(
+                    "Just Enter to delete them:\n"
+                    + "\n".join([str(i + 1) + ". " + v for i, v in enumerate(workspaces)])
+                    + "\n"
+                    ">> "
+                )
+                if not len(res):
+                    for workspace in workspaces:
+                        os.system(f'del {workspace}.workspace')
         else:
             executable_cbp = sel(cbp_files)
             executable_cbp_dir = os.path.dirname(executable_cbp)
