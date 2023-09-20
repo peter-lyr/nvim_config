@@ -2,6 +2,7 @@ local M = {}
 
 local cur_projectroot = ''
 local projects = {}
+local timer = 0
 
 vim.cmd [[
   function! SwitchBuffer(bufnr, mouseclicks, mousebutton, modifiers)
@@ -42,6 +43,32 @@ M.refresh_tabline = function()
   end
 end
 
+vim.cmd [[
+  hi tabline_sel  guifg=#e6646e gui=bold
+  hi tabline_fill guifg=none
+]]
+
+M.refresh_tabline_hl_cur = function()
+  if projects[cur_projectroot] then
+    local items = {}
+    for i, bufnr in ipairs(projects[cur_projectroot]) do
+      local buf_name = vim.fn.bufname(bufnr)
+      local only_name = string.gsub(buf_name, '/', '\\')
+      if string.match(only_name, '\\') then
+        only_name = string.match(only_name, '.+%\\(.+)$')
+      end
+      if vim.fn.bufnr() == bufnr then
+        items[#items + 1] = '%#tabline_sel#' .. '%' .. tostring(bufnr) .. '@SwitchBuffer@ ' .. tostring(i) .. ' ' .. only_name
+      else
+        items[#items + 1] = '%#tabline_fill#' .. '%' .. tostring(bufnr) .. '@SwitchBuffer@ ' .. tostring(i) .. ' ' .. only_name
+      end
+    end
+    local temp = vim.fn.join(items, ' ')
+    temp = temp .. '%=%#tabline_fill#' .. vim.loop.cwd() .. ' '
+    vim.opt.tabline = temp
+  end
+end
+
 pcall(vim.api.nvim_del_autocmd, vim.g.tabline_au_bufenter_1)
 
 vim.g.tabline_au_bufenter_1 = vim.api.nvim_create_autocmd('BufEnter', {
@@ -74,6 +101,16 @@ vim.g.tabline_au_bufenter_1 = vim.api.nvim_create_autocmd('BufEnter', {
     if ok then
       M.refresh_tabline()
     end
+    if timer ~= 0 then
+      timer:stop()
+    end
+    timer = vim.loop.new_timer()
+    timer:start(320, 0, function()
+      vim.schedule(function()
+        M.refresh_tabline_hl_cur()
+        timer = 0
+      end)
+    end)
   end,
 })
 
