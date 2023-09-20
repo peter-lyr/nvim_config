@@ -1,5 +1,6 @@
 return {
-  'chentoast/marks.nvim',
+  -- 'chentoast/marks.nvim',
+  'peter-lyr/marks.nvim',
   lazy = true,
   event = { 'BufReadPost', 'BufNewFile', },
   config = function()
