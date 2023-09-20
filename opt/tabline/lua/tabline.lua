@@ -58,14 +58,20 @@ vim.g.tabline_au_bufenter_1 = vim.api.nvim_create_autocmd('BufEnter', {
       return
     end
     local temp_projectroot = rep(vim.fn['ProjectRootGet'](temp_fname))
+    local ok = nil
     if temp_projectroot ~= cur_projectroot then
+      ok = 1
       cur_projectroot = temp_projectroot
     end
     if vim.tbl_contains(vim.tbl_keys(projects), temp_projectroot) == false then
+      ok = 1
       projects[temp_projectroot] = {}
     end
     if vim.tbl_contains(projects[temp_projectroot], cur_bufnr) == false then
+      ok = 1
       projects[temp_projectroot][#projects[temp_projectroot] + 1] = cur_bufnr
+    end
+    if ok then
       M.refresh_tabline()
     end
   end,
