@@ -1,5 +1,7 @@
 local M = {}
 
+package.loaded['tabline'] = nil
+
 local cur_projectroot = ''
 local projects = {}
 local timer = 0
@@ -45,7 +47,7 @@ M.refresh_tabline = function(hl)
         items[#items + 1] = '%' .. tostring(bufnr) .. '@SwitchBuffer@ ' .. tostring(i) .. ' ' .. only_name
       end
     end
-    local temp = vim.fn.join(items, ' ')
+    local temp = vim.fn.join(items, ' ') .. ' '
     if hl then
       temp = temp .. '%=%#tblfil#' .. ' ' .. vim.loop.cwd() .. ' '
     else
