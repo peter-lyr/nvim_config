@@ -42,7 +42,7 @@ vim.opt.fileencodings = 'utf-8,gbk,default,ucs-bom,latin'
 -- vim.opt.autoindent      = true -- true
 
 vim.opt.shortmess:append { W = true, I = true, c = true, }
-vim.opt.showmode      = false -- Dont show mode since we have a statusline
+vim.opt.showmode      = true -- Dont show mode since we have a statusline
 
 vim.opt.undofile      = true
 vim.opt.undolevels    = 10000
@@ -53,3 +53,4 @@ vim.opt.conceallevel  = 3 -- Hide * markup for bold and italic
 vim.opt.list          = true
 vim.opt.shada         = [[!,'1000,<500,s10000,h]]
 vim.opt.laststatus    = 3
+vim.opt.statusline    = [[%<%-14.(%l,%c%V%) %P%=%F %h%m%r]]
