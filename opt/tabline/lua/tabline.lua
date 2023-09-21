@@ -58,15 +58,93 @@ local function rep(content)
   return content
 end
 
+local function indexof(tbl, item)
+  return vim.fn.indexof(tbl, string.format('v:val == %s', item)) + 1
+end
+
+local function get_only_name(bufname)
+  local only_name = string.gsub(bufname, '/', '\\')
+  if string.match(only_name, '\\') then
+    only_name = string.match(only_name, '.+%\\(.+)$')
+  end
+  return only_name
+end
+
+M.get_buf_to_show = function(bufnrs, cur_bufnr)
+  local index = indexof(bufnrs, cur_bufnr)
+  local columns = vim.opt.columns:get()
+  local buf_len = columns - #vim.loop.cwd() - 2
+  local newbufnrs = { bufnrs[index], }
+  buf_len = buf_len - #get_only_name(vim.fn.bufname(bufnrs[index])) - 5
+  if buf_len < 0 then
+    return newbufnrs
+  end
+  local cnt1 = 1
+  local cnt2 = 1
+  for i = 2, #bufnrs do
+    if i % 2 == 0 then
+      local ii = index + cnt1
+      if ii > #bufnrs then
+        ii = index - cnt2
+        local only_name = get_only_name(vim.fn.bufname(bufnrs[ii]))
+        buf_len = buf_len - #only_name - 5
+        if #newbufnrs > 9 then
+          buf_len = buf_len - 1
+        end
+        if buf_len < 0 then
+          break
+        end
+        table.insert(newbufnrs, 1, bufnrs[ii])
+        cnt2 = cnt2 + 1
+      else
+        local only_name = get_only_name(vim.fn.bufname(bufnrs[ii]))
+        buf_len = buf_len - #only_name - 5
+        if #newbufnrs > 9 then
+          buf_len = buf_len - 1
+        end
+        if buf_len < 0 then
+          break
+        end
+        table.insert(newbufnrs, bufnrs[ii])
+        cnt1 = cnt1 + 1
+      end
+    else
+      local ii = index - cnt2
+      if ii < 1 then
+        ii = index + cnt1
+        local only_name = get_only_name(vim.fn.bufname(bufnrs[ii]))
+        buf_len = buf_len - #only_name - 5
+        if #newbufnrs > 9 then
+          buf_len = buf_len - 1
+        end
+        if buf_len < 0 then
+          break
+        end
+        table.insert(newbufnrs, bufnrs[ii])
+        cnt1 = cnt1 + 1
+      else
+        local only_name = get_only_name(vim.fn.bufname(bufnrs[ii]))
+        buf_len = buf_len - #only_name - 5
+        if #newbufnrs > 9 then
+          buf_len = buf_len - 1
+        end
+        if buf_len < 0 then
+          break
+        end
+        table.insert(newbufnrs, 1, bufnrs[ii])
+        cnt2 = cnt2 + 1
+      end
+    end
+  end
+  return newbufnrs
+end
+
 M.refresh_tabline = function(hl)
   if projects[cur_projectroot] then
     local items = {}
-    for i, bufnr in ipairs(projects[cur_projectroot]) do
-      local buf_name = vim.fn.bufname(bufnr)
-      local only_name = string.gsub(buf_name, '/', '\\')
-      if string.match(only_name, '\\') then
-        only_name = string.match(only_name, '.+%\\(.+)$')
-      end
+    local buf_to_show = M.get_buf_to_show(projects[cur_projectroot], vim.fn.bufnr())
+    for i, bufnr in ipairs(buf_to_show) do
+      local only_name = get_only_name(vim.fn.bufname(bufnr))
       local temp = ''
       if hl then
         if vim.fn.bufnr() == bufnr then
@@ -97,7 +175,7 @@ vim.cmd [[
 
 pcall(vim.api.nvim_del_autocmd, vim.g.tabline_au_bufenter_1)
 
-vim.g.tabline_au_bufenter_1 = vim.api.nvim_create_autocmd('BufEnter', {
+vim.g.tabline_au_bufenter_1 = vim.api.nvim_create_autocmd({ 'BufEnter', 'WinResized', }, {
   callback = function(ev)
     local cur_bufnr = ev.buf
     local temp_fname = rep(vim.api.nvim_buf_get_name(cur_bufnr))
