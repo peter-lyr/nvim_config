@@ -19,7 +19,7 @@ vim.cmd [[
 ]]
 
 function SwitchBuffer(bufnr, mouseclicks, mousebutton, modifiers)
-  if mousebutton == 'm' then -- and mouseclicks == 1 then
+  if mousebutton == 'm' then     -- and mouseclicks == 1 then
   elseif mousebutton == 'l' then -- and mouseclicks == 1 then
     if vim.fn.buflisted(vim.fn.bufnr()) ~= 0 then
       vim.cmd('b' .. bufnr)
@@ -30,7 +30,7 @@ function SwitchBuffer(bufnr, mouseclicks, mousebutton, modifiers)
 end
 
 function SwitchTab(tabnr, mouseclicks, mousebutton, modifiers)
-  if mousebutton == 'm' then -- and mouseclicks == 1 then
+  if mousebutton == 'm' then     -- and mouseclicks == 1 then
     pcall(vim.cmd, tabnr .. 'tabclose')
   elseif mousebutton == 'l' then -- and mouseclicks == 1 then
     local max_tabnr = vim.fn.tabpagenr '$'
@@ -97,6 +97,12 @@ M.get_buf_to_show = function(bufnrs, cur_bufnr)
   local newbufnrs = { bufnrs[index], }
   buf_len = buf_len - #get_only_name(vim.fn.bufname(cur_bufnr)) - 4
   if buf_len < 0 then
+    if index >= 2 then
+      table.insert(newbufnrs, 1, bufnrs[index - 1])
+    end
+    if index < #bufnrs then
+      table.insert(newbufnrs, bufnrs[index + 1])
+    end
     return newbufnrs
   end
   local cnt1 = 1
@@ -154,6 +160,11 @@ M.get_buf_to_show = function(bufnrs, cur_bufnr)
         table.insert(newbufnrs, 1, bufnrs[ii])
         cnt2 = cnt2 + 1
       end
+    end
+  end
+  if #newbufnrs == 2 then
+    if newbufnrs[1] == cur_bufnr and indexof(bufnrs, cur_bufnr) ~= 1 then
+      table.insert(newbufnrs, 1, bufnrs[index - 1])
     end
   end
   return newbufnrs
