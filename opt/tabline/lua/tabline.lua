@@ -75,7 +75,7 @@ M.get_buf_to_show = function(bufnrs, cur_bufnr)
   local columns = vim.opt.columns:get()
   local buf_len = columns - #vim.loop.cwd() - 2
   local newbufnrs = { bufnrs[index], }
-  buf_len = buf_len - #get_only_name(vim.fn.bufname(bufnrs[index])) - 5
+  buf_len = buf_len - #get_only_name(vim.fn.bufname(bufnrs[index])) - 4
   if buf_len < 0 then
     return newbufnrs
   end
@@ -87,7 +87,7 @@ M.get_buf_to_show = function(bufnrs, cur_bufnr)
       if ii > #bufnrs then
         ii = index - cnt2
         local only_name = get_only_name(vim.fn.bufname(bufnrs[ii]))
-        buf_len = buf_len - #only_name - 5
+        buf_len = buf_len - #only_name - 4
         if #newbufnrs > 9 then
           buf_len = buf_len - 1
         end
@@ -98,7 +98,7 @@ M.get_buf_to_show = function(bufnrs, cur_bufnr)
         cnt2 = cnt2 + 1
       else
         local only_name = get_only_name(vim.fn.bufname(bufnrs[ii]))
-        buf_len = buf_len - #only_name - 5
+        buf_len = buf_len - #only_name - 4
         if #newbufnrs > 9 then
           buf_len = buf_len - 1
         end
@@ -113,7 +113,7 @@ M.get_buf_to_show = function(bufnrs, cur_bufnr)
       if ii < 1 then
         ii = index + cnt1
         local only_name = get_only_name(vim.fn.bufname(bufnrs[ii]))
-        buf_len = buf_len - #only_name - 5
+        buf_len = buf_len - #only_name - 4
         if #newbufnrs > 9 then
           buf_len = buf_len - 1
         end
@@ -124,7 +124,7 @@ M.get_buf_to_show = function(bufnrs, cur_bufnr)
         cnt1 = cnt1 + 1
       else
         local only_name = get_only_name(vim.fn.bufname(bufnrs[ii]))
-        buf_len = buf_len - #only_name - 5
+        buf_len = buf_len - #only_name - 4
         if #newbufnrs > 9 then
           buf_len = buf_len - 1
         end
@@ -157,7 +157,7 @@ M.refresh_tabline = function(hl)
     end
     local temp = vim.fn.join(items, ' ') .. ' '
     if hl then
-      temp = temp .. '%=%#tblfil#'
+      temp = temp .. '%#tblfil#%=%#tblfil#'
     end
     local ii = ''
     if vim.fn.tabpagenr '$' > 1 then
@@ -169,7 +169,7 @@ M.refresh_tabline = function(hl)
 end
 
 vim.cmd [[
-  hi tblsel guifg=#e6646e gui=bold
+  hi tblsel guifg=#e6646e guibg=#5a5a5a gui=bold
   hi tblfil guifg=none
 ]]
 
