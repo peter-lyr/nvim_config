@@ -18,6 +18,9 @@ vim.cmd [[
   hi Comment           gui=NONE
   hi @comment          gui=NONE
   hi @lsp.type.comment gui=NONE
+  hi TabLine     guifg=#a4a4a4
+  hi TabLineSel  guifg=#a4a4a4
+  hi TabLineFill guifg=#a4a4a4
 ]]
 vim.opt.termguicolors = true
 vim.opt.splitright    = true
