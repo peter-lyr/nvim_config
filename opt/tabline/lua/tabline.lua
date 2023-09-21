@@ -19,8 +19,8 @@ vim.cmd [[
 ]]
 
 function SwitchBuffer(bufnr, mouseclicks, mousebutton, modifiers)
-  if mousebutton == 'm' and mouseclicks == 1 then
-  elseif mousebutton == 'l' and mouseclicks == 1 then
+  if mousebutton == 'm' then -- and mouseclicks == 1 then
+  elseif mousebutton == 'l' then -- and mouseclicks == 1 then
     if vim.fn.buflisted(vim.fn.bufnr()) ~= 0 then
       vim.cmd('b' .. bufnr)
       M.refresh_tabline(1)
@@ -30,9 +30,9 @@ function SwitchBuffer(bufnr, mouseclicks, mousebutton, modifiers)
 end
 
 function SwitchTab(tabnr, mouseclicks, mousebutton, modifiers)
-  if mousebutton == 'm' and mouseclicks == 1 then
+  if mousebutton == 'm' then -- and mouseclicks == 1 then
     pcall(vim.cmd, tabnr .. 'tabclose')
-  elseif mousebutton == 'l' and mouseclicks == 1 then
+  elseif mousebutton == 'l' then -- and mouseclicks == 1 then
     local max_tabnr = vim.fn.tabpagenr '$'
     if tabnr < max_tabnr then
       tabnr = tabnr + 1
