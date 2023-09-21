@@ -95,7 +95,7 @@ M.get_buf_to_show = function(bufnrs, cur_bufnr)
   local columns = vim.opt.columns:get()
   local buf_len = columns - #vim.loop.cwd() - 2
   local newbufnrs = { bufnrs[index], }
-  buf_len = buf_len - #get_only_name(vim.fn.bufname(bufnrs[index])) - 4
+  buf_len = buf_len - #get_only_name(vim.fn.bufname(cur_bufnr)) - 4
   if buf_len < 0 then
     return newbufnrs
   end
