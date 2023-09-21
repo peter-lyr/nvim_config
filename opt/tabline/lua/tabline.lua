@@ -10,6 +10,12 @@ vim.cmd [[
   function! SwitchBuffer(bufnr, mouseclicks, mousebutton, modifiers)
     call v:lua.SwitchBuffer(a:bufnr, a:mouseclicks, a:mousebutton, a:modifiers)
   endfunction
+  function! SwitchTab(tabnr, mouseclicks, mousebutton, modifiers)
+    call v:lua.SwitchTab(a:tabnr, a:mouseclicks, a:mousebutton, a:modifiers)
+  endfunction
+  function! SwitchWindow(win_number, mouseclicks, mousebutton, modifiers)
+    call v:lua.SwitchWindow(a:win_number, a:mouseclicks, a:mousebutton, a:modifiers)
+  endfunction
 ]]
 
 function SwitchBuffer(bufnr, mouseclicks, mousebutton, modifiers)
@@ -17,7 +23,31 @@ function SwitchBuffer(bufnr, mouseclicks, mousebutton, modifiers)
   elseif mousebutton == 'l' and mouseclicks == 1 then
     if vim.fn.buflisted(vim.fn.bufnr()) ~= 0 then
       vim.cmd('b' .. bufnr)
+      M.refresh_tabline(1)
     end
+  elseif mousebutton == 'r' and mouseclicks == 1 then
+  end
+end
+
+function SwitchTab(tabnr, mouseclicks, mousebutton, modifiers)
+  if mousebutton == 'm' and mouseclicks == 1 then
+    pcall(vim.cmd, tabnr .. 'tabclose')
+  elseif mousebutton == 'l' and mouseclicks == 1 then
+    local max_tabnr = vim.fn.tabpagenr '$'
+    if tabnr < max_tabnr then
+      tabnr = tabnr + 1
+    else
+      tabnr = 1
+    end
+    vim.cmd(tabnr .. 'tabnext')
+    M.refresh_tabline(1)
+  elseif mousebutton == 'r' and mouseclicks == 1 then
+  end
+end
+
+function SwitchWindow(win_number, mouseclicks, mousebutton, modifiers)
+  if mousebutton == 'm' and mouseclicks == 1 then
+  elseif mousebutton == 'l' and mouseclicks == 1 then
   elseif mousebutton == 'r' and mouseclicks == 1 then
   end
 end
@@ -37,22 +67,25 @@ M.refresh_tabline = function(hl)
       if string.match(only_name, '\\') then
         only_name = string.match(only_name, '.+%\\(.+)$')
       end
+      local temp = ''
       if hl then
         if vim.fn.bufnr() == bufnr then
-          items[#items + 1] = '%#tblsel#' .. '%' .. tostring(bufnr) .. '@SwitchBuffer@ ' .. tostring(i) .. ' ' .. only_name
+          temp = '%#tblsel#'
         else
-          items[#items + 1] = '%#tblfil#' .. '%' .. tostring(bufnr) .. '@SwitchBuffer@ ' .. tostring(i) .. ' ' .. only_name
+          temp = '%#tblfil#'
         end
-      else
-        items[#items + 1] = '%' .. tostring(bufnr) .. '@SwitchBuffer@ ' .. tostring(i) .. ' ' .. only_name
       end
+      items[#items + 1] = temp .. '%' .. tostring(bufnr) .. '@SwitchBuffer@ ' .. tostring(i) .. ' ' .. only_name
     end
     local temp = vim.fn.join(items, ' ') .. ' '
     if hl then
-      temp = temp .. '%=%#tblfil#' .. ' ' .. vim.loop.cwd() .. ' '
-    else
-      temp = temp .. '%=' .. vim.loop.cwd() .. ' '
+      temp = temp .. '%=%#tblfil#'
     end
+    local ii = ''
+    if vim.fn.tabpagenr '$' > 1 then
+      ii = string.format(' [%d/%d]', vim.fn.tabpagenr(), vim.fn.tabpagenr '$')
+    end
+    temp = temp .. '%=' .. '%' .. tostring(vim.fn.tabpagenr()) .. '@SwitchTab@' .. ii .. ' ' .. vim.loop.cwd() .. ' '
     vim.opt.tabline = temp
   end
 end
@@ -109,9 +142,9 @@ vim.g.tabline_au_bufenter_1 = vim.api.nvim_create_autocmd('BufEnter', {
 
 pcall(vim.api.nvim_del_autocmd, vim.g.tabline_au_dirchanged)
 
-vim.g.tabline_au_dirchanged = vim.api.nvim_create_autocmd('DirChanged', {
+vim.g.tabline_au_dirchanged = vim.api.nvim_create_autocmd({ 'DirChanged', 'TabEnter', }, {
   callback = function()
-    M.refresh_tabline()
+    M.refresh_tabline(1)
   end,
 })
 
