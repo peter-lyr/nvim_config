@@ -70,6 +70,26 @@ local function get_only_name(bufname)
   return only_name
 end
 
+M.b_prev_buf = function()
+  if projects[cur_projectroot] then
+    local index = indexof(projects[cur_projectroot], vim.fn.bufnr()) - 1
+    if index < 1 then
+      index = 1
+    end
+    vim.cmd(string.format('b%d', projects[cur_projectroot][index]))
+  end
+end
+
+M.b_next_buf = function()
+  if projects[cur_projectroot] then
+    local index = indexof(projects[cur_projectroot], vim.fn.bufnr()) + 1
+    if index > #projects[cur_projectroot] then
+      index = #projects[cur_projectroot]
+    end
+    vim.cmd(string.format('b%d', projects[cur_projectroot][index]))
+  end
+end
+
 M.get_buf_to_show = function(bufnrs, cur_bufnr)
   local index = indexof(bufnrs, cur_bufnr)
   local columns = vim.opt.columns:get()

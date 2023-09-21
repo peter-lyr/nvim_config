@@ -10,7 +10,8 @@ return {
     require 'plugins.projectroot',
   },
   keys = {
-    -- { '<c-h>', function() require 'tabline'.buffer 'prev' end, mode = { 'n', 'v', }, silent = true, desc = 'tabline go buffer prev', },
+    { '<c-h>', function() require 'tabline'.b_prev_buf() end, mode = { 'n', 'v', }, silent = true, desc = 'tabline b prev buffer', },
+    { '<c-l>', function() require 'tabline'.b_next_buf() end, mode = { 'n', 'v', }, silent = true, desc = 'tabline b next buffer', },
   },
   init = function()
     vim.opt.tabline     = ' ' .. vim.loop.cwd()
