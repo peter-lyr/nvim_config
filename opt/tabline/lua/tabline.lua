@@ -179,7 +179,7 @@ M.refresh_tabline = function(hl)
     end
     local temp = vim.fn.join(items, ' ') .. ' '
     if hl then
-      temp = temp .. '%#tblfil#%=%#tblfil#'
+      temp = temp .. '%#tblfil#%=%<%#tblfil#'
     end
     local ii = ''
     if vim.fn.tabpagenr '$' > 1 then
