@@ -26,9 +26,6 @@ M.diffviewopen = function()
 end
 
 M.diffviewclose = function()
-  if vim.fn.bufnr '-MINIMAP-' ~= -1 then
-    pcall(vim.cmd, 'MinimapClose')
-  end
   vim.cmd 'DiffviewClose'
 end
 
