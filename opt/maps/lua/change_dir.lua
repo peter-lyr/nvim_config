@@ -1,5 +1,7 @@
 local M = {}
 
+package.loaded['change_dir'] = nil
+
 M.cur = function()
   local dir = vim.fn.expand '%:p:h'
   if #dir == 0 then
@@ -37,7 +39,7 @@ M.cwd = function()
   if #dir == 0 then
     return
   end
-  vim.cmd 'ProjectRootCD'
+  pcall(vim.cmd, 'ProjectRootCD')
   require 'notify'.dismiss()
   vim.notify(vim.loop.cwd(), 'info', {
     animate = false,
