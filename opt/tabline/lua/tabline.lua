@@ -40,6 +40,7 @@ function SwitchTab(tabnr, mouseclicks, mousebutton, modifiers)
       tabnr = 1
     end
     vim.cmd(tabnr .. 'tabnext')
+    pcall(vim.call, 'ProjectRootCD')
     M.refresh_tabline(1)
   elseif mousebutton == 'r' and mouseclicks == 1 then
   end
