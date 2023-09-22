@@ -281,6 +281,7 @@ M.restore_hidden_tabs = function()
         vim.cmd('b' .. projects[project][1])
       end
     end
+    vim.cmd '1tabnext'
   end
 end
 
