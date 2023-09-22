@@ -7,6 +7,20 @@ M.projects = {}
 M.projects_active = {}
 M.timer = 0
 
+M.is_buf_to_show = function(bufnr)
+  local temp_fname = rep(vim.api.nvim_buf_get_name(bufnr))
+  if #temp_fname == 0 then
+    return nil
+  end
+  if not require 'plenary.path'.new(temp_fname):exists() then
+    return nil
+  end
+  if vim.fn.buflisted(bufnr) == 0 or vim.api.nvim_buf_get_option(bufnr, 'buftype') == 'quickfix' then
+    return nil
+  end
+  return true
+end
+
 vim.cmd [[
   function! SwitchBuffer(bufnr, mouseclicks, mousebutton, modifiers)
     call v:lua.SwitchBuffer(a:bufnr, a:mouseclicks, a:mousebutton, a:modifiers)
@@ -219,37 +233,45 @@ vim.cmd [[
 
 pcall(vim.api.nvim_del_autocmd, vim.g.tabline_au_bufenter_1)
 
-vim.g.tabline_au_bufenter_1 = vim.api.nvim_create_autocmd({ 'BufEnter', 'WinResized', }, {
+vim.g.tabline_au_bufenter_1 = vim.api.nvim_create_autocmd({ 'BufEnter', }, {
   callback = function(ev)
-    local cur_bufnr = ev.buf
-    local temp_fname = rep(vim.api.nvim_buf_get_name(cur_bufnr))
-    if #temp_fname == 0 then
+    if M.timer ~= 0 then
+      M.timer:stop()
+    end
+    if not M.is_buf_to_show(ev.buf) then
       return
     end
-    if not require 'plenary.path'.new(temp_fname):exists() then
-      return
-    end
-    if vim.fn.buflisted(cur_bufnr) == 0 or vim.api.nvim_buf_get_option(cur_bufnr, 'buftype') == 'quickfix' then
-      return
-    end
+    local temp_fname = rep(vim.api.nvim_buf_get_name(ev.buf))
     local temp_projectroot = rep(vim.fn['ProjectRootGet'](temp_fname))
-    local ok = nil
     if temp_projectroot ~= M.cur_projectroot then
-      ok = 1
       M.cur_projectroot = temp_projectroot
     end
-    if vim.tbl_contains(vim.tbl_keys(M.projects), temp_projectroot) == false then
-      ok = 1
-      M.projects[temp_projectroot] = {}
-    end
-    if vim.tbl_contains(M.projects[temp_projectroot], cur_bufnr) == false then
-      ok = 1
-      M.projects[temp_projectroot][#M.projects[temp_projectroot] + 1] = cur_bufnr
-    end
-    M.projects_active[temp_projectroot] = cur_bufnr
-    if ok then
-      M.refresh_tabline()
-    end
+    M.timer = vim.loop.new_timer()
+    M.timer:start(200, 0, function()
+      vim.schedule(function()
+        M.projects = {}
+        for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do
+          temp_fname = rep(vim.api.nvim_buf_get_name(bufnr))
+          if M.is_buf_to_show(bufnr) then
+            temp_projectroot = rep(vim.fn['ProjectRootGet'](temp_fname))
+            if vim.tbl_contains(vim.tbl_keys(M.projects), temp_projectroot) == false then
+              M.projects[temp_projectroot] = {}
+            end
+            M.projects[temp_projectroot][#M.projects[temp_projectroot] + 1] = bufnr
+            M.projects_active[temp_projectroot] = bufnr
+          end
+        end
+        M.refresh_tabline(1)
+        M.timer = 0
+      end)
+    end)
+  end,
+})
+
+pcall(vim.api.nvim_del_autocmd, vim.g.tabline_au_winresized_1)
+
+vim.g.tabline_au_winresized_1 = vim.api.nvim_create_autocmd({ 'WinResized', }, {
+  callback = function()
     if M.timer ~= 0 then
       M.timer:stop()
     end
