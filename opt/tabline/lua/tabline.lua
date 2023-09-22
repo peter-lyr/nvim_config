@@ -7,6 +7,24 @@ M.projects = {}
 M.projects_active = {}
 M.timer = 0
 
+local function rep(content)
+  content = vim.fn.tolower(content)
+  content = string.gsub(content, '/', '\\')
+  return content
+end
+
+local function indexof(tbl, item)
+  return vim.fn.indexof(tbl, string.format('v:val == %s', item)) + 1
+end
+
+local function get_only_name(bufname)
+  local only_name = string.gsub(bufname, '/', '\\')
+  if string.match(only_name, '\\') then
+    only_name = string.match(only_name, '.+%\\(.+)$')
+  end
+  return only_name
+end
+
 M.is_buf_to_show = function(bufnr)
   local temp_fname = rep(vim.api.nvim_buf_get_name(bufnr))
   if #temp_fname == 0 then
@@ -38,7 +56,7 @@ function SwitchBuffer(bufnr, mouseclicks, mousebutton, modifiers)
   elseif mousebutton == 'l' then -- and mouseclicks == 1 then
     if vim.fn.buflisted(vim.fn.bufnr()) ~= 0 then
       vim.cmd('b' .. bufnr)
-      M.refresh_tabline(1)
+      M.refresh_tabline()
     end
   elseif mousebutton == 'r' and mouseclicks == 1 then
   end
@@ -56,7 +74,7 @@ function SwitchTab(tabnr, mouseclicks, mousebutton, modifiers)
     end
     vim.cmd(tabnr .. 'tabnext')
     pcall(vim.call, 'ProjectRootCD')
-    M.refresh_tabline(1)
+    M.refresh_tabline()
   elseif mousebutton == 'r' and mouseclicks == 1 then
   end
 end
@@ -66,24 +84,6 @@ function SwitchWindow(win_number, mouseclicks, mousebutton, modifiers)
   elseif mousebutton == 'l' and mouseclicks == 1 then
   elseif mousebutton == 'r' and mouseclicks == 1 then
   end
-end
-
-local function rep(content)
-  content = vim.fn.tolower(content)
-  content = string.gsub(content, '/', '\\')
-  return content
-end
-
-local function indexof(tbl, item)
-  return vim.fn.indexof(tbl, string.format('v:val == %s', item)) + 1
-end
-
-local function get_only_name(bufname)
-  local only_name = string.gsub(bufname, '/', '\\')
-  if string.match(only_name, '\\') then
-    only_name = string.match(only_name, '.+%\\(.+)$')
-  end
-  return only_name
 end
 
 M.b_prev_buf = function()
@@ -186,7 +186,7 @@ M.get_buf_to_show = function(bufnrs, cur_bufnr)
   return newbufnrs
 end
 
-M.refresh_tabline = function(hl)
+M.refresh_tabline = function()
   if M.projects[M.cur_projectroot] then
     local items = {}
     local buf_to_show = M.get_buf_to_show(M.projects[M.cur_projectroot], vim.fn.bufnr())
@@ -198,28 +198,20 @@ M.refresh_tabline = function(hl)
       local xx = yy + i - 1
       local only_name = get_only_name(vim.fn.bufname(bufnr))
       local temp = ''
-      if hl then
-        if vim.fn.bufnr() == bufnr then
-          temp = '%#tblsel#'
-        else
-          temp = '%#tblfil#'
-        end
+      if vim.fn.bufnr() == bufnr then
+        temp = '%#tblsel#'
+      else
+        temp = '%#tblfil#'
       end
       items[#items + 1] = temp .. '%' .. tostring(bufnr) .. '@SwitchBuffer@ ' .. tostring(xx) .. ' ' .. only_name
     end
     local temp = vim.fn.join(items, ' ') .. ' '
-    if hl then
-      temp = temp .. '%#tblfil#%=%<%#tblfil#'
-    else
-      temp = temp .. '%=%<'
-    end
+    temp = temp .. '%#tblfil#%=%<%#tblfil#'
     local ii = ''
     if vim.fn.tabpagenr '$' > 1 then
       ii = string.format(' [%d/%d]', vim.fn.tabpagenr(), vim.fn.tabpagenr '$')
     end
-    if hl then
-      temp = temp .. '%#tbltab#'
-    end
+    temp = temp .. '%#tbltab#'
     temp = temp .. '%' .. tostring(vim.fn.tabpagenr()) .. '@SwitchTab@' .. ii .. ' ' .. vim.loop.cwd() .. ' '
     vim.opt.tabline = temp
   end
@@ -261,7 +253,7 @@ vim.g.tabline_au_bufenter_1 = vim.api.nvim_create_autocmd({ 'BufEnter', }, {
             M.projects_active[temp_projectroot] = bufnr
           end
         end
-        M.refresh_tabline(1)
+        M.refresh_tabline()
         M.timer = 0
       end)
     end)
@@ -278,7 +270,7 @@ vim.g.tabline_au_winresized_1 = vim.api.nvim_create_autocmd({ 'WinResized', }, {
     M.timer = vim.loop.new_timer()
     M.timer:start(200, 0, function()
       vim.schedule(function()
-        M.refresh_tabline(1)
+        M.refresh_tabline()
         M.timer = 0
       end)
     end)
@@ -289,7 +281,7 @@ pcall(vim.api.nvim_del_autocmd, vim.g.tabline_au_dirchanged)
 
 vim.g.tabline_au_dirchanged = vim.api.nvim_create_autocmd({ 'DirChanged', 'TabEnter', }, {
   callback = function()
-    M.refresh_tabline(1)
+    M.refresh_tabline()
   end,
 })
 
