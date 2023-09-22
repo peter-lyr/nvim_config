@@ -175,7 +175,7 @@ M.refresh_tabline = function(hl)
     local items = {}
     local buf_to_show = M.get_buf_to_show(projects[cur_projectroot], vim.fn.bufnr())
     if #buf_to_show == 0 then
-      return
+      buf_to_show = projects[cur_projectroot]
     end
     local yy = indexof(projects[cur_projectroot], buf_to_show[1])
     for i, bufnr in ipairs(buf_to_show) do
