@@ -8,10 +8,13 @@ return {
   dependencies = {
     require 'plugins.plenary',
     require 'plugins.projectroot',
+    'peter-lyr/vim-bbye',
   },
   keys = {
-    { '<c-h>',      function() require 'tabline'.b_prev_buf() end,   mode = { 'n', 'v', }, silent = true, desc = 'tabline b prev buffer', },
-    { '<c-l>',      function() require 'tabline'.b_next_buf() end,   mode = { 'n', 'v', }, silent = true, desc = 'tabline b next buffer', },
+    { '<c-h>',      function() require 'tabline'.b_prev_buf() end,          mode = { 'n', 'v', }, silent = true, desc = 'tabline b prev buffer', },
+    { '<c-l>',      function() require 'tabline'.b_next_buf() end,          mode = { 'n', 'v', }, silent = true, desc = 'tabline b next buffer', },
+    { '<c-s-h>',    function() require 'tabline'.bd_prev_buf() end,         mode = { 'n', 'v', }, silent = true, desc = 'tabline bd prev buffer', },
+    { '<c-s-l>',    function() require 'tabline'.bd_next_buf() end,         mode = { 'n', 'v', }, silent = true, desc = 'tabline bd next buffer', },
     { '<c-q><c-t>', function() require 'tabline'.restore_hidden_tabs() end, mode = { 'n', 'v', }, silent = true, desc = 'tabline restore hidden tabs', },
     { '<c-q>t',     function() require 'tabline'.restore_hidden_tabs() end, mode = { 'n', 'v', }, silent = true, desc = 'tabline restore hidden tabs', },
   },

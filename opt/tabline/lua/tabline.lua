@@ -5,7 +5,9 @@ package.loaded['tabline'] = nil
 M.cur_projectroot = ''
 M.projects = {}
 M.projects_active = {}
-M.timer = 0
+M.buf_deleting = nil
+M.bufenter_timer = 0
+M.bufdelete_timer = 0
 
 local function rep(content)
   content = vim.fn.tolower(content)
@@ -52,7 +54,10 @@ vim.cmd [[
 ]]
 
 function SwitchBuffer(bufnr, mouseclicks, mousebutton, modifiers)
-  if mousebutton == 'm' then     -- and mouseclicks == 1 then
+  if mousebutton == 'm' then -- and mouseclicks == 1 then
+    vim.cmd('Bdelete! ' .. bufnr)
+    M.update_show_bufs()
+    M.refresh_tabline()
   elseif mousebutton == 'l' then -- and mouseclicks == 1 then
     if vim.fn.buflisted(vim.fn.bufnr()) ~= 0 then
       vim.cmd('b' .. bufnr)
@@ -103,6 +108,32 @@ M.b_next_buf = function()
       index = #M.projects[M.cur_projectroot]
     end
     vim.cmd(string.format('b%d', M.projects[M.cur_projectroot][index]))
+  end
+end
+
+M.bd_prev_buf = function()
+  if #M.projects[M.cur_projectroot] > 0 then
+    local index = indexof(M.projects[M.cur_projectroot], vim.fn.bufnr())
+    if index <= 1 then
+      return
+    end
+    index = index - 1
+    vim.cmd(string.format('Bdelete! %d', M.projects[M.cur_projectroot][index]))
+    M.update_show_bufs()
+    M.refresh_tabline()
+  end
+end
+
+M.bd_next_buf = function()
+  if #M.projects[M.cur_projectroot] > 0 then
+    local index = indexof(M.projects[M.cur_projectroot], vim.fn.bufnr())
+    if index >= #M.projects[M.cur_projectroot] then
+      return
+    end
+    index = index + 1
+    vim.cmd(string.format('Bdelete! %d', M.projects[M.cur_projectroot][index]))
+    M.update_show_bufs()
+    M.refresh_tabline()
   end
 end
 
@@ -187,34 +218,36 @@ M.get_buf_to_show = function(bufnrs, cur_bufnr)
 end
 
 M.refresh_tabline = function()
+  local items = {}
+  local buf_to_show = {}
+  local yy = 1
   if M.projects[M.cur_projectroot] then
-    local items = {}
-    local buf_to_show = M.get_buf_to_show(M.projects[M.cur_projectroot], vim.fn.bufnr())
+    buf_to_show = M.get_buf_to_show(M.projects[M.cur_projectroot], vim.fn.bufnr())
     if #buf_to_show == 0 then
       buf_to_show = M.projects[M.cur_projectroot]
     end
-    local yy = indexof(M.projects[M.cur_projectroot], buf_to_show[1])
-    for i, bufnr in ipairs(buf_to_show) do
-      local xx = yy + i - 1
-      local only_name = get_only_name(vim.fn.bufname(bufnr))
-      local temp = ''
-      if vim.fn.bufnr() == bufnr then
-        temp = '%#tblsel#'
-      else
-        temp = '%#tblfil#'
-      end
-      items[#items + 1] = temp .. '%' .. tostring(bufnr) .. '@SwitchBuffer@ ' .. tostring(xx) .. ' ' .. only_name
-    end
-    local temp = vim.fn.join(items, ' ') .. ' '
-    temp = temp .. '%#tblfil#%=%<%#tblfil#'
-    local ii = ''
-    if vim.fn.tabpagenr '$' > 1 then
-      ii = string.format(' [%d/%d]', vim.fn.tabpagenr(), vim.fn.tabpagenr '$')
-    end
-    temp = temp .. '%#tbltab#'
-    temp = temp .. '%' .. tostring(vim.fn.tabpagenr()) .. '@SwitchTab@' .. ii .. ' ' .. vim.loop.cwd() .. ' '
-    vim.opt.tabline = temp
+    yy = indexof(M.projects[M.cur_projectroot], buf_to_show[1])
   end
+  for i, bufnr in ipairs(buf_to_show) do
+    local xx = yy + i - 1
+    local only_name = get_only_name(vim.fn.bufname(bufnr))
+    local temp = ''
+    if vim.fn.bufnr() == bufnr then
+      temp = '%#tblsel#'
+    else
+      temp = '%#tblfil#'
+    end
+    items[#items + 1] = temp .. '%' .. tostring(bufnr) .. '@SwitchBuffer@ ' .. tostring(xx) .. ' ' .. only_name
+  end
+  local temp = vim.fn.join(items, ' ') .. ' '
+  temp = temp .. '%#tblfil#%=%<%#tblfil#'
+  local ii = ''
+  if vim.fn.tabpagenr '$' > 1 then
+    ii = string.format(' [%d/%d]', vim.fn.tabpagenr(), vim.fn.tabpagenr '$')
+  end
+  temp = temp .. '%#tbltab#'
+  temp = temp .. '%' .. tostring(vim.fn.tabpagenr()) .. '@SwitchTab@' .. ii .. ' ' .. vim.loop.cwd() .. ' '
+  vim.opt.tabline = temp
 end
 
 vim.cmd [[
@@ -223,12 +256,30 @@ vim.cmd [[
   hi tblfil guifg=none
 ]]
 
+M.update_show_bufs = function()
+  M.projects = {}
+  for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do
+    local temp_fname = rep(vim.api.nvim_buf_get_name(bufnr))
+    if M.is_buf_to_show(bufnr) then
+      local temp_projectroot = rep(vim.fn['ProjectRootGet'](temp_fname))
+      if vim.tbl_contains(vim.tbl_keys(M.projects), temp_projectroot) == false then
+        M.projects[temp_projectroot] = {}
+      end
+      M.projects[temp_projectroot][#M.projects[temp_projectroot] + 1] = bufnr
+      M.projects_active[temp_projectroot] = bufnr
+    end
+  end
+end
+
 pcall(vim.api.nvim_del_autocmd, vim.g.tabline_au_bufenter_1)
 
 vim.g.tabline_au_bufenter_1 = vim.api.nvim_create_autocmd({ 'BufEnter', }, {
   callback = function(ev)
-    if M.timer ~= 0 then
-      M.timer:stop()
+    if M.buf_deleting then
+      return
+    end
+    if M.bufenter_timer ~= 0 then
+      M.bufenter_timer:stop()
     end
     if not M.is_buf_to_show(ev.buf) then
       return
@@ -238,23 +289,30 @@ vim.g.tabline_au_bufenter_1 = vim.api.nvim_create_autocmd({ 'BufEnter', }, {
     if temp_projectroot ~= M.cur_projectroot then
       M.cur_projectroot = temp_projectroot
     end
-    M.timer = vim.loop.new_timer()
-    M.timer:start(200, 0, function()
+    M.bufenter_timer = vim.loop.new_timer()
+    M.bufenter_timer:start(200, 0, function()
       vim.schedule(function()
-        M.projects = {}
-        for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do
-          temp_fname = rep(vim.api.nvim_buf_get_name(bufnr))
-          if M.is_buf_to_show(bufnr) then
-            temp_projectroot = rep(vim.fn['ProjectRootGet'](temp_fname))
-            if vim.tbl_contains(vim.tbl_keys(M.projects), temp_projectroot) == false then
-              M.projects[temp_projectroot] = {}
-            end
-            M.projects[temp_projectroot][#M.projects[temp_projectroot] + 1] = bufnr
-            M.projects_active[temp_projectroot] = bufnr
-          end
-        end
+        M.update_show_bufs()
         M.refresh_tabline()
-        M.timer = 0
+        M.bufenter_timer = 0
+      end)
+    end)
+  end,
+})
+
+pcall(vim.api.nvim_del_autocmd, vim.g.tabline_au_bufdelete_1)
+
+vim.g.tabline_au_bufdelete_1 = vim.api.nvim_create_autocmd({ 'BufDelete', }, {
+  callback = function()
+    M.buf_deleting = 1
+    if M.bufdelete_timer ~= 0 then
+      M.bufdelete_timer:stop()
+    end
+    M.bufdelete_timer = vim.loop.new_timer()
+    M.bufdelete_timer:start(200, 0, function()
+      vim.schedule(function()
+        M.buf_deleting = nil
+        M.bufdelete_timer = 0
       end)
     end)
   end,
@@ -264,14 +322,14 @@ pcall(vim.api.nvim_del_autocmd, vim.g.tabline_au_winresized_1)
 
 vim.g.tabline_au_winresized_1 = vim.api.nvim_create_autocmd({ 'WinResized', }, {
   callback = function()
-    if M.timer ~= 0 then
-      M.timer:stop()
+    if M.bufenter_timer ~= 0 then
+      M.bufenter_timer:stop()
     end
-    M.timer = vim.loop.new_timer()
-    M.timer:start(200, 0, function()
+    M.bufenter_timer = vim.loop.new_timer()
+    M.bufenter_timer:start(200, 0, function()
       vim.schedule(function()
         M.refresh_tabline()
-        M.timer = 0
+        M.bufenter_timer = 0
       end)
     end)
   end,
