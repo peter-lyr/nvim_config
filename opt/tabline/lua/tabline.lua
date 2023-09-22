@@ -4,6 +4,7 @@ package.loaded['tabline'] = nil
 
 local cur_projectroot = ''
 local projects = {}
+local projects_active = {}
 local timer = 0
 
 vim.cmd [[
@@ -245,6 +246,7 @@ vim.g.tabline_au_bufenter_1 = vim.api.nvim_create_autocmd({ 'BufEnter', 'WinResi
       ok = 1
       projects[temp_projectroot][#projects[temp_projectroot] + 1] = cur_bufnr
     end
+    projects_active[temp_projectroot] = cur_bufnr
     if ok then
       M.refresh_tabline()
     end
@@ -274,11 +276,11 @@ M.restore_hidden_tabs = function()
   vim.cmd 'wincmd o'
   if #vim.tbl_keys(projects) > 1 then
     local temp = rep(vim.fn['ProjectRootGet'](vim.api.nvim_buf_get_name(0)))
-    for _, project in ipairs(vim.tbl_keys(projects)) do
-      if project ~= temp and #projects[project] > 0 and vim.fn.buflisted(projects[project][1]) == 1 then
+    for _, project in ipairs(vim.tbl_keys(projects_active)) do
+      if project ~= temp and vim.fn.buflisted(projects_active[project]) == 1 then
         vim.cmd 'wincmd v'
         vim.cmd 'wincmd T'
-        vim.cmd('b' .. projects[project][1])
+        vim.cmd('b' .. projects_active[project])
       end
     end
     vim.cmd '1tabnext'
