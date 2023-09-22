@@ -2,10 +2,10 @@ local M = {}
 
 package.loaded['tabline'] = nil
 
-local cur_projectroot = ''
-local projects = {}
-local projects_active = {}
-local timer = 0
+M.cur_projectroot = ''
+M.projects = {}
+M.projects_active = {}
+M.timer = 0
 
 vim.cmd [[
   function! SwitchBuffer(bufnr, mouseclicks, mousebutton, modifiers)
@@ -73,22 +73,22 @@ local function get_only_name(bufname)
 end
 
 M.b_prev_buf = function()
-  if projects[cur_projectroot] then
-    local index = indexof(projects[cur_projectroot], vim.fn.bufnr()) - 1
+  if M.projects[M.cur_projectroot] then
+    local index = indexof(M.projects[M.cur_projectroot], vim.fn.bufnr()) - 1
     if index < 1 then
       index = 1
     end
-    vim.cmd(string.format('b%d', projects[cur_projectroot][index]))
+    vim.cmd(string.format('b%d', M.projects[M.cur_projectroot][index]))
   end
 end
 
 M.b_next_buf = function()
-  if projects[cur_projectroot] then
-    local index = indexof(projects[cur_projectroot], vim.fn.bufnr()) + 1
-    if index > #projects[cur_projectroot] then
-      index = #projects[cur_projectroot]
+  if M.projects[M.cur_projectroot] then
+    local index = indexof(M.projects[M.cur_projectroot], vim.fn.bufnr()) + 1
+    if index > #M.projects[M.cur_projectroot] then
+      index = #M.projects[M.cur_projectroot]
     end
-    vim.cmd(string.format('b%d', projects[cur_projectroot][index]))
+    vim.cmd(string.format('b%d', M.projects[M.cur_projectroot][index]))
   end
 end
 
@@ -173,13 +173,13 @@ M.get_buf_to_show = function(bufnrs, cur_bufnr)
 end
 
 M.refresh_tabline = function(hl)
-  if projects[cur_projectroot] then
+  if M.projects[M.cur_projectroot] then
     local items = {}
-    local buf_to_show = M.get_buf_to_show(projects[cur_projectroot], vim.fn.bufnr())
+    local buf_to_show = M.get_buf_to_show(M.projects[M.cur_projectroot], vim.fn.bufnr())
     if #buf_to_show == 0 then
-      buf_to_show = projects[cur_projectroot]
+      buf_to_show = M.projects[M.cur_projectroot]
     end
-    local yy = indexof(projects[cur_projectroot], buf_to_show[1])
+    local yy = indexof(M.projects[M.cur_projectroot], buf_to_show[1])
     for i, bufnr in ipairs(buf_to_show) do
       local xx = yy + i - 1
       local only_name = get_only_name(vim.fn.bufname(bufnr))
@@ -234,30 +234,30 @@ vim.g.tabline_au_bufenter_1 = vim.api.nvim_create_autocmd({ 'BufEnter', 'WinResi
     end
     local temp_projectroot = rep(vim.fn['ProjectRootGet'](temp_fname))
     local ok = nil
-    if temp_projectroot ~= cur_projectroot then
+    if temp_projectroot ~= M.cur_projectroot then
       ok = 1
-      cur_projectroot = temp_projectroot
+      M.cur_projectroot = temp_projectroot
     end
-    if vim.tbl_contains(vim.tbl_keys(projects), temp_projectroot) == false then
+    if vim.tbl_contains(vim.tbl_keys(M.projects), temp_projectroot) == false then
       ok = 1
-      projects[temp_projectroot] = {}
+      M.projects[temp_projectroot] = {}
     end
-    if vim.tbl_contains(projects[temp_projectroot], cur_bufnr) == false then
+    if vim.tbl_contains(M.projects[temp_projectroot], cur_bufnr) == false then
       ok = 1
-      projects[temp_projectroot][#projects[temp_projectroot] + 1] = cur_bufnr
+      M.projects[temp_projectroot][#M.projects[temp_projectroot] + 1] = cur_bufnr
     end
-    projects_active[temp_projectroot] = cur_bufnr
+    M.projects_active[temp_projectroot] = cur_bufnr
     if ok then
       M.refresh_tabline()
     end
-    if timer ~= 0 then
-      timer:stop()
+    if M.timer ~= 0 then
+      M.timer:stop()
     end
-    timer = vim.loop.new_timer()
-    timer:start(200, 0, function()
+    M.timer = vim.loop.new_timer()
+    M.timer:start(200, 0, function()
       vim.schedule(function()
         M.refresh_tabline(1)
-        timer = 0
+        M.timer = 0
       end)
     end)
   end,
@@ -274,13 +274,13 @@ vim.g.tabline_au_dirchanged = vim.api.nvim_create_autocmd({ 'DirChanged', 'TabEn
 M.restore_hidden_tabs = function()
   vim.cmd 'tabo'
   vim.cmd 'wincmd o'
-  if #vim.tbl_keys(projects) > 1 then
+  if #vim.tbl_keys(M.projects) > 1 then
     local temp = rep(vim.fn['ProjectRootGet'](vim.api.nvim_buf_get_name(0)))
-    for _, project in ipairs(vim.tbl_keys(projects_active)) do
-      if project ~= temp and vim.fn.buflisted(projects_active[project]) == 1 then
+    for _, project in ipairs(vim.tbl_keys(M.projects_active)) do
+      if project ~= temp and vim.fn.buflisted(M.projects_active[project]) == 1 then
         vim.cmd 'wincmd v'
         vim.cmd 'wincmd T'
-        vim.cmd('b' .. projects_active[project])
+        vim.cmd('b' .. M.projects_active[project])
       end
     end
     vim.cmd '1tabnext'
