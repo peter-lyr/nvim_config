@@ -273,8 +273,9 @@ M.restore_hidden_tabs = function()
   vim.cmd 'tabo'
   vim.cmd 'wincmd o'
   if #vim.tbl_keys(projects) > 1 then
+    local temp = rep(vim.fn['ProjectRootGet'](vim.api.nvim_buf_get_name(0)))
     for _, project in ipairs(vim.tbl_keys(projects)) do
-      if project ~= cur_projectroot and #projects[project] > 0 and vim.fn.buflisted(projects[project][1]) == 1 then
+      if project ~= temp and #projects[project] > 0 and vim.fn.buflisted(projects[project][1]) == 1 then
         vim.cmd 'wincmd v'
         vim.cmd 'wincmd T'
         vim.cmd('b' .. projects[project][1])
