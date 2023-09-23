@@ -155,6 +155,7 @@ M.get_buf_to_show = function(bufnrs, cur_bufnr)
   if vim.fn.tabpagenr '$' > 1 then
     buf_len = buf_len - #string.format('[%d/%d] ', vim.fn.tabpagenr(), vim.fn.tabpagenr '$')
   end
+  buf_len = buf_len - #tostring(#bufnrs) - 1
   local cnt1 = 1
   local cnt2 = 1
   for i = 2, #bufnrs do
@@ -232,15 +233,16 @@ M.refresh_tabline = function()
     yy = indexof(M.projects[M.cur_projectroot], buf_to_show[1])
   end
   for i, bufnr in ipairs(buf_to_show) do
-    local xx = yy + i - 1
+    local xx = tostring(yy + i - 1)
     local only_name = get_only_name(vim.fn.bufname(bufnr))
     local temp = ''
     if vim.fn.bufnr() == bufnr then
       temp = '%#tblsel#'
+      xx = xx .. '/' .. #M.projects[M.cur_projectroot]
     else
       temp = '%#tblfil#'
     end
-    items[#items + 1] = temp .. '%' .. tostring(bufnr) .. '@SwitchBuffer@ ' .. tostring(xx) .. ' ' .. only_name
+    items[#items + 1] = temp .. '%' .. tostring(bufnr) .. '@SwitchBuffer@ ' .. xx .. ' ' .. only_name
   end
   local temp = vim.fn.join(items, ' ') .. ' '
   temp = temp .. '%#tblfil#%=%<%#tblfil#'
