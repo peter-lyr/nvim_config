@@ -152,6 +152,9 @@ M.get_buf_to_show = function(bufnrs, cur_bufnr)
     end
     return newbufnrs
   end
+  if vim.fn.tabpagenr '$' > 1 then
+    buf_len = buf_len - #string.format('[%d/%d] ', vim.fn.tabpagenr(), vim.fn.tabpagenr '$')
+  end
   local cnt1 = 1
   local cnt2 = 1
   for i = 2, #bufnrs do
@@ -246,7 +249,7 @@ M.refresh_tabline = function()
     ii = string.format('[%d/%d] ', vim.fn.tabpagenr(), vim.fn.tabpagenr '$')
   end
   temp = temp .. '%#tbltab#'
-  temp = temp .. '%' .. tostring(vim.fn.tabpagenr()) .. '@SwitchTab@ ' .. ' ' .. vim.loop.cwd() .. ' ' .. ii
+  temp = temp .. '%' .. tostring(vim.fn.tabpagenr()) .. '@SwitchTab@ ' .. vim.loop.cwd() .. ' ' .. ii
   vim.opt.tabline = temp
 end
 
