@@ -46,7 +46,7 @@ vim.opt.showmode      = true -- Dont show mode since we have a statusline
 
 vim.opt.undofile      = true
 vim.opt.undolevels    = 10000
-vim.opt.sidescrolloff = 8 -- Columns of context
+vim.opt.sidescrolloff = 0 -- Columns of context
 vim.opt.scrolloff     = 0 -- Lines of context
 vim.opt.completeopt   = 'menu,menuone,noselect'
 vim.opt.conceallevel  = 3 -- Hide * markup for bold and italic
