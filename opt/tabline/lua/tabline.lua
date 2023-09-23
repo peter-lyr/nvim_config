@@ -310,24 +310,30 @@ M.refresh_tabline = function(only_tabs)
     local curtabpagenr = vim.fn.tabpagenr()
     local tabpagemax = vim.fn.tabpagenr '$'
     for tabpagenr= 1, tabpagemax do
+      local name = ''
+      local temp_fname = ''
       for _, bufnr in ipairs(vim.fn.tabpagebuflist(tabpagenr)) do
-        local temp_fname = vim.api.nvim_buf_get_name(bufnr)
+        temp_fname = vim.api.nvim_buf_get_name(bufnr)
         local temp_proj = rep(vim.fn['ProjectRootGet'](temp_fname))
-        if vim.tbl_contains(temp_projs, temp_proj) == false then
+        if temp_proj ~= '.' and vim.fn.isdirectory(temp_proj) == 1 and vim.tbl_contains(temp_projs, temp_proj) == false then
           temp_projs[#temp_projs+1] = temp_proj
-          if curtabpagenr == tabpagenr then
-            temp = temp .. '%#tbltab#%'
-          else
-            temp = temp .. '%#tblfil#%'
-          end
-          temp = temp .. tostring(tabpagenr) .. '@SwitchTab@ '
-          if curtabpagenr == tabpagenr then
-            temp = temp .. tostring(tabpagenr) .. '/' .. tostring(tabpagemax) .. ' ' .. M.get_projectroot(temp_proj) .. ' '
-          else
-            temp = temp .. tostring(tabpagenr) .. ' ' .. M.get_projectroot(temp_proj) .. ' '
-          end
+          name = temp_proj
           break
         end
+      end
+      if #name == 0 then
+        name = temp_fname
+      end
+      if curtabpagenr == tabpagenr then
+        temp = temp .. '%#tbltab#%'
+      else
+        temp = temp .. '%#tblfil#%'
+      end
+      temp = temp .. tostring(tabpagenr) .. '@SwitchTab@ '
+      if curtabpagenr == tabpagenr then
+        temp = temp .. tostring(tabpagenr) .. '/' .. tostring(tabpagemax) .. ' ' .. M.get_projectroot(name) .. ' '
+      else
+        temp = temp .. tostring(tabpagenr) .. ' ' .. M.get_projectroot(name) .. ' '
       end
     end
   else
