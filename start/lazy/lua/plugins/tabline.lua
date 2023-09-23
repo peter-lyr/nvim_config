@@ -23,7 +23,7 @@ return {
     vim.opt.showtabline = 2
   end,
   config = function()
-    vim.opt.winbar = '%f'
+    -- vim.opt.winbar = '%f'
     require 'tabline'
   end,
 }
