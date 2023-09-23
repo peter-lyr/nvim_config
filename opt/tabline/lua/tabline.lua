@@ -54,6 +54,8 @@ vim.cmd [[
   function! SwitchWindow(win_number, mouseclicks, mousebutton, modifiers)
     call v:lua.SwitchWindow(a:win_number, a:mouseclicks, a:mousebutton, a:modifiers)
   endfunction
+  function! SwitchNone(win_number, mouseclicks, mousebutton, modifiers)
+  endfunction
 ]]
 
 function SwitchBuffer(bufnr, mouseclicks, mousebutton, modifiers)
@@ -305,7 +307,7 @@ M.refresh_tabline = function(only_tabs)
     temp = temp .. vim.fn.join(items, ' ') .. ' '
   end
   if only_tabs and vim.fn.tabpagenr '$' > 1 then
-    temp = temp .. '%=%<%#tblfil#'
+    temp = temp .. '%=%#tblfil#'
     local temp_projs = {}
     local curtabpagenr = vim.fn.tabpagenr()
     local tabpagemax = vim.fn.tabpagenr '$'
@@ -337,7 +339,7 @@ M.refresh_tabline = function(only_tabs)
       end
     end
   else
-    temp = temp .. '%#tblfil#%=%<%#tblfil#'
+    temp = temp .. '%#tblfil#%1@SwitchNone@%=%<%#tblfil#'
     local ii = ''
     if vim.fn.tabpagenr '$' > 1 then
       ii = string.format('%d/%d ', vim.fn.tabpagenr(), vim.fn.tabpagenr '$')
