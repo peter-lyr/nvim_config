@@ -169,7 +169,7 @@ M.get_buf_to_show = function(bufnrs, cur_bufnr)
     return newbufnrs
   end
   if vim.fn.tabpagenr '$' > 1 then
-    buf_len = buf_len - #string.format('[%d/%d] ', vim.fn.tabpagenr(), vim.fn.tabpagenr '$')
+    buf_len = buf_len - #string.format('%d/%d ', vim.fn.tabpagenr(), vim.fn.tabpagenr '$')
   end
   buf_len = buf_len - #tostring(#bufnrs) - 1
   local cnt1 = 1
@@ -340,7 +340,7 @@ M.refresh_tabline = function(only_tabs)
     temp = temp .. '%#tblfil#%=%<%#tblfil#'
     local ii = ''
     if vim.fn.tabpagenr '$' > 1 then
-      ii = string.format('[%d/%d] ', vim.fn.tabpagenr(), vim.fn.tabpagenr '$')
+      ii = string.format('%d/%d ', vim.fn.tabpagenr(), vim.fn.tabpagenr '$')
     end
     temp = temp .. '%#tbltab#'
     temp = temp .. '%' .. tostring(vim.fn.tabpagenr()) .. '@SwitchTabNext@ ' .. vim.loop.cwd() .. ' ' .. ii
