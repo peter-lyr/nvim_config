@@ -243,10 +243,10 @@ M.refresh_tabline = function()
   temp = temp .. '%#tblfil#%=%<%#tblfil#'
   local ii = ''
   if vim.fn.tabpagenr '$' > 1 then
-    ii = string.format(' [%d/%d]', vim.fn.tabpagenr(), vim.fn.tabpagenr '$')
+    ii = string.format('[%d/%d] ', vim.fn.tabpagenr(), vim.fn.tabpagenr '$')
   end
   temp = temp .. '%#tbltab#'
-  temp = temp .. '%' .. tostring(vim.fn.tabpagenr()) .. '@SwitchTab@' .. ii .. ' ' .. vim.loop.cwd() .. ' '
+  temp = temp .. '%' .. tostring(vim.fn.tabpagenr()) .. '@SwitchTab@ ' .. ' ' .. vim.loop.cwd() .. ' ' .. ii
   vim.opt.tabline = temp
 end
 
