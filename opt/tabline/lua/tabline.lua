@@ -303,8 +303,8 @@ M.refresh_tabline = function(only_tabs)
 end
 
 vim.cmd [[
-  hi tblsel guifg=#e6646e guibg=#5a5a5a gui=bold
-  hi tbltab guifg=#64e66e guibg=#5a5a5a gui=bold
+  hi tblsel guifg=#e6646e guibg=#555555 gui=bold
+  hi tbltab guifg=#64e66e guibg=#666666 gui=bold
   hi tblfil guifg=none
 ]]
 
