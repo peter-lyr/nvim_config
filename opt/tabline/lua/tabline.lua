@@ -48,6 +48,9 @@ vim.cmd [[
   function! SwitchTab(tabnr, mouseclicks, mousebutton, modifiers)
     call v:lua.SwitchTab(a:tabnr, a:mouseclicks, a:mousebutton, a:modifiers)
   endfunction
+  function! SwitchTabNext(tabnr, mouseclicks, mousebutton, modifiers)
+    call v:lua.SwitchTabNext(a:tabnr, a:mouseclicks, a:mousebutton, a:modifiers)
+  endfunction
   function! SwitchWindow(win_number, mouseclicks, mousebutton, modifiers)
     call v:lua.SwitchWindow(a:win_number, a:mouseclicks, a:mousebutton, a:modifiers)
   endfunction
@@ -71,6 +74,18 @@ function SwitchTab(tabnr, mouseclicks, mousebutton, modifiers)
   if mousebutton == 'm' then     -- and mouseclicks == 1 then
     pcall(vim.cmd, tabnr .. 'tabclose')
   elseif mousebutton == 'l' then -- and mouseclicks == 1 then
+    vim.cmd(tabnr .. 'tabnext')
+    pcall(vim.call, 'ProjectRootCD')
+    M.refresh_tabline()
+  elseif mousebutton == 'r' and mouseclicks == 1 then
+    M.refresh_tabline(1)
+  end
+end
+
+function SwitchTabNext(tabnr, mouseclicks, mousebutton, modifiers)
+  if mousebutton == 'm' then     -- and mouseclicks == 1 then
+    pcall(vim.cmd, tabnr .. 'tabclose')
+  elseif mousebutton == 'l' then -- and mouseclicks == 1 then
     local max_tabnr = vim.fn.tabpagenr '$'
     if tabnr < max_tabnr then
       tabnr = tabnr + 1
@@ -81,6 +96,7 @@ function SwitchTab(tabnr, mouseclicks, mousebutton, modifiers)
     pcall(vim.call, 'ProjectRootCD')
     M.refresh_tabline()
   elseif mousebutton == 'r' and mouseclicks == 1 then
+    M.refresh_tabline(1)
   end
 end
 
@@ -221,37 +237,68 @@ M.get_buf_to_show = function(bufnrs, cur_bufnr)
   return newbufnrs
 end
 
-M.refresh_tabline = function()
+M.refresh_tabline = function(only_tabs)
   local items = {}
   local buf_to_show = {}
   local yy = 1
-  if M.projects[M.cur_projectroot] then
-    buf_to_show = M.get_buf_to_show(M.projects[M.cur_projectroot], vim.fn.bufnr())
-    if #buf_to_show == 0 then
-      buf_to_show = M.projects[M.cur_projectroot]
+  local temp = ''
+  if not only_tabs then
+    if M.projects[M.cur_projectroot] then
+      buf_to_show = M.get_buf_to_show(M.projects[M.cur_projectroot], vim.fn.bufnr())
+      if #buf_to_show == 0 then
+        buf_to_show = M.projects[M.cur_projectroot]
+      end
+      yy = indexof(M.projects[M.cur_projectroot], buf_to_show[1])
     end
-    yy = indexof(M.projects[M.cur_projectroot], buf_to_show[1])
-  end
-  for i, bufnr in ipairs(buf_to_show) do
-    local xx = tostring(yy + i - 1)
-    local only_name = get_only_name(vim.fn.bufname(bufnr))
-    local temp = ''
-    if vim.fn.bufnr() == bufnr then
-      temp = '%#tblsel#'
-      xx = xx .. '/' .. #M.projects[M.cur_projectroot]
-    else
-      temp = '%#tblfil#'
+    for i, bufnr in ipairs(buf_to_show) do
+      local xx = tostring(yy + i - 1)
+      local only_name = get_only_name(vim.fn.bufname(bufnr))
+      local temp_ = ''
+      if vim.fn.bufnr() == bufnr then
+        temp_ = '%#tblsel#'
+        xx = xx .. '/' .. #M.projects[M.cur_projectroot]
+      else
+        temp_ = '%#tblfil#'
+      end
+      items[#items + 1] = temp_ .. '%' .. tostring(bufnr) .. '@SwitchBuffer@ ' .. xx .. ' ' .. only_name
     end
-    items[#items + 1] = temp .. '%' .. tostring(bufnr) .. '@SwitchBuffer@ ' .. xx .. ' ' .. only_name
+    temp = temp .. vim.fn.join(items, ' ') .. ' '
   end
-  local temp = vim.fn.join(items, ' ') .. ' '
-  temp = temp .. '%#tblfil#%=%<%#tblfil#'
-  local ii = ''
-  if vim.fn.tabpagenr '$' > 1 then
-    ii = string.format('[%d/%d] ', vim.fn.tabpagenr(), vim.fn.tabpagenr '$')
+  if only_tabs and vim.fn.tabpagenr '$' > 1 then
+    temp = temp .. '%=%<%#tblfil#'
+    local temp_projs = {}
+    local curtabpagenr = vim.fn.tabpagenr()
+    local tabpagemax = vim.fn.tabpagenr '$'
+    for tabpagenr= 1, tabpagemax do
+      for _, bufnr in ipairs(vim.fn.tabpagebuflist(tabpagenr)) do
+        local temp_fname = vim.api.nvim_buf_get_name(bufnr)
+        local temp_proj = rep(vim.fn['ProjectRootGet'](temp_fname))
+        if vim.tbl_contains(temp_projs, temp_proj) == false then
+          temp_projs[#temp_projs+1] = temp_proj
+          if curtabpagenr == tabpagenr then
+            temp = temp .. '%#tbltab#%'
+          else
+            temp = temp .. '%#tblfil#%'
+          end
+          temp = temp .. tostring(tabpagenr) .. '@SwitchTab@ '
+          if curtabpagenr == tabpagenr then
+            temp = temp .. tostring(tabpagenr) .. '/' .. tostring(tabpagemax) .. ' ' .. temp_proj .. ' '
+          else
+            temp = temp .. tostring(tabpagenr) .. ' ' .. temp_proj .. ' '
+          end
+          break
+        end
+      end
+    end
+  else
+    temp = temp .. '%#tblfil#%=%<%#tblfil#'
+    local ii = ''
+    if vim.fn.tabpagenr '$' > 1 then
+      ii = string.format('[%d/%d] ', vim.fn.tabpagenr(), vim.fn.tabpagenr '$')
+    end
+    temp = temp .. '%#tbltab#'
+    temp = temp .. '%' .. tostring(vim.fn.tabpagenr()) .. '@SwitchTabNext@ ' .. vim.loop.cwd() .. ' ' .. ii
   end
-  temp = temp .. '%#tbltab#'
-  temp = temp .. '%' .. tostring(vim.fn.tabpagenr()) .. '@SwitchTab@ ' .. vim.loop.cwd() .. ' ' .. ii
   vim.opt.tabline = temp
 end
 
