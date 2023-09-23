@@ -121,24 +121,23 @@ lspconfig.marksman.setup {
   },
 }
 
-vim.keymap.set('n', '[f', vim.diagnostic.open_float, { desc = 'vim.diagnostic.open_float', })
-vim.keymap.set('n', ']f', vim.diagnostic.setloclist, { desc = 'vim.diagnostic.setloclist', })
-vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'vim.diagnostic.goto_prev', })
-vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'vim.diagnostic.goto_next', })
+vim.keymap.set({ 'n', 'v', }, '[f', vim.diagnostic.open_float, { desc = 'vim.diagnostic.open_float', })
+vim.keymap.set({ 'n', 'v', }, ']f', vim.diagnostic.setloclist, { desc = 'vim.diagnostic.setloclist', })
+vim.keymap.set({ 'n', 'v', }, '[d', vim.diagnostic.goto_prev, { desc = 'vim.diagnostic.goto_prev', })
+vim.keymap.set({ 'n', 'v', }, ']d', vim.diagnostic.goto_next, { desc = 'vim.diagnostic.goto_next', })
 
 
-vim.keymap.set('n', '<leader>fS', ':LspStart<cr>', { desc = 'LspStart', })
-vim.keymap.set('n', '<leader>fR', ':LspRestart<cr>', { desc = 'LspRestart', })
-vim.keymap.set('n', '<leader>fq', vim.diagnostic.enable, { desc = 'vim.diagnostic.enable', })
-vim.keymap.set('n', '<leader>fvq', vim.diagnostic.disable, { desc = 'vim.diagnostic.disable', })
-vim.keymap.set('n', '<leader>fW', function() vim.lsp.stop_client(vim.lsp.get_active_clients()) end,
-  { desc = 'stop all lsp clients', })
-vim.keymap.set('n', '<leader>fD', [[:call feedkeys(':LspStop ')<cr>]], { desc = 'stop one lsp client of', })
-vim.keymap.set('n', '<leader>fF', ':LspInfo<cr>', { desc = 'LspInfo', })
+vim.keymap.set({ 'n', 'v', }, '<leader>fS', ':<c-u>LspStart<cr>', { desc = 'LspStart', })
+vim.keymap.set({ 'n', 'v', }, '<leader>fR', ':<c-u>LspRestart<cr>', { desc = 'LspRestart', })
+vim.keymap.set({ 'n', 'v', }, '<leader>fq', vim.diagnostic.enable, { desc = 'vim.diagnostic.enable', })
+vim.keymap.set({ 'n', 'v', }, '<leader>fvq', vim.diagnostic.disable, { desc = 'vim.diagnostic.disable', })
+vim.keymap.set({ 'n', 'v', }, '<leader>fW', function() vim.lsp.stop_client(vim.lsp.get_active_clients()) end, { desc = 'stop all lsp clients', })
+vim.keymap.set({ 'n', 'v', }, '<leader>fD', [[:call feedkeys(':LspStop ')<cr>]], { desc = 'stop one lsp client of', })
+vim.keymap.set({ 'n', 'v', }, '<leader>fF', ':<c-u>LspInfo<cr>', { desc = 'LspInfo', })
 
-vim.keymap.set('n', '<leader>fw', ':ClangdSwitchSourceHeader<cr>', { desc = 'ClangdSwitchSourceHeader', })
-vim.keymap.set({ 'n', 'v', }, '<F11>', ':ClangdSwitchSourceHeader<cr>', { desc = 'ClangdSwitchSourceHeader', })
-vim.keymap.set('n', '<leader>fp', function()
+vim.keymap.set({ 'n', 'v', }, '<leader>fw', ':<c-u>ClangdSwitchSourceHeader<cr>', { desc = 'ClangdSwitchSourceHeader', })
+vim.keymap.set({ 'n', 'v', }, '<F11>', ':<c-u>ClangdSwitchSourceHeader<cr>', { desc = 'ClangdSwitchSourceHeader', })
+vim.keymap.set({ 'n', 'v', }, '<leader>fp', function()
   local save_cursor = vim.fn.getpos '.'
   vim.cmd 'norm =ap'
   pcall(vim.fn.setpos, '.', save_cursor)
