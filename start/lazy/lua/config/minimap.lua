@@ -24,6 +24,7 @@ vim.g.minimap_au_bufenter = vim.api.nvim_create_autocmd('BufEnter', {
       vim.opt.cursorcolumn = false
       if vim.g.minimap_width ~= vim.opt.winwidth:get() then
         vim.cmd '999wincmd <'
+        vim.opt.scrolloff = 999
         vim.api.nvim_win_set_width(0, vim.g.minimap_width)
       end
     end
