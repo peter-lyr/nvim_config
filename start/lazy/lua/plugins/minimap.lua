@@ -4,8 +4,8 @@ return {
   event = { 'BufReadPost', 'BufNewFile', },
   lazy = true,
   keys = {
-    { '<leader>am', function() require 'config.minimap'.open() end,         mode = { 'n', 'v', }, silent = true, desc = 'MiniMap toggle', },
-    { '<leader>aM', function() require 'config.minimap'.close() end,        mode = { 'n', 'v', }, silent = true, desc = 'MiniMap toggle', },
+    { '<leader>am', function() require 'config.minimap'.open() end,         mode = { 'n', 'v', }, silent = true, desc = 'MiniMap open', },
+    { '<leader>aM', function() require 'config.minimap'.close() end,        mode = { 'n', 'v', }, silent = true, desc = 'MiniMap close', },
     { '<leader>an', function() require 'config.minimap'.toggle_focus() end, mode = { 'n', 'v', }, silent = true, desc = 'MiniMap toggle_focus', },
   },
   init = function()
