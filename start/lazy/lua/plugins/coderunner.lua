@@ -10,7 +10,7 @@ return {
     { '<leader>rR',     function() require 'config.coderunner'.rebuild_run() end, mode = { 'n', 'v', }, silent = true, desc = 'code runner rebuild_run', },
 
     --c
-    { '<c-f10>',        function() require 'config.coderunner_c'.to_cmake() end,  mode = { 'n', 'v', }, silent = true, desc = 'code runner rebuild_run', },
+    { '<c-f10>',        function() require 'config.coderunner_c'.to_cmake() end,  mode = { 'n', 'v', }, silent = true, desc = 'code runner c to_cmake', },
   },
   dependencies = {
     require 'plugins.projectroot',
