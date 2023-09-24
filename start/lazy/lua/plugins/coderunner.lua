@@ -8,6 +8,9 @@ return {
     { '<leader>rB',     function() require 'config.coderunner'.rebuild() end,     mode = { 'n', 'v', }, silent = true, desc = 'code runner rebuild', },
     { '<leader>r<c-b>', function() require 'config.coderunner'.build_run() end,   mode = { 'n', 'v', }, silent = true, desc = 'code runner build_run', },
     { '<leader>rR',     function() require 'config.coderunner'.rebuild_run() end, mode = { 'n', 'v', }, silent = true, desc = 'code runner rebuild_run', },
+
+    --c
+    { '<c-f10>',        function() require 'config.coderunner_c'.to_cmake() end,  mode = { 'n', 'v', }, silent = true, desc = 'code runner rebuild_run', },
   },
   dependencies = {
     require 'plugins.projectroot',
