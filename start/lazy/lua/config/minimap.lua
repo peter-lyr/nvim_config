@@ -34,7 +34,7 @@ pcall(vim.api.nvim_del_autocmd, vim.g.minimap_au_tableave_1)
 
 vim.g.minimap_au_tableave_1 = vim.api.nvim_create_autocmd({ 'TabLeave', }, {
   callback = function()
-    vim.cmd 'MinimapClose'
+    pcall(vim.cmd, 'MinimapClose')
   end,
 })
 
@@ -54,7 +54,7 @@ M.open = function()
 end
 
 M.close = function()
-  vim.cmd 'MinimapClose'
+  pcall(vim.cmd, 'MinimapClose')
   M.opened = nil
 end
 

@@ -1,5 +1,6 @@
 return {
-  'wfxr/minimap.vim',
+  'peter-lyr/minimap.vim',
+  -- 'wfxr/minimap.vim',
   lazy = true,
   event = { 'BufReadPost', 'BufNewFile', },
   cmd = { 'Minimap', 'MinimapToggle', },
