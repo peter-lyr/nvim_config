@@ -106,8 +106,13 @@ return {
 
     -- info.lua
     { '<F1>',           function() require 'info'.statusline() end,           mode = { 'n', 'v', }, silent = true, desc = 'info statusline', },
+
+    -- quickfix.lua
+    { '<leader>aq',     function() require 'quickfix'.open() end,             mode = { 'n', 'v', }, silent = true, desc = 'quickfix open', },
+
   },
   init = function()
+    require 'which-key'.register { ['<leader>a'] = { name = 'Side Panel', }, }
     require 'which-key'.register { ['<leader>gg'] = { name = 'Git Push', }, }
     require 'which-key'.register { ['<leader>y'] = { name = 'Yank', }, }
     require 'which-key'.register { ['<leader>w'] = { name = 'Window', }, }
