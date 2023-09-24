@@ -9,10 +9,10 @@ minimap.setup {
   symbols = {
     encode = minimap.gen_encode_symbols.dot('4x2'),
     scroll_line = '█',
-    scroll_view = '┃',
+    scroll_view = '│',
   },
   window = {
-    focusable = false,
+    focusable = true,
     side = 'right',
     show_integration_count = true,
     width = 12,

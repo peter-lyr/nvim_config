@@ -444,7 +444,6 @@ vim.g.tabline_au_dirchanged = vim.api.nvim_create_autocmd({ 'DirChanged', 'TabEn
 })
 
 M.restore_hidden_tabs = function()
-  pcall(vim.cmd, 'MinimapClose')
   vim.cmd 'tabo'
   vim.cmd 'wincmd o'
   if #vim.tbl_keys(M.projects) > 1 then
