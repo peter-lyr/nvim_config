@@ -18,6 +18,8 @@ local get_setup_table = function(file_ignore_patterns)
       layout_config = {
         horizontal = {
           preview_cutoff = 0,
+          width = 0.99,
+          height = 0.99,
         },
       },
       preview = {
