@@ -4,8 +4,9 @@ return {
   event = { 'BufReadPost', 'BufNewFile', },
   lazy = true,
   keys = {
-    { '<leader>am', function() MiniMap.toggle() end,       mode = { 'n', 'v', }, silent = true, desc = 'MiniMap toggle', },
-    { '<leader>an', function() MiniMap.toggle_focus() end, mode = { 'n', 'v', }, silent = true, desc = 'MiniMap toggle_focus', },
+    { '<leader>am', function() require 'config.minimap'.open() end,         mode = { 'n', 'v', }, silent = true, desc = 'MiniMap toggle', },
+    { '<leader>aM', function() require 'config.minimap'.close() end,        mode = { 'n', 'v', }, silent = true, desc = 'MiniMap toggle', },
+    { '<leader>an', function() require 'config.minimap'.toggle_focus() end, mode = { 'n', 'v', }, silent = true, desc = 'MiniMap toggle_focus', },
   },
   init = function()
     require 'which-key'.register { ['<leader>a'] = { name = 'Side Panel', }, }
