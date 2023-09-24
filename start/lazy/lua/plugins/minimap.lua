@@ -10,6 +10,7 @@ return {
   },
   dependencies = {
     'wfxr/code-minimap',
+    require 'plugins.whichkey',
   },
   init = function()
     require 'which-key'.register { ['<leader>a'] = { name = 'Side Panel', }, }

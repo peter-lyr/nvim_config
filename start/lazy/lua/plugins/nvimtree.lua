@@ -13,6 +13,7 @@ return {
     require 'plugins.treesitter',
     require 'plugins.plenary',
     require 'plugins.projectroot',
+    require 'plugins.whichkey',
   },
   init = function()
     require 'which-key'.register { ['<leader>a'] = { name = 'Side Panel', }, }
