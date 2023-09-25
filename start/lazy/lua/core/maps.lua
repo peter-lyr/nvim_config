@@ -108,7 +108,7 @@ return {
     { '<F1>',           function() require 'info'.statusline() end,           mode = { 'n', 'v', }, silent = true, desc = 'info statusline', },
 
     -- quickfix.lua
-    { '<leader>aq',     function() require 'quickfix'.open() end,             mode = { 'n', 'v', }, silent = true, desc = 'quickfix open', },
+    { 'dm',             function() require 'quickfix'.toggle() end,           mode = { 'n', 'v', }, silent = true, desc = 'quickfix open', },
 
   },
   init = function()
