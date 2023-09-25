@@ -4,14 +4,18 @@ package.loaded['quickfix'] = nil
 
 M.qf_before_winid = -1
 
+M.close = function()
+  vim.cmd 'cclose'
+  if vim.api.nvim_win_is_valid(M.qf_before_winid) == true then
+    vim.fn.win_gotoid(M.qf_before_winid)
+  end
+end
+
 M.wait_map_q = function()
   vim.fn.timer_start(10, function()
     vim.keymap.set('n', 'q', function()
       vim.schedule(function()
-        vim.cmd 'cclose'
-        if vim.api.nvim_win_is_valid(M.qf_before_winid) == true then
-          vim.fn.win_gotoid(M.qf_before_winid)
-        end
+        M.close()
       end)
     end, { buffer = vim.fn.bufnr(), nowait = true, silent = true, })
   end)
@@ -19,10 +23,7 @@ end
 
 M.toggle = function()
   if vim.api.nvim_buf_get_option(vim.fn.bufnr(), 'buftype') == 'quickfix' then
-    vim.cmd 'cclose'
-    if vim.api.nvim_win_is_valid(M.qf_before_winid) == true then
-      vim.fn.win_gotoid(M.qf_before_winid)
-    end
+    M.close()
   else
     M.qf_before_winid = vim.fn.win_getid()
     vim.cmd 'copen'
