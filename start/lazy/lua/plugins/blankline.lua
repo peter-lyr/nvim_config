@@ -1,7 +1,7 @@
 return {
   'lukas-reineke/indent-blankline.nvim',
   lazy = true,
-  event = { 'BufReadPost', 'BufNewFile', },
+  event = { 'CursorHold', 'CursorHoldI', },
   opt = {
     space_char_blankline = ' ',
     char = '│',
