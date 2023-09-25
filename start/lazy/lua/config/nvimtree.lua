@@ -2,31 +2,34 @@ local M = {}
 
 package.loaded['config.nvimtree-func'] = nil
 
-local on_attach = function(bufnr)
-  local api = require 'nvim-tree.api'
+local api = require 'nvim-tree.api'
 
+local function tab()
+  local save_cursor = vim.fn.getpos '.'
+  api.node.open.preview()
+  pcall(vim.fn.setpos, '.', save_cursor)
+  vim.cmd 'norm j'
+end
+
+local function c_tab()
+  local save_cursor = vim.fn.getpos '.'
+  api.node.open.preview()
+  pcall(vim.fn.setpos, '.', save_cursor)
+  vim.cmd 'norm k'
+end
+
+local on_attach = function(bufnr)
   local function opts(desc)
     return { desc = 'nvim-tree: ' .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true, }
   end
-
   vim.keymap.set('n', '<c-f>', api.node.show_info_popup, opts 'Info')
-
   vim.keymap.set('n', 'dk', api.node.open.tab, opts 'Open: New Tab')
   vim.keymap.set('n', 'dl', api.node.open.vertical, opts 'Open: Vertical Split')
   vim.keymap.set('n', 'dj', api.node.open.horizontal, opts 'Open: Horizontal Split')
   vim.keymap.set('n', 'a', api.node.open.edit, opts 'Open')
-  vim.keymap.set('n', '<Tab>', function()
-    local save_cursor = vim.fn.getpos '.'
-    api.node.open.preview()
-    pcall(vim.fn.setpos, '.', save_cursor)
-    vim.cmd 'norm j'
-  end, opts 'Open Preview')
-  vim.keymap.set('n', '<C-Tab>', function()
-    local save_cursor = vim.fn.getpos '.'
-    api.node.open.preview()
-    pcall(vim.fn.setpos, '.', save_cursor)
-    vim.cmd 'norm k'
-  end, opts 'Open Preview')
+
+  vim.keymap.set('n', '<Tab>', tab, opts 'Open Preview')
+  vim.keymap.set('n', '<C-Tab>', c_tab, opts 'Open Preview')
 
   vim.keymap.set('n', '<2-LeftMouse>', api.node.open.no_window_picker, opts 'Open')
   vim.keymap.set('n', '<CR>', api.node.open.no_window_picker, opts 'Open: No Window Picker')
