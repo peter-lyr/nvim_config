@@ -4,6 +4,21 @@ package.loaded['config.nvimtree-func'] = nil
 
 local api = require 'nvim-tree.api'
 
+M.nvimtree_opened = nil
+M.focuslost_timer = 0
+
+local wrap_node = function(fn)
+  return function(node, ...)
+    node = node or require 'nvim-tree.lib'.get_node_at_cursor()
+    fn(node, ...)
+  end
+end
+
+local function close()
+  api.tree.close()
+  M.nvimtree_opened = nil
+end
+
 local function tab()
   api.node.open.preview()
   vim.cmd 'norm j'
@@ -58,7 +73,7 @@ local on_attach = function(bufnr)
   vim.keymap.set('n', '<c-r>', api.tree.reload, opts 'Refresh')
   vim.keymap.set('n', 'E', api.tree.expand_all, opts 'Expand All')
   vim.keymap.set('n', 'W', api.tree.collapse_all, opts 'Collapse')
-  vim.keymap.set('n', 'q', api.tree.close, opts 'Close')
+  vim.keymap.set('n', 'q', wrap_node(close), opts 'Close')
 
   vim.keymap.set('n', '<leader>k', api.node.navigate.git.prev, opts 'Prev Git')
   vim.keymap.set('n', '<leader>j', api.node.navigate.git.next, opts 'Next Git')
@@ -89,7 +104,7 @@ hi NvimTreeModifiedFile guibg=#87237f
 hi NvimTreeSpecialFile guifg=brown gui=bold,underline
 ]]
 
-local t = {
+local cfg_tbl = {
   on_attach = on_attach,
   update_focused_file = {
     -- enable = true,
@@ -138,7 +153,52 @@ local t = {
 }
 
 M.setup = function(conf)
-  require 'nvim-tree'.setup(vim.tbl_deep_extend('force', t, conf or {}))
+  require 'nvim-tree'.setup(vim.tbl_deep_extend('force', cfg_tbl, conf or {}))
 end
 
 M.setup()
+
+M.findfile = function()
+  M.nvimtree_opened = 1
+  vim.cmd 'NvimTreeFindFile'
+end
+
+M.open = function()
+  M.nvimtree_opened = 1
+  vim.cmd 'NvimTreeOpen'
+end
+
+pcall(vim.api.nvim_del_autocmd, vim.g.nvimtree_au_focusgained)
+
+vim.g.nvimtree_au_focusgained = vim.api.nvim_create_autocmd({ 'FocusGained', }, {
+  callback = function()
+    if M.focuslost_timer ~= 0 then
+      M.focuslost_timer:stop()
+    end
+    M.focuslost_timer = 0
+    if M.nvimtree_opened == 1 then
+      local winid = vim.fn.win_getid()
+      vim.cmd 'NvimTreeOpen'
+      vim.fn.win_gotoid(winid)
+    end
+  end,
+})
+
+pcall(vim.api.nvim_del_autocmd, vim.g.nvimtree_au_focuslost)
+
+vim.g.nvimtree_au_focuslost = vim.api.nvim_create_autocmd({ 'FocusLost', }, {
+  callback = function()
+    if M.focuslost_timer ~= 0 then
+      M.focuslost_timer:stop()
+    end
+    M.focuslost_timer = vim.loop.new_timer()
+    M.focuslost_timer:start(1000 * 20, 0, function()
+      vim.schedule(function()
+        vim.cmd 'NvimTreeClose'
+        M.focuslost_timer = 0
+      end)
+    end)
+  end,
+})
+
+return M

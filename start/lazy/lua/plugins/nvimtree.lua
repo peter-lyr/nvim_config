@@ -6,8 +6,8 @@ return {
     'NvimTreeOpen',
   },
   keys = {
-    { '<leader>af', '<cmd>NvimTreeFindFile<cr>', mode = { 'n', 'v', }, silent = true, desc = 'NvimTreeFindFile', },
-    { '<leader>ao', '<cmd>NvimTreeOpen<cr>',     mode = { 'n', 'v', }, silent = true, desc = 'NvimTreeOpen', },
+    { '<leader>af', function() require 'config.nvimtree'.findfile() end, mode = { 'n', 'v', }, silent = true, desc = 'NvimTree findfile', },
+    { '<leader>ao', function() require 'config.nvimtree'.open() end,     mode = { 'n', 'v', }, silent = true, desc = 'NvimTree open', },
   },
   dependencies = {
     require 'plugins.treesitter',
