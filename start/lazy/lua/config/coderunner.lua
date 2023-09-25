@@ -6,7 +6,7 @@ M.merge_tables = function(...)
   local result = {}
   for _, t in ipairs { ..., } do
     for _, v in ipairs(t) do
-      result[#result+1] = v
+      result[#result + 1] = v
     end
   end
   return result
@@ -63,14 +63,17 @@ require 'code_runner'.setup {
 }
 
 M.done = function()
+  local winid = vim.fn.win_getid()
   vim.cmd 'RunCode'
-  vim.fn.timer_start(100, function()
-    vim.cmd 'norm Gzz'
-    vim.api.nvim_win_set_height(0, 15)
-    local opt = { buffer = vim.fn.bufnr(), nowait = true, silent = true, }
-    vim.keymap.set('n', 'q', '<cmd>close<cr>', opt)
-    vim.keymap.set('n', '<esc>', '<cmd>close<cr>', opt)
-  end)
+  if winid ~= vim.fn.win_getid() then
+    vim.fn.timer_start(100, function()
+      vim.cmd 'norm Gzz'
+      vim.api.nvim_win_set_height(0, 15)
+      local opt = { buffer = vim.fn.bufnr(), nowait = true, silent = true, }
+      vim.keymap.set('n', 'q', '<cmd>close<cr>', opt)
+      vim.keymap.set('n', '<esc>', '<cmd>close<cr>', opt)
+    end)
+  end
 end
 
 M.run = function()
