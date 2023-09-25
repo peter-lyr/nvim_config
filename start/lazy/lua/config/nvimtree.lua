@@ -5,16 +5,16 @@ package.loaded['config.nvimtree-func'] = nil
 local api = require 'nvim-tree.api'
 
 local function tab()
-  local save_cursor = vim.fn.getpos '.'
+  -- local save_cursor = vim.fn.getpos '.'
   api.node.open.preview()
-  pcall(vim.fn.setpos, '.', save_cursor)
+  -- pcall(vim.fn.setpos, '.', save_cursor)
   vim.cmd 'norm j'
 end
 
 local function c_tab()
-  local save_cursor = vim.fn.getpos '.'
+  -- local save_cursor = vim.fn.getpos '.'
   api.node.open.preview()
-  pcall(vim.fn.setpos, '.', save_cursor)
+  -- pcall(vim.fn.setpos, '.', save_cursor)
   vim.cmd 'norm k'
 end
 
