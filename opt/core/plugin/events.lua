@@ -20,12 +20,12 @@ vim.g.events_au_bufenter = vim.api.nvim_create_autocmd({ 'BufEnter', }, {
     end
     local buftype = vim.api.nvim_buf_get_option(ev.buf, 'buftype')
     if vim.fn.bufname() == '' and byftype == '' then
-      vim.api.nvim_buf_set_option(ev.buf, 'buftype', 'nofile')
+      vim.api.nvim_buf_set_option(ev.buf, 'buftype', 'nofile') -- for [No Name] buffers
     end
     if buftype == 'nofile' and vim.fn.bufname() == '' then
-      vim.cmd 'setlocal signcolumn=no'
+      vim.cmd 'setlocal signcolumn=no' -- for lsp hover
     elseif buftype == 'help' then
-      vim.cmd 'setlocal nu'
+      vim.cmd 'setlocal nu' -- for help show line number
     end
   end,
 })
