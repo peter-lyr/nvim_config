@@ -6,12 +6,37 @@ local api = require 'nvim-tree.api'
 
 M.nvimtree_opened = nil
 M.focuslost_timer = 0
+M.show_cwd_root = 1
 
 local wrap_node = function(fn)
   return function(node, ...)
     node = node or require 'nvim-tree.lib'.get_node_at_cursor()
     fn(node, ...)
   end
+end
+
+local function root_folder_label(root_cwd)
+  if M.show_cwd_root then
+    return root_cwd
+  end
+  return vim.fn.fnamemodify(root_cwd, ':t')
+end
+
+local function show_cwd_root_toggle()
+  if M.show_cwd_root then
+    M.show_cwd_root = nil
+  else
+    M.show_cwd_root = 1
+  end
+  vim.cmd 'wincmd p'
+  vim.cmd 'wincmd p'
+end
+
+local function plugins_map()
+  local function opts(desc)
+    return { desc = 'nvim-tree: ' .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true, }
+  end
+  vim.keymap.set('n', '<c-bs>', wrap_node(show_cwd_root_toggle), opts 'Show cwd root or not')
 end
 
 local function close()
@@ -29,7 +54,7 @@ local function c_tab()
   vim.cmd 'norm k'
 end
 
-local on_attach = function(bufnr)
+local function basic_map(bufnr)
   local function opts(desc)
     return { desc = 'nvim-tree: ' .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true, }
   end
@@ -98,6 +123,11 @@ local on_attach = function(bufnr)
   vim.keymap.set('n', 'gf', api.live_filter.clear, opts 'Clean Filter')
 end
 
+local on_attach = function(bufnr)
+  basic_map(bufnr)
+  plugins_map(bufnr)
+end
+
 vim.cmd [[
 hi NvimTreeOpenedFile guibg=#238789
 hi NvimTreeModifiedFile guibg=#87237f
@@ -131,6 +161,7 @@ local cfg_tbl = {
     show_on_open_dirs = false,
   },
   renderer = {
+    root_folder_label = root_folder_label,
     highlight_git = true,
     highlight_opened_files = 'name',
     highlight_modified = 'name',
