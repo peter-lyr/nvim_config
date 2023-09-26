@@ -8,7 +8,7 @@ M.projects_active = {}
 M.buf_deleting = nil
 M.bufenter_timer = 0
 M.bufdelete_timer = 0
-M.winbar = nil
+M.simple_statusline = nil
 
 local function rep(content)
   content = vim.fn.tolower(content)
@@ -281,7 +281,7 @@ M.get_projectroot = function(projectroot)
 end
 
 M.refresh_tabline = function(only_tabs)
-  if M.winbar then
+  if M.simple_statusline then
     vim.opt.tabline = ''
     return
   end
@@ -465,16 +465,14 @@ M.restore_hidden_tabs = function()
 end
 
 M.tabline_or_winbar = function()
-  if M.winbar then
-    M.winbar = nil
-    vim.opt.winbar = ''
+  if M.simple_statusline then
+    M.simple_statusline = nil
     vim.opt.showtabline = 2
     vim.opt.laststatus = 3
   else
-    M.winbar = 1
-    vim.opt.winbar = '%f'
+    M.simple_statusline = 1
     vim.opt.showtabline = 0
-    vim.opt.laststatus = 0
+    vim.opt.laststatus = 2
   end
 end
 
