@@ -46,10 +46,11 @@ vim.opt.showmode      = true -- Dont show mode since we have a statusline
 
 vim.opt.undofile      = true
 vim.opt.undolevels    = 10000
-vim.opt.sidescrolloff = 0 -- Columns of context
-vim.opt.scrolloff     = 0 -- Lines of context
+vim.opt.sidescrolloff = 0      -- Columns of context
+vim.opt.scrolloff     = 0      -- Lines of context
+vim.opt.scrollback    = 100000 -- Lines of context
 vim.opt.completeopt   = 'menu,menuone,noselect'
-vim.opt.conceallevel  = 3 -- Hide * markup for bold and italic
+vim.opt.conceallevel  = 3      -- Hide * markup for bold and italic
 vim.opt.list          = true
 vim.opt.shada         = [[!,'1000,<500,s10000,h]]
 vim.opt.laststatus    = 3
