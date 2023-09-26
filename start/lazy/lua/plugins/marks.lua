@@ -14,6 +14,7 @@ return {
       excluded_filetypes = {
         'NvimTree',
         'fugitive',
+        'help',
       },
       mappings = {
         toggle = 'mm',
