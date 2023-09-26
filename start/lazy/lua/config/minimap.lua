@@ -24,12 +24,30 @@ minimap.setup {
 
 M.auto_open = nil
 
+local function cr(cnt)
+  for i = 1, cnt do
+    vim.cmd [[call feedkeys("\<cr>")]]
+  end
+end
+
+local function esc(cnt)
+  for i = 1, cnt do
+    vim.cmd [[call feedkeys("\<esc>")]]
+  end
+end
+
 pcall(vim.api.nvim_del_autocmd, vim.g.minimap_au_bufenter)
 
 vim.g.minimap_au_bufenter = vim.api.nvim_create_autocmd('BufEnter', {
   callback = function(ev)
     if M.auto_open and vim.api.nvim_buf_get_option(ev.buf, 'filetype') ~= 'minimap' then
       minimap.open()
+    end
+    if vim.api.nvim_buf_get_option(ev.buf, 'filetype') == 'minimap' then
+      vim.keymap.set({ 'n', }, '<MiddleMouse>', function() esc(1) end, { buffer = ev.buf, desc = 'MiniMap esc', })
+      vim.keymap.set({ 'v', }, '<MiddleMouse>', function() esc(2) end, { buffer = ev.buf, desc = 'MiniMap esc', })
+      vim.keymap.set({ 'n', }, '<2-LeftMouse>', function() cr(1) end, { buffer = ev.buf, desc = 'MiniMap cr', })
+      vim.keymap.set({ 'v', }, '<2-LeftMouse>', function() cr(2) end, { buffer = ev.buf, desc = 'MiniMap cr', })
     end
   end,
 })
