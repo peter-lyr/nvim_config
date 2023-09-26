@@ -17,8 +17,8 @@ return {
     { '<c-s-l>',     function() require 'tabline'.bd_next_buf() end,              mode = { 'n', 'v', }, silent = true, desc = 'tabline bd next buffer', },
     { '<c-q><c-t>',  function() require 'tabline'.restore_hidden_tabs() end,      mode = { 'n', 'v', }, silent = true, desc = 'tabline restore hidden tabs', },
     { '<c-q>t',      function() require 'tabline'.restore_hidden_tabs() end,      mode = { 'n', 'v', }, silent = true, desc = 'tabline restore hidden tabs', },
-    { '<c-q><c-bs>', function() require 'tabline'.simple_statusline_toggle() end, mode = { 'n', 'v', }, silent = true, desc = 'tabline or winbar', },
-    { '<c-q>bs',     function() require 'tabline'.simple_statusline_toggle() end, mode = { 'n', 'v', }, silent = true, desc = 'tabline or winbar', },
+    { '<c-q><c-bs>', function() require 'tabline'.simple_statusline_toggle() end, mode = { 'n', 'v', }, silent = true, desc = 'tabline simple_statusline_toggle', },
+    { '<c-q>bs',     function() require 'tabline'.simple_statusline_toggle() end, mode = { 'n', 'v', }, silent = true, desc = 'tabline simple_statusline_toggle', },
   },
   init = function()
     vim.opt.tabline     = ' ' .. vim.loop.cwd()
