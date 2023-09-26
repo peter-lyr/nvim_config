@@ -22,7 +22,7 @@ vim.g.events_au_bufenter = vim.api.nvim_create_autocmd({ 'BufEnter', }, {
     if vim.fn.bufname() == '' and byftype == '' then
       vim.api.nvim_buf_set_option(ev.buf, 'buftype', 'nofile')
     end
-    if buftype == 'nofile' then
+    if buftype == 'nofile' and vim.fn.bufname() == '' then
       vim.cmd 'setlocal signcolumn=no'
     elseif buftype == 'help' then
       vim.cmd 'setlocal nu'
