@@ -27,8 +27,8 @@ end
 
 local function system_run(str_format, ...)
   local cmd = string.format(str_format, ...)
-  -- cmd = string.format([[silent !start cmd /c "%s & pause"]], cmd)
-  cmd = string.format('AsyncRun %s', cmd)
+  cmd = string.format([[silent !start cmd /c "%s & pause"]], cmd)
+  -- cmd = string.format('AsyncRun %s', cmd)
   vim.cmd(cmd)
 end
 
@@ -56,10 +56,10 @@ M.to_cmake = function()
   end
   local cbps = M.get_cbps(project)
   if #cbps < 1 then
-    vim.notify 'c2cmake'
+    vim.notify 'c2cmake...'
     system_run('chcp 65001 && %s python "%s" "%s"', system_cd(project), c2cmake_py, project)
   else
-    vim.notify 'cbp2cmake'
+    vim.notify 'cbp2cmake...'
     system_run('chcp 65001 && %s python "%s" "%s"', system_cd(project), cbp2cmake_py, project)
   end
 end
