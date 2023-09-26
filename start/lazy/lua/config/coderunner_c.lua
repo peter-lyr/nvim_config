@@ -25,10 +25,15 @@ local function system_cd(p)
   return s
 end
 
-local function system_run(str_format, ...)
+local function system_run(way, str_format, ...)
   local cmd = string.format(str_format, ...)
-  cmd = string.format([[silent !start cmd /c "%s & pause"]], cmd)
-  -- cmd = string.format('AsyncRun %s', cmd)
+  if way == 'start' then
+    cmd = string.format([[silent !start cmd /c "%s & pause"]], cmd)
+  elseif way == 'asyncrun' then
+    cmd = string.format('AsyncRun %s', cmd)
+  elseif way == 'term' then
+    cmd = string.format('wincmd s|term %s', cmd)
+  end
   vim.cmd(cmd)
 end
 
@@ -57,10 +62,10 @@ M.to_cmake = function()
   local cbps = M.get_cbps(project)
   if #cbps < 1 then
     vim.notify 'c2cmake...'
-    system_run('chcp 65001 && %s python "%s" "%s"', system_cd(project), c2cmake_py, project)
+    system_run('start', 'chcp 65001 && %s python "%s" "%s"', system_cd(project), c2cmake_py, project)
   else
     vim.notify 'cbp2cmake...'
-    system_run('chcp 65001 && %s python "%s" "%s"', system_cd(project), cbp2cmake_py, project)
+    system_run('start', 'chcp 65001 && %s python "%s" "%s"', system_cd(project), cbp2cmake_py, project)
   end
 end
 
