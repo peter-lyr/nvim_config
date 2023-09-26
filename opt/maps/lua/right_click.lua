@@ -2,7 +2,14 @@ M = {}
 
 package.loaded['right_click'] = nil
 
+M.menu_popup_way = 'ui_select' -- nvim_open_win, ui_select
+
 M.commands = {}
+
+--------------------------
+-- define menu popup way of nvim_open_win
+--------------------------
+
 M.winid = 0
 M.bufnr = 0
 
@@ -31,13 +38,17 @@ M.close = function()
   vim.api.nvim_win_close(M.winid, true)
 end
 
-M.run_command = function()
-  local line = vim.fn.line '.'
-  M.close()
-  local func = M.commands[line]
+M.run_at = function(index)
+  local func = M.commands[index]
   if func then
     func()
   end
+end
+
+M.run_command = function()
+  local line = vim.fn.line '.'
+  M.close()
+  M.run_at(line)
 end
 
 M.popup_menu = function(items)
@@ -80,6 +91,32 @@ M.popup_menu = function(items)
   })
 end
 
+M.ui_select_menu = function(items)
+  local temp = {}
+  for _, v in ipairs(items) do
+    temp[#temp + 1] = v[1]
+    M.commands[#M.commands + 1] = v[2]
+  end
+  vim.ui.select(temp, { prompt = 'menu ui_select', }, function(choice, idx)
+    if not choice then
+      return
+    end
+    M.run_at(idx)
+  end)
+end
+
+--------------------------
+-- define right click menu
+--------------------------
+
+M.toggle_menu_mode = function()
+  if M.menu_popup_way == 'nvim_open_win' then
+    M.menu_popup_way = 'ui_select'
+  else
+    M.menu_popup_way = 'nvim_open_win'
+  end
+end
+
 M.select_all = function()
   vim.cmd [[call feedkeys("ggVG")]]
 end
@@ -94,15 +131,20 @@ M.copy_all = function()
 end
 
 local items = {
-  { 'select all', M.select_all, },
-  { 'copy all',   M.copy_all, },
+  { 'toggle_menu_mode', M.toggle_menu_mode, },
+  { 'select all',       M.select_all, },
+  { 'copy all',         M.copy_all, },
 }
 
 M.right_click = function()
-  vim.cmd [[call feedkeys("\<LeftMouse>")]]
-  vim.fn.timer_start(10, function()
-    M.popup_menu(items)
-  end)
+  if M.menu_popup_way == 'menu' then
+    vim.cmd [[call feedkeys("\<LeftMouse>")]]
+    vim.fn.timer_start(10, function()
+      M.popup_menu(items)
+    end)
+  elseif M.menu_popup_way == 'ui_select' then
+    M.ui_select_menu(items)
+  end
 end
 
 return M
