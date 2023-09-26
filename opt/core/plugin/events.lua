@@ -16,7 +16,9 @@ pcall(vim.api.nvim_del_autocmd, vim.g.events_au_bufenter)
 
 vim.g.events_au_bufenter = vim.api.nvim_create_autocmd({ 'BufEnter', }, {
   callback = function(ev)
-    vim.opt.cursorcolumn = true
+    if vim.fn.filereadable(ev.file) == 1 then
+      vim.opt.cursorcolumn = true
+    end
     vim.opt.mouse = 'a'
     if vim.tbl_contains(tab_4_fts, vim.opt.filetype:get()) == true then
       vim.opt.tabstop = 4
