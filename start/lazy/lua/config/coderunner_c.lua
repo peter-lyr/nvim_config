@@ -1,6 +1,6 @@
 local M = {}
 
-package.loaded['c2cmake'] = nil
+package.loaded['config.coderunner_c'] = nil
 
 local c2cmake = require 'plenary.path':new(vim.g.pack_path):joinpath('nvim_config', 'start', 'lazy', 'lua', 'config')
 local c2cmake_py = c2cmake:joinpath 'coderunner_c2cmake.py'.filename
@@ -27,7 +27,8 @@ end
 
 local function system_run(str_format, ...)
   local cmd = string.format(str_format, ...)
-  cmd = string.format([[silent !start cmd /c "%s & pause"]], cmd)
+  -- cmd = string.format([[silent !start cmd /c "%s & pause"]], cmd)
+  cmd = string.format('AsyncRun %s', cmd)
   vim.cmd(cmd)
 end
 
@@ -56,10 +57,10 @@ M.to_cmake = function()
   local cbps = M.get_cbps(project)
   if #cbps < 1 then
     vim.notify 'c2cmake'
-    system_run('chcp 936 && %s python "%s" "%s"', system_cd(project), c2cmake_py, project)
+    system_run('chcp 65001 && %s python "%s" "%s"', system_cd(project), c2cmake_py, project)
   else
     vim.notify 'cbp2cmake'
-    system_run('chcp 936 && %s python "%s" "%s"', system_cd(project), cbp2cmake_py, project)
+    system_run('chcp 65001 && %s python "%s" "%s"', system_cd(project), cbp2cmake_py, project)
   end
 end
 
