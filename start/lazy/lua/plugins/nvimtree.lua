@@ -8,6 +8,7 @@ return {
   keys = {
     { '<leader>af', function() require 'config.nvimtree'.findfile() end, mode = { 'n', 'v', }, silent = true, desc = 'NvimTree findfile', },
     { '<leader>ao', function() require 'config.nvimtree'.open() end,     mode = { 'n', 'v', }, silent = true, desc = 'NvimTree open', },
+    { '<leader>ac', function() require 'config.nvimtree'.close() end,    mode = { 'n', 'v', }, silent = true, desc = 'NvimTree close', },
   },
   dependencies = {
     require 'plugins.treesitter',

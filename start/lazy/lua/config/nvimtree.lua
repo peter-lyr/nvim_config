@@ -199,6 +199,11 @@ M.open = function()
   vim.cmd 'NvimTreeOpen'
 end
 
+M.close = function()
+  M.nvimtree_opened = nil
+  vim.cmd 'NvimTreeClose'
+end
+
 pcall(vim.api.nvim_del_autocmd, vim.g.nvimtree_au_focusgained)
 
 vim.g.nvimtree_au_focusgained = vim.api.nvim_create_autocmd({ 'FocusGained', }, {
