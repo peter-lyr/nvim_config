@@ -469,10 +469,12 @@ M.tabline_or_winbar = function()
     M.winbar = nil
     vim.opt.winbar = ''
     vim.opt.showtabline = 2
+    vim.opt.laststatus = 3
   else
     M.winbar = 1
     vim.opt.winbar = '%f'
     vim.opt.showtabline = 0
+    vim.opt.laststatus = 0
   end
 end
 
