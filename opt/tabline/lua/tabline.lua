@@ -465,7 +465,7 @@ M.restore_hidden_tabs = function()
 end
 
 M.tabline_or_winbar = function()
-  if #vim.opt.winbar:get() > 0 then
+  if M.winbar then
     M.winbar = nil
     vim.opt.winbar = ''
     vim.opt.showtabline = 2
