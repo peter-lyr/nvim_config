@@ -464,7 +464,7 @@ M.restore_hidden_tabs = function()
   end
 end
 
-M.tabline_or_winbar = function()
+M.simple_statusline_toggle = function()
   if M.simple_statusline then
     M.simple_statusline = nil
     vim.opt.showtabline = 2
