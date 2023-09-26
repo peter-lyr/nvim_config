@@ -65,6 +65,7 @@ require 'nvim-treesitter.configs'.setup {
 require 'rainbow.internal'.defhl()
 
 require 'treesitter-context'.setup {
+  zindex = 1,
   on_attach = function()
     local max_filesize = 1000 * 1024
     local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(0))
