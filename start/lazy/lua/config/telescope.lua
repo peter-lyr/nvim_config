@@ -817,7 +817,7 @@ M.quit_all = function()
   vim.cmd 'qa!'
 end
 
-local items = {
+M.items = {
   { 'toggle menu popup way',        M.toggle_menu_popup_way, },
   { 'copy all to system clipboard', M.copy_all_to_system_clipboard, },
   { 'quit all',                     M.quit_all, },
@@ -827,10 +827,10 @@ M.right_click = function()
   if M.menu_popup_way == 'nvim_open_win' then
     vim.cmd [[call feedkeys("\<LeftMouse>")]]
     vim.fn.timer_start(10, function()
-      M.popup_menu(items)
+      M.popup_menu(M.items)
     end)
   elseif M.menu_popup_way == 'ui_select' then
-    M.ui_select_menu(items)
+    M.ui_select_menu(M.items)
   end
 end
 
