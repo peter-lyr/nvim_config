@@ -9,6 +9,7 @@ M.fname = function()
     on_open = function(win)
       local buf = vim.api.nvim_win_get_buf(win)
       vim.api.nvim_buf_set_option(buf, 'filetype', 'markdown')
+      vim.api.nvim_win_set_option(win, 'concealcursor', 'nvic')
     end,
     timeout = 1000 * 8,
   })
@@ -21,6 +22,7 @@ M.absfname = function()
     on_open = function(win)
       local buf = vim.api.nvim_win_get_buf(win)
       vim.api.nvim_buf_set_option(buf, 'filetype', 'markdown')
+      vim.api.nvim_win_set_option(win, 'concealcursor', 'nvic')
     end,
     timeout = 1000 * 8,
   })
@@ -33,6 +35,7 @@ M.cwd = function()
     on_open = function(win)
       local buf = vim.api.nvim_win_get_buf(win)
       vim.api.nvim_buf_set_option(buf, 'filetype', 'markdown')
+      vim.api.nvim_win_set_option(win, 'concealcursor', 'nvic')
     end,
     timeout = 1000 * 8,
   })
