@@ -17,6 +17,7 @@ require 'aerial'.setup {
     ['?'] = 'actions.show_help',
     ['a'] = 'actions.jump',
     ['<2-LeftMouse>'] = 'actions.jump',
+    ['<MiddleMouse>'] = 'actions.close',
     ['<C-x>'] = 'actions.jump_split',
     ['<tab>'] = 'actions.scroll',
     ['o'] = 'actions.tree_toggle',
