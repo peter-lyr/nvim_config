@@ -24,7 +24,7 @@ minimap.setup {
   },
 }
 
-M.auto_open_en = nil
+M.auto_open_en = 1
 M.opened = nil
 
 local function cr(cnt)
