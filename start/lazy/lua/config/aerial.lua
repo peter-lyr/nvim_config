@@ -2,10 +2,12 @@ local M = {}
 
 package.loaded['config.aerial'] = nil
 
+local width = 24
+
 require 'aerial'.setup {
   layout = {
-    max_width = 24,
-    min_width = 24,
+    max_width = width,
+    min_width = width,
     preserve_equality = nil,
   },
   keymaps = {
