@@ -817,10 +817,19 @@ M.quit_all = function()
   vim.cmd 'qa!'
 end
 
+------------
+-- nvim-tree
+------------
+
+M.nvim_tree_open = function()
+  vim.cmd 'NvimTreeOpen'
+end
+
 M.items = {
   { 'toggle menu popup way',        M.toggle_menu_popup_way, },
   { 'copy all to system clipboard', M.copy_all_to_system_clipboard, },
   { 'quit all',                     M.quit_all, },
+  { 'nvim tree open',               M.nvim_tree_open, },
 }
 
 M.right_click = function()
