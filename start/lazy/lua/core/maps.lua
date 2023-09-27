@@ -110,9 +110,6 @@ return {
     -- quickfix.lua
     { 'dm',             function() require 'quickfix'.toggle() end,           mode = { 'n', 'v', }, silent = true, desc = 'quickfix open', },
 
-    -- right_click.lua
-    { '<RightMouse>',   function() require 'right_click'.right_click() end,   mode = { 'n', 'v', }, silent = true, desc = 'right_click', },
-
   },
   init = function()
     require 'which-key'.register { ['<leader>a'] = { name = 'Side Panel', }, }
