@@ -43,28 +43,7 @@ require 'aerial'.setup {
 }
 
 M.open = function()
-  if vim.fn.buflisted(vim.fn.bufnr()) == 0 then
-    if vim.g.lastbufwinid ~= -1 then
-      vim.fn.win_gotoid(vim.g.lastbufwinid)
-    else
-      return
-    end
-  end
-  vim.cmd 'AerialCloseAll'
   vim.cmd 'AerialOpen right'
-  vim.fn.timer_start(10, function()
-    vim.cmd 'wincmd ='
-  end)
 end
-
--- vim.api.nvim_create_autocmd({ 'BufEnter', }, {
---   callback = function()
---     if vim.bo.ft == 'aerial' then
---       vim.cmd [[
---         setlocal scrolloff=99
---       ]]
---     end
---   end,
--- })
 
 return M
