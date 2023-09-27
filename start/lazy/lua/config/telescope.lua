@@ -818,9 +818,9 @@ M.quit_all = function()
 end
 
 local items = {
-  { 'toggle_menu_popup_way',        M.toggle_menu_popup_way, },
+  { 'toggle menu popup way',        M.toggle_menu_popup_way, },
   { 'copy all to system clipboard', M.copy_all_to_system_clipboard, },
-  { 'quit_all',                     M.quit_all, },
+  { 'quit all',                     M.quit_all, },
 }
 
 M.right_click = function()
