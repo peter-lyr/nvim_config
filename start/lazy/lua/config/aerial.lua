@@ -4,7 +4,8 @@ package.loaded['config.aerial'] = nil
 
 require 'aerial'.setup {
   layout = {
-    min_width = 28,
+    max_width = 24,
+    min_width = 12,
     preserve_equality = nil,
   },
   keymaps = {
