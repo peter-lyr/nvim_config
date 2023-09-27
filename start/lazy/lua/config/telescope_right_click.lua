@@ -1,5 +1,7 @@
 local M = {}
 
+package.loaded['config.telescope_right_click'] = nil
+
 M.menu_popup_way = 'nvim_open_win' -- nvim_open_win, ui_select
 
 M.commands = {}
@@ -20,7 +22,7 @@ M.buf_options = {
 M.win_options = {
   signcolumn = 'no',
   number = true,
-  -- winblend = 10,
+  winblend = 10,
 }
 
 M.win_open_opts = {
@@ -136,11 +138,20 @@ M.nvim_tree_open = function()
   vim.cmd 'NvimTreeOpen'
 end
 
+------------
+-- fugitive
+------------
+
+M.fugitive_open = function()
+  vim.cmd 'Git'
+end
+
 M.items = {
   { 'toggle menu popup way',        M.toggle_menu_popup_way, },
   { 'copy all to system clipboard', M.copy_all_to_system_clipboard, },
   { 'quit all',                     M.quit_all, },
   { 'nvim tree open',               M.nvim_tree_open, },
+  { 'fugitive open',                M.fugitive_open, },
 }
 
 M.right_click = function()
