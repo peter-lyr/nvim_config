@@ -155,18 +155,18 @@ M.items = {
 }
 
 M.right_click = function()
-  if vim.fn.filereadable(vim.api.nvim_buf_get_name(0)) == 1 then
-    if M.menu_popup_way == 'nvim_open_win' then
-      vim.cmd [[call feedkeys("\<LeftMouse>")]]
-      vim.fn.timer_start(10, function()
-        M.popup_menu(M.items)
-      end)
-    elseif M.menu_popup_way == 'ui_select' then
-      M.ui_select_menu(M.items)
+  vim.cmd [[call feedkeys("\<LeftMouse>")]]
+  vim.fn.timer_start(10, function()
+    if vim.fn.filereadable(vim.api.nvim_buf_get_name(0)) == 1 then
+      if M.menu_popup_way == 'nvim_open_win' then
+        vim.fn.timer_start(10, function()
+          M.popup_menu(M.items)
+        end)
+      elseif M.menu_popup_way == 'ui_select' then
+        M.ui_select_menu(M.items)
+      end
     end
-  else
-    vim.cmd [[call feedkeys("\<LeftMouse>")]]
-  end
+  end)
 end
 
 return M
