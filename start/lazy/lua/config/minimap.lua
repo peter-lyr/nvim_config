@@ -24,7 +24,8 @@ minimap.setup {
   },
 }
 
-M.auto_open = nil
+M.auto_open_en = nil
+M.opened = nil
 
 local function cr(cnt)
   for _ = 1, cnt do
@@ -50,8 +51,8 @@ pcall(vim.api.nvim_del_autocmd, vim.g.minimap_au_bufenter)
 
 vim.g.minimap_au_bufenter = vim.api.nvim_create_autocmd('BufEnter', {
   callback = function(ev)
-    if M.auto_open and vim.api.nvim_buf_get_option(ev.buf, 'filetype') ~= 'minimap' then
-      if vim.fn.filereadable(ev.file) == 1 then
+    if M.auto_open_en and vim.api.nvim_buf_get_option(ev.buf, 'filetype') ~= 'minimap' then
+      if not M.opened and vim.fn.filereadable(ev.file) == 1 then
         minimap.open()
       end
     end
@@ -68,12 +69,18 @@ vim.g.minimap_au_bufenter = vim.api.nvim_create_autocmd('BufEnter', {
 
 M.open = function()
   minimap.open()
-  M.auto_open = 1
+  M.auto_open_en = 1
+  M.opened = 1
 end
 
 M.close = function()
   minimap.close()
-  M.auto_open = nil
+  M.auto_open_en = nil
+  M.opened = nil
+end
+
+M.auto_open = function()
+  M.auto_open_en = 1
 end
 
 M.toggle_focus = function()

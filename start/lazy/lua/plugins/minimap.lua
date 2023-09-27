@@ -7,6 +7,7 @@ return {
     { '<leader>am', function() require 'config.minimap'.open() end,         mode = { 'n', 'v', }, silent = true, desc = 'MiniMap open', },
     { '<leader>aM', function() require 'config.minimap'.close() end,        mode = { 'n', 'v', }, silent = true, desc = 'MiniMap close', },
     { '<leader>an', function() require 'config.minimap'.toggle_focus() end, mode = { 'n', 'v', }, silent = true, desc = 'MiniMap toggle_focus', },
+    { '<leader>aN', function() require 'config.minimap'.auto_open() end,    mode = { 'n', 'v', }, silent = true, desc = 'MiniMap auto_open', },
   },
   init = function()
     require 'which-key'.register { ['<leader>a'] = { name = 'Side Panel', }, }
