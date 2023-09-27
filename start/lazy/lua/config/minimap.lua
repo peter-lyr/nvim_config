@@ -1,5 +1,7 @@
 local M = {}
 
+package.loaded['config.minimap'] = nil
+
 local minimap = require 'mini.map'
 
 minimap.setup {
@@ -25,15 +27,23 @@ minimap.setup {
 M.auto_open = nil
 
 local function cr(cnt)
-  for i = 1, cnt do
+  for _ = 1, cnt do
     vim.cmd [[call feedkeys("\<cr>")]]
   end
 end
 
 local function esc(cnt)
-  for i = 1, cnt do
+  for _ = 1, cnt do
     vim.cmd [[call feedkeys("\<esc>")]]
   end
+end
+
+local function up()
+  vim.cmd [[call feedkeys("\<up>")]]
+end
+
+local function down()
+  vim.cmd [[call feedkeys("\<down>")]]
 end
 
 pcall(vim.api.nvim_del_autocmd, vim.g.minimap_au_bufenter)
@@ -48,6 +58,8 @@ vim.g.minimap_au_bufenter = vim.api.nvim_create_autocmd('BufEnter', {
       vim.keymap.set({ 'v', }, '<MiddleMouse>', function() esc(2) end, { buffer = ev.buf, desc = 'MiniMap esc', })
       vim.keymap.set({ 'n', }, '<2-LeftMouse>', function() cr(1) end, { buffer = ev.buf, desc = 'MiniMap cr', })
       vim.keymap.set({ 'v', }, '<2-LeftMouse>', function() cr(2) end, { buffer = ev.buf, desc = 'MiniMap cr', })
+      vim.keymap.set({ 'n', 'v', }, '<ScrollWheelUp>', function() up() end, { buffer = ev.buf, desc = 'MiniMap up', })
+      vim.keymap.set({ 'n', 'v', }, '<ScrollWheelDown>', function() down() end, { buffer = ev.buf, desc = 'MiniMap up', })
     end
   end,
 })
