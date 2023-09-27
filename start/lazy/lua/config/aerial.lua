@@ -7,7 +7,7 @@ local width = 24
 require 'aerial'.setup {
   layout = {
     max_width = width,
-    min_width = width + 8,
+    min_width = width,
     preserve_equality = nil,
   },
   keymaps = {
