@@ -112,7 +112,12 @@ end
 
 M.b_prev_buf = function()
   if M.projects[M.cur_projectroot] then
-    local index = indexof(M.projects[M.cur_projectroot], vim.fn.bufnr()) - 1
+    local index
+    if vim.v.count ~= 0 then
+      index = vim.v.count
+    else
+      index = indexof(M.projects[M.cur_projectroot], vim.fn.bufnr()) - 1
+    end
     if index < 1 then
       index = 1
     end
@@ -122,7 +127,12 @@ end
 
 M.b_next_buf = function()
   if M.projects[M.cur_projectroot] then
-    local index = indexof(M.projects[M.cur_projectroot], vim.fn.bufnr()) + 1
+    local index
+    if vim.v.count ~= 0 then
+      index = vim.v.count
+    else
+      index = indexof(M.projects[M.cur_projectroot], vim.fn.bufnr()) + 1
+    end
     if index > #M.projects[M.cur_projectroot] then
       index = #M.projects[M.cur_projectroot]
     end
@@ -316,14 +326,14 @@ M.refresh_tabline = function(only_tabs)
     local temp_projs = {}
     local curtabpagenr = vim.fn.tabpagenr()
     local tabpagemax = vim.fn.tabpagenr '$'
-    for tabpagenr= 1, tabpagemax do
+    for tabpagenr = 1, tabpagemax do
       local name = ''
       local temp_fname = ''
       for _, bufnr in ipairs(vim.fn.tabpagebuflist(tabpagenr)) do
         temp_fname = vim.api.nvim_buf_get_name(bufnr)
         local temp_proj = rep(vim.fn['ProjectRootGet'](temp_fname))
         if temp_proj ~= '.' and vim.fn.isdirectory(temp_proj) == 1 and vim.tbl_contains(temp_projs, temp_proj) == false then
-          temp_projs[#temp_projs+1] = temp_proj
+          temp_projs[#temp_projs + 1] = temp_proj
           name = temp_proj
           break
         end
