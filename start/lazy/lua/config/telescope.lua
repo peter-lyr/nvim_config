@@ -813,9 +813,14 @@ M.copy_all_to_system_clipboard = function()
   end)
 end
 
+M.quit_all = function()
+  vim.cmd 'qa!'
+end
+
 local items = {
   { 'toggle_menu_popup_way',        M.toggle_menu_popup_way, },
   { 'copy all to system clipboard', M.copy_all_to_system_clipboard, },
+  { 'quit_all',                     M.quit_all, },
 }
 
 M.right_click = function()
