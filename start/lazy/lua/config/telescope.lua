@@ -476,107 +476,107 @@ end
 --------------------
 
 M.search_history = function()
-  vim.cmd('Telescope search_history')
+  vim.cmd 'Telescope search_history'
 end
 
 M.command_history = function()
-  vim.cmd('Telescope command_history')
+  vim.cmd 'Telescope command_history'
 end
 
 M.commands = function()
-  vim.cmd('Telescope commands')
+  vim.cmd 'Telescope commands'
 end
 
 M.frecency = function()
-  vim.cmd('Telescope frecency')
+  vim.cmd 'Telescope frecency'
 end
 
 M.buffers_cur = function()
-  vim.cmd('Telescope buffers cwd_only=true sort_mru=true ignore_current_buffer=true')
+  vim.cmd 'Telescope buffers cwd_only=true sort_mru=true ignore_current_buffer=true'
 end
 
 M.jumplist = function()
-  vim.cmd('Telescope jumplist show_line=false')
+  vim.cmd 'Telescope jumplist show_line=false'
 end
 
 M.diagnostics = function()
-  vim.cmd('Telescope diagnostics')
+  vim.cmd 'Telescope diagnostics'
 end
 
 M.filetypes = function()
-  vim.cmd('Telescope filetypes')
+  vim.cmd 'Telescope filetypes'
 end
 
 M.current_buffer_fuzzy_find = function()
-  vim.cmd('Telescope current_buffer_fuzzy_find')
+  vim.cmd 'Telescope current_buffer_fuzzy_find'
 end
 
 M.quickfix = function()
-  vim.cmd('Telescope quickfix')
+  vim.cmd 'Telescope quickfix'
 end
 
 M.quickfixhistory = function()
-  vim.cmd('Telescope quickfixhistory')
+  vim.cmd 'Telescope quickfixhistory'
 end
 
 M.builtin = function()
-  vim.cmd('Telescope builtin')
+  vim.cmd 'Telescope builtin'
 end
 
 M.colorscheme = function()
-  vim.cmd('Telescope colorscheme')
+  vim.cmd 'Telescope colorscheme'
 end
 
 M.git_branches = function()
-  vim.cmd('Telescope git_branches')
+  vim.cmd 'Telescope git_branches'
 end
 
 M.git_commits = function()
-  vim.cmd('Telescope git_commits')
+  vim.cmd 'Telescope git_commits'
 end
 
 M.git_bcommits = function()
-  vim.cmd('Telescope git_bcommits')
+  vim.cmd 'Telescope git_bcommits'
 end
 
 M.lsp_document_symbols = function()
-  vim.cmd('Telescope lsp_document_symbols')
+  vim.cmd 'Telescope lsp_document_symbols'
 end
 
 M.lsp_references = function()
-  vim.cmd('Telescope lsp_references')
+  vim.cmd 'Telescope lsp_references'
 end
 
 M.help_tags = function()
-  vim.cmd('Telescope help_tags')
+  vim.cmd 'Telescope help_tags'
 end
 
 M.vim_options = function()
-  vim.cmd('Telescope vim_options')
+  vim.cmd 'Telescope vim_options'
 end
 
 M.planets = function()
-  vim.cmd('Telescope planets')
+  vim.cmd 'Telescope planets'
 end
 
 M.grep_string = function()
-  vim.cmd('Telescope grep_string shorten_path=true word_match=-w only_sort_text=true search= grep_open_files=true')
+  vim.cmd 'Telescope grep_string shorten_path=true word_match=-w only_sort_text=true search= grep_open_files=true'
 end
 
 M.keymaps = function()
-  vim.cmd('Telescope keymaps')
+  vim.cmd 'Telescope keymaps'
 end
 
 M.my_file_browser = function()
-  vim.cmd('Telescope my_file_browser')
+  vim.cmd 'Telescope my_file_browser'
 end
 
 M.git_status = function()
-  vim.cmd('Telescope git_status')
+  vim.cmd 'Telescope git_status'
 end
 
 M.buffers = function()
-  vim.cmd('Telescope buffers')
+  vim.cmd 'Telescope buffers'
 end
 
 --------------------
@@ -804,11 +804,7 @@ M.toggle_menu_popup_way = function()
   end
 end
 
-M.select_all = function()
-  vim.cmd [[call feedkeys("ggVG")]]
-end
-
-M.copy_all = function()
+M.copy_all_to_system_clipboard = function()
   local save_cursor = vim.fn.getpos '.'
   vim.cmd [[call feedkeys("ggVG\"+y")]]
   vim.fn.timer_start(10, function()
@@ -818,9 +814,8 @@ M.copy_all = function()
 end
 
 local items = {
-  { 'toggle_menu_popup_way', M.toggle_menu_popup_way, },
-  { 'select all',       M.select_all, },
-  { 'copy all',         M.copy_all, },
+  { 'toggle_menu_popup_way',        M.toggle_menu_popup_way, },
+  { 'copy all to system clipboard', M.copy_all_to_system_clipboard, },
 }
 
 M.right_click = function()
