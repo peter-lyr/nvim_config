@@ -51,7 +51,9 @@ pcall(vim.api.nvim_del_autocmd, vim.g.minimap_au_bufenter)
 vim.g.minimap_au_bufenter = vim.api.nvim_create_autocmd('BufEnter', {
   callback = function(ev)
     if M.auto_open and vim.api.nvim_buf_get_option(ev.buf, 'filetype') ~= 'minimap' then
-      minimap.open()
+      if vim.fn.filereadable(ev.file) == 1 then
+        minimap.open()
+      end
     end
     if vim.api.nvim_buf_get_option(ev.buf, 'filetype') == 'minimap' then
       vim.keymap.set({ 'n', }, '<MiddleMouse>', function() esc(1) end, { buffer = ev.buf, desc = 'MiniMap esc', })
