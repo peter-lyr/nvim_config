@@ -689,7 +689,7 @@ end
 -- right click
 -- ====================
 
-M.menu_popup_way = 'ui_select' -- nvim_open_win, ui_select
+M.menu_popup_way = 'nvim_open_win' -- nvim_open_win, ui_select
 
 M.commands = {}
 
@@ -824,7 +824,7 @@ local items = {
 }
 
 M.right_click = function()
-  if M.menu_popup_way == 'menu' then
+  if M.menu_popup_way == 'nvim_open_win' then
     vim.cmd [[call feedkeys("\<LeftMouse>")]]
     vim.fn.timer_start(10, function()
       M.popup_menu(items)
