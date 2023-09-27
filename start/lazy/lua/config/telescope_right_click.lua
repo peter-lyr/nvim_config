@@ -146,12 +146,26 @@ M.fugitive_open = function()
   vim.cmd 'Git'
 end
 
+------------
+-- spectre
+------------
+
+M.spectre_open_visual = function()
+  require 'spectre'.open_visual { select_word = true, }
+end
+
+M.spectre_open_file_search = function()
+  require 'spectre'.open_file_search { select_word = true, }
+end
+
 M.items = {
   { 'toggle menu popup way',        M.toggle_menu_popup_way, },
   { 'copy all to system clipboard', M.copy_all_to_system_clipboard, },
   { 'quit all',                     M.quit_all, },
   { 'nvim tree open',               M.nvim_tree_open, },
   { 'fugitive open',                M.fugitive_open, },
+  { 'spectre open cword cwd',       M.spectre_open_visual, },
+  { 'spectre open cword cfile',     M.spectre_open_file_search, },
 }
 
 M.right_click = function()
