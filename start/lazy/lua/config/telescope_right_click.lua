@@ -14,14 +14,14 @@ M.winid = 0
 M.bufnr = 0
 
 M.buf_options = {
-  filetype = 'menu',
+  filetype = 'markdown',
   buftype = 'nofile',
   modifiable = false,
 }
 
 M.win_options = {
   signcolumn = 'no',
-  number = true,
+  -- number = true,
   winblend = 10,
 }
 
@@ -58,14 +58,14 @@ M.popup_menu = function(items)
   local win_width = vim.fn.strdisplaywidth(cword)
   local win_height = #vim.tbl_keys(items)
   local menus = {}
-  for _, v in ipairs(items) do
-    menus[#menus + 1] = v[1]
+  for i, v in ipairs(items) do
+    menus[#menus + 1] = string.format('%d. %s', i, v[1])
     M.commands[#M.commands + 1] = v[2]
     if vim.fn.strdisplaywidth(v[1]) > win_width then
       win_width = vim.fn.strdisplaywidth(v[1])
     end
   end
-  win_width = win_width + 2 + vim.opt.numberwidth:get()
+  win_width = win_width + 2 + #tostring(#menus)
   vim.api.nvim_buf_set_lines(M.bufnr, 0, -1, true, menus)
   M.winid = vim.api.nvim_open_win(M.bufnr, true,
     vim.tbl_deep_extend('force', M.win_open_opts, {
@@ -162,10 +162,10 @@ M.items = {
   { 'toggle menu popup way',        M.toggle_menu_popup_way, },
   { 'copy all to system clipboard', M.copy_all_to_system_clipboard, },
   { 'quit all',                     M.quit_all, },
-  { 'nvim tree open',               M.nvim_tree_open, },
-  { 'fugitive open',                M.fugitive_open, },
-  { 'spectre open cword cwd',       M.spectre_open_visual, },
-  { 'spectre open cword cfile',     M.spectre_open_file_search, },
+  { '[nvim-tree] open',             M.nvim_tree_open, },
+  { '[fugitive] open',              M.fugitive_open, },
+  { '[spectre] open cword cwd',     M.spectre_open_visual, },
+  { '[spectre] open cword cfile',   M.spectre_open_file_search, },
 }
 
 M.right_click = function()
