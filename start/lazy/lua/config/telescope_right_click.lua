@@ -21,8 +21,8 @@ M.buf_options = {
 
 M.win_options = {
   signcolumn = 'no',
-  -- number = true,
   winblend = 10,
+  concealcursor = 'nvic',
 }
 
 M.win_open_opts = {
@@ -159,13 +159,13 @@ M.spectre_open_file_search = function()
 end
 
 M.items = {
-  { 'toggle menu popup way',        M.toggle_menu_popup_way, },
-  { 'copy all to system clipboard', M.copy_all_to_system_clipboard, },
-  { 'quit all',                     M.quit_all, },
-  { '[nvim-tree] open',             M.nvim_tree_open, },
-  { '[fugitive] open',              M.fugitive_open, },
-  { '[spectre] open cword cwd',     M.spectre_open_visual, },
-  { '[spectre] open cword cfile',   M.spectre_open_file_search, },
+  { 'toggle [menu popup way]',        M.toggle_menu_popup_way, },
+  { '[copy] all to system clipboard', M.copy_all_to_system_clipboard, },
+  { '[nvim-tree] open',               M.nvim_tree_open, },
+  { '[fugitive] open',                M.fugitive_open, },
+  { '[spectre] open cword cwd',       M.spectre_open_visual, },
+  { '[spectre] open cword cfile',     M.spectre_open_file_search, },
+  { '[quit all]',                     M.quit_all, },
 }
 
 M.right_click = function()
