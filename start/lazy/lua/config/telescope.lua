@@ -796,7 +796,7 @@ end
 -- define right click menu
 --------------------------
 
-M.toggle_menu_mode = function()
+M.toggle_menu_popup_way = function()
   if M.menu_popup_way == 'nvim_open_win' then
     M.menu_popup_way = 'ui_select'
   else
@@ -818,7 +818,7 @@ M.copy_all = function()
 end
 
 local items = {
-  { 'toggle_menu_mode', M.toggle_menu_mode, },
+  { 'toggle_menu_popup_way', M.toggle_menu_popup_way, },
   { 'select all',       M.select_all, },
   { 'copy all',         M.copy_all, },
 }
