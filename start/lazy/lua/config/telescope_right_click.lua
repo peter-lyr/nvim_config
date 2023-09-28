@@ -162,6 +162,14 @@ M.spectre_open_file_search = function()
   require 'spectre'.open_file_search { select_word = true, }
 end
 
+------------
+-- aerial
+------------
+
+M.aerial_open = function()
+  vim.cmd 'AerialOpen right'
+end
+
 M.items = {
   { 'toggle [menu popup way]',        M.toggle_menu_popup_way, },
   { '[copy] all to system clipboard', M.copy_all_to_system_clipboard, },
@@ -170,6 +178,7 @@ M.items = {
   { '[fugitive] open',                M.fugitive_open, },
   { '[spectre] open cword cwd',       M.spectre_open_visual, },
   { '[spectre] open cword cfile',     M.spectre_open_file_search, },
+  { '[aerial] open right',            M.aerial_open, },
   { '[quit all]',                     M.quit_all, },
 }
 
