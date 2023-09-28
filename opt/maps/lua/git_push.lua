@@ -4,6 +4,19 @@ package.loaded['git_push'] = nil
 
 local git_push_timer = nil
 
+local function system_cd(p)
+  local s = ''
+  if string.sub(p, 2, 2) == ':' then
+    s = s .. string.sub(p, 1, 2) .. ' && '
+  end
+  if require 'plenary.path'.new(p):is_dir() then
+    s = s .. 'cd ' .. p .. ' && '
+  else
+    s = s .. 'cd ' .. require 'plenary.path'.new(p):parent().filename .. ' && '
+  end
+  return s
+end
+
 GitPushDone = function()
   git_push_timer:stop()
   pcall(vim.call, 'fugitive#ReloadStatus')
@@ -186,7 +199,7 @@ M.initdo = function(dpath, run)
   end
   asyncrunprepare()
   local cmd = string.gsub(string.format([[%s
-      cd %s && md %s &&
+      %s md %s &
       cd %s && git init --bare &&
       cd .. &&
       git init &&
@@ -197,7 +210,7 @@ M.initdo = function(dpath, run)
       git push -u origin "main"
       ]],
     not run and 'AsyncRun' or '!',
-    dpath, remote_name, remote_dname, remote_name), '%s+', ' ')
+    system_cd(dpath), remote_name, remote_dname, remote_name), '%s+', ' ')
   vim.cmd(cmd)
 end
 
