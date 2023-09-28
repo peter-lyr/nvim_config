@@ -183,6 +183,7 @@ M.items = {
 }
 
 M.right_click_menu = function()
+  vim.cmd [[call feedkeys("\<LeftMouse>")]]
   if M.menu_popup_way == 'nvim_open_win' then
     vim.fn.timer_start(10, function()
       M.popup_menu(M.items)
@@ -192,9 +193,11 @@ M.right_click_menu = function()
   end
 end
 
+RightClickMenu = M.right_click_menu
+
 M.right_click = function()
   if vim.fn.filereadable(vim.api.nvim_buf_get_name(0)) == 1 then
-    return ':<c-u>lua require "config.telescope_right_click".right_click_menu()<cr>'
+    return ':<c-u>call v:lua.RightClickMenu()<cr>'
   end
   return '<RightMouse>'
 end
