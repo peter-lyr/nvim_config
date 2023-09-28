@@ -64,7 +64,7 @@ TelescopeKeys = {
   { '<leader>sO',         function() require 'config.telescope'.open() end,                      mode = { 'n', 'v', }, silent = true, desc = 'Telescope open config file', },
 
   -- right_click
-  { '<RightMouse>',       function() require 'config.telescope_right_click'.right_click() end,   mode = { 'n', 'v', }, silent = true, desc = 'Telescope right_click', },
+  '<RightMouse>',
 
 }
 
