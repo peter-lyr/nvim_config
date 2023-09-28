@@ -22,7 +22,7 @@ minimap.setup {
     side = 'right',
     show_integration_count = true,
     width = 12,
-    winblend = 90,
+    winblend = 20,
   },
 }
 
