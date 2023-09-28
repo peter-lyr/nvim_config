@@ -180,16 +180,16 @@ M.aerial_open = function()
 end
 
 M.items = {
-  { 'toggle [menu popup way]',              M.toggle_menu_popup_way, },
-  { '[copy] all to system clipboard',       M.copy_all_to_system_clipboard, },
-  { '[copy] paragraph to system clipboard', M.copy_paragraph_to_system_clipboard, },
-  { '[nvim-tree] open',                     M.nvim_tree_open, },
-  { '[nvim-tree] find file',                M.nvim_tree_find_file, },
-  { '[fugitive] open',                      M.fugitive_open, },
-  { '[spectre] open cword cwd',             M.spectre_open_visual, },
-  { '[spectre] open cword cfile',           M.spectre_open_file_search, },
-  { '[aerial] open right',                  M.aerial_open, },
-  { '[quit all]',                           M.quit_all, },
+  { 'toggle [Menu Popup Way]',              M.toggle_menu_popup_way, },
+  { '[Copy] all to system clipboard',       M.copy_all_to_system_clipboard, },
+  { '[Copy] paragraph to system clipboard', M.copy_paragraph_to_system_clipboard, },
+  { '[Nvim-Tree] open',                     M.nvim_tree_open, },
+  { '[Nvim-Tree] find file',                M.nvim_tree_find_file, },
+  { '[Fugitive] open',                      M.fugitive_open, },
+  { '[Spectre] open cword cwd',             M.spectre_open_visual, },
+  { '[Spectre] open cword cfile',           M.spectre_open_file_search, },
+  { '[Aerial] open right',                  M.aerial_open, },
+  { '[Quit All]',                           M.quit_all, },
 }
 
 M.right_click_menu = function()
