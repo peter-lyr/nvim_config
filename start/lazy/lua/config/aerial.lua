@@ -46,4 +46,24 @@ M.open = function()
   vim.cmd 'AerialOpen right'
 end
 
+pcall(vim.api.nvim_del_autocmd, vim.g.aerial_au_bufenter)
+
+vim.g.aerial_au_bufenter = vim.api.nvim_create_autocmd({ 'BufEnter', }, {
+  callback = function(ev)
+    if vim.api.nvim_buf_get_option(ev.buf, 'filetype') == 'aerial' then
+      vim.api.nvim_win_set_width(0, width * 2)
+    end
+  end,
+})
+
+pcall(vim.api.nvim_del_autocmd, vim.g.aerial_au_bufleave)
+
+vim.g.aerial_au_bufleave = vim.api.nvim_create_autocmd({ 'BufLeave', }, {
+  callback = function(ev)
+    if vim.api.nvim_buf_get_option(ev.buf, 'filetype') == 'aerial' then
+      vim.api.nvim_win_set_width(0, width)
+    end
+  end,
+})
+
 return M
