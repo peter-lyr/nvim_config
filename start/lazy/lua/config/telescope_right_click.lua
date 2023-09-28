@@ -126,6 +126,15 @@ M.copy_all_to_system_clipboard = function()
   end)
 end
 
+M.copy_paragraph_to_system_clipboard = function()
+  local save_cursor = vim.fn.getpos '.'
+  vim.cmd [[call feedkeys("vip\"+y")]]
+  vim.fn.timer_start(10, function()
+    pcall(vim.fn.setpos, '.', save_cursor)
+    vim.cmd 'norm zz'
+  end)
+end
+
 M.quit_all = function()
   vim.cmd 'qa!'
 end
@@ -171,15 +180,16 @@ M.aerial_open = function()
 end
 
 M.items = {
-  { 'toggle [menu popup way]',        M.toggle_menu_popup_way, },
-  { '[copy] all to system clipboard', M.copy_all_to_system_clipboard, },
-  { '[nvim-tree] open',               M.nvim_tree_open, },
-  { '[nvim-tree] find file',          M.nvim_tree_find_file, },
-  { '[fugitive] open',                M.fugitive_open, },
-  { '[spectre] open cword cwd',       M.spectre_open_visual, },
-  { '[spectre] open cword cfile',     M.spectre_open_file_search, },
-  { '[aerial] open right',            M.aerial_open, },
-  { '[quit all]',                     M.quit_all, },
+  { 'toggle [menu popup way]',              M.toggle_menu_popup_way, },
+  { '[copy] all to system clipboard',       M.copy_all_to_system_clipboard, },
+  { '[copy] paragraph to system clipboard', M.copy_paragraph_to_system_clipboard, },
+  { '[nvim-tree] open',                     M.nvim_tree_open, },
+  { '[nvim-tree] find file',                M.nvim_tree_find_file, },
+  { '[fugitive] open',                      M.fugitive_open, },
+  { '[spectre] open cword cwd',             M.spectre_open_visual, },
+  { '[spectre] open cword cfile',           M.spectre_open_file_search, },
+  { '[aerial] open right',                  M.aerial_open, },
+  { '[quit all]',                           M.quit_all, },
 }
 
 M.right_click_menu = function()
