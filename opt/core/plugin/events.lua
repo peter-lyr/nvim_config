@@ -36,7 +36,11 @@ vim.g.events_au_bufenter = vim.api.nvim_create_autocmd({ 'BufEnter', }, {
     if buftype == 'nofile' and vim.fn.bufname() == '' then
       vim.cmd 'setlocal signcolumn=no' -- for lsp hover
     elseif buftype == 'help' then
-      vim.cmd 'setlocal nu' -- for help show line number
+      vim.cmd [[
+        setlocal nu
+        setlocal iskeyword=@,48-57,_,192-255
+        setlocal conceallevel=0
+      ]]
     end
   end,
 })
