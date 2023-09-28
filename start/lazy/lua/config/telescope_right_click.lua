@@ -138,6 +138,10 @@ M.nvim_tree_open = function()
   vim.cmd 'NvimTreeOpen'
 end
 
+M.nvim_tree_find_file = function()
+  vim.cmd 'NvimTreeFindFile'
+end
+
 ------------
 -- fugitive
 ------------
@@ -162,6 +166,7 @@ M.items = {
   { 'toggle [menu popup way]',        M.toggle_menu_popup_way, },
   { '[copy] all to system clipboard', M.copy_all_to_system_clipboard, },
   { '[nvim-tree] open',               M.nvim_tree_open, },
+  { '[nvim-tree] find file',          M.nvim_tree_find_file, },
   { '[fugitive] open',                M.fugitive_open, },
   { '[spectre] open cword cwd',       M.spectre_open_visual, },
   { '[spectre] open cword cfile',     M.spectre_open_file_search, },
