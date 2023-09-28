@@ -183,13 +183,13 @@ M.items = {
 }
 
 M.right_click_menu = function()
-    if M.menu_popup_way == 'nvim_open_win' then
-      vim.fn.timer_start(10, function()
-        M.popup_menu(M.items)
-      end)
-    elseif M.menu_popup_way == 'ui_select' then
-      M.ui_select_menu(M.items)
-    end
+  if M.menu_popup_way == 'nvim_open_win' then
+    vim.fn.timer_start(10, function()
+      M.popup_menu(M.items)
+    end)
+  elseif M.menu_popup_way == 'ui_select' then
+    M.ui_select_menu(M.items)
+  end
 end
 
 M.right_click = function()
