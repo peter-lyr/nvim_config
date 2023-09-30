@@ -14,10 +14,6 @@ local function f4_lhs_() return '<leader>sj' end
 local function f4_desc() return 'Telescope jumplist' end
 local function f4_____() require 'config.telescope'.jumplist() end
 
-local function f5_lhs_() return '<leader>se' end
-local function f5_desc() return 'Telescope file_browser_cur' end
-local function f5_____() require 'config.telescope'.file_browser_cur() end
-
 local function f6_lhs_() return '<leader>sc' end
 local function f6_desc() return 'Telescope command_history' end
 local function f6_____() require 'config.telescope'.command_history() end
@@ -30,10 +26,6 @@ local function f8_lhs_() return '<leader>sb' end
 local function f8_desc() return 'Telescope buffers' end
 local function f8_____() require 'config.telescope'.buffers() end
 
-local function f10_lhs_() return '<leader>sa' end
-local function f10_desc() return 'Telescope my_file_browser' end
-local function f10_____() require 'config.telescope'.my_file_browser() end
-
 local function nop() end
 
 TelescopeKeyF12_ = {
@@ -41,11 +33,9 @@ TelescopeKeyF12_ = {
   { f2_lhs_(),  { '<c-s-f12><f2>', f2_____, mode = { 'n', 'v', }, silent = true, desc = f2_desc(), }, },
   { f3_lhs_(),  { '<c-s-f12><f3>', f3_____, mode = { 'n', 'v', }, silent = true, desc = f3_desc(), }, },
   { f4_lhs_(),  { '<c-s-f12><f4>', f4_____, mode = { 'n', 'v', }, silent = true, desc = f4_desc(), }, },
-  { f5_lhs_(),  { '<c-s-f12><f5>', f5_____, mode = { 'n', 'v', }, silent = true, desc = f5_desc(), }, },
   { f6_lhs_(),  { '<c-s-f12><f6>', f6_____, mode = { 'n', 'v', }, silent = true, desc = f6_desc(), }, },
   { f7_lhs_(),  { '<c-s-f12><f7>', f7_____, mode = { 'n', 'v', }, silent = true, desc = f7_desc(), }, },
   { f8_lhs_(),  { '<c-s-f12><f8>', f8_____, mode = { 'n', 'v', }, silent = true, desc = f8_desc(), }, },
-  { f10_lhs_(), { '<c-s-f12><f10>', f10_____, mode = { 'n', 'v', }, silent = true, desc = f10_desc(), }, },
 }
 
 TelescopeKeyF12Nop = {
@@ -155,8 +145,6 @@ return {
       'nvim-telescope/telescope-frecency.nvim',
       dependencies = { 'kkharji/sqlite.lua', },
     },
-    -- 'nvim-telescope/telescope-file-browser.nvim',
-    'peter-lyr/telescope-file-browser.nvim',
     require 'plugins.whichkey',
   },
   init = function()

@@ -1,10 +1,10 @@
 local keys = {}
 
-local telescopekeysuiall_temp = {
+local telescopekeysuiall_projects = {
   { '<leader>sk', function() require 'config.telescope_projects'.my_projects() end, mode = { 'n', 'v', }, silent = true, desc = 'Telescope my_projects', },
 }
 
-for _, k in ipairs(vim.deepcopy(telescopekeysuiall_temp)) do
+for _, k in ipairs(vim.deepcopy(telescopekeysuiall_projects)) do
   keys[#keys + 1] = k
   TelescopeKeysUiAll[#TelescopeKeysUiAll + 1] = k
 end
