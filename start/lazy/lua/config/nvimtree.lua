@@ -3,6 +3,7 @@ local M = {}
 package.loaded['config.nvimtree-func'] = nil
 
 local api = require 'nvim-tree.api'
+local sel = require 'config.nvimtree_sel'
 
 M.nvimtree_opened = nil
 M.focuslost_timer = 0
@@ -32,7 +33,7 @@ local function show_cwd_root_toggle()
   vim.cmd 'wincmd p'
 end
 
-local function plugins_map()
+local function plugins_map(bufnr)
   local function opts(desc)
     return { desc = 'nvim-tree: ' .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true, }
   end
@@ -124,8 +125,27 @@ local function basic_map(bufnr)
   vim.keymap.set('n', 'gf', api.live_filter.clear, opts 'Clean Filter')
 end
 
+local function sel_map(bufnr)
+  local function opts(desc)
+    return { desc = 'nvim-tree sel: ' .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true, }
+  end
+  vim.keymap.set('n', "'", wrap_node(sel.toggle_sel), opts 'toggle and go next')
+  vim.keymap.set('n', '"', wrap_node(sel.toggle_sel_up), opts 'toggle and go prev')
+
+  vim.keymap.set('n', 'de', wrap_node(sel.empty_sel), opts 'empty all selections')
+
+  vim.keymap.set('n', 'dd', wrap_node(sel.delete_sel), opts 'delete all selections')
+  vim.keymap.set('n', 'dm', wrap_node(sel.move_sel), opts 'move selections here')
+  vim.keymap.set('n', 'dc', wrap_node(sel.copy_sel), opts 'copy selections here')
+  vim.keymap.set('n', 'dr', wrap_node(sel.rename_sel), opts 'rename selections here')
+
+  vim.keymap.set('n', 'dy', wrap_node(sel.copy_2_clip), opts 'copy_2_clip')
+  vim.keymap.set('n', 'dp', wrap_node(sel.paste_from_clip), opts 'paste_from_clip')
+end
+
 local on_attach = function(bufnr)
   basic_map(bufnr)
+  sel_map(bufnr)
   plugins_map(bufnr)
 end
 

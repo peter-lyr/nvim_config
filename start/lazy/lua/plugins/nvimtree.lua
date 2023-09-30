@@ -11,9 +11,7 @@ return {
     { '<leader>ac', function() require 'config.nvimtree'.close() end,    mode = { 'n', 'v', }, silent = true, desc = 'NvimTree close', },
   },
   dependencies = {
-    require 'plugins.treesitter',
     require 'plugins.plenary',
-    require 'plugins.projectroot',
     require 'plugins.whichkey',
   },
   init = function()
