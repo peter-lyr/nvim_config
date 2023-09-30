@@ -1,7 +1,7 @@
 return {
   'lukas-reineke/indent-blankline.nvim',
   lazy = true,
-  event = { 'CursorHold', 'CursorHoldI', },
+  event = { 'CursorMoved', 'CursorMovedI', },
   opt = {
     space_char_blankline = ' ',
     char = '│',
