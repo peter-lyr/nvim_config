@@ -623,9 +623,9 @@ require 'telescope'.load_extension 'ui-select'
 
 local descs = {}
 local keys = {}
-for i = 1, #TelescopeKeys do
-  descs[#descs + 1] = TelescopeKeys[i]['desc']
-  keys[#keys + 1] = vim.fn.substitute(TelescopeKeys[i][1], '<leader>', ' ', 'g')
+for i = 1, #TelescopeKeysUiAll do
+  descs[#descs + 1] = TelescopeKeysUiAll[i]['desc']
+  keys[#keys + 1] = vim.fn.substitute(TelescopeKeysUiAll[i][1], '<leader>', ' ', 'g')
 end
 
 M.ui_all = function()

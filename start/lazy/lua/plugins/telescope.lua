@@ -1,3 +1,59 @@
+-- ui all
+local function f9() require 'config.telescope'.ui_all() end
+local function f9_desc() return 'Telescope ui_all' end
+
+local function f1() require 'config.telescope'.git_status() end
+local function f1_desc() return 'Telescope git_status' end
+
+local function f2() require 'config.telescope'.buffers_cur() end
+local function f2_desc() return 'Telescope buffers_cur' end
+
+local function f3() require 'config.telescope'.find_files() end
+local function f3_desc() return 'Telescope find_files' end
+
+local function f4() require 'config.telescope'.jumplist() end
+local function f4_desc() return 'Telescope jumplist' end
+
+local function f5() require 'config.telescope'.file_browser_cur() end
+local function f5_desc() return 'Telescope file_browser_cur' end
+
+local function f6() require 'config.telescope'.command_history() end
+local function f6_desc() return 'Telescope command_history' end
+
+local function f7() require 'config.telescope'.lsp_document_symbols() end
+local function f7_desc() return 'Telescope lsp_document_symbols' end
+
+local function f8() require 'config.telescope'.buffers() end
+local function f8_desc() return 'Telescope buffers' end
+
+local function f10() require 'config.telescope'.my_file_browser() end
+local function f10_desc() return 'Telescope my_file_browser' end
+
+local function nop() end
+
+TelescopeKeyF12 = {
+  { '<c-s-f12><f1>',  f1,  mode = { 'n', 'v', }, silent = true, desc = f1_desc(), },
+  { '<c-s-f12><f2>',  f2,  mode = { 'n', 'v', }, silent = true, desc = f2_desc(), },
+  { '<c-s-f12><f3>',  f3,  mode = { 'n', 'v', }, silent = true, desc = f3_desc(), },
+  { '<c-s-f12><f4>',  f4,  mode = { 'n', 'v', }, silent = true, desc = f4_desc(), },
+  { '<c-s-f12><f5>',  f5,  mode = { 'n', 'v', }, silent = true, desc = f5_desc(), },
+  { '<c-s-f12><f6>',  f6,  mode = { 'n', 'v', }, silent = true, desc = f6_desc(), },
+  { '<c-s-f12><f7>',  f7,  mode = { 'n', 'v', }, silent = true, desc = f7_desc(), },
+  { '<c-s-f12><f8>',  f8,  mode = { 'n', 'v', }, silent = true, desc = f8_desc(), },
+  { '<c-s-f12><f9>',  f9,  mode = { 'n', 'v', }, silent = true, desc = f9_desc(), },
+  { '<c-s-f12><f10>', f10, mode = { 'n', 'v', }, silent = true, desc = f10_desc(), },
+  { '<c-s-f12><f1>',  nop, mode = { 'i', },      silent = true, desc = '', },
+  { '<c-s-f12><f2>',  nop, mode = { 'i', },      silent = true, desc = '', },
+  { '<c-s-f12><f3>',  nop, mode = { 'i', },      silent = true, desc = '', },
+  { '<c-s-f12><f4>',  nop, mode = { 'i', },      silent = true, desc = '', },
+  { '<c-s-f12><f5>',  nop, mode = { 'i', },      silent = true, desc = '', },
+  { '<c-s-f12><f6>',  nop, mode = { 'i', },      silent = true, desc = '', },
+  { '<c-s-f12><f7>',  nop, mode = { 'i', },      silent = true, desc = '', },
+  { '<c-s-f12><f8>',  nop, mode = { 'i', },      silent = true, desc = '', },
+  { '<c-s-f12><f9>',  nop, mode = { 'i', },      silent = true, desc = '', },
+  { '<c-s-f12><f10>', nop, mode = { 'i', },      silent = true, desc = '', },
+}
+
 TelescopeKeysLess = {
   { '<leader>svh',  function() require 'config.telescope'.help_tags() end,   mode = { 'n', 'v', }, silent = true, desc = 'Telescope help_tags', },
   { '<leader>svvo', function() require 'config.telescope'.vim_options() end, mode = { 'n', 'v', }, silent = true, desc = 'Telescope vim_options', },
@@ -16,28 +72,9 @@ TelescopeKeysMore = {
   { '<leader>sj',        function() require 'config.telescope'.jumplist() end,             mode = { 'n', 'v', }, silent = true, desc = 'Telescope jumplist', },
   { '<leader>fl',        function() require 'config.telescope'.lsp_document_symbols() end, mode = { 'n', 'v', }, silent = true, desc = 'Telescope lsp_document_symbols', },
   { '<leader>se',        function() require 'config.telescope'.file_browser_cur() end,     mode = { 'n', 'v', }, silent = true, desc = 'Telescope file_browser_cur', },
-  { '<c-s-f12><f5>',     function() require 'config.telescope'.file_browser_cur() end,     mode = { 'n', 'v', }, silent = true, desc = 'Telescope file_browser_cur', },
-  { '<c-s-f12><f10>',    function() require 'config.telescope'.my_file_browser() end,      mode = { 'n', 'v', }, silent = true, desc = 'Telescope my_file_browser', },
-  { '<c-s-f12><f2>',     function() require 'config.telescope'.buffers_cur() end,          mode = { 'n', 'v', }, silent = true, desc = 'Telescope buffers_cur', },
-  { '<c-s-f12><f8>',     function() require 'config.telescope'.buffers() end,              mode = { 'n', 'v', }, silent = true, desc = 'Telescope buffers', },
-  { '<c-s-f12><f1>',     function() require 'config.telescope'.git_status() end,           mode = { 'n', 'v', }, silent = true, desc = 'Telescope git_status', },
-  { '<c-s-f12><f3>',     function() require 'config.telescope'.find_files() end,           mode = { 'n', 'v', }, silent = true, desc = 'Telescope find_files', },
-  { '<c-s-f12><f4>',     function() require 'config.telescope'.jumplist() end,             mode = { 'n', 'v', }, silent = true, desc = 'Telescope jumplist', },
-  { '<c-s-f12><f6>',     function() require 'config.telescope'.command_history() end,      mode = { 'n', 'v', }, silent = true, desc = 'Telescope command_history', },
-  { '<c-s-f12><f7>',     function() require 'config.telescope'.lsp_document_symbols() end, mode = { 'n', 'v', }, silent = true, desc = 'Telescope lsp_document_symbols', },
-  { '<c-s-f12><f1>',     function() end,                                                   mode = { 'i', },      silent = true, desc = '', },
-  { '<c-s-f12><f2>',     function() end,                                                   mode = { 'i', },      silent = true, desc = '', },
-  { '<c-s-f12><f3>',     function() end,                                                   mode = { 'i', },      silent = true, desc = '', },
-  { '<c-s-f12><f4>',     function() end,                                                   mode = { 'i', },      silent = true, desc = '', },
-  { '<c-s-f12><f5>',     function() end,                                                   mode = { 'i', },      silent = true, desc = '', },
-  { '<c-s-f12><f6>',     function() end,                                                   mode = { 'i', },      silent = true, desc = '', },
-  { '<c-s-f12><f7>',     function() end,                                                   mode = { 'i', },      silent = true, desc = '', },
-  { '<c-s-f12><f8>',     function() end,                                                   mode = { 'i', },      silent = true, desc = '', },
-  { '<c-s-f12><f9>',     function() end,                                                   mode = { 'i', },      silent = true, desc = '', },
-  { '<c-s-f12><f10>',    function() end,                                                   mode = { 'i', },      silent = true, desc = 'Telescope ui_all', },
 }
 
-TelescopeKeys = {
+TelescopeKeysUiAll = {
 
   { '<leader>sk',         function() require 'config.telescope'.my_projects() end,               mode = { 'n', 'v', }, silent = true, desc = 'Telescope my_projects', },
   { '<leader>sv<leader>', function() require 'config.telescope'.find_files_all() end,            mode = { 'n', 'v', }, silent = true, desc = 'Telescope find_files_all', },
@@ -78,15 +115,18 @@ local keys = {
 
   -- all
   { '<leader>sA',     function() require 'config.telescope'.ui_all() end,        mode = { 'n', 'v', }, silent = true, desc = 'Telescope ui_all', },
-  { '<c-s-f12><f9>',  function() require 'config.telescope'.ui_all() end,        mode = { 'n', 'v', }, silent = true, desc = 'Telescope ui_all', },
 
 }
+
+for _, k in ipairs(TelescopeKeyF12) do
+  keys[#keys + 1] = k
+end
 
 for _, k in ipairs(TelescopeKeysMore) do
   keys[#keys + 1] = k
 end
 
-for _, k in ipairs(TelescopeKeys) do
+for _, k in ipairs(TelescopeKeysUiAll) do
   keys[#keys + 1] = k
 end
 
