@@ -1,8 +1,3 @@
--- ui all
-local function f9_lhs_() return '<leader>sA' end
-local function f9_desc() return 'Telescope ui_all' end
-local function f9_____() require 'config.telescope'.ui_all() end
-
 local function f1_lhs_() return '<leader>gf' end
 local function f1_desc() return 'Telescope git_status' end
 local function f1_____() require 'config.telescope'.git_status() end
@@ -41,7 +36,7 @@ local function f10_____() require 'config.telescope'.my_file_browser() end
 
 local function nop() end
 
-TelescopeKeyF12 = {
+TelescopeKeyF12_ = {
   { f1_lhs_(),  { '<c-s-f12><f1>', f1_____, mode = { 'n', 'v', }, silent = true, desc = f1_desc(), }, },
   { f2_lhs_(),  { '<c-s-f12><f2>', f2_____, mode = { 'n', 'v', }, silent = true, desc = f2_desc(), }, },
   { f3_lhs_(),  { '<c-s-f12><f3>', f3_____, mode = { 'n', 'v', }, silent = true, desc = f3_desc(), }, },
@@ -50,7 +45,6 @@ TelescopeKeyF12 = {
   { f6_lhs_(),  { '<c-s-f12><f6>', f6_____, mode = { 'n', 'v', }, silent = true, desc = f6_desc(), }, },
   { f7_lhs_(),  { '<c-s-f12><f7>', f7_____, mode = { 'n', 'v', }, silent = true, desc = f7_desc(), }, },
   { f8_lhs_(),  { '<c-s-f12><f8>', f8_____, mode = { 'n', 'v', }, silent = true, desc = f8_desc(), }, },
-  { f9_lhs_(),  { '<c-s-f12><f9>', f9_____, mode = { 'n', 'v', }, silent = true, desc = f9_desc(), }, },
   { f10_lhs_(), { '<c-s-f12><f10>', f10_____, mode = { 'n', 'v', }, silent = true, desc = f10_desc(), }, },
 }
 
@@ -114,17 +108,14 @@ local keys = {
   { '<leader>sL',     function() require 'config.telescope'.live_grep_def() end, mode = { 'n', 'v', }, silent = true, desc = 'Telescope live_grep_def', },
   { '<leader>s<c-l>', function() require 'config.telescope'.live_grep_rg() end,  mode = { 'n', 'v', }, silent = true, desc = 'Telescope live_grep_rg', },
 
-  -- all
-  { '<leader>sA',     function() require 'config.telescope'.ui_all() end,        mode = { 'n', 'v', }, silent = true, desc = 'Telescope ui_all', },
-
 }
 
-for _, k in ipairs(vim.deepcopy(TelescopeKeyF12)) do
+for _, k in ipairs(vim.deepcopy(TelescopeKeyF12_)) do
   local kk = k[2]
   keys[#keys + 1] = kk
 end
 
-for _, k in ipairs(vim.deepcopy(TelescopeKeyF12)) do
+for _, k in ipairs(vim.deepcopy(TelescopeKeyF12_)) do
   local kk = k[2]
   kk[1] = k[1]
   keys[#keys + 1] = kk
@@ -167,7 +158,6 @@ return {
     -- 'nvim-telescope/telescope-file-browser.nvim',
     'peter-lyr/telescope-file-browser.nvim',
     require 'plugins.whichkey',
-    'nvim-telescope/telescope-ui-select.nvim',
   },
   init = function()
     require 'which-key'.register { ['<leader>s'] = { name = 'Telescope', }, }
