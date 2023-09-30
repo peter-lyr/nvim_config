@@ -287,15 +287,6 @@ local get_setup_table = function(file_ignore_patterns)
       },
       wrap_results = true,
     },
-    extensions = {
-      fzf = {
-        fuzzy = true,                   -- false will only do exact matching
-        override_generic_sorter = true, -- override the generic sorter
-        override_file_sorter = true,    -- override the file sorter
-        case_mode = 'smart_case',       -- or "ignore_case" or "respect_case"
-        -- the default case_mode is "smart_case"
-      },
-    },
   }
 end
 
@@ -459,10 +450,6 @@ M.filetypes = function()
   vim.cmd 'Telescope filetypes'
 end
 
-M.current_buffer_fuzzy_find = function()
-  vim.cmd 'Telescope current_buffer_fuzzy_find'
-end
-
 M.quickfix = function()
   vim.cmd 'Telescope quickfix'
 end
@@ -526,12 +513,6 @@ end
 M.buffers = function()
   vim.cmd 'Telescope buffers'
 end
-
---------------------
--- fzf
---------------------
-
-pcall(telescope.load_extension, 'fzf')
 
 --------------------
 -- open config
