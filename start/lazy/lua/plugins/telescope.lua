@@ -72,7 +72,6 @@ TelescopeKeysUiAll = {
   { '<leader>svq',        function() require 'config.telescope'.quickfixhistory() end,           mode = { 'n', 'v', }, silent = true, desc = 'Telescope quickfixhistory', },
   { '<leader>svva',       function() require 'config.telescope'.builtin() end,                   mode = { 'n', 'v', }, silent = true, desc = 'Telescope builtin', },
   { '<leader>svc',        function() require 'config.telescope'.colorscheme() end,               mode = { 'n', 'v', }, silent = true, desc = 'Telescope colorscheme', },
-  { '<leader>so',         function() require 'config.telescope'.frecency() end,                  mode = { 'n', 'v', }, silent = true, desc = 'Telescope frecency', },
 
   -- git
   { '<leader>gh',         function() require 'config.telescope'.git_branches() end,              mode = { 'n', 'v', }, silent = true, desc = 'Telescope git_branches', },
@@ -140,10 +139,6 @@ return {
       'nvim-telescope/telescope-fzf-native.nvim',
       -- build = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build',
       build = 'mingw32-make',
-    },
-    {
-      'nvim-telescope/telescope-frecency.nvim',
-      dependencies = { 'kkharji/sqlite.lua', },
     },
     require 'plugins.whichkey',
   },
