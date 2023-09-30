@@ -168,7 +168,6 @@ return {
     'peter-lyr/telescope-file-browser.nvim',
     require 'plugins.whichkey',
     'nvim-telescope/telescope-ui-select.nvim',
-    'ahmedkhalf/project.nvim',
   },
   init = function()
     require 'which-key'.register { ['<leader>s'] = { name = 'Telescope', }, }
