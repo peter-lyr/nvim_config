@@ -455,6 +455,7 @@ pcall(vim.api.nvim_del_autocmd, vim.g.tabline_au_dirchanged)
 vim.g.tabline_au_dirchanged = vim.api.nvim_create_autocmd({ 'DirChanged', 'TabEnter', }, {
   callback = function()
     M.refresh_tabline()
+    pcall(vim.cmd, 'ProjectRootCD')
   end,
 })
 
