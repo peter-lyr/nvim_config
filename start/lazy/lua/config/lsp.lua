@@ -78,10 +78,10 @@ lspconfig.lua_ls.setup {
       workspace = {
         -- library = {}, --vim.api.nvim_get_runtime_file('', true),
         library = {
-          'opt.maps.lua.',
-          'opt.tabline.lua.',
-          'opt.terminal.lua.terminal',
-          'opt.test.lua.test',
+          'opt/maps/lua',
+          'opt/tabline/lua.',
+          'opt/terminal/lua',
+          'opt/test/lua',
         },
         checkThirdParty = false,
       },
