@@ -53,6 +53,37 @@ lspconfig.pyright.setup {
   },
 }
 
+local function rep(content)
+  content = string.gsub(content, '\\', '/')
+  return content
+end
+
+local libraries_3rd = vim.api.nvim_get_runtime_file('', true)
+
+local nvim_config = rep(vim.fn.expand '$VIMRUNTIME') .. '/pack/nvim_config/'
+
+local my_libraries = {
+  'opt/tabline/lua.',
+  'opt/terminal/lua',
+  'opt/test/lua',
+}
+
+local lua_libraries = {}
+
+for _, v in ipairs(my_libraries) do
+  lua_libraries[#lua_libraries + 1] = nvim_config .. v
+end
+
+for _, v in ipairs(libraries_3rd) do
+  local entries = require 'plenary.scandir'.scan_dir(v, { hidden = false, depth = 18, add_dirs = true, })
+  for _, entry in ipairs(entries) do
+    entry = rep(entry)
+    if require 'plenary.path':new(entry):is_dir() == true and string.match(entry, '/([^/]+)$') == 'lua' then
+      lua_libraries[#lua_libraries + 1] = entry
+    end
+  end
+end
+
 lspconfig.lua_ls.setup {
   capabilities = capabilities,
   root_dir = root_dir {
@@ -77,12 +108,7 @@ lspconfig.lua_ls.setup {
       },
       workspace = {
         -- library = {}, --vim.api.nvim_get_runtime_file('', true),
-        library = {
-          'opt/maps/lua',
-          'opt/tabline/lua.',
-          'opt/terminal/lua',
-          'opt/test/lua',
-        },
+        library = lua_libraries,
         checkThirdParty = false,
       },
       telemetry = {

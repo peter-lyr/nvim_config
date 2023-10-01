@@ -13,6 +13,7 @@ return {
     'Mason',
   },
   dependencies = {
+    require 'plugins.plenary',
     {
       'williamboman/mason.nvim',
       opts = {
