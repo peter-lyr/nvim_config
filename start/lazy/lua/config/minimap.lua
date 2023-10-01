@@ -61,6 +61,8 @@ vim.g.minimap_au_bufenter = vim.api.nvim_create_autocmd('BufEnter', {
     if vim.api.nvim_buf_get_option(ev.buf, 'filetype') == 'minimap' then
       vim.keymap.set({ 'n', }, '<MiddleMouse>', function() esc(1) end, { buffer = ev.buf, desc = 'MiniMap esc', })
       vim.keymap.set({ 'v', }, '<MiddleMouse>', function() esc(2) end, { buffer = ev.buf, desc = 'MiniMap esc', })
+      vim.keymap.set({ 'n', }, 'q', function() esc(1) end, { buffer = ev.buf, desc = 'MiniMap esc', })
+      vim.keymap.set({ 'v', }, 'q', function() esc(2) end, { buffer = ev.buf, desc = 'MiniMap esc', })
       vim.keymap.set({ 'n', }, '<2-LeftMouse>', function() cr(1) end, { buffer = ev.buf, desc = 'MiniMap cr', })
       vim.keymap.set({ 'v', }, '<2-LeftMouse>', function() cr(2) end, { buffer = ev.buf, desc = 'MiniMap cr', })
       vim.keymap.set({ 'n', 'v', }, '<ScrollWheelUp>', function() up() end, { buffer = ev.buf, desc = 'MiniMap up', })
