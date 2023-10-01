@@ -55,7 +55,7 @@ return {
     -- change_dir.lua
     { 'c.',                  function() require 'change_dir'.cur() end,       mode = { 'n', },      silent = true,  desc = 'cd %:h', },
     { 'cu',                  function() require 'change_dir'.up() end,        mode = { 'n', },      silent = true,  desc = 'cd ..', },
-    { 'c<c-w>',              function() require 'change_dir'.cwd() end,       mode = { 'n', },      silent = true,  desc = 'cd cwd', },
+    { 'c<leader>',           function() require 'change_dir'.cwd() end,       mode = { 'n', },      silent = true,  desc = 'cd cwd', },
 
     -- font_size.lua
     { '<c-=>',               function() require 'font_size'.up() end,         mode = { 'n', 'v', }, silent = true,  desc = 'font_size up', },
