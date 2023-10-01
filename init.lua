@@ -37,7 +37,7 @@ lazy.setup {
   performance = {
     rtp = {
       paths = {
-        string.sub(vimruntime, 1, #vimruntime - 12) .. 'nvim\\runtime',
+        string.sub(vimruntime, 1, #vimruntime - 12) .. 'nvim-qt\\runtime',
       },
       disabled_plugins = {
         'gzip',
