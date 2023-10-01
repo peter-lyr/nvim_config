@@ -81,6 +81,7 @@ lspconfig.lua_ls.setup {
           'opt.maps.lua.',
           'opt.tabline.lua.',
           'opt.terminal.lua.terminal',
+          'opt.test.lua.test',
         },
         checkThirdParty = false,
       },
