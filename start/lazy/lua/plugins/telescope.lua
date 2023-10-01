@@ -29,13 +29,13 @@ local function f8_____() require 'config.telescope'.buffers() end
 local function nop() end
 
 TelescopeKeyF12_ = {
-  { f1_lhs_(),  { '<c-s-f12><f1>', f1_____, mode = { 'n', 'v', }, silent = true, desc = f1_desc(), }, },
-  { f2_lhs_(),  { '<c-s-f12><f2>', f2_____, mode = { 'n', 'v', }, silent = true, desc = f2_desc(), }, },
-  { f3_lhs_(),  { '<c-s-f12><f3>', f3_____, mode = { 'n', 'v', }, silent = true, desc = f3_desc(), }, },
-  { f4_lhs_(),  { '<c-s-f12><f4>', f4_____, mode = { 'n', 'v', }, silent = true, desc = f4_desc(), }, },
-  { f6_lhs_(),  { '<c-s-f12><f6>', f6_____, mode = { 'n', 'v', }, silent = true, desc = f6_desc(), }, },
-  { f7_lhs_(),  { '<c-s-f12><f7>', f7_____, mode = { 'n', 'v', }, silent = true, desc = f7_desc(), }, },
-  { f8_lhs_(),  { '<c-s-f12><f8>', f8_____, mode = { 'n', 'v', }, silent = true, desc = f8_desc(), }, },
+  { f1_lhs_(), { '<c-s-f12><f1>', f1_____, mode = { 'n', 'v', }, silent = true, desc = f1_desc(), }, },
+  { f2_lhs_(), { '<c-s-f12><f2>', f2_____, mode = { 'n', 'v', }, silent = true, desc = f2_desc(), }, },
+  { f3_lhs_(), { '<c-s-f12><f3>', f3_____, mode = { 'n', 'v', }, silent = true, desc = f3_desc(), }, },
+  { f4_lhs_(), { '<c-s-f12><f4>', f4_____, mode = { 'n', 'v', }, silent = true, desc = f4_desc(), }, },
+  { f6_lhs_(), { '<c-s-f12><f6>', f6_____, mode = { 'n', 'v', }, silent = true, desc = f6_desc(), }, },
+  { f7_lhs_(), { '<c-s-f12><f7>', f7_____, mode = { 'n', 'v', }, silent = true, desc = f7_desc(), }, },
+  { f8_lhs_(), { '<c-s-f12><f8>', f8_____, mode = { 'n', 'v', }, silent = true, desc = f8_desc(), }, },
 }
 
 TelescopeKeyF12Nop = {
@@ -61,26 +61,26 @@ TelescopeKeysLess = {
 
 TelescopeKeysUiAll = {
 
-  { '<leader>sv<leader>', function() require 'config.telescope'.find_files_all() end,            mode = { 'n', 'v', }, silent = true, desc = 'Telescope find_files_all', },
-  { '<leader>sh',         function() require 'config.telescope'.search_history()() end,          mode = { 'n', 'v', }, silent = true, desc = 'Telescope search_history', },
-  { '<leader>svc',        function() require 'config.telescope'.commands() end,                  mode = { 'n', 'v', }, silent = true, desc = 'Telescope commands', },
-  { '<leader>sd',         function() require 'config.telescope'.diagnostics() end,               mode = { 'n', 'v', }, silent = true, desc = 'Telescope diagnostics', },
-  { '<leader>sf',         function() require 'config.telescope'.filetypes() end,                 mode = { 'n', 'v', }, silent = true, desc = 'Telescope filetypes', },
-  { '<leader>sq',         function() require 'config.telescope'.quickfix() end,                  mode = { 'n', 'v', }, silent = true, desc = 'Telescope quickfix', },
-  { '<leader>svq',        function() require 'config.telescope'.quickfixhistory() end,           mode = { 'n', 'v', }, silent = true, desc = 'Telescope quickfixhistory', },
-  { '<leader>svva',       function() require 'config.telescope'.builtin() end,                   mode = { 'n', 'v', }, silent = true, desc = 'Telescope builtin', },
-  { '<leader>svc',        function() require 'config.telescope'.colorscheme() end,               mode = { 'n', 'v', }, silent = true, desc = 'Telescope colorscheme', },
+  { '<leader>sv<leader>', function() require 'config.telescope'.find_files_all() end,   mode = { 'n', 'v', }, silent = true, desc = 'Telescope find_files_all', },
+  { '<leader>sh',         function() require 'config.telescope'.search_history()() end, mode = { 'n', 'v', }, silent = true, desc = 'Telescope search_history', },
+  { '<leader>svc',        function() require 'config.telescope'.commands() end,         mode = { 'n', 'v', }, silent = true, desc = 'Telescope commands', },
+  { '<leader>sd',         function() require 'config.telescope'.diagnostics() end,      mode = { 'n', 'v', }, silent = true, desc = 'Telescope diagnostics', },
+  { '<leader>sf',         function() require 'config.telescope'.filetypes() end,        mode = { 'n', 'v', }, silent = true, desc = 'Telescope filetypes', },
+  { '<leader>sq',         function() require 'config.telescope'.quickfix() end,         mode = { 'n', 'v', }, silent = true, desc = 'Telescope quickfix', },
+  { '<leader>svq',        function() require 'config.telescope'.quickfixhistory() end,  mode = { 'n', 'v', }, silent = true, desc = 'Telescope quickfixhistory', },
+  { '<leader>svva',       function() require 'config.telescope'.builtin() end,          mode = { 'n', 'v', }, silent = true, desc = 'Telescope builtin', },
+  { '<leader>svc',        function() require 'config.telescope'.colorscheme() end,      mode = { 'n', 'v', }, silent = true, desc = 'Telescope colorscheme', },
 
   -- git
-  { '<leader>gh',         function() require 'config.telescope'.git_branches() end,              mode = { 'n', 'v', }, silent = true, desc = 'Telescope git_branches', },
-  { '<leader>gtc',        function() require 'config.telescope'.git_commits() end,               mode = { 'n', 'v', }, silent = true, desc = 'Telescope git_commits', },
-  { '<leader>gtb',        function() require 'config.telescope'.git_bcommits() end,              mode = { 'n', 'v', }, silent = true, desc = 'Telescope git_bcommits', },
+  { '<leader>gh',         function() require 'config.telescope'.git_branches() end,     mode = { 'n', 'v', }, silent = true, desc = 'Telescope git_branches', },
+  { '<leader>gtc',        function() require 'config.telescope'.git_commits() end,      mode = { 'n', 'v', }, silent = true, desc = 'Telescope git_commits', },
+  { '<leader>gtb',        function() require 'config.telescope'.git_bcommits() end,     mode = { 'n', 'v', }, silent = true, desc = 'Telescope git_bcommits', },
 
   -- lsp
-  { '<leader>fr',         function() require 'config.telescope'.lsp_references() end,            mode = { 'n', 'v', }, silent = true, desc = 'Telescope lsp_references', },
+  { '<leader>fr',         function() require 'config.telescope'.lsp_references() end,   mode = { 'n', 'v', }, silent = true, desc = 'Telescope lsp_references', },
 
   -- config
-  { '<leader>sO',         function() require 'config.telescope'.open() end,                      mode = { 'n', 'v', }, silent = true, desc = 'Telescope open config file', },
+  { '<leader>sO',         function() require 'config.telescope'.open() end,             mode = { 'n', 'v', }, silent = true, desc = 'Telescope open config file', },
 
   -- right_click
   '<RightMouse>',
