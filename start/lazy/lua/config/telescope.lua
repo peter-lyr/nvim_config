@@ -1,5 +1,7 @@
 package.loaded['config.telescope'] = nil
 
+require 'config.telescope_right_click'
+
 local telescope = require 'telescope'
 local actions = require 'telescope.actions'
 local actions_layout = require 'telescope.actions.layout'

@@ -61,13 +61,11 @@ TelescopeKeysLess = {
 
 TelescopeKeysUiAll = {
 
-  { '<leader>sk',         function() require 'config.telescope'.my_projects() end,               mode = { 'n', 'v', }, silent = true, desc = 'Telescope my_projects', },
   { '<leader>sv<leader>', function() require 'config.telescope'.find_files_all() end,            mode = { 'n', 'v', }, silent = true, desc = 'Telescope find_files_all', },
   { '<leader>sh',         function() require 'config.telescope'.search_history()() end,          mode = { 'n', 'v', }, silent = true, desc = 'Telescope search_history', },
   { '<leader>svc',        function() require 'config.telescope'.commands() end,                  mode = { 'n', 'v', }, silent = true, desc = 'Telescope commands', },
   { '<leader>sd',         function() require 'config.telescope'.diagnostics() end,               mode = { 'n', 'v', }, silent = true, desc = 'Telescope diagnostics', },
   { '<leader>sf',         function() require 'config.telescope'.filetypes() end,                 mode = { 'n', 'v', }, silent = true, desc = 'Telescope filetypes', },
-  { '<leader>sz',         function() require 'config.telescope'.current_buffer_fuzzy_find() end, mode = { 'n', 'v', }, silent = true, desc = 'Telescope current_buffer_fuzzy_find', },
   { '<leader>sq',         function() require 'config.telescope'.quickfix() end,                  mode = { 'n', 'v', }, silent = true, desc = 'Telescope quickfix', },
   { '<leader>svq',        function() require 'config.telescope'.quickfixhistory() end,           mode = { 'n', 'v', }, silent = true, desc = 'Telescope quickfixhistory', },
   { '<leader>svva',       function() require 'config.telescope'.builtin() end,                   mode = { 'n', 'v', }, silent = true, desc = 'Telescope builtin', },
