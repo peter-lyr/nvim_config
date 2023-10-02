@@ -121,7 +121,7 @@ M.commit = function()
 end
 
 M.graph = function()
-  vim.cmd [[!start cmd /c "git log --all --graph --decorate --oneline && pause"]]
+  vim.cmd [[silent !start cmd /c "git log --all --graph --decorate --oneline && pause"]]
 end
 
 M.push = function()
