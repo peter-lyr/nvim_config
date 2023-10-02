@@ -214,6 +214,8 @@ M.initdo = function(dpath, run)
   vim.cmd(cmd)
 end
 
+pcall(vim.cmd, 'Lazy load telescope-ui-select.nvim')
+
 M.init = function()
   local fname = vim.api.nvim_buf_get_name(0)
   local dirs = get_dirs(fname)
