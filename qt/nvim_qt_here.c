@@ -68,19 +68,17 @@ int main(int argc, char *argv[]) {
             "\"Icon\"=\"start-nvim-qt.exe\"\n"
             "[HKEY_LOCAL_MACHINE\\SOFTWARE\\Classes\\Directory\\background\\shell\\nvimqt_here\\command]\n"
             "@=\"%s\"\n"
-            "[HKEY_LOCAL_MACHINE\\SOFTWARE\\Classes\\Folder\\shell\\nvimqtPrompt]\n"
-            "[HKEY_LOCAL_MACHINE\\SOFTWARE\\Classes\\Folder\\shell\\nvimqtPrompt\\command]\n"
-            "@=\"%s \\\"cd %%1\\\"\"\n"
+            "\n"
             "[HKEY_LOCAL_MACHINE\\SOFTWARE\\Classes\\Directory\\shell\\nvimqt_here]\n"
             "\"Icon\"=\"start-nvim-qt.exe\"\n"
             "[HKEY_LOCAL_MACHINE\\SOFTWARE\\Classes\\Directory\\shell\\nvimqt_here\\command]\n"
             "@=\"%s\"\n"
             "\n"
-            "[HKEY_LOCAL_MACHINE\\SOFTWARE\\Classes\\*\\shell\\OpenWithNvimQt]\n"
+            "[HKEY_LOCAL_MACHINE\\SOFTWARE\\Classes\\*\\shell\\open_with_nvimqt]\n"
             "\"Icon\"=\"start-nvim-qt.exe\"\n"
-            "[HKEY_LOCAL_MACHINE\\SOFTWARE\\Classes\\*\\shell\\OpenWithNvimQt\\command]\n"
+            "[HKEY_LOCAL_MACHINE\\SOFTWARE\\Classes\\*\\shell\\open_with_nvimqt\\command]\n"
             "@=\"%s \\\"%%1\\\"\"\n",
-            start_nvim_qt_exe, start_nvim_qt_exe, start_nvim_qt_exe, start_nvim_qt_exe);
+            start_nvim_qt_exe, start_nvim_qt_exe, start_nvim_qt_exe);
 
     fclose(fp);
 
@@ -93,9 +91,8 @@ int main(int argc, char *argv[]) {
     fprintf(fp,
             "Windows Registry Editor Version 5.00\n"
             "[-HKEY_LOCAL_MACHINE\\SOFTWARE\\Classes\\Directory\\background\\shell\\nvimqt_here]\n"
-            "[-HKEY_LOCAL_MACHINE\\SOFTWARE\\Classes\\Folder\\shell\\nvimqtPrompt]\n"
             "[-HKEY_LOCAL_MACHINE\\SOFTWARE\\Classes\\Directory\\shell\\nvimqt_here]\n"
-            "[-HKEY_LOCAL_MACHINE\\SOFTWARE\\Classes\\*\\shell\\OpenWithNvimQt]\n");
+            "[-HKEY_LOCAL_MACHINE\\SOFTWARE\\Classes\\*\\shell\\open_with_nvimqt]\n");
 
     fclose(fp);
 
