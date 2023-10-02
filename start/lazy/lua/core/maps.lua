@@ -113,7 +113,7 @@ return {
     { '<F1>',           function() require 'info'.statusline() end,           mode = { 'n', 'v', }, silent = true, desc = 'info statusline', },
 
     -- quickfix.lua
-    { 'dm',             function() require 'quickfix'.toggle() end,           mode = { 'n', 'v', }, silent = true, desc = 'quickfix open', },
+    { 'd<leader>',      function() require 'quickfix'.toggle() end,           mode = { 'n', 'v', }, silent = true, desc = 'quickfix open', },
 
     -- all_git_repos.lua
     { '<leader>sg',     function() require 'all_git_repos'.sel() end,         mode = { 'n', 'v', }, silent = true, desc = 'all_git_repos sel', },
