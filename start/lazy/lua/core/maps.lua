@@ -5,11 +5,15 @@ return {
   dir = opt .. 'maps',
   lazy = true,
   event = { 'CmdlineEnter', 'InsertEnter', 'ModeChanged', },
+  cmd = {
+    'UpdateAllGitRepos', -- all_git_repos.lua
+  },
   dependencies = {
     require 'plugins.asyncrun',
     require 'plugins.notify',
     require 'plugins.projectroot',
     require 'plugins.whichkey',
+    require 'plugins.plenary',
   },
   keys = {
 
@@ -109,6 +113,9 @@ return {
 
     -- quickfix.lua
     { 'dm',             function() require 'quickfix'.toggle() end,           mode = { 'n', 'v', }, silent = true, desc = 'quickfix open', },
+
+    -- all_git_repos.lua
+    { '<leader>sg',     function() require 'all_git_repos'.sel() end,         mode = { 'n', 'v', }, silent = true, desc = 'all_git_repos sel', },
 
   },
   init = function()
