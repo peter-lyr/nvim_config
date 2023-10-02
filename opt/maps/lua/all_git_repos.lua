@@ -45,14 +45,20 @@ M.sel = function()
   local git_repos = {}
   local lines = M.all_git_repos_txt_p:readlines()
   for _, line in ipairs(lines) do
-    git_repos[#git_repos + 1] = vim.fn.trim(line)
+    local dir_p = require 'plenary.path':new(vim.fn.trim(line))
+    if dir_p:exists() == true then
+      git_repos[#git_repos + 1] = dir_p.filename
+    end
   end
   vim.ui.select(git_repos, { prompt = 'nvimtree open git repo', }, function(choice, idx)
     if not choice then
       return
     end
-    vim.cmd 'NvimTreeOpen'
-    vim.cmd('cd ' .. choice)
+    local dir_p = require 'plenary.path':new(vim.fn.trim(choice))
+    if dir_p:exists() == true then
+      vim.cmd 'NvimTreeOpen'
+      vim.cmd('cd ' .. choice)
+    end
   end)
 end
 
