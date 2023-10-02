@@ -62,3 +62,7 @@ vim.keymap.set({ 't', 'c', 'i', }, '<a-s-a>', '<c-LEFT>', { desc = 'ctrl left', 
 vim.keymap.set({ 't', }, '<esc>', '<c-\\><c-n>', { desc = 'esc', })
 vim.keymap.set({ 't', }, '<c-l>', '<c-\\><c-n>', { desc = 'esc', })
 vim.keymap.set({ 'i', 'c', }, '<c-l>', '<esc>', { desc = 'esc', })
+
+require 'maps'.add('<esc>', 'n', function()
+  pcall(vim.cmd, 'wincmd p')
+end, 'wincmd p')

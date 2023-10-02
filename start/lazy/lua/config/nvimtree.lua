@@ -45,10 +45,6 @@ local function close()
   M.nvimtree_opened = nil
 end
 
-local function wincmd_p()
-  vim.cmd 'wincmd p'
-end
-
 local function tab()
   api.node.open.preview()
   vim.cmd 'norm j'
@@ -104,7 +100,6 @@ local function basic_map(bufnr)
   vim.keymap.set('n', 'E', api.tree.expand_all, opts 'Expand All')
   vim.keymap.set('n', 'W', api.tree.collapse_all, opts 'Collapse')
   vim.keymap.set('n', 'q', wrap_node(close), opts 'Close')
-  vim.keymap.set('n', '<esc>', wrap_node(wincmd_p), opts 'Close')
 
   vim.keymap.set('n', '<leader>k', api.node.navigate.git.prev, opts 'Prev Git')
   vim.keymap.set('n', '<leader>j', api.node.navigate.git.next, opts 'Next Git')
