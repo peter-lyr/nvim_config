@@ -72,8 +72,10 @@ int main(int argc, char *argv[]) {
         sprintf(cmd, "set LOCALAPPDATA=%s&& set TEMP=%s&& set INCLUDE=%s\\mingw64\\x86_64-w64-mingw32\\include&& start /d %s /b %s",
                 localappdata, temp, nv, start_here, nvimexe);
     } else {
-        sprintf(cmd, "set LOCALAPPDATA=%s&& set TEMP=%s&& set INCLUDE=%s\\mingw64\\x86_64-w64-mingw32\\include&& %s %s",
-                localappdata, temp, nv, nvimexe, start_here);
+        char start_dir[MAX_PATH + 1];
+        strcpy(start_dir, get_parent_dir(start_here, 1));
+        sprintf(cmd, "set LOCALAPPDATA=%s&& set TEMP=%s&& set INCLUDE=%s\\mingw64\\x86_64-w64-mingw32\\include&& start /d %s /b %s %s",
+                localappdata, temp, nv, start_dir, nvimexe, start_here);
     }
 
     system(cmd);
