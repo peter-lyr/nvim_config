@@ -88,6 +88,7 @@ return {
     { '<leader>gga',    function() require 'git_push'.addall() end,           mode = { 'n', 'v', }, silent = true, desc = 'Git Push add -A', },
     { '<leader>ggr',    function() require 'git_push'.reset_hard() end,       mode = { 'n', 'v', }, silent = true, desc = 'Git Push reset --hard', },
     { '<leader>ggd',    function() require 'git_push'.reset_hard_clean() end, mode = { 'n', 'v', }, silent = true, desc = 'Git Push reset --hard && git clean -fd', },
+    { '<leader>ggC',    function() require 'git_push'.clone() end,            mode = { 'n', 'v', }, silent = true, desc = 'Git Clone', },
 
     -- window.lua
     { '<a-s-h>',        function() require 'window'.height_less() end,        mode = { 'n', 'v', }, silent = true, desc = 'Window height_less', },

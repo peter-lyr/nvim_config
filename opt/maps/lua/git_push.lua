@@ -256,4 +256,11 @@ M.reset_hard_clean = function()
   end
 end
 
+M.clone = function()
+  print('cwd:', vim.loop.cwd())
+  local res = vim.fn.input 'Input git repo name: '
+  asyncrunprepare()
+  vim.cmd(string.format('AsyncRun git clone git@github.com:peter-lyr/%s.git', res))
+end
+
 return M
