@@ -206,6 +206,9 @@ end
 RightClickMenu = M.right_click_menu
 
 M.right_click = function()
+  if vim.fn.getmousepos()['line'] == 0 then
+    return '<RightMouse>'
+  end
   if vim.fn.filereadable(vim.api.nvim_buf_get_name(0)) == 1 then
     return ':<c-u>call v:lua.RightClickMenu()<cr>'
   end
