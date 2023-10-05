@@ -279,4 +279,33 @@ vim.g.nvimtree_au_focuslost = vim.api.nvim_create_autocmd({ 'FocusLost', }, {
   end,
 })
 
+pcall(vim.api.nvim_del_autocmd, vim.g.nvimtree_au_bufenter)
+
+vim.g.nvimtree_au_bufenter = vim.api.nvim_create_autocmd({ 'BufEnter', }, {
+  callback = function()
+    if vim.bo.ft == 'NvimTree' then
+      vim.fn.timer_start(10, function()
+        local max = 0
+        for line = 2, vim.fn.line '$' do
+          local cnt = vim.fn.strdisplaywidth(vim.fn.getline(line))
+          if max < cnt then
+            max = cnt
+          end
+        end
+        vim.api.nvim_win_set_width(0, max + 4)
+      end)
+    end
+  end,
+})
+
+pcall(vim.api.nvim_del_autocmd, vim.g.nvimtree_au_bufleave)
+
+vim.g.nvimtree_au_bufleave = vim.api.nvim_create_autocmd({ 'BufLeave', }, {
+  callback = function()
+    if vim.bo.ft == 'NvimTree' then
+      vim.api.nvim_win_set_width(0, require 'nvim-tree.view'.View.width)
+    end
+  end,
+})
+
 return M
