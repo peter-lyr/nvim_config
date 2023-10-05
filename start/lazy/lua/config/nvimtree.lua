@@ -224,6 +224,28 @@ M.close = function()
   vim.cmd 'NvimTreeClose'
 end
 
+pcall(vim.cmd, 'Lazy load telescope-ui-select.nvim')
+
+M.path = function()
+  local path_dirs = {}
+  for path in string.gmatch(vim.fn.expand '$PATH', '([^;]+);') do
+    local dir_p = require 'plenary.path':new(vim.fn.trim(path))
+    if dir_p:exists() == true then
+      path_dirs[#path_dirs + 1] = path
+    end
+  end
+  vim.ui.select(path_dirs, { prompt = 'nvimtree open path dirs', }, function(choice, idx)
+    if not choice then
+      return
+    end
+    local dir_p = require 'plenary.path':new(vim.fn.trim(choice))
+    if dir_p:exists() == true then
+      vim.cmd 'NvimTreeOpen'
+      vim.cmd('cd ' .. choice)
+    end
+  end)
+end
+
 pcall(vim.api.nvim_del_autocmd, vim.g.nvimtree_au_focusgained)
 
 vim.g.nvimtree_au_focusgained = vim.api.nvim_create_autocmd({ 'FocusGained', }, {
