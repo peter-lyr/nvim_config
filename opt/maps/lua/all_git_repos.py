@@ -13,7 +13,7 @@ if __name__ == "__main__":
                         for root, dirs, files in os.walk(driver):
                             for dir in dirs:
                                 dir = os.path.join(root, dir)
-                                if dir[-4:] == '.git' and '$RECYCLE.BIN' not in dir:
+                                if dir[-4:] == '.git' and '$recycle.bin' not in dir.lower():
                                     dir = dir[:-4].replace('\\', '/')
                                     f.write(dir.encode('utf-8') + b'\n')
                                     cnt += 1

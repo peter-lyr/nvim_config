@@ -35,6 +35,10 @@ if not M.all_git_repos_dir_p:exists() then
   vim.fn.mkdir(M.all_git_repos_dir_p.filename)
 end
 
+if not M.all_git_repos_txt_p:exists() then
+  M.all_git_repos_txt_p:write('', 'w')
+end
+
 pcall(vim.cmd, 'Lazy load telescope-ui-select.nvim')
 
 M.update_all_git_repos = function()
