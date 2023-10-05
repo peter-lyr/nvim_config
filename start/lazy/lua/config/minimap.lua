@@ -53,7 +53,7 @@ pcall(vim.api.nvim_del_autocmd, vim.g.minimap_au_bufenter)
 
 vim.g.minimap_au_bufenter = vim.api.nvim_create_autocmd('BufEnter', {
   callback = function(ev)
-    if M.auto_open_en and vim.api.nvim_buf_get_option(ev.buf, 'filetype') ~= 'minimap' then
+    if M.auto_open_en and vim.fn.filereadable(ev.file) == 1 then
       if not M.opened then
         minimap.open()
       end
