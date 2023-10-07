@@ -281,7 +281,7 @@ vim.g.nvimtree_au_focuslost = vim.api.nvim_create_autocmd({ 'FocusLost', }, {
 
 pcall(vim.api.nvim_del_autocmd, vim.g.nvimtree_au_bufenter)
 
-vim.g.nvimtree_au_bufenter = vim.api.nvim_create_autocmd({ 'BufEnter', }, {
+vim.g.nvimtree_au_bufenter = vim.api.nvim_create_autocmd({ 'BufEnter', 'DirChanged', }, {
   callback = function()
     if vim.bo.ft == 'NvimTree' then
       vim.fn.timer_start(10, function()
