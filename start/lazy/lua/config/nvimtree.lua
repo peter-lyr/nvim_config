@@ -303,7 +303,9 @@ pcall(vim.api.nvim_del_autocmd, vim.g.nvimtree_au_bufleave)
 vim.g.nvimtree_au_bufleave = vim.api.nvim_create_autocmd({ 'BufLeave', }, {
   callback = function()
     if vim.bo.ft == 'NvimTree' then
-      vim.api.nvim_win_set_width(0, require 'nvim-tree.view'.View.width)
+      if vim.api.nvim_win_get_width(0) > require 'nvim-tree.view'.View.width then
+        vim.api.nvim_win_set_width(0, require 'nvim-tree.view'.View.width)
+      end
     end
   end,
 })
