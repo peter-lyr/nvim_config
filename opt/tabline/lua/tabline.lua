@@ -119,7 +119,7 @@ M.b_prev_buf = function()
       index = indexof(M.projects[M.cur_projectroot], vim.fn.bufnr()) - 1
     end
     if index < 1 then
-      index = 1
+      index = #M.projects[M.cur_projectroot]
     end
     vim.cmd(string.format('b%d', M.projects[M.cur_projectroot][index]))
   end
@@ -134,7 +134,7 @@ M.b_next_buf = function()
       index = indexof(M.projects[M.cur_projectroot], vim.fn.bufnr()) + 1
     end
     if index > #M.projects[M.cur_projectroot] then
-      index = #M.projects[M.cur_projectroot]
+      index = 1
     end
     vim.cmd(string.format('b%d', M.projects[M.cur_projectroot][index]))
   end
