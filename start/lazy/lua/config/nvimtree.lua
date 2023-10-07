@@ -281,12 +281,17 @@ vim.g.nvimtree_au_focuslost = vim.api.nvim_create_autocmd({ 'FocusLost', }, {
 
 pcall(vim.api.nvim_del_autocmd, vim.g.nvimtree_au_bufenter)
 
-vim.g.nvimtree_au_bufenter = vim.api.nvim_create_autocmd({ 'BufEnter', 'DirChanged', }, {
+vim.g.nvimtree_au_bufenter = vim.api.nvim_create_autocmd({ 'BufEnter', 'DirChanged', 'CursorHold', }, {
   callback = function()
     if vim.bo.ft == 'NvimTree' then
       vim.fn.timer_start(10, function()
         local max = 0
-        for line = 2, vim.fn.line '$' do
+        local min_nr = vim.fn.line 'w0'
+        if min_nr == 1 then
+          min_nr = 2
+        end
+        local max_nr = vim.fn.line 'w$'
+        for line = min_nr, max_nr do
           local cnt = vim.fn.strdisplaywidth(vim.fn.getline(line))
           if max < cnt then
             max = cnt
