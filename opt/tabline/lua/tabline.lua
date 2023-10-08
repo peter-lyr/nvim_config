@@ -9,6 +9,7 @@ M.buf_deleting = nil
 M.bufenter_timer = 0
 M.bufdelete_timer = 0
 M.simple_statusline = nil
+M.only_tabs = nil
 
 local function rep(content)
   content = vim.fn.tolower(content)
@@ -299,6 +300,7 @@ M.refresh_tabline = function(only_tabs)
   local buf_to_show = {}
   local yy = 1
   local temp = ''
+  M.only_tabs = only_tabs
   if not only_tabs then
     if M.projects[M.cur_projectroot] then
       buf_to_show = M.get_buf_to_show(M.projects[M.cur_projectroot], vim.fn.bufnr())
@@ -363,6 +365,14 @@ M.refresh_tabline = function(only_tabs)
     temp = temp .. '%' .. tostring(vim.fn.tabpagenr()) .. '@SwitchTabNext@ ' .. vim.loop.cwd() .. ' ' .. ii
   end
   vim.opt.tabline = temp
+end
+
+M.only_tabs_toggle = function()
+  if M.only_tabs then
+    M.refresh_tabline(nil)
+  else
+    M.refresh_tabline(1)
+  end
 end
 
 vim.cmd [[
