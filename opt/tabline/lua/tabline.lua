@@ -512,6 +512,8 @@ M.append_one_proj_right_down = function()
         vim.cmd 'wincmd s'
         vim.cmd('b' .. M.projects_active[choice])
       end)
+    else
+      print('no append_one_proj_right_down')
     end
   end
 end
@@ -534,6 +536,38 @@ M.append_one_proj_new_tab = function()
         vim.cmd 'wincmd T'
         vim.cmd('b' .. M.projects_active[choice])
       end)
+    else
+      print('no append_one_proj_new_tab')
+    end
+  end
+end
+
+M.append_one_proj_new_tab_no_dupl = function()
+  if #vim.tbl_keys(M.projects) > 1 then
+    local projs = {}
+    local active_projs = {}
+    for _, winid in ipairs(vim.api.nvim_list_wins()) do
+      local tt = rep(vim.fn['ProjectRootGet'](vim.api.nvim_buf_get_name(vim.fn.winbufnr(winid))))
+      if vim.tbl_contains(active_projs, tt) == false then
+        active_projs[#active_projs + 1] = tt
+      end
+    end
+    for _, project in ipairs(vim.tbl_keys(M.projects_active)) do
+      if vim.tbl_contains(active_projs, project) == false and vim.fn.buflisted(M.projects_active[project]) == 1 then
+        projs[#projs + 1] = project
+      end
+    end
+    if #projs > 0 then
+      vim.ui.select(projs, { prompt = 'append_one_proj_new_tab_no_dupl', }, function(choice, idx)
+        if not choice then
+          return
+        end
+        vim.cmd 'wincmd s'
+        vim.cmd 'wincmd T'
+        vim.cmd('b' .. M.projects_active[choice])
+      end)
+    else
+      print('no append_one_proj_new_tab_no_dupl')
     end
   end
 end
