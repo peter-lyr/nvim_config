@@ -19,6 +19,8 @@ return {
     { '<c-q>t',      function() require 'tabline'.restore_hidden_tabs() end,        mode = { 'n', 'v', }, silent = true, desc = 'tabline restore hidden tabs', },
     { '<c-q><c-o>',  function() require 'tabline'.append_one_proj_right_down() end, mode = { 'n', 'v', }, silent = true, desc = 'tabline append one proj right down', },
     { '<c-q>o',      function() require 'tabline'.append_one_proj_right_down() end, mode = { 'n', 'v', }, silent = true, desc = 'tabline append one proj right down', },
+    { '<c-q><c-n>',  function() require 'tabline'.append_one_proj_new_tab() end,    mode = { 'n', 'v', }, silent = true, desc = 'tabline append one proj new tab', },
+    { '<c-q>n',      function() require 'tabline'.append_one_proj_new_tab() end,    mode = { 'n', 'v', }, silent = true, desc = 'tabline append one proj new tab', },
     { '<c-q><c-bs>', function() require 'tabline'.simple_statusline_toggle() end,   mode = { 'n', 'v', }, silent = true, desc = 'tabline simple_statusline_toggle', },
     { '<leader>at',  function() require 'tabline'.only_tabs_toggle() end,           mode = { 'n', 'v', }, silent = true, desc = 'tabline show only tabs toggle', },
   },

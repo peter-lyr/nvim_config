@@ -515,6 +515,28 @@ M.append_one_proj_right_down = function()
   end
 end
 
+M.append_one_proj_new_tab = function()
+  if #vim.tbl_keys(M.projects) > 1 then
+    local projs = {}
+    local temp = rep(vim.fn['ProjectRootGet'](vim.api.nvim_buf_get_name(0)))
+    for _, project in ipairs(vim.tbl_keys(M.projects_active)) do
+      if project ~= temp and vim.fn.buflisted(M.projects_active[project]) == 1 then
+        projs[#projs + 1] = project
+      end
+    end
+    if #projs > 0 then
+      vim.ui.select(projs, { prompt = 'append_one_proj_new_tab', }, function(choice, idx)
+        if not choice then
+          return
+        end
+        vim.cmd 'wincmd s'
+        vim.cmd 'wincmd T'
+        vim.cmd('b' .. M.projects_active[choice])
+      end)
+    end
+  end
+end
+
 M.simple_statusline_toggle = function()
   if M.simple_statusline then
     M.simple_statusline = nil
