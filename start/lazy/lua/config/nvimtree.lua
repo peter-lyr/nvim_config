@@ -160,6 +160,9 @@ local cfg_tbl = {
     -- enable = true,
     update_root = true,
   },
+  view = {
+    width = 30,
+  },
   sync_root_with_cwd = true,
   reload_on_bufenter = true,
   respect_buf_cwd = true,
@@ -282,10 +285,13 @@ vim.g.nvimtree_au_focuslost = vim.api.nvim_create_autocmd({ 'FocusLost', }, {
 pcall(vim.api.nvim_del_autocmd, vim.g.nvimtree_au_bufenter)
 
 vim.g.nvimtree_au_bufenter = vim.api.nvim_create_autocmd({ 'BufEnter', 'DirChanged', 'CursorHold', }, {
-  callback = function()
+  callback = function(ev)
     if vim.bo.ft == 'NvimTree' then
       vim.fn.timer_start(10, function()
-        local max = 0
+        if ev.event == 'BufEnter' then
+          vim.cmd 'set nu'
+        end
+        local max = require 'nvim-tree.view'.View.width
         local min_nr = vim.fn.line 'w0'
         if min_nr == 1 then
           min_nr = 2
@@ -297,7 +303,7 @@ vim.g.nvimtree_au_bufenter = vim.api.nvim_create_autocmd({ 'BufEnter', 'DirChang
             max = cnt
           end
         end
-        vim.api.nvim_win_set_width(0, max + 4)
+        vim.api.nvim_win_set_width(0, max + 5 + #tostring(vim.fn.line '$'))
       end)
     end
   end,
@@ -308,6 +314,7 @@ pcall(vim.api.nvim_del_autocmd, vim.g.nvimtree_au_bufleave)
 vim.g.nvimtree_au_bufleave = vim.api.nvim_create_autocmd({ 'BufLeave', }, {
   callback = function()
     if vim.bo.ft == 'NvimTree' then
+      vim.cmd 'set nonu'
       if vim.api.nvim_win_get_width(0) > require 'nvim-tree.view'.View.width then
         vim.api.nvim_win_set_width(0, require 'nvim-tree.view'.View.width)
       end
