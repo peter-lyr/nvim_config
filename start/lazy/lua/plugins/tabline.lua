@@ -18,7 +18,6 @@ return {
     { '<c-q><c-t>',  function() require 'tabline'.restore_hidden_tabs() end,      mode = { 'n', 'v', }, silent = true, desc = 'tabline restore hidden tabs', },
     { '<c-q>t',      function() require 'tabline'.restore_hidden_tabs() end,      mode = { 'n', 'v', }, silent = true, desc = 'tabline restore hidden tabs', },
     { '<c-q><c-bs>', function() require 'tabline'.simple_statusline_toggle() end, mode = { 'n', 'v', }, silent = true, desc = 'tabline simple_statusline_toggle', },
-    { '<c-q>bs',     function() require 'tabline'.simple_statusline_toggle() end, mode = { 'n', 'v', }, silent = true, desc = 'tabline simple_statusline_toggle', },
     { '<leader>at',  function() require 'tabline'.only_tabs_toggle() end,         mode = { 'n', 'v', }, silent = true, desc = 'tabline show only tabs toggle', },
   },
   init = function()
