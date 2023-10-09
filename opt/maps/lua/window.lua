@@ -113,4 +113,41 @@ M.close_win_left = function()
   end
 end
 
+M.close_cur = function()
+  vim.cmd [[
+    try
+      close!
+    catch
+    endtry
+  ]]
+end
+
+M.bdelete_cur = function()
+  vim.cmd [[
+    try
+      bdelete!
+      e!
+    catch
+    endtry
+  ]]
+end
+
+M.bwipeout_cur = function()
+  vim.cmd [[
+    try
+      bw!
+    catch
+    endtry
+  ]]
+end
+
+M.close_cur_tab = function()
+  vim.cmd [[
+    try
+      tabclose!
+    catch
+    endtry
+  ]]
+end
+
 return M
