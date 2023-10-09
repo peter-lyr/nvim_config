@@ -77,6 +77,7 @@ end
 function SwitchTab(tabnr, mouseclicks, mousebutton, modifiers)
   if mousebutton == 'm' then     -- and mouseclicks == 1 then
     pcall(vim.cmd, tabnr .. 'tabclose')
+    M.refresh_tabline(1)
   elseif mousebutton == 'l' then -- and mouseclicks == 1 then
     vim.cmd(tabnr .. 'tabnext')
     pcall(vim.call, 'ProjectRootCD')
