@@ -485,6 +485,8 @@ M.restore_hidden_tabs = function()
   end
 end
 
+require 'telescope'.load_extension 'ui-select'
+
 M.append_one_proj_right_down = function()
   if #vim.tbl_keys(M.projects) > 1 then
     local projs = {}
