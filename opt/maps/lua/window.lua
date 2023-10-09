@@ -57,4 +57,60 @@ M.new_left = function()
   vim.cmd 'leftabove vnew'
 end
 
+M.close_win_up = function()
+  local winid = vim.fn.win_getid()
+  vim.cmd('wincmd k')
+  if winid ~= vim.fn.win_getid() then
+    vim.cmd [[
+      try
+        close
+      catch
+      endtry
+    ]]
+    vim.fn.win_gotoid(winid)
+  end
+end
+
+M.close_win_down = function()
+  local winid = vim.fn.win_getid()
+  vim.cmd('wincmd j')
+  if winid ~= vim.fn.win_getid() then
+    vim.cmd [[
+      try
+        close
+      catch
+      endtry
+    ]]
+    vim.fn.win_gotoid(winid)
+  end
+end
+
+M.close_win_right = function()
+  local winid = vim.fn.win_getid()
+  vim.cmd('wincmd l')
+  if winid ~= vim.fn.win_getid() then
+    vim.cmd [[
+      try
+        close
+      catch
+      endtry
+    ]]
+    vim.fn.win_gotoid(winid)
+  end
+end
+
+M.close_win_left = function()
+  local winid = vim.fn.win_getid()
+  vim.cmd('wincmd h')
+  if winid ~= vim.fn.win_getid() then
+    vim.cmd [[
+      try
+        close
+      catch
+      endtry
+    ]]
+    vim.fn.win_gotoid(winid)
+  end
+end
+
 return M
