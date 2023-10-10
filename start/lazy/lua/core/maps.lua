@@ -106,6 +106,13 @@ return {
     { '<leader>w<a-k>', function() require 'window'.new_up() end,             mode = { 'n', 'v', }, silent = true, desc = 'Window new_up', },
     { '<leader>w<a-l>', function() require 'window'.new_right() end,          mode = { 'n', 'v', }, silent = true, desc = 'Window new_right', },
 
+    -- change win around
+    { '<leader>wh',     function() require 'window'.change_around 'h' end,    mode = { 'n', 'v', }, silent = true, desc = 'Window change win to left', },
+    { '<leader>wj',     function() require 'window'.change_around 'j' end,    mode = { 'n', 'v', }, silent = true, desc = 'Window change win to down', },
+    { '<leader>wk',     function() require 'window'.change_around 'k' end,    mode = { 'n', 'v', }, silent = true, desc = 'Window change win to up', },
+    { '<leader>wl',     function() require 'window'.change_around 'l' end,    mode = { 'n', 'v', }, silent = true, desc = 'Window change win to right', },
+    { '<leader>wL',     function() require 'window'.change_around_last() end, mode = { 'n', 'v', }, silent = true, desc = 'Window change win use last', },
+
     -- close around
     { '<leader>xh',     function() require 'window'.close_win_left() end,     mode = { 'n', 'v', }, silent = true, desc = 'Window close_win_left', },
     { '<leader>xj',     function() require 'window'.close_win_down() end,     mode = { 'n', 'v', }, silent = true, desc = 'Window close_win_down', },
