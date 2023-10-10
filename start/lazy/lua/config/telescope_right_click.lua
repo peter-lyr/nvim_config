@@ -201,7 +201,9 @@ M.right_click_menu = function()
       M.popup_menu(M.items)
     end)
   elseif M.menu_popup_way == 'ui_select' then
-    M.ui_select_menu(M.items)
+    vim.fn.timer_start(10, function()
+      M.ui_select_menu(M.items)
+    end)
   end
 end
 
