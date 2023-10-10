@@ -58,12 +58,17 @@ local function rep(content)
   return content
 end
 
-local libraries_3rd = vim.api.nvim_get_runtime_file('', true)
+M.lua_libraries_dir_p = require 'plenary.path':new(vim.fn.stdpath 'data'):joinpath 'lua_libraries'
+M.lua_libraries_txt_p = M.lua_libraries_dir_p:joinpath 'lua_libraries.txt'
+
+if not M.lua_libraries_dir_p:exists() then
+  vim.fn.mkdir(M.lua_libraries_dir_p.filename)
+end
 
 local nvim_config = rep(vim.fn.expand '$VIMRUNTIME') .. '/pack/nvim_config/'
 
 local my_libraries = {
-  'opt/tabline/lua.',
+  'opt/tabline/lua',
   'opt/terminal/lua',
   'opt/test/lua',
 }
@@ -74,14 +79,27 @@ for _, v in ipairs(my_libraries) do
   lua_libraries[#lua_libraries + 1] = nvim_config .. v
 end
 
-for _, v in ipairs(libraries_3rd) do
-  local entries = require 'plenary.scandir'.scan_dir(v, { hidden = false, depth = 18, add_dirs = true, })
-  for _, entry in ipairs(entries) do
-    entry = rep(entry)
-    if require 'plenary.path':new(entry):is_dir() == true and string.match(entry, '/([^/]+)$') == 'lua' then
-      lua_libraries[#lua_libraries + 1] = entry
+M.update_lua_libraries = function()
+  local libraries_3rd = vim.api.nvim_get_runtime_file('', true)
+  local temp = {}
+  for _, v in ipairs(libraries_3rd) do
+    local entries = require 'plenary.scandir'.scan_dir(v, { hidden = false, depth = 18, add_dirs = true, })
+    for _, entry in ipairs(entries) do
+      entry = rep(entry)
+      if require 'plenary.path':new(entry):is_dir() == true and string.match(entry, '/([^/]+)$') == 'lua' then
+        temp[#temp + 1] = entry
+      end
     end
   end
+  M.lua_libraries_txt_p:write(vim.fn.join(temp, '\n'), 'w')
+end
+
+if not M.lua_libraries_txt_p:exists() then
+  M.update_lua_libraries()
+end
+
+for _, lua_library in ipairs(M.lua_libraries_txt_p:readlines()) do
+  lua_libraries[#lua_libraries + 1] = lua_library
 end
 
 lspconfig.lua_ls.setup {
@@ -254,3 +272,5 @@ vim.g.lsp_au_focuslost = vim.api.nvim_create_autocmd({ 'FocusLost', }, {
     end)
   end,
 })
+
+vim.api.nvim_create_user_command('UpdateLuaLspLibrary', M.update_lua_libraries, {})
