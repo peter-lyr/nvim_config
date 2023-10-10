@@ -59,7 +59,7 @@ end
 
 M.close_win_up = function()
   local winid = vim.fn.win_getid()
-  vim.cmd('wincmd k')
+  vim.cmd 'wincmd k'
   if winid ~= vim.fn.win_getid() then
     vim.cmd [[
       try
@@ -73,7 +73,7 @@ end
 
 M.close_win_down = function()
   local winid = vim.fn.win_getid()
-  vim.cmd('wincmd j')
+  vim.cmd 'wincmd j'
   if winid ~= vim.fn.win_getid() then
     vim.cmd [[
       try
@@ -87,7 +87,7 @@ end
 
 M.close_win_right = function()
   local winid = vim.fn.win_getid()
-  vim.cmd('wincmd l')
+  vim.cmd 'wincmd l'
   if winid ~= vim.fn.win_getid() then
     vim.cmd [[
       try
@@ -101,7 +101,7 @@ end
 
 M.close_win_left = function()
   local winid = vim.fn.win_getid()
-  vim.cmd('wincmd h')
+  vim.cmd 'wincmd h'
   if winid ~= vim.fn.win_getid() then
     vim.cmd [[
       try
@@ -158,20 +158,55 @@ end
 
 M.bwipeout_cur_proj = function()
   local curroot = rep(vim.fn['ProjectRootGet'](vim.api.nvim_buf_get_name(0)))
-  for _, b in ipairs(vim.api.nvim_list_bufs()) do
-    if curroot == rep(vim.fn['ProjectRootGet'](vim.api.nvim_buf_get_name(b))) then
-      pcall(vim.cmd, 'bw! ' .. tostring(b))
+  for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do
+    if curroot == rep(vim.fn['ProjectRootGet'](vim.api.nvim_buf_get_name(bufnr))) then
+      pcall(vim.cmd, 'bw! ' .. tostring(bufnr))
     end
   end
 end
 
 M.bdelete_cur_proj = function()
   local curroot = rep(vim.fn['ProjectRootGet'](vim.api.nvim_buf_get_name(0)))
-  for _, b in ipairs(vim.api.nvim_list_bufs()) do
-    if curroot == rep(vim.fn['ProjectRootGet'](vim.api.nvim_buf_get_name(b))) then
-      pcall(vim.cmd, 'bdelete! ' .. tostring(b))
+  for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do
+    if curroot == rep(vim.fn['ProjectRootGet'](vim.api.nvim_buf_get_name(bufnr))) then
+      pcall(vim.cmd, 'bdelete! ' .. tostring(bufnr))
     end
   end
+end
+
+M.get_deleted_bufnrs = function()
+  return vim.tbl_filter(function(bufnr)
+    if 1 ~= vim.fn.buflisted(bufnr) then
+      local pfname = require 'plenary.path':new(vim.api.nvim_buf_get_name(bufnr))
+      if (string.match(pfname.filename, 'diffview://') or pfname:exists()) and not pfname:is_dir() then
+        return true
+      end
+      return false
+    end
+    return false
+  end, vim.api.nvim_list_bufs())
+end
+
+M.bwipeout_deleted = function()
+  for _, bufnr in ipairs(M.get_deleted_bufnrs()) do
+    pcall(vim.cmd, 'bwipeout! ' .. tostring(bufnr))
+    print('bwipeout! -> ' .. vim.fn.bufname(bufnr))
+  end
+end
+
+require 'telescope'.load_extension 'ui-select'
+
+M.reopen_deleted = function()
+  local deleted_bufnames = {}
+  for _, bufnr in ipairs(M.get_deleted_bufnrs()) do
+    deleted_bufnames[#deleted_bufnames + 1] = vim.api.nvim_buf_get_name(bufnr)
+  end
+  vim.ui.select(deleted_bufnames, { prompt = 'reopen deleted buffers', }, function(choice, _)
+    if not choice then
+      return
+    end
+    vim.cmd('e ' .. choice)
+  end)
 end
 
 return M

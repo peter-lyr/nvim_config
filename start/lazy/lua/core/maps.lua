@@ -125,6 +125,10 @@ return {
     -- quit
     { '<leader>xa',     '<cmd>qall<cr>',                                      mode = { 'n', 'v', }, silent = true, desc = 'Window quit all', },
 
+    -- bwipeout deleted
+    { '<leader>x<del>', function() require 'window'.bwipeout_deleted() end,   mode = { 'n', 'v', }, silent = true, desc = 'Window bwipeout_deleted', },
+    { '<leader>x<cr>',  function() require 'window'.reopen_deleted() end,     mode = { 'n', 'v', }, silent = true, desc = 'Window reopen_deleted', },
+
     -- lazygit
     { '<leader>gl',     '<cmd>silent !start lazygit<cr>',                     mode = { 'n', 'v', }, silent = true, desc = 'lazygit', },
 
