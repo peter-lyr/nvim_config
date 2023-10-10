@@ -122,6 +122,9 @@ return {
     { '<leader>xp',     function() require 'window'.bdelete_cur_proj() end,   mode = { 'n', 'v', }, silent = true, desc = 'Window bdelete_cur_proj', },
     { '<leader>xP',     function() require 'window'.bwipeout_cur_proj() end,  mode = { 'n', 'v', }, silent = true, desc = 'Window bwipeout_cur_proj', },
 
+    -- quit
+    { '<leader>xa',     '<cmd>qall<cr>',                                      mode = { 'n', 'v', }, silent = true, desc = 'Window quit all', },
+
     -- lazygit
     { '<leader>gl',     '<cmd>silent !start lazygit<cr>',                     mode = { 'n', 'v', }, silent = true, desc = 'lazygit', },
 
