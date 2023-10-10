@@ -150,4 +150,28 @@ M.close_cur_tab = function()
   ]]
 end
 
+local function rep(content)
+  content = vim.fn.tolower(content)
+  content = string.gsub(content, '\\', '/')
+  return content
+end
+
+M.bwipeout_cur_proj = function()
+  local curroot = rep(vim.fn['ProjectRootGet'](vim.api.nvim_buf_get_name(0)))
+  for _, b in ipairs(vim.api.nvim_list_bufs()) do
+    if curroot == rep(vim.fn['ProjectRootGet'](vim.api.nvim_buf_get_name(b))) then
+      pcall(vim.cmd, 'bw! ' .. tostring(b))
+    end
+  end
+end
+
+M.bdelete_cur_proj = function()
+  local curroot = rep(vim.fn['ProjectRootGet'](vim.api.nvim_buf_get_name(0)))
+  for _, b in ipairs(vim.api.nvim_list_bufs()) do
+    if curroot == rep(vim.fn['ProjectRootGet'](vim.api.nvim_buf_get_name(b))) then
+      pcall(vim.cmd, 'bdelete! ' .. tostring(b))
+    end
+  end
+end
+
 return M

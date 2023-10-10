@@ -114,9 +114,13 @@ return {
 
     -- close cur
     { '<leader>xt',     function() require 'window'.close_cur_tab() end,      mode = { 'n', 'v', }, silent = true, desc = 'Window close_cur_tab', },
-    { '<leader>xw',     function() require 'window'.bwipeout_cur() end,      mode = { 'n', 'v', }, silent = true, desc = 'Window bwipeout_cur', },
-    { '<leader>xd',     function() require 'window'.bdelete_cur() end,      mode = { 'n', 'v', }, silent = true, desc = 'Window bdelete_cur', },
-    { '<leader>xc',     function() require 'window'.close_cur() end,      mode = { 'n', 'v', }, silent = true, desc = 'Window close_cur', },
+    { '<leader>xw',     function() require 'window'.bwipeout_cur() end,       mode = { 'n', 'v', }, silent = true, desc = 'Window bwipeout_cur', },
+    { '<leader>xd',     function() require 'window'.bdelete_cur() end,        mode = { 'n', 'v', }, silent = true, desc = 'Window bdelete_cur', },
+    { '<leader>xc',     function() require 'window'.close_cur() end,          mode = { 'n', 'v', }, silent = true, desc = 'Window close_cur', },
+
+    -- close cur proj
+    { '<leader>xp',     function() require 'window'.bdelete_cur_proj() end,   mode = { 'n', 'v', }, silent = true, desc = 'Window bdelete_cur_proj', },
+    { '<leader>xP',     function() require 'window'.bwipeout_cur_proj() end,  mode = { 'n', 'v', }, silent = true, desc = 'Window bwipeout_cur_proj', },
 
     -- lazygit
     { '<leader>gl',     '<cmd>silent !start lazygit<cr>',                     mode = { 'n', 'v', }, silent = true, desc = 'lazygit', },
