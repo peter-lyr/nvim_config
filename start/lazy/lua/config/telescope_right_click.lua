@@ -91,6 +91,8 @@ M.popup_menu = function(items)
   })
 end
 
+require 'telescope'.load_extension 'ui-select'
+
 M.ui_select_menu = function(items)
   local temp = {}
   for _, v in ipairs(items) do
