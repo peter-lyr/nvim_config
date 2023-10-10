@@ -113,6 +113,11 @@ return {
     { '<leader>wl',     function() require 'window'.change_around 'l' end,    mode = { 'n', 'v', }, silent = true, desc = 'Window change win to right', },
     { '<leader>wL',     function() require 'window'.change_around_last() end, mode = { 'n', 'v', }, silent = true, desc = 'Window change win use last', },
 
+    -- stack full filename
+    { '<leader>w=',     function() require 'window'.stack_cur() end,          mode = { 'n', 'v', }, silent = true, desc = 'Window stack_cur', },
+    { '<leader>w+',     function() require 'window'.stack_open_txt() end,     mode = { 'n', 'v', }, silent = true, desc = 'Window stack_open_txt', },
+    { '<leader>w-',     function() require 'window'.stack_open_sel() end,     mode = { 'n', 'v', }, silent = true, desc = 'Window stack_open_sel', },
+
     -- close around
     { '<leader>xh',     function() require 'window'.close_win_left() end,     mode = { 'n', 'v', }, silent = true, desc = 'Window close_win_left', },
     { '<leader>xj',     function() require 'window'.close_win_down() end,     mode = { 'n', 'v', }, silent = true, desc = 'Window close_win_down', },

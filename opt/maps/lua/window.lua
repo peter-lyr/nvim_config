@@ -1,5 +1,7 @@
 local M = {}
 
+package.loaded['window'] = nil
+
 M.height_more = function()
   vim.cmd '10wincmd >'
 end
@@ -57,17 +59,15 @@ M.new_left = function()
   vim.cmd 'leftabove vnew'
 end
 
-local winnr1, winid1, bufnr1, winnr2, winid2, bufnr2
+local winid1, bufnr1, winid2, bufnr2
 local changed = 1
 
 M.change_around = function(dir)
   changed = 0
-  winnr1 = vim.fn.winnr()
   winid1 = vim.fn.win_getid()
   bufnr1 = vim.fn.bufnr()
   vim.cmd('wincmd ' .. dir)
   winid2 = vim.fn.win_getid()
-  winnr2 = vim.fn.winnr()
   if winid1 ~= winid2 then
     bufnr2 = vim.fn.bufnr()
     vim.cmd('b' .. tostring(bufnr1))
@@ -253,6 +253,47 @@ M.reopen_deleted = function()
     end
     vim.cmd('e ' .. choice)
   end)
+end
+
+M.stack_full_fname_dir_p = require 'plenary.path':new(vim.fn.stdpath 'data'):joinpath 'stack_full_fname'
+M.stack_full_fname_txt_p = M.stack_full_fname_dir_p:joinpath 'stack_full_fname.txt'
+
+if not M.stack_full_fname_dir_p:exists() then
+  vim.fn.mkdir(M.stack_full_fname_dir_p.filename)
+end
+
+if not M.stack_full_fname_txt_p:exists() then
+  M.stack_full_fname_txt_p:write('', 'w')
+end
+
+M.stack_cur = function()
+  local fname = vim.api.nvim_buf_get_name(0)
+  if vim.fn.filereadable(fname) == 1 then
+    M.stack_full_fname_txt_p:write(fname .. '\n', 'a')
+  end
+end
+
+M.stack_open_sel = function()
+  local temp = M.stack_full_fname_txt_p:readlines()
+  local fnames = {}
+  for _, fname in ipairs(temp) do
+    fname = rep(fname)
+    if vim.tbl_contains(fnames, fname) == false then
+      fnames[#fnames + 1] = fname
+    end
+  end
+  M.stack_full_fname_txt_p:write(vim.fn.join(fnames, '\n'), 'w')
+  vim.ui.select(fnames, { prompt = 'stack full fname open', }, function(choice, idx)
+    if not choice then
+      return
+    end
+    vim.cmd('e ' .. choice)
+  end)
+end
+
+M.stack_open_txt = function()
+  vim.cmd 'wincmd s'
+  vim.cmd('e ' .. M.stack_full_fname_txt_p.filename)
 end
 
 return M
