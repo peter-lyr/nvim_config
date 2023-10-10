@@ -163,7 +163,7 @@ vim.keymap.set({ 'n', 'v', }, '<leader>fS', ':<c-u>LspStart<cr>', { desc = 'LspS
 vim.keymap.set({ 'n', 'v', }, '<leader>fR', ':<c-u>LspRestart<cr>', { desc = 'LspRestart', })
 vim.keymap.set({ 'n', 'v', }, '<leader>fq', vim.diagnostic.enable, { desc = 'vim.diagnostic.enable', })
 vim.keymap.set({ 'n', 'v', }, '<leader>fvq', vim.diagnostic.disable, { desc = 'vim.diagnostic.disable', })
-vim.keymap.set({ 'n', 'v', }, '<leader>fW', function() vim.lsp.stop_client(vim.lsp.get_active_clients()) end, { desc = 'stop all lsp clients', })
+vim.keymap.set({ 'n', 'v', }, '<leader>fW', function() vim.lsp.stop_client(vim.lsp.get_active_clients(), true) end, { desc = 'stop all lsp clients', })
 vim.keymap.set({ 'n', 'v', }, '<leader>fD', [[:call feedkeys(':LspStop ')<cr>]], { desc = 'stop one lsp client of', })
 vim.keymap.set({ 'n', 'v', }, '<leader>fF', ':<c-u>LspInfo<cr>', { desc = 'LspInfo', })
 
@@ -219,3 +219,38 @@ vim.keymap.set('n', '<leader>fC', function()
     call feedkeys("\<esc>:silent !clang-format -i \<c-r>=nvim_buf_get_name(0)\<cr> --style=\"{BasedOnStyle: llvm, IndentWidth: 4, ColumnLimit: 200, SortIncludes: true}\"")
   ]]
 end, { desc = 'clang-format ...', silent = true, })
+
+M.focuslost_timer = 0
+M.lsp_stopped = nil
+
+pcall(vim.api.nvim_del_autocmd, vim.g.lsp_au_focusgained)
+
+vim.g.lsp_au_focusgained = vim.api.nvim_create_autocmd({ 'FocusGained', }, {
+  callback = function()
+    if M.focuslost_timer ~= 0 then
+      M.focuslost_timer:stop()
+    end
+    M.focuslost_timer = 0
+    if M.lsp_stopped then
+      vim.cmd 'LspStart'
+    end
+    M.lsp_stopped = nil
+  end,
+})
+
+pcall(vim.api.nvim_del_autocmd, vim.g.lsp_au_focuslost)
+
+vim.g.lsp_au_focuslost = vim.api.nvim_create_autocmd({ 'FocusLost', }, {
+  callback = function()
+    if M.focuslost_timer ~= 0 then
+      M.focuslost_timer:stop()
+    end
+    M.focuslost_timer = vim.loop.new_timer()
+    M.focuslost_timer:start(1000 * 20, 0, function()
+      vim.schedule(function()
+        vim.lsp.stop_client(vim.lsp.get_active_clients(), true)
+        M.lsp_stopped = 1
+      end)
+    end)
+  end,
+})
