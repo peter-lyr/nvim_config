@@ -201,6 +201,9 @@ M.reopen_deleted = function()
   for _, bufnr in ipairs(M.get_deleted_bufnrs()) do
     deleted_bufnames[#deleted_bufnames + 1] = vim.api.nvim_buf_get_name(bufnr)
   end
+  if #deleted_bufnames == 0 then
+    return
+  end
   vim.ui.select(deleted_bufnames, { prompt = 'reopen deleted buffers', }, function(choice, _)
     if not choice then
       return
