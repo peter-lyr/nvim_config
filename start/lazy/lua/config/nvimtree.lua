@@ -162,6 +162,7 @@ local cfg_tbl = {
   },
   view = {
     width = 30,
+    number = true,
   },
   sync_root_with_cwd = true,
   reload_on_bufenter = true,
@@ -288,9 +289,6 @@ vim.g.nvimtree_au_bufenter = vim.api.nvim_create_autocmd({ 'BufEnter', 'DirChang
   callback = function(ev)
     if vim.bo.ft == 'NvimTree' then
       vim.fn.timer_start(10, function()
-        if ev.event == 'BufEnter' then
-          vim.cmd 'set nu'
-        end
         local max = require 'nvim-tree.view'.View.width
         local min_nr = vim.fn.line 'w0'
         if min_nr == 1 then
@@ -314,7 +312,6 @@ pcall(vim.api.nvim_del_autocmd, vim.g.nvimtree_au_bufleave)
 vim.g.nvimtree_au_bufleave = vim.api.nvim_create_autocmd({ 'BufLeave', }, {
   callback = function()
     if vim.bo.ft == 'NvimTree' then
-      vim.cmd 'set nonu'
       if vim.api.nvim_win_get_width(0) > require 'nvim-tree.view'.View.width then
         vim.api.nvim_win_set_width(0, require 'nvim-tree.view'.View.width)
       end
