@@ -15,6 +15,8 @@ return {
     { '<c-l>',       function() require 'tabline'.b_next_buf() end,                      mode = { 'n', 'v', }, silent = true, desc = 'tabline b next buffer', },
     { '<c-s-h>',     function() require 'tabline'.bd_prev_buf() end,                     mode = { 'n', 'v', }, silent = true, desc = 'tabline bd prev buffer', },
     { '<c-s-l>',     function() require 'tabline'.bd_next_buf() end,                     mode = { 'n', 'v', }, silent = true, desc = 'tabline bd next buffer', },
+    { '<c-q><c-w>',  function() require 'tabline'.only_cur_buffer() end,             mode = { 'n', 'v', }, silent = true, desc = 'tabline restore hidden tabs', },
+    { '<c-q>w',      function() require 'tabline'.only_cur_buffer() end,             mode = { 'n', 'v', }, silent = true, desc = 'tabline restore hidden tabs', },
     { '<c-q><c-t>',  function() require 'tabline'.restore_hidden_tabs() end,             mode = { 'n', 'v', }, silent = true, desc = 'tabline restore hidden tabs', },
     { '<c-q>t',      function() require 'tabline'.restore_hidden_tabs() end,             mode = { 'n', 'v', }, silent = true, desc = 'tabline restore hidden tabs', },
     { '<c-q><c-o>',  function() require 'tabline'.append_one_proj_right_down() end,      mode = { 'n', 'v', }, silent = true, desc = 'tabline append one proj right down', },

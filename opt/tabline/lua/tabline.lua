@@ -470,6 +470,12 @@ vim.g.tabline_au_dirchanged = vim.api.nvim_create_autocmd({ 'DirChanged', 'TabEn
   end,
 })
 
+M.only_cur_buffer = function()
+  vim.cmd 'tabo'
+  vim.cmd 'wincmd o'
+  pcall(vim.cmd, 'e!')
+end
+
 M.restore_hidden_tabs = function()
   vim.cmd 'tabo'
   vim.cmd 'wincmd o'
