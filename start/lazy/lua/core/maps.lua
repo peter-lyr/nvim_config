@@ -158,6 +158,10 @@ return {
     { '<leader>td',     function() require 'toggle'.diff(1) end,              mode = { 'n', 'v', }, silent = true, desc = 'toggle diffthis', },
     { '<leader>tD',     function() require 'toggle'.diff() end,               mode = { 'n', 'v', }, silent = true, desc = 'toggle diffoff', },
 
+    -- wrap
+    { '<leader>tw',     function() require 'toggle'.wrap(1) end,              mode = { 'n', 'v', }, silent = true, desc = 'toggle wrap', },
+    { '<leader>tW',     function() require 'toggle'.wrap() end,               mode = { 'n', 'v', }, silent = true, desc = 'toggle nowrap', },
+
   },
   init = function()
     require 'which-key'.register { ['<leader>a'] = { name = 'Side Panel', }, }

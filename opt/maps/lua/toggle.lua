@@ -12,4 +12,12 @@ M.diff = function(en)
   end
 end
 
+M.wrap = function(en)
+  if en then
+    vim.cmd 'set wrap'
+  else
+    vim.cmd 'set nowrap'
+  end
+end
+
 return M
