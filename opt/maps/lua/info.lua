@@ -1,6 +1,7 @@
 local M = {}
 
-vim.cmd [[Lazy load nvim-treesitter]]
+vim.cmd 'Lazy load nvim-treesitter'
+vim.cmd 'Lazy load vim-gitbranch'
 
 local function filesize()
   local file = vim.fn.expand '%:p'
@@ -30,6 +31,7 @@ M.statusline = function()
     { 'datetime',     vim.fn.strftime '%Y-%m-%d %H:%M:%S %A', },
     { 'fileencoding', vim.opt.fileencoding:get(), },
     { 'fileformat',   vim.bo.fileformat, },
+    { 'gitbranch',    vim.fn['gitbranch#name'](), },
   }
   local items = {}
   local width = 0
