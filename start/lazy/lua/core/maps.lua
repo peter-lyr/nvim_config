@@ -153,6 +153,11 @@ return {
     -- all_git_repos.lua
     { '<leader>sg',     function() require 'all_git_repos'.sel() end,         mode = { 'n', 'v', }, silent = true, desc = 'all_git_repos sel', },
 
+    -- toggle.lua
+    -- diff
+    { '<leader>td',     function() require 'toggle'.diff(1) end,              mode = { 'n', 'v', }, silent = true, desc = 'toggle diffthis', },
+    { '<leader>tD',     function() require 'toggle'.diff() end,               mode = { 'n', 'v', }, silent = true, desc = 'toggle diffoff', },
+
   },
   init = function()
     require 'which-key'.register { ['<leader>a'] = { name = 'Side Panel', }, }
