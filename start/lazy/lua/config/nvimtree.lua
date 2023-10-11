@@ -4,6 +4,7 @@ package.loaded['config.nvimtree-func'] = nil
 
 local api = require 'nvim-tree.api'
 local sel = require 'config.nvimtree_sel'
+local plug = require 'config.nvimtree_plug'
 
 M.nvimtree_opened = nil
 M.focuslost_timer = 0
@@ -23,21 +24,13 @@ local function root_folder_label(root_cwd)
   return vim.fn.fnamemodify(root_cwd, ':t')
 end
 
-local function show_cwd_root_toggle()
-  if M.show_cwd_root then
-    M.show_cwd_root = nil
-  else
-    M.show_cwd_root = 1
-  end
-  vim.cmd 'wincmd p'
-  vim.cmd 'wincmd p'
-end
-
 local function plugins_map(bufnr)
   local function opts(desc)
     return { desc = 'nvim-tree: ' .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true, }
   end
-  vim.keymap.set('n', '<c-bs>', wrap_node(show_cwd_root_toggle), opts 'Show cwd root or not')
+  vim.keymap.set('n', '<c-bs>', wrap_node(plug.show_cwd_root_toggle), opts 'Show cwd root or not')
+  vim.keymap.set('n', 's', wrap_node(plug.start_file), opts 'start file')
+  vim.keymap.set('n', 'gs', wrap_node(plug.start_dir), opts 'start dir')
 end
 
 local function close()
@@ -140,6 +133,12 @@ local function sel_map(bufnr)
 
   vim.keymap.set('n', 'dy', wrap_node(sel.copy_2_clip), opts 'copy_2_clip')
   vim.keymap.set('n', 'dp', wrap_node(sel.paste_from_clip), opts 'paste_from_clip')
+end
+
+local function my_map(bufnr)
+  local function opts(desc)
+    return { desc = 'nvim-tree sel: ' .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true, }
+  end
 end
 
 local on_attach = function(bufnr)
