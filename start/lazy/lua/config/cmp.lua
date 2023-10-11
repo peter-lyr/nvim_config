@@ -45,17 +45,17 @@ cmp.setup {
     ['<C-Space>'] = cmp.mapping.complete(),
     ['<C-e>'] = cmp.mapping.abort(),
     ['<c-m>'] = cmp.mapping.confirm { select = false, },
-    ['qo'] = cmp.mapping.confirm { select = false, },
-    ['qi'] = {
-      i = function()
-        if cmp.visible() then
-          cmp.select_next_item { behavior = types.cmp.SelectBehavior.Insert, }
-          cmp.confirm { select = false, }
-        else
-          cmp.complete()
-        end
-      end,
-    },
+    -- ['qo'] = cmp.mapping.confirm { select = false, },
+    -- ['qi'] = {
+    --   i = function()
+    --     if cmp.visible() then
+    --       cmp.select_next_item { behavior = types.cmp.SelectBehavior.Insert, }
+    --       cmp.confirm { select = false, }
+    --     else
+    --       cmp.complete()
+    --     end
+    --   end,
+    -- },
   },
   sources = cmp.config.sources {
     { name = 'nvim_lsp', },
