@@ -20,4 +20,12 @@ M.wrap = function(en)
   end
 end
 
+M.norenu = function(en)
+  if en then
+    vim.cmd 'set norelativenumber'
+  else
+    vim.cmd 'set relativenumber'
+  end
+end
+
 return M

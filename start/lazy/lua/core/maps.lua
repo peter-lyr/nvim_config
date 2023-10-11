@@ -162,6 +162,10 @@ return {
     { '<leader>tw',     function() require 'toggle'.wrap(1) end,              mode = { 'n', 'v', }, silent = true, desc = 'toggle wrap', },
     { '<leader>tW',     function() require 'toggle'.wrap() end,               mode = { 'n', 'v', }, silent = true, desc = 'toggle nowrap', },
 
+    -- norenu
+    { '<leader>tr',     function() require 'toggle'.norenu(1) end,              mode = { 'n', 'v', }, silent = true, desc = 'toggle norenu', },
+    { '<leader>tR',     function() require 'toggle'.norenu() end,               mode = { 'n', 'v', }, silent = true, desc = 'toggle renu', },
+
   },
   init = function()
     require 'which-key'.register { ['<leader>a'] = { name = 'Side Panel', }, }
