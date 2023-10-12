@@ -135,7 +135,8 @@ return {
     { '<leader>xP',     function() require 'window'.bwipeout_cur_proj() end,  mode = { 'n', 'v', }, silent = true, desc = 'Window bwipeout_cur_proj', },
 
     -- quit
-    { '<leader>xa',     '<cmd>qall<cr>',                                      mode = { 'n', 'v', }, silent = true, desc = 'Window quit all', },
+    { '<leader>xa',     '<cmd>qa!<cr>',                                       mode = { 'n', 'v', }, silent = true, desc = 'Window quit all', },
+    { '<leader>xA',     function() require 'window'.restart_nvim_qt() end,    mode = { 'n', 'v', }, silent = true, desc = 'Window restart nvim-qt', },
 
     -- bwipeout deleted
     { '<leader>x<del>', function() require 'window'.bwipeout_deleted() end,   mode = { 'n', 'v', }, silent = true, desc = 'Window bwipeout_deleted', },
