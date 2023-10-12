@@ -175,7 +175,31 @@ return {
     { "<leader>'l",     function() require 'bcomp'.diff_last() end,           mode = { 'n', 'v', }, silent = true, desc = 'bcomp last', },
 
     -- Work
+    -- upload
     { "<leader>'u",     function() require 'work.upload'.upload() end,        mode = { 'n', 'v', }, silent = true, desc = 'work upload file', },
+
+    -- tortoisesvn
+    { '<leader>vo',     '<cmd>TortoiseSVN settings cur yes<cr>',              mode = { 'n', 'v', }, silent = true, desc = 'TortoiseSVN settings cur yes<cr>', },
+    { '<leader>vd',     '<cmd>TortoiseSVN diff cur yes<cr>',                  mode = { 'n', 'v', }, silent = true, desc = 'TortoiseSVN diff cur yes<cr>', },
+    { '<leader>vD',     '<cmd>TortoiseSVN diff root yes<cr>',                 mode = { 'n', 'v', }, silent = true, desc = 'TortoiseSVN diff root yes<cr>', },
+    { '<leader>vb',     '<cmd>TortoiseSVN blame cur yes<cr>',                 mode = { 'n', 'v', }, silent = true, desc = 'TortoiseSVN blame cur yes<cr>', },
+    { '<leader>vw',     '<cmd>TortoiseSVN repobrowser cur yes<cr>',           mode = { 'n', 'v', }, silent = true, desc = 'TortoiseSVN repobrowser cur yes<cr>', },
+    { '<leader>vW',     '<cmd>TortoiseSVN repobrowser root yes<cr>',          mode = { 'n', 'v', }, silent = true, desc = 'TortoiseSVN repobrowser root yes<cr>', },
+    { '<leader>vs',     '<cmd>TortoiseSVN repostatus cur yes<cr>',            mode = { 'n', 'v', }, silent = true, desc = 'TortoiseSVN repostatus cur yes<cr>', },
+    { '<leader>vS',     '<cmd>TortoiseSVN repostatus root yes<cr>',           mode = { 'n', 'v', }, silent = true, desc = 'TortoiseSVN repostatus root yes<cr>', },
+    { '<leader>vr',     '<cmd>TortoiseSVN rename cur yes<cr>',                mode = { 'n', 'v', }, silent = true, desc = 'TortoiseSVN rename cur yes<cr>', },
+    { '<leader>vR',     '<cmd>TortoiseSVN remove cur yes<cr>',                mode = { 'n', 'v', }, silent = true, desc = 'TortoiseSVN remove cur yes<cr>', },
+    { '<leader>vv',     '<cmd>TortoiseSVN revert cur yes<cr>',                mode = { 'n', 'v', }, silent = true, desc = 'TortoiseSVN revert cur yes<cr>', },
+    { '<leader>vV',     '<cmd>TortoiseSVN revert root yes<cr>',               mode = { 'n', 'v', }, silent = true, desc = 'TortoiseSVN revert root yes<cr>', },
+    { '<leader>va',     '<cmd>TortoiseSVN add cur yes<cr>',                   mode = { 'n', 'v', }, silent = true, desc = 'TortoiseSVN add cur yes<cr>', },
+    { '<leader>vA',     '<cmd>TortoiseSVN add root yes<cr>',                  mode = { 'n', 'v', }, silent = true, desc = 'TortoiseSVN add root yes<cr>', },
+    { '<leader>vc',     '<cmd>TortoiseSVN commit cur yes<cr>',                mode = { 'n', 'v', }, silent = true, desc = 'TortoiseSVN commit cur yes<cr>', },
+    { '<leader>vC',     '<cmd>TortoiseSVN commit root yes<cr>',               mode = { 'n', 'v', }, silent = true, desc = 'TortoiseSVN commit root yes<cr>', },
+    { '<leader>vu',     '<cmd>TortoiseSVN update root no<cr>',                mode = { 'n', 'v', }, silent = true, desc = 'TortoiseSVN update root no<cr>', },
+    { '<leader>vU',     '<cmd>TortoiseSVN update /rev root yes<cr>',          mode = { 'n', 'v', }, silent = true, desc = 'TortoiseSVN update /rev root yes<cr>', },
+    { '<leader>vl',     '<cmd>TortoiseSVN log cur yes<cr>',                   mode = { 'n', 'v', }, silent = true, desc = 'TortoiseSVN log cur yes<cr>', },
+    { '<leader>vL',     '<cmd>TortoiseSVN log root yes<cr>',                  mode = { 'n', 'v', }, silent = true, desc = 'TortoiseSVN log root yes<cr>', },
+    { '<leader>vk',     '<cmd>TortoiseSVN checkout root yes<cr>',             mode = { 'n', 'v', }, silent = true, desc = 'TortoiseSVN checkout root yes<cr>', },
 
   },
   init = function()
@@ -186,5 +210,10 @@ return {
     require 'which-key'.register { ['<leader>t'] = { name = 'Toggle Set', }, }
     require 'which-key'.register { ['<leader>x'] = { name = 'Close Buffers', }, }
     require 'which-key'.register { ["<leader>'"] = { name = 'Others', }, }
+    -- work
+    require 'which-key'.register { ['<leader>v'] = { name = 'TortoiseSVN', }, }
+  end,
+  config = function()
+    require 'work.tortoisesvn'
   end,
 }
