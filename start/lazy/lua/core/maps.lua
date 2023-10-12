@@ -172,5 +172,7 @@ return {
     require 'which-key'.register { ['<leader>gg'] = { name = 'Git Push', }, }
     require 'which-key'.register { ['<leader>y'] = { name = 'Yank', }, }
     require 'which-key'.register { ['<leader>w'] = { name = 'Window', }, }
+    require 'which-key'.register { ['<leader>t'] = { name = 'Toggle Set', }, }
+    require 'which-key'.register { ['<leader>x'] = { name = 'Close Buffers', }, }
   end,
 }
