@@ -166,6 +166,8 @@ return {
     { '<leader>tr',     function() require 'toggle'.norenu(1) end,            mode = { 'n', 'v', }, silent = true, desc = 'toggle norenu', },
     { '<leader>tR',     function() require 'toggle'.norenu() end,             mode = { 'n', 'v', }, silent = true, desc = 'toggle renu', },
 
+    -- Others
+
     -- bcomp.lua
     { "<leader>'<tab>", function() require 'bcomp'.diff1() end,               mode = { 'n', 'v', }, silent = true, desc = 'bcomp diff1', },
     { "<leader>'`",     function() require 'bcomp'.diff2() end,               mode = { 'n', 'v', }, silent = true, desc = 'bcomp diff2', },
@@ -178,5 +180,6 @@ return {
     require 'which-key'.register { ['<leader>w'] = { name = 'Window', }, }
     require 'which-key'.register { ['<leader>t'] = { name = 'Toggle Set', }, }
     require 'which-key'.register { ['<leader>x'] = { name = 'Close Buffers', }, }
+    require 'which-key'.register { ["<leader>'"] = { name = 'Others', }, }
   end,
 }
