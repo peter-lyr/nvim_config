@@ -13,6 +13,6 @@ if __name__ == "__main__":
                 content = f.read()
                 patt = re.compile(r'("[^"]+data\\mason)\\packages')
                 res = re.findall(patt, content.decode('utf-8'))
-                new, _ = re.subn(patt, '"%~dp0..', content.decode('utf-8'))
+                new, _ = re.subn(patt, r'"%~dp0..\\packages', content.decode('utf-8'))
             with open(file, 'wb') as f:
                 f.write(new.encode('utf-8'))
