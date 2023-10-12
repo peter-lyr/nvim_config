@@ -54,6 +54,9 @@ M.sel = function()
       git_repos[#git_repos + 1] = dir_p.filename
     end
   end
+  if #git_repos == 0 then
+    vim.cmd 'UpdateAllGitRepos'
+  end
   vim.ui.select(git_repos, { prompt = 'nvimtree open git repo', }, function(choice, idx)
     if not choice then
       return
