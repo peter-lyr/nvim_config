@@ -31,6 +31,11 @@ local function plugins_map(bufnr)
   vim.keymap.set('n', '<c-bs>', wrap_node(plug.show_cwd_root_toggle), opts 'Show cwd root or not')
   vim.keymap.set('n', 's', wrap_node(plug.start_file), opts 'start file')
   vim.keymap.set('n', 'gs', wrap_node(plug.start_dir), opts 'start dir')
+
+  -- bcomp.lua
+  vim.keymap.set('n', "<leader>'<tab>", wrap_node(plug.bcomp1), opts 'bcomp 1')
+  vim.keymap.set('n', "<leader>'`", wrap_node(plug.bcomp2), opts 'bcomp 2')
+  vim.keymap.set('n', "<leader>'l", wrap_node(plug.bcomplast), opts 'bcomp last')
 end
 
 local function close()

@@ -40,4 +40,18 @@ M.show_cwd_root_toggle = function()
   vim.cmd 'wincmd p'
 end
 
+-- bcomp.lua
+
+M.bcomp1 = function(node)
+  require 'bcomp'.diff1(node.absolute_path)
+end
+
+M.bcomp2 = function(node)
+  require 'bcomp'.diff2(node.absolute_path)
+end
+
+M.bcomplast = function()
+  require 'bcomp'.diff_last()
+end
+
 return M
