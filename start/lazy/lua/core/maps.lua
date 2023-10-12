@@ -163,8 +163,12 @@ return {
     { '<leader>tW',     function() require 'toggle'.wrap() end,               mode = { 'n', 'v', }, silent = true, desc = 'toggle nowrap', },
 
     -- norenu
-    { '<leader>tr',     function() require 'toggle'.norenu(1) end,              mode = { 'n', 'v', }, silent = true, desc = 'toggle norenu', },
-    { '<leader>tR',     function() require 'toggle'.norenu() end,               mode = { 'n', 'v', }, silent = true, desc = 'toggle renu', },
+    { '<leader>tr',     function() require 'toggle'.norenu(1) end,            mode = { 'n', 'v', }, silent = true, desc = 'toggle norenu', },
+    { '<leader>tR',     function() require 'toggle'.norenu() end,             mode = { 'n', 'v', }, silent = true, desc = 'toggle renu', },
+
+    -- bcomp.lua
+    { "<leader>'<tab>", function() require 'bcomp'.diff1() end,               mode = { 'n', 'v', }, silent = true, desc = 'bcomp diff1', },
+    { "<leader>'`",     function() require 'bcomp'.diff2() end,               mode = { 'n', 'v', }, silent = true, desc = 'bcomp diff2', },
 
   },
   init = function()
