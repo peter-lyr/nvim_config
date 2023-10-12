@@ -173,6 +173,9 @@ return {
     { "<leader>'`",     function() require 'bcomp'.diff2() end,               mode = { 'n', 'v', }, silent = true, desc = 'bcomp diff2', },
     { "<leader>'l",     function() require 'bcomp'.diff_last() end,           mode = { 'n', 'v', }, silent = true, desc = 'bcomp last', },
 
+    -- Work
+    { "<leader>'u",     function() require 'work.upload'.upload() end,        mode = { 'n', 'v', }, silent = true, desc = 'work upload file', },
+
   },
   init = function()
     require 'which-key'.register { ['<leader>a'] = { name = 'Side Panel', }, }
