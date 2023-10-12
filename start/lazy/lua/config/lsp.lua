@@ -58,6 +58,25 @@ local function rep(content)
   return content
 end
 
+local function system_run(way, str_format, ...)
+  local cmd = string.format(str_format, ...)
+  if way == 'start' then
+    cmd = string.format([[silent !start cmd /c "%s & pause"]], cmd)
+  elseif way == 'asyncrun' then
+    cmd = string.format('AsyncRun %s', cmd)
+  elseif way == 'term' then
+    cmd = string.format('wincmd s|term %s', cmd)
+  end
+  vim.cmd(cmd)
+end
+
+M.update_mason_cmd_path = function()
+  local config = require 'plenary.path':new(vim.g.pack_path):joinpath('nvim_config', 'start', 'lazy', 'lua', 'config')
+  local lsp_mason_path_py = config:joinpath 'lsp_mason_cmd_path.py'.filename
+  local install_root_dir = require 'mason.settings'.current.install_root_dir
+  system_run('start', 'python "%s" "%s"', lsp_mason_path_py, install_root_dir)
+end
+
 M.lua_libraries_dir_p = require 'plenary.path':new(vim.fn.stdpath 'data'):joinpath 'lua_libraries'
 M.lua_libraries_txt_p = M.lua_libraries_dir_p:joinpath 'lua_libraries.txt'
 
@@ -274,3 +293,4 @@ vim.g.lsp_au_focuslost = vim.api.nvim_create_autocmd({ 'FocusLost', }, {
 })
 
 vim.api.nvim_create_user_command('UpdateLuaLspLibrary', M.update_lua_libraries, {})
+vim.api.nvim_create_user_command('UpdateMasonCmdPath', M.update_mason_cmd_path, {})
