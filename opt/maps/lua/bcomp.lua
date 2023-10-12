@@ -24,12 +24,24 @@ M.diff2 = function(file)
   end
 end
 
-vim.api.nvim_create_user_command('Bcomp1', function(params)
+M.diff_last = function()
+  if vim.fn.filereadable(M.file1) == 1 and vim.fn.filereadable(M.file1) == 1 then
+    vim.cmd(string.format([[silent !start /b /min cmd /c "bcomp "%s" "%s""]], M.file1, M.file2))
+  else
+    print('no compare.')
+  end
+end
+
+vim.api.nvim_create_user_command('B1', function(params)
   M.diff1(unpack(params['fargs']))
 end, { nargs = '*', })
 
-vim.api.nvim_create_user_command('Bcomp2', function(params)
+vim.api.nvim_create_user_command('B2', function(params)
   M.diff2(unpack(params['fargs']))
+end, { nargs = '*', })
+
+vim.api.nvim_create_user_command('Bl', function(params)
+  M.diff_last(unpack(params['fargs']))
 end, { nargs = '*', })
 
 return M
