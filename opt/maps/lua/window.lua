@@ -283,12 +283,14 @@ M.stack_open_sel = function()
     end
   end
   M.stack_full_fname_txt_p:write(vim.fn.join(fnames, '\n'), 'w')
-  vim.ui.select(fnames, { prompt = 'stack full fname open', }, function(choice, idx)
-    if not choice then
-      return
-    end
-    vim.cmd('e ' .. choice)
-  end)
+  if #fname > 0 then
+    vim.ui.select(fnames, { prompt = 'stack full fname open', }, function(choice, idx)
+      if not choice then
+        return
+      end
+      vim.cmd('e ' .. choice)
+    end)
+  end
 end
 
 M.stack_open_txt = function()
