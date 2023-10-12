@@ -70,6 +70,8 @@ local function system_run(way, str_format, ...)
   vim.cmd(cmd)
 end
 
+local M = {}
+
 M.update_mason_cmd_path = function()
   local config = require 'plenary.path':new(vim.g.pack_path):joinpath('nvim_config', 'start', 'lazy', 'lua', 'config')
   local lsp_mason_path_py = config:joinpath 'lsp_mason_cmd_path.py'.filename
