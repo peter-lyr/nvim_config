@@ -135,12 +135,6 @@ local function sel_map(bufnr)
   vim.keymap.set('n', 'dp', wrap_node(sel.paste_from_clip), opts 'paste_from_clip')
 end
 
-local function my_map(bufnr)
-  local function opts(desc)
-    return { desc = 'nvim-tree sel: ' .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true, }
-  end
-end
-
 local on_attach = function(bufnr)
   basic_map(bufnr)
   sel_map(bufnr)
