@@ -171,6 +171,7 @@ return {
     -- bcomp.lua
     { "<leader>'<tab>", function() require 'bcomp'.diff1() end,               mode = { 'n', 'v', }, silent = true, desc = 'bcomp diff1', },
     { "<leader>'`",     function() require 'bcomp'.diff2() end,               mode = { 'n', 'v', }, silent = true, desc = 'bcomp diff2', },
+    { "<leader>'l",     function() require 'bcomp'.diff_last() end,           mode = { 'n', 'v', }, silent = true, desc = 'bcomp last', },
 
   },
   init = function()
