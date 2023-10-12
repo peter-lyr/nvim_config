@@ -89,16 +89,18 @@ local function change_working_directory(prompt_bufnr, prompt)
 end
 
 local function find_project_files(prompt_bufnr)
-  require 'config.telescope'.all(1)
-  local project_path, cd_successful = change_working_directory(prompt_bufnr, true)
-  local opt = {
-    cwd = project_path,
-    hidden = config.options.show_hidden,
-    mode = 'insert',
-    find_command = { 'fd', },
-  }
+  require 'config.telescope'.all(0)
+  local _, cd_successful = change_working_directory(prompt_bufnr, true)
+  -- local project_path, cd_successful = change_working_directory(prompt_bufnr, true)
+  -- local opt = {
+  --   cwd = project_path,
+  --   hidden = config.options.show_hidden,
+  --   mode = 'insert',
+  --   find_command = { 'fd', },
+  -- }
   if cd_successful then
-    builtin.find_files(opt)
+    -- builtin.find_files(opt)
+    vim.cmd 'Telescope find_files'
   end
 end
 
@@ -179,11 +181,16 @@ local function my_projects(opts)
     attach_mappings = function(prompt_bufnr, map)
       -- map("n", "f", find_project_files)
       map('n', 'r', browse_project_files, { nowait = true, })
-      map('n', 'z', delete_project, { nowait = true, })
-      map('n', 'c', search_in_project_files, { nowait = true, })
-      map('n', 'b', git_status, { nowait = true, })
+      map('n', 'd', delete_project, { nowait = true, })
+      map('n', 's', search_in_project_files, { nowait = true, })
+      map('n', 'g', git_status, { nowait = true, })
       -- map("n", "r", recent_project_files)
       -- map("n", "w", change_working_directory)
+
+      map('i', '<c-r>', browse_project_files, { nowait = true, })
+      map('i', '<c-d>', delete_project, { nowait = true, })
+      map('i', '<c-s>', search_in_project_files, { nowait = true, })
+      map('i', '<c-g>', git_status, { nowait = true, })
 
       -- map("i", "<c-f>", find_project_files)
       -- map("i", "<c-b>", browse_project_files)
