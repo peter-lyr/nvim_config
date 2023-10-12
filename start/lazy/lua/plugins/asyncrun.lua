@@ -3,7 +3,7 @@ return {
   lazy = true,
   cmd = { 'AsyncRun', 'AsyncStop', 'AsyncReset', },
   keys = {
-    { '<c-s-f9>',   function() require 'config.asyncrun'.stop() end,  mode = { 'n', 'v', }, silent = true, desc = 'AsyncStop', },
-    { '<leader>v;', function() require 'config.asyncrun'.input() end, mode = { 'n', 'v', }, silent = true, desc = 'AsyncRun', },
+    { '<c-s-f9>',      function() require 'config.asyncrun'.stop() end,  mode = { 'n', 'v', }, silent = true, desc = 'AsyncStop', },
+    { '<leader><c-;>', function() require 'config.asyncrun'.input() end, mode = { 'n', 'v', }, silent = true, desc = 'AsyncRun', },
   },
 }
