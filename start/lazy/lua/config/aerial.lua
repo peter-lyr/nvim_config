@@ -53,6 +53,10 @@ M.open = function()
   end)
 end
 
+M.close = function()
+  vim.cmd 'AerialCloseAll'
+end
+
 pcall(vim.api.nvim_del_autocmd, vim.g.aerial_au_bufenter)
 
 vim.g.aerial_au_bufenter = vim.api.nvim_create_autocmd({ 'BufEnter', }, {
