@@ -5,7 +5,11 @@ M.mappings = {}
 M.add = function(mapping)
   for key, val in pairs(mapping) do
     if vim.tbl_contains(vim.tbl_keys(M.mappings), key) == true then
-      M.mappings[key] = { name = M.mappings[key]['name'] .. ' ' .. val['name'], }
+      local new = M.mappings[key]['name']
+      local old = val['name']
+      if old ~= new then
+        M.mappings[key] = { name = new .. ' ' .. old, }
+      end
     else
       M.mappings[key] = val
     end
