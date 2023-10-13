@@ -174,4 +174,14 @@ M.build = function(workspace)
   end
 end
 
+M.justbuild = function(workspace)
+  M.rebuild_en = nil
+  M.build(workspace)
+end
+
+M.rebuild = function(workspace)
+  M.rebuild_en = 1
+  M.build(workspace)
+end
+
 return M
