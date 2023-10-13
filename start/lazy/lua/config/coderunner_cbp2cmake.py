@@ -11,15 +11,17 @@ def rep(text):
 
 def rm_build_dirs(project_root):
     rms = ['build', '.cache']
-    for dirs in os.listdir(project_root):
+    for root, dirs, _ in os.walk(project_root):
         for r in rms:
             if r in dirs:
-                r = rep(os.path.join(project_root, r))
-                try:
-                    shutil.rmtree(r)
-                    print(f"Deleted {r}")
-                except:
-                    pass
+                r = rep(os.path.join(root, r))
+                if os.path.exists(r):
+                    try:
+                        print(f"Deleting {r}, ", end = '')
+                        shutil.rmtree(r)
+                        print(f"Deleted {r}.")
+                    except:
+                        pass
 
 
 def get_libs_a_dirs(project_root):

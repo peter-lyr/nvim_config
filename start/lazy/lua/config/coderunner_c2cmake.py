@@ -10,15 +10,17 @@ def rep(text):
 
 def rm_build_dirs(project_root):
     rms = ['build', '.cache']
-    for dirs in os.listdir(project_root):
+    for root, dirs, _ in os.walk(project_root):
         for r in rms:
             if r in dirs:
-                r = rep(os.path.join(project_root, r))
-                try:
-                    shutil.rmtree(r)
-                    print(f"Deleted {r}")
-                except:
-                    pass
+                r = rep(os.path.join(root, r))
+                if os.path.exists(r):
+                    try:
+                        print(f"Deleting {r}, ", end = '')
+                        shutil.rmtree(r)
+                        print(f"Deleted {r}.")
+                    except:
+                        pass
 
 
 def is_test_dir(f):
@@ -28,7 +30,7 @@ def is_test_dir(f):
             return 0
         if _f[0] == '.':
             return 1
-        for _I in ['test', 'bak']:
+        for _I in ['test', 'bak', 'build', '.cache']:
             if _I in _f:
                 return 1
     return 0
@@ -44,23 +46,18 @@ def check(project_root):
     for root, _, files in os.walk(project_root):
         for file in files:
             if file.split('.')[-1] in ['c', 'h', 'cpp']:
+                f = rep(os.path.join(root, file)).replace(project_root + '/', '').strip('/')
+                if f in I:
+                    continue
+                if is_test_dir(f):
+                    continue
                 if file.split('.')[-1] in ['c', 'cpp']:
-                    f = rep(os.path.join(root, file)).replace(project_root + '/', '').strip('/')
-                    if not is_test_dir(f):
-                        for i in I:
-                            if f in i:
-                                break
-                        else:
-                            F.append(f)
+                    F.append(f)
                 d = rep(root).replace(project_root, '').strip('/')
                 if not is_test_dir(d):
                     d = d.lstrip('/')
                     if d not in D:
-                        for i in I:
-                            if d in i:
-                                break
-                        else:
-                            D.append(d)
+                        D.append(d)
     return D, F
 
 
