@@ -71,18 +71,18 @@ return {
 
   },
   init = function()
-    require 'which-key'.register { ['<leader><f1>'] = { name = 'terminal cmd', }, }
-    require 'which-key'.register { ['<leader><f2>'] = { name = 'terminal ipython', }, }
-    require 'which-key'.register { ['<leader><f3>'] = { name = 'terminal bash', }, }
-    require 'which-key'.register { ['<leader><f4>'] = { name = 'terminal powershell', }, }
-    require 'which-key'.register { ['<leader><f1>s'] = { name = 'terminal send cmd', }, }
-    require 'which-key'.register { ['<leader><f2>s'] = { name = 'terminal send ipython', }, }
-    require 'which-key'.register { ['<leader><f3>s'] = { name = 'terminal send bash', }, }
-    require 'which-key'.register { ['<leader><f4>s'] = { name = 'terminal send powershell', }, }
-    require 'which-key'.register { ['<leader><f1>h'] = { name = 'terminal hide cmd', }, }
-    require 'which-key'.register { ['<leader><f2>h'] = { name = 'terminal hide ipython', }, }
-    require 'which-key'.register { ['<leader><f3>h'] = { name = 'terminal hide bash', }, }
-    require 'which-key'.register { ['<leader><f4>h'] = { name = 'terminal hide powershell', }, }
+    require 'config.whichkey'.add { ['<leader><f1>'] = { name = 'terminal cmd', }, }
+    require 'config.whichkey'.add { ['<leader><f2>'] = { name = 'terminal ipython', }, }
+    require 'config.whichkey'.add { ['<leader><f3>'] = { name = 'terminal bash', }, }
+    require 'config.whichkey'.add { ['<leader><f4>'] = { name = 'terminal powershell', }, }
+    require 'config.whichkey'.add { ['<leader><f1>s'] = { name = 'terminal send cmd', }, }
+    require 'config.whichkey'.add { ['<leader><f2>s'] = { name = 'terminal send ipython', }, }
+    require 'config.whichkey'.add { ['<leader><f3>s'] = { name = 'terminal send bash', }, }
+    require 'config.whichkey'.add { ['<leader><f4>s'] = { name = 'terminal send powershell', }, }
+    require 'config.whichkey'.add { ['<leader><f1>h'] = { name = 'terminal hide cmd', }, }
+    require 'config.whichkey'.add { ['<leader><f2>h'] = { name = 'terminal hide ipython', }, }
+    require 'config.whichkey'.add { ['<leader><f3>h'] = { name = 'terminal hide bash', }, }
+    require 'config.whichkey'.add { ['<leader><f4>h'] = { name = 'terminal hide powershell', }, }
   end,
   config = function()
     require 'terminal'

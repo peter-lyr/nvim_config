@@ -9,7 +9,7 @@ return {
     { '<leader>ag', function() require 'config.fugitive'.toggle() end, mode = { 'n', 'v', }, silent = true, desc = 'Git toggle', },
   },
   init = function()
-    require 'which-key'.register { ['<leader>a'] = { name = 'Side Panel', }, }
+    require 'config.whichkey'.add { ['<leader>a'] = { name = 'Side Panel', }, }
   end,
   config = function()
     require 'config.fugitive'

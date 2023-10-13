@@ -31,7 +31,7 @@ return {
     { '<leader>gvw', ':<c-u>Telescope git_diffs diff_commits<cr>',                    mode = { 'n', 'v', }, silent = true, desc = 'Diffview Telescope git_diffs diff_commits', },
   },
   init = function()
-    require 'which-key'.register { ['<leader>gv'] = { name = 'Diffview', }, }
+    require 'config.whichkey'.add { ['<leader>gv'] = { name = 'Diffview', }, }
   end,
   config = function()
     require 'config.diffview'

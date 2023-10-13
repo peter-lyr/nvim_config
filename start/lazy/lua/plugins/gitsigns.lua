@@ -33,9 +33,9 @@ return {
     require 'plugins.whichkey',
   },
   init = function()
-    require 'which-key'.register { ['<leader>g'] = { name = 'Git', }, }
-    require 'which-key'.register { ['<leader>gm'] = { name = 'Gitsigns', }, }
-    require 'which-key'.register { ['<leader>gmt'] = { name = 'Gitsigns Toggle', }, }
+    require 'config.whichkey'.add { ['<leader>g'] = { name = 'Git', }, }
+    require 'config.whichkey'.add { ['<leader>gm'] = { name = 'Gitsigns', }, }
+    require 'config.whichkey'.add { ['<leader>gmt'] = { name = 'Gitsigns Toggle', }, }
   end,
   config = function()
     require 'config.gitsigns'

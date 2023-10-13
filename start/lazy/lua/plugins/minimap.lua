@@ -10,7 +10,7 @@ return {
     { '<leader>aN', function() require 'config.minimap'.auto_open() end,    mode = { 'n', 'v', }, silent = true, desc = 'MiniMap auto_open', },
   },
   init = function()
-    require 'which-key'.register { ['<leader>a'] = { name = 'Side Panel', }, }
+    require 'config.whichkey'.add { ['<leader>a'] = { name = 'Side Panel', }, }
   end,
   config = function()
     require 'config.minimap'

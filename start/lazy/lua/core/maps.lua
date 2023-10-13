@@ -203,15 +203,15 @@ return {
 
   },
   init = function()
-    require 'which-key'.register { ['<leader>a'] = { name = 'Side Panel', }, }
-    require 'which-key'.register { ['<leader>gg'] = { name = 'Git Push', }, }
-    require 'which-key'.register { ['<leader>y'] = { name = 'Yank', }, }
-    require 'which-key'.register { ['<leader>w'] = { name = 'Window', }, }
-    require 'which-key'.register { ['<leader>t'] = { name = 'Toggle Set', }, }
-    require 'which-key'.register { ['<leader>x'] = { name = 'Close Buffers', }, }
-    require 'which-key'.register { ["<leader>'"] = { name = 'Others', }, }
+    require 'config.whichkey'.add { ['<leader>a'] = { name = 'Side Panel', }, }
+    require 'config.whichkey'.add { ['<leader>gg'] = { name = 'Git Push', }, }
+    require 'config.whichkey'.add { ['<leader>y'] = { name = 'Yank', }, }
+    require 'config.whichkey'.add { ['<leader>w'] = { name = 'Window', }, }
+    require 'config.whichkey'.add { ['<leader>t'] = { name = 'Toggle Set', }, }
+    require 'config.whichkey'.add { ['<leader>x'] = { name = 'Close Buffers', }, }
+    require 'config.whichkey'.add { ["<leader>'"] = { name = 'Others', }, }
     -- work
-    require 'which-key'.register { ['<leader>v'] = { name = 'TortoiseSVN', }, }
+    require 'config.whichkey'.add { ['<leader>v'] = { name = 'TortoiseSVN', }, }
   end,
   config = function()
     require 'work.tortoisesvn'

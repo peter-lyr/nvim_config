@@ -16,7 +16,7 @@ return {
     require 'plugins.whichkey',
   },
   init = function()
-    require 'which-key'.register { ['<leader>a'] = { name = 'Side Panel', }, }
+    require 'config.whichkey'.add { ['<leader>a'] = { name = 'Side Panel', }, }
   end,
   config = function()
     require 'config.nvimtree'

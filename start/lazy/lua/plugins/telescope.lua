@@ -136,10 +136,10 @@ return {
     require 'plugins.whichkey',
   },
   init = function()
-    require 'which-key'.register { ['<leader>s'] = { name = 'Telescope', }, }
-    require 'which-key'.register { ['<leader>sv'] = { name = 'Telescope more', }, }
-    require 'which-key'.register { ['<leader>svv'] = { name = 'Telescope more', }, }
-    require 'which-key'.register { ['<leader>gt'] = { name = 'Git Telescope', }, }
+    require 'config.whichkey'.add { ['<leader>s'] = { name = 'Telescope', }, }
+    require 'config.whichkey'.add { ['<leader>sv'] = { name = 'Telescope more', }, }
+    require 'config.whichkey'.add { ['<leader>svv'] = { name = 'Telescope more', }, }
+    require 'config.whichkey'.add { ['<leader>gt'] = { name = 'Git Telescope', }, }
   end,
   config = function()
     require 'config.telescope'

@@ -6,7 +6,7 @@ return {
     require 'plugins.whichkey',
   },
   init = function()
-    require 'which-key'.register { ['<leader>c'] = { name = 'NerdCommenter', }, }
+    require 'config.whichkey'.add { ['<leader>c'] = { name = 'NerdCommenter', }, }
     vim.g.NERDSpaceDelims = 1
     vim.g.NERDDefaultAlign = 'left'
     vim.g.NERDCommentEmptyLines = 1
