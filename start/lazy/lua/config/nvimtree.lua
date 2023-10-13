@@ -158,6 +158,9 @@ local cfg_tbl = {
     -- enable = true,
     update_root = true,
   },
+  git = {
+    enable = false,
+  },
   view = {
     width = 30,
     number = true,
@@ -166,7 +169,7 @@ local cfg_tbl = {
   reload_on_bufenter = true,
   respect_buf_cwd = true,
   filesystem_watchers = {
-    enable = false,
+    enable = true,
     debounce_delay = 50,
     ignore_dirs = { '*.git', },
   },
