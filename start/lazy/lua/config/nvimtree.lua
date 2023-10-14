@@ -24,6 +24,19 @@ local function root_folder_label(root_cwd)
   return vim.fn.fnamemodify(root_cwd, ':t')
 end
 
+-- ausize_toggle
+
+M.ausize_en = 1
+
+local ausize_toggle = function()
+  if M.ausize_en then
+    M.ausize_en = nil
+  else
+    M.ausize_en = 1
+  end
+  print('ausize_en:', M.ausize_en)
+end
+
 local function plugins_map(bufnr)
   local function opts(desc)
     return { desc = 'nvim-tree: ' .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true, }
@@ -36,6 +49,9 @@ local function plugins_map(bufnr)
   vim.keymap.set('n', "<leader>'<tab>", wrap_node(plug.bcomp1), opts 'bcomp 1')
   vim.keymap.set('n', "<leader>'`", wrap_node(plug.bcomp2), opts 'bcomp 2')
   vim.keymap.set('n', "<leader>'l", wrap_node(plug.bcomplast), opts 'bcomp last')
+
+  -- toggle
+  vim.keymap.set('n', "<leader>'a", wrap_node(ausize_toggle), opts 'ausize toggle')
 end
 
 local function close()
@@ -287,8 +303,8 @@ vim.g.nvimtree_au_focuslost = vim.api.nvim_create_autocmd({ 'FocusLost', }, {
 pcall(vim.api.nvim_del_autocmd, vim.g.nvimtree_au_bufenter)
 
 vim.g.nvimtree_au_bufenter = vim.api.nvim_create_autocmd({ 'BufEnter', 'DirChanged', 'CursorHold', }, {
-  callback = function(ev)
-    if vim.bo.ft == 'NvimTree' then
+  callback = function()
+    if vim.bo.ft == 'NvimTree' and M.ausize_en then
       vim.fn.timer_start(10, function()
         local max = require 'nvim-tree.view'.View.width
         local min_nr = vim.fn.line 'w0'
@@ -312,7 +328,7 @@ pcall(vim.api.nvim_del_autocmd, vim.g.nvimtree_au_bufleave)
 
 vim.g.nvimtree_au_bufleave = vim.api.nvim_create_autocmd({ 'BufLeave', }, {
   callback = function()
-    if vim.bo.ft == 'NvimTree' then
+    if vim.bo.ft == 'NvimTree' and M.ausize_en then
       if vim.api.nvim_win_get_width(0) > require 'nvim-tree.view'.View.width then
         vim.api.nvim_win_set_width(0, require 'nvim-tree.view'.View.width)
       end
