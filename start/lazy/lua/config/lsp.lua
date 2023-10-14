@@ -1,3 +1,5 @@
+local M = {}
+
 local lspconfig = require 'lspconfig'
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -192,28 +194,28 @@ lspconfig.marksman.setup {
   },
 }
 
-vim.keymap.set({ 'n', 'v', }, '[f', vim.diagnostic.open_float, { desc = 'vim.diagnostic.open_float', })
-vim.keymap.set({ 'n', 'v', }, ']f', vim.diagnostic.setloclist, { desc = 'vim.diagnostic.setloclist', })
-vim.keymap.set({ 'n', 'v', }, '[d', vim.diagnostic.goto_prev, { desc = 'vim.diagnostic.goto_prev', })
-vim.keymap.set({ 'n', 'v', }, ']d', vim.diagnostic.goto_next, { desc = 'vim.diagnostic.goto_next', })
+M.format = function()
+  vim.lsp.buf.format {
+    async = true,
+    filter = function(client)
+      return client.name ~= 'clangd'
+    end,
+  }
+end
 
-
-vim.keymap.set({ 'n', 'v', }, '<leader>fS', ':<c-u>LspStart<cr>', { desc = 'LspStart', })
-vim.keymap.set({ 'n', 'v', }, '<leader>fR', ':<c-u>LspRestart<cr>', { desc = 'LspRestart', })
-vim.keymap.set({ 'n', 'v', }, '<leader>fq', vim.diagnostic.enable, { desc = 'vim.diagnostic.enable', })
-vim.keymap.set({ 'n', 'v', }, '<leader>fvq', vim.diagnostic.disable, { desc = 'vim.diagnostic.disable', })
-vim.keymap.set({ 'n', 'v', }, '<leader>fW', function() vim.lsp.stop_client(vim.lsp.get_active_clients(), true) end, { desc = 'stop all lsp clients', })
-vim.keymap.set({ 'n', 'v', }, '<leader>fD', [[:call feedkeys(':LspStop ')<cr>]], { desc = 'stop one lsp client of', })
-vim.keymap.set({ 'n', 'v', }, '<leader>fF', ':<c-u>LspInfo<cr>', { desc = 'LspInfo', })
-
-vim.keymap.set({ 'n', 'v', }, '<leader>fw', ':<c-u>ClangdSwitchSourceHeader<cr>', { desc = 'ClangdSwitchSourceHeader', })
-vim.keymap.set({ 'n', 'v', }, '<F11>', ':<c-u>ClangdSwitchSourceHeader<cr>', { desc = 'ClangdSwitchSourceHeader', })
-vim.keymap.set({ 'n', 'v', }, '<leader>fp', function()
+M.format_paragraph = function()
   local save_cursor = vim.fn.getpos '.'
   vim.cmd 'norm =ap'
   pcall(vim.fn.setpos, '.', save_cursor)
-end, { desc = '=ap', })
+end
 
+M.stop_all = function()
+  vim.lsp.stop_client(vim.lsp.get_active_clients(), true)
+end
+
+M.rename = function()
+  vim.fn.feedkeys(':IncRename ' .. vim.fn.expand '<cword>')
+end
 
 pcall(vim.api.nvim_del_autocmd, vim.g.lsp_au_lspattach)
 
@@ -221,43 +223,14 @@ vim.g.lsp_au_lspattach = vim.api.nvim_create_autocmd('LspAttach', {
   group = vim.api.nvim_create_augroup('UserLspConfig', {}),
   callback = function(ev)
     vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
-    local opts = function(desc)
-      return { buffer = ev.buf, desc = desc, }
-    end
-    vim.keymap.set({ 'n', 'v', }, 'K', vim.lsp.buf.definition, opts 'vim.lsp.buf.definition')
-    vim.keymap.set({ 'n', 'v', }, '<leader>fo', vim.lsp.buf.definition, opts 'vim.lsp.buf.definition')
-    vim.keymap.set({ 'n', 'v', }, '<F12>', vim.lsp.buf.definition, opts 'vim.lsp.buf.definition')
-    vim.keymap.set({ 'n', 'v', }, '<leader>fd', vim.lsp.buf.declaration, opts 'vim.lsp.buf.declaration')
-    vim.keymap.set({ 'n', 'v', }, '<C-F12>', vim.lsp.buf.declaration, opts 'vim.lsp.buf.declaration')
-    vim.keymap.set({ 'n', 'v', }, '<leader>fh', vim.lsp.buf.hover, opts 'vim.lsp.buf.hover')
-    vim.keymap.set({ 'n', 'v', }, '<A-F12>', vim.lsp.buf.hover, opts 'vim.lsp.buf.hover')
-    vim.keymap.set({ 'n', 'v', }, '<leader>fi', vim.lsp.buf.implementation, opts 'vim.lsp.buf.implementation')
-    vim.keymap.set({ 'n', 'v', }, '<leader>fs', vim.lsp.buf.signature_help, opts 'vim.lsp.buf.signature_help')
-    vim.keymap.set({ 'n', 'v', }, '<leader>fe', vim.lsp.buf.references, opts 'vim.lsp.buf.references')
-    vim.keymap.set({ 'n', 'v', }, '<S-F12>', vim.lsp.buf.references, opts 'vim.lsp.buf.references')
-    vim.keymap.set({ 'n', 'v', }, '<leader>fvd', vim.lsp.buf.type_definition, opts 'vim.lsp.buf.type_definition')
-    vim.keymap.set({ 'n', 'v', }, '<leader>fn', function()
-      vim.fn.feedkeys(':IncRename ' .. vim.fn.expand '<cword>')
-    end, opts 'lsp rename IncRename')
-    vim.keymap.set({ 'n', 'v', }, '<leader>ff', function()
-      vim.lsp.buf.format {
-        async = true,
-        filter = function(client)
-          return client.name ~= 'clangd'
-        end,
-      }
-    end, opts 'vim.lsp.buf.format')
-    vim.keymap.set({ 'n', 'v', }, '<leader>fc', vim.lsp.buf.code_action, opts 'vim.lsp.buf.code_action')
   end,
 })
 
-vim.keymap.set('n', '<leader>fve', [[<cmd>%s/\s\+$//<cr>]], { desc = 'erase bad white space', })
-
-vim.keymap.set('n', '<leader>fC', function()
+M.format_input = function()
   vim.cmd [[
     call feedkeys("\<esc>:silent !clang-format -i \<c-r>=nvim_buf_get_name(0)\<cr> --style=\"{BasedOnStyle: llvm, IndentWidth: 4, ColumnLimit: 200, SortIncludes: true}\"")
   ]]
-end, { desc = 'clang-format ...', silent = true, })
+end
 
 M.focuslost_timer = 0
 M.lsp_stopped = nil
@@ -293,3 +266,5 @@ vim.g.lsp_au_focuslost = vim.api.nvim_create_autocmd({ 'FocusLost', }, {
     end)
   end,
 })
+
+return M
