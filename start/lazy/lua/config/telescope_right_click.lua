@@ -11,6 +11,7 @@ M.commands = {}
 --------------------------
 
 M.winid = 0
+M.line = 0
 M.bufnr = 0
 
 M.buf_options = {
@@ -39,6 +40,7 @@ M.close = function()
 end
 
 M.run_at = function(index)
+  M.line = index
   local func = M.commands[index]
   if func then
     func()
@@ -82,11 +84,13 @@ M.popup_menu = function(items)
   local map_opt = function(desc)
     return { buffer = M.bufnr, desc = desc, nowait = true, }
   end
+  vim.cmd(string.format('norm %dgg', M.line))
   vim.keymap.set({ 'n', 'v', }, '<2-LeftMouse>', M.run_command, map_opt 'run command')
   vim.keymap.set({ 'n', 'v', }, '<cr>', M.run_command, map_opt 'run command')
   vim.keymap.set({ 'n', 'v', }, '<leader>', M.run_command, map_opt 'run command')
   vim.keymap.set({ 'n', 'v', }, '<c-m>', M.run_command, map_opt 'run command')
   vim.keymap.set({ 'n', 'v', }, '<esc>', M.close, map_opt 'esc')
+  vim.keymap.set({ 'n', 'v', }, 'q', M.close, map_opt 'esc')
   vim.api.nvim_create_autocmd({ 'BufLeave', }, {
     callback = M.close,
     once = true,
