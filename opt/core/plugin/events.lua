@@ -123,6 +123,7 @@ vim.api.nvim_create_autocmd('FileType', {
     'git',
     'notify',
     'fugitive',
+    'fugitiveblame',
     'qf',
     'spectre_panel',
     'startuptime',
