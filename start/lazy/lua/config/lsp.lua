@@ -293,6 +293,3 @@ vim.g.lsp_au_focuslost = vim.api.nvim_create_autocmd({ 'FocusLost', }, {
     end)
   end,
 })
-
-vim.api.nvim_create_user_command('UpdateLuaLspLibrary', M.update_lua_libraries, {})
-vim.api.nvim_create_user_command('UpdateMasonCmdPath', M.update_mason_cmd_path, {})

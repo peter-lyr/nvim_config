@@ -5,9 +5,6 @@ return {
   dir = opt .. 'maps',
   lazy = true,
   event = { 'CmdlineEnter', 'InsertEnter', 'ModeChanged', },
-  cmd = {
-    'UpdateAllGitRepos', -- all_git_repos.lua
-  },
   dependencies = {
     require 'plugins.asyncrun',
     require 'plugins.notify',
@@ -153,6 +150,7 @@ return {
 
     -- all_git_repos.lua
     { '<leader>sg',     function() require 'all_git_repos'.sel() end,         mode = { 'n', 'v', }, silent = true, desc = 'all_git_repos sel', },
+    { '<leader>sG',     function() require 'all_git_repos'.update() end,      mode = { 'n', 'v', }, silent = true, desc = 'all_git_repos update', },
 
     -- toggle.lua
     -- diff

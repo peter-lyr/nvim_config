@@ -94,8 +94,13 @@ return {
       end,
     },
   },
+  keys = {
+    { '<leader>fUl', function() require 'config.lsp'.update_lua_libraries() end,  mode = { 'n', 'v', }, silent = true, desc = 'lsp update_lua_libraries', },
+    { '<leader>fUm', function() require 'config.lsp'.update_mason_cmd_path() end, mode = { 'n', 'v', }, silent = true, desc = 'lsp update_mason_cmd_path', },
+  },
   init = function()
     require 'config.whichkey'.add { ['<leader>f'] = { name = 'Lsp', }, }
+    require 'config.whichkey'.add { ['<leader>fU'] = { name = 'Lsp Update', }, }
   end,
   config = function()
     require 'config.lsp'

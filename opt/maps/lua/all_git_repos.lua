@@ -41,7 +41,7 @@ end
 
 pcall(vim.cmd, 'Lazy load telescope-ui-select.nvim')
 
-M.update_all_git_repos = function()
+M.update = function()
   system_run('start', 'chcp 65001 && %s python "%s" "%s"', system_cd(M.all_git_repos_dir_p.filename), M.all_git_repos_py_p.filename, M.all_git_repos_txt_p.filename)
 end
 
@@ -55,7 +55,7 @@ M.sel = function()
     end
   end
   if #git_repos == 0 then
-    M.update_all_git_repos()
+    M.update()
   end
   vim.ui.select(git_repos, { prompt = 'nvimtree open git repo', }, function(choice, idx)
     if not choice then
@@ -68,7 +68,5 @@ M.sel = function()
     end
   end)
 end
-
-vim.api.nvim_create_user_command('UpdateAllGitRepos', M.update_all_git_repos, {})
 
 return M
