@@ -84,6 +84,7 @@ TelescopeKeysUiAll = {
 
   -- right_click
   '<RightMouse>',
+  '<leader>`',
 
 }
 
@@ -140,6 +141,8 @@ return {
     require 'config.whichkey'.add { ['<leader>sv'] = { name = 'Telescope more', }, }
     require 'config.whichkey'.add { ['<leader>svv'] = { name = 'Telescope more', }, }
     require 'config.whichkey'.add { ['<leader>gt'] = { name = 'Git Telescope', }, }
+    local mark = vim.api.nvim_buf_get_mark(0, '"')
+    vim.api.nvim_input_mouse('left', 'press', '', 0, mark[1], mark[2])
   end,
   config = function()
     require 'config.telescope'
