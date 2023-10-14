@@ -24,6 +24,7 @@ M.win_options = {
   signcolumn = 'no',
   winblend = 10,
   concealcursor = 'nvic',
+  number = true,
 }
 
 M.win_open_opts = {
@@ -61,13 +62,13 @@ M.popup_menu = function(items)
   local win_height = #vim.tbl_keys(items)
   local menus = {}
   for i, v in ipairs(items) do
-    menus[#menus + 1] = string.format('%d. %s', i, v[1])
+    menus[#menus + 1] = string.format('%s', v[1])
     M.commands[#M.commands + 1] = v[2]
     if vim.fn.strdisplaywidth(v[1]) > win_width then
       win_width = vim.fn.strdisplaywidth(v[1])
     end
   end
-  win_width = win_width + 2 + #tostring(#menus)
+  win_width = win_width + #tostring(#menus)
   vim.api.nvim_buf_set_lines(M.bufnr, 0, -1, true, menus)
   M.winid = vim.api.nvim_open_win(M.bufnr, true,
     vim.tbl_deep_extend('force', M.win_open_opts, {
@@ -88,7 +89,9 @@ M.popup_menu = function(items)
   vim.keymap.set({ 'n', 'v', }, '<2-LeftMouse>', M.run_command, map_opt 'run command')
   vim.keymap.set({ 'n', 'v', }, '<cr>', M.run_command, map_opt 'run command')
   vim.keymap.set({ 'n', 'v', }, '<leader>', M.run_command, map_opt 'run command')
+  vim.keymap.set({ 'n', 'v', }, '<tab>', M.run_command, map_opt 'run command')
   vim.keymap.set({ 'n', 'v', }, '<c-m>', M.run_command, map_opt 'run command')
+  vim.keymap.set({ 'n', 'v', }, '`', M.close, map_opt 'esc')
   vim.keymap.set({ 'n', 'v', }, '<esc>', M.close, map_opt 'esc')
   vim.keymap.set({ 'n', 'v', }, 'q', M.close, map_opt 'esc')
   vim.api.nvim_create_autocmd({ 'BufLeave', }, {
