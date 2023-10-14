@@ -128,8 +128,6 @@ return {
     { '<leader>fw',  ':<c-u>ClangdSwitchSourceHeader<cr>',                        mode = { 'n', 'v', }, silent = true, desc = 'ClangdSwitchSourceHeader', },
     { '<F11>',       ':<c-u>ClangdSwitchSourceHeader<cr>',                        mode = { 'n', 'v', }, silent = true, desc = 'ClangdSwitchSourceHeader', },
     { '<leader>fve', [[<cmd>%s/\s\+$//<cr>]],                                     mode = { 'n', 'v', }, silent = true, desc = 'erase bad white space', },
-
-
   },
   init = function()
     require 'config.whichkey'.add { ['<leader>f'] = { name = 'Lsp', }, }
