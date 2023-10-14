@@ -175,7 +175,7 @@ local cfg_tbl = {
     update_root = true,
   },
   git = {
-    enable = false,
+    enable = true,
   },
   view = {
     width = 30,

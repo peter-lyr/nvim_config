@@ -1,5 +1,6 @@
 return {
   'nvim-tree/nvim-tree.lua',
+  commit = '00741206',
   lazy = true,
   cmd = {
     'NvimTreeFindFile',
