@@ -242,18 +242,13 @@ M.right_click_menu = function()
   end
 end
 
-RightClickMenu = M.right_click_menu
+RClick = M.right_click_menu
 
 M.right_click = function()
   if vim.fn.getmousepos()['line'] == 0 then
     return '<RightMouse>'
   end
-  return ':<c-u>call v:lua.RightClickMenu()<cr>'
-  -- local fname = vim.api.nvim_buf_get_name(0)
-  -- if vim.fn.filereadable(fname) == 1 or vim.bo.modifiable == true and #fname == 0 and vim.api.nvim_buf_get_option(0, 'buftype') == '' then
-  --   return ':<c-u>call v:lua.RightClickMenu()<cr>'
-  -- end
-  -- return '<RightMouse>'
+  return ':<c-u>call v:lua.RClick()<cr>'
 end
 
 vim.keymap.set({ 'n', 'v', }, '<RightMouse>', M.right_click, { desc = '<RightMouse>', expr = true, })
