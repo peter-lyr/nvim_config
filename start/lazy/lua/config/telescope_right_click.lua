@@ -80,10 +80,12 @@ M.popup_menu = function(items)
     vim.api.nvim_win_set_option(M.winid, k, v)
   end
   local map_opt = function(desc)
-    return { buffer = M.bufnr, desc = desc, }
+    return { buffer = M.bufnr, desc = desc, nowait = true, }
   end
   vim.keymap.set({ 'n', 'v', }, '<2-LeftMouse>', M.run_command, map_opt 'run command')
   vim.keymap.set({ 'n', 'v', }, '<cr>', M.run_command, map_opt 'run command')
+  vim.keymap.set({ 'n', 'v', }, '<leader>', M.run_command, map_opt 'run command')
+  vim.keymap.set({ 'n', 'v', }, '<c-m>', M.run_command, map_opt 'run command')
   vim.keymap.set({ 'n', 'v', }, '<esc>', M.close, map_opt 'esc')
   vim.api.nvim_create_autocmd({ 'BufLeave', }, {
     callback = M.close,
@@ -181,16 +183,49 @@ M.aerial_open = function()
   vim.cmd 'AerialOpen right'
 end
 
+M.monitor_1min = function()
+  vim.fn.system 'powercfg -x -monitor-timeout-ac 1'
+  print 'monitor_1min'
+end
+
+M.monitor_30min = function()
+  vim.fn.system 'powercfg -x -monitor-timeout-ac 30'
+  print 'monitor_30min'
+end
+
+M.proxy_on = function()
+  vim.fn.system [[reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Internet Settings" /v ProxyEnable /t REG_DWORD /d 1 /f]]
+  print 'proxy_on'
+end
+
+M.proxy_off = function()
+  vim.fn.system [[reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Internet Settings" /v ProxyEnable /t REG_DWORD /d 0 /f]]
+  print 'proxy_off'
+end
+
+M.path = function()
+  vim.fn.system 'rundll32 sysdm.cpl,EditEnvironmentVariables'
+end
+
+M.sound = function()
+  vim.fn.system 'mmsys.cpl'
+end
+
 M.items = {
   { 'toggle [Menu Popup Way]',              M.toggle_menu_popup_way, },
+  { '[Aerial] open right',                  M.aerial_open, },
+  { '[Fugitive] open',                      M.fugitive_open, },
+  { '[Nvim-Tree] find file',                M.nvim_tree_find_file, },
+  { '[Nvim-Tree] open',                     M.nvim_tree_open, },
+  { '[Spectre] open cword cfile',           M.spectre_open_file_search, },
+  { '[Spectre] open cword cwd',             M.spectre_open_visual, },
   { '[Copy] all to system clipboard',       M.copy_all_to_system_clipboard, },
   { '[Copy] paragraph to system clipboard', M.copy_paragraph_to_system_clipboard, },
-  { '[Nvim-Tree] open',                     M.nvim_tree_open, },
-  { '[Nvim-Tree] find file',                M.nvim_tree_find_file, },
-  { '[Fugitive] open',                      M.fugitive_open, },
-  { '[Spectre] open cword cwd',             M.spectre_open_visual, },
-  { '[Spectre] open cword cfile',           M.spectre_open_file_search, },
-  { '[Aerial] open right',                  M.aerial_open, },
+  { '[Monitor] timeout 1 min',              M.monitor_1min, },
+  { '[Monitor] timeout 30 min',             M.monitor_30min, },
+  { '[Proxy] on',                           M.proxy_on, },
+  { '[Proxy] off',                          M.proxy_off, },
+  { '[Path] open',                          M.path, },
   { '[Quit All]',                           M.quit_all, },
 }
 
@@ -222,5 +257,6 @@ M.right_click = function()
 end
 
 vim.keymap.set({ 'n', 'v', }, '<RightMouse>', M.right_click, { desc = '<RightMouse>', expr = true, })
+vim.keymap.set({ 'n', 'v', }, '<leader>`', M.right_click, { desc = '<RightMouse>', expr = true, })
 
 return M
