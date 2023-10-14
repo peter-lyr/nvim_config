@@ -33,6 +33,7 @@ local function asyncrunprepare()
       local temp = #vim.fn.getqflist()
       if l ~= temp then
         pcall(vim.call, 'fugitive#ReloadStatus')
+        pcall(require 'quickfix'.ausize)
         l = temp
       end
     end)
