@@ -17,6 +17,18 @@ local wrap_node = function(fn)
   end
 end
 
+-- root_folder_label
+
+local show_cwd_root_toggle = function()
+  if M.show_cwd_root then
+    M.show_cwd_root = nil
+  else
+    M.show_cwd_root = 1
+  end
+  vim.cmd 'NvimTreeClose'
+  vim.cmd 'NvimTreeOpen'
+end
+
 local function root_folder_label(root_cwd)
   if M.show_cwd_root then
     return root_cwd
@@ -41,7 +53,7 @@ local function plugins_map(bufnr)
   local function opts(desc)
     return { desc = 'nvim-tree: ' .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true, }
   end
-  vim.keymap.set('n', '<c-bs>', wrap_node(plug.show_cwd_root_toggle), opts 'Show cwd root or not')
+  vim.keymap.set('n', '<c-bs>', wrap_node(show_cwd_root_toggle), opts 'Show cwd root or not')
   vim.keymap.set('n', 's', wrap_node(plug.start_file), opts 'start file')
   vim.keymap.set('n', 'gs', wrap_node(plug.start_dir), opts 'start dir')
 

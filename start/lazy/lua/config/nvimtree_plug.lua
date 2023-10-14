@@ -30,16 +30,6 @@ M.start_dir = function(node)
   vim.cmd('silent !start ' .. get_dtarget(node))
 end
 
-M.show_cwd_root_toggle = function()
-  if M.show_cwd_root then
-    M.show_cwd_root = nil
-  else
-    M.show_cwd_root = 1
-  end
-  vim.cmd 'wincmd p'
-  vim.cmd 'wincmd p'
-end
-
 -- bcomp.lua
 
 M.bcomp1 = function(node)
