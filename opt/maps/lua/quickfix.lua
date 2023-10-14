@@ -102,7 +102,7 @@ M.del_dupl = function()
   end
 end
 
-M.lines = 0
+M.height = 0
 M.bufnr = 0
 
 pcall(vim.api.nvim_del_autocmd, vim.g.quickfix_au_bufenter)
@@ -110,8 +110,8 @@ pcall(vim.api.nvim_del_autocmd, vim.g.quickfix_au_bufenter)
 vim.g.quickfix_au_bufenter = vim.api.nvim_create_autocmd({ 'BufEnter', }, {
   callback = function(ev)
     if vim.api.nvim_buf_get_option(vim.fn.bufnr(), 'buftype') == 'quickfix' then
-      M.lines = vim.fn.line '$'
       M.bufnr = ev.buf
+      M.height = vim.api.nvim_win_get_height(0)
       vim.o.wrap = false
       vim.keymap.set('n', 'o', M.open_and_close, { buffer = ev.buf, nowait = true, silent = true, })
       vim.keymap.set('n', 'a', M.open_and_close, { buffer = ev.buf, nowait = true, silent = true, })
@@ -125,11 +125,13 @@ vim.g.quickfix_au_bufenter = vim.api.nvim_create_autocmd({ 'BufEnter', }, {
 })
 
 M.ausize = function()
-  if vim.api.nvim_buf_is_valid(M.bufnr) == true and vim.api.nvim_win_get_height(vim.fn.win_getid(vim.fn.bufwinnr(M.bufnr))) < 10 then
-    local lines = vim.fn.line '$'
-    if lines > M.lines then
-      M.lines = lines
-      vim.api.nvim_win_set_height(M.bufnr, lines)
+  if vim.api.nvim_buf_is_valid(M.bufnr) == true then
+    local winid = vim.fn.win_getid(vim.fn.bufwinnr(M.bufnr))
+    if vim.api.nvim_win_get_height(winid) < 10 and M.height < 10 then
+      if vim.fn.line '$' >= M.height then
+        vim.api.nvim_win_set_height(winid, 10)
+        M.height = 10
+      end
     end
   end
 end
