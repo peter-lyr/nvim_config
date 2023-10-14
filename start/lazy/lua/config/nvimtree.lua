@@ -176,6 +176,7 @@ local cfg_tbl = {
   },
   git = {
     enable = true,
+    timeout = 40,
   },
   view = {
     width = 30,
