@@ -102,11 +102,14 @@ M.del_dupl = function()
   end
 end
 
+M.lines = 0
+
 pcall(vim.api.nvim_del_autocmd, vim.g.quickfix_au_bufenter)
 
 vim.g.quickfix_au_bufenter = vim.api.nvim_create_autocmd({ 'BufEnter', }, {
   callback = function(ev)
     if vim.api.nvim_buf_get_option(vim.fn.bufnr(), 'buftype') == 'quickfix' then
+      M.lines = vim.fn.line '$'
       vim.o.wrap = false
       vim.keymap.set('n', 'o', M.open_and_close, { buffer = ev.buf, nowait = true, silent = true, })
       vim.keymap.set('n', 'a', M.open_and_close, { buffer = ev.buf, nowait = true, silent = true, })
@@ -115,6 +118,22 @@ vim.g.quickfix_au_bufenter = vim.api.nvim_create_autocmd({ 'BufEnter', }, {
       vim.cmd 'setlocal scrolloff=0'
       M.del_dupl()
       M.wait_map_q()
+    end
+  end,
+})
+
+pcall(vim.api.nvim_del_autocmd, vim.g.quickfix_au_cursorhold)
+
+vim.g.quickfix_au_cursorhold = vim.api.nvim_create_autocmd({ 'CursorHold', }, {
+  callback = function(ev)
+    if vim.api.nvim_buf_get_option(vim.fn.bufnr(), 'buftype') == 'quickfix' then
+      if vim.api.nvim_win_get_height(0) < 10 then
+        local lines = vim.fn.line '$'
+        if lines > M.lines then
+          M.lines = lines
+          vim.api.nvim_win_set_height(0, lines)
+        end
+      end
     end
   end,
 })
