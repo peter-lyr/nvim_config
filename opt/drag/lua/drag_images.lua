@@ -43,9 +43,20 @@ M.get_relative_head = function(base_file, target_file)
   return string.gsub(relative, '([^/]+)', '..')
 end
 
+M.notify = function(info)
+  vim.notify(info, 'info', {
+    animate = false,
+    on_open = function(win)
+      local buf = vim.api.nvim_win_get_buf(win)
+      vim.api.nvim_buf_set_option(buf, 'filetype', 'markdown')
+      vim.api.nvim_win_set_option(win, 'concealcursor', 'nvic')
+    end,
+    timeout = 1000 * 8,
+  })
+end
+
 M.copy_image = function(src, tgt)
   vim.fn.system(string.format('copy /y "%s" "%s"', src, tgt))
-  print(string.format('copy /y "%s" "%s"', src, tgt))
 end
 
 M.prepare = function(project, image_fname, markdown_fname)
@@ -106,7 +117,7 @@ end
 local function system_run(way, str_format, ...)
   local cmd = string.format(str_format, ...)
   if way == 'start' then
-    cmd = string.format([[silent !start cmd /c "%s & pause"]], cmd)
+    cmd = string.format([[silent !start cmd /c "%s"]], cmd)
   elseif way == 'asyncrun' then
     cmd = string.format('AsyncRun %s', cmd)
   elseif way == 'term' then
@@ -115,17 +126,31 @@ local function system_run(way, str_format, ...)
   vim.cmd(cmd)
 end
 
-M.update = function()
+M.update = function(cur)
   local drag_images_update_py = require 'plenary.path':new(vim.g.pack_path):joinpath('nvim_config', 'opt', 'drag', 'lua', 'drag_images_update.py').filename
   local project = rep(vim.fn['ProjectRootGet']())
-  system_run('start', 'python "%s" "%s" "%s" "%s"', drag_images_update_py, project, M.image_root_dir, M.image_root_md)
+  local fname = vim.api.nvim_buf_get_name(0)
+  local ext = string.match(fname, '%.([^.]+)$')
+  if cur == 'cur' and 1 then
+    if vim.tbl_contains(M.markdowns_fts, ext) == true then
+      cur = fname
+      M.notify('[updating] markdown image cur: `' .. vim.fn.fnamemodify(fname, ':t') .. '`')
+    else
+      M.notify('update markdown image cur [failed]: not markdown: `' .. vim.fn.fnamemodify(fname, ':t') .. '`')
+      return
+    end
+  else
+    M.notify('[updating] markdown image cwd: `' .. project .. '`')
+    cur = ''
+  end
+  system_run('start', 'python "%s" "%s" "%s" "%s" "%s"', drag_images_update_py, project, M.image_root_dir, M.image_root_md, cur)
 end
 
 M.paste = function(png)
   local fname = vim.api.nvim_buf_get_name(0)
   local project = rep(vim.fn['ProjectRootGet'](fname))
   if #project == 0 then
-    print('not in a project:', fname)
+    M.notify('not in a project: `' .. fname .. '`')
     return ''
   end
   vim.g.temp_image_en = 0
@@ -139,7 +164,7 @@ if isinstance(img, Image.Image):
 EOF
   ]]
   if vim.g.temp_image_en == 0 then
-    print 'no image in clipboard.'
+    M.notify 'no image in clipboard.'
     return
   end
   local image_name = vim.fn.input('Input ' .. png .. ' image name: ', vim.fn.strftime '%Y%m%d-%A-%H%M%S-')
@@ -163,7 +188,7 @@ EOF
     M.append_info()
     M.append_line()
   else
-    print 'get image failed.'
+    M.notify 'get image failed.'
   end
 end
 
@@ -171,7 +196,7 @@ M.check = function(buf)
   local markdown_fname = rep(require 'drag'.last_file)
   local project = rep(vim.fn['ProjectRootGet'](markdown_fname))
   if #project == 0 then
-    print('not in a project:', markdown_fname)
+    M.notify('not in a project: ' .. markdown_fname)
     return ''
   end
   local ext = string.match(markdown_fname, '%.([^.]+)$')
