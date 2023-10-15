@@ -114,16 +114,45 @@ M.append_image = function(project, image_fname, markdown_fname)
   return { callback, { M.append_line_pre(), }, }
 end
 
+local drag_images_timer = nil
+
+DragImageDone = function()
+  if drag_images_timer then
+    drag_images_timer:stop()
+  end
+  local l = vim.fn.getqflist()
+  vim.notify(l[1]['text'] .. '\n' .. l[#l - 1]['text'] .. '\n' .. l[#l]['text'])
+  vim.cmd 'au! User AsyncRunStop'
+end
+
+local function asyncrunprepare()
+  local l = 0
+  drag_images_timer = vim.loop.new_timer()
+  drag_images_timer:start(300, 100, function()
+    vim.schedule(function()
+      local temp = #vim.fn.getqflist()
+      if l ~= temp then
+        pcall(require 'quickfix'.ausize)
+        l = temp
+      end
+    end)
+  end)
+  vim.cmd [[au User AsyncRunStop call v:lua.DragImageDone()]]
+end
+
 local function system_run(way, str_format, ...)
   local cmd = string.format(str_format, ...)
   if way == 'start' then
     cmd = string.format([[silent !start cmd /c "%s"]], cmd)
+    vim.cmd(cmd)
   elseif way == 'asyncrun' then
     cmd = string.format('AsyncRun %s', cmd)
+    asyncrunprepare()
+    vim.cmd(cmd)
   elseif way == 'term' then
     cmd = string.format('wincmd s|term %s', cmd)
+    vim.cmd(cmd)
   end
-  vim.cmd(cmd)
 end
 
 M.update = function(cur)
@@ -143,7 +172,7 @@ M.update = function(cur)
     M.notify('[updating] markdown image cwd: `' .. project .. '`')
     cur = ''
   end
-  system_run('start', 'python "%s" "%s" "%s" "%s" "%s"', drag_images_update_py, project, M.image_root_dir, M.image_root_md, cur)
+  system_run('asyncrun', 'python "%s" "%s" "%s" "%s" "%s"', drag_images_update_py, project, M.image_root_dir, M.image_root_md, cur)
 end
 
 M.paste = function(png)
