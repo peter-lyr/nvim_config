@@ -1,2 +1,2 @@
 1. [ ] del index.lock
-2. [ ] telescope startuptime
+2. [x] telescope startuptime
