@@ -39,7 +39,11 @@ vim.g.drag_au_bufreadpost = vim.api.nvim_create_autocmd({ 'BufReadPost', }, {
   callback = function()
     vim.schedule(function()
       if #M.post_cmd > 0 then
-        pcall(vim.cmd, M.post_cmd)
+        if type(M.post_cmd) == 'string' then
+          pcall(vim.cmd, M.post_cmd)
+        elseif type(M.post_cmd) == 'table' then
+          M.post_cmd[1](unpack(M.post_cmd[2]))
+        end
       end
       M.post_cmd = ''
     end)
