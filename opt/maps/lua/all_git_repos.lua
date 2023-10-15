@@ -15,16 +15,47 @@ local function system_cd(p)
   return s
 end
 
+M.asyncrunprepare = function()
+  local l1 = 0
+  AsyncrunTimer = nil
+  AsyncrunTimer = vim.loop.new_timer()
+  AsyncrunTimer:start(300, 100, function()
+    vim.schedule(function()
+      local temp = #vim.fn.getqflist()
+      if l1 ~= temp then
+        pcall(require 'quickfix'.ausize)
+        l1 = temp
+      end
+    end)
+  end)
+  AsyncRunDone = function()
+    if AsyncrunTimer then
+      AsyncrunTimer:stop()
+    end
+    local l2 = vim.fn.getqflist()
+    if #l2 > 2 then
+      vim.notify(l2[1]['text'] .. '\n' .. l2[#l2 - 1]['text'] .. '\n' .. l2[#l2]['text'])
+    else
+      vim.notify(l2[1]['text'] .. '\n' .. l2[2]['text'])
+    end
+    vim.cmd 'au! User AsyncRunStop'
+  end
+  vim.cmd [[au User AsyncRunStop call v:lua.AsyncRunDone()]]
+end
+
 local function system_run(way, str_format, ...)
   local cmd = string.format(str_format, ...)
   if way == 'start' then
-    cmd = string.format([[silent !start cmd /c "%s & pause"]], cmd)
+    cmd = string.format([[silent !start cmd /c "%s"]], cmd)
+    vim.cmd(cmd)
   elseif way == 'asyncrun' then
     cmd = string.format('AsyncRun %s', cmd)
+    M.asyncrunprepare()
+    vim.cmd(cmd)
   elseif way == 'term' then
     cmd = string.format('wincmd s|term %s', cmd)
+    vim.cmd(cmd)
   end
-  vim.cmd(cmd)
 end
 
 M.all_git_repos_dir_p = require 'plenary.path':new(vim.fn.stdpath 'data'):joinpath 'all_git_repos'
@@ -42,7 +73,7 @@ end
 pcall(vim.cmd, 'Lazy load telescope-ui-select.nvim')
 
 M.update = function()
-  system_run('start', 'chcp 65001 && %s python "%s" "%s"', system_cd(M.all_git_repos_dir_p.filename), M.all_git_repos_py_p.filename, M.all_git_repos_txt_p.filename)
+  system_run('asyncrun', 'chcp 65001 && %s python "%s" "%s"', system_cd(M.all_git_repos_dir_p.filename), M.all_git_repos_py_p.filename, M.all_git_repos_txt_p.filename)
 end
 
 M.sel = function()

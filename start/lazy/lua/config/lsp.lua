@@ -60,25 +60,54 @@ local function rep(content)
   return content
 end
 
+M.asyncrunprepare = function()
+  local l1 = 0
+  AsyncrunTimer = nil
+  AsyncrunTimer = vim.loop.new_timer()
+  AsyncrunTimer:start(300, 100, function()
+    vim.schedule(function()
+      local temp = #vim.fn.getqflist()
+      if l1 ~= temp then
+        pcall(require 'quickfix'.ausize)
+        l1 = temp
+      end
+    end)
+  end)
+  AsyncRunDone = function()
+    if AsyncrunTimer then
+      AsyncrunTimer:stop()
+    end
+    local l2 = vim.fn.getqflist()
+    if #l2 > 2 then
+      vim.notify(l2[1]['text'] .. '\n' .. l2[#l2 - 1]['text'] .. '\n' .. l2[#l2]['text'])
+    else
+      vim.notify(l2[1]['text'] .. '\n' .. l2[2]['text'])
+    end
+    vim.cmd 'au! User AsyncRunStop'
+  end
+  vim.cmd [[au User AsyncRunStop call v:lua.AsyncRunDone()]]
+end
+
 local function system_run(way, str_format, ...)
   local cmd = string.format(str_format, ...)
   if way == 'start' then
-    cmd = string.format([[silent !start cmd /c "%s & pause"]], cmd)
+    cmd = string.format([[silent !start cmd /c "%s"]], cmd)
+    vim.cmd(cmd)
   elseif way == 'asyncrun' then
     cmd = string.format('AsyncRun %s', cmd)
+    M.asyncrunprepare()
+    vim.cmd(cmd)
   elseif way == 'term' then
     cmd = string.format('wincmd s|term %s', cmd)
+    vim.cmd(cmd)
   end
-  vim.cmd(cmd)
 end
-
-local M = {}
 
 M.update_mason_cmd_path = function()
   local config = require 'plenary.path':new(vim.g.pack_path):joinpath('nvim_config', 'start', 'lazy', 'lua', 'config')
   local lsp_mason_path_py = config:joinpath 'lsp_mason_cmd_path.py'.filename
   local install_root_dir = require 'mason.settings'.current.install_root_dir
-  system_run('start', 'python "%s" "%s"', lsp_mason_path_py, install_root_dir)
+  system_run('asyncrun', 'python "%s" "%s"', lsp_mason_path_py, install_root_dir)
 end
 
 M.lua_libraries_dir_p = require 'plenary.path':new(vim.fn.stdpath 'data'):joinpath 'lua_libraries'

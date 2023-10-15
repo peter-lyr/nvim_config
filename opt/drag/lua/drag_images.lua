@@ -114,30 +114,32 @@ M.append_image = function(project, image_fname, markdown_fname)
   return { callback, { M.append_line_pre(), }, }
 end
 
-local drag_images_timer = nil
-
-DragImageDone = function()
-  if drag_images_timer then
-    drag_images_timer:stop()
-  end
-  local l = vim.fn.getqflist()
-  vim.notify(l[1]['text'] .. '\n' .. l[#l - 1]['text'] .. '\n' .. l[#l]['text'])
-  vim.cmd 'au! User AsyncRunStop'
-end
-
-local function asyncrunprepare()
-  local l = 0
-  drag_images_timer = vim.loop.new_timer()
-  drag_images_timer:start(300, 100, function()
+M.asyncrunprepare = function()
+  local l1 = 0
+  AsyncrunTimer = nil
+  AsyncrunTimer = vim.loop.new_timer()
+  AsyncrunTimer:start(300, 100, function()
     vim.schedule(function()
       local temp = #vim.fn.getqflist()
-      if l ~= temp then
+      if l1 ~= temp then
         pcall(require 'quickfix'.ausize)
-        l = temp
+        l1 = temp
       end
     end)
   end)
-  vim.cmd [[au User AsyncRunStop call v:lua.DragImageDone()]]
+  AsyncRunDone = function()
+    if AsyncrunTimer then
+      AsyncrunTimer:stop()
+    end
+    local l2 = vim.fn.getqflist()
+    if #l2 > 2 then
+      vim.notify(l2[1]['text'] .. '\n' .. l2[#l2 - 1]['text'] .. '\n' .. l2[#l2]['text'])
+    else
+      vim.notify(l2[1]['text'] .. '\n' .. l2[2]['text'])
+    end
+    vim.cmd 'au! User AsyncRunStop'
+  end
+  vim.cmd [[au User AsyncRunStop call v:lua.AsyncRunDone()]]
 end
 
 local function system_run(way, str_format, ...)
@@ -147,7 +149,7 @@ local function system_run(way, str_format, ...)
     vim.cmd(cmd)
   elseif way == 'asyncrun' then
     cmd = string.format('AsyncRun %s', cmd)
-    asyncrunprepare()
+    M.asyncrunprepare()
     vim.cmd(cmd)
   elseif way == 'term' then
     cmd = string.format('wincmd s|term %s', cmd)
