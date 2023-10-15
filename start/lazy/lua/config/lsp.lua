@@ -132,18 +132,11 @@ for _, v in ipairs(my_libraries) do
 end
 
 M.update_lua_libraries = function()
+  local config = require 'plenary.path':new(vim.g.pack_path):joinpath('nvim_config', 'start', 'lazy', 'lua', 'config')
   local libraries_3rd = vim.api.nvim_get_runtime_file('', true)
-  local temp = {}
-  for _, v in ipairs(libraries_3rd) do
-    local entries = require 'plenary.scandir'.scan_dir(v, { hidden = false, depth = 18, add_dirs = true, })
-    for _, entry in ipairs(entries) do
-      entry = rep(entry)
-      if require 'plenary.path':new(entry):is_dir() == true and string.match(entry, '/([^/]+)$') == 'lua' then
-        temp[#temp + 1] = entry
-      end
-    end
-  end
-  M.lua_libraries_txt_p:write(vim.fn.join(temp, '\n'), 'w')
+  local temp = vim.fn.join(libraries_3rd, '" "')
+  local lsp_lua_libraries_py = config:joinpath 'lsp_lua_libraries.py'.filename
+  system_run('asyncrun', 'python "%s" "%s" "%s"', lsp_lua_libraries_py, M.lua_libraries_txt_p.filename, temp)
 end
 
 if not M.lua_libraries_txt_p:exists() then
