@@ -5,6 +5,9 @@ return {
   lazy = true,
   dir = opt .. 'drag',
   event = { 'BufReadPre', 'BufNewFile', },
+  keys = {
+    { '<leader>mU', function() require 'drag_images'.update() end, mode = { 'n', 'v', }, silent = true, desc = 'markdown images update', },
+  },
   dependencies = {
     require 'plugins.plenary',
     'peter-lyr/vim-bbye',

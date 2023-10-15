@@ -103,6 +103,24 @@ M.append_image = function(project, image_fname, markdown_fname)
   return { callback, { M.append_line_pre(), }, }
 end
 
+local function system_run(way, str_format, ...)
+  local cmd = string.format(str_format, ...)
+  if way == 'start' then
+    cmd = string.format([[silent !start cmd /c "%s & pause"]], cmd)
+  elseif way == 'asyncrun' then
+    cmd = string.format('AsyncRun %s', cmd)
+  elseif way == 'term' then
+    cmd = string.format('wincmd s|term %s', cmd)
+  end
+  vim.cmd(cmd)
+end
+
+M.update = function()
+  local drag_images_update_py = require 'plenary.path':new(vim.g.pack_path):joinpath('nvim_config', 'opt', 'drag', 'lua', 'drag_images_update.py').filename
+  local project = rep(vim.fn['ProjectRootGet']())
+  system_run('start', 'python "%s" "%s" "%s" "%s"', drag_images_update_py, project, M.image_root_dir, M.image_root_md)
+end
+
 M.check = function(buf)
   local markdown_fname = rep(require 'drag'.last_file)
   local project = rep(vim.fn['ProjectRootGet'](markdown_fname))
