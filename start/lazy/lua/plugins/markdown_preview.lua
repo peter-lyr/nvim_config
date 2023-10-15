@@ -11,8 +11,9 @@ return {
     'MarkdownPreviewToggle',
   },
   keys = {
-    { '<leader>m<leader>', '<cmd>MarkdownPreview<cr>',     mode = { 'v', 'n', }, silent = true, desc = 'MarkdownPreview', },
-    { '<leader>mq',        '<cmd>MarkdownPreviewStop<cr>', mode = { 'v', 'n', }, silent = true, desc = 'MarkdownPreviewStop', },
+    { '<leader>m<leader>', function() require 'config.markdown_preview'.start() end,   mode = { 'v', 'n', }, silent = true, desc = 'MarkdownPreview', },
+    { '<leader>mm',        function() require 'config.markdown_preview'.restart() end, mode = { 'v', 'n', }, silent = true, desc = 'MarkdownPreview restart', },
+    { '<leader>mq',        function() require 'config.markdown_preview'.stop() end,    mode = { 'v', 'n', }, silent = true, desc = 'MarkdownPreviewStop', },
   },
   dependencies = {
     require 'plugins.plenary',
