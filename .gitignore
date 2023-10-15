@@ -11,3 +11,5 @@
 .xxdout
 lazy-lock.json
 saved_images
+*.images
+*test.*
