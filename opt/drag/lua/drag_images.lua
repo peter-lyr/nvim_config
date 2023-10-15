@@ -121,6 +121,52 @@ M.update = function()
   system_run('start', 'python "%s" "%s" "%s" "%s"', drag_images_update_py, project, M.image_root_dir, M.image_root_md)
 end
 
+M.paste = function(png)
+  local fname = vim.api.nvim_buf_get_name(0)
+  local project = rep(vim.fn['ProjectRootGet'](fname))
+  if #project == 0 then
+    print('not in a project:', fname)
+    return ''
+  end
+  vim.g.temp_image_en = 0
+  vim.cmd [[
+    python << EOF
+import vim
+from PIL import ImageGrab, Image
+img = ImageGrab.grabclipboard()
+if isinstance(img, Image.Image):
+  vim.command('let g:temp_image_en = 1')
+EOF
+  ]]
+  if vim.g.temp_image_en == 0 then
+    print 'no image in clipboard.'
+    return
+  end
+  local image_name = vim.fn.input('Input ' .. png .. ' image name: ', vim.fn.strftime '%Y%m%d-%A-%H%M%S-')
+  vim.g.temp_image_file = require 'plenary.path':new(vim.fn.expand '$temp'):joinpath(image_name .. '.' .. png).filename
+  vim.g.temp_image_ext = png
+  vim.g.temp_image_drag = require 'plenary.path':new(vim.g.pack_path):joinpath('nvim_config', 'opt', 'drag', 'lua').filename
+  vim.cmd [[
+  python << EOF
+import vim
+import subprocess
+arg1 = vim.eval('g:temp_image_file')
+arg2 = vim.eval('g:temp_image_ext')
+cwd = vim.eval('g:temp_image_drag')
+psxmlgen = subprocess.Popen([r'powershell.exe', '-ExecutionPolicy', 'Unrestricted', './GetClipboardImage.ps1', arg1, arg2], cwd=cwd)
+psxmlgen.wait()
+EOF
+  ]]
+  if require 'plenary.path':new(vim.g.temp_image_file):exists() then
+    M.prepare(project, vim.g.temp_image_file, fname)
+    M.save_image()
+    M.append_info()
+    M.append_line()
+  else
+    print 'get image failed.'
+  end
+end
+
 M.check = function(buf)
   local markdown_fname = rep(require 'drag'.last_file)
   local project = rep(vim.fn['ProjectRootGet'](markdown_fname))
