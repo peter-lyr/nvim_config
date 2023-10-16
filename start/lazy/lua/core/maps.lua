@@ -165,6 +165,10 @@ return {
     { '<leader>tr',     function() require 'toggle'.norenu(1) end,            mode = { 'n', 'v', }, silent = true, desc = 'toggle norenu', },
     { '<leader>tR',     function() require 'toggle'.norenu() end,             mode = { 'n', 'v', }, silent = true, desc = 'toggle renu', },
 
+    -- signcolumn
+    { '<leader>ts',     function() require 'toggle'.signcolumn(1) end,        mode = { 'n', 'v', }, silent = true, desc = 'toggle signcolumn=auto:1', },
+    { '<leader>tS',     function() require 'toggle'.signcolumn() end,         mode = { 'n', 'v', }, silent = true, desc = 'toggle signcolumn=no', },
+
     -- Others
 
     -- bcomp.lua

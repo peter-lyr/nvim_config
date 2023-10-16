@@ -28,4 +28,12 @@ M.norenu = function(en)
   end
 end
 
+M.signcolumn = function(en)
+  if en then
+    vim.cmd 'set signcolumn=auto:1'
+  else
+    vim.cmd 'set signcolumn=no'
+  end
+end
+
 return M

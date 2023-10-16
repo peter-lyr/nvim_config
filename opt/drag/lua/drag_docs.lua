@@ -181,7 +181,7 @@ M.update = function(cur)
   system_run('asyncrun', 'python "%s" "%s" "%s" "%s" "%s"', drag_images_docs_update_py, project, M.doc_root_dir, M.doc_root_md, cur)
 end
 
-M.is_draged = function(project, buf)
+M.is_dragged = function(project, buf)
   local doc_root_dir_path = require 'plenary.path':new(project):joinpath(M.doc_root_dir)
   local doc_root_md_path = doc_root_dir_path:joinpath(M.doc_root_md)
   local content = doc_root_md_path:read()
@@ -200,9 +200,9 @@ M.check = function(buf)
     M.notify('not in a project: ' .. markdown_fname)
     return ''
   end
-  if M.is_draged(project, buf) then
-    M.notify('is dragged: ' .. markdown_fname)
+  if M.is_dragged(project, buf) then
     local doc_fname = rep(vim.api.nvim_buf_get_name(buf))
+    M.notify('is dragged: ' .. doc_fname)
     local callback = function(result)
       vim.cmd 'Bdelete!'
       vim.fn.system('start ' .. result)

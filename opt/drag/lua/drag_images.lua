@@ -244,12 +244,33 @@ M.paste = function(png, no_input_image_name)
   M.paste_do(png, no_input_image_name)
 end
 
+M.is_dragged = function(project, buf)
+  local image_root_dir_path = require 'plenary.path':new(project):joinpath(M.image_root_dir)
+  local image_root_md_path = image_root_dir_path:joinpath(M.image_root_md)
+  local content = image_root_md_path:read()
+  local image_fname = rep(vim.api.nvim_buf_get_name(buf))
+  local hash_64 = M.get_hash(image_fname)
+  if string.match(content, hash_64) then
+    return 1
+  end
+  return nil
+end
+
 M.check = function(buf)
   local markdown_fname = rep(require 'drag'.last_file)
   local project = rep(vim.fn['ProjectRootGet'](markdown_fname))
   if #project == 0 then
     M.notify('not in a project: ' .. markdown_fname)
     return ''
+  end
+  if M.is_dragged(project, buf) then
+    local image_fname = rep(vim.api.nvim_buf_get_name(buf))
+    M.notify('is dragged: ' .. image_fname)
+    local callback = function(result)
+      vim.cmd 'Bdelete!'
+      vim.fn.system('start ' .. result)
+    end
+    return { callback, { image_fname, }, }
   end
   local ext = string.match(markdown_fname, '%.([^.]+)$')
   if vim.tbl_contains(M.markdowns_fts, ext) == true then
