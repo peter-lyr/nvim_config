@@ -181,7 +181,7 @@ M.update = function(cur)
   system_run('asyncrun', 'python "%s" "%s" "%s" "%s" "%s"', drag_images_update_py, project, M.image_root_dir, M.image_root_md, cur)
 end
 
-M.paste = function(png)
+M.paste_check = function()
   local fname = vim.api.nvim_buf_get_name(0)
   local project = rep(vim.fn['ProjectRootGet'](fname))
   if #project == 0 then
@@ -198,11 +198,16 @@ if isinstance(img, Image.Image):
   vim.command('let g:temp_image_en = 1')
 EOF
   ]]
-  if vim.g.temp_image_en == 0 then
-    M.notify 'no image in clipboard.'
-    return
+  return vim.g.temp_image_en
+end
+
+M.paste_do = function(png, no_input_image_name)
+  local fname = vim.api.nvim_buf_get_name(0)
+  local project = rep(vim.fn['ProjectRootGet'](fname))
+  local image_name = vim.fn.strftime '%Y%m%d-%A-%H%M%S'
+  if not no_input_image_name then
+    image_name = vim.fn.input('Input ' .. png .. ' image name: ', vim.fn.strftime '%Y%m%d-%A-%H%M%S-')
   end
-  local image_name = vim.fn.input('Input ' .. png .. ' image name: ', vim.fn.strftime '%Y%m%d-%A-%H%M%S-')
   vim.g.temp_image_file = require 'plenary.path':new(vim.fn.expand '$temp'):joinpath(image_name .. '.' .. png).filename
   vim.g.temp_image_ext = png
   vim.g.temp_image_drag = require 'plenary.path':new(vim.g.pack_path):joinpath('nvim_config', 'opt', 'drag', 'lua').filename
@@ -227,6 +232,14 @@ EOF
   end
 end
 
+M.paste = function(png, no_input_image_name)
+  if M.paste_check() == 0 then
+    M.notify 'no image in clipboard.'
+    return
+  end
+  M.paste_do(png, no_input_image_name)
+end
+
 M.check = function(buf)
   local markdown_fname = rep(require 'drag'.last_file)
   local project = rep(vim.fn['ProjectRootGet'](markdown_fname))
@@ -244,5 +257,18 @@ M.check = function(buf)
   end
   return ''
 end
+
+MClick = function()
+  M.paste_do('jpg', 1)
+end
+
+M.middle_click = function()
+  if M.paste_check() == 0 then
+    return '<MiddleMouse>'
+  end
+  return ':<c-u>call v:lua.MClick()<cr>'
+end
+
+vim.keymap.set({ 'n', 'v', }, '<MiddleMouse>', M.middle_click, { desc = '<MiddleMouse>', expr = true, })
 
 return M
