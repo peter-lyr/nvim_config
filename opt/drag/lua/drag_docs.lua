@@ -162,7 +162,7 @@ local function system_run(way, str_format, ...)
 end
 
 M.update = function(cur)
-  local drag_docs_update_py = require 'plenary.path':new(vim.g.pack_path):joinpath('nvim_config', 'opt', 'drag', 'lua', 'drag_docs_update.py').filename
+  local drag_images_docs_update_py = require 'plenary.path':new(vim.g.pack_path):joinpath('nvim_config', 'opt', 'drag', 'lua', 'drag_images_docs_update.py').filename
   local project = rep(vim.fn['ProjectRootGet']())
   local fname = vim.api.nvim_buf_get_name(0)
   local ext = string.match(fname, '%.([^.]+)$')
@@ -178,7 +178,7 @@ M.update = function(cur)
     M.notify('[updating] markdown document cwd: `' .. project .. '`')
     cur = ''
   end
-  system_run('asyncrun', 'python "%s" "%s" "%s" "%s" "%s"', drag_docs_update_py, project, M.doc_root_dir, M.doc_root_md, cur)
+  system_run('asyncrun', 'python "%s" "%s" "%s" "%s" "%s"', drag_images_docs_update_py, project, M.doc_root_dir, M.doc_root_md, cur)
 end
 
 M.check = function(buf)

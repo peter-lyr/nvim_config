@@ -46,17 +46,17 @@ def do(file, image_root_dir, patt):
             if results:
                 temp = ""
                 for result in results:
-                    image_name = result[0]
-                    hash_name = result[1].split(b"/")[-1]
+                    head = result[0]
+                    image_name = result[1]
+                    hash_name = result[2].split(b"/")[-1]
                     # hash_8, ext = hash_name.split(b'.')[:]
                     relative = file[len(project) + 1 :]
                     if not printed:
                         print(f"-- {relative} --")
                     relative_dir = rep(os.path.dirname(relative))
-                    relative_dir_dot = re.subn(
-                        "[^/]+", "..", relative_dir
-                    )[0]
-                    new = "![%s](%s)" % (
+                    relative_dir_dot = re.subn("[^/]+", "..", relative_dir)[0]
+                    new = "%s%s](%s)" % (
+                        head.decode('utf-8'),
                         image_name.decode("utf-8"),
                         rep(
                             os.path.join(
@@ -67,7 +67,7 @@ def do(file, image_root_dir, patt):
                         ),
                     )
                     printed += 1
-                    print(str(printed) + '.', new)
+                    print(str(printed) + ".", new)
                     temp += new
                 lines_new.append(temp.encode("utf-8") + b"\n")
             else:
@@ -80,7 +80,7 @@ def do(file, image_root_dir, patt):
 
 def update(project, image_root_dir, image_root_md, cur):
     # ![1238741982374619283461](../../../.images/80cfb906.jpg)
-    patt = r"!\[([^\]]+)\]\(([^\)]+)\)"
+    patt = r"(.*\[)([^\]]+)\]\(([^\)]+)\)"
     patt = re.compile(patt.encode("utf-8"))
     if len(cur) > 0 and os.path.exists(cur):
         do(cur, image_root_dir, patt)
