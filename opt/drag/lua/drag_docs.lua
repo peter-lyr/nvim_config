@@ -178,7 +178,7 @@ M.update = function(cur)
     M.notify('[updating] markdown document cwd: `' .. project .. '`')
     cur = ''
   end
-  system_run('asyncrun', 'python "%s" "%s" "%s" "%s" "%s"', drag_images_docs_update_py, project, M.doc_root_dir, M.doc_root_md, cur)
+  system_run('asyncrun', 'python "%s" "%s" "%s" "%s"', drag_images_docs_update_py, project, M.doc_root_md, cur)
 end
 
 M.is_dragged = function(project, buf)

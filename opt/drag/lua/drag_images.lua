@@ -178,7 +178,7 @@ M.update = function(cur)
     M.notify('[updating] markdown image cwd: `' .. project .. '`')
     cur = ''
   end
-  system_run('asyncrun', 'python "%s" "%s" "%s" "%s" "%s"', drag_images_docs_update_py, project, M.image_root_dir, M.image_root_md, cur)
+  system_run('asyncrun', 'python "%s" "%s" "%s" "%s"', drag_images_docs_update_py, project, M.image_root_md, cur)
 end
 
 M.paste_check = function()
