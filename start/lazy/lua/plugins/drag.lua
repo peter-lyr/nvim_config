@@ -6,10 +6,11 @@ return {
   dir = opt .. 'drag',
   event = { 'BufReadPre', 'BufNewFile', },
   keys = {
-    { '<leader>mu',  function() require 'drag_images'.update 'cur' end, mode = { 'n', 'v', }, silent = true, desc = 'markdown images update cur', },
-    { '<leader>mU',  function() require 'drag_images'.update 'cwd' end, mode = { 'n', 'v', }, silent = true, desc = 'markdown images update cwd', },
-    { '<leader>mv',  function() require 'drag_images'.paste 'jpg' end,  mode = { 'n', 'v', }, silent = true, desc = 'markdown paste jpg image', },
-    { '<leader>mV',  function() require 'drag_images'.paste 'png' end,  mode = { 'n', 'v', }, silent = true, desc = 'markdown paste png image', },
+    { '<leader>mu', function() require 'drag_images'.update 'cur' end,        mode = { 'n', 'v', }, silent = true, desc = 'markdown images update cur', },
+    { '<leader>mU', function() require 'drag_images'.update 'cwd' end,        mode = { 'n', 'v', }, silent = true, desc = 'markdown images update cwd', },
+    { '<leader>mv', function() require 'drag_images'.paste 'jpg' end,         mode = { 'n', 'v', }, silent = true, desc = 'markdown paste jpg image', },
+    { '<leader>mV', function() require 'drag_images'.paste 'png' end,         mode = { 'n', 'v', }, silent = true, desc = 'markdown paste png image', },
+    { '<leader>mE', function() require 'drag_bin'.edit_drag_bin_fts_md() end, mode = { 'n', 'v', }, silent = true, desc = 'drag bin to xxd fts edit', },
   },
   dependencies = {
     require 'plugins.plenary',
