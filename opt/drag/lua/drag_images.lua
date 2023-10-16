@@ -39,6 +39,9 @@ end
 M.get_relative_head = function(base_file, target_file)
   local relative = string.sub(target_file, #base_file + 2, #target_file)
   relative = vim.fn.fnamemodify(relative, ':h')
+  if relative == '.' then
+    return '.'
+  end
   relative = string.gsub(relative, '(\\)', '/')
   return string.gsub(relative, '([^/]+)', '..')
 end
