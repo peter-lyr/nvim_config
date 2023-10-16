@@ -44,4 +44,8 @@ M.bcomplast = function()
   require 'bcomp'.diff_last()
 end
 
+M.quicklook = function(node)
+  vim.fn.system('QuickLook.exe ' .. node.absolute_path)
+end
+
 return M

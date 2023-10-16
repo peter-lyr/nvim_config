@@ -62,6 +62,9 @@ local function plugins_map(bufnr)
   vim.keymap.set('n', "<leader>'`", wrap_node(plug.bcomp2), opts 'bcomp 2')
   vim.keymap.set('n', "<leader>'l", wrap_node(plug.bcomplast), opts 'bcomp last')
 
+  -- quicklook
+  vim.keymap.set('n', "`", wrap_node(plug.quicklook), opts 'quicklook')
+
   -- toggle
   vim.keymap.set('n', "<leader>'a", wrap_node(ausize_toggle), opts 'ausize toggle')
 end
