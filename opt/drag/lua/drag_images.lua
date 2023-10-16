@@ -249,6 +249,9 @@ M.is_dragged = function(project, buf)
   local image_root_md_path = image_root_dir_path:joinpath(M.image_root_md)
   local content = image_root_md_path:read()
   local image_fname = rep(vim.api.nvim_buf_get_name(buf))
+  if not require 'plenary.path':new(image_fname):exists() then
+    return nil
+  end
   local hash_64 = M.get_hash(image_fname)
   if string.match(content, hash_64) then
     return 1

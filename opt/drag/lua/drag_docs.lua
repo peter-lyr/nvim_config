@@ -186,6 +186,9 @@ M.is_dragged = function(project, buf)
   local doc_root_md_path = doc_root_dir_path:joinpath(M.doc_root_md)
   local content = doc_root_md_path:read()
   local doc_fname = rep(vim.api.nvim_buf_get_name(buf))
+  if not require 'plenary.path':new(doc_fname):exists() then
+    return nil
+  end
   local hash_64 = M.get_hash(doc_fname)
   if string.match(content, hash_64) then
     return 1
