@@ -181,12 +181,33 @@ M.update = function(cur)
   system_run('asyncrun', 'python "%s" "%s" "%s" "%s" "%s"', drag_images_docs_update_py, project, M.doc_root_dir, M.doc_root_md, cur)
 end
 
+M.is_draged = function(project, buf)
+  local doc_root_dir_path = require 'plenary.path':new(project):joinpath(M.doc_root_dir)
+  local doc_root_md_path = doc_root_dir_path:joinpath(M.doc_root_md)
+  local content = doc_root_md_path:read()
+  local doc_fname = rep(vim.api.nvim_buf_get_name(buf))
+  local hash_64 = M.get_hash(doc_fname)
+  if string.match(content, hash_64) then
+    return 1
+  end
+  return nil
+end
+
 M.check = function(buf)
   local markdown_fname = rep(require 'drag'.last_file)
   local project = rep(vim.fn['ProjectRootGet'](markdown_fname))
   if #project == 0 then
     M.notify('not in a project: ' .. markdown_fname)
     return ''
+  end
+  if M.is_draged(project, buf) then
+    M.notify('is dragged: ' .. markdown_fname)
+    local doc_fname = rep(vim.api.nvim_buf_get_name(buf))
+    local callback = function(result)
+      vim.cmd 'Bdelete!'
+      vim.fn.system('start ' .. result)
+    end
+    return { callback, { doc_fname, }, }
   end
   local ext = string.match(markdown_fname, '%.([^.]+)$')
   if vim.tbl_contains(M.markdowns_fts, ext) == true then
