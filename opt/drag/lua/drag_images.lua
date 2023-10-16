@@ -263,10 +263,13 @@ MClick = function()
 end
 
 M.middle_click = function()
-  if M.paste_check() == 0 then
+  if vim.fn.getmousepos()['line'] == 0 then
     return '<MiddleMouse>'
   end
-  return ':<c-u>call v:lua.MClick()<cr>'
+  if M.paste_check() == 1 then
+    return ':<c-u>call v:lua.MClick()<cr>'
+  end
+  return '<MiddleMouse>'
 end
 
 vim.keymap.set({ 'n', 'v', }, '<MiddleMouse>', M.middle_click, { desc = '<MiddleMouse>', expr = true, })
