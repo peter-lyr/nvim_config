@@ -257,6 +257,11 @@ M.close = function()
   vim.cmd 'NvimTreeClose'
 end
 
+M.restart = function()
+  vim.cmd('source ' .. require 'plenary.path':new(vim.g.pack_path):joinpath('nvim_config', 'start', 'lazy', 'lua', 'config', 'nvimtree.lua').filename)
+  M.open()
+end
+
 pcall(vim.api.nvim_del_autocmd, vim.g.nvimtree_au_focusgained)
 
 vim.g.nvimtree_au_focusgained = vim.api.nvim_create_autocmd({ 'FocusGained', }, {
