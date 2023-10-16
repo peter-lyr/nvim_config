@@ -4,7 +4,7 @@ local M = {}
 
 -- save dragging image files to .images/ in the project root.
 -- rename them by the calculation result of hash.
--- save key/value in .image/_.txt:
+-- save key/value in .image/_.md:
 -- hash: image file name.
 
 package.loaded['drag_images'] = nil

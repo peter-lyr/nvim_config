@@ -26,6 +26,9 @@ vim.g.drag_au_bufreadpre = vim.api.nvim_create_autocmd({ 'BufReadPre', }, {
       if M.is_dragging == true then
         M.post_cmd = require 'drag_images'.check(ev.buf)
         if #M.post_cmd == 0 then
+          M.post_cmd = require 'drag_docs'.check(ev.buf)
+        end
+        if #M.post_cmd == 0 then
           M.post_cmd = require 'drag_bin'.check(ev.buf)
         end
       end
