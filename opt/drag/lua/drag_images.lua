@@ -138,6 +138,7 @@ M.asyncrunprepare = function()
       vim.notify(l2[1]['text'] .. '\n' .. l2[2]['text'])
     end
     vim.cmd 'au! User AsyncRunStop'
+    vim.cmd 'e!'
   end
   vim.cmd [[au User AsyncRunStop call v:lua.AsyncRunDone()]]
 end
