@@ -23,7 +23,7 @@ return {
     vim.g.mkdp_auto_close      = 0
     vim.g.mkdp_auto_start      = 1
     vim.g.mkdp_combine_preview = 1
-    vim.g.mkdp_browser         = 'firefox.exe'
+    vim.g.mkdp_browser         = 'firefox.exe' -- Firefox Setup 55.0.exe test ok, http://ftp.mozilla.org/pub/firefox/releases/55.0/win64/zh-CN/Firefox%20Setup%2055.0.exe
     require 'config.whichkey'.add { ['<leader>m'] = { name = 'MarkdownPreview', }, }
   end,
 }
