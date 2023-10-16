@@ -150,6 +150,10 @@ M.quit_all = function()
   vim.cmd 'qa!'
 end
 
+M.refresh = function()
+  vim.cmd 'e!'
+end
+
 ------------
 -- nvim-tree
 ------------
@@ -254,6 +258,7 @@ M.items = {
   { '[Nvim-Tree] close',                    M.nvim_tree_close, },
   { '[Spectre] open cword cfile',           M.spectre_open_file_search, },
   { '[Spectre] open cword cwd',             M.spectre_open_visual, },
+  { '[Refresh]',                            M.refresh, },
   { '[Copy] all to system clipboard',       M.copy_all_to_system_clipboard, },
   { '[Copy] paragraph to system clipboard', M.copy_paragraph_to_system_clipboard, },
   { '[Monitor] timeout 1 min',              M.monitor_1min, },
