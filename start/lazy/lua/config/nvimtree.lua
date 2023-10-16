@@ -304,21 +304,19 @@ vim.g.nvimtree_au_bufenter = vim.api.nvim_create_autocmd({ 'BufEnter', 'DirChang
   callback = function()
     if vim.bo.ft == 'NvimTree' and M.ausize_en then
       vim.fn.timer_start(10, function()
-        local max = require 'nvim-tree.view'.View.width
+        local max = 0
         local min_nr = vim.fn.line 'w0'
         if min_nr == 1 then
           min_nr = 2
         end
         local max_nr = vim.fn.line 'w$'
-        local ok = nil
         for line = min_nr, max_nr do
           local cnt = vim.fn.strdisplaywidth(vim.fn.getline(line))
           if max < cnt then
             max = cnt
-            ok = 1
           end
         end
-        if ok then
+        if max + 1 + #tostring(vim.fn.line 'w$') > require 'nvim-tree.view'.View.width then
           vim.api.nvim_win_set_width(0, max + 5 + #tostring(vim.fn.line '$'))
         end
       end)
