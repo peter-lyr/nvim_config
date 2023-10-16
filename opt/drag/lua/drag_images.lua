@@ -247,6 +247,9 @@ end
 M.is_dragged = function(project, buf)
   local image_root_dir_path = require 'plenary.path':new(project):joinpath(M.image_root_dir)
   local image_root_md_path = image_root_dir_path:joinpath(M.image_root_md)
+  if not require 'plenary.path':new(image_root_md_path):exists() then
+    return nil
+  end
   local content = image_root_md_path:read()
   local image_fname = rep(vim.api.nvim_buf_get_name(buf))
   if not require 'plenary.path':new(image_fname):exists() then

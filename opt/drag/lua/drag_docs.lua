@@ -120,6 +120,9 @@ end
 M.is_dragged = function(project, buf)
   local doc_root_dir_path = require 'plenary.path':new(project):joinpath(M.doc_root_dir)
   local doc_root_md_path = doc_root_dir_path:joinpath(M.doc_root_md)
+  if not require 'plenary.path':new(doc_root_md_path):exists() then
+    return nil
+  end
   local content = doc_root_md_path:read()
   local doc_fname = rep(vim.api.nvim_buf_get_name(buf))
   if not require 'plenary.path':new(doc_fname):exists() then
