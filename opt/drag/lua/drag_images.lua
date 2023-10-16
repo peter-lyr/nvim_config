@@ -271,7 +271,7 @@ M.check = function(buf)
     M.notify('is dragged: ' .. image_fname)
     local callback = function(result)
       vim.cmd 'Bdelete!'
-      vim.fn.system('start ' .. result)
+      vim.fn.system('QuickLook.exe ' .. result)
     end
     return { callback, { image_fname, }, }
   end
