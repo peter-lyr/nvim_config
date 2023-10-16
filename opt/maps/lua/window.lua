@@ -298,9 +298,13 @@ M.stack_open_txt = function()
   vim.cmd('e ' .. M.stack_full_fname_txt_p.filename)
 end
 
-M.restart_nvim_qt = function()
+M.start_new_nvim_qt = function()
   local start_nvim_qt_exe = vim.fn.expand '$VIMRUNTIME' .. '\\pack\\nvim_config\\start-nvim-qt.exe'
   vim.cmd(string.format([[silent !start /b /min cmd /c "%s"]], start_nvim_qt_exe))
+end
+
+M.restart_nvim_qt = function()
+  M.start_new_nvim_qt()
   vim.cmd 'qa!'
 end
 

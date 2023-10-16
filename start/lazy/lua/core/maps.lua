@@ -134,6 +134,7 @@ return {
     -- quit
     { '<leader>xa',     '<cmd>qa!<cr>',                                       mode = { 'n', 'v', }, silent = true, desc = 'Window quit all', },
     { '<leader>xA',     function() require 'window'.restart_nvim_qt() end,    mode = { 'n', 'v', }, silent = true, desc = 'Window restart nvim-qt', },
+    { '<leader>xS',     function() require 'window'.start_new_nvim_qt() end,  mode = { 'n', 'v', }, silent = true, desc = 'Window restart nvim-qt', },
 
     -- bwipeout deleted
     { '<leader>x<del>', function() require 'window'.bwipeout_deleted() end,   mode = { 'n', 'v', }, silent = true, desc = 'Window bwipeout_deleted', },
