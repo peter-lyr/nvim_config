@@ -316,7 +316,7 @@ vim.g.nvimtree_au_bufenter = vim.api.nvim_create_autocmd({ 'BufEnter', 'DirChang
             max = cnt
           end
         end
-        if max + 1 + #tostring(vim.fn.line 'w$') > require 'nvim-tree.view'.View.width then
+        if max + 1 + 1 + #tostring(vim.fn.line 'w$') + 1 + 2 > require 'nvim-tree.view'.View.width then
           vim.api.nvim_win_set_width(0, max + 5 + #tostring(vim.fn.line '$'))
         end
       end)
