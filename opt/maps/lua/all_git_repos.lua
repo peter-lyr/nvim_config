@@ -73,7 +73,7 @@ end
 pcall(vim.cmd, 'Lazy load telescope-ui-select.nvim')
 
 M.update = function()
-  system_run('asyncrun', 'chcp 65001 && %s python "%s" "%s"', system_cd(M.all_git_repos_dir_p.filename), M.all_git_repos_py_p.filename, M.all_git_repos_txt_p.filename)
+  system_run('start', 'chcp 65001 && %s python "%s" "%s"', system_cd(M.all_git_repos_dir_p.filename), M.all_git_repos_py_p.filename, M.all_git_repos_txt_p.filename)
 end
 
 M.sel = function()

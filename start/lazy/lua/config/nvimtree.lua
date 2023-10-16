@@ -302,13 +302,17 @@ vim.g.nvimtree_au_bufenter = vim.api.nvim_create_autocmd({ 'BufEnter', 'DirChang
           min_nr = 2
         end
         local max_nr = vim.fn.line 'w$'
+        local ok = nil
         for line = min_nr, max_nr do
           local cnt = vim.fn.strdisplaywidth(vim.fn.getline(line))
           if max < cnt then
             max = cnt
+            ok = 1
           end
         end
-        vim.api.nvim_win_set_width(0, max + 5 + #tostring(vim.fn.line '$'))
+        if ok then
+          vim.api.nvim_win_set_width(0, max + 5 + #tostring(vim.fn.line '$'))
+        end
       end)
     end
   end,
