@@ -158,6 +158,10 @@ M.nvim_tree_open = function()
   vim.cmd 'NvimTreeOpen'
 end
 
+M.nvim_tree_close = function()
+  vim.cmd 'NvimTreeClose'
+end
+
 M.nvim_tree_find_file = function()
   vim.cmd 'NvimTreeFindFile'
 end
@@ -190,6 +194,26 @@ M.aerial_open = function()
   vim.cmd 'AerialOpen right'
 end
 
+M.aerial_close = function()
+  vim.cmd 'AerialCloseAll'
+end
+
+------------
+-- minimap
+------------
+
+M.minimap_open = function()
+  require 'config.minimap'.open()
+end
+
+M.minimap_close = function()
+  require 'config.minimap'.close()
+end
+
+------------
+-- others
+------------
+
 M.monitor_1min = function()
   vim.fn.system 'powercfg -x -monitor-timeout-ac 1'
   print 'monitor_1min'
@@ -221,9 +245,13 @@ end
 M.items = {
   { 'toggle [Menu Popup Way]',              M.toggle_menu_popup_way, },
   { '[Aerial] open right',                  M.aerial_open, },
+  { '[Aerial] close',                       M.aerial_close, },
+  { '[Minimap] open',                       M.minimap_open, },
+  { '[Minimap] close',                      M.minimap_close, },
   { '[Fugitive] open',                      M.fugitive_open, },
   { '[Nvim-Tree] find file',                M.nvim_tree_find_file, },
   { '[Nvim-Tree] open',                     M.nvim_tree_open, },
+  { '[Nvim-Tree] close',                    M.nvim_tree_close, },
   { '[Spectre] open cword cfile',           M.spectre_open_file_search, },
   { '[Spectre] open cword cwd',             M.spectre_open_visual, },
   { '[Copy] all to system clipboard',       M.copy_all_to_system_clipboard, },
