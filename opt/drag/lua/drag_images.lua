@@ -183,6 +183,10 @@ end
 
 M.paste_check = function()
   local fname = vim.api.nvim_buf_get_name(0)
+  local ext = string.match(fname, '%.([^.]+)$')
+  if vim.tbl_contains(M.markdowns_fts, ext) == false then
+    return ''
+  end
   local project = rep(vim.fn['ProjectRootGet'](fname))
   if #project == 0 then
     M.notify('not in a project: `' .. fname .. '`')
