@@ -24,7 +24,10 @@ vim.api.nvim_create_autocmd({ 'VimLeave', }, {
     local fnames = {}
     for _, buf in ipairs(vim.api.nvim_list_bufs()) do
       if vim.api.nvim_buf_is_loaded(buf) == true and vim.api.nvim_buf_is_valid(buf) == true then
-        fnames[#fnames + 1] = vim.api.nvim_buf_get_name(buf)
+        local fname = vim.api.nvim_buf_get_name(buf)
+        if #fname > 0 and vim.fn.filereadable(fname) then
+          fnames[#fnames + 1] = fname
+        end
       end
     end
     M.sessions_txt_p:write(vim.fn.join(fnames, '\n'), 'w')
