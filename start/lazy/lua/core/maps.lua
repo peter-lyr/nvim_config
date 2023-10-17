@@ -146,6 +146,9 @@ return {
     -- info.lua
     { '<F1>',           function() require 'info'.statusline() end,           mode = { 'n', 'v', }, silent = true, desc = 'info statusline', },
 
+    -- message
+    { '<c-F1>',         function() require 'info'.message() end,              mode = { 'n', 'v', }, silent = true, desc = 'info message', },
+
     -- quickfix.lua
     { 'd<leader>',      function() require 'quickfix'.toggle() end,           mode = { 'n', 'v', }, silent = true, desc = 'quickfix open', },
 

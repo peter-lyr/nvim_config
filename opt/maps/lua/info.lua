@@ -55,4 +55,15 @@ M.statusline = function()
   })
 end
 
+M.message = function()
+  local mes = vim.fn.execute 'mes'
+  local l = vim.fn.split(mes, '\\n')
+  if #l > 0 then
+    vim.cmd 'wincmd n'
+    vim.fn.append(vim.fn.line '.', l)
+  else
+    vim.cmd 'echo "no message."'
+  end
+end
+
 return M
