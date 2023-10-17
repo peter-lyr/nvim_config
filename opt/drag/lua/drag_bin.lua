@@ -25,17 +25,26 @@ local function system_cd(p)
   return s
 end
 
+M.xxd_output_dir_p = require 'plenary.path':new([[C:\Windows\temp]]):joinpath('xxd_output')
+
+if not M.xxd_output_dir_p:exists() then
+  vim.fn.mkdir(M.xxd_output_dir_p.filename)
+end
+
+M.xxd_output_dir = M.xxd_output_dir_p.filename
+
 M.xxd_do = function(bufnr)
   local bin_fname = rep(vim.api.nvim_buf_get_name(bufnr))
-  local bin_fname_head = vim.fn.fnamemodify(bin_fname, ':h')
   local bin_fname_tail = vim.fn.fnamemodify(bin_fname, ':t')
-  local xxd_outdir = string.format('%s\\.xxdout', bin_fname_head)
-  if not require 'plenary.path':new(xxd_outdir):exists() then
-    vim.fn.mkdir(xxd_outdir)
+  local bin_fname_full__ = string.gsub(bin_fname, '\\', '_')
+  bin_fname_full__ = string.gsub(bin_fname_full__, ':', '_')
+  local xxd_output_sub_dir_p = M.xxd_output_dir_p:joinpath(bin_fname_full__)
+  if not xxd_output_sub_dir_p:exists() then
+    vim.fn.mkdir(xxd_output_sub_dir_p.filename)
   end
-  local xxd = string.format('%s\\%s.xxd', xxd_outdir, bin_fname_tail)
-  local c = string.format('%s\\%s.c', xxd_outdir, bin_fname_tail)
-  local bak = string.format('%s\\%s.bak', xxd_outdir, bin_fname_tail)
+  local xxd = xxd_output_sub_dir_p:joinpath(bin_fname_tail .. '.xxd').filename
+  local c = xxd_output_sub_dir_p:joinpath(bin_fname_tail .. '.c').filename
+  local bak = xxd_output_sub_dir_p:joinpath(bin_fname_tail .. '.bak').filename
   vim.fn.system(string.format('copy /y "%s" "%s"', bin_fname, bak))
   vim.fn.system(string.format('%s "%s" "%s"', M.xxd_cmd, bak, xxd))
   vim.fn.system(string.format('%s && %s -i "%s" "%s"', system_cd(bak), M.xxd_cmd, vim.fn.fnamemodify(bak, ':t'), c))
