@@ -2,6 +2,8 @@ local M = {}
 
 package.loaded['drag_bin'] = nil
 
+vim.cmd 'Lazy load nvim-notify'
+
 M.xxd_cmd = 'xxd'
 
 M.drag_bin_fts_md_path = require 'plenary.path':new(vim.g.pack_path):joinpath('nvim_config', 'opt', 'drag', 'lua', 'drag_bin_fts.md')
@@ -36,7 +38,7 @@ M.xxd_output_dir = M.xxd_output_dir_p.filename
 M.xxd_do = function(bufnr)
   local bin_fname = rep(vim.api.nvim_buf_get_name(bufnr))
   local bin_fname_tail = vim.fn.fnamemodify(bin_fname, ':t')
-  local bin_fname_full__ = string.gsub(bin_fname, '\\', '_')
+  local bin_fname_full__ = string.gsub(vim.fn.fnamemodify(bin_fname, ':h'), '\\', '_')
   bin_fname_full__ = string.gsub(bin_fname_full__, ':', '_')
   local xxd_output_sub_dir_p = M.xxd_output_dir_p:joinpath(bin_fname_full__)
   if not xxd_output_sub_dir_p:exists() then
