@@ -36,4 +36,20 @@ M.signcolumn = function(en)
   end
 end
 
+M.conceallevel = function(en)
+  if en then
+    vim.cmd 'set conceallevel=3'
+  else
+    vim.cmd 'set conceallevel=0'
+  end
+end
+
+M.iskeyword = function(en)
+  if en then
+    vim.cmd 'set iskeyword=@,48-57,_,192-255'
+  else
+    vim.cmd [[set iskeyword=!-~,^*,^\|,^",192-255]]
+  end
+end
+
 return M

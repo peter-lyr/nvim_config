@@ -173,6 +173,14 @@ return {
     { '<leader>ts',     function() require 'toggle'.signcolumn(1) end,        mode = { 'n', 'v', }, silent = true, desc = 'toggle signcolumn=auto:1', },
     { '<leader>tS',     function() require 'toggle'.signcolumn() end,         mode = { 'n', 'v', }, silent = true, desc = 'toggle signcolumn=no', },
 
+    -- conceallevel
+    { '<leader>tc',     function() require 'toggle'.conceallevel(1) end,      mode = { 'n', 'v', }, silent = true, desc = 'toggle conceallevel=3', },
+    { '<leader>tC',     function() require 'toggle'.conceallevel() end,       mode = { 'n', 'v', }, silent = true, desc = 'toggle conceallevel=0', },
+
+    -- iskeyword
+    { '<leader>tk',     function() require 'toggle'.iskeyword(1) end,      mode = { 'n', 'v', }, silent = true, desc = 'toggle iskeyword', },
+    { '<leader>tK',     function() require 'toggle'.iskeyword() end,       mode = { 'n', 'v', }, silent = true, desc = 'toggle iskeyword', },
+
     -- Others
 
     -- bcomp.lua
