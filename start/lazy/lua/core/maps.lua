@@ -173,9 +173,6 @@ return {
     { '<leader>ts',     function() require 'toggle'.signcolumn(1) end,        mode = { 'n', 'v', }, silent = true, desc = 'toggle signcolumn=auto:1', },
     { '<leader>tS',     function() require 'toggle'.signcolumn() end,         mode = { 'n', 'v', }, silent = true, desc = 'toggle signcolumn=no', },
 
-    -- sessions.lua
-    { '<leader>s<cr>',  function() require 'sessions'.load() end,             mode = { 'n', 'v', }, silent = true, desc = 'sessions load', },
-
     -- Others
 
     -- bcomp.lua

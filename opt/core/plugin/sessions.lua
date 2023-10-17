@@ -19,7 +19,7 @@ M.load = function()
   end
 end
 
-vim.api.nvim_create_autocmd({ 'VimLeave', }, {
+vim.api.nvim_create_autocmd({ 'VimLeavePre', }, {
   callback = function()
     local fnames = {}
     for _, buf in ipairs(vim.api.nvim_list_bufs()) do
@@ -33,5 +33,7 @@ vim.api.nvim_create_autocmd({ 'VimLeave', }, {
     M.sessions_txt_p:write(vim.fn.join(fnames, '\n'), 'w')
   end,
 })
+
+vim.keymap.set({ 'n', 'v', }, '<leader>s<cr>', function() M.load() end, { desc = 'sessions load', })
 
 return M
