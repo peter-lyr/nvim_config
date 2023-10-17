@@ -91,6 +91,14 @@ M.append_info = function()
   M.image_root_md_path:write(_line, 'a')
 end
 
+M.has_hash_8 = function()
+  local hash = M.image_root_dir .. '/' .. M.image_hash_8
+  if string.match(require 'plenary.path':new(M.markdown_fname):read(), hash) then
+    return hash
+  end
+  return nil
+end
+
 M.append_line_pre = function()
   local url = rep_reverse(require 'plenary.path':new(M.markdown_rel_head_dot):joinpath(M.image_root_dir, M.image_hash_8 .. '.' .. M.image_fname_tail_ext).filename)
   return string.format('![%s](%s)', M.image_fname_tail_root, url)
@@ -274,7 +282,14 @@ M.check = function(buf)
     M.notify('is dragged: ' .. image_fname)
     local callback = function(result)
       vim.cmd 'Bdelete!'
-      vim.fn.system('QuickLook.exe ' .. result)
+      M.prepare(project, image_fname, markdown_fname)
+      local hash = M.has_hash_8()
+      if hash then
+        vim.fn.system('QuickLook.exe ' .. result)
+        M.notify('In markdown: ' .. hash)
+      else
+        M.append_line()
+      end
     end
     return { callback, { image_fname, }, }
   end
