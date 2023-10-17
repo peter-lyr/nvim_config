@@ -13,7 +13,7 @@ M.load = function()
   local lines = M.sessions_txt_p:readlines()
   for _, line in ipairs(lines) do
     local fname = vim.fn.trim(line)
-    if #fname > 0 and vim.fn.filereadable(fname) then
+    if #fname > 0 and require 'plenary.path':new(fname):exists() then
       vim.cmd('edit ' .. fname)
     end
   end
@@ -25,7 +25,7 @@ vim.api.nvim_create_autocmd({ 'VimLeavePre', }, {
     for _, buf in ipairs(vim.api.nvim_list_bufs()) do
       if vim.api.nvim_buf_is_loaded(buf) == true and vim.api.nvim_buf_is_valid(buf) == true then
         local fname = vim.api.nvim_buf_get_name(buf)
-        if #fname > 0 and vim.fn.filereadable(fname) then
+        if #fname > 0 and require 'plenary.path':new(fname):exists() then
           fnames[#fnames + 1] = fname
         end
       end
