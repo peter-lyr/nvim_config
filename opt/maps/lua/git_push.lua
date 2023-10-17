@@ -18,10 +18,16 @@ local function system_cd(p)
 end
 
 GitPushDone = function()
-  git_push_timer:stop()
+  if git_push_timer then
+    git_push_timer:stop()
+  end
   pcall(vim.call, 'fugitive#ReloadStatus')
   local l = vim.fn.getqflist()
-  vim.notify(l[1]['text'] .. '\n' .. l[#l - 1]['text'] .. '\n' .. l[#l]['text'])
+  local lines = {}
+  for _, i in ipairs(l) do
+    lines[#lines + 1] = i['text']
+  end
+  vim.notify(vim.fn.join(lines, '\n'))
   vim.cmd 'au! User AsyncRunStop'
 end
 
