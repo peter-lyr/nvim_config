@@ -31,11 +31,7 @@ local mydirs_existed = {}
 M.init_mydirs = function()
   mydirs = {
     vim.fn.expand [[$HOME]],
-    vim.fn.expand [[$TEMP]],
-    vim.fn.expand [[$LOCALAPPDATA]],
-    vim.fn.expand [[$VIMRUNTIME\pack]],
     vim.fn.expand [[$VIMRUNTIME\pack\nvim_config]],
-    vim.fn.expand [[$VIMRUNTIME\pack\lazy\plugins]],
     nv.filename,
   }
   mydirs_existed = {}
