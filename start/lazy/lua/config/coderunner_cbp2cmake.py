@@ -50,23 +50,25 @@ def get_executable_cbp(project_root):
     if len(cbp_files) == 1:
         executable_cbp = cbp_files[0]
     elif len(cbp_files) > 1:
+        temp_app_cbps = []
         for cbp_file in cbp_files:
             if os.path.basename(cbp_file) in ["app.cbp"]:
-                executable_cbp = cbp_file
-                break
+                temp_app_cbps.append(cbp_file)
         else:
-            res = input(
-                "Type number to choose one of cbp as executable\n"
-                + "\n".join([str(i + 1) + ". " + v for i, v in enumerate(cbp_files)])
-                + "\n"
-                ">> "
-            )
-            try:
-                num = int(res)
-                if num in [i + 1 for i, _ in enumerate(cbp_files)]:
-                    executable_cbp = cbp_files[num - 1]
-            except Exception as e:
-                print(e)
+            if not temp_app_cbps:
+                temp_app_cbps = cbp_files
+        res = input(
+            "Type number to choose one of cbp as executable\n"
+            + "\n".join([str(i + 1) + ". " + v for i, v in enumerate(temp_app_cbps)])
+            + "\n"
+            ">> "
+        )
+        try:
+            num = int(res)
+            if num in [i + 1 for i, _ in enumerate(cbp_files)]:
+                executable_cbp = cbp_files[num - 1]
+        except Exception as e:
+            print(e)
     cbp_files_2 = []
     executable_cbp_dir = os.path.dirname(executable_cbp)
     for cbp_file in cbp_files:
