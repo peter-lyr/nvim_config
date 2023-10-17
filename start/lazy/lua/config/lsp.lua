@@ -117,23 +117,14 @@ if not M.lua_libraries_dir_p:exists() then
   vim.fn.mkdir(M.lua_libraries_dir_p.filename)
 end
 
-local nvim_config = rep(vim.fn.expand '$VIMRUNTIME') .. '/pack/nvim_config/'
-
-local my_libraries = {
-  'opt/tabline/lua',
-  'opt/terminal/lua',
-  'opt/test/lua',
-}
+local opt = rep(vim.fn.expand '$VIMRUNTIME') .. '/pack/nvim_config'
 
 local lua_libraries = {}
-
-for _, v in ipairs(my_libraries) do
-  lua_libraries[#lua_libraries + 1] = nvim_config .. v
-end
 
 M.update_lua_libraries = function()
   local config = require 'plenary.path':new(vim.g.pack_path):joinpath('nvim_config', 'start', 'lazy', 'lua', 'config')
   local libraries_3rd = vim.api.nvim_get_runtime_file('', true)
+  libraries_3rd[#libraries_3rd + 1] = opt
   local temp = vim.fn.join(libraries_3rd, '" "')
   local lsp_lua_libraries_py = config:joinpath 'lsp_lua_libraries.py'.filename
   system_run('asyncrun', 'python "%s" "%s" "%s"', lsp_lua_libraries_py, M.lua_libraries_txt_p.filename, temp)
@@ -144,7 +135,7 @@ if not M.lua_libraries_txt_p:exists() then
 end
 
 for _, lua_library in ipairs(M.lua_libraries_txt_p:readlines()) do
-  lua_libraries[#lua_libraries + 1] = lua_library
+  lua_libraries[#lua_libraries + 1] = vim.fn.trim(lua_library)
 end
 
 lspconfig.lua_ls.setup {
