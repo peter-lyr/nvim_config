@@ -108,7 +108,7 @@ return {
     { ']d',          vim.diagnostic.goto_next,                                    mode = { 'n', 'v', }, silent = true, desc = 'lsp vim.diagnostic.goto_next', },
     { '<leader>fq',  vim.diagnostic.enable,                                       mode = { 'n', 'v', }, silent = true, desc = 'lsp vim.diagnostic.enable', },
     { '<leader>fvq', vim.diagnostic.disable,                                      mode = { 'n', 'v', }, silent = true, desc = 'lsp vim.diagnostic.disable', },
-    { 'K',           desc = 'lsp vim.lsp.buf.definition', },
+    { 'K',           desc = 'K', },
     { '<leader>fo',  vim.lsp.buf.definition,                                      mode = { 'n', 'v', }, silent = true, desc = 'lsp vim.lsp.buf.definition', },
     { '<F12>',       vim.lsp.buf.definition,                                      mode = { 'n', 'v', }, silent = true, desc = 'lsp vim.lsp.buf.definition', },
     { '<leader>fd',  vim.lsp.buf.declaration,                                     mode = { 'n', 'v', }, silent = true, desc = 'lsp vim.lsp.buf.declaration', },
