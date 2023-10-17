@@ -47,10 +47,10 @@ def get_executable_cbp(project_root):
             if file.endswith(".cbp"):
                 cbp_files.append(rep(os.path.join(root, file)))
     executable_cbp = ""
+    temp_app_cbps = []
     if len(cbp_files) == 1:
         executable_cbp = cbp_files[0]
     elif len(cbp_files) > 1:
-        temp_app_cbps = []
         for cbp_file in cbp_files:
             if os.path.basename(cbp_file) in ["app.cbp"]:
                 temp_app_cbps.append(cbp_file)
@@ -70,9 +70,8 @@ def get_executable_cbp(project_root):
         except Exception as e:
             print(e)
     cbp_files_2 = []
-    executable_cbp_dir = os.path.dirname(executable_cbp)
     for cbp_file in cbp_files:
-        if executable_cbp_dir != os.path.dirname(cbp_file):
+        if cbp_file not in temp_app_cbps:
             cbp_files_2.append(cbp_file)
     return executable_cbp, cbp_files_2
 
