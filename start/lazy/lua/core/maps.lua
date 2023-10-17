@@ -173,6 +173,9 @@ return {
     { '<leader>ts',     function() require 'toggle'.signcolumn(1) end,        mode = { 'n', 'v', }, silent = true, desc = 'toggle signcolumn=auto:1', },
     { '<leader>tS',     function() require 'toggle'.signcolumn() end,         mode = { 'n', 'v', }, silent = true, desc = 'toggle signcolumn=no', },
 
+    -- sessions.lua
+    { '<leader>s<cr>',  function() require 'sessions'.load() end,             mode = { 'n', 'v', }, silent = true, desc = 'sessions load', },
+
     -- Others
 
     -- bcomp.lua
@@ -216,6 +219,7 @@ return {
     require 'config.whichkey'.add { ['<leader>t'] = { name = 'Toggle Set', }, }
     require 'config.whichkey'.add { ['<leader>x'] = { name = 'Close Buffers', }, }
     require 'config.whichkey'.add { ["<leader>'"] = { name = 'Others', }, }
+    require 'config.whichkey'.add { ['<leader>s'] = { name = 'Sessions', }, }
     -- work
     require 'config.whichkey'.add { ['<leader>v'] = { name = 'TortoiseSVN', }, }
   end,
