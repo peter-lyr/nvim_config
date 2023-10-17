@@ -277,13 +277,13 @@ M.stack_open_sel = function()
   local temp = M.stack_full_fname_txt_p:readlines()
   local fnames = {}
   for _, fname in ipairs(temp) do
-    fname = rep(fname)
-    if vim.tbl_contains(fnames, fname) == false then
+    fname = vim.fn.trim(rep(fname))
+    if #fname > 0 and vim.tbl_contains(fnames, fname) == false then
       fnames[#fnames + 1] = fname
     end
   end
   M.stack_full_fname_txt_p:write(vim.fn.join(fnames, '\n'), 'w')
-  if #fname > 0 then
+  if #fnames > 0 then
     vim.ui.select(fnames, { prompt = 'stack full fname open', }, function(choice, idx)
       if not choice then
         return
