@@ -141,6 +141,9 @@ pcall(vim.api.nvim_del_autocmd, vim.g.quickfix_au_cursorhold)
 vim.g.quickfix_au_cursorhold = vim.api.nvim_create_autocmd({ 'CursorHold', }, {
   callback = function(ev)
     if vim.api.nvim_buf_get_option(ev.buf, 'buftype') == 'quickfix' then
+      if M.bufnr == 0 then
+        M.bufnr = ev.buf
+      end
       M.ausize()
     end
   end,
