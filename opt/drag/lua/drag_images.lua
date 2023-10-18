@@ -252,6 +252,20 @@ M.paste = function(png, no_input_image_name)
   M.paste_do(png, no_input_image_name)
 end
 
+M.copy_text = function()
+  local cfile = require'plenary.path':new(vim.loop.cwd()):joinpath(unpack(vim.fn.split(vim.fn.expand('<cfile>'), '/'))).filename
+  vim.fn.setreg('+', cfile)
+  print('copy text to clipboard: ' .. cfile)
+end
+
+M.drag_images_copy2clip_exe =  require 'plenary.path':new(vim.g.pack_path):joinpath('nvim_config', 'opt', 'drag', 'lua', 'drag_images_copy2clip.exe').filename
+
+M.copy_file = function()
+  local cfile = require'plenary.path':new(vim.loop.cwd()):joinpath(unpack(vim.fn.split(vim.fn.expand('<cfile>'), '/'))).filename
+  vim.fn.system(string.format('%s "%s"', M.drag_images_copy2clip_exe, cfile))
+  print('copy file to clipboard: ' .. cfile)
+end
+
 M.is_dragged = function(project, buf)
   local image_root_dir_path = require 'plenary.path':new(project):joinpath(M.image_root_dir)
   local image_root_md_path = image_root_dir_path:joinpath(M.image_root_md)
