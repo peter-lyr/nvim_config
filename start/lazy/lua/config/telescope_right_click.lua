@@ -197,6 +197,14 @@ M.git_pull = function()
 end
 
 ------------
+-- quickfix
+------------
+
+M.quickfix_toggle = function()
+  require 'quickfix'.toggle()
+end
+
+------------
 -- spectre
 ------------
 
@@ -272,6 +280,7 @@ M.items = {
   { '[Minimap] close',                      M.minimap_close, },
   { '[Fugitive] open',                      M.fugitive_open, },
   { '[GitPush] pull',                       M.git_pull, },
+  { '[QuickFix] toggle',                    M.quickfix_toggle, },
   { '[Nvim-Tree] find file',                M.nvim_tree_find_file, },
   { '[Nvim-Tree] open',                     M.nvim_tree_open, },
   { '[Nvim-Tree] close',                    M.nvim_tree_close, },
