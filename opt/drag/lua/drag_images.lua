@@ -258,6 +258,38 @@ M.copy_text = function()
   print('copy text to clipboard: ' .. cfile)
 end
 
+local function system_cd(p)
+  local s = ''
+  if string.sub(p, 2, 2) == ':' then
+    s = s .. string.sub(p, 1, 2) .. ' && '
+  end
+  if require 'plenary.path'.new(p):is_dir() then
+    s = s .. 'cd ' .. p
+  else
+    s = s .. 'cd ' .. require 'plenary.path'.new(p):parent().filename
+  end
+  return s
+end
+
+M.get_desktop = function()
+  local lua_dir_p = require 'plenary.path':new(vim.g.pack_path):joinpath('nvim_config', 'opt', 'drag', 'lua')
+  local drag_images_desktop_exe_p = lua_dir_p:joinpath 'drag_images_desktop.exe'
+  if not drag_images_desktop_exe_p:exists() then
+    vim.cmd(string.format(
+      [[silent !start /b /min cmd /c "%s && gcc drag_images_desktop.c -Wall -s -ffunction-sections -fdata-sections -Wl,--gc-sections -O3 -o drag_images_desktop"]],
+      system_cd(lua_dir_p.filename)))
+  end
+  local f = io.popen(drag_images_desktop_exe_p.filename)
+  if f then
+    for dir in string.gmatch(f:read '*a', '([%S ]+)') do
+      f:close()
+      return vim.fn.tolower(dir)
+    end
+    f:close()
+  end
+  return ''
+end
+
 M.drag_images_copy2clip_exe = require 'plenary.path':new(vim.g.pack_path):joinpath('nvim_config', 'opt', 'drag', 'lua', 'drag_images_copy2clip.exe').filename
 
 M.copy_file = function()
