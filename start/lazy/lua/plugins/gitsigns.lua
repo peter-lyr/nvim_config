@@ -1,5 +1,6 @@
 return {
   'lewis6991/gitsigns.nvim',
+  commit = '79127db3b127f5d125f35e0d44ba60715edf2842',
   event = { 'BufReadPre', 'BufNewFile', },
   keys = {
     '<leader>g',
