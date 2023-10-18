@@ -21,8 +21,8 @@ M.wait_map_q = function()
   end)
 end
 
-M.toggle = function()
-  if vim.api.nvim_buf_get_option(vim.fn.bufnr(), 'buftype') == 'quickfix' then
+M.toggle = function(open)
+  if vim.api.nvim_buf_get_option(vim.fn.bufnr(), 'buftype') == 'quickfix' and not open then
     M.close()
   else
     M.qf_before_winid = vim.fn.win_getid()
