@@ -122,7 +122,8 @@ for _, k in ipairs(vim.deepcopy(TelescopeKeysLess)) do
 end
 
 return {
-  'nvim-telescope/telescope.nvim',
+  -- 'nvim-telescope/telescope.nvim',
+  'peter-lyr/telescope.nvim',
   branch = '0.1.x',
   lazy = true,
   cmd = {
