@@ -14,15 +14,17 @@ return {
   },
   keys = {
 
+    -- go cmdline
+    { '<leader>；', ':', mode = { 'n', 'v', }, silent = false, desc = 'go cmdline', },
+    { '<leader>;', ':', mode = { 'n', 'v', }, silent = false, desc = 'go cmdline', },
+    '<leader>；',
+
     -- record
     { 'q',                   '<cmd>WhichKey q<cr>',                           mode = { 'n', 'v', }, silent = true,  desc = 'nop', },
     { 'Q',                   'q',                                             mode = { 'n', 'v', }, silent = true,  desc = 'record', },
 
     -- undo
     { 'U',                   '<c-r>',                                         mode = { 'n', },      silent = true,  desc = 'redo', },
-
-    -- go cmdline
-    { '<leader>;',           ':',                                             mode = { 'n', 'v', }, silent = false, desc = 'go cmdline', },
 
     -- scroll horizontally
     { '<S-ScrollWheelDown>', '10zl',                                          mode = { 'n', 'v', }, silent = false, desc = 'scroll right horizontally', },
@@ -178,8 +180,8 @@ return {
     { '<leader>tC',     function() require 'toggle'.conceallevel() end,       mode = { 'n', 'v', }, silent = true, desc = 'toggle conceallevel=0', },
 
     -- iskeyword
-    { '<leader>tk',     function() require 'toggle'.iskeyword(1) end,      mode = { 'n', 'v', }, silent = true, desc = 'toggle iskeyword', },
-    { '<leader>tK',     function() require 'toggle'.iskeyword() end,       mode = { 'n', 'v', }, silent = true, desc = 'toggle iskeyword', },
+    { '<leader>tk',     function() require 'toggle'.iskeyword(1) end,         mode = { 'n', 'v', }, silent = true, desc = 'toggle iskeyword', },
+    { '<leader>tK',     function() require 'toggle'.iskeyword() end,          mode = { 'n', 'v', }, silent = true, desc = 'toggle iskeyword', },
 
     -- Others
 
