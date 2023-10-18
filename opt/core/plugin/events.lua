@@ -12,17 +12,11 @@ vim.g.events_au_bufleave = vim.api.nvim_create_autocmd({ 'BufLeave', }, {
   end,
 })
 
-local function rep(content)
-  content = string.gsub(content, '\\', '/')
-  return content
-end
-
 pcall(vim.api.nvim_del_autocmd, vim.g.events_au_bufreadpost)
 
 vim.g.events_au_bufreadpost = vim.api.nvim_create_autocmd({ 'BufReadPost', }, {
   callback = function(ev)
     pcall(vim.cmd, 'retab')
-    vim.api.nvim_buf_set_name(ev.buf, rep(vim.api.nvim_buf_get_name(ev.buf)))
     pcall(vim.cmd, [[silent %s/\s\+$//]])
     pcall(vim.cmd, 'silent w!')
   end,
