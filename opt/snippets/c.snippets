@@ -1,29 +1,41 @@
-snippet mjin "printf just int\n"
+snippet mjin "myprintf just int\n"
 	my_printf("%d\n", $1);
-snippet mjic "printf just int, "
+snippet mjic "myprintf just int, "
 	my_printf("%d, ", $1);
-snippet min "printf int\n"
+snippet min "myprintf int\n"
 	my_printf("$1: %d\n", $1);
-snippet mic "printf int,"
+snippet mic "myprintf int,"
 	my_printf("$1: %d, ", $1);
-snippet mjhn "printf just hex\n"
+snippet mjhn "myprintf just hex\n"
 	my_printf("%x\n", $1);
-snippet mjhc "printf just hex,"
+snippet mjhc "myprintf just hex,"
 	my_printf("%x, ", $1);
-snippet mhn "printf hex\n"
+snippet mhn "myprintf hex\n"
 	my_printf("$1: 0x%x\n", $1);
-snippet mhc "printf hex,"
+snippet mhc "myprintf hex,"
 	my_printf("$1: 0x%x, ", $1);
-snippet mhin "printf hex(int)\n"
+snippet mhin "myprintf hex(int)\n"
 	my_printf("$1: 0x%x(%d)\n", $1, $1);
-snippet mhic "printf hex(int),"
+snippet mhic "myprintf hex(int),"
 	my_printf("$1: 0x%x(%d), ", $1, $1);
-snippet msn "printf string"
+snippet msn "myprintf string"
 	my_printf("$1\n");
-snippet ms "printf string"
+snippet mss "myprintf string"
 	my_printf("$1");
-snippet ml "printf line"
+snippet ml "myprintf line"
 	my_printf("## %s# %d\n", __func__, __LINE__);
+snippet msd "const char str[]"
+	AT(.com_text.str)
+	const char str_$1[] = "$1: %d\n";
+	my_printf(str_$1, $1);
+snippet msx "const char str[]"
+	AT(.com_text.str)
+	const char str_$1[] = "$1: 0x%x\n";
+	my_printf(str_$1, $1);
+snippet msdx "const char str[]"
+	AT(.com_text.str)
+	const char str_$1[] = "$1: 0x%x(%d)\n";
+	my_printf(str_$1, $1, $1);
 
 snippet jin "printf just int\n"
 	printf("%d\n", $1);
@@ -47,7 +59,19 @@ snippet hic "printf hex(int),"
 	printf("$1: 0x%x(%d), ", $1, $1);
 snippet sn "printf string"
 	printf("$1\n");
-snippet s "printf string"
+snippet ss "printf string"
 	printf("$1");
 snippet l "printf line"
 	printf("## %s# %d\n", __func__, __LINE__);
+snippet sd "const char str[]"
+	AT(.com_text.str)
+	const char str_$1[] = "$1: %d\n";
+	printf(str_$1, $1);
+snippet sx "const char str[]"
+	AT(.com_text.str)
+	const char str_$1[] = "$1: 0x%x\n";
+	printf(str_$1, $1);
+snippet sdx "const char str[]"
+	AT(.com_text.str)
+	const char str_$1[] = "$1: 0x%x(%d)\n";
+	printf(str_$1, $1, $1);
