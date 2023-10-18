@@ -12,6 +12,11 @@ vim.g.events_au_bufleave = vim.api.nvim_create_autocmd({ 'BufLeave', }, {
   end,
 })
 
+local function rep(content)
+  content = string.gsub(content, '\\', '/')
+  return content
+end
+
 pcall(vim.api.nvim_del_autocmd, vim.g.events_au_bufenter)
 
 vim.g.events_au_bufenter = vim.api.nvim_create_autocmd({ 'BufEnter', }, {
@@ -30,6 +35,9 @@ vim.g.events_au_bufenter = vim.api.nvim_create_autocmd({ 'BufEnter', }, {
       vim.opt.shiftwidth = 2
     end
     pcall(vim.cmd, 'retab')
+    vim.api.nvim_buf_set_name(ev.buf, rep(vim.api.nvim_buf_get_name(ev.buf)))
+    pcall(vim.cmd, 'w!')
+    pcall(vim.api.nvim_del_autocmd, vim.g.events_au_bufenter)
     local buftype = vim.api.nvim_buf_get_option(ev.buf, 'buftype')
     if vim.fn.bufname() == '' and byftype == '' then
       vim.api.nvim_buf_set_option(ev.buf, 'buftype', 'nofile') -- for [No Name] buffers
