@@ -13,6 +13,9 @@ end
 
 M.wait_map_q = function()
   vim.fn.timer_start(10, function()
+    if vim.api.nvim_win_get_width(0) < vim.o.columns then
+      vim.cmd 'wincmd J'
+    end
     vim.keymap.set('n', 'q', function()
       vim.schedule(function()
         M.close()
