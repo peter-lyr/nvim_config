@@ -29,7 +29,7 @@ vim.g.events_au_bufenter = vim.api.nvim_create_autocmd({ 'BufEnter', }, {
       vim.opt.softtabstop = 2
       vim.opt.shiftwidth = 2
     end
-    vim.cmd 'retab'
+    pcall(vim.cmd, 'retab')
     local buftype = vim.api.nvim_buf_get_option(ev.buf, 'buftype')
     if vim.fn.bufname() == '' and byftype == '' then
       vim.api.nvim_buf_set_option(ev.buf, 'buftype', 'nofile') -- for [No Name] buffers
