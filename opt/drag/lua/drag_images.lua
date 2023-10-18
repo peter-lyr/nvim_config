@@ -295,8 +295,22 @@ M.drag_images_copy2clip_exe = require 'plenary.path':new(vim.g.pack_path):joinpa
 M.copy_file = function()
   local cfile = require 'plenary.path':new(vim.loop.cwd()):joinpath(unpack(vim.fn.split(vim.fn.expand '<cfile>', '/'))).filename
   if require 'plenary.path':new(cfile):exists() then
-    vim.fn.system(string.format('%s "%s"', M.drag_images_copy2clip_exe, cfile))
-    print('copy file to clipboard: ' .. cfile)
+    local desktop = M.get_desktop()
+    local desktop_p = require 'plenary.path':new(desktop)
+    if desktop_p:exists() then
+      local line = vim.fn.getline '.'
+      local fname = string.match(line, '%[([^%]]+)%]%([^%)]+%)')
+      if fname then
+        local ext = string.match(cfile, '%.([^.]+)$')
+        local tgt = desktop_p:joinpath(fname .. '.' .. ext).filename
+        vim.fn.system(string.format('copy /y "%s" "%s"', cfile, tgt))
+        vim.fn.system(string.format('%s "%s"', M.drag_images_copy2clip_exe, tgt))
+        print('copy file to clipboard: ' .. tgt)
+      else
+        vim.fn.system(string.format('%s "%s"', M.drag_images_copy2clip_exe, cfile))
+        print('copy file to clipboard: ' .. cfile)
+      end
+    end
   else
     print('not exists: ' .. cfile)
   end
