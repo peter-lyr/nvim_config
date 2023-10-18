@@ -11,6 +11,8 @@ vim.keymap.set({ 'c', 'i', }, '<c-1>', '<c-r>=bufname()<cr>', { desc = 'paste bu
 vim.keymap.set({ 'c', 'i', }, '<c-2>', '<c-r>=getcwd()<cr>', { desc = 'paste cwd', })
 vim.keymap.set({ 'c', 'i', }, '<c-3>', '<c-r>=gitbranch#name()<cr>', { desc = 'paste branch name', })
 
+vim.keymap.set({ 'c', 'i', }, '<c-4>', '<c-r>=getline(".")<cr>', { desc = 'paste cur line', })
+
 vim.keymap.set({ 'c', 'i', }, '<c-s>', '<c-r>"', { desc = 'paste "', })
 vim.keymap.set({ 't', }, '<c-s>', '<c-\\><c-n>pi', { desc = 'paste "', })
 
