@@ -13,6 +13,8 @@ vim.keymap.set({ 'c', 'i', }, '<c-3>', '<c-r>=gitbranch#name()<cr>', { desc = 'p
 
 vim.keymap.set({ 'c', 'i', }, '<c-4>', '<c-r>=getline(".")<cr>', { desc = 'paste cur line', })
 
+vim.keymap.set({ 'c', 'i', }, '<c-tab>', '<c-r>+', { desc = 'paste +', })
+
 vim.keymap.set({ 'c', 'i', }, '<c-s>', '<c-r>"', { desc = 'paste "', })
 vim.keymap.set({ 't', }, '<c-s>', '<c-\\><c-n>pi', { desc = 'paste "', })
 
