@@ -150,6 +150,16 @@ M.quit_all = function()
   vim.cmd 'qa!'
 end
 
+M.start_new_nvim_qt = function()
+  local start_nvim_qt_exe = vim.fn.expand '$VIMRUNTIME' .. '\\pack\\nvim_config\\start-nvim-qt.exe'
+  vim.cmd(string.format([[silent !start /b /min cmd /c "%s"]], start_nvim_qt_exe))
+end
+
+M.restart_nvim_qt = function()
+  M.start_new_nvim_qt()
+  vim.cmd 'qa!'
+end
+
 M.refresh = function()
   vim.cmd 'e!'
 end
@@ -266,7 +276,9 @@ M.items = {
   { '[Proxy] on',                           M.proxy_on, },
   { '[Proxy] off',                          M.proxy_off, },
   { '[Path] open',                          M.path, },
-  { '[Quit All]',                           M.quit_all, },
+  { '[Nvim-Qt] quit all',                   M.quit_all, },
+  { '[Nvim-Qt] start new',                  M.start_new_nvim_qt, },
+  { '[Nvim-Qt] restart',                    M.restart_nvim_qt, },
 }
 
 M.right_click_menu = function()
