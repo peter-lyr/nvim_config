@@ -189,6 +189,14 @@ M.fugitive_open = function()
 end
 
 ------------
+-- git_push
+------------
+
+M.git_pull = function()
+  require 'git_push'.pull()
+end
+
+------------
 -- spectre
 ------------
 
@@ -263,6 +271,7 @@ M.items = {
   { '[Minimap] open',                       M.minimap_open, },
   { '[Minimap] close',                      M.minimap_close, },
   { '[Fugitive] open',                      M.fugitive_open, },
+  { '[GitPush] pull',                       M.git_pull, },
   { '[Nvim-Tree] find file',                M.nvim_tree_find_file, },
   { '[Nvim-Tree] open',                     M.nvim_tree_open, },
   { '[Nvim-Tree] close',                    M.nvim_tree_close, },
