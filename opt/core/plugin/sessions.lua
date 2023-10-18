@@ -9,6 +9,23 @@ if not M.sessions_dir_p:exists() then
   vim.fn.mkdir(M.sessions_dir_p.filename)
 end
 
+M.sel = function()
+  local lines = M.sessions_txt_p:readlines()
+  local fnames = {}
+  for _, line in ipairs(lines) do
+    local fname = vim.fn.trim(line)
+    if #fname > 0 and require 'plenary.path':new(fname):exists() then
+      fnames[#fnames + 1] = fname
+    end
+  end
+  vim.ui.select(fnames, { prompt = 'sessions sel open', }, function(choice, idx)
+    if not choice then
+      return
+    end
+    vim.cmd('edit ' .. choice)
+  end)
+end
+
 M.load = function()
   local lines = M.sessions_txt_p:readlines()
   for _, line in ipairs(lines) do
@@ -35,5 +52,6 @@ vim.api.nvim_create_autocmd({ 'VimLeavePre', }, {
 })
 
 vim.keymap.set({ 'n', 'v', }, '<leader>s<cr>', function() M.load() end, { desc = 'sessions load', })
+vim.keymap.set({ 'n', 'v', }, '<leader>s\\', function() M.sel() end, { desc = 'sessions sel open', })
 
 return M
