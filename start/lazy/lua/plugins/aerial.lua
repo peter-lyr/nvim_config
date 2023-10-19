@@ -10,6 +10,7 @@ return {
   },
   dependencies = {
     require 'plugins.treesitter',
+    require 'plugins.minimap',
     'nvim-tree/nvim-web-devicons',
   },
   config = function()

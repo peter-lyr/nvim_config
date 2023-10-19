@@ -2,6 +2,10 @@ local M = {}
 
 package.loaded['config.minimap'] = nil
 
+vim.cmd 'Lazy load aerial.nvim'
+
+M.width = 25
+
 local minimap = require 'mini.map'
 
 local symbols = minimap.gen_encode_symbols.dot '4x2'
@@ -26,7 +30,7 @@ minimap.setup {
     focusable = true,
     side = 'right',
     show_integration_count = true,
-    width = 25,
+    width = M.width,
     winblend = 20,
   },
 }
@@ -64,38 +68,30 @@ vim.g.minimap_au_bufenter = vim.api.nvim_create_autocmd('BufEnter', {
       end
     end
     if vim.api.nvim_buf_get_option(ev.buf, 'filetype') == 'minimap' then
-      if vim.fn.getcurpos()[5] > 3 and (vim.fn.trim(vim.fn.execute 'norm g8') == '20') == true then
-        M.close()
-        vim.fn.timer_start(20, function()
-          local aerialopened = nil
+      vim.fn.timer_start(20, function()
+        if vim.fn.getcurpos()[5] > 3 and (vim.fn.trim(vim.fn.execute 'norm g8') == '20') == true then
           if require 'config.aerial'.opened then
-            aerialopened = 1
+            vim.cmd 'wincmd p'
+            vim.cmd 'AerialCloseAll'
+            require 'aerial'.setup {
+              layout = {
+                max_width = M.width * 2 + 2,
+                min_width = M.width * 2 + 2,
+              },
+            }
+            vim.cmd 'AerialOpen right'
           end
-          vim.cmd 'AerialOpen right'
-          vim.fn.timer_start(20, function()
-            vim.api.nvim_create_autocmd({ 'BufLeave', }, {
-              callback = function()
-                if not aerialopened then
-                  vim.cmd 'AerialClose'
-                else
-                  vim.cmd 'wincmd p'
-                end
-                M.open()
-              end,
-              once = true,
-            })
-          end)
-        end)
-      else
-        vim.keymap.set({ 'n', }, '<MiddleMouse>', function() esc(1) end, { buffer = ev.buf, desc = 'MiniMap esc', })
-        vim.keymap.set({ 'v', }, '<MiddleMouse>', function() esc(2) end, { buffer = ev.buf, desc = 'MiniMap esc', })
-        vim.keymap.set({ 'n', }, 'q', function() esc(1) end, { buffer = ev.buf, desc = 'MiniMap esc', })
-        vim.keymap.set({ 'v', }, 'q', function() esc(2) end, { buffer = ev.buf, desc = 'MiniMap esc', })
-        vim.keymap.set({ 'n', }, '<2-LeftMouse>', function() cr(1) end, { buffer = ev.buf, desc = 'MiniMap cr', })
-        vim.keymap.set({ 'v', }, '<2-LeftMouse>', function() cr(2) end, { buffer = ev.buf, desc = 'MiniMap cr', })
-        vim.keymap.set({ 'n', 'v', }, '<ScrollWheelUp>', function() up() end, { buffer = ev.buf, desc = 'MiniMap up', })
-        vim.keymap.set({ 'n', 'v', }, '<ScrollWheelDown>', function() down() end, { buffer = ev.buf, desc = 'MiniMap down', })
-      end
+        else
+          vim.keymap.set({ 'n', }, '<MiddleMouse>', function() esc(1) end, { buffer = ev.buf, desc = 'MiniMap esc', })
+          vim.keymap.set({ 'v', }, '<MiddleMouse>', function() esc(2) end, { buffer = ev.buf, desc = 'MiniMap esc', })
+          vim.keymap.set({ 'n', }, 'q', function() esc(1) end, { buffer = ev.buf, desc = 'MiniMap esc', })
+          vim.keymap.set({ 'v', }, 'q', function() esc(2) end, { buffer = ev.buf, desc = 'MiniMap esc', })
+          vim.keymap.set({ 'n', }, '<2-LeftMouse>', function() cr(1) end, { buffer = ev.buf, desc = 'MiniMap cr', })
+          vim.keymap.set({ 'v', }, '<2-LeftMouse>', function() cr(2) end, { buffer = ev.buf, desc = 'MiniMap cr', })
+          vim.keymap.set({ 'n', 'v', }, '<ScrollWheelUp>', function() up() end, { buffer = ev.buf, desc = 'MiniMap up', })
+          vim.keymap.set({ 'n', 'v', }, '<ScrollWheelDown>', function() down() end, { buffer = ev.buf, desc = 'MiniMap down', })
+        end
+      end)
     end
   end,
 })
