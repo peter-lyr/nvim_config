@@ -315,7 +315,7 @@ vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI', }, {
 
 local function _()
   rehili()
-  vim.api.nvim_set_hl(0, 'CursorWord', { bg = '#888800', fg = '#000088', bold = true, })
+  vim.api.nvim_set_hl(0, 'CursorWord', { reverse = true, bold = true, })
 end
 
 _()
