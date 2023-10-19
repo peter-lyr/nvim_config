@@ -2,7 +2,7 @@ local M = {}
 
 package.loaded['config.aerial'] = nil
 
-local width = 24
+local width = 27
 
 require 'aerial'.setup {
   layout = {
@@ -42,30 +42,17 @@ require 'aerial'.setup {
   },
 }
 
-M.width_more = function()
-  vim.api.nvim_win_set_width(0, width + 20)
-end
+M.opened = nil
 
 M.open = function()
+  M.opened = 1
   vim.cmd 'AerialOpen right'
-  vim.fn.timer_start(10, function()
-    M.width_more()
-  end)
 end
 
 M.close = function()
+  M.opened = 1
   vim.cmd 'AerialCloseAll'
 end
-
-pcall(vim.api.nvim_del_autocmd, vim.g.aerial_au_bufenter)
-
-vim.g.aerial_au_bufenter = vim.api.nvim_create_autocmd({ 'BufEnter', }, {
-  callback = function(ev)
-    if vim.api.nvim_buf_get_option(ev.buf, 'filetype') == 'aerial' then
-      M.width_more()
-    end
-  end,
-})
 
 pcall(vim.api.nvim_del_autocmd, vim.g.aerial_au_bufleave)
 
@@ -73,6 +60,26 @@ vim.g.aerial_au_bufleave = vim.api.nvim_create_autocmd({ 'BufLeave', }, {
   callback = function(ev)
     if vim.api.nvim_buf_get_option(ev.buf, 'filetype') == 'aerial' then
       vim.api.nvim_win_set_width(0, width)
+    end
+  end,
+})
+
+pcall(vim.api.nvim_del_autocmd, vim.g.aerial_au_bufenter)
+
+vim.g.aerial_au_bufenter = vim.api.nvim_create_autocmd('BufEnter', {
+  callback = function(ev)
+    if vim.api.nvim_buf_get_option(ev.buf, 'filetype') == 'aerial' then
+      vim.fn.timer_start(20, function()
+        if require 'config.minimap'.opened then
+          require 'config.minimap'.close()
+          vim.api.nvim_create_autocmd({ 'BufLeave', }, {
+            callback = function()
+              require 'config.minimap'.open()
+            end,
+            once = true,
+          })
+        end
+      end)
     end
   end,
 })
