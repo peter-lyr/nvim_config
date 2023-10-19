@@ -1,12 +1,14 @@
 local M = {}
 
+package.loaded['config.markdown_preview'] = nil
+
 M.start = function()
   pcall(vim.cmd, 'MarkdownPreview')
 end
 
 M.restart = function()
   vim.cmd 'MarkdownPreviewStop'
-  vim.fn.timer_start(20, function()
+  vim.fn.timer_start(200, function()
     pcall(vim.cmd, 'MarkdownPreview')
   end)
 end
