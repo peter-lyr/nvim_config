@@ -29,7 +29,7 @@ pcall(vim.api.nvim_del_autocmd, vim.g.fugitive_au_bufenter)
 vim.g.fugitive_au_bufenter = vim.api.nvim_create_autocmd({ 'BufEnter', }, {
   callback = function(ev)
     if vim.bo.ft == 'fugitive' then
-      vim.keymap.set({ 'n', 'v', }, 'dd', function() feed 'X' end, { desc = 'X', buffer = ev.buf, })
+      vim.keymap.set({ 'n', 'v', }, '<c-.>', function() feed 'X' end, { desc = 'X', buffer = ev.buf, })
     end
   end,
 })
