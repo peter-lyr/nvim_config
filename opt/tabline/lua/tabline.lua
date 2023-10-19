@@ -75,7 +75,7 @@ function SwitchBuffer(bufnr, mouseclicks, mousebutton, modifiers)
 end
 
 function SwitchTab(tabnr, mouseclicks, mousebutton, modifiers)
-  if mousebutton == 'm' then     -- and mouseclicks == 1 then
+  if mousebutton == 'm' then -- and mouseclicks == 1 then
     pcall(vim.cmd, tabnr .. 'tabclose')
     M.refresh_tabline(1)
   elseif mousebutton == 'l' then -- and mouseclicks == 1 then
@@ -397,6 +397,15 @@ M.update_show_bufs = function()
   end
 end
 
+pcall(vim.api.nvim_del_autocmd, vim.g.tabline_au_winenter)
+
+vim.g.tabline_au_winenter = vim.api.nvim_create_autocmd({ 'WinEnter', }, {
+  callback = function()
+    M.update_show_bufs()
+    M.refresh_tabline()
+  end,
+})
+
 pcall(vim.api.nvim_del_autocmd, vim.g.tabline_au_bufenter_1)
 
 vim.g.tabline_au_bufenter_1 = vim.api.nvim_create_autocmd({ 'BufEnter', }, {
@@ -519,7 +528,7 @@ M.append_one_proj_right_down = function()
         vim.cmd('b' .. M.projects_active[choice])
       end)
     else
-      print('no append_one_proj_right_down')
+      print 'no append_one_proj_right_down'
     end
   end
 end
@@ -543,7 +552,7 @@ M.append_one_proj_new_tab = function()
         vim.cmd('b' .. M.projects_active[choice])
       end)
     else
-      print('no append_one_proj_new_tab')
+      print 'no append_one_proj_new_tab'
     end
   end
 end
@@ -573,7 +582,7 @@ M.append_one_proj_new_tab_no_dupl = function()
         vim.cmd('b' .. M.projects_active[choice])
       end)
     else
-      print('no append_one_proj_new_tab_no_dupl')
+      print 'no append_one_proj_new_tab_no_dupl'
     end
   end
 end
