@@ -4,6 +4,6 @@ return {
   cmd = { 'AsyncRun', 'AsyncStop', 'AsyncReset', },
   keys = {
     { '<c-s-f9>',      function() require 'config.asyncrun'.stop() end,  mode = { 'n', 'v', }, silent = true, desc = 'AsyncStop', },
-    { '<leader><c-;>', function() require 'config.asyncrun'.input() end, mode = { 'n', 'v', }, silent = true, desc = 'AsyncRun', },
+    { '<leader><c-;>', function() require 'config.asyncrun'.input() end, mode = { 'n', 'v', }, desc = 'AsyncRun', },
   },
 }
