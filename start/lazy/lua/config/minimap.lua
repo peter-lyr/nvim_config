@@ -4,6 +4,9 @@ package.loaded['config.minimap'] = nil
 
 local minimap = require 'mini.map'
 
+local symbols = minimap.gen_encode_symbols.dot '4x2'
+symbols[1] = ' '
+
 minimap.setup {
   integrations = {
     minimap.gen_integration.builtin_search(),
@@ -11,7 +14,7 @@ minimap.setup {
     minimap.gen_integration.diagnostic(),
   },
   symbols = {
-    encode = minimap.gen_encode_symbols.dot '4x2',
+    encode = symbols,
     -- scroll_line = '█',
     -- scroll_view = '░',
     -- scroll_line = '󰨊',
