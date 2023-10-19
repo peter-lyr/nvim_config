@@ -275,7 +275,7 @@ vim.g.lsp_au_focuslost = vim.api.nvim_create_autocmd({ 'FocusLost', }, {
       M.focuslost_timer:stop()
     end
     M.focuslost_timer = vim.loop.new_timer()
-    M.focuslost_timer:start(1000 * 20, 0, function()
+    M.focuslost_timer:start(1000 * 60 * 60 * 3, 0, function()
       vim.schedule(function()
         vim.lsp.stop_client(vim.lsp.get_active_clients(), true)
         M.lsp_stopped = 1
