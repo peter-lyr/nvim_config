@@ -225,6 +225,34 @@ return {
     { '<leader>vL',     '<cmd>TortoiseSVN log root yes<cr>',                  mode = { 'n', 'v', }, silent = true, desc = 'TortoiseSVN log root yes<cr>', },
     { '<leader>vk',     '<cmd>TortoiseSVN checkout root yes<cr>',             mode = { 'n', 'v', }, silent = true, desc = 'TortoiseSVN checkout root yes<cr>', },
 
+    -- hili.lua
+    -- multiline hili
+    { '*',              function() require 'hili'.search() end,               mode = { 'v', },      silent = true, desc = 'hili multiline search', },
+
+    -- windo cursorword
+    { '<a-7>',          function() require 'hili'.cursorword() end,           mode = { 'n', },      silent = true, desc = 'hili cursor word', },
+    { '<a-8>',          function() require 'hili'.windocursorword() end,      mode = { 'n', },      silent = true, desc = 'hili windo cursor word', },
+
+    -- cword hili
+    { '<c-8>',          function() require 'hili'.hili_n() end,               mode = { 'n', },      silent = true, desc = 'hili cword', },
+    { '<c-8>',          function() require 'hili'.hili_v() end,               mode = { 'v', },      silent = true, desc = 'hili cword', },
+
+    -- cword hili rm
+    { '<c-s-8>',        function() require 'hili'.rmhili_v() end,             mode = { 'v', },      silent = true, desc = 'hili rm v', },
+    { '<c-s-8>',        function() require 'hili'.rmhili_n() end,             mode = { 'n', },      silent = true, desc = 'hili rm n', },
+
+    -- select hili
+    { '<c-7>',          function() require 'hili'.selnexthili() end,          mode = { 'n', 'v', }, silent = true, desc = 'hili sel next', },
+    { '<c-s-7>',        function() require 'hili'.selprevhili() end,          mode = { 'n', 'v', }, silent = true, desc = 'hili sel prev', },
+
+    -- go hili
+    { '<c-n>',          function() require 'hili'.prevhili() end,             mode = { 'n', 'v', }, silent = true, desc = 'hili go prev', },
+    { '<c-m>',          function() require 'hili'.nexthili() end,             mode = { 'n', 'v', }, silent = true, desc = 'hili go next', },
+
+    -- go cur hili
+    { '<c-s-n>',        function() require 'hili'.prevcurhili() end,          mode = { 'n', 'v', }, silent = true, desc = 'hili go cur prev', },
+    { '<c-s-m>',        function() require 'hili'.nextcurhili() end,          mode = { 'n', 'v', }, silent = true, desc = 'hili go cur next', },
+
   },
   init = function()
     require 'config.whichkey'.add { ['<leader>a'] = { name = 'Side Panel', }, }
