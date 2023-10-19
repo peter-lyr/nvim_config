@@ -16,9 +16,7 @@ pcall(vim.api.nvim_del_autocmd, vim.g.fugitive_au_focusgained)
 
 vim.g.fugitive_au_focusgained = vim.api.nvim_create_autocmd({ 'FocusGained', }, {
   callback = function(ev)
-    if vim.bo.ft == 'fugitive' then
-      pcall(vim.call, 'fugitive#ReloadStatus')
-    end
+    pcall(vim.call, 'fugitive#ReloadStatus')
   end,
 })
 
