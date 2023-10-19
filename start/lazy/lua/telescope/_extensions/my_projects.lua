@@ -185,6 +185,7 @@ local function my_projects(opts)
       -- map("n", "r", recent_project_files)
       -- map("n", "w", change_working_directory)
 
+      map('i', '<c-b>', git_status, { nowait = true, })
       -- map("i", "<c-f>", find_project_files)
       -- map("i", "<c-b>", browse_project_files)
       -- map("i", "<c-d>", delete_project)
