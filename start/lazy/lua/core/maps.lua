@@ -90,6 +90,14 @@ return {
     { '<leader>ggC',    function() require 'git_push'.clone() end,            mode = { 'n', 'v', }, silent = true, desc = 'Git Clone', },
 
     -- window.lua
+    -- go
+    { '<tab>',          'gt',                                                 mode = { 'n', 'v', }, silent = true, desc = 'Window gt', },
+    { '<s-tab>',        'gT',                                                 mode = { 'n', 'v', }, silent = true, desc = 'Window gt', },
+    { '<leader><tab>',  '<c-tab>',                                            mode = { 'n', },      silent = true, desc = 'Window g<tab>', },
+    { '<leader><tab>',  '<esc><c-tab>',                                       mode = { 'v', },      silent = true, desc = 'Window g<tab>', },
+
+    -- width
+
     { '<a-s-h>',        function() require 'window'.height_less() end,        mode = { 'n', 'v', }, silent = true, desc = 'Window height_less', },
     { '<a-s-l>',        function() require 'window'.height_more() end,        mode = { 'n', 'v', }, silent = true, desc = 'Window height_more', },
     { '<a-s-j>',        function() require 'window'.width_less() end,         mode = { 'n', 'v', }, silent = true, desc = 'Window width_less', },
