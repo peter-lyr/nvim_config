@@ -12,15 +12,15 @@ vim.g.events_au_bufleave = vim.api.nvim_create_autocmd({ 'BufLeave', }, {
   end,
 })
 
-pcall(vim.api.nvim_del_autocmd, vim.g.events_au_bufreadpost)
-
-vim.g.events_au_bufreadpost = vim.api.nvim_create_autocmd({ 'BufReadPost', }, {
-  callback = function(ev)
-    pcall(vim.cmd, 'retab')
-    pcall(vim.cmd, [[silent %s/\s\+$//]])
-    pcall(vim.cmd, 'silent w!')
-  end,
-})
+-- pcall(vim.api.nvim_del_autocmd, vim.g.events_au_bufreadpost)
+--
+-- vim.g.events_au_bufreadpost = vim.api.nvim_create_autocmd({ 'BufReadPost', }, {
+--   callback = function(ev)
+--     pcall(vim.cmd, 'retab')
+--     pcall(vim.cmd, [[silent %s/\s\+$//]])
+--     pcall(vim.cmd, 'silent w!')
+--   end,
+-- })
 
 pcall(vim.api.nvim_del_autocmd, vim.g.events_au_bufenter)
 

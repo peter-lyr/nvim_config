@@ -127,7 +127,7 @@ return {
     { '<leader>fF',  ':<c-u>LspInfo<cr>',                                         mode = { 'n', 'v', }, silent = true, desc = 'lsp LspInfo', },
     { '<leader>fw',  ':<c-u>ClangdSwitchSourceHeader<cr>',                        mode = { 'n', 'v', }, silent = true, desc = 'lsp ClangdSwitchSourceHeader', },
     { '<F11>',       ':<c-u>ClangdSwitchSourceHeader<cr>',                        mode = { 'n', 'v', }, silent = true, desc = 'lsp ClangdSwitchSourceHeader', },
-    { '<leader>fve', [[<cmd>%s/\s\+$//<cr>]],                                     mode = { 'n', 'v', }, silent = true, desc = 'lsp erase bad white space', },
+    { '<leader>fve', [[<cmd>retab<bar>%s/\s\+$//<cr>]],                           mode = { 'n', 'v', }, silent = true, desc = 'lsp erase bad white space', },
   },
   init = function()
     require 'config.whichkey'.add { ['<leader>f'] = { name = 'Lsp', }, }
