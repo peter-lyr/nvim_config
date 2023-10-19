@@ -31,9 +31,9 @@ vim.g.drag_au_bufreadpre = vim.api.nvim_create_autocmd({ 'BufReadPre', }, {
         if #M.post_cmd == 0 then
           M.post_cmd = require 'drag_bin'.check_xxd(ev.buf)
         end
-        if #M.post_cmd == 0 then
-          M.post_cmd = require 'drag_bin'.check_others(ev.buf)
-        end
+        -- if #M.post_cmd == 0 then
+        --   M.post_cmd = require 'drag_bin'.check_others(ev.buf)
+        -- end
       end
     end)
   end,
