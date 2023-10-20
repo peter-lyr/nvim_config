@@ -16,11 +16,15 @@ local function rep(content)
   return content
 end
 
-vim.api.nvim_create_autocmd({ 'BufEnter', }, {
+pcall(vim.api.nvim_del_autocmd, vim.g.projectroot_au_bufenter)
+
+vim.g.projectroot_au_bufenter = vim.api.nvim_create_autocmd('BufEnter', {
   callback = function(ev)
     pcall(vim.call, 'ProjectRootCD')
     local project = rep(vim.fn['ProjectRootGet'](vim.api.nvim_buf_get_name(ev.buf)))
     local ver = vim.version()
-    vim.opt.titlestring = string.format('v%d%d-%s', ver['minor'], ver['patch'], get_only_name(project))
+    local head = vim.fn.fnamemodify(project, ':h')
+    head = get_only_name(head)
+    vim.opt.titlestring = string.format('%d %s %s', ver['patch'], get_only_name(project), head)
   end,
 })
