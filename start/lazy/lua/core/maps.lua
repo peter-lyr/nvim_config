@@ -91,10 +91,10 @@ return {
 
     -- window.lua
     -- go
-    { '<tab>',          'gt',                                                 mode = { 'n', 'v', }, silent = true, desc = 'Window gt', },
-    { '<s-tab>',        'gT',                                                 mode = { 'n', 'v', }, silent = true, desc = 'Window gt', },
-    { '<leader><tab>',  '<c-tab>',                                            mode = { 'n', },      silent = true, desc = 'Window g<tab>', },
-    { '<leader><tab>',  '<esc><c-tab>',                                       mode = { 'v', },      silent = true, desc = 'Window g<tab>', },
+    { '<cr>',           'gt',                                                 mode = { 'n', 'v', }, silent = true, desc = 'Window gt', },
+    { '<c-cr>',         'gT',                                                 mode = { 'n', 'v', }, silent = true, desc = 'Window gt', },
+    { '<leader><cr>',   '<c-tab>',                                            mode = { 'n', },      silent = true, desc = 'Window g<tab>', },
+    { '<leader><cr>',   '<esc><c-tab>',                                       mode = { 'v', },      silent = true, desc = 'Window g<tab>', },
 
     -- width
 
