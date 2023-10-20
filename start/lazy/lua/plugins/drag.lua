@@ -21,7 +21,7 @@ return {
     'peter-lyr/sha2',
     require 'plugins.projectroot',
   },
-  init = function()
+  config = function()
     require 'drag'
   end,
 }
