@@ -141,17 +141,17 @@ end
 
 function B.asyncrun_prepare(callback)
   if not callback then
-    B.temp_function = function()
+    Temp_function = function()
       B.notify_qflist()
       vim.cmd 'au! User AsyncRunStop'
     end
   else
-    B.temp_function = function()
+    Temp_function = function()
       callback()
       vim.cmd 'au! User AsyncRunStop'
     end
   end
-  vim.cmd "au User AsyncRunStop call v:lua.require('base').temp_function()"
+  vim.cmd "au User AsyncRunStop call v:lua.Temp_function()"
 end
 
 function B.notify_on_open(win)
