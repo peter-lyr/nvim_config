@@ -136,7 +136,7 @@ function B.notify_qflist()
   for _, i in ipairs(vim.fn.getqflist()) do
     lines[#lines + 1] = i['text']
   end
-  B.notify_info(vim.fn.join(lines, '\n'))
+  B.notify_info(lines)
 end
 
 function B.asyncrun_prepare(callback)
