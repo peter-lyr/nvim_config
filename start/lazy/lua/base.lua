@@ -40,6 +40,7 @@ function B.aucmd(desc, event, opts)
 end
 
 function B.get_file_dirs(file)
+  vim.cmd 'Lazy load plenary.nvim'
   local file_path = require 'plenary.path':new(file)
   if not file_path:is_file() then
     B.notify_info('not file: ' .. file)
@@ -106,6 +107,7 @@ function B.get_create_file_path(dir_path, filename)
 end
 
 function B.get_fname_tail(file)
+  vim.cmd 'Lazy load plenary.nvim'
   file = string.gsub(file, '\\', '/')
   local fpath = require 'plenary.path':new(file)
   if fpath:is_file() then
