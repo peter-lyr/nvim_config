@@ -53,7 +53,4 @@ vim.api.nvim_create_autocmd({ 'VimLeavePre', }, {
   end,
 })
 
-vim.keymap.set({ 'n', 'v', }, '<leader>s<cr>', function() M.load() end, { desc = 'sessions load', })
-vim.keymap.set({ 'n', 'v', }, '<leader>s\\', function() M.sel() end, { desc = 'sessions sel open', })
-
 return M

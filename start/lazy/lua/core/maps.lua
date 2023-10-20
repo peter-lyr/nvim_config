@@ -192,6 +192,10 @@ return {
     { '<leader>tk',     function() require 'toggle'.iskeyword(1) end,         mode = { 'n', 'v', }, silent = true, desc = 'toggle iskeyword', },
     { '<leader>tK',     function() require 'toggle'.iskeyword() end,          mode = { 'n', 'v', }, silent = true, desc = 'toggle iskeyword', },
 
+    -- sessions.lua
+    { '<leader>s<cr>',  function() require 'sessions'.load() end,             mode = { 'n', 'v', }, silent = true, desc = 'sessions load', },
+    { '<leader>s\\',    function() require 'sessions'.sel() end,              mode = { 'n', 'v', }, silent = true, desc = 'sessions sel open', },
+
     -- Others
 
     -- bcomp.lua
