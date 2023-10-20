@@ -2,9 +2,7 @@ local M = {}
 
 package.loaded['config.aerial'] = nil
 
-local minimap = require 'config.minimap'
-
-M.width = minimap.width
+M.width = require 'config.minimap'.width
 
 require 'aerial'.setup {
   layout = {
@@ -78,7 +76,7 @@ vim.g.aerial_au_bufenter = vim.api.nvim_create_autocmd('BufEnter', {
   callback = function(ev)
     if vim.api.nvim_buf_get_option(ev.buf, 'filetype') == 'aerial' then
       local width = M.width + 2
-      if minimap.opened then
+      if require 'config.minimap'.opened then
         width = M.width * 2 + 2
       end
       require 'aerial'.setup {
