@@ -9,6 +9,18 @@ local function getfontnamesize()
   return fontname, fontsize
 end
 
+M.notify = function(info)
+  vim.notify(info, 'info', {
+    animate = false,
+    on_open = function(win)
+      local buf = vim.api.nvim_win_get_buf(win)
+      vim.api.nvim_buf_set_option(buf, 'filetype', 'markdown')
+      vim.api.nvim_win_set_option(win, 'concealcursor', 'nvic')
+    end,
+    timeout = 1000 * 8,
+  })
+end
+
 M.last_font_size_dir_p = require 'plenary.path':new(vim.fn.stdpath 'data'):joinpath 'last-font-size'
 M.last_font_size_txt_p = M.last_font_size_dir_p:joinpath 'last-font-size.txt'
 
@@ -40,8 +52,9 @@ M.up = function()
   fontsize = fontsize + 1
   M.lastfontsize = fontsize
   if fontsize <= 72 then
-    vim.cmd('GuiFont! ' .. fontname .. fontsize)
-    print('GuiFont! ' .. fontname .. fontsize)
+    local cmd = 'GuiFont! ' .. fontname .. fontsize
+    vim.cmd(cmd)
+    M.notify(cmd)
   end
 end
 
@@ -50,27 +63,31 @@ M.down = function()
   fontsize = fontsize - 1
   M.lastfontsize = fontsize
   if fontsize >= 1 then
-    vim.cmd('GuiFont! ' .. fontname .. fontsize)
-    print('GuiFont! ' .. fontname .. fontsize)
+    local cmd = 'GuiFont! ' .. fontname .. fontsize
+    vim.cmd(cmd)
+    M.notify(cmd)
   end
 end
 
 M.normal = function()
   local fontname, fontsize = getfontnamesize()
   if (tonumber(fontsize) == M.fontsizenormal) == true then
-    vim.cmd('GuiFont! ' .. fontname .. M.lastfontsize)
-    print('GuiFont! ' .. fontname .. M.lastfontsize)
+    local cmd = 'GuiFont! ' .. fontname .. M.lastfontsize
+    vim.cmd(cmd)
+    M.notify(cmd)
   else
-    vim.cmd('GuiFont! ' .. fontname .. M.fontsizenormal)
-    print('GuiFont! ' .. fontname .. M.fontsizenormal)
+    local cmd = 'GuiFont! ' .. fontname .. M.fontsizenormal
+    vim.cmd(cmd)
+    M.notify(cmd)
   end
 end
 
 M.min = function()
   local fontname, _ = getfontnamesize()
   M.lastfontsize = 1
-  vim.cmd('GuiFont! ' .. fontname .. 1)
-  print('GuiFont! ' .. fontname .. 1)
+  local cmd = 'GuiFont! ' .. fontname .. 1
+  vim.cmd(cmd)
+  M.notify(cmd)
 end
 
 M.frameless = function()
