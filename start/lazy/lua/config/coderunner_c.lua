@@ -20,9 +20,9 @@ local function system_cd(p)
     s = s .. string.sub(p, 1, 2) .. ' && '
   end
   if require 'plenary.path'.new(p):is_dir() then
-    s = s .. 'cd ' .. p .. ' && '
+    s = s .. 'cd ' .. p
   else
-    s = s .. 'cd ' .. require 'plenary.path'.new(p):parent().filename .. ' && '
+    s = s .. 'cd ' .. require 'plenary.path'.new(p):parent().filename
   end
   return s
 end
@@ -95,10 +95,10 @@ M.to_cmake = function()
   local cbps = M.get_cbps(project)
   if #cbps < 1 then
     vim.notify 'c2cmake...'
-    system_run('start', 'chcp 65001 && %s python "%s" "%s"', system_cd(project), c2cmake_py, project)
+    system_run('start', 'chcp 65001 && %s && python "%s" "%s"', system_cd(project), c2cmake_py, project)
   else
     vim.notify 'cbp2cmake...'
-    system_run('start', 'chcp 65001 && %s python "%s" "%s"', system_cd(project), cbp2cmake_py, project)
+    system_run('start', 'chcp 65001 && %s && python "%s" "%s"', system_cd(project), cbp2cmake_py, project)
   end
 end
 
@@ -133,7 +133,7 @@ M.build_do = function(project, workspace)
   if M.rebuild_en then
     make = make .. ' -B -j20'
   end
-  local cmd = string.format([[chcp 65001 && %s cbp2make --wrap-objects --keep-outdir -in "%s" -out Makefile & %s]], system_cd(project), workspace, make)
+  local cmd = string.format([[chcp 65001 && %s && cbp2make --wrap-objects --keep-outdir -in "%s" -out Makefile & %s]], system_cd(project), workspace, make)
   if M.rebuild_en then
     cmd = string.gsub(cmd, '"', '\\"')
     vim.fn.system(string.format([[start cmd /c "%s & pause"]], cmd))
