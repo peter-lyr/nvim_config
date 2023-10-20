@@ -93,9 +93,9 @@ local function find_project_files(prompt_bufnr)
   local project_path, cd_successful = change_working_directory(prompt_bufnr, true)
   local opt = {
     cwd = project_path,
-    hidden = config.options.show_hidden,
-    mode = 'insert',
-    find_command = { 'fd', },
+    -- hidden = config.options.show_hidden,
+    -- mode = 'insert',
+    -- find_command = { 'fd', },
   }
   if cd_successful then
     builtin.find_files(opt)
@@ -106,7 +106,7 @@ local function browse_project_files(prompt_bufnr)
   local project_path, cd_successful = change_working_directory(prompt_bufnr, true)
   local opt = {
     cwd = project_path,
-    hidden = config.options.show_hidden,
+    -- hidden = config.options.show_hidden,
   }
   if cd_successful then
     require 'telescope'.extensions.file_browser.file_browser(opt)
@@ -117,8 +117,8 @@ local function search_in_project_files(prompt_bufnr)
   local project_path, cd_successful = change_working_directory(prompt_bufnr, true)
   local opt = {
     cwd = project_path,
-    hidden = config.options.show_hidden,
-    mode = 'insert',
+    -- hidden = config.options.show_hidden,
+    -- mode = 'insert',
   }
   if cd_successful then
     builtin.live_grep(opt)
@@ -129,8 +129,8 @@ local function git_status(prompt_bufnr)
   local project_path, cd_successful = change_working_directory(prompt_bufnr, true)
   local opt = {
     cwd = project_path,
-    hidden = config.options.show_hidden,
-    mode = 'insert',
+    -- hidden = config.options.show_hidden,
+    -- mode = 'insert',
   }
   if cd_successful then
     builtin.git_status(opt)
