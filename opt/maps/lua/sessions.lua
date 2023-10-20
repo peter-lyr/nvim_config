@@ -1,13 +1,13 @@
 local M = {}
 
-function M.rep(content)
+function M.rep_baskslash(content)
   content = string.gsub(content, '\\', '/')
   return content
 end
 
 function M.get_source()
   local source = vim.fn.trim(debug.getinfo(1)['source'], '@')
-  return M.rep(source)
+  return M.rep_baskslash(source)
 end
 
 function M.get_loaded()
@@ -18,6 +18,19 @@ function M.get_loaded()
 end
 
 package.loaded[M.get_loaded()] = nil
+
+function M.get_desc(desc)
+  return M.get_loaded() .. '-' .. desc, {}
+end
+
+function M.get_group(desc)
+  return vim.api.nvim_create_augroup(M.get_desc(desc), {})
+end
+
+function M.aucmd(desc, event, opts)
+  opts = vim.tbl_deep_extend('force', opts, { group = M.get_group(desc), desc = M.get_desc(desc), })
+  vim.api.nvim_create_autocmd(event, opts)
+end
 
 M.sessions_dir_p = require 'plenary.path':new(vim.fn.stdpath 'data'):joinpath 'sessions'
 M.sessions_txt_p = M.sessions_dir_p:joinpath 'sessions.txt'
@@ -72,6 +85,6 @@ function M.save()
   end
 end
 
-vim.api.nvim_create_autocmd({ 'VimLeavePre', }, { callback = M.save, })
+M.aucmd('VimLeavePre', { 'VimLeavePre', }, { callback = M.save, })
 
 return M
