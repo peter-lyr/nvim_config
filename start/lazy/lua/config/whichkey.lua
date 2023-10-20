@@ -16,10 +16,11 @@ M.add = function(mapping)
   end
 end
 
-vim.api.nvim_create_autocmd({ 'VimEnter', }, {
-  callback = function()
-    require 'which-key'.register(M.mappings)
-  end,
-})
+M.start = function()
+  require 'which-key'.setup {}
+  require 'which-key'.register(M.mappings)
+end
+
+vim.fn.timer_start(100, M.start)
 
 return M
