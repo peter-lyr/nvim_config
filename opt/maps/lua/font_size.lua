@@ -1,11 +1,12 @@
 local M = {}
 
 M.fontsizenormal = 9
+M.lastfontsize = 9
 
 local function getfontnamesize()
   local fontname
   local fontsize
-  for k, v in string.gmatch(vim.g.GuiFont, "(.*:h)(%d+)") do
+  for k, v in string.gmatch(vim.g.GuiFont, '(.*:h)(%d+)') do
     fontname, fontsize = k, v
   end
   return fontname, fontsize
@@ -14,6 +15,7 @@ end
 M.up = function()
   local fontname, fontsize = getfontnamesize()
   fontsize = fontsize + 1
+  M.lastfontsize = fontsize
   if fontsize <= 72 then
     vim.cmd('GuiFont! ' .. fontname .. fontsize)
     print('GuiFont! ' .. fontname .. fontsize)
@@ -23,6 +25,7 @@ end
 M.down = function()
   local fontname, fontsize = getfontnamesize()
   fontsize = fontsize - 1
+  M.lastfontsize = fontsize
   if fontsize >= 1 then
     vim.cmd('GuiFont! ' .. fontname .. fontsize)
     print('GuiFont! ' .. fontname .. fontsize)
@@ -30,13 +33,19 @@ M.down = function()
 end
 
 M.normal = function()
-  local fontname, _ = getfontnamesize()
-  vim.cmd('GuiFont! ' .. fontname .. M.fontsizenormal)
-  print('GuiFont! ' .. fontname .. M.fontsizenormal)
+  local fontname, fontsize = getfontnamesize()
+  if (tonumber(fontsize) == M.fontsizenormal) == true then
+    vim.cmd('GuiFont! ' .. fontname .. M.lastfontsize)
+    print('GuiFont! ' .. fontname .. M.lastfontsize)
+  else
+    vim.cmd('GuiFont! ' .. fontname .. M.fontsizenormal)
+    print('GuiFont! ' .. fontname .. M.fontsizenormal)
+  end
 end
 
 M.min = function()
   local fontname, _ = getfontnamesize()
+  M.lastfontsize = 1
   vim.cmd('GuiFont! ' .. fontname .. 1)
   print('GuiFont! ' .. fontname .. 1)
 end
