@@ -32,17 +32,39 @@ function M.aucmd(desc, event, opts)
   vim.api.nvim_create_autocmd(event, opts)
 end
 
-M.sessions_dir_p = require 'plenary.path':new(vim.fn.stdpath 'data'):joinpath 'sessions'
-M.sessions_txt_p = M.sessions_dir_p:joinpath 'sessions.txt'
-
-if not M.sessions_dir_p:exists() then
-  vim.fn.mkdir(M.sessions_dir_p.filename)
+function M.get_std_data_dir_path(dirs)
+  local std_data_path = require 'plenary.path':new(vim.fn.stdpath 'data')
+  if not dir then
+    return std_data_path
+  end
+  local dir_path = std_data_path
+  if type(dirs) == 'string' then
+    dirs = { dirs, }
+  end
+  for _, dir in dirs do
+    dir_path = std_data_path:joinpath(dir)
+    if not dir_path:exists() then
+      vim.fn.mkdir(dir_path.filename)
+    end
+  end
+  return dir_path
 end
+
+function M.get_create_file_path(dir_path, filename)
+  local file_path = dir_path:joinpath(filename)
+  if not file_path:exists() then
+    file_path:write('', 'w')
+  end
+  return file_path
+end
+
+M.sessions_dir_path = M.get_std_data_dir_path 'sessions'
+M.sessions_txt_path = M.get_create_file_path(M.sessions_dir_path, 'sessions.txt')
 
 pcall(vim.cmd, 'Lazy load telescope-ui-select.nvim')
 
 M.sel = function()
-  local lines = M.sessions_txt_p:readlines()
+  local lines = M.sessions_txt_path:readlines()
   local fnames = {}
   for _, line in ipairs(lines) do
     local fname = vim.fn.trim(line)
@@ -61,7 +83,7 @@ M.sel = function()
 end
 
 M.load = function()
-  local lines = M.sessions_txt_p:readlines()
+  local lines = M.sessions_txt_path:readlines()
   for _, line in ipairs(lines) do
     local fname = vim.fn.trim(line)
     if #fname > 0 and require 'plenary.path':new(fname):exists() then
@@ -81,7 +103,7 @@ function M.save()
     end
   end
   if #fnames > 0 then
-    M.sessions_txt_p:write(vim.fn.join(fnames, '\n'), 'w')
+    M.sessions_txt_path:write(vim.fn.join(fnames, '\n'), 'w')
   end
 end
 
