@@ -95,10 +95,10 @@ M.to_cmake = function()
   local cbps = M.get_cbps(project)
   if #cbps < 1 then
     vim.notify 'c2cmake...'
-    system_run('asyncrun', 'chcp 65001 && %s python "%s" "%s"', system_cd(project), c2cmake_py, project)
+    system_run('start', 'chcp 65001 && %s python "%s" "%s"', system_cd(project), c2cmake_py, project)
   else
     vim.notify 'cbp2cmake...'
-    system_run('asyncrun', 'chcp 65001 && %s python "%s" "%s"', system_cd(project), cbp2cmake_py, project)
+    system_run('start', 'chcp 65001 && %s python "%s" "%s"', system_cd(project), cbp2cmake_py, project)
   end
 end
 
