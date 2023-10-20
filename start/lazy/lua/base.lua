@@ -1,36 +1,36 @@
-local M = {}
+local B = {}
 
-function M.rep_baskslash(content)
+function B.rep_baskslash(content)
   content = string.gsub(content, '\\', '/')
   return content
 end
 
-function M.get_source()
+function B.get_source()
   local source = vim.fn.trim(debug.getinfo(1)['source'], '@')
-  return M.rep_baskslash(source)
+  return B.rep_baskslash(source)
 end
 
-function M.get_loaded()
-  local source = M.get_source()
+function B.get_loaded()
+  local source = B.get_source()
   local loaded = string.match(source, '.+lua/(.+)%.lua')
   loaded = string.gsub(loaded, '/', '.')
   return loaded
 end
 
-function M.get_desc(desc)
-  return M.get_loaded() .. '-' .. desc, {}
+function B.get_desc(desc)
+  return B.get_loaded() .. '-' .. desc, {}
 end
 
-function M.get_group(desc)
-  return vim.api.nvim_create_augroup(M.get_desc(desc), {})
+function B.get_group(desc)
+  return vim.api.nvim_create_augroup(B.get_desc(desc), {})
 end
 
-function M.aucmd(desc, event, opts)
-  opts = vim.tbl_deep_extend('force', opts, { group = M.get_group(desc), desc = M.get_desc(desc), })
+function B.aucmd(desc, event, opts)
+  opts = vim.tbl_deep_extend('force', opts, { group = B.get_group(desc), desc = B.get_desc(desc), })
   vim.api.nvim_create_autocmd(event, opts)
 end
 
-function M.get_std_data_dir_path(dirs)
+function B.get_std_data_dir_path(dirs)
   vim.cmd 'Lazy load plenary.nvim'
   local std_data_path = require 'plenary.path':new(vim.fn.stdpath 'data')
   if not dir then
@@ -49,7 +49,7 @@ function M.get_std_data_dir_path(dirs)
   return dir_path
 end
 
-function M.get_create_file_path(dir_path, filename)
+function B.get_create_file_path(dir_path, filename)
   local file_path = dir_path:joinpath(filename)
   if not file_path:exists() then
     file_path:write('', 'w')
@@ -57,4 +57,16 @@ function M.get_create_file_path(dir_path, filename)
   return file_path
 end
 
-return M
+function B.ui_sel(items, prompt, callback)
+  vim.cmd 'Lazy load telescope-ui-select.nvim'
+  if #items > 0 then
+    vim.ui.select(items, { prompt = prompt, }, callback)
+  end
+end
+
+function B.file_exists(file)
+  vim.cmd 'Lazy load plenary.nvim'
+  return require 'plenary.path':new(file):exists()
+end
+
+return B
