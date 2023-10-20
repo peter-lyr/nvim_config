@@ -32,6 +32,7 @@ return {
 
     -- f5
     { '<f5>',                '<cmd>e!<cr>',                                   mode = { 'n', 'v', }, silent = true,  desc = 'e!', },
+    { 'q<leader>',           '<cmd>e!<cr>',                                   mode = { 'n', 'v', }, silent = true,  desc = 'e!', },
 
     -- cursor
     { '<c-j>',               '5j',                                            mode = { 'n', 'v', }, silent = true,  desc = '5j', },
