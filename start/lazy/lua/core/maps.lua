@@ -269,5 +269,6 @@ return {
   end,
   config = function()
     require 'work.tortoisesvn'
+    require 'hili'
   end,
 }
