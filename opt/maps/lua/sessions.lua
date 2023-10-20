@@ -20,12 +20,14 @@ M.sel = function()
       fnames[#fnames + 1] = fname
     end
   end
-  vim.ui.select(fnames, { prompt = 'sessions sel open', }, function(choice, idx)
-    if not choice then
-      return
-    end
-    vim.cmd('edit ' .. choice)
-  end)
+  if #fnames > 0 then
+    vim.ui.select(fnames, { prompt = 'sessions sel open', }, function(choice, idx)
+      if not choice then
+        return
+      end
+      vim.cmd('edit ' .. choice)
+    end)
+  end
 end
 
 M.load = function()
@@ -49,7 +51,9 @@ vim.api.nvim_create_autocmd({ 'VimLeavePre', }, {
         end
       end
     end
-    M.sessions_txt_p:write(vim.fn.join(fnames, '\n'), 'w')
+    if #fnames > 0 then
+      M.sessions_txt_p:write(vim.fn.join(fnames, '\n'), 'w')
+    end
   end,
 })
 
