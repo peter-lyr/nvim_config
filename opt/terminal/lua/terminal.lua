@@ -96,7 +96,7 @@ local function map_q_close()
   end, { buffer = buf, nowait = true, silent = true, })
 end
 
-M.toggle = function(terminal, chdir)
+M.toggle                  = function(terminal, chdir)
   if not chdir then
     chdir = ''
   end
@@ -181,7 +181,7 @@ M.toggle = function(terminal, chdir)
   end
 end
 
-local get_paragraph = function(sep)
+local get_paragraph       = function(sep)
   local paragraph = {}
   local linenr = vim.fn.line '.'
   local lines = 0
@@ -206,7 +206,7 @@ local get_paragraph = function(sep)
   return table.concat(paragraph, sep)
 end
 
-M.send = function(terminal, to_send, show) -- show时，send后不hide
+M.send                    = function(terminal, to_send, show) -- show时，send后不hide
   if vim.g.builtin_terminal_ok == 0 then
     vim.cmd(string.format('silent !start %s', terminal))
     return
@@ -282,7 +282,7 @@ M.send = function(terminal, to_send, show) -- show时，send后不hide
   end
 end
 
-M.hideall = function()
+M.hideall                 = function()
   local winid = vim.fn.win_getid()
   for winnr = 1, vim.fn.winnr '$' do
     local b = vim.fn.winbufnr(winnr)
@@ -296,6 +296,13 @@ M.hideall = function()
   vim.fn.win_gotoid(winid)
 end
 
-vim.g.builtin_terminal_ok = 1
+local major, minor, patch = string.match(vim.fn.system 'ver', 'Microsoft Windows %[Version (%d+)%.(%d+)%.(%d+)%.%d+%]')
+major = tonumber(major, 10)
+minor = tonumber(minor, 10)
+patch = tonumber(patch, 10)
+
+if major < 10 or patch < 18900 then
+  vim.g.builtin_terminal_ok = 1
+end
 
 return M
