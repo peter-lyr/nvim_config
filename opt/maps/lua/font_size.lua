@@ -9,9 +9,31 @@ local function getfontnamesize()
   return fontname, fontsize
 end
 
+M.last_font_size_dir_p = require 'plenary.path':new(vim.fn.stdpath 'data'):joinpath 'last-font-size'
+M.last_font_size_txt_p = M.last_font_size_dir_p:joinpath 'last-font-size.txt'
+
+if not M.last_font_size_dir_p:exists() then
+  vim.fn.mkdir(M.last_font_size_dir_p.filename)
+end
+
+if not M.last_font_size_txt_p:exists() then
+  M.last_font_size_txt_p:write('9', 'w')
+end
+
+M.fontsizenormal = 9
 local _, temp = getfontnamesize()
 M.lastfontsize = temp
-M.fontsizenormal = 9
+if (tonumber(temp) == M.fontsizenormal) == true then
+  M.lastfontsize = M.last_font_size_txt_p:read()
+end
+
+vim.api.nvim_create_autocmd({ 'VimLeavePre', }, {
+  callback = function()
+    if M.lastfontsize ~= M.fontsizenormal then
+      M.last_font_size_txt_p:write(M.lastfontsize, 'w')
+    end
+  end,
+})
 
 M.up = function()
   local fontname, fontsize = getfontnamesize()
