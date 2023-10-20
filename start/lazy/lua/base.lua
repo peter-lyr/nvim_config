@@ -128,16 +128,15 @@ function B.notify_qflist()
 end
 
 function B.asyncrun_prepare(callback)
-  if not callback then
-    B.temp_function = function()
+  B.temp_function = function()
+    if not callback then
       B.notify_qflist()
-      vim.cmd 'au! User AsyncRunStop'
+    else
+      B.temp_function = function()
+        callback()
+      end
     end
-  else
-    B.temp_function = function()
-      callback()
-      vim.cmd 'au! User AsyncRunStop'
-    end
+    vim.cmd 'au! User AsyncRunStop'
   end
   vim.cmd "au User AsyncRunStop call v:lua.require('base').temp_function()"
 end
