@@ -84,7 +84,6 @@ M.commit_push = function()
     local input = vim.fn.input 'commit info (commit and push): '
     if #input > 0 then
       B.set_timeout(10, function()
-        B.asyncrun_prepare()
         B.system_run('asyncrun', 'git commit -m "%s" && git push', input)
       end)
     end
