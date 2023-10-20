@@ -119,12 +119,24 @@ function B.clear_interval(timer)
   vim.fn.timer_stop(timer)
 end
 
+B.notify_info = function(message)
+  local messages = type(message) == 'table' and message or { message, }
+  local title = table.remove(messages, 1)
+  message = vim.fn.join(messages, '\n')
+  vim.notify(message, 'info', {
+    title = title,
+    animate = false,
+    on_open = B.notify_on_open,
+    timeout = 1000 * 8,
+  })
+end
+
 function B.notify_qflist()
   local lines = {}
   for _, i in ipairs(vim.fn.getqflist()) do
     lines[#lines + 1] = i['text']
   end
-  vim.notify(vim.fn.join(lines, '\n'))
+  B.notify_info(vim.fn.join(lines, '\n'))
 end
 
 function B.asyncrun_prepare(callback)
@@ -145,18 +157,6 @@ function B.notify_on_open(win)
   local buf = vim.api.nvim_win_get_buf(win)
   vim.api.nvim_buf_set_option(buf, 'filetype', 'markdown')
   vim.api.nvim_win_set_option(win, 'concealcursor', 'nvic')
-end
-
-B.notify_info = function(message)
-  local messages = type(message) == 'table' and message or { message, }
-  local title = table.remove(messages, 1)
-  message = vim.fn.join(messages, '\n')
-  vim.notify(message, 'info', {
-    title = title,
-    animate = false,
-    on_open = B.notify_on_open,
-    timeout = 1000 * 8,
-  })
 end
 
 function B.system_run(way, str_format, ...)
