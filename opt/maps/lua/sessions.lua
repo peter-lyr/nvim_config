@@ -40,21 +40,21 @@ M.load = function()
   end
 end
 
-vim.api.nvim_create_autocmd({ 'VimLeavePre', }, {
-  callback = function()
-    local fnames = {}
-    for _, buf in ipairs(vim.api.nvim_list_bufs()) do
-      if vim.api.nvim_buf_is_loaded(buf) == true and vim.api.nvim_buf_is_valid(buf) == true then
-        local fname = vim.api.nvim_buf_get_name(buf)
-        if #fname > 0 and require 'plenary.path':new(fname):exists() then
-          fnames[#fnames + 1] = fname
-        end
+function M.save()
+  local fnames = {}
+  for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+    if vim.api.nvim_buf_is_loaded(buf) == true and vim.api.nvim_buf_is_valid(buf) == true then
+      local fname = vim.api.nvim_buf_get_name(buf)
+      if #fname > 0 and require 'plenary.path':new(fname):exists() then
+        fnames[#fnames + 1] = fname
       end
     end
-    if #fnames > 0 then
-      M.sessions_txt_p:write(vim.fn.join(fnames, '\n'), 'w')
-    end
-  end,
-})
+  end
+  if #fnames > 0 then
+    M.sessions_txt_p:write(vim.fn.join(fnames, '\n'), 'w')
+  end
+end
+
+vim.api.nvim_create_autocmd({ 'VimLeavePre', }, { callback = M.save, })
 
 return M
