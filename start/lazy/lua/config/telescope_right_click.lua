@@ -221,11 +221,11 @@ end
 ------------
 
 M.aerial_open = function()
-  vim.cmd 'AerialOpen right'
+  require 'config.aerial'.open()
 end
 
 M.aerial_close = function()
-  vim.cmd 'AerialCloseAll'
+  require 'config.aerial'.close()
 end
 
 ------------

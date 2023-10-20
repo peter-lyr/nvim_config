@@ -70,6 +70,7 @@ vim.g.minimap_au_bufenter = vim.api.nvim_create_autocmd('BufEnter', {
     if vim.api.nvim_buf_get_option(ev.buf, 'filetype') == 'minimap' then
       vim.fn.timer_start(20, function()
         if vim.fn.getcurpos()[5] > 3 and (vim.fn.trim(vim.fn.execute 'norm g8') == '20') == true then
+          print(require 'config.aerial'.opened, '-----')
           if require 'config.aerial'.opened then
             vim.cmd 'wincmd p'
             vim.cmd 'AerialCloseAll'
