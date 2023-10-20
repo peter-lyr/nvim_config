@@ -302,23 +302,26 @@ vim.g.nvimtree_au_focuslost = vim.api.nvim_create_autocmd({ 'FocusLost', }, {
 pcall(vim.api.nvim_del_autocmd, vim.g.nvimtree_au_bufenter)
 
 vim.g.nvimtree_au_bufenter = vim.api.nvim_create_autocmd({ 'BufEnter', 'DirChanged', 'CursorHold', }, {
-  callback = function()
+  callback = function(ev)
     if vim.bo.ft == 'NvimTree' and M.ausize_en then
+      local winid = vim.fn.win_getid(vim.fn.bufwinnr(ev.buf))
       vim.fn.timer_start(10, function()
-        local max = 0
-        local min_nr = vim.fn.line 'w0'
-        if min_nr == 1 then
-          min_nr = 2
-        end
-        local max_nr = vim.fn.line 'w$'
-        for line = min_nr, max_nr do
-          local cnt = vim.fn.strdisplaywidth(vim.fn.getline(line))
-          if max < cnt then
-            max = cnt
+        if vim.bo.ft == 'NvimTree' then
+          local max = 0
+          local min_nr = vim.fn.line 'w0'
+          if min_nr == 1 then
+            min_nr = 2
           end
-        end
-        if max + 1 + 1 + #tostring(vim.fn.line 'w$') + 1 + 2 > require 'nvim-tree.view'.View.width then
-          vim.api.nvim_win_set_width(0, max + 5 + #tostring(vim.fn.line '$'))
+          local max_nr = vim.fn.line 'w$'
+          for line = min_nr, max_nr do
+            local cnt = vim.fn.strdisplaywidth(vim.fn.getline(line))
+            if max < cnt then
+              max = cnt
+            end
+          end
+          if max + 1 + 1 + #tostring(vim.fn.line 'w$') + 1 + 2 > require 'nvim-tree.view'.View.width then
+            vim.api.nvim_win_set_width(winid, max + 5 + #tostring(vim.fn.line '$'))
+          end
         end
       end)
     end
@@ -328,10 +331,11 @@ vim.g.nvimtree_au_bufenter = vim.api.nvim_create_autocmd({ 'BufEnter', 'DirChang
 pcall(vim.api.nvim_del_autocmd, vim.g.nvimtree_au_bufleave)
 
 vim.g.nvimtree_au_bufleave = vim.api.nvim_create_autocmd({ 'BufLeave', }, {
-  callback = function()
+  callback = function(ev)
     if vim.bo.ft == 'NvimTree' and M.ausize_en then
-      if vim.api.nvim_win_get_width(0) > require 'nvim-tree.view'.View.width then
-        vim.api.nvim_win_set_width(0, require 'nvim-tree.view'.View.width)
+      local winid = vim.fn.win_getid(vim.fn.bufwinnr(ev.buf))
+      if vim.api.nvim_win_get_width(winid) > require 'nvim-tree.view'.View.width then
+        vim.api.nvim_win_set_width(winid, require 'nvim-tree.view'.View.width)
       end
     end
   end,
