@@ -1,8 +1,5 @@
 local M = {}
 
-M.fontsizenormal = 9
-M.lastfontsize = 9
-
 local function getfontnamesize()
   local fontname
   local fontsize
@@ -11,6 +8,10 @@ local function getfontnamesize()
   end
   return fontname, fontsize
 end
+
+local _, temp = getfontnamesize()
+M.lastfontsize = temp
+M.fontsizenormal = 9
 
 M.up = function()
   local fontname, fontsize = getfontnamesize()
