@@ -4,7 +4,7 @@ package.loaded['config.aerial'] = nil
 
 M.width = require 'config.minimap'.width
 
-require 'aerial'.setup {
+local default_opts = {
   layout = {
     max_width = M.width * 2,
     min_width = M.width * 2,
@@ -42,6 +42,13 @@ require 'aerial'.setup {
   },
 }
 
+require 'aerial'.setup(default_opts)
+
+function M.setup(opts)
+  opts = vim.tbl_deep_extend('force', default_opts, opts)
+  require 'aerial'.setup(opts)
+end
+
 M.opened = nil
 
 M.open = function()
@@ -59,7 +66,7 @@ pcall(vim.api.nvim_del_autocmd, vim.g.aerial_au_bufleave)
 vim.g.aerial_au_bufleave = vim.api.nvim_create_autocmd({ 'BufLeave', }, {
   callback = function(ev)
     if vim.api.nvim_buf_get_option(ev.buf, 'filetype') == 'aerial' then
-      require 'aerial'.setup {
+      M.setup {
         layout = {
           max_width = M.width + 2,
           min_width = M.width + 2,
@@ -79,7 +86,7 @@ vim.g.aerial_au_bufenter = vim.api.nvim_create_autocmd('BufEnter', {
       if require 'config.minimap'.opened then
         width = M.width * 2 + 2
       end
-      require 'aerial'.setup {
+      M.setup {
         layout = {
           max_width = width,
           min_width = width,
