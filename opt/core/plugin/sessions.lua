@@ -9,6 +9,8 @@ if not M.sessions_dir_p:exists() then
   vim.fn.mkdir(M.sessions_dir_p.filename)
 end
 
+pcall(vim.cmd, 'Lazy load telescope-ui-select.nvim')
+
 M.sel = function()
   local lines = M.sessions_txt_p:readlines()
   local fnames = {}
