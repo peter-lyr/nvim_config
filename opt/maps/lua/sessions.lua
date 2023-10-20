@@ -8,40 +8,22 @@ M.sessions_dir_path = B.get_std_data_dir_path 'sessions'
 M.sessions_txt_path = B.get_create_file_path(M.sessions_dir_path, 'sessions.txt')
 
 function M.sel()
-  local files = {}
-  for _, line in ipairs(M.sessions_txt_path:readlines()) do
-    local fname = vim.fn.trim(line)
-    if #fname > 0 and B.file_exists(fname) then
-      files[#files + 1] = fname
-    end
-  end
+  local files = B.fetch_existed_files(M.sessions_txt_path:readlines())
   B.ui_sel(files, 'sessions sel open', function(choice, idx)
-    if not choice then
-      return
+    if choice then
+      vim.cmd('edit ' .. choice)
     end
-    vim.cmd('edit ' .. choice)
   end)
 end
 
 function M.load()
-  for _, line in ipairs(M.sessions_txt_path:readlines()) do
-    local fname = vim.fn.trim(line)
-    if #fname > 0 and B.file_exists(fname) then
-      vim.cmd('edit ' .. fname)
-    end
+  for _, file in ipairs(B.fetch_existed_files(M.sessions_txt_path:readlines())) do
+    vim.cmd('edit ' .. file)
   end
 end
 
 function M.save()
-  local files = {}
-  for _, buf in ipairs(vim.api.nvim_list_bufs()) do
-    if vim.api.nvim_buf_is_loaded(buf) == true and vim.api.nvim_buf_is_valid(buf) == true then
-      local fname = vim.api.nvim_buf_get_name(buf)
-      if #fname > 0 and B.file_exists(fname) then
-        files[#files + 1] = fname
-      end
-    end
-  end
+  local files = get_loaded_valid_bufs
   if #files > 0 then
     M.sessions_txt_path:write(vim.fn.join(files, '\n'), 'w')
   end

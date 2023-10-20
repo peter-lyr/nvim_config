@@ -17,6 +17,8 @@ function B.get_loaded()
   return loaded
 end
 
+package.loaded[B.get_loaded()] = nil
+
 function B.get_desc(desc)
   return B.get_loaded() .. '-' .. desc, {}
 end
@@ -67,6 +69,34 @@ end
 function B.file_exists(file)
   vim.cmd 'Lazy load plenary.nvim'
   return require 'plenary.path':new(file):exists()
+end
+
+function B.is_buf_loaded_valid(buf)
+  return vim.api.nvim_buf_is_loaded(buf) == true and vim.api.nvim_buf_is_valid(buf) == true
+end
+
+function B.get_loaded_valid_bufs()
+  local files = {}
+  for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+    if B.is_buf_loaded_valid(buf) then
+      local fname = vim.api.nvim_buf_get_name(buf)
+      if #fname > 0 and B.file_exists(fname) then
+        files[#files + 1] = fname
+      end
+    end
+  end
+  return files
+end
+
+function B.fetch_existed_files(files)
+  local new_files = {}
+  for _, file in ipairs(files) do
+    file = vim.fn.trim(file)
+    if #file > 0 and B.file_exists(file) then
+      new_files[#new_files + 1] = file
+    end
+  end
+  return new_files
 end
 
 return B
