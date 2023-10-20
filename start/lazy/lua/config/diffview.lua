@@ -157,9 +157,9 @@ pcall(vim.api.nvim_del_autocmd, vim.g.diffview_au_bufenter)
 vim.g.diffview_au_bufenter = vim.api.nvim_create_autocmd('BufEnter', {
   callback = function()
     if vim.tbl_contains({
-      'DiffviewFiles',
-      'DiffviewFileHistory',
-    }, vim.api.nvim_buf_get_option(vim.fn.bufnr(), 'filetype')) then
+          'DiffviewFiles',
+          'DiffviewFileHistory',
+        }, vim.api.nvim_buf_get_option(vim.fn.bufnr(), 'filetype')) then
       if timer ~= 0 then
         timer:stop()
       end
