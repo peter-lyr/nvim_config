@@ -1,6 +1,23 @@
 local M = {}
 
-package.loaded['sessions'] = nil
+function M.rep(content)
+  content = string.gsub(content, '\\', '/')
+  return content
+end
+
+function M.get_source()
+  local source = vim.fn.trim(debug.getinfo(1)['source'], '@')
+  return M.rep(source)
+end
+
+function M.get_loaded()
+  local source = M.get_source()
+  local loaded = string.match(source, '.+lua/(.+)%.lua')
+  loaded = string.gsub(loaded, '/', '.')
+  return loaded
+end
+
+package.loaded[M.get_loaded()] = nil
 
 M.sessions_dir_p = require 'plenary.path':new(vim.fn.stdpath 'data'):joinpath 'sessions'
 M.sessions_txt_p = M.sessions_dir_p:joinpath 'sessions.txt'
