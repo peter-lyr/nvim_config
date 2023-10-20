@@ -63,7 +63,7 @@ M.sessions_txt_path = M.get_create_file_path(M.sessions_dir_path, 'sessions.txt'
 
 pcall(vim.cmd, 'Lazy load telescope-ui-select.nvim')
 
-M.sel = function()
+function M.sel()
   local lines = M.sessions_txt_path:readlines()
   local fnames = {}
   for _, line in ipairs(lines) do
@@ -82,7 +82,7 @@ M.sel = function()
   end
 end
 
-M.load = function()
+function M.load()
   local lines = M.sessions_txt_path:readlines()
   for _, line in ipairs(lines) do
     local fname = vim.fn.trim(line)
