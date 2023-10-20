@@ -164,15 +164,15 @@ end
 ---------------
 
 local oftendirs = {}
-local plugins_dir_p = require 'plenary.path':new(vim.g.pack_path):joinpath('nvim_config', 'start', 'lazy', 'lua', 'plugins')
-local nvimtree_oftendirs_exe_p = plugins_dir_p:joinpath 'nvimtree_oftendirs.exe'
+local config_dir_p = require 'plenary.path':new(vim.g.pack_path):joinpath('nvim_config', 'start', 'lazy', 'lua', 'config')
+local nvimtree_oftendirs_exe_p = config_dir_p:joinpath 'nvimtree_oftendirs.exe'
 
 M.init_oftendir = function()
   local res = true
   if not nvimtree_oftendirs_exe_p:exists() then
     vim.cmd(string.format(
       [[silent !start /b /min cmd /c "%s && gcc nvimtree_oftendirs.c -Wall -s -ffunction-sections -fdata-sections -Wl,--gc-sections -O3 -o nvimtree_oftendirs"]],
-      systemcd(plugins_dir_p.filename)))
+      systemcd(config_dir_p.filename)))
     res = nil
   end
   local f = io.popen(nvimtree_oftendirs_exe_p.filename)
