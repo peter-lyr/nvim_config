@@ -5,13 +5,15 @@ function B.rep_baskslash(content)
   return content
 end
 
-function B.get_source()
-  local source = vim.fn.trim(debug.getinfo(1)['source'], '@')
+function B.get_source(source)
+  if not source then
+    source = vim.fn.trim(debug.getinfo(1)['source'], '@')
+  end
   return B.rep_baskslash(source)
 end
 
-function B.get_loaded()
-  local source = B.get_source()
+function B.get_loaded(source)
+  source = B.get_source(source)
   local loaded = string.match(source, '.+lua/(.+)%.lua')
   loaded = string.gsub(loaded, '/', '.')
   return loaded
@@ -97,6 +99,81 @@ function B.fetch_existed_files(files)
     end
   end
   return new_files
+end
+
+function B.set_timeout(timeout, callback)
+  local timer = vim.fn.timer_start(timeout, function()
+    callback()
+  end, { ['repeat'] = 1, })
+  return timer
+end
+
+function B.set_interval(interval, callback)
+  local timer = vim.fn.timer_start(interval, function()
+    callback()
+  end, { ['repeat'] = -1, })
+  return timer
+end
+
+function B.clear_interval(timer)
+  vim.fn.timer_stop(timer)
+end
+
+function B.notify_qflist()
+  local lines = {}
+  for _, i in ipairs(vim.fn.getqflist()) do
+    lines[#lines + 1] = i['text']
+  end
+  vim.notify(vim.fn.join(lines, '\n'))
+end
+
+function B.asyncrun_prepare(callback)
+  if not callback then
+    B.temp_function = function()
+      B.notify_qflist()
+      vim.cmd 'au! User AsyncRunStop'
+    end
+  else
+    B.temp_function = function()
+      callback()
+      vim.cmd 'au! User AsyncRunStop'
+    end
+  end
+  vim.cmd "au User AsyncRunStop call v:lua.require('base').temp_function()"
+end
+
+function B.notify_on_open(win)
+  local buf = vim.api.nvim_win_get_buf(win)
+  vim.api.nvim_buf_set_option(buf, 'filetype', 'markdown')
+  vim.api.nvim_win_set_option(win, 'concealcursor', 'nvic')
+end
+
+B.notify_info = function(message)
+  local messages = type(message) == 'table' and message or { message, }
+  local title = table.remove(messages, 1)
+  message = vim.fn.join(messages, '\n')
+  vim.notify(message, 'info', {
+    title = title,
+    animate = false,
+    on_open = B.notify_on_open,
+    timeout = 1000 * 8,
+  })
+end
+
+function B.system_run(way, str_format, ...)
+  local cmd = string.format(str_format, ...)
+  if way == 'start' then
+    cmd = string.format([[silent !start cmd /c "%s"]], cmd)
+    vim.cmd(cmd)
+  elseif way == 'asyncrun' then
+    vim.cmd 'Lazy load asyncrun.vim'
+    cmd = string.format('AsyncRun %s', cmd)
+    B.asyncrun_prepare()
+    vim.cmd(cmd)
+  elseif way == 'term' then
+    cmd = string.format('wincmd s|term %s', cmd)
+    vim.cmd(cmd)
+  end
 end
 
 return B

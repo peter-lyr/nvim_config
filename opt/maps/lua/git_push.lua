@@ -1,6 +1,8 @@
 local M = {}
 
-package.loaded['git_push'] = nil
+local B = require 'base'
+
+package.loaded[B.get_loaded(debug.getinfo(1)['source'])] = nil
 
 local git_push_timer = nil
 
@@ -74,26 +76,16 @@ M.addcommitpush = function()
   end
 end
 
-M.commitpush = function()
+M.commit_push = function()
   pcall(vim.call, 'ProjectRootCD')
   local result = vim.fn.systemlist { 'git', 'diff', '--staged', '--stat', }
   if #result > 0 then
-    vim.notify('git diff --staged --stat' .. '\n' .. vim.loop.cwd() .. '\n' .. table.concat(result, '\n'), 'info', {
-      animate = false,
-      on_open = function(win)
-        local buf = vim.api.nvim_win_get_buf(win)
-        vim.api.nvim_buf_set_option(buf, 'filetype', 'markdown')
-        vim.api.nvim_win_set_option(win, 'concealcursor', 'nvic')
-      end,
-      timeout = 1000 * 8,
-    })
+    B.notify_info { 'git diff --staged --stat', vim.loop.cwd(), table.concat(result, '\n'), }
     local input = vim.fn.input 'commit info (commit and push): '
     if #input > 0 then
-      vim.loop.new_timer():start(10, 0, function()
-        vim.schedule(function()
-          asyncrunprepare()
-          vim.cmd(string.format('AsyncRun git commit -m "%s" && git push', input))
-        end)
+      B.set_timeout(10, function()
+        B.asyncrun_prepare()
+        B.system_run('asyncrun', 'git commit -m "%s" && git push', input)
       end)
     end
   else

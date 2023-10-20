@@ -79,7 +79,7 @@ return {
     -- git_push.lua
     '<leader>gg',
     { '<leader>ga',     function() require 'git_push'.addcommitpush() end,    mode = { 'n', 'v', }, silent = true, desc = 'Git Push add all commit and push', },
-    { '<leader>gc',     function() require 'git_push'.commitpush() end,       mode = { 'n', 'v', }, silent = true, desc = 'Git Push commit and push', },
+    { '<leader>gc',     function() require 'git_push'.commit_push() end,      mode = { 'n', 'v', }, silent = true, desc = 'Git Push commit and push', },
     { '<leader>ggc',    function() require 'git_push'.commit() end,           mode = { 'n', 'v', }, silent = true, desc = 'Git Push just commit', },
     { '<leader>ggs',    function() require 'git_push'.push() end,             mode = { 'n', 'v', }, silent = true, desc = 'Git Push just push', },
     { '<leader>ggg',    function() require 'git_push'.graph() end,            mode = { 'n', 'v', }, silent = true, desc = 'Git Push graph', },
