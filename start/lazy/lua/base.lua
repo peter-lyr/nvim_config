@@ -31,6 +31,7 @@ function M.aucmd(desc, event, opts)
 end
 
 function M.get_std_data_dir_path(dirs)
+  vim.cmd 'Lazy load plenary.nvim'
   local std_data_path = require 'plenary.path':new(vim.fn.stdpath 'data')
   if not dir then
     return std_data_path
