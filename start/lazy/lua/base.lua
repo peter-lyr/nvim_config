@@ -1,5 +1,10 @@
 local B = {}
 
+function B.rep_slash(content)
+  content = string.gsub(content, '/', '\\')
+  return content
+end
+
 function B.rep_baskslash(content)
   content = string.gsub(content, '\\', '/')
   return content
@@ -34,6 +39,45 @@ function B.aucmd(desc, event, opts)
   vim.api.nvim_create_autocmd(event, opts)
 end
 
+function B.get_file_dirs(file)
+  local file_path = require 'plenary.path':new(file)
+  if not file_path:is_file() then
+    B.notify_info('not file: ' .. file)
+    return nil
+  end
+  local dirs = {}
+  for _ = 1, 24 do
+    file_path = file_path:parent()
+    local name = B.rep_baskslash(file_path.filename)
+    dirs[#dirs + 1] = name
+    if not string.match(name, '/') then
+      break
+    end
+  end
+  return dirs
+end
+
+function B.get_dir_path(dirs)
+  vim.cmd 'Lazy load plenary.nvim'
+  if type(dirs) == 'string' then
+    dirs = { dirs, }
+  end
+  local dir_1 = table.remove(dirs, 1)
+  local dir_path = require 'plenary.path':new(dir_1)
+  for _, dir in dirs do
+    dir_path = dir_path:joinpath(dir)
+    if not dir_path:exists() then
+      vim.fn.mkdir(dir_path.filename)
+    end
+  end
+  return dir_path
+end
+
+function B.get_file_path(dirs, file)
+  local dir_path = B.get_dir_path(dirs)
+  return dir_path:joinpath(file)
+end
+
 function B.get_std_data_dir_path(dirs)
   vim.cmd 'Lazy load plenary.nvim'
   local std_data_path = require 'plenary.path':new(vim.fn.stdpath 'data')
@@ -59,6 +103,23 @@ function B.get_create_file_path(dir_path, filename)
     file_path:write('', 'w')
   end
   return file_path
+end
+
+function B.get_fname_tail(file)
+  file = string.gsub(file, '\\', '/')
+  local fpath = require 'plenary.path':new(file)
+  if fpath:is_file() then
+    file = fpath:_split()
+    return file[#file]
+  elseif fpath:is_dir() then
+    file = fpath:_split()
+    if #file[#file] > 0 then
+      return file[#file]
+    else
+      return file[#file - 1]
+    end
+  end
+  return ''
 end
 
 function B.ui_sel(items, prompt, callback)
@@ -139,10 +200,16 @@ function B.notify_qflist()
   B.notify_info(lines)
 end
 
+function B.refresh_fugitive()
+  vim.cmd 'Lazy load vim-fugitive'
+  vim.call 'fugitive#ReloadStatus'
+end
+
 function B.asyncrun_prepare(callback)
   if not callback then
     AsyncRunDone = function()
       B.notify_qflist()
+      B.refresh_fugitive()
       vim.cmd 'au! User AsyncRunStop'
     end
   else
@@ -151,7 +218,7 @@ function B.asyncrun_prepare(callback)
       vim.cmd 'au! User AsyncRunStop'
     end
   end
-  vim.cmd "au User AsyncRunStop call v:lua.AsyncRunDone()"
+  vim.cmd 'au User AsyncRunStop call v:lua.AsyncRunDone()'
 end
 
 function B.notify_on_open(win)
@@ -161,6 +228,9 @@ function B.notify_on_open(win)
 end
 
 function B.system_run(way, str_format, ...)
+  if type(str_format) == 'table' then
+    str_format = vim.fn.join(str_format, ' && ')
+  end
   local cmd = string.format(str_format, ...)
   if way == 'start' then
     cmd = string.format([[silent !start cmd /c "%s"]], cmd)
@@ -173,6 +243,19 @@ function B.system_run(way, str_format, ...)
   elseif way == 'term' then
     cmd = string.format('wincmd s|term %s', cmd)
     vim.cmd(cmd)
+  end
+end
+
+function B.system_cd(file)
+  vim.cmd 'Lazy load plenary.nvim'
+  local new_file = ''
+  if string.sub(file, 2, 2) == ':' then
+    new_file = new_file .. string.sub(file, 1, 2) .. ' && '
+  end
+  if require 'plenary.path'.new(file):is_dir() then
+    return new_file .. 'cd ' .. file
+  else
+    return new_file .. 'cd ' .. require 'plenary.path'.new(file):parent().filename
   end
 end
 
