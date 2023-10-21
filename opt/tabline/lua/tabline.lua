@@ -1,6 +1,8 @@
 local M = {}
-
-package.loaded['tabline'] = nil
+local B = require 'my_base'
+M.source = debug.getinfo(1)['source']
+package.loaded[B.get_loaded(M.source)] = nil
+--------------------------------------------
 
 M.cur_projectroot = ''
 M.projects = {}
@@ -399,24 +401,20 @@ M.update_show_bufs = function()
   end
 end
 
-pcall(vim.api.nvim_del_autocmd, vim.g.tabline_au_winenter)
-
-vim.g.tabline_au_winenter = vim.api.nvim_create_autocmd({ 'WinEnter', }, {
+B.aucmd(M.source, 'WinEnter', { 'WinEnter', }, {
   callback = function()
     M.update_show_bufs()
     M.refresh_tabline()
   end,
 })
 
-pcall(vim.api.nvim_del_autocmd, vim.g.tabline_au_bufenter_1)
-
-vim.g.tabline_au_bufenter_1 = vim.api.nvim_create_autocmd({ 'BufEnter', }, {
+B.aucmd(M.source, 'BufEnter', { 'BufEnter', }, {
   callback = function(ev)
     if M.buf_deleting then
       return
     end
     if M.bufenter_timer ~= 0 then
-      M.bufenter_timer:stop()
+      B.clear_interval(M.bufenter_timer)
     end
     if not M.is_buf_to_show(ev.buf) then
       return
@@ -426,55 +424,40 @@ vim.g.tabline_au_bufenter_1 = vim.api.nvim_create_autocmd({ 'BufEnter', }, {
     if temp_projectroot ~= M.cur_projectroot then
       M.cur_projectroot = temp_projectroot
     end
-    M.bufenter_timer = vim.loop.new_timer()
-    M.bufenter_timer:start(200, 0, function()
-      vim.schedule(function()
-        M.update_show_bufs()
-        M.refresh_tabline()
-        M.bufenter_timer = 0
-      end)
+    M.bufenter_timer = B.set_timeout(200, function()
+      M.update_show_bufs()
+      M.refresh_tabline()
+      M.bufenter_timer = 0
     end)
   end,
 })
 
-pcall(vim.api.nvim_del_autocmd, vim.g.tabline_au_bufdelete_1)
-
-vim.g.tabline_au_bufdelete_1 = vim.api.nvim_create_autocmd({ 'BufDelete', }, {
+B.aucmd(M.source, 'BufDelete', { 'BufDelete', }, {
   callback = function()
     M.buf_deleting = 1
     if M.bufdelete_timer ~= 0 then
-      M.bufdelete_timer:stop()
+      B.clear_interval(M.bufdelete_timer)
     end
-    M.bufdelete_timer = vim.loop.new_timer()
-    M.bufdelete_timer:start(200, 0, function()
-      vim.schedule(function()
-        M.buf_deleting = nil
-        M.bufdelete_timer = 0
-      end)
+    M.bufdelete_timer = B.set_timeout(200, function()
+      M.buf_deleting = nil
+      M.bufdelete_timer = 0
     end)
   end,
 })
 
-pcall(vim.api.nvim_del_autocmd, vim.g.tabline_au_winresized_1)
-
-vim.g.tabline_au_winresized_1 = vim.api.nvim_create_autocmd({ 'WinResized', }, {
+B.aucmd(M.source, 'WinResized', { 'WinResized', }, {
   callback = function()
     if M.bufenter_timer ~= 0 then
-      M.bufenter_timer:stop()
+      B.clear_interval(M.bufenter_timer)
     end
-    M.bufenter_timer = vim.loop.new_timer()
-    M.bufenter_timer:start(200, 0, function()
-      vim.schedule(function()
-        M.refresh_tabline()
-        M.bufenter_timer = 0
-      end)
+    M.bufenter_timer = B.set_timeout(200, function()
+      M.refresh_tabline()
+      M.bufenter_timer = 0
     end)
   end,
 })
 
-pcall(vim.api.nvim_del_autocmd, vim.g.tabline_au_dirchanged)
-
-vim.g.tabline_au_dirchanged = vim.api.nvim_create_autocmd({ 'DirChanged', 'TabEnter', }, {
+B.aucmd(M.source, 'DirChanged', { 'DirChanged', }, {
   callback = function()
     M.refresh_tabline()
     pcall(vim.cmd, 'ProjectRootCD')
