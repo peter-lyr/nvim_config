@@ -1,6 +1,8 @@
 local M = {}
-
-package.loaded['config.nvimtree-func'] = nil
+local B = require 'my_base'
+M.source = debug.getinfo(1)['source']
+package.loaded[B.get_loaded(M.source)] = nil
+--------------------------------------------
 
 local api = require 'nvim-tree.api'
 local sel = require 'config.nvimtree_sel'
@@ -266,79 +268,63 @@ M.restart = function()
   M.open()
 end
 
-pcall(vim.api.nvim_del_autocmd, vim.g.nvimtree_au_focusgained)
+B.aucmd(M.source, 'FocusGained', { 'FocusGained', }, { callback = function()
+  if M.focuslost_timer ~= 0 then
+    M.focuslost_timer:stop()
+  end
+  M.focuslost_timer = 0
+  if M.nvimtree_opened == 1 then
+    local winid = vim.fn.win_getid()
+    vim.cmd 'NvimTreeOpen'
+    vim.fn.win_gotoid(winid)
+  end
+end, })
 
-vim.g.nvimtree_au_focusgained = vim.api.nvim_create_autocmd({ 'FocusGained', }, {
-  callback = function()
-    if M.focuslost_timer ~= 0 then
-      M.focuslost_timer:stop()
-    end
-    M.focuslost_timer = 0
-    if M.nvimtree_opened == 1 then
-      local winid = vim.fn.win_getid()
-      vim.cmd 'NvimTreeOpen'
-      vim.fn.win_gotoid(winid)
-    end
-  end,
-})
-
-pcall(vim.api.nvim_del_autocmd, vim.g.nvimtree_au_focuslost)
-
-vim.g.nvimtree_au_focuslost = vim.api.nvim_create_autocmd({ 'FocusLost', }, {
-  callback = function()
-    if M.focuslost_timer ~= 0 then
-      M.focuslost_timer:stop()
-    end
-    M.focuslost_timer = vim.loop.new_timer()
-    M.focuslost_timer:start(1000 * 20, 0, function()
-      vim.schedule(function()
-        vim.cmd 'NvimTreeClose'
-        M.focuslost_timer = 0
-      end)
+B.aucmd(M.source, 'FocusLost', { 'FocusLost', }, { callback = function()
+  if M.focuslost_timer ~= 0 then
+    M.focuslost_timer:stop()
+  end
+  M.focuslost_timer = vim.loop.new_timer()
+  M.focuslost_timer:start(1000 * 20, 0, function()
+    vim.schedule(function()
+      vim.cmd 'NvimTreeClose'
+      M.focuslost_timer = 0
     end)
-  end,
-})
+  end)
+end, })
 
-pcall(vim.api.nvim_del_autocmd, vim.g.nvimtree_au_bufenter)
-
-vim.g.nvimtree_au_bufenter = vim.api.nvim_create_autocmd({ 'BufEnter', 'DirChanged', 'CursorHold', }, {
-  callback = function(ev)
-    if vim.bo.ft == 'NvimTree' and M.ausize_en then
-      local winid = vim.fn.win_getid(vim.fn.bufwinnr(ev.buf))
-      vim.fn.timer_start(10, function()
-        if vim.bo.ft == 'NvimTree' then
-          local max = 0
-          local min_nr = vim.fn.line 'w0'
-          if min_nr == 1 then
-            min_nr = 2
-          end
-          local max_nr = vim.fn.line 'w$'
-          for line = min_nr, max_nr do
-            local cnt = vim.fn.strdisplaywidth(vim.fn.getline(line))
-            if max < cnt then
-              max = cnt
-            end
-          end
-          if max + 1 + 1 + #tostring(vim.fn.line 'w$') + 1 + 2 > require 'nvim-tree.view'.View.width then
-            vim.api.nvim_win_set_width(winid, max + 5 + #tostring(vim.fn.line '$'))
+B.aucmd(M.source, 'BufEnter', { 'BufEnter', 'DirChanged', 'CursorHold', }, { callback = function(ev)
+  if vim.bo.ft == 'NvimTree' and M.ausize_en then
+    local winid = vim.fn.win_getid(vim.fn.bufwinnr(ev.buf))
+    vim.fn.timer_start(10, function()
+      if vim.bo.ft == 'NvimTree' then
+        local max = 0
+        local min_nr = vim.fn.line 'w0'
+        if min_nr == 1 then
+          min_nr = 2
+        end
+        local max_nr = vim.fn.line 'w$'
+        for line = min_nr, max_nr do
+          local cnt = vim.fn.strdisplaywidth(vim.fn.getline(line))
+          if max < cnt then
+            max = cnt
           end
         end
-      end)
-    end
-  end,
-})
-
-pcall(vim.api.nvim_del_autocmd, vim.g.nvimtree_au_bufleave)
-
-vim.g.nvimtree_au_bufleave = vim.api.nvim_create_autocmd({ 'BufLeave', }, {
-  callback = function(ev)
-    if vim.bo.ft == 'NvimTree' and M.ausize_en then
-      local winid = vim.fn.win_getid(vim.fn.bufwinnr(ev.buf))
-      if vim.api.nvim_win_get_width(winid) > require 'nvim-tree.view'.View.width then
-        vim.api.nvim_win_set_width(winid, require 'nvim-tree.view'.View.width)
+        if max + 1 + 1 + #tostring(vim.fn.line 'w$') + 1 + 2 > require 'nvim-tree.view'.View.width then
+          vim.api.nvim_win_set_width(winid, max + 5 + #tostring(vim.fn.line '$'))
+        end
       end
+    end)
+  end
+end, })
+
+B.aucmd(M.source, 'BufLeave', { 'BufLeave', }, { callback = function(ev)
+  if vim.bo.ft == 'NvimTree' and M.ausize_en then
+    local winid = vim.fn.win_getid(vim.fn.bufwinnr(ev.buf))
+    if vim.api.nvim_win_get_width(winid) > require 'nvim-tree.view'.View.width then
+      vim.api.nvim_win_set_width(winid, require 'nvim-tree.view'.View.width)
     end
-  end,
-})
+  end
+end, })
 
 return M
