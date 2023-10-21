@@ -66,7 +66,7 @@ B.aucmd(M.source, 'FileType', 'FileType', {
   end,
 })
 
-B.aucmd(M.source, 'VimLeave', 'VimLeave', {
+B.aucmd(M.source, 'VimLeavePre', 'VimLeavePre', {
   callback = function()
     if vim.fn.exists 'g:GuiLoaded' and vim.g.GuiLoaded == 1 then
       if vim.g.GuiWindowMaximized == 1 then
