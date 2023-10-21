@@ -2,7 +2,9 @@ local M = {}
 
 local B = require 'base'
 
-package.loaded[B.get_loaded(debug.getinfo(1)['source'])] = nil
+M.source = debug.getinfo(1)['source']
+
+package.loaded[B.get_loaded(M.source)] = nil
 
 M.addcommitpush = function()
   pcall(vim.call, 'ProjectRootCD')

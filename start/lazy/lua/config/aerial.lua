@@ -1,6 +1,10 @@
 local M = {}
 
-package.loaded['config.aerial'] = nil
+local B = require 'base'
+
+M.source = debug.getinfo(1)['source']
+
+package.loaded[B.get_loaded(M.source)] = nil
 
 M.width = require 'config.minimap'.width
 

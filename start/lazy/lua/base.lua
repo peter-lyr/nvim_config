@@ -10,9 +10,13 @@ function B.rep_baskslash(content)
   return content
 end
 
+function B.get_base_source()
+  return debug.getinfo(1)['source']
+end
+
 function B.get_source(source)
   if not source then
-    source = vim.fn.trim(debug.getinfo(1)['source'], '@')
+    source = vim.fn.trim(B.get_base_source(), '@')
   end
   return B.rep_baskslash(source)
 end
@@ -26,16 +30,16 @@ end
 
 package.loaded[B.get_loaded()] = nil
 
-function B.get_desc(desc)
-  return B.get_loaded() .. '-' .. desc, {}
+function B.get_desc(source, desc)
+  return B.get_loaded(source) .. '-' .. desc, {}
 end
 
-function B.get_group(desc)
-  return vim.api.nvim_create_augroup(B.get_desc(desc), {})
+function B.get_group(source, desc)
+  return vim.api.nvim_create_augroup(B.get_desc(source, desc), {})
 end
 
-function B.aucmd(desc, event, opts)
-  opts = vim.tbl_deep_extend('force', opts, { group = B.get_group(desc), desc = B.get_desc(desc), })
+function B.aucmd(source, desc, event, opts)
+  opts = vim.tbl_deep_extend('force', opts, { group = B.get_group(source, desc), desc = B.get_desc(source, desc), })
   vim.api.nvim_create_autocmd(event, opts)
 end
 

@@ -2,7 +2,9 @@ local M = {}
 
 local B = require 'base'
 
-package.loaded[B.get_loaded()] = nil
+M.source = debug.getinfo(1)['source']
+
+package.loaded[B.get_loaded(M.source)] = nil
 
 M.sessions_dir_path = B.get_std_data_dir_path 'sessions'
 M.sessions_txt_path = B.get_create_file_path(M.sessions_dir_path, 'sessions.txt')
@@ -29,6 +31,6 @@ function M.save()
   end
 end
 
-B.aucmd('VimLeavePre', { 'VimLeavePre', }, { callback = M.save, })
+B.aucmd(M.source, 'VimLeavePre', { 'VimLeavePre', }, { callback = M.save, })
 
 return M
