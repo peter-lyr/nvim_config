@@ -105,7 +105,7 @@ function B.get_std_data_dir_path(dirs)
   if type(dirs) == 'string' then
     dirs = { dirs, }
   end
-  for _, dir in dirs do
+  for _, dir in ipairs(dirs) do
     dir_path = dir_path:joinpath(dir)
     if not dir_path:exists() then
       vim.fn.mkdir(dir_path.filename)
