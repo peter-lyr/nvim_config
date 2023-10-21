@@ -66,6 +66,7 @@ return {
     { '<c-0>_',              function() require 'font_size'.min() end,        mode = { 'n', 'v', }, silent = true,  desc = 'font_size min', },
     { '<c-0><c-->',          function() require 'font_size'.frameless() end,  mode = { 'n', 'v', }, silent = true,  desc = 'font_size frameless', },
     { '<c-0><c-=>',          function() require 'font_size'.fullscreen() end, mode = { 'n', 'v', }, silent = true,  desc = 'font_size fullscreen', },
+    { '<c-0><c-bs>',         function() require 'font_size'.frameless_() end, mode = { 'n', 'v', }, silent = true,  desc = 'font_size fullscreen', },
 
     -- start.lua
     { 'cs.',                 function() require 'start'.explorer_cur() end,   mode = { 'n', },      silent = true,  desc = 'start explorer_cur', },

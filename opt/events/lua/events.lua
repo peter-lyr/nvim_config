@@ -66,19 +66,21 @@ B.aucmd(M.source, 'FileType', 'FileType', {
   end,
 })
 
+local lines = vim.fn.readfile(require 'startup'.gui_window_frameless_txt)
+
 B.aucmd(M.source, 'VimLeavePre', 'VimLeavePre', {
   callback = function()
-    if vim.fn.exists 'g:GuiLoaded' and vim.g.GuiLoaded == 1 then
-      if vim.g.GuiWindowMaximized == 1 then
-        vim.fn['GuiWindowMaximized'](0)
-      end
-      if vim.g.GuiWindowFrameless == 1 then
-        vim.fn['GuiWindowFrameless'](0)
-        vim.loop.new_timer():start(10, 0, function()
-          vim.schedule(function()
+    if #vim.fn.trim(vim.fn.join(lines, '')) == 0 then
+      if vim.fn.exists 'g:GuiLoaded' and vim.g.GuiLoaded == 1 then
+        if vim.g.GuiWindowMaximized == 1 then
+          vim.fn['GuiWindowMaximized'](0)
+        end
+        if vim.g.GuiWindowFrameless == 1 then
+          vim.fn['GuiWindowFrameless'](0)
+          B.set_timeout(10, function()
             vim.fn['GuiWindowFrameless'](0)
           end)
-        end)
+        end
       end
     end
   end,

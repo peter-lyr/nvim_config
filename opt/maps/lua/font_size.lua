@@ -1,4 +1,8 @@
 local M = {}
+local B = require 'my_base'
+M.source = debug.getinfo(1)['source']
+package.loaded[B.get_loaded(M.source)] = nil
+--------------------------------------------
 
 local function getfontnamesize()
   local fontname
@@ -103,6 +107,19 @@ M.fullscreen = function()
     vim.fn['GuiWindowFullScreen'](1)
   else
     vim.fn['GuiWindowFullScreen'](0)
+  end
+end
+
+M.gui_window_frameless_txt = require 'startup'.gui_window_frameless_txt
+
+function M.frameless_()
+  local lines = vim.fn.readfile(M.gui_window_frameless_txt)
+  if #vim.fn.trim(vim.fn.join(lines, '')) == 0 then
+    vim.fn.writefile({ '0', }, M.gui_window_frameless_txt)
+    B.notify_info 'nvim-qt will startup with frame'
+  else
+    vim.fn.writefile({ '', }, M.gui_window_frameless_txt)
+    B.notify_info 'nvim-qt will startup framelessly'
   end
 end
 

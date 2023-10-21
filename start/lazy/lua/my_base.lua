@@ -1,5 +1,14 @@
 local B = {}
 
+local S = require 'my_simple'
+
+B.get_std_data_dir = S.get_std_data_dir
+B.get_dir = S.get_dir
+B.get_create_file = S.get_create_file
+
+B.set_timeout = S.set_timeout
+B.get_opt_dir = S.get_opt_dir
+
 function B.rep_slash(content)
   content = string.gsub(content, '/', '\\')
   return content
@@ -74,6 +83,11 @@ function B.get_file_dirs(file)
   return dirs
 end
 
+function B.get_file_path(dirs, file)
+  local dir_path = B.get_dir_path(dirs)
+  return dir_path:joinpath(file)
+end
+
 function B.get_dir_path(dirs)
   vim.cmd 'Lazy load plenary.nvim'
   if type(dirs) == 'string' then
@@ -81,29 +95,8 @@ function B.get_dir_path(dirs)
   end
   local dir_1 = table.remove(dirs, 1)
   local dir_path = require 'plenary.path':new(dir_1)
-  for _, dir in dirs do
-    dir_path = dir_path:joinpath(dir)
-    if not dir_path:exists() then
-      vim.fn.mkdir(dir_path.filename)
-    end
-  end
-  return dir_path
-end
-
-function B.get_file_path(dirs, file)
-  local dir_path = B.get_dir_path(dirs)
-  return dir_path:joinpath(file)
-end
-
-function B.get_std_data_dir_path(dirs)
-  vim.cmd 'Lazy load plenary.nvim'
-  local std_data_path = require 'plenary.path':new(vim.fn.stdpath 'data')
-  if not dirs then
-    return std_data_path
-  end
-  local dir_path = std_data_path
-  if type(dirs) == 'string' then
-    dirs = { dirs, }
+  if not dir_path:exists() then
+    vim.fn.mkdir(dir_path.filename)
   end
   for _, dir in ipairs(dirs) do
     dir_path = dir_path:joinpath(dir)
@@ -112,6 +105,14 @@ function B.get_std_data_dir_path(dirs)
     end
   end
   return dir_path
+end
+
+function B.get_std_data_dir_path(dirs)
+  if type(dirs) == 'string' then
+    dirs = { dirs, }
+  end
+  table.insert(dirs, 1, vim.fn.stdpath 'data')
+  return B.get_dir_path(dirs)
 end
 
 function B.get_create_file_path(dir_path, filename)
@@ -180,13 +181,6 @@ function B.fetch_existed_files(files)
   return new_files
 end
 
-function B.set_timeout(timeout, callback)
-  local timer = vim.fn.timer_start(timeout, function()
-    callback()
-  end, { ['repeat'] = 1, })
-  return timer
-end
-
 function B.set_interval(interval, callback)
   local timer = vim.fn.timer_start(interval, function()
     callback()
@@ -200,7 +194,10 @@ end
 
 B.notify_info = function(message)
   local messages = type(message) == 'table' and message or { message, }
-  local title = table.remove(messages, 1)
+  local title = ''
+  if #messages > 1 then
+    title = table.remove(messages, 1)
+  end
   message = vim.fn.join(messages, '\n')
   vim.notify(message, 'info', {
     title = title,
