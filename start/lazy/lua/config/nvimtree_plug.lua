@@ -1,33 +1,29 @@
 local M = {}
-
-package.loaded['config.nvimtree_plug'] = nil
-
-local function rep(content)
-  content = vim.fn.tolower(content)
-  content = string.gsub(content, '/', '\\')
-  return content
-end
+local B = require 'my_base'
+M.source = debug.getinfo(1)['source']
+package.loaded[B.get_loaded(M.source)] = nil
+--------------------------------------------
 
 local get_ftarget = function(node)
-  return rep(node.absolute_path)
+  return B.rep_slash_lower(node.absolute_path)
 end
 
 local get_dtarget = function(node)
   if node.type == 'directory' then
-    return rep(node.absolute_path)
+    return B.rep_slash_lower(node.absolute_path)
   end
   if node.type == 'file' then
-    return rep(node.parent.absolute_path)
+    return B.rep_slash_lower(node.parent.absolute_path)
   end
   return nil
 end
 
 M.start_file = function(node)
-  vim.cmd('silent !start ' .. get_ftarget(node))
+  B.system_run('start', [[explorer "%s"]], get_ftarget(node))
 end
 
 M.start_dir = function(node)
-  vim.cmd('silent !start ' .. get_dtarget(node))
+  B.system_run('start', [[explorer "%s"]], get_dtarget(node))
 end
 
 -- bcomp.lua
@@ -45,7 +41,7 @@ M.bcomplast = function()
 end
 
 M.quicklook = function(node)
-  vim.fn.system('QuickLook.exe ' .. node.absolute_path)
+  B.system_run('start', [[QuickLook "%s"]], node.absolute_path)
 end
 
 return M
