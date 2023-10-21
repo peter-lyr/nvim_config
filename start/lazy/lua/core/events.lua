@@ -7,8 +7,6 @@ return {
     'BufWritePre',
     'FileType',
     'VimLeave',
-    'BufEnter',
-    'BufLeave',
   },
   config = function()
     require 'events'
