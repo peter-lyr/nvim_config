@@ -4,6 +4,9 @@ return {
   keys = {
     { '<esc>', function() require 'notify'.dismiss() end, mode = { 'n', }, silent = true, desc = 'dismiss notification', },
   },
+  dependencies = {
+    require 'plugins.colorscheme',
+  },
   config = function()
     require 'notify'.setup {
       top_down = false,

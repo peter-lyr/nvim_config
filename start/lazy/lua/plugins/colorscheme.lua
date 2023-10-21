@@ -1,8 +1,8 @@
 return {
   {
     'navarasu/onedark.nvim',
-    lazy = false,
-    priority = 1000,
+    lazy = true,
+    event = { 'BufReadPost', 'BufNewFile', },
     config = function()
       vim.cmd.colorscheme 'onedark'
     end,
