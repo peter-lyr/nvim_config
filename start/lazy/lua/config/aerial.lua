@@ -65,39 +65,43 @@ M.close = function()
   vim.cmd 'AerialCloseAll'
 end
 
-pcall(vim.api.nvim_del_autocmd, vim.g.aerial_au_bufleave)
+function M.size_leave(ev)
+  if vim.api.nvim_buf_get_option(ev.buf, 'filetype') == 'aerial' then
+    M.setup {
+      layout = {
+        max_width = M.width + 2,
+        min_width = M.width + 2,
+      },
+    }
+    vim.api.nvim_win_set_width(0, M.width + 2)
+  end
+end
 
-vim.g.aerial_au_bufleave = vim.api.nvim_create_autocmd({ 'BufLeave', }, {
-  callback = function(ev)
-    if vim.api.nvim_buf_get_option(ev.buf, 'filetype') == 'aerial' then
-      M.setup {
-        layout = {
-          max_width = M.width + 2,
-          min_width = M.width + 2,
-        },
-      }
-      vim.api.nvim_win_set_width(0, M.width + 2)
+function M.size_enter(ev)
+  if vim.api.nvim_buf_get_option(ev.buf, 'filetype') == 'aerial' then
+    local width = M.width + 2
+    if require 'config.minimap'.opened then
+      width = M.width * 2 + 2
     end
+    M.setup {
+      layout = {
+        max_width = width,
+        min_width = width,
+      },
+    }
+    vim.api.nvim_win_set_width(0, width)
+  end
+end
+
+B.aucmd(M.source, 'BufLeave', { 'BufLeave', }, {
+  callback = function(ev)
+    M.size_leave(ev)
   end,
 })
 
-pcall(vim.api.nvim_del_autocmd, vim.g.aerial_au_bufenter)
-
-vim.g.aerial_au_bufenter = vim.api.nvim_create_autocmd('BufEnter', {
+B.aucmd(M.source, 'BufEnter', { 'BufEnter', }, {
   callback = function(ev)
-    if vim.api.nvim_buf_get_option(ev.buf, 'filetype') == 'aerial' then
-      local width = M.width + 2
-      if require 'config.minimap'.opened then
-        width = M.width * 2 + 2
-      end
-      M.setup {
-        layout = {
-          max_width = width,
-          min_width = width,
-        },
-      }
-      vim.api.nvim_win_set_width(0, width)
-    end
+    M.size_enter(ev)
   end,
 })
 
