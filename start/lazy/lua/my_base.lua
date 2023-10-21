@@ -292,4 +292,10 @@ function B.get_only_name(file)
   return only_name
 end
 
+function B.buf_map_close(lhs, buf)
+  vim.keymap.set({ 'n', 'v', }, lhs, function()
+    vim.cmd 'close'
+  end, { buffer = buf, nowait = true, desc = 'close', })
+end
+
 return B
