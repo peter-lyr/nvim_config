@@ -79,7 +79,7 @@ M.search = function()
   timer:start(10, 0, function()
     vim.schedule(function()
       vim.cmd(string.format('let @/ = "\\V" . %s', getvisualcontent()))
-      vim.cmd [[call feedkeys("/\<c-r>/\<cr>")]]
+      vim.cmd [[call feedkeys("/\\\<c-r>/\<cr>")]]
     end)
   end)
 end
