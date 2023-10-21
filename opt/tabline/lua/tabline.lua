@@ -124,6 +124,7 @@ M.b_prev_buf = function()
       index = #M.projects[M.cur_projectroot]
     end
     vim.cmd(string.format('b%d', M.projects[M.cur_projectroot][index]))
+    M.refresh_tabline()
   end
 end
 
@@ -139,6 +140,7 @@ M.b_next_buf = function()
       index = 1
     end
     vim.cmd(string.format('b%d', M.projects[M.cur_projectroot][index]))
+    M.refresh_tabline()
   end
 end
 
