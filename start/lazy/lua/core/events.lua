@@ -12,5 +12,6 @@ return {
   },
   config = function()
     require 'events'
+    require 'scroll'
   end
 }
