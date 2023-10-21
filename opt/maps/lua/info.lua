@@ -68,6 +68,7 @@ M.new_buf_execute = function(cmd)
     local buf = vim.fn.bufnr()
     B.buf_map_close('q', buf)
     B.buf_map_close('<esc>', buf)
+    vim.cmd 'set ft=markdown'
   end
 end
 
