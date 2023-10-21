@@ -84,7 +84,6 @@ TelescopeKeysUiAll = {
 
   -- right_click
   { '<RightMouse>',       silent = true,                                                desc = 'RightMouse', },
-  { '<leader>`',          silent = true,                                                desc = 'RightMouse', },
 
 }
 
@@ -95,6 +94,7 @@ local keys = {
   { '<leader>svl',    function() require 'config.telescope'.live_grep_all() end, mode = { 'n', 'v', }, silent = true, desc = 'Telescope live_grep_all', },
   { '<leader>sL',     function() require 'config.telescope'.live_grep_def() end, mode = { 'n', 'v', }, silent = true, desc = 'Telescope live_grep_def', },
   { '<leader>s<c-l>', function() require 'config.telescope'.live_grep_rg() end,  mode = { 'n', 'v', }, silent = true, desc = 'Telescope live_grep_rg', },
+  { '<leader>`',          silent = true,                                                desc = 'RightMouse', },
 
 }
 

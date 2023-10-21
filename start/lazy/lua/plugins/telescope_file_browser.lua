@@ -32,7 +32,4 @@ return {
   dependencies = {
     require 'plugins.telescope',
   },
-  config = function()
-    require 'config.telescope_file_browser'
-  end,
 }

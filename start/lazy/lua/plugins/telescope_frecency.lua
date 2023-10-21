@@ -17,7 +17,4 @@ return {
     'kkharji/sqlite.lua',
     require 'plugins.telescope',
   },
-  config = function()
-    require 'config.telescope_frecency'
-  end,
 }
