@@ -298,4 +298,10 @@ function B.buf_map_close(lhs, buf)
   end, { buffer = buf, nowait = true, desc = 'close', })
 end
 
+function B.table_check_insert(array, value)
+  if vim.tbl_contains(array, value) == false then
+    table.insert(array, value)
+  end
+end
+
 return B
