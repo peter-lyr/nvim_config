@@ -1,7 +1,5 @@
-local opt = vim.fn.expand '$VIMRUNTIME' .. '\\pack\\nvim_config\\opt\\'
-
 return {
   name = 'verylazy',
-  dir = opt .. 'verylazy',
+  dir = require 'my_simple'.get_opt_dir 'verylazy',
   event = 'VeryLazy',
 }

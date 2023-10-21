@@ -1,9 +1,7 @@
-local opt = vim.fn.expand '$VIMRUNTIME' .. '\\pack\\nvim_config\\opt\\'
-
 return {
   name = 'drag',
+  dir = require 'my_simple'.get_opt_dir 'drag',
   lazy = true,
-  dir = opt .. 'drag',
   event = { 'BufReadPre', 'BufNewFile', },
   keys = {
     { '<leader>mu', function() require 'drag_images'.update 'cur' end,        mode = { 'n', 'v', }, silent = true, desc = 'markdown images update cur', },

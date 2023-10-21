@@ -1,8 +1,6 @@
-local opt = vim.fn.expand '$VIMRUNTIME' .. '\\pack\\nvim_config\\opt\\'
-
 return {
   name = 'maps',
-  dir = opt .. 'maps',
+  dir = require 'my_simple'.get_opt_dir 'maps',
   lazy = true,
   event = { 'CmdlineEnter', 'InsertEnter', 'ModeChanged', },
   dependencies = {

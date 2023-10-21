@@ -1,9 +1,7 @@
-local opt = vim.fn.expand '$VIMRUNTIME' .. '\\pack\\nvim_config\\opt\\'
-
 return {
   name = 'tabline',
+  dir = require 'my_simple'.get_opt_dir 'tabline',
   lazy = true,
-  dir = opt .. 'tabline',
   event = { 'BufReadPost', 'BufNewFile', },
   dependencies = {
     require 'plugins.plenary',

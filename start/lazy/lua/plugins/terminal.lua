@@ -1,9 +1,7 @@
-local opt = vim.fn.expand '$VIMRUNTIME' .. '\\pack\\nvim_config\\opt\\'
-
 return {
   name = 'terminal',
+  dir = require 'my_simple'.get_opt_dir 'terminal',
   lazy = true,
-  dir = opt .. 'terminal',
   keys = {
 
     -- toggle
