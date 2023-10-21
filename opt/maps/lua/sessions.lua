@@ -1,10 +1,8 @@
 local M = {}
-
 local B = require 'my_base'
-
 M.source = debug.getinfo(1)['source']
-
 package.loaded[B.get_loaded(M.source)] = nil
+--------------------------------------------
 
 M.sessions_dir_path = B.get_std_data_dir_path 'sessions'
 M.sessions_txt_path = B.get_create_file_path(M.sessions_dir_path, 'sessions.txt')

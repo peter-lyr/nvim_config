@@ -1,6 +1,8 @@
 local M = {}
-
-package.loaded['config.bqf'] = nil
+local B = require 'my_base'
+M.source = debug.getinfo(1)['source']
+package.loaded[B.get_loaded(M.source)] = nil
+--------------------------------------------
 
 local bqf = require 'bqf'
 

@@ -1,10 +1,8 @@
 local M = {}
-
 local B = require 'my_base'
-
 M.source = debug.getinfo(1)['source']
-
 package.loaded[B.get_loaded(M.source)] = nil
+--------------------------------------------
 
 M.width = require 'config.minimap'.width
 
