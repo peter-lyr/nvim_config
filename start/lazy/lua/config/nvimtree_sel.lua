@@ -1,28 +1,24 @@
 local M = {}
+local B = require 'my_base'
+M.source = debug.getinfo(1)['source']
+package.loaded[B.get_loaded(M.source)] = nil
+--------------------------------------------
 
-package.loaded['config.nvimtree_sel'] = nil
-
-local function get_exe_path(fname)
-  return require 'plenary.path':new(vim.g.pack_path):joinpath('nvim_config', 'start', 'lazy', 'lua', 'config'):joinpath(fname).filename
+function M.get_exe_pathth(fname)
+  return B.get_file_path({ vim.g.pack_path, 'nvim_config', 'start', 'lazy', 'lua', 'config', }, fname)
 end
 
-local function rep(content)
-  content = vim.fn.tolower(content)
-  content = string.gsub(content, '/', '\\')
-  return content
-end
-
-local get_dtarget = function(node)
+function M.get_dtarget(node)
   if node.type == 'directory' then
-    return rep(node.absolute_path)
+    return B.rep_slash_lower(node.absolute_path)
   end
   if node.type == 'file' then
-    return rep(node.parent.absolute_path)
+    return B.rep_slash_lower(node.parent.absolute_path)
   end
   return nil
 end
 
-local get_fname_tail = function(fname)
+M.get_fname_tail = function(fname)
   fname = string.gsub(fname, '/', '\\')
   local path = require 'plenary.path':new(fname)
   if path:is_file() then
@@ -69,12 +65,12 @@ M.delete_sel = function()
       if path:is_dir() then
         local entries = require 'plenary.scandir'.scan_dir(absolute_path, { hidden = true, depth = 10, add_dirs = false, })
         for _, entry in ipairs(entries) do
-          pcall(vim.cmd, 'bw! ' .. rep(entry))
+          pcall(vim.cmd, 'bw! ' .. B.rep_slash_lower(entry))
         end
       else
-        pcall(vim.cmd, 'bw! ' .. rep(absolute_path))
+        pcall(vim.cmd, 'bw! ' .. B.rep_slash_lower(absolute_path))
       end
-      vim.fn.system(string.format('%s "%s"', get_exe_path 'nvimtree_recyclebin.exe', absolute_path:match '^(.-)\\*$'))
+      vim.fn.system(string.format('%s "%s"', M.get_exe_pathth 'nvimtree_recyclebin.exe', absolute_path:match '^(.-)\\*$'))
     end
     require 'nvim-tree.marks'.clear_marks()
     require 'nvim-tree.api'.tree.reload()
@@ -84,7 +80,7 @@ M.delete_sel = function()
 end
 
 M.move_sel = function(node)
-  local dtarget = get_dtarget(node)
+  local dtarget = M.get_dtarget(node)
   if not dtarget then
     return
   end
@@ -94,7 +90,7 @@ M.move_sel = function(node)
     for _, v in ipairs(marks) do
       local absolute_path = v['absolute_path']
       if require 'plenary.path':new(absolute_path):is_dir() then
-        local dname = get_fname_tail(absolute_path)
+        local dname = M.get_fname_tail(absolute_path)
         dname = string.format('%s\\%s', dtarget, dname)
         if require 'plenary.path':new(dname):exists() then
           vim.cmd 'redraw'
@@ -113,7 +109,7 @@ M.move_sel = function(node)
           vim.fn.system(string.format('move "%s" "%s"', string.sub(absolute_path, 1, #absolute_path - 1), dname))
         end
       else
-        local fname = get_fname_tail(absolute_path)
+        local fname = M.get_fname_tail(absolute_path)
         fname = string.format('%s\\%s', dtarget, fname)
         if require 'plenary.path':new(fname):exists() then
           vim.cmd 'redraw'
@@ -132,7 +128,7 @@ M.move_sel = function(node)
           vim.fn.system(string.format('move "%s" "%s"', absolute_path, fname))
         end
       end
-      pcall(vim.cmd, 'bw! ' .. rep(absolute_path))
+      pcall(vim.cmd, 'bw! ' .. B.rep_slash_lower(absolute_path))
       ::continue::
     end
     require 'nvim-tree.marks'.clear_marks()
@@ -143,7 +139,7 @@ M.move_sel = function(node)
 end
 
 M.copy_sel = function(node)
-  local dtarget = get_dtarget(node)
+  local dtarget = M.get_dtarget(node)
   if not dtarget then
     return
   end
@@ -153,7 +149,7 @@ M.copy_sel = function(node)
     for _, v in ipairs(marks) do
       local absolute_path = v['absolute_path']
       if require 'plenary.path':new(absolute_path):is_dir() then
-        local dname = get_fname_tail(absolute_path)
+        local dname = M.get_fname_tail(absolute_path)
         dname = string.format('%s\\%s', dtarget, dname)
         if require 'plenary.path':new(dname):exists() then
           vim.cmd 'redraw'
@@ -178,7 +174,7 @@ M.copy_sel = function(node)
           vim.fn.system(string.format('xcopy "%s" "%s" /s /e /f', absolute_path, dname))
         end
       else
-        local fname = get_fname_tail(absolute_path)
+        local fname = M.get_fname_tail(absolute_path)
         fname = string.format('%s\\%s', dtarget, fname)
         if require 'plenary.path':new(fname):exists() then
           vim.cmd 'redraw'
@@ -205,8 +201,6 @@ M.copy_sel = function(node)
     print 'canceled!'
   end
 end
-
-local temppath = require 'plenary.path':new(vim.fn.expand '$temp')
 
 M.rename_sel = function(_)
   local marks = require 'nvim-tree.marks'.get_marks()
@@ -298,7 +292,7 @@ M.rename_sel = function(_)
           local is_file = v[1]
           local src = v[2]
           src = string.gsub(src, '[/\\:]', '_')
-          src = temppath:joinpath(src).filename
+          src = B.get_file_path(vim.fn.expand '$temp', src).filename
           if is_file == 0 then
             table.insert(cmds[k], src .. '\\')
           else
@@ -355,13 +349,13 @@ M.copy_2_clip = function()
   for _, v in ipairs(marks) do
     files = files .. ' ' .. '"' .. v.absolute_path .. '"'
   end
-  vim.fn.system(string.format('%s%s', get_exe_path 'nvimtree_copy2clip.exe', files))
+  vim.fn.system(string.format('%s%s', M.get_exe_pathth 'nvimtree_copy2clip.exe', files))
   require 'nvim-tree.marks'.clear_marks()
   require 'nvim-tree.api'.tree.reload()
 end
 
 M.paste_from_clip = function(node)
-  local dtarget = get_dtarget(node)
+  local dtarget = M.get_dtarget(node)
   if not dtarget then
     return
   end
