@@ -11,10 +11,12 @@ if __name__ == "__main__":
                 for dir in dirs:
                     if dir == "lua":
                         l = os.path.join(root, dir)
-                        for d in os.listdir(l):
-                            file = os.path.join(l, d)
-                            file = file.replace('\\', '/')
-                            if os.path.isfile(file) and d.split('.')[-1].lower() == 'lua':
-                                if file not in L:
-                                    L.append(file)
-                                    f.write(file.encode('utf-8') + b"\n")
+                        for _root, _, _files in os.walk(l):
+                            for _file in _files:
+                                _file = os.path.join(_root, _file)
+                                _file = _file.replace('\\', '/')
+                                if _file.split('.')[-1].lower() == 'lua':
+                                    if _file not in L:
+                                        print(_file)
+                                        L.append(_file)
+                                        f.write(_file.encode('utf-8') + b"\n")

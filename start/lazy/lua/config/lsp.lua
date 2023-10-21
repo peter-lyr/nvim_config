@@ -1,5 +1,11 @@
 local M = {}
 
+local B = require 'my_base'
+
+M.source = debug.getinfo(1)['source']
+
+package.loaded[B.get_loaded(M.source)] = nil
+
 local lspconfig = require 'lspconfig'
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -135,7 +141,10 @@ if not M.lua_libraries_txt_p:exists() then
 end
 
 for _, lua_library in ipairs(M.lua_libraries_txt_p:readlines()) do
-  lua_libraries[#lua_libraries + 1] = vim.fn.trim(lua_library)
+  local file = vim.fn.trim(lua_library)
+  if #file > 0 and B.file_exists(file) then
+    lua_libraries[#lua_libraries + 1] = file
+  end
 end
 
 lspconfig.lua_ls.setup {

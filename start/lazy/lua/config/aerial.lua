@@ -1,6 +1,6 @@
 local M = {}
 
-local B = require 'base'
+local B = require 'my_base'
 
 M.source = debug.getinfo(1)['source']
 
