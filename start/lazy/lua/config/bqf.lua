@@ -4,44 +4,40 @@ M.source = debug.getinfo(1)['source']
 package.loaded[B.get_loaded(M.source)] = nil
 --------------------------------------------
 
-local bqf = require 'bqf'
+M.bqf = require 'bqf'
 
-local hi = function()
+M.percent = 50
+
+function M.hi()
   vim.cmd [[
     hi BqfPreviewBorder guifg=#50a14f ctermfg=71
     hi link BqfPreviewRange Search
   ]]
 end
 
-hi()
+M.hi()
 
-local percent = 50
-
-pcall(vim.api.nvim_del_autocmd, vim.g.bqf_au_bufenter)
-
-vim.g.bqf_au_bufenter = vim.api.nvim_create_autocmd({ 'BufEnter', }, {
+B.aucmd(M.source, 'BufEnter', { 'BufEnter', }, {
   callback = function()
     if vim.bo.ft == 'qf' then
       local floatwin = require 'bqf.preview.floatwin'
-      floatwin.defaultHeight = vim.fn.float2nr(vim.o.lines * percent / 100 - 3)
-      floatwin.defaultVHeight = vim.fn.float2nr(vim.o.lines * percent / 100 - 3)
+      floatwin.defaultHeight = vim.fn.float2nr(vim.o.lines * M.percent / 100 - 3)
+      floatwin.defaultVHeight = vim.fn.float2nr(vim.o.lines * M.percent / 100 - 3)
     end
   end,
 })
 
-pcall(vim.api.nvim_del_autocmd, vim.g.bqf_au_colorscheme)
-
-vim.g.bqf_au_colorscheme = vim.api.nvim_create_autocmd({ 'ColorScheme', }, {
+B.aucmd(M.source, 'ColorScheme', { 'ColorScheme', }, {
   callback = function()
-    hi()
+    M.hi()
   end,
 })
 
-bqf.setup {
+M.bqf.setup {
   auto_resize_height = true,
   preview = {
-    win_height = vim.fn.float2nr(vim.o.lines * percent / 100 - 3),
-    win_vheight = vim.fn.float2nr(vim.o.lines * percent / 100 - 3),
+    win_height = vim.fn.float2nr(vim.o.lines * M.percent / 100 - 3),
+    win_vheight = vim.fn.float2nr(vim.o.lines * M.percent / 100 - 3),
     wrap = true,
   },
 }
