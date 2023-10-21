@@ -1,6 +1,8 @@
 local M = {}
-
--- package.loaded['terminal'] = nil
+local B = require 'my_base'
+M.source = debug.getinfo(1)['source']
+package.loaded[B.get_loaded(M.source)] = nil
+--------------------------------------------
 
 local bufleave_readable_file = ''
 
@@ -149,7 +151,7 @@ M.toggle                  = function(terminal, chdir)
         return
       end
     end
-    local bnr_idx = vim.fn.index_of(terminal_bufnrs, string.format('v:val == %d', vim.fn.bufnr()))
+    local bnr_idx = B.index_of(terminal_bufnrs, vim.fn.bufnr())
     bnr_idx = bnr_idx + 1
     if bnr_idx > #terminal_bufnrs then
       if is_hide_en() then

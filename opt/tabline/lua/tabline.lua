@@ -13,10 +13,6 @@ M.bufdelete_timer = 0
 M.simple_statusline = nil
 M.only_tabs = nil
 
-local function indexof(tbl, item)
-  return vim.fn.indexof(tbl, string.format('v:val == %s', item)) + 1
-end
-
 local function get_only_name(bufname)
   local only_name = string.gsub(bufname, '/', '\\')
   if string.match(only_name, '\\') then
@@ -114,7 +110,7 @@ M.b_prev_buf = function()
     if vim.v.count ~= 0 then
       index = vim.v.count
     else
-      index = indexof(M.projects[M.cur_projectroot], vim.fn.bufnr()) - 1
+      index = B.index_of(M.projects[M.cur_projectroot], vim.fn.bufnr()) - 1
     end
     if index < 1 then
       index = #M.projects[M.cur_projectroot]
@@ -130,7 +126,7 @@ M.b_next_buf = function()
     if vim.v.count ~= 0 then
       index = vim.v.count
     else
-      index = indexof(M.projects[M.cur_projectroot], vim.fn.bufnr()) + 1
+      index = B.index_of(M.projects[M.cur_projectroot], vim.fn.bufnr()) + 1
     end
     if index > #M.projects[M.cur_projectroot] then
       index = 1
@@ -142,7 +138,7 @@ end
 
 M.bd_prev_buf = function()
   if #M.projects[M.cur_projectroot] > 0 then
-    local index = indexof(M.projects[M.cur_projectroot], vim.fn.bufnr())
+    local index = B.index_of(M.projects[M.cur_projectroot], vim.fn.bufnr())
     if index <= 1 then
       return
     end
@@ -155,7 +151,7 @@ end
 
 M.bd_next_buf = function()
   if #M.projects[M.cur_projectroot] > 0 then
-    local index = indexof(M.projects[M.cur_projectroot], vim.fn.bufnr())
+    local index = B.index_of(M.projects[M.cur_projectroot], vim.fn.bufnr())
     if index >= #M.projects[M.cur_projectroot] then
       return
     end
@@ -167,7 +163,7 @@ M.bd_next_buf = function()
 end
 
 M.get_buf_to_show = function(bufnrs, cur_bufnr)
-  local index = indexof(bufnrs, cur_bufnr)
+  local index = B.index_of(bufnrs, cur_bufnr)
   local columns = vim.opt.columns:get()
   local buf_len = columns - #vim.loop.cwd() - 2
   local newbufnrs = { bufnrs[index], }
@@ -243,7 +239,7 @@ M.get_buf_to_show = function(bufnrs, cur_bufnr)
     end
   end
   if #newbufnrs == 2 then
-    if newbufnrs[1] == cur_bufnr and indexof(bufnrs, cur_bufnr) ~= 1 then
+    if newbufnrs[1] == cur_bufnr and B.index_of(bufnrs, cur_bufnr) ~= 1 then
       table.insert(newbufnrs, 1, bufnrs[index - 1])
     end
   end
@@ -306,7 +302,7 @@ M.refresh_tabline = function(only_tabs)
       if #buf_to_show == 0 then
         buf_to_show = M.projects[M.cur_projectroot]
       end
-      yy = indexof(M.projects[M.cur_projectroot], buf_to_show[1])
+      yy = B.index_of(M.projects[M.cur_projectroot], buf_to_show[1])
     end
     for i, bufnr in ipairs(buf_to_show) do
       local xx = tostring(yy + i - 1)
