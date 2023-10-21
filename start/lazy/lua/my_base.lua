@@ -286,4 +286,13 @@ function B.index_of(array, value)
   return nil
 end
 
+function B.get_only_name(file)
+  file = B.rep_slash(file)
+  local only_name = vim.fn.trim(file, '\\')
+  if string.match(only_name, '\\') then
+    only_name = string.match(only_name, '.+%\\(.+)$')
+  end
+  return only_name
+end
+
 return B

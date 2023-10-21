@@ -13,14 +13,6 @@ M.bufdelete_timer = 0
 M.simple_statusline = nil
 M.only_tabs = nil
 
-local function get_only_name(bufname)
-  local only_name = string.gsub(bufname, '/', '\\')
-  if string.match(only_name, '\\') then
-    only_name = string.match(only_name, '.+%\\(.+)$')
-  end
-  return only_name
-end
-
 M.is_buf_to_show = function(bufnr)
   local temp_fname = B.rep_slash_lower(vim.api.nvim_buf_get_name(bufnr))
   if #temp_fname == 0 then
@@ -167,7 +159,7 @@ M.get_buf_to_show = function(bufnrs, cur_bufnr)
   local columns = vim.opt.columns:get()
   local buf_len = columns - #vim.loop.cwd() - 2
   local newbufnrs = { bufnrs[index], }
-  buf_len = buf_len - #get_only_name(vim.fn.bufname(cur_bufnr)) - 4
+  buf_len = buf_len - #B.get_only_name(vim.fn.bufname(cur_bufnr)) - 4
   if buf_len < 0 then
     if index >= 2 then
       table.insert(newbufnrs, 1, bufnrs[index - 1])
@@ -188,7 +180,7 @@ M.get_buf_to_show = function(bufnrs, cur_bufnr)
       local ii = index + cnt1
       if ii > #bufnrs then
         ii = index - cnt2
-        local only_name = get_only_name(vim.fn.bufname(bufnrs[ii]))
+        local only_name = B.get_only_name(vim.fn.bufname(bufnrs[ii]))
         buf_len = buf_len - #only_name - 4
         if #newbufnrs > 9 then
           buf_len = buf_len - 1
@@ -199,7 +191,7 @@ M.get_buf_to_show = function(bufnrs, cur_bufnr)
         table.insert(newbufnrs, 1, bufnrs[ii])
         cnt2 = cnt2 + 1
       else
-        local only_name = get_only_name(vim.fn.bufname(bufnrs[ii]))
+        local only_name = B.get_only_name(vim.fn.bufname(bufnrs[ii]))
         buf_len = buf_len - #only_name - 4
         if #newbufnrs > 9 then
           buf_len = buf_len - 1
@@ -214,7 +206,7 @@ M.get_buf_to_show = function(bufnrs, cur_bufnr)
       local ii = index - cnt2
       if ii < 1 then
         ii = index + cnt1
-        local only_name = get_only_name(vim.fn.bufname(bufnrs[ii]))
+        local only_name = B.get_only_name(vim.fn.bufname(bufnrs[ii]))
         buf_len = buf_len - #only_name - 4
         if #newbufnrs > 9 then
           buf_len = buf_len - 1
@@ -225,7 +217,7 @@ M.get_buf_to_show = function(bufnrs, cur_bufnr)
         table.insert(newbufnrs, bufnrs[ii])
         cnt1 = cnt1 + 1
       else
-        local only_name = get_only_name(vim.fn.bufname(bufnrs[ii]))
+        local only_name = B.get_only_name(vim.fn.bufname(bufnrs[ii]))
         buf_len = buf_len - #only_name - 4
         if #newbufnrs > 9 then
           buf_len = buf_len - 1
@@ -306,7 +298,7 @@ M.refresh_tabline = function(only_tabs)
     end
     for i, bufnr in ipairs(buf_to_show) do
       local xx = tostring(yy + i - 1)
-      local only_name = get_only_name(vim.fn.bufname(bufnr))
+      local only_name = B.get_only_name(vim.fn.bufname(bufnr))
       local temp_ = ''
       if vim.fn.bufnr() == bufnr then
         temp_ = '%#tblsel#'
