@@ -4,9 +4,4 @@ return {
   name = 'verylazy',
   dir = opt .. 'verylazy',
   event = 'VeryLazy',
-  config = function()
-    require 'my_events'
-    require 'my_options'
-    require 'my_scroll'
-  end,
 }
