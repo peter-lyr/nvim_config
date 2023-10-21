@@ -5,7 +5,19 @@ function B.rep_slash(content)
   return content
 end
 
+function B.rep_slash_lower(content)
+  content = vim.fn.tolower(content)
+  content = string.gsub(content, '/', '\\')
+  return content
+end
+
 function B.rep_baskslash(content)
+  content = string.gsub(content, '\\', '/')
+  return content
+end
+
+function B.rep_baskslash_lower(content)
+  content = vim.fn.tolower(content)
   content = string.gsub(content, '\\', '/')
   return content
 end

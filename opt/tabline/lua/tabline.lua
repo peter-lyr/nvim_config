@@ -13,12 +13,6 @@ M.bufdelete_timer = 0
 M.simple_statusline = nil
 M.only_tabs = nil
 
-local function rep(content)
-  content = vim.fn.tolower(content)
-  content = string.gsub(content, '/', '\\')
-  return content
-end
-
 local function indexof(tbl, item)
   return vim.fn.indexof(tbl, string.format('v:val == %s', item)) + 1
 end
@@ -32,7 +26,7 @@ local function get_only_name(bufname)
 end
 
 M.is_buf_to_show = function(bufnr)
-  local temp_fname = rep(vim.api.nvim_buf_get_name(bufnr))
+  local temp_fname = B.rep_slash_lower(vim.api.nvim_buf_get_name(bufnr))
   if #temp_fname == 0 then
     return nil
   end
@@ -338,7 +332,7 @@ M.refresh_tabline = function(only_tabs)
       local temp_fname = ''
       for _, bufnr in ipairs(vim.fn.tabpagebuflist(tabpagenr)) do
         temp_fname = vim.api.nvim_buf_get_name(bufnr)
-        local temp_proj = rep(vim.fn['ProjectRootGet'](temp_fname))
+        local temp_proj = B.rep_slash_lower(vim.fn['ProjectRootGet'](temp_fname))
         if temp_proj ~= '.' and vim.fn.isdirectory(temp_proj) == 1 and vim.tbl_contains(temp_projs, temp_proj) == false then
           temp_projs[#temp_projs + 1] = temp_proj
           name = temp_proj
@@ -389,9 +383,9 @@ vim.cmd [[
 M.update_show_bufs = function()
   M.projects = {}
   for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do
-    local temp_fname = rep(vim.api.nvim_buf_get_name(bufnr))
+    local temp_fname = B.rep_slash_lower(vim.api.nvim_buf_get_name(bufnr))
     if M.is_buf_to_show(bufnr) then
-      local temp_projectroot = rep(vim.fn['ProjectRootGet'](temp_fname))
+      local temp_projectroot = B.rep_slash_lower(vim.fn['ProjectRootGet'](temp_fname))
       if vim.tbl_contains(vim.tbl_keys(M.projects), temp_projectroot) == false then
         M.projects[temp_projectroot] = {}
       end
@@ -419,8 +413,8 @@ B.aucmd(M.source, 'BufEnter', { 'BufEnter', }, {
     if not M.is_buf_to_show(ev.buf) then
       return
     end
-    local temp_fname = rep(vim.api.nvim_buf_get_name(ev.buf))
-    local temp_projectroot = rep(vim.fn['ProjectRootGet'](temp_fname))
+    local temp_fname = B.rep_slash_lower(vim.api.nvim_buf_get_name(ev.buf))
+    local temp_projectroot = B.rep_slash_lower(vim.fn['ProjectRootGet'](temp_fname))
     if temp_projectroot ~= M.cur_projectroot then
       M.cur_projectroot = temp_projectroot
     end
@@ -474,7 +468,7 @@ M.restore_hidden_tabs = function()
   vim.cmd 'tabo'
   vim.cmd 'wincmd o'
   if #vim.tbl_keys(M.projects) > 1 then
-    local temp = rep(vim.fn['ProjectRootGet'](vim.api.nvim_buf_get_name(0)))
+    local temp = B.rep_slash_lower(vim.fn['ProjectRootGet'](vim.api.nvim_buf_get_name(0)))
     for _, project in ipairs(vim.tbl_keys(M.projects_active)) do
       if project ~= temp and vim.fn.buflisted(M.projects_active[project]) == 1 then
         vim.cmd 'wincmd v'
@@ -493,7 +487,7 @@ M.append_one_proj_right_down = function()
     local projs = {}
     local active_projs = {}
     for winnr = 1, vim.fn.winnr '$' do
-      local tt = rep(vim.fn['ProjectRootGet'](vim.api.nvim_buf_get_name(vim.fn.winbufnr(winnr))))
+      local tt = B.rep_slash_lower(vim.fn['ProjectRootGet'](vim.api.nvim_buf_get_name(vim.fn.winbufnr(winnr))))
       if vim.tbl_contains(active_projs, tt) == false then
         active_projs[#active_projs + 1] = tt
       end
@@ -521,7 +515,7 @@ end
 M.append_one_proj_new_tab = function()
   if #vim.tbl_keys(M.projects) > 1 then
     local projs = {}
-    local temp = rep(vim.fn['ProjectRootGet'](vim.api.nvim_buf_get_name(0)))
+    local temp = B.rep_slash_lower(vim.fn['ProjectRootGet'](vim.api.nvim_buf_get_name(0)))
     for _, project in ipairs(vim.tbl_keys(M.projects_active)) do
       if project ~= temp and vim.fn.buflisted(M.projects_active[project]) == 1 then
         projs[#projs + 1] = project
@@ -547,7 +541,7 @@ M.append_one_proj_new_tab_no_dupl = function()
     local projs = {}
     local active_projs = {}
     for _, winid in ipairs(vim.api.nvim_list_wins()) do
-      local tt = rep(vim.fn['ProjectRootGet'](vim.api.nvim_buf_get_name(vim.fn.winbufnr(winid))))
+      local tt = B.rep_slash_lower(vim.fn['ProjectRootGet'](vim.api.nvim_buf_get_name(vim.fn.winbufnr(winid))))
       if vim.tbl_contains(active_projs, tt) == false then
         active_projs[#active_projs + 1] = tt
       end
