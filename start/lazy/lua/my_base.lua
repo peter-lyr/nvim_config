@@ -283,7 +283,7 @@ function B.index_of(array, value)
       return i
     end
   end
-  return nil
+  return -1
 end
 
 function B.get_only_name(file)

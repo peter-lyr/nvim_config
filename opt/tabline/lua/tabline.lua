@@ -156,6 +156,9 @@ end
 
 M.get_buf_to_show = function(bufnrs, cur_bufnr)
   local index = B.index_of(bufnrs, cur_bufnr)
+  if index == -1 then
+    return {}
+  end
   local columns = vim.opt.columns:get()
   local buf_len = columns - #vim.loop.cwd() - 2
   local newbufnrs = { bufnrs[index], }
