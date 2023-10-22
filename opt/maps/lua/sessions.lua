@@ -23,7 +23,7 @@ function M.load()
 end
 
 function M.save()
-  local files = get_loaded_valid_bufs
+  local files = B.get_loaded_valid_bufs()
   if #files > 0 then
     M.sessions_txt_path:write(vim.fn.join(files, '\n'), 'w')
   end

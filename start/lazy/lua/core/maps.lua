@@ -274,5 +274,6 @@ return {
     require 'work.tortoisesvn'
     require 'hili'
     require 'info'
+    require 'sessions'
   end,
 }
