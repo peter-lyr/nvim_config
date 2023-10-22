@@ -1,33 +1,12 @@
 local M = {}
-
-package.loaded['config.diffview'] = nil
+local B = require 'my_base'
+M.source = B.get_source(debug.getinfo(1)['source'])
+M.loaded = B.get_loaded(M.source)
+package.loaded[M.loaded] = nil
+--------------------------------------------
 
 local diffview = require 'diffview'
 local actions = require 'diffview.actions'
-
-M.diffviewfilehistory = function(mode)
-  if mode == 0 then
-    vim.cmd 'DiffviewFileHistory'
-  elseif mode == 1 then
-    vim.cmd 'DiffviewFileHistory --max-count=64'
-  elseif mode == 2 then
-    vim.cmd 'DiffviewFileHistory --max-count=238778'
-  elseif mode == 3 then
-    vim.cmd 'DiffviewFileHistory --walk-reflogs --range=stash'
-  elseif mode == 4 then
-    vim.cmd [[call feedkeys(":DiffviewFileHistory --base=")]]
-  elseif mode == 5 then
-    vim.cmd [[call feedkeys(":DiffviewFileHistory --range=")]]
-  end
-end
-
-M.diffviewopen = function()
-  vim.cmd 'DiffviewOpen -u'
-end
-
-M.diffviewclose = function()
-  vim.cmd 'DiffviewClose'
-end
 
 diffview.setup {
   file_history_panel = {
@@ -150,28 +129,58 @@ diffview.setup {
   },
 }
 
-local timer = 0
+function M.filehistory(mode)
+  if mode == '16' then
+    vim.cmd 'DiffviewFileHistory'
+  elseif mode == '64' then
+    vim.cmd 'DiffviewFileHistory --max-count=64'
+  elseif mode == 'finite' then
+    vim.cmd 'DiffviewFileHistory --max-count=238778'
+  elseif mode == 'stash' then
+    vim.cmd 'DiffviewFileHistory --walk-reflogs --range=stash'
+  elseif mode == 'base' then
+    vim.cmd [[call feedkeys(":DiffviewFileHistory --base=")]]
+  elseif mode == 'range' then
+    vim.cmd [[call feedkeys(":DiffviewFileHistory --range=")]]
+  end
+end
 
-pcall(vim.api.nvim_del_autocmd, vim.g.diffview_au_bufenter)
+function M.open()
+  vim.cmd 'DiffviewOpen -u'
+end
 
-vim.g.diffview_au_bufenter = vim.api.nvim_create_autocmd('BufEnter', {
-  callback = function()
-    if vim.tbl_contains({
-          'DiffviewFiles',
-          'DiffviewFileHistory',
-        }, vim.api.nvim_buf_get_option(vim.fn.bufnr(), 'filetype')) then
-      if timer ~= 0 then
-        timer:stop()
-      end
-      timer = vim.loop.new_timer()
-      timer:start(200, 0, function()
-        vim.schedule(function()
-          vim.cmd 'set nu'
-          timer = 0
-        end)
+function M.close()
+  vim.cmd 'DiffviewClose'
+end
+
+function M.refresh()
+  vim.cmd 'DiffviewRefresh'
+end
+
+function M.diff_commits()
+  vim.cmd 'Telescope git_diffs diff_commits'
+end
+
+B.aucmd(M.source, 'BufEnter', 'BufEnter', {
+  callback = function(ev)
+    if vim.tbl_contains({ 'DiffviewFiles', 'DiffviewFileHistory', },
+          vim.api.nvim_buf_get_option(ev.buf, 'filetype')) then
+      B.set_timeout(200, function()
+        vim.cmd 'set nu'
       end)
     end
   end,
 })
+
+B.map('<leader>gv1', M, 'filehistory', { '16', })
+B.map('<leader>gv2', M, 'filehistory', { '64', })
+B.map('<leader>gv3', M, 'filehistory', { 'finite', })
+B.map('<leader>gvs', M, 'filehistory', { 'stash', })
+B.map('<leader>gvb', M, 'filehistory', { 'base', })
+B.map('<leader>gvr', M, 'filehistory', { 'range', })
+B.map('<leader>gvo', M, 'open')
+B.map('<leader>gvl', M, 'refresh')
+B.map('<leader>gvq', M, 'close')
+B.map('<leader>gvw', M, 'diff_commits')
 
 return M

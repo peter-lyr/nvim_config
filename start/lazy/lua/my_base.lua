@@ -393,7 +393,7 @@ function B.merge_tables(...)
 end
 
 function B.map(lhs, M, func, params, desc_more)
-  local desc = M.loaded and { M.loaded, } or {}
+  local desc = M.loaded and { string.match(M.loaded, '%.([^.]+)$'), } or {}
   desc[#desc + 1] = func
   if desc_more then
     desc[#desc + 1] = desc_more

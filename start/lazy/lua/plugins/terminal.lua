@@ -22,6 +22,6 @@ return {
     S.wkey('<leader><f4>h', 'hide powershell', f)
   end,
   config = function()
-    require 'terminal'
+    require(f)
   end,
 }
