@@ -66,6 +66,7 @@ end
 
 function B.get_file_dirs(file)
   vim.cmd 'Lazy load plenary.nvim'
+  file = B.rep_slash(file)
   local file_path = require 'plenary.path':new(file)
   if not file_path:is_file() then
     B.notify_info('not file: ' .. file)
@@ -94,15 +95,21 @@ function B.get_dir_path(dirs)
     dirs = { dirs, }
   end
   local dir_1 = table.remove(dirs, 1)
+  dir_1 = B.rep_slash(dir_1)
   local dir_path = require 'plenary.path':new(dir_1)
-  if not dir_path:exists() then
-    vim.fn.mkdir(dir_path.filename)
-  end
   for _, dir in ipairs(dirs) do
-    dir_path = dir_path:joinpath(dir)
     if not dir_path:exists() then
       vim.fn.mkdir(dir_path.filename)
     end
+    dir_path = dir_path:joinpath(dir)
+  end
+  return dir_path
+end
+
+function B.get_create_last_dir_path(dirs)
+  local dir_path = B.get_dir_path(dirs)
+  if not dir_path:exists() then
+    vim.fn.mkdir(dir_path.filename)
   end
   return dir_path
 end
@@ -125,7 +132,7 @@ end
 
 function B.get_fname_tail(file)
   vim.cmd 'Lazy load plenary.nvim'
-  file = string.gsub(file, '\\', '/')
+  file = B.rep_slash(file)
   local fpath = require 'plenary.path':new(file)
   if fpath:is_file() then
     file = fpath:_split()
@@ -150,6 +157,7 @@ end
 
 function B.file_exists(file)
   vim.cmd 'Lazy load plenary.nvim'
+  file = B.rep_slash(file)
   return require 'plenary.path':new(file):exists()
 end
 
@@ -225,6 +233,7 @@ function B.asyncrun_prepare(callback)
     AsyncRunDone = function()
       callback()
       vim.cmd 'au! User AsyncRunStop'
+      B.asyncrun_prepare_default()
     end
   end
   vim.cmd 'au User AsyncRunStop call v:lua.AsyncRunDone()'

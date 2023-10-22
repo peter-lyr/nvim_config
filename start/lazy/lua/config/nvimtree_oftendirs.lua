@@ -136,7 +136,7 @@ end
 ---------------
 
 M.oftendirs = {}
-M.nvimtree_oftendirs_exe_path = B.get_file_path(B.get_dir_path({
+M.nvimtree_oftendirs_exe_path = B.get_file_path(B.get_dir({
   vim.g.pack_path, 'nvim_config', 'start', 'lazy', 'lua', 'config',
 }), 'nvimtree_oftendirs.exe')
 
