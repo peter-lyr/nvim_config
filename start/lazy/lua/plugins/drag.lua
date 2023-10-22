@@ -1,6 +1,6 @@
 return {
   name = 'drag',
-  dir = require 'my_simple'.get_opt_dir 'drag',
+  dir = require 'my_simple'.get_create_opt_dir 'drag',
   lazy = true,
   event = { 'BufReadPre', 'BufNewFile', },
   keys = {

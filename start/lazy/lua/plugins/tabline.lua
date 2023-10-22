@@ -1,6 +1,6 @@
 return {
   name = 'tabline',
-  dir = require 'my_simple'.get_opt_dir 'tabline',
+  dir = require 'my_simple'.get_create_opt_dir 'tabline',
   lazy = true,
   event = { 'BufReadPost', 'BufNewFile', },
   dependencies = {

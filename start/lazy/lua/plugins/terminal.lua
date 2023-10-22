@@ -1,6 +1,6 @@
 return {
   name = 'terminal',
-  dir = require 'my_simple'.get_opt_dir 'terminal',
+  dir = require 'my_simple'.get_create_opt_dir 'terminal',
   lazy = true,
   keys = {
 

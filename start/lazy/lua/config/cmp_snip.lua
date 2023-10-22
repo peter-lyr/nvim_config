@@ -5,7 +5,7 @@ package.loaded[B.get_loaded(M.source)] = nil
 --------------------------------------------
 
 require 'luasnip.loaders.from_vscode'.lazy_load()
-require 'luasnip.loaders.from_snipmate'.lazy_load { paths = { B.get_opt_dir 'snippets', }, }
+require 'luasnip.loaders.from_snipmate'.lazy_load { paths = { B.get_create_opt_dir 'snippets', }, }
 
 require 'luasnip'.config.setup {
   history = true,
