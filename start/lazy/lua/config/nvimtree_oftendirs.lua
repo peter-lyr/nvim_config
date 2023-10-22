@@ -19,8 +19,8 @@ M.mydirs_existed = {}
 M.init_mydirs = function()
   M.mydirs = {
     vim.fn.expand [[$HOME]],
-    vim.fn.expand [[$VIMRUNTIME\pack\nvim_config]],
     M.nv_dir.filename,
+    vim.fn.expand [[$VIMRUNTIME\pack\nvim_config]],
   }
   M.mydirs_existed = {}
   for _, dir in ipairs(M.mydirs) do
@@ -43,7 +43,7 @@ end
 M.init_mydirs()
 
 M.open_mydirs = function()
-  B.ui_sel(vim.fn.sort(M.mydirs_existed), 'my dirs', function(choice)
+  B.ui_sel(M.mydirs_existed, 'my dirs', function(choice)
     if choice then
       vim.cmd 'NvimTreeOpen'
       B.set_timeout(10, function()
