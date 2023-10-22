@@ -56,12 +56,13 @@ function S.func_wrap(src, key)
   end
 end
 
-function S.gkey(key, desc, src)
-  return { key, S.func_wrap(src, key), mode = { 'n', 'v', }, silent = true, desc = string.match(src, '%.([^.]+)$') .. ' ' .. desc, }
-end
-
 function S.wkey(key, desc, src)
   require 'config.whichkey'.add { [key] = { name = string.match(src, '%.([^.]+)$') .. ' ' .. desc, }, }
+end
+
+function S.gkey(key, desc, src)
+  S.wkey(key, desc, src)
+  return { key, S.func_wrap(src, key), mode = { 'n', 'v', }, silent = true, desc = string.match(src, '%.([^.]+)$') .. ' ' .. desc, }
 end
 
 return S
