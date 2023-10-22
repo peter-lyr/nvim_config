@@ -1,10 +1,5 @@
 local S = {}
 
-function S.get_opt_dir(dir)
-  local opt = vim.fn.expand '$VIMRUNTIME' .. '\\pack\\nvim_config\\opt\\'
-  return opt .. dir
-end
-
 function S.get_dir(dirs)
   if type(dirs) == 'string' then
     dirs = { dirs, }
@@ -21,6 +16,10 @@ function S.get_dir(dirs)
     end
   end
   return dir
+end
+
+function S.get_opt_dir(dir)
+  return S.get_dir { vim.fn.expand '$VIMRUNTIME', 'pack', 'nvim_config', 'opt', dir }
 end
 
 function S.get_std_data_dir(dirs)
