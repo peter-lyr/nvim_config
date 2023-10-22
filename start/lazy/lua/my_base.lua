@@ -37,8 +37,9 @@ end
 
 function B.get_source(source)
   if not source then
-    source = vim.fn.trim(B.get_base_source(), '@')
+    source = B.get_base_source()
   end
+  source = vim.fn.trim(source, '@')
   return B.rep_baskslash(source)
 end
 
