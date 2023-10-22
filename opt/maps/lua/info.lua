@@ -65,8 +65,6 @@ M.new_buf_execute = function(cmd)
   if #lines > 0 then
     vim.cmd 'wincmd n'
     vim.fn.append(vim.fn.line '.', lines)
-    print("vim.inspect(B):", vim.inspect(B))
-    print("vim.inspect(B.buf_map_q_esc_close):", vim.inspect(B.buf_map_q_esc_close))
     B.buf_map_q_esc_close()
     vim.cmd 'set ft=markdown'
   end
