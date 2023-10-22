@@ -29,8 +29,8 @@ require 'dial.config'.augends:register_group {
     -- c
     augend.constant.new { elements = { '%d', '%s', }, word = false, },
     augend.constant.new { elements = { 'signed', 'unsigned', }, },
-    augend.constant.new { elements = { 'u8', 'u16', 'u32', }, },
-    augend.constant.new { elements = { 's8', 's16', 's32', }, },
+    augend.constant.new { elements = { 'u8', 'u16', 'u32', 'u64', }, },
+    augend.constant.new { elements = { 's8', 's16', 's32', 's64', }, },
     augend.constant.new { elements = { 'char', 'short', 'int', 'long', }, },
     -- date time
     augend.date.alias['%-d.%-m.'],
