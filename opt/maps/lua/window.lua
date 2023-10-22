@@ -1,6 +1,8 @@
 local M = {}
-
-package.loaded['window'] = nil
+local B = require 'my_base'
+M.source = debug.getinfo(1)['source']
+package.loaded[B.get_loaded(M.source)] = nil
+--------------------------------------------
 
 M.height_more = function()
   vim.cmd '10wincmd >'
@@ -296,6 +298,7 @@ end
 M.stack_open_txt = function()
   vim.cmd 'wincmd s'
   vim.cmd('e ' .. M.stack_full_fname_txt_p.filename)
+  B.buf_map_q_esc_close()
 end
 
 M.start_new_nvim_qt = function()
