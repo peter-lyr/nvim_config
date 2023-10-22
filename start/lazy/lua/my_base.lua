@@ -2,12 +2,12 @@ local B = {}
 
 local S = require 'my_simple'
 
-B.get_std_data_dir = S.get_std_data_dir
-B.get_dir = S.get_dir
+B.get_create_std_data_dir = S.get_create_std_data_dir
+B.get_create_dir = S.get_create_dir
 B.get_create_file = S.get_create_file
 
 B.set_timeout = S.set_timeout
-B.get_opt_dir = S.get_opt_dir
+B.get_opt_dir = S.get_create_opt_dir
 
 function B.rep_slash(content)
   content = string.gsub(content, '/', '\\')
@@ -373,6 +373,13 @@ function B.get_paragraph(sep)
     return table.concat(paragraph, sep)
   end
   return table.concat(paragraph, sep)
+end
+
+function B.is(val)
+  if not val or val == 0 or val == '' or val == false or val == {} then
+    return nil
+  end
+  return 1
 end
 
 return B

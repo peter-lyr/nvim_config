@@ -1,6 +1,6 @@
 local S = {}
 
-function S.get_dir(dirs)
+function S.get_create_dir(dirs)
   if type(dirs) == 'string' then
     dirs = { dirs, }
   end
@@ -18,16 +18,16 @@ function S.get_dir(dirs)
   return dir
 end
 
-function S.get_opt_dir(dir)
-  return S.get_dir { vim.fn.expand '$VIMRUNTIME', 'pack', 'nvim_config', 'opt', dir }
+function S.get_create_opt_dir(dir)
+  return S.get_create_dir { vim.fn.expand '$VIMRUNTIME', 'pack', 'nvim_config', 'opt', dir }
 end
 
-function S.get_std_data_dir(dirs)
+function S.get_create_std_data_dir(dirs)
   if type(dirs) == 'string' then
     dirs = { dirs, }
   end
   table.insert(dirs, 1, vim.fn.stdpath 'data')
-  return S.get_dir(dirs)
+  return S.get_create_dir(dirs)
 end
 
 function S.get_create_file(dir, filename)
