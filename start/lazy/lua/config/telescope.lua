@@ -346,8 +346,6 @@ add(t, {
 
 telescope.setup(get_setup_table(t))
 
-local M = {}
-
 M.all = function(all)
   if all == 1 then
     local temp = {}
@@ -524,10 +522,8 @@ end
 -- open config
 --------------------
 
-M.nvim_config = require 'plenary.path':new(vim.g.pack_path):joinpath 'nvim_config'
-
 M.open = function()
-  vim.cmd('cd ' .. M.nvim_config.filename .. '|e ' .. 'start/lazy/lua/config/telescope.lua')
+  vim.cmd('edit ' .. M.source)
 end
 
 pcall(vim.api.nvim_del_autocmd, vim.g.telescope_au_bufenter)
