@@ -228,24 +228,49 @@ function B.refresh_fugitive()
   vim.call 'fugitive#ReloadStatus'
 end
 
-function B.asyncrun_prepare(callback)
-  if callback then
-    AsyncRunDone = function()
-      callback()
-      vim.cmd 'au! User AsyncRunStop'
-      B.asyncrun_prepare_default()
-    end
-  end
+B.asyncrun_done_changed = nil
+
+function B.asyncrun_done_default()
+  B.notify_qflist()
+  B.refresh_fugitive()
+  vim.cmd 'au! User AsyncRunStop'
+end
+
+function B.au_user_asyncrunstop()
   vim.cmd 'au User AsyncRunStop call v:lua.AsyncRunDone()'
 end
 
-function B.asyncrun_prepare_default()
-  AsyncRunDone = function()
-    B.notify_qflist()
-    B.refresh_fugitive()
-    vim.cmd 'au! User AsyncRunStop'
+function B.asyncrun_prepare(callback)
+  if callback then
+    AsyncRunDone = function()
+      B.asyncrun_done_changed = nil
+      callback()
+      vim.cmd 'au! User AsyncRunStop'
+      AsyncRunDone = B.asyncrun_done_default
+    end
+    B.asyncrun_done_changed = 1
   end
-  vim.cmd 'au User AsyncRunStop call v:lua.AsyncRunDone()'
+  B.au_user_asyncrunstop()
+end
+
+function B.asyncrun_prepare_add(callback)
+  if callback then
+    AsyncRunDone = function()
+      B.asyncrun_done_changed = nil
+      B.asyncrun_done_default()
+      callback()
+      AsyncRunDone = B.asyncrun_done_default
+    end
+    B.asyncrun_done_changed = 1
+  end
+  B.au_user_asyncrunstop()
+end
+
+function B.asyncrun_prepare_default()
+  if not B.asyncrun_done_changed then
+    AsyncRunDone = B.asyncrun_done_default
+    B.au_user_asyncrunstop()
+  end
 end
 
 function B.notify_on_open(win)
