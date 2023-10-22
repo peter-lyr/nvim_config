@@ -1,7 +1,8 @@
 local M = {}
 local B = require 'my_base'
 M.source = B.get_source(debug.getinfo(1)['source'])
-package.loaded[B.get_loaded(M.source)] = nil
+M.loaded = B.get_loaded(M.source)
+package.loaded[M.loaded] = nil
 --------------------------------------------
 
 M.bufleave_readable_file = ''
@@ -253,5 +254,62 @@ patch = tonumber(patch, 10)
 if major < 10 or patch < 18900 then
   vim.g.builtin_terminal_ok = 1
 end
+
+B.map('<leader><f1><f1>', M, 'toggle', { 'cmd', })
+B.map('<leader><f2><f2>', M, 'toggle', { 'ipython', })
+B.map('<leader><f3><f3>', M, 'toggle', { 'bash', })
+B.map('<leader><f4><f4>', M, 'toggle', { 'powershell', })
+
+-- cd
+B.map('<leader><f1>w', M, 'toggle', { 'cmd', 'cwd', })
+B.map('<leader><f2>w', M, 'toggle', { 'ipython', 'cwd', })
+B.map('<leader><f3>w', M, 'toggle', { 'bash', 'cwd', })
+B.map('<leader><f4>w', M, 'toggle', { 'powershell', 'cwd', })
+B.map('<leader><f1>.', M, 'toggle', { 'cmd', '.', })
+B.map('<leader><f2>.', M, 'toggle', { 'ipython', '.', })
+B.map('<leader><f3>.', M, 'toggle', { 'bash', '.', })
+B.map('<leader><f4>.', M, 'toggle', { 'powershell', '.', })
+B.map('<leader><f1>u', M, 'toggle', { 'cmd', 'u', })
+B.map('<leader><f2>u', M, 'toggle', { 'ipython', 'u', })
+B.map('<leader><f3>u', M, 'toggle', { 'bash', 'u', })
+B.map('<leader><f4>u', M, 'toggle', { 'powershell', 'u', })
+B.map('<leader><f1>-', M, 'toggle', { 'cmd', '-', })
+B.map('<leader><f2>-', M, 'toggle', { 'ipython', '-', })
+B.map('<leader><f3>-', M, 'toggle', { 'bash', '-', })
+B.map('<leader><f4>-', M, 'toggle', { 'powershell', '-', })
+
+-- send and show
+B.map('<leader><f1>s.', M, 'send', { 'cmd', 'curline', 'show', })
+B.map('<leader><f2>s.', M, 'send', { 'ipython', 'curline', 'show', })
+B.map('<leader><f3>s.', M, 'send', { 'bash', 'curline', 'show', })
+B.map('<leader><f4>s.', M, 'send', { 'powershell', 'curline', 'show', })
+B.map('<leader><f1>sp', M, 'send', { 'cmd', 'paragraph', 'show', })
+B.map('<leader><f2>sp', M, 'send', { 'ipython', 'paragraph', 'show', })
+B.map('<leader><f3>sp', M, 'send', { 'bash', 'paragraph', 'show', })
+B.map('<leader><f4>sp', M, 'send', { 'powershell', 'paragraph', 'show', })
+B.map('<leader><f1>sc', M, 'send', { 'cmd', 'clipboard', 'show', })
+B.map('<leader><f2>sc', M, 'send', { 'ipython', 'clipboard', 'show', })
+B.map('<leader><f3>sc', M, 'send', { 'bash', 'clipboard', 'show', })
+B.map('<leader><f4>sc', M, 'send', { 'powershell', 'clipboard', 'show', })
+
+-- send and hide
+B.map('<leader><f1>h.', M, 'send', { 'cmd', 'curline', 'hide', })
+B.map('<leader><f2>h.', M, 'send', { 'ipython', 'curline', 'hide', })
+B.map('<leader><f3>h.', M, 'send', { 'bash', 'curline', 'hide', })
+B.map('<leader><f4>h.', M, 'send', { 'powershell', 'curline', 'hide', })
+B.map('<leader><f1>hp', M, 'send', { 'cmd', 'paragraph', 'hide', })
+B.map('<leader><f2>hp', M, 'send', { 'ipython', 'paragraph', 'hide', })
+B.map('<leader><f3>hp', M, 'send', { 'bash', 'paragraph', 'hide', })
+B.map('<leader><f4>hp', M, 'send', { 'powershell', 'paragraph', 'hide', })
+B.map('<leader><f1>hc', M, 'send', { 'cmd', 'clipboard', 'hide', })
+B.map('<leader><f2>hc', M, 'send', { 'ipython', 'clipboard', 'hide', })
+B.map('<leader><f3>hc', M, 'send', { 'bash', 'clipboard', 'hide', })
+B.map('<leader><f4>hc', M, 'send', { 'powershell', 'clipboard', 'hide', })
+
+-- hideall
+B.map('<leader><f1><del>', M, 'hideall')
+B.map('<leader><f2><del>', M, 'hideall')
+B.map('<leader><f3><del>', M, 'hideall')
+B.map('<leader><f4><del>', M, 'hideall')
 
 return M

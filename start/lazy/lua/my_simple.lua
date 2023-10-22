@@ -19,7 +19,7 @@ function S.get_create_dir(dirs)
 end
 
 function S.get_create_opt_dir(dir)
-  return S.get_create_dir { vim.fn.expand '$VIMRUNTIME', 'pack', 'nvim_config', 'opt', dir }
+  return S.get_create_dir { vim.fn.expand '$VIMRUNTIME', 'pack', 'nvim_config', 'opt', dir, }
 end
 
 function S.get_create_std_data_dir(dirs)
@@ -45,6 +45,23 @@ function S.set_timeout(timeout, callback)
     callback()
   end, { ['repeat'] = 1, })
   return timer
+end
+
+function S.func_wrap(src, key)
+  return function()
+    vim.cmd(string.format('lua require "%s"', src))
+    key = string.gsub(key, '<leader>', '<space>')
+    vim.cmd('WhichKey ' .. key)
+    vim.keymap.del({ 'n', 'v', }, key)
+  end
+end
+
+function S.gkey(key, desc, src)
+  return { key, S.func_wrap(src, key), mode = { 'n', 'v', }, silent = true, desc = src .. ' ' .. desc, }
+end
+
+function S.wkey(key, desc, src)
+  require 'config.whichkey'.add { [key] = { name = src .. ' ' .. desc, }, }
 end
 
 return S
