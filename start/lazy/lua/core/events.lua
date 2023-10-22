@@ -1,6 +1,6 @@
 return {
   name = 'events',
-  dir = require 'my_simple'.get_opt_dir 'events',
+  dir = require 'my_simple'.get_create_opt_dir 'events',
   event = {
     'TextYankPost',
     'BufReadPost',

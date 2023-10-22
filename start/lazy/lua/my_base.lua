@@ -7,7 +7,7 @@ B.get_create_dir = S.get_create_dir
 B.get_create_file = S.get_create_file
 
 B.set_timeout = S.set_timeout
-B.get_opt_dir = S.get_create_opt_dir
+B.get_create_opt_dir = S.get_create_opt_dir
 
 function B.rep_slash(content)
   content = string.gsub(content, '/', '\\')
