@@ -221,17 +221,20 @@ function B.refresh_fugitive()
 end
 
 function B.asyncrun_prepare(callback)
-  if not callback then
-    AsyncRunDone = function()
-      B.notify_qflist()
-      B.refresh_fugitive()
-      vim.cmd 'au! User AsyncRunStop'
-    end
-  else
+  if callback then
     AsyncRunDone = function()
       callback()
       vim.cmd 'au! User AsyncRunStop'
     end
+  end
+  vim.cmd 'au User AsyncRunStop call v:lua.AsyncRunDone()'
+end
+
+function B.asyncrun_prepare_default()
+  AsyncRunDone = function()
+    B.notify_qflist()
+    B.refresh_fugitive()
+    vim.cmd 'au! User AsyncRunStop'
   end
   vim.cmd 'au User AsyncRunStop call v:lua.AsyncRunDone()'
 end
@@ -253,7 +256,7 @@ function B.system_run(way, str_format, ...)
   elseif way == 'asyncrun' then
     vim.cmd 'Lazy load asyncrun.vim'
     cmd = string.format('AsyncRun %s', cmd)
-    B.asyncrun_prepare()
+    B.asyncrun_prepare_default()
     vim.cmd(cmd)
   elseif way == 'term' then
     cmd = string.format('wincmd s|term %s', cmd)
