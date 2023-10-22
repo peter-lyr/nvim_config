@@ -4,56 +4,51 @@ M.source = B.get_source(debug.getinfo(1)['source'])
 package.loaded[B.get_loaded(M.source)] = nil
 --------------------------------------------
 
-local bufleave_readable_file = ''
+M.bufleave_readable_file = ''
 
-vim.api.nvim_create_autocmd({ 'BufLeave', }, {
-  callback = function()
-    local fname = vim.api.nvim_buf_get_name(0)
+B.aucmd(M.source, 'BufLeave', { 'BufLeave', }, {
+  callback = function(ev)
+    local fname = vim.api.nvim_buf_get_name(ev.buf)
     if require 'plenary.path':new(fname):exists() then
-      bufleave_readable_file = fname
+      M.bufleave_readable_file = fname
     end
   end,
 })
 
-local is_bufname_terminal = function(bufname, terminal)
+M.is_bufname_terminal = function(bufname, terminal)
   if string.match(bufname, '^term://') then
-    local is_ipython = string.match(bufname, ':ipython$')
-    local is_bash = string.match(bufname, ':bash$')
-    local is_powershell = string.match(bufname, ':powershell$')
-    local is_cmd = string.match(bufname, ':cmd$')
-    if terminal == 'ipython' and is_ipython then
+    if terminal == 'ipython' and string.match(bufname, ':ipython$') then
       return true, true
-    elseif terminal == 'bash' and is_bash then
+    elseif terminal == 'bash' and string.match(bufname, ':bash$') then
       return true, true
-    elseif terminal == 'powershell' and is_powershell then
+    elseif terminal == 'powershell' and string.match(bufname, ':powershell$') then
       return true, true
-    elseif terminal == 'cmd' and is_cmd then
+    elseif terminal == 'cmd' and string.match(bufname, ':cmd$') then
       return true, true
     else
-      return true, false
+      return true, nil
     end
   end
-  return false, false
+  return nil, nil
 end
 
-local try_goto_terminal = function()
-  for i = 1, vim.fn.winnr '$' do
-    local bufnr = vim.fn.winbufnr(i)
-    local buftype = vim.fn.getbufvar(bufnr, '&buftype')
-    if buftype == 'terminal' then
-      vim.fn.win_gotoid(vim.fn.win_getid(i))
-      return true
+M.try_goto_terminal = function()
+  for winnr = 1, vim.fn.winnr '$' do
+    local bufnr = vim.fn.winbufnr(winnr)
+    if vim.fn.getbufvar(bufnr, '&buftype') == 'terminal' then
+      vim.fn.win_gotoid(vim.fn.win_getid(winnr))
+      return 1
     end
   end
-  return false
+  return nil
 end
 
-local get_terminal_bufnrs = function(terminal)
+M.get_terminal_bufnrs = function(terminal)
   local terminal_bufnrs = {}
   for _, v in pairs(vim.fn.getbufinfo()) do
-    local _, certain = is_bufname_terminal(v['name'], terminal)
+    local _, certain = M.is_bufname_terminal(v['name'], terminal)
     if certain then
-      table.insert(terminal_bufnrs, v['bufnr'])
+      terminal_bufnrs[#terminal_bufnrs + 1] = v['bufnr']
     end
   end
   if #terminal_bufnrs == 0 then
@@ -62,49 +57,26 @@ local get_terminal_bufnrs = function(terminal)
   return terminal_bufnrs
 end
 
-local is_hide_en = function()
+M.is_hide_en = function()
   local cnt = 0
   for i = 1, vim.fn.winnr '$' do
     if vim.fn.getbufvar(vim.fn.winbufnr(i), '&buftype') ~= 'nofile' then
       cnt = cnt + 1
     end
     if cnt > 1 then
-      return true
+      return 1
     end
   end
-  return false
+  return nil
 end
 
-local get_dname = function(readablefile)
-  if #readablefile == 0 then
-    return ''
-  end
-  local fname = string.gsub(readablefile, '\\', '/')
-  local path = require 'plenary.path':new(fname)
-  if path:is_file() then
-    return path:parent()['filename']
-  end
-  return ''
-end
-
-local function map_q_close()
-  local buf = vim.fn.bufnr()
-  vim.bo[buf].buflisted = false
-  vim.keymap.set('n', 'q', function()
-    pcall(vim.cmd, 'close')
-  end, { buffer = buf, nowait = true, silent = true, })
-  vim.keymap.set('n', '<esc>', function()
-    pcall(vim.cmd, 'close')
-  end, { buffer = buf, nowait = true, silent = true, })
-end
-
-M.toggle                  = function(terminal, chdir)
+function M.toggle(terminal, chdir)
   if not chdir then
     chdir = ''
   end
   if vim.g.builtin_terminal_ok == 0 then
     if chdir == '.' then
-      chdir = get_dname(vim.api.nvim_buf_get_name(0))
+      chdir = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(0), ':h')
       chdir = string.gsub(chdir, '/', '\\')
     elseif chdir == 'u' then
       chdir = '..'
@@ -117,12 +89,12 @@ M.toggle                  = function(terminal, chdir)
     return
   end
   local fname = vim.api.nvim_buf_get_name(0)
-  local terminal_bufnrs = get_terminal_bufnrs(terminal)
-  local one, certain = is_bufname_terminal(fname, terminal)
+  local terminal_bufnrs = M.get_terminal_bufnrs(terminal)
+  local one, certain = M.is_bufname_terminal(fname, terminal)
   if certain then
     if #chdir > 0 then
       if chdir == '.' then
-        chdir = get_dname(bufleave_readable_file)
+        chdir = vim.fn.fnamemodify(M.bufleave_readable_file, ':h')
       elseif chdir == 'u' then
         chdir = '..'
       elseif chdir == '-' then
@@ -141,11 +113,11 @@ M.toggle                  = function(terminal, chdir)
       else
         vim.cmd [[call feedkeys("i\<cr>\<esc>")]]
       end
-      map_q_close()
+      B.buf_map_q_esc_close()
       return
     else
       if #terminal_bufnrs == 1 then
-        if is_hide_en() then
+        if M.is_hide_en() then
           vim.cmd 'hide'
         end
         return
@@ -154,17 +126,17 @@ M.toggle                  = function(terminal, chdir)
     local bnr_idx = B.index_of(terminal_bufnrs, vim.fn.bufnr())
     bnr_idx = bnr_idx + 1
     if bnr_idx > #terminal_bufnrs then
-      if is_hide_en() then
+      if M.is_hide_en() then
         vim.cmd 'hide'
       end
       return
     else
       vim.cmd(string.format('b%d', terminal_bufnrs[bnr_idx]))
-      map_q_close()
+      B.buf_map_q_esc_close()
     end
   else
     if terminal_bufnrs then
-      if not try_goto_terminal() then
+      if not M.try_goto_terminal() then
         if #fname > 0 or vim.bo.modified == true then
           vim.cmd 'split'
         end
@@ -174,41 +146,16 @@ M.toggle                  = function(terminal, chdir)
       if not one then
         vim.cmd 'split'
       end
-      vim.cmd(string.format('te %s', terminal))
+      vim.cmd(string.format('term %s', terminal))
     end
-    map_q_close()
+    B.buf_map_q_esc_close()
     if #chdir > 0 then
       M.toggle(terminal, chdir)
     end
   end
 end
 
-local get_paragraph       = function(sep)
-  local paragraph = {}
-  local linenr = vim.fn.line '.'
-  local lines = 0
-  for i = linenr, 1, -1 do
-    local line = vim.fn.getline(i)
-    if #line > 0 then
-      lines = lines + 1
-      table.insert(paragraph, 1, line)
-    else
-      break
-    end
-  end
-  for i = linenr + 1, vim.fn.line '$' do
-    local line = vim.fn.getline(i)
-    if #line > 0 then
-      table.insert(paragraph, line)
-      lines = lines + 1
-    else
-      break
-    end
-  end
-  return table.concat(paragraph, sep)
-end
-
-M.send                    = function(terminal, to_send, show) -- show时，send后不hide
+function M.send(terminal, to_send, show) -- show时，send后不hide
   if vim.g.builtin_terminal_ok == 0 then
     vim.cmd(string.format('silent !start %s', terminal))
     return
@@ -218,11 +165,11 @@ M.send                    = function(terminal, to_send, show) -- show时，send�
     cmd_to_send = vim.fn.getline '.'
   elseif to_send == 'paragraph' then
     if terminal == 'terminal' then
-      cmd_to_send = get_paragraph ' && '
+      cmd_to_send = B.get_paragraph ' && '
     elseif terminal == 'powershell' then
-      cmd_to_send = get_paragraph '; '
+      cmd_to_send = B.get_paragraph '; '
     else
-      cmd_to_send = get_paragraph '\n'
+      cmd_to_send = B.get_paragraph '\n'
     end
   elseif to_send == 'clipboard' then
     local clipboard = vim.fn.getreg '+'
@@ -241,8 +188,8 @@ M.send                    = function(terminal, to_send, show) -- show时，send�
     cmd_to_send = to_send
   end
   local fname = vim.api.nvim_buf_get_name(0)
-  local terminal_bufnrs = get_terminal_bufnrs(terminal)
-  local one, certain = is_bufname_terminal(fname, terminal)
+  local terminal_bufnrs = M.get_terminal_bufnrs(terminal)
+  local one, certain = M.is_bufname_terminal(fname, terminal)
   if certain then
     vim.api.nvim_chan_send(vim.b.terminal_job_id, cmd_to_send)
     if terminal == 'ipython' then
@@ -255,7 +202,7 @@ M.send                    = function(terminal, to_send, show) -- show时，send�
       vim.cmd [[call feedkeys("i\<cr>\<esc>")]]
     end
     if show ~= 'show' then
-      if is_hide_en() then
+      if M.is_hide_en() then
         vim.loop.new_timer():start(100, 0,
           function()
             vim.schedule(function()
@@ -266,7 +213,7 @@ M.send                    = function(terminal, to_send, show) -- show时，send�
     end
   else
     if terminal_bufnrs then
-      if not try_goto_terminal() then
+      if not M.try_goto_terminal() then
         if #fname > 0 or vim.bo.modified == true then
           vim.cmd 'split'
         end
@@ -276,7 +223,7 @@ M.send                    = function(terminal, to_send, show) -- show时，send�
       if not one then
         vim.cmd 'split'
       end
-      vim.cmd(string.format('te %s', terminal))
+      vim.cmd(string.format('term %s', terminal))
     end
     if #cmd_to_send > 0 then
       M.send(terminal, cmd_to_send, show)
@@ -284,12 +231,12 @@ M.send                    = function(terminal, to_send, show) -- show时，send�
   end
 end
 
-M.hideall                 = function()
+function M.hideall()
   local winid = vim.fn.win_getid()
-  for winnr = 1, vim.fn.winnr '$' do
-    local b = vim.fn.winbufnr(winnr)
-    if vim.fn.buflisted(b) ~= 0 and 1 then
-      if vim.api.nvim_buf_get_option(b, 'buftype') == 'terminal' then
+  for winnr = vim.fn.winnr '$', 1, -1 do
+    local buf = vim.fn.winbufnr(winnr)
+    if vim.fn.buflisted(buf) ~= 0 and 1 then
+      if vim.api.nvim_buf_get_option(buf, 'buftype') == 'terminal' then
         vim.fn.win_gotoid(vim.fn.win_getid(winnr))
         pcall(vim.cmd, 'close')
       end

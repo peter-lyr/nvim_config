@@ -62,10 +62,10 @@ return {
 
     -- hideall
 
-    { '<leader><f1><esc>', function() require 'terminal'.hideall() end,                               mode = { 'n', 'v', }, silent = true, desc = 'terminal hide all', },
-    { '<leader><f2><esc>', function() require 'terminal'.hideall() end,                               mode = { 'n', 'v', }, silent = true, desc = 'terminal hide all', },
-    { '<leader><f3><esc>', function() require 'terminal'.hideall() end,                               mode = { 'n', 'v', }, silent = true, desc = 'terminal hide all', },
-    { '<leader><f4><esc>', function() require 'terminal'.hideall() end,                               mode = { 'n', 'v', }, silent = true, desc = 'terminal hide all', },
+    { '<leader><f1><del>', function() require 'terminal'.hideall() end,                               mode = { 'n', 'v', }, silent = true, desc = 'terminal hide all', },
+    { '<leader><f2><del>', function() require 'terminal'.hideall() end,                               mode = { 'n', 'v', }, silent = true, desc = 'terminal hide all', },
+    { '<leader><f3><del>', function() require 'terminal'.hideall() end,                               mode = { 'n', 'v', }, silent = true, desc = 'terminal hide all', },
+    { '<leader><f4><del>', function() require 'terminal'.hideall() end,                               mode = { 'n', 'v', }, silent = true, desc = 'terminal hide all', },
 
   },
   init = function()

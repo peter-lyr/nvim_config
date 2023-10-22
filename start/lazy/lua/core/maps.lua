@@ -15,7 +15,6 @@ return {
     -- go cmdline
     { '<leader>；', ':', mode = { 'n', 'v', }, silent = false, desc = 'go cmdline', },
     { '<leader>;', ':', mode = { 'n', 'v', }, silent = false, desc = 'go cmdline', },
-    'q',
 
     -- record
     { 'q',                   '<cmd>WhichKey q<cr>',                           mode = { 'n', 'v', }, silent = true,  desc = 'nop', },
