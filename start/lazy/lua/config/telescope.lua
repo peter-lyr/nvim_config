@@ -380,45 +380,23 @@ M.live_grep_def = function()
   vim.cmd [[ call feedkeys("\<esc>:Telescope live_grep cwd=\<c-r>=expand('%:p:h')\<cr>") ]]
 end
 
-local function get_dirs(fname)
-  local fpath = require 'plenary.path':new(fname)
-  if not fpath:is_file() then
-    vim.cmd 'ec "not file"'
-    return nil
-  end
-  local dirs = {}
-  for _ = 1, 24 do
-    fpath = fpath:parent()
-    local name = string.gsub(fpath.filename, '\\', '/')
-    table.insert(dirs, name)
-    if not string.match(name, '/') then
-      break
-    end
-  end
-  return dirs
-end
-
 M.live_grep_rg = function()
   local fname = vim.api.nvim_buf_get_name(0)
-  local dirs = get_dirs(fname)
-  if not dirs then
-    return
-  end
-  vim.ui.select(dirs, { prompt = 'telescope_rg_path', }, function(choice)
-    if not choice then
-      return
+  local dirs = B.get_file_dirs(fname)
+  B.ui_sel(dirs, 'telescope_rg_path', function(path)
+    if path then
+      B.ui_sel({ '--fixed-strings', '', }, 'telescope_rg_fixed_strings', function(choice)
+        if choice then
+          local fixed_strings = choice
+          local cmd = vim.fn.input('telescope_rg_patt: ', [[[\u4e00-\u9fa5]+]])
+          if #cmd > 0 then
+            B.system_run('asyncrun',
+              'rg --no-heading --with-filename --line-number --column --smart-case --no-ignore %s -g !*.js %s "%s"',
+              fixed_strings, cmd, path)
+          end
+        end
+      end)
     end
-    local path = choice
-    vim.ui.select({ '--fixed-strings', '', }, { prompt = 'telescope_rg_fixed_strings', }, function(choice)
-      if not choice then
-        return
-      end
-      local fixed_strings = choice
-      local cmd = vim.fn.input('telescope_rg_patt: ', [[[\u4e00-\u9fa5]+]])
-      if #cmd > 0 then
-        vim.cmd(string.format('AsyncRun rg --no-heading --with-filename --line-number --column --smart-case --no-ignore %s -g !*.js %s "%s"', fixed_strings, cmd, path))
-      end
-    end)
   end)
 end
 
@@ -526,9 +504,7 @@ M.open = function()
   vim.cmd('edit ' .. M.source)
 end
 
-pcall(vim.api.nvim_del_autocmd, vim.g.telescope_au_bufenter)
-
-vim.g.telescope_au_bufenter = vim.api.nvim_create_autocmd('BufEnter', {
+B.aucmd(M.source, 'BufEnter', { 'BufEnter', }, {
   callback = function(ev)
     local filetype = vim.api.nvim_buf_get_option(ev.buf, 'filetype')
     local buftype = vim.api.nvim_buf_get_option(ev.buf, 'buftype')
