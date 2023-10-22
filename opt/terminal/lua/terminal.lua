@@ -298,7 +298,7 @@ M.hideall                 = function()
   vim.fn.win_gotoid(winid)
 end
 
-local major, minor, patch = string.match(vim.fn.system 'ver', 'Microsoft Windows %[Version (%d+)%.(%d+)%.(%d+)%.%d+%]')
+local major, minor, patch = string.match(vim.fn.system 'ver', '(%d+)%.(%d+)%.(%d+)%.%d+')
 major = tonumber(major, 10)
 minor = tonumber(minor, 10)
 patch = tonumber(patch, 10)
