@@ -6,3 +6,4 @@
 6. [ ] fugitive au height
 7. [ ] snippets <a-.>
 8. [ ] require 'plugins.*' no dupl
+9. [ ] asyncrun queue
