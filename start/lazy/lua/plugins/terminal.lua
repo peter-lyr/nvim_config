@@ -12,6 +12,10 @@ return {
     S.gkey('<leader><f4>', 'powershell', f),
   },
   init = function()
+    -- S.wkey('<leader><f1>', 'cmd', f)
+    -- S.wkey('<leader><f2>', 'ipython', f)
+    -- S.wkey('<leader><f3>', 'bash', f)
+    -- S.wkey('<leader><f4>', 'powershell', f)
     S.wkey('<leader><f1>s', 'send cmd', f)
     S.wkey('<leader><f2>s', 'send ipython', f)
     S.wkey('<leader><f3>s', 'send bash', f)
