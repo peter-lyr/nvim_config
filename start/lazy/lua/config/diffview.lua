@@ -5,6 +5,13 @@ M.loaded = B.get_loaded(M.source)
 package.loaded[M.loaded] = nil
 --------------------------------------------
 
+B.load('nvim-web-devicons')
+B.load('telescope-git-diffs.nvim')
+B.load('plenary.nvim')
+B.load('telescope.nvim', 'telescope')
+B.load('nvim-treesitter', 'treesitter')
+B.load('which-key.nvim', 'whichkey')
+
 local diffview = require 'diffview'
 local actions = require 'diffview.actions'
 

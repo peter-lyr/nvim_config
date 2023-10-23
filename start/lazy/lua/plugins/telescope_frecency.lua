@@ -14,7 +14,6 @@ return {
   lazy = true,
   keys = keys,
   dependencies = {
-    'kkharji/sqlite.lua',
     require 'plugins.telescope',
   },
 }

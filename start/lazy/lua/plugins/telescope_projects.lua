@@ -13,7 +13,7 @@ return {
   'ahmedkhalf/project.nvim',
   lazy = true,
   keys = keys,
-  dependencies = {
-    require 'plugins.telescope',
-  },
+  config = function()
+    require 'config.telescope_projects'
+  end,
 }

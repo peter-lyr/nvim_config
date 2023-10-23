@@ -4,6 +4,9 @@ M.source = B.get_source(debug.getinfo(1)['source'])
 package.loaded[B.get_loaded(M.source)] = nil
 --------------------------------------------
 
+B.load('plenary.nvim')
+B.load('which-key.nvim', 'whichkey')
+
 require 'config.telescope_right_click'
 
 local telescope = require 'telescope'

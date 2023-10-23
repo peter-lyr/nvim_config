@@ -29,7 +29,7 @@ return {
   'peter-lyr/telescope-file-browser.nvim',
   lazy = true,
   keys = keys,
-  dependencies = {
-    require 'plugins.telescope',
-  },
+  config = function()
+    require 'config.telescope_file_browser'
+  end,
 }

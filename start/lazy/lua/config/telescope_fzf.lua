@@ -1,4 +1,10 @@
 local M = {}
+local B = require 'my_base'
+M.source = B.get_source(debug.getinfo(1)['source'])
+package.loaded[B.get_loaded(M.source)] = nil
+--------------------------------------------
+
+B.load('telescope.nvim', 'telescope')
 
 require 'telescope'.setup {
   extensions = {

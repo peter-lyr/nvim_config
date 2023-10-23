@@ -13,14 +13,14 @@ return {
     'DiffviewRefresh',
     'DiffviewToggleFiles',
   },
-  dependencies = {
-    'nvim-tree/nvim-web-devicons',
-    'paopaol/telescope-git-diffs.nvim',
-    require 'plugins.telescope',
-    require 'plugins.plenary',
-    require 'plugins.treesitter',
-    require 'plugins.whichkey',
-  },
+  -- dependencies = {
+  --   'nvim-tree/nvim-web-devicons',
+  --   'paopaol/telescope-git-diffs.nvim',
+  --   require 'plugins.telescope',
+  --   require 'plugins.plenary',
+  --   require 'plugins.treesitter',
+  --   require 'plugins.whichkey',
+  -- },
   keys = {
     S.gkey('<leader>gv', '', f),
   },

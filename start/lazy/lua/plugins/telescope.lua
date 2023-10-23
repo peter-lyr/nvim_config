@@ -133,10 +133,6 @@ return {
     '<leader>s',
     unpack(keys),
   },
-  dependencies = {
-    require 'plugins.plenary',
-    require 'plugins.whichkey',
-  },
   init = function()
     require 'config.whichkey'.add { ['<leader>s'] = { name = 'Telescope', }, }
     require 'config.whichkey'.add { ['<leader>sv'] = { name = 'Telescope more', }, }

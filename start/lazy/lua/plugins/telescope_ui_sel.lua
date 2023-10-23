@@ -27,7 +27,7 @@ return {
   'nvim-telescope/telescope-ui-select.nvim',
   lazy = true,
   keys = keys,
-  dependencies = {
-    require 'plugins.telescope',
-  },
+  config = function()
+    require 'config.telescope_ui_sel'
+  end,
 }
