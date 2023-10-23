@@ -151,7 +151,7 @@ end
 
 function B.ui_sel(items, prompt, callback)
   vim.cmd 'Lazy load telescope-ui-select.nvim'
-  if #items > 0 then
+  if items and #items > 0 then
     vim.ui.select(items, { prompt = prompt, }, callback)
   end
 end
