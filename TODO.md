@@ -3,3 +3,4 @@
 3. [ ] minimap hide when cursor under it
 4. [x] `<leader>gd` not working well
 5. [ ] right click depend on ft
+6. [ ] fugitive au height
