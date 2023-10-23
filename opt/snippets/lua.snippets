@@ -13,6 +13,6 @@ snippet s "print string"
 snippet ss "print just string"
 	print("$1")
 snippet ll "print line"
-	print(string.format("## %s# %d", debug.getinfo(1)['name'], debug.getinfo(1)['currentline']))
+	print(string.format("## %s# %d", debug.getinfo(1)['source'], debug.getinfo(1)['currentline']))
 snippet ii "print inspect"
 	print("vim.inspect($1):", vim.inspect($1))
