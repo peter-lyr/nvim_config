@@ -100,14 +100,14 @@ function M.init_do(git_root_dir)
   end)
   B.system_run('asyncrun', {
     B.system_cd(git_root_dir),
-    'md %s',
+    'md "%s"',
     'cd %s',
     'git init --bare',
     'cd ..',
     'git init',
     'git add .gitignore',
     [[git commit -m ".gitignore"]],
-    [[git remote add origin %s]],
+    [[git remote add origin "%s"]],
     [[git branch -M "main"]],
     [[git push -u origin "main"]],
   }, remote_name, remote_name, remote_name)
