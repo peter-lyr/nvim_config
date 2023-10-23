@@ -21,6 +21,7 @@ return {
   dependencies = {
     require 'plugins.plenary',
     require 'plugins.whichkey',
+    require 'plugins.colorscheme',
   },
   init = function()
     require 'config.whichkey'.add { ['<leader>a'] = { name = 'Side Panel', }, }
