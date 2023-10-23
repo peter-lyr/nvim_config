@@ -7,3 +7,4 @@
 7. [ ] snippets <a-.>
 8. [ ] require 'plugins.*' no dupl
 9. [ ] asyncrun queue
+10. [ ] timeout and mem extra big then restart and restore session
