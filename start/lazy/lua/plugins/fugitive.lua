@@ -13,10 +13,10 @@ return {
   -- cmd = {
   --   'Git',
   -- },
-  keys = {
-    S.gkey('<leader>', plugin, map),
-  },
   -- config = function()
   --   S.load_require(plugin, map)
   -- end,
+  init = function()
+    S.wkey('<leader>', plugin, map)
+  end
 }

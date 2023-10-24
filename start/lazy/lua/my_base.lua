@@ -95,7 +95,7 @@ end
 ----------------------
 
 function B.rep_map_to_config(loaded)
-  return string.gsub(loaded, 'map', 'config')
+  return string.gsub(loaded, 'map.', 'config.')
 end
 
 return B

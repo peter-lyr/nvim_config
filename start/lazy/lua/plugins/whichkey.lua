@@ -9,10 +9,8 @@ return {
   init = function()
     vim.o.timeout = true
     vim.o.timeoutlen = 300
+    S.wkey('<leader>', plugin, map)
   end,
-  keys = {
-    S.gkey('<leader>', '', plugin, map),
-  },
   -- config = function()
   --   S.load_require(plugin, map)
   -- end,
