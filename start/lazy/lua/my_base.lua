@@ -68,6 +68,9 @@ function B.merge_tables(...)
 end
 
 function B.map(lhs, M, func, params, desc_more)
+  if type(M) == 'string' then
+    M = require(M)
+  end
   local desc = M.loaded and { string.match(M.loaded, '%.([^.]+)$'), } or {}
   desc[#desc + 1] = func
   if desc_more then
@@ -87,6 +90,12 @@ function B.map(lhs, M, func, params, desc_more)
       M[func]()
     end
   end, { silent = true, desc = vim.fn.join(desc, ' '), })
+end
+
+----------------------
+
+function B.rep_map_to_config(loaded)
+  return string.gsub(loaded, 'map', 'config')
 end
 
 return B

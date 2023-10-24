@@ -11,9 +11,9 @@ return {
     vim.o.timeoutlen = 300
   end,
   keys = {
-    S.gkey('<leader>', plugin, config),
+    S.gkey('<leader>', '', plugin, config),
   },
-  config = function()
-    S.load_require(plugin, config)
-  end,
+  -- config = function()
+  --   S.load_require(plugin, config)
+  -- end,
 }

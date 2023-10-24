@@ -9,9 +9,9 @@ return {
   event = { 'BufReadPost', 'BufNewFile', },
   lazy = true,
   keys = {
-    S.gkey('<leader>a', plugin, config),
+    S.gkey('<leader>', 'a', plugin, config),
   },
-  config = function()
-    S.load_require(plugin, config)
-  end,
+  -- config = function()
+  --   S.load_require(plugin, config)
+  -- end,
 }

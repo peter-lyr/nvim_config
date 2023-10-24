@@ -56,11 +56,6 @@ M.toggle_focus = function()
   minimap.toggle_focus()
 end
 
-B.map('<leader>am', M, 'open', {})
-B.map('<leader>aM', M, 'close', {})
-B.map('<leader>an', M, 'toggle_focus', {})
-B.map('<leader>aN', M, 'auto_open', {})
-
 print(M.source)
 
 return M

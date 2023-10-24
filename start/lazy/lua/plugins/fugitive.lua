@@ -10,13 +10,13 @@ end, { silent = true, desc = '9999', })
 return {
   plugin,
   lazy = true,
-  cmd = {
-    'Git',
-  },
+  -- cmd = {
+  --   'Git',
+  -- },
   keys = {
-    S.gkey('<leader>a', plugin, config),
+    S.gkey('<leader>', 'a', plugin, config),
   },
-  config = function()
-    S.load_require(plugin, config)
-  end,
+  -- config = function()
+  --   S.load_require(plugin, config)
+  -- end,
 }
