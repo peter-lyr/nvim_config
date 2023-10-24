@@ -8,4 +8,8 @@ return {
     lazy = true,
     cmd = 'StartupTime',
   },
+  {
+    'nvim-tree/nvim-web-devicons',
+    lazy = true,
+  },
 }

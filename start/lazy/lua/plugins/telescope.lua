@@ -23,6 +23,7 @@ return {
   end,
   config = function()
     S.load_require(plugin, 'map.' .. map)
-    -- S.load_require('nvim-lua/plenary.nvim') -- only need sometimes.
+    S.load_require 'nvim-lua/plenary.nvim'
+    S.load_require 'nvim-tree/nvim-web-devicons'
   end,
 }
