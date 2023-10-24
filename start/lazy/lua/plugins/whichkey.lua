@@ -15,5 +15,5 @@ return {
   },
   config = function()
     S.load_require(plugin, config)
-  end
+  end,
 }
