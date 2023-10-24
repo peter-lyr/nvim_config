@@ -14,7 +14,7 @@ return {
   --   'Git',
   -- },
   keys = {
-    S.gkey('<leader>', 'a', plugin, config),
+    S.gkey('<leader>', plugin, config),
   },
   -- config = function()
   --   S.load_require(plugin, config)

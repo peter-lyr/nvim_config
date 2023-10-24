@@ -21,20 +21,19 @@ function S.func_wrap(key, plugin, config, desc)
   end
 end
 
-function S.gkey(key_major, key_minor, plugin, config, desc)
-  local temp = string.match(config, '%.*([^.]+)$')
-  desc = desc and temp .. ' ' .. desc or temp
-  -- if key_major ~= '<leader>' then
-  --   require 'config.whichkey'.add { [key_major] = { name = desc, }, }
+function S.gkey(key, plugin, config, desc)
+  -- local temp = string.match(config, '%.*([^.]+)$')
+  -- desc = desc and temp .. ' ' .. desc or temp
+  -- if key ~= '<leader>' then
+  --   require 'config.whichkey'.add { [key] = { name = desc, }, }
   -- else
   -- end
   return {
-    key_major,
-    -- S.func_wrap(key_major, plugin, config, desc),
+    key,
+    -- S.func_wrap(key, plugin, config, desc),
     function()
-      print(key_major, key_minor, plugin, config, desc)
-      print("key_major:", key_major, '|')
-      print("key_minor:", key_minor, '|')
+      print(key, plugin, config, desc)
+      print("key:", key)
       print("plugin:", plugin, '|')
       print("config:", config, '|')
       print("desc:", desc, '|')
