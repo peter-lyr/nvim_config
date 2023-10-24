@@ -13,6 +13,6 @@ return {
   --   S.load_require(plugin, map)
   -- end,
   init = function()
-    S.wkey('<leader>', plugin, map)
+    S.wkey('<leader>a', plugin, map)
   end
 }
