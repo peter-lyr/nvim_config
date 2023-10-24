@@ -13,8 +13,6 @@ M.toggle = function()
   end
 end
 
-B.map('<leader>ag', M, 'toggle', {})
-
 print(M.source)
 
 return M

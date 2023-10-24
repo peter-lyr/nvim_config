@@ -67,11 +67,12 @@ function B.merge_tables(...)
   return result
 end
 
-function B.map(lhs, M, func, params, desc_more)
-  if type(M) == 'string' then
-    M = require(M)
-  end
-  local desc = M.loaded and { string.match(M.loaded, '%.([^.]+)$'), } or {}
+function B.map(lhs, lua, func, params, desc_more)
+  print("lhs:", lhs)
+  print("lua:", lua, '000')
+  print("lua:", vim.inspect(lua), '999')
+  print("lua:", type(lua))
+  local desc = { string.match(lua, '%.([^.]+)$'), }
   desc[#desc + 1] = func
   if desc_more then
     desc[#desc + 1] = desc_more
@@ -83,11 +84,11 @@ function B.map(lhs, M, func, params, desc_more)
   end
   vim.keymap.set({ 'n', 'v', }, lhs, function()
     if type(params) == 'string' then
-      M[func](params)
+      require(lua)[func](params)
     elseif type(params) == 'table' then
-      M[func](unpack(params))
+      require(lua)[func](unpack(params))
     else
-      M[func]()
+      require(lua)[func]()
     end
   end, { silent = true, desc = vim.fn.join(desc, ' '), })
 end
