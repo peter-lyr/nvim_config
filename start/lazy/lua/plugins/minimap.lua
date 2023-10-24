@@ -8,10 +8,10 @@ return {
   version = '*',
   event = { 'BufReadPost', 'BufNewFile', },
   lazy = true,
-  -- config = function()
-  --   S.load_require(plugin, map)
-  -- end,
   init = function()
     S.wkey('<leader>a', plugin, map)
+  end,
+  config = function()
+    S.load_require(plugin, 'map.' .. map)
   end,
 }

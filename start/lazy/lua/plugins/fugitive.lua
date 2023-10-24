@@ -6,13 +6,13 @@ local map = 'fugitive'
 return {
   plugin,
   lazy = true,
-  -- cmd = {
-  --   'Git',
-  -- },
-  -- config = function()
-  --   S.load_require(plugin, map)
-  -- end,
+  cmd = {
+    'Git',
+  },
   init = function()
     S.wkey('<leader>a', plugin, map)
-  end
+  end,
+  config = function()
+    S.load_require(plugin, 'map.' .. map)
+  end,
 }

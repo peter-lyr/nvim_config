@@ -11,7 +11,4 @@ return {
     vim.o.timeoutlen = 300
     S.wkey('<leader>', plugin, map)
   end,
-  -- config = function()
-  --   S.load_require(plugin, map)
-  -- end,
 }
