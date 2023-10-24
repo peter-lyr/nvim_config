@@ -10,7 +10,7 @@ function S.load_require(plugin, lua)
 end
 
 function S.wkey(key, plugin, map, desc)
-  desc = desc and map .. ' ' .. desc or map
+  desc = desc and map .. '_' .. desc or map
   if vim.tbl_contains(vim.tbl_keys(S.mappings), key) == false then
     S.mappings[key] = { { plugin, map, desc, }, }
   else
