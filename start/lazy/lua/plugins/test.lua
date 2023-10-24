@@ -1,7 +1,7 @@
 local S = require 'my_simple'
 
 local plugin = 'test'
-local map = 'test'
+local map = 'Test'
 
 return {
   name = plugin,

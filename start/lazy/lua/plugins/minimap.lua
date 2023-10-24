@@ -1,7 +1,7 @@
 local S = require 'my_simple'
 
 local plugin = 'echasnovski/mini.map'
-local map = 'minimap'
+local map = 'Minimap'
 
 return {
   plugin,

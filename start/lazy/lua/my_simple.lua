@@ -4,8 +4,11 @@ S.mappings = {}
 
 function S.load_require(plugin, lua)
   vim.cmd('Lazy load ' .. string.match(plugin, '/*([^/]+)$'))
-  if lua and not package.loaded[lua] then
-    vim.cmd(string.format('lua require"%s"', lua))
+  if lua then
+    lua = vim.fn.tolower(lua)
+    if not package.loaded[lua] then
+      vim.cmd(string.format('lua require"%s"', lua))
+    end
   end
 end
 

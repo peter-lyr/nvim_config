@@ -1,7 +1,7 @@
 local S = require 'my_simple'
 
 local plugin = 'tpope/vim-fugitive'
-local map = 'fugitive'
+local map = 'Fugitive'
 
 return {
   plugin,

@@ -2,7 +2,7 @@ local S = require 'my_simple'
 
 -- local plugin = 'nvim-telescope/telescope.nvim',
 local plugin = 'peter-lyr/telescope.nvim'
-local map = 'telescope'
+local map = 'Telescope'
 
 return {
   plugin,
@@ -12,12 +12,12 @@ return {
     'Telescope',
   },
   init = function()
-    S.wkey('<leader>svv', plugin, map, 'more and more')
-    S.wkey('<leader>sv', plugin, map, 'more')
-    S.wkey('<leader>s', plugin, map)
+    S.wkey('<leader>f', plugin, map, 'Lsp')
     S.wkey('<leader>g', plugin, map, 'Git')
-    S.wkey('<leader>f', plugin, map, 'lsp')
     S.wkey('<leader>gt', plugin, map, 'Git more')
+    S.wkey('<leader>s', plugin, map)
+    S.wkey('<leader>sv', plugin, map, 'more')
+    S.wkey('<leader>svv', plugin, map, 'more more')
     -- local mark = vim.api.nvim_buf_get_mark(0, '"')
     -- vim.api.nvim_input_mouse('left', 'press', '', 0, mark[1], mark[2])
   end,

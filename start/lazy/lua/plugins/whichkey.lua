@@ -1,7 +1,7 @@
 local S = require 'my_simple'
 
 local plugin = 'folke/which-key.nvim'
-local map = 'whichkey'
+local map = 'Whichkey'
 
 return {
   plugin,
