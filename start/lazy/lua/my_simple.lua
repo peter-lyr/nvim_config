@@ -11,27 +11,35 @@ end
 
 function S.wkey(key, plugin, map, desc)
   desc = desc and map .. '_' .. desc or map
+  key = vim.fn.tolower(key)
   if vim.tbl_contains(vim.tbl_keys(S.mappings), key) == false then
     S.mappings[key] = { { plugin, map, desc, }, }
   else
     S.mappings[key][#S.mappings[key] + 1] = { plugin, map, desc, }
   end
-  local new_desc = {}
-  for _, val in ipairs(S.mappings[key]) do
-    new_desc[#new_desc + 1] = val[3]
-  end
-  desc = vim.fn.join(new_desc, ' ')
-  vim.keymap.set({ 'n', 'v', }, key, function()
-    if not package.loaded['config.whichkey'] then
-      vim.cmd 'Lazy load which-key.nvim'
-    end
-    for _, pm in ipairs(S.mappings[key]) do
-      S.load_require(pm[1], string.format('map.%s', pm[2]))
-    end
-    key = string.gsub(key, '<leader>', '<space>')
-    vim.keymap.del({ 'n', 'v', }, key)
-    vim.cmd('WhichKey ' .. key)
-  end, { silent = true, desc = desc, })
 end
+
+function S.map()
+  for key, vals in pairs(S.mappings) do
+    local new_desc = {}
+    for _, val in ipairs(vals) do
+      new_desc[#new_desc + 1] = val[3]
+    end
+    local desc = vim.fn.join(new_desc, ' ')
+    vim.keymap.set({ 'n', 'v', }, key, function()
+      if not package.loaded['config.whichkey'] then
+        vim.cmd 'Lazy load which-key.nvim'
+      end
+      for _, val in ipairs(vals) do
+        S.load_require(val[1], string.format('map.%s', val[2]))
+      end
+      key = string.gsub(key, '<leader>', '<space>')
+      vim.keymap.del({ 'n', 'v', }, key)
+      vim.cmd('WhichKey ' .. key)
+    end, { silent = true, desc = desc, })
+  end
+end
+
+vim.api.nvim_create_autocmd('VimEnter', { callback = S.map, })
 
 return S
