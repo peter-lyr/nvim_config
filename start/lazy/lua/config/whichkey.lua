@@ -5,6 +5,4 @@ M.loaded = B.get_loaded(M.source)
 -- package.loaded[M.loaded] = nil
 --------------------------------------------
 
-print(M.source)
-
 return M

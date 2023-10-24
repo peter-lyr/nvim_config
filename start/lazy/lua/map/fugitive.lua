@@ -6,8 +6,6 @@ M.config = B.rep_map_to_config(M.loaded)
 -- package.loaded[M.loaded] = nil
 --------------------------------------------
 
-print(M.source)
-
 B.map('<leader>ag', M.config, 'toggle', {})
 
 return M

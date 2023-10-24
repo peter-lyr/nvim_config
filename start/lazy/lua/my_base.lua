@@ -68,10 +68,6 @@ function B.merge_tables(...)
 end
 
 function B.map(lhs, lua, func, params, desc_more)
-  print("lhs:", lhs)
-  print("lua:", lua, '000')
-  print("lua:", vim.inspect(lua), '999')
-  print("lua:", type(lua))
   local desc = { string.match(lua, '%.([^.]+)$'), }
   desc[#desc + 1] = func
   if desc_more then

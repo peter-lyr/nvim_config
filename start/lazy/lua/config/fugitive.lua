@@ -13,6 +13,4 @@ M.toggle = function()
   end
 end
 
-print(M.source)
-
 return M

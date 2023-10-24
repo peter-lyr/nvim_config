@@ -56,6 +56,4 @@ M.toggle_focus = function()
   minimap.toggle_focus()
 end
 
-print(M.source)
-
 return M

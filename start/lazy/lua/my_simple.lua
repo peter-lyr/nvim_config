@@ -2,13 +2,10 @@ local S = {}
 
 function S.load_require(plugin, lua)
   vim.cmd('Lazy load ' .. string.match(plugin, '/*([^/]+)$'))
-  print('Lazy load ' .. string.match(plugin, '/*([^/]+)$'))
   if not package.loaded[lua] then
     vim.cmd(string.format('lua require"%s"', lua))
   end
 end
-
-print(debug.getinfo(1)['source'], '8888')
 
 S.mappings = {}
 
