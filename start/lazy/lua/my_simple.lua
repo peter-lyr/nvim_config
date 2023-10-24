@@ -1,46 +1,30 @@
 local S = {}
 
-function S.load_require(plugin, config)
+function S.load_require(plugin, map)
   pcall(vim.cmd, 'Lazy load ' .. string.match(plugin, '%/*([^.]+)$'))
-  if config and not package.loaded['config.' .. config] then
-    print('lua require"config."', config)
-    vim.cmd(string.format('lua require"config.%s"', config))
+  if map and not package.loaded['map.' .. map] then
+    print('lua require"map."', map)
+    vim.cmd(string.format('lua require"map.%s"', map))
   else
-    print('LUA REQUIRE"CONFIG".', config)
+    print('LUA REQUIRE"CONFIG".', map)
   end
 end
 
-function S.func_wrap(key, plugin, config, desc)
+function S.func_wrap(key, plugin, map, desc)
   return function()
-    if not require 'config.whichkey'.started then
-      require 'config.whichkey'.start()
-    end
-    S.load_require(plugin, config)
+    S.load_require(plugin, map)
     key = string.gsub(key, '<leader>', '<space>')
     vim.cmd('WhichKey ' .. key)
   end
 end
 
-function S.gkey(key, plugin, config, desc)
-  -- local temp = string.match(config, '%.*([^.]+)$')
-  -- desc = desc and temp .. ' ' .. desc or temp
-  -- if key ~= '<leader>' then
-  --   require 'config.whichkey'.add { [key] = { name = desc, }, }
-  -- else
-  -- end
+function S.gkey(key, plugin, map, desc)
   return {
     key,
-    -- S.func_wrap(key, plugin, config, desc),
-    function()
-      print(key, plugin, config, desc)
-      print("key:", key)
-      print("plugin:", plugin, '|')
-      print("config:", config, '|')
-      print("desc:", desc, '|')
-    end,
+    S.func_wrap(key, plugin, map, desc),
     mode = { 'n', 'v', },
     silent = true,
-    desc = desc,
+    desc = desc and map .. ' ' .. desc or map,
   }
 end
 

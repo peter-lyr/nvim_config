@@ -6,6 +6,8 @@ M.config = B.rep_map_to_config(M.loaded)
 -- package.loaded[M.loaded] = nil
 --------------------------------------------
 
+print(M.source)
+
 B.map('<leader>am', M.config, 'open', {})
 B.map('<leader>aM', M.config, 'close', {})
 B.map('<leader>an', M.config, 'toggle_focus', {})

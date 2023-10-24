@@ -1,7 +1,7 @@
 local S = require 'my_simple'
 
 local plugin = 'folke/which-key.nvim'
-local config = 'whichkey'
+local map = 'whichkey'
 
 return {
   plugin,
@@ -11,9 +11,9 @@ return {
     vim.o.timeoutlen = 300
   end,
   keys = {
-    S.gkey('<leader>', '', plugin, config),
+    S.gkey('<leader>', '', plugin, map),
   },
   -- config = function()
-  --   S.load_require(plugin, config)
+  --   S.load_require(plugin, map)
   -- end,
 }

@@ -1,7 +1,7 @@
 local S = require 'my_simple'
 
 local plugin = 'tpope/vim-fugitive'
-local config = 'fugitive'
+local map = 'fugitive'
 
 vim.keymap.set({ 'n', 'v', }, '<leader><leader>', function()
   print '00000'
@@ -14,9 +14,9 @@ return {
   --   'Git',
   -- },
   keys = {
-    S.gkey('<leader>', plugin, config),
+    S.gkey('<leader>', plugin, map),
   },
   -- config = function()
-  --   S.load_require(plugin, config)
+  --   S.load_require(plugin, map)
   -- end,
 }
