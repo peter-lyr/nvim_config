@@ -1,10 +1,16 @@
+local S = require 'my_simple'
+
+local plugin = 'test'
+local map = 'test'
+
 return {
-  name = 'maps',
-  dir = require 'my_simple'.get_create_opt_dir 'maps',
+  name = plugin,
+  dir = S.get_opt_dir(plugin),
   lazy = true,
-  event = { 'CmdlineEnter', 'InsertEnter', 'ModeChanged', },
   init = function()
+    S.wkey('<c-s-f4>', plugin, map)
   end,
   config = function()
+    S.load_require(plugin, 'map.' .. map)
   end,
 }

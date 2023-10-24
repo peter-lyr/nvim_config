@@ -42,4 +42,10 @@ end
 
 vim.api.nvim_create_autocmd('VimEnter', { callback = S.map, })
 
+---------------------------------
+
+function S.get_opt_dir(dir)
+  return vim.fn.expand '$VIMRUNTIME' .. '\\pack\\nvim_config\\opt\\' .. dir
+end
+
 return S
