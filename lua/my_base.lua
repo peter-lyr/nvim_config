@@ -7,6 +7,8 @@ local S = require 'startup'
 B.load_require = S.load_require
 
 function B.load_require_common()
+  B.load_require 'navarasu/onedark.nvim'
+  vim.cmd.colorscheme 'onedark'
 end
 
 -----------------------------

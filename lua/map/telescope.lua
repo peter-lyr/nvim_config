@@ -1,12 +1,11 @@
 local M = {}
 local B = require 'my_base'
+B.load_require_common()
 M.source = B.get_source(debug.getinfo(1)['source'])
 M.loaded = B.get_loaded(M.source)
 M.config = B.rep_map_to_config(M.loaded)
 -- package.loaded[M.loaded] = nil
 --------------------------------------------
-
-B.load_require_common()
 
 B.load_require 'nvim-lua/plenary.nvim'
 B.load_require 'nvim-tree/nvim-web-devicons'
@@ -25,7 +24,7 @@ B.map('<leader>sb', M.config, 'buffers', {})
 B.map('<leader>sc', M.config, 'command_history', {})
 B.map('<leader>sd', M.config, 'diagnostics', {})
 B.map('<leader>sf', M.config, 'filetypes', {})
-B.map('<leader>sh', M.config, 'search_history()', {})
+B.map('<leader>sh', M.config, 'search_history', {})
 B.map('<leader>sj', M.config, 'jumplist', {})
 B.map('<leader>sl', M.config, 'live_grep', {})
 B.map('<leader>sm', M.config, 'keymaps', {})
