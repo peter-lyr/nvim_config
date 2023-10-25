@@ -10,7 +10,7 @@ return {
     vim.o.timeout = true
     vim.o.timeoutlen = 300
     if not S.enable then
-      require 'my_simple'.wkey('<leader>', plugin, map)
+      require 'my_simple'.add_whichkey('<leader>', plugin, map)
     end
   end,
 }

@@ -7,7 +7,7 @@ S.mappings = {}
 S.load_require = Startup.load_require
 S.map = Startup.map
 
-function S.wkey(key, plugin, map, desc)
+function S.add_whichkey(key, plugin, map, desc)
   desc = desc and map .. '_' .. desc or map
   key = vim.fn.tolower(key)
   if vim.tbl_contains(vim.tbl_keys(S.mappings), key) == false then

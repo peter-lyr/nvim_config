@@ -10,7 +10,7 @@ return {
   lazy = true,
   init = function()
     if not S.enable then
-      require 'my_simple'.wkey('<leader>a', plugin, map)
+      require 'my_simple'.add_whichkey('<leader>a', plugin, map)
     end
   end,
   config = function()

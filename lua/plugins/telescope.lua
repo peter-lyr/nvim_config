@@ -13,9 +13,9 @@ return {
   },
   init = function()
     if not S.enable then
-      require 'my_simple'.wkey('<leader>s', plugin, map)
-      require 'my_simple'.wkey('<leader>f', plugin, map, 'Lsp')
-      require 'my_simple'.wkey('<leader>g', plugin, map, 'Git')
+      require 'my_simple'.add_whichkey('<leader>s', plugin, map)
+      require 'my_simple'.add_whichkey('<leader>f', plugin, map, 'Lsp')
+      require 'my_simple'.add_whichkey('<leader>g', plugin, map, 'Git')
     end
     -- local mark = vim.api.nvim_buf_get_mark(0, '"')
     -- vim.api.nvim_input_mouse('left', 'press', '', 0, mark[1], mark[2])
