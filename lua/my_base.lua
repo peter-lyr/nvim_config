@@ -2,6 +2,8 @@ local B = {}
 
 local S = require 'my_simple'
 
+B.load_require = S.load_require
+
 function B.is(val)
   if not val or val == 0 or val == '' or val == false or val == {} then
     return nil

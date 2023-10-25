@@ -6,6 +6,9 @@ M.config = B.rep_map_to_config(M.loaded)
 -- package.loaded[M.loaded] = nil
 --------------------------------------------
 
+B.load_require 'nvim-lua/plenary.nvim'
+B.load_require 'nvim-tree/nvim-web-devicons'
+
 B.map('<leader>fl', M.config, 'lsp_document_symbols', {})
 B.map('<leader>fr', M.config, 'lsp_references', {})
 B.map('<leader>gf', M.config, 'git_status', {})
