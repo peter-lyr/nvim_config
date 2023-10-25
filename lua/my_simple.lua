@@ -5,7 +5,7 @@ local Startup = require 'startup'
 S.mappings = {}
 
 S.load_require = Startup.load_require
-S.map = Startup.map
+S.prepare_whichkeys = Startup.prepare_whichkeys
 
 function S.add_whichkey(key, plugin, map, desc)
   desc = desc and map .. '_' .. desc or map
