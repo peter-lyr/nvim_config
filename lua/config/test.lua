@@ -33,7 +33,7 @@ vim.api.nvim_create_user_command('ExecuteOutput', function(params)
 end, { nargs = '*', complete = 'command', })
 
 function M.type_execute_output()
-  vim.cmd([[call feedkeys(":\<c-u>ExecuteOutput ")]])
+  vim.cmd [[call feedkeys(":\<c-u>ExecuteOutput ")]]
 end
 
 ------------------------------
@@ -59,6 +59,19 @@ function M.startuptime()
   vim.fn.timer_start(20, function()
     M.map_buf_esc_q_close(vim.fn.bufnr(), 'bwipeout!')
   end)
+end
+
+------------------------------
+
+M.start_new_nvim_qt = function()
+  vim.cmd(string.format([[silent !start /d %s /b %s\\bin\\nvim-qt.exe"]],
+    vim.loop.cwd(),
+    string.match(vim.fn.execute 'set rtp', ',([^,]+)\\share\\nvim\\runtime')))
+end
+
+M.restart_nvim_qt = function()
+  M.start_new_nvim_qt()
+  vim.cmd 'qa!'
 end
 
 return M
