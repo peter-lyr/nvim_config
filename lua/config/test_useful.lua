@@ -11,7 +11,6 @@ function M.map_buf_close(lhs, buf, cmd)
 end
 
 function M.map_buf_q_close(buf, cmd)
-  M.map_buf_close('<esc>', buf, cmd)
   M.map_buf_close('q', buf, cmd)
 end
 
@@ -58,7 +57,7 @@ end
 
 function M.start_new_nvim_qt()
   vim.cmd(
-    string.format([[silent !start /d %s /b %s\\bin\\nvim-qt.exe"]],
+    string.format([[silent !start /d %s %s\\bin\\nvim-qt.exe"]],
     vim.loop.cwd(),
     string.match(vim.fn.execute 'set rtp', ',([^,]+)\\share\\nvim\\runtime'))
   )

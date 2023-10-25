@@ -64,16 +64,13 @@ function B.get_loaded(source)
   return loaded
 end
 
+B.source = B.get_source(debug.getinfo(1)['source'])
+B.loaded = B.get_loaded(B.source)
+
 -----------------------------
 
 function B.merge_tables(...)
-  local result = {}
-  for _, t in ipairs { ..., } do
-    for _, v in ipairs(t) do
-      result[#result + 1] = v
-    end
-  end
-  return result
+  return B.call_sub(B.loaded, 'keymap', 'merge_tables', ...)
 end
 
 B.map_default_opts = {
@@ -90,25 +87,7 @@ function B.map_reset_opts()
 end
 
 function B.map(lhs, lua, func, params, desc_more)
-  local desc = { string.match(lua, '%.([^.]+)$'), }
-  desc[#desc + 1] = func
-  if desc_more then
-    desc[#desc + 1] = desc_more
-  end
-  if type(params) == 'string' then
-    desc[#desc + 1] = params
-  elseif type(params) == 'table' then
-    desc = B.merge_tables(desc, params)
-  end
-  vim.keymap.set({ 'n', 'v', }, lhs, function()
-    if type(params) == 'string' then
-      require(lua)[func](params)
-    elseif type(params) == 'table' then
-      require(lua)[func](unpack(params))
-    else
-      require(lua)[func]()
-    end
-  end, vim.tbl_deep_extend('force', B.map_opts, { desc = vim.fn.join(desc, ' '), }))
+  B.call_sub(B.loaded, 'keymap', 'map', B.merge_tables, B.map_opts, lhs, lua, func, params, desc_more)
 end
 
 -----------------------------
@@ -122,24 +101,7 @@ end
 B.whichkeys = {}
 
 function B.register_whichkey(key, lua, desc)
-  lua = string.match(lua, '%.*([^.]+)$')
-  if not lua then
-    return
-  end
-  if desc then
-    desc = string.gsub(desc, ' ', '_')
-    desc = lua .. '_' .. desc
-  else
-    desc = lua
-  end
-  if vim.tbl_contains(vim.tbl_keys(B.whichkeys), key) == true then
-    local old = B.whichkeys[key]['name']
-    if not string.match(old, desc) then
-      B.whichkeys[key] = { name = old .. ' ' .. desc, }
-    end
-  else
-    B.whichkeys[key] = { name = desc, }
-  end
+  B.call_sub(B.loaded, 'keymap', 'register_whichkey', B.whichkeys, key, lua, desc)
 end
 
 function B.merge_whichkeys()
@@ -149,7 +111,7 @@ end
 -----------------------------
 
 function B.call_sub(main, sub, func, ...)
-  require(main .. '_' .. sub)[func](...)
+  return require(main .. '_' .. sub)[func](...)
 end
 
 return B
