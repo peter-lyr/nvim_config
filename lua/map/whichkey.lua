@@ -8,4 +8,6 @@ M.config = B.rep_map_to_config(M.loaded)
 
 B.load_require 'navarasu/onedark.nvim'
 
+vim.cmd.colorscheme 'onedark'
+
 return M

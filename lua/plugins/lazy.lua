@@ -14,8 +14,5 @@ return {
   {
     'navarasu/onedark.nvim',
     lazy = true,
-    config = function()
-      vim.cmd.colorscheme 'onedark'
-    end,
   },
 }

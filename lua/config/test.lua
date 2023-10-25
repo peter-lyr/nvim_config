@@ -26,6 +26,8 @@ function M.execute_output(cmd)
   M.map_buf_esc_q_close(vim.fn.bufnr(), 'bwipeout!')
 end
 
+       -- :call nvim_create_user_command('SayHello', 'echo "Hello world!"', {'bang': v:true})
+
 function M.delete_whichkeys_txt()
   local whichkeys_txt = require 'startup'.whichkeys_txt
   local autocmd_startup = require 'my_simple'.autocmd_startup
