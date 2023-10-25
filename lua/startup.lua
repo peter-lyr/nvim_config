@@ -29,7 +29,7 @@ function S.prepare_whichkeys(mappings)
         S.load_require(val[1], string.format('map.%s', val[2]))
       end
       key = string.gsub(key, '<leader>', '<space>')
-      vim.keymap.del({ 'n', 'v', }, key)
+      -- vim.keymap.del({ 'n', 'v', }, key)
       vim.cmd('WhichKey ' .. key)
     end, { silent = true, desc = desc, })
   end
