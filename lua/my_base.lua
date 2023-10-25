@@ -6,9 +6,14 @@ local S = require 'startup'
 
 B.load_require = S.load_require
 
+B.load_post = nil
+
 function B.load_require_common()
-  B.load_require 'navarasu/onedark.nvim'
-  vim.cmd.colorscheme 'onedark'
+  if not B.is(B.load_post) then
+    B.load_post = 1
+    B.load_require 'navarasu/onedark.nvim'
+    vim.cmd.colorscheme 'onedark'
+  end
 end
 
 -----------------------------

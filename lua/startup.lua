@@ -10,8 +10,10 @@ function S.load_require(plugin, lua)
     lua = vim.fn.tolower(lua)
     if not package.loaded[lua] then
       vim.cmd(string.format('lua require"%s"', lua))
+      return 1
     end
   end
+  return nil
 end
 
 function S.prepare_whichkeys(mappings)
