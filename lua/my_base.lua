@@ -124,4 +124,19 @@ function B.call_sub(main, sub, func, ...)
   return require(main .. '_' .. sub)[func](...)
 end
 
+-----------------------------
+
+function B.get_desc(source, desc)
+  return B.get_loaded(source) .. '-' .. desc, {}
+end
+
+function B.get_group(source, desc)
+  return vim.api.nvim_create_augroup(B.get_desc(source, desc), {})
+end
+
+function B.aucmd(source, desc, event, opts)
+  opts = vim.tbl_deep_extend('force', opts, { group = B.get_group(source, desc), desc = B.get_desc(source, desc), })
+  vim.api.nvim_create_autocmd(event, opts)
+end
+
 return B
