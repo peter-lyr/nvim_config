@@ -20,13 +20,23 @@ function M.map_buf_esc_q_close(buf, cmd)
   M.map_buf_close('q', buf, cmd)
 end
 
+------------------------------
+
 function M.execute_output(cmd)
   vim.cmd 'wincmd n'
   vim.fn.append(vim.fn.line '.', vim.fn.split(vim.fn.execute(cmd), '\n'))
   M.map_buf_esc_q_close(vim.fn.bufnr(), 'bwipeout!')
 end
 
-       -- :call nvim_create_user_command('SayHello', 'echo "Hello world!"', {'bang': v:true})
+vim.api.nvim_create_user_command('ExecuteOutput', function(params)
+  M.execute_output(vim.fn.join(params['fargs'], ' '))
+end, { nargs = '*', complete = 'command', })
+
+function M.type_execute_output()
+  vim.cmd([[call feedkeys(":\<c-u>ExecuteOutput ")]])
+end
+
+------------------------------
 
 function M.delete_whichkeys_txt()
   local whichkeys_txt = require 'startup'.whichkeys_txt
@@ -41,6 +51,8 @@ function M.delete_whichkeys_txt()
     print('Not exists: ' .. whichkeys_txt)
   end
 end
+
+------------------------------
 
 function M.startuptime()
   vim.cmd 'StartupTime'

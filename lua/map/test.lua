@@ -14,6 +14,8 @@ B.map('<c-s-f4>1', M.config, 'execute_output', { 'mes', })
 B.map('<c-s-f4>2', M.config, 'execute_output', { 'scriptnames', })
 B.map('<c-s-f4>3', M.config, 'execute_output', { '!dir', })
 
+B.map('<c-s-f4>t', M.config, 'type_execute_output', {})
+
 B.map('<c-s-f4><del>', M.config, 'delete_whichkeys_txt', {})
 B.map('<c-s-f4><f4>', M.config, 'startuptime', {})
 
