@@ -22,7 +22,7 @@ end
 
 function M.execute_output(cmd)
   vim.cmd 'wincmd n'
-  vim.fn.append(vim.fn.line('.'), vim.fn.split(vim.fn.execute(cmd), '\n'))
+  vim.fn.append(vim.fn.line '.', vim.fn.split(vim.fn.execute(cmd), '\n'))
   M.map_buf_esc_q_close(vim.fn.bufnr(), 'bwipeout!')
 end
 
@@ -38,6 +38,13 @@ function M.delete_whichkeys_txt()
   else
     print('Not exists: ' .. whichkeys_txt)
   end
+end
+
+function M.startuptime()
+  vim.cmd 'StartupTime'
+  vim.fn.timer_start(20, function()
+    M.map_buf_esc_q_close(vim.fn.bufnr(), 'bwipeout!')
+  end)
 end
 
 return M
