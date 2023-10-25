@@ -76,6 +76,19 @@ function B.merge_tables(...)
   return result
 end
 
+B.map_default_opts = {
+  silent = true,
+}
+B.map_opts = B.map_default_opts
+
+function B.map_set_opts(opts)
+  B.map_opts = vim.tbl_deep_extend('force', B.map_default_opts, opts)
+end
+
+function B.map_reset_opts()
+  B.map_opts = B.map_default_opts
+end
+
 function B.map(lhs, lua, func, params, desc_more)
   local desc = { string.match(lua, '%.([^.]+)$'), }
   desc[#desc + 1] = func
@@ -95,7 +108,7 @@ function B.map(lhs, lua, func, params, desc_more)
     else
       require(lua)[func]()
     end
-  end, { silent = true, desc = vim.fn.join(desc, ' '), })
+  end, vim.tbl_deep_extend('force', B.map_opts, { desc = vim.fn.join(desc, ' '), }))
 end
 
 -----------------------------
