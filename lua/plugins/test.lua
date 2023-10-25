@@ -1,4 +1,4 @@
-local S = require 'my_simple'
+local S = require 'startup'
 
 local plugin = 'test'
 local map = 'Test'
@@ -8,9 +8,11 @@ return {
   dir = '',
   lazy = true,
   init = function()
-    S.wkey('<c-s-f4>', plugin, map)
+    if not S.enable then
+      require 'my_simple'.wkey('<c-s-f4>', plugin, map)
+    end
   end,
   config = function()
-    S.load_require(plugin, 'map.' .. map)
+    require 'my_simple'.load_require(plugin, 'map.' .. map)
   end,
 }
