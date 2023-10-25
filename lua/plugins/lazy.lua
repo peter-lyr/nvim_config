@@ -15,4 +15,13 @@ return {
     'navarasu/onedark.nvim',
     lazy = true,
   },
+  {
+    name = 'options',
+    dir = '',
+    event = { 'VeryLazy', },
+    lazy = false,
+    config = function()
+      require 'my_simple'.load_require('', 'core.' .. 'options')
+    end,
+  },
 }

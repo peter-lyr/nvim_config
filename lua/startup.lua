@@ -5,15 +5,16 @@ S.whichkeys_txt = vim.fn.stdpath 'data' .. '\\whichkeys.txt'
 S.enable = 1
 
 function S.load_require(plugin, lua)
-  vim.cmd('Lazy load ' .. string.match(plugin, '/*([^/]+)$'))
+  plugin = string.match(plugin, '/*([^/]+)$')
+  if plugin then
+    vim.cmd('Lazy load ' .. plugin)
+  end
   if lua then
     lua = vim.fn.tolower(lua)
     if not package.loaded[lua] then
       vim.cmd(string.format('lua require"%s"', lua))
-      return 1
     end
   end
-  return nil
 end
 
 function S.prepare_whichkeys(mappings)
