@@ -12,4 +12,11 @@ return {
     'nvim-tree/nvim-web-devicons',
     lazy = true,
   },
+  {
+    'navarasu/onedark.nvim',
+    lazy = true,
+    config = function()
+      vim.cmd.colorscheme 'onedark'
+    end,
+  },
 }

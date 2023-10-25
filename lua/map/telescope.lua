@@ -6,6 +6,7 @@ M.config = B.rep_map_to_config(M.loaded)
 -- package.loaded[M.loaded] = nil
 --------------------------------------------
 
+B.load_require_common()
 B.load_require 'nvim-lua/plenary.nvim'
 B.load_require 'nvim-tree/nvim-web-devicons'
 

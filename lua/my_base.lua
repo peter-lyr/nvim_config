@@ -2,7 +2,14 @@ local B = {}
 
 local S = require 'my_simple'
 
+-----------------------------
+
 B.load_require = S.load_require
+
+function B.load_require_common()
+end
+
+-----------------------------
 
 function B.is(val)
   if not val or val == 0 or val == '' or val == false or val == {} then
@@ -36,7 +43,7 @@ function B.rep_baskslash_lower(content)
   return vim.fn.tolower(B.rep_baskslash(content))
 end
 
-----------------------
+-----------------------------
 
 function B.get_base_source()
   return debug.getinfo(1)['source']
@@ -57,7 +64,7 @@ function B.get_loaded(source)
   return loaded
 end
 
-----------------------
+-----------------------------
 
 function B.merge_tables(...)
   local result = {}
@@ -91,13 +98,13 @@ function B.map(lhs, lua, func, params, desc_more)
   end, { silent = true, desc = vim.fn.join(desc, ' '), })
 end
 
-----------------------
+-----------------------------
 
 function B.rep_map_to_config(loaded)
   return string.gsub(loaded, 'map.', 'config.')
 end
 
-----------------------
+-----------------------------
 
 B.whichkeys = {}
 
@@ -126,5 +133,7 @@ end
 function B.merge_whichkeys()
   require 'which-key'.register(B.whichkeys)
 end
+
+-----------------------------
 
 return B
