@@ -26,4 +26,18 @@ function M.execute_output(cmd)
   M.map_buf_esc_q_close(vim.fn.bufnr(), 'bwipeout!')
 end
 
+function M.delete_whichkeys_txt()
+  local whichkeys_txt = require 'startup'.whichkeys_txt
+  local autocmd_startup = require 'my_simple'.autocmd_startup
+  if autocmd_startup then
+    vim.api.nvim_del_autocmd(autocmd_startup)
+  end
+  if vim.fn.filereadable(whichkeys_txt) == 1 then
+    vim.fn.delete(whichkeys_txt)
+    print('Deleted: ' .. whichkeys_txt)
+  else
+    print('Not exists: ' .. whichkeys_txt)
+  end
+end
+
 return M

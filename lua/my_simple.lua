@@ -23,7 +23,7 @@ if not Startup.enable then
       S.map(S.mappings)
     end,
   })
-  vim.api.nvim_create_autocmd('VimLeave', {
+  S.autocmd_startup = vim.api.nvim_create_autocmd('VimLeave', {
     callback = function()
       local mappings = string.gsub(vim.inspect(S.mappings), '%s+', ' ')
       vim.fn.writefile({ mappings, }, require 'startup'.whichkeys_txt)
