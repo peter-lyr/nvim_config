@@ -5,7 +5,7 @@ local map = 'Test'
 
 return {
   name = plugin,
-  dir = S.get_opt_dir(plugin),
+  dir = '',
   lazy = true,
   init = function()
     S.wkey('<c-s-f4>', plugin, map)
