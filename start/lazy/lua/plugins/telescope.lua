@@ -14,10 +14,7 @@ return {
   init = function()
     S.wkey('<leader>f', plugin, map, 'Lsp')
     S.wkey('<leader>g', plugin, map, 'Git')
-    S.wkey('<leader>gt', plugin, map, 'Git more')
     S.wkey('<leader>s', plugin, map)
-    S.wkey('<leader>sv', plugin, map, 'more')
-    S.wkey('<leader>svv', plugin, map, 'more more')
     -- local mark = vim.api.nvim_buf_get_mark(0, '"')
     -- vim.api.nvim_input_mouse('left', 'press', '', 0, mark[1], mark[2])
   end,

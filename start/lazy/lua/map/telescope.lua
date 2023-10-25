@@ -37,4 +37,10 @@ B.map('<leader>svva', M.config, 'builtin', {})
 B.map('<leader>svvo', M.config, 'vim_options', {})
 B.map('<leader>svvp', M.config, 'planets', {})
 
+B.register_whichkey('<leader>gt', M.config, 'Git more')
+B.register_whichkey('<leader>sv', M.config, 'more')
+B.register_whichkey('<leader>svv', M.config, 'more more')
+
+B.merge_whichkeys()
+
 return M

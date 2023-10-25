@@ -95,4 +95,34 @@ function B.rep_map_to_config(loaded)
   return string.gsub(loaded, 'map.', 'config.')
 end
 
+----------------------
+
+B.whichkeys = {}
+
+function B.register_whichkey(key, lua, desc)
+  lua = string.match(lua, '%.*([^.]+)$')
+  print('lua:', lua)
+  if not lua then
+    return
+  end
+  if desc then
+    desc = string.gsub(desc, ' ', '_')
+    desc = lua .. '_' .. desc
+  else
+    desc = lua
+  end
+  if vim.tbl_contains(vim.tbl_keys(B.whichkeys), key) == true then
+    local old = B.whichkeys[key]['name']
+    if not string.match(old, desc) then
+      B.whichkeys[key] = { name = old .. ' ' .. desc, }
+    end
+  else
+    B.whichkeys[key] = { name = desc, }
+  end
+end
+
+function B.merge_whichkeys()
+  require 'which-key'.register(B.whichkeys)
+end
+
 return B
