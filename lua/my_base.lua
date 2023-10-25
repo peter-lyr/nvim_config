@@ -1,6 +1,6 @@
 local B = {}
 
-local S = require 'my_simple'
+local S = require 'startup'
 
 -----------------------------
 

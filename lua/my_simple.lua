@@ -21,7 +21,11 @@ if not Startup.enable then
   vim.api.nvim_create_autocmd('VimEnter', {
     callback = function()
       S.map(S.mappings)
-      local mappings = string.gsub(vim.inspect(S.mappings), '%s', ' ')
+    end,
+  })
+  vim.api.nvim_create_autocmd('VimLeave', {
+    callback = function()
+      local mappings = string.gsub(vim.inspect(S.mappings), '%s+', ' ')
       vim.fn.writefile({ mappings, }, require 'startup'.whichkeys_txt)
     end,
   })

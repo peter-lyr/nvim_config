@@ -2,7 +2,7 @@ local S = {}
 
 S.whichkeys_txt = vim.fn.stdpath 'data' .. '\\whichkeys.txt'
 
-S.enable = nil
+S.enable = 1
 
 function S.load_require(plugin, lua)
   vim.cmd('Lazy load ' .. string.match(plugin, '/*([^/]+)$'))
@@ -46,6 +46,7 @@ if S.enable then
       end,
     })
   else
+    S.enable = nil
   end
 end
 
