@@ -148,4 +148,8 @@ end
 
 -----------------------------
 
+function B.call_sub(main, sub, func, ...)
+  require(main .. '_' .. sub)[func](...)
+end
+
 return B
