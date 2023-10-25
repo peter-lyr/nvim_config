@@ -14,7 +14,7 @@ function S.load_require(plugin, lua)
   end
 end
 
-function S.map(mappings)
+function S.prepare_whichkeys(mappings)
   for key, vals in pairs(mappings) do
     local new_desc = {}
     for _, val in ipairs(vals) do
@@ -42,7 +42,7 @@ if S.enable then
     f:close()
     vim.api.nvim_create_autocmd('VimEnter', {
       callback = function()
-        S.map(S.mappings)
+        S.prepare_whichkeys(S.mappings)
       end,
     })
   else

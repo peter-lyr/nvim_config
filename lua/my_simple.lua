@@ -20,7 +20,7 @@ end
 if not Startup.enable then
   vim.api.nvim_create_autocmd('VimEnter', {
     callback = function()
-      S.map(S.mappings)
+      S.prepare_whichkeys(S.mappings)
     end,
   })
   S.autocmd_startup = vim.api.nvim_create_autocmd('VimLeave', {
