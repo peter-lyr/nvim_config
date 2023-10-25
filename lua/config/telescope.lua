@@ -5,8 +5,6 @@ M.loaded = B.get_loaded(M.source)
 -- package.loaded[M.loaded] = nil
 --------------------------------------------
 
-print(M.source)
-
 local telescope = require 'telescope'
 local actions = require 'telescope.actions'
 local actions_layout = require 'telescope.actions.layout'

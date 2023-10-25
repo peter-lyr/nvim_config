@@ -123,7 +123,6 @@ B.whichkeys = {}
 
 function B.register_whichkey(key, lua, desc)
   lua = string.match(lua, '%.*([^.]+)$')
-  print('lua:', lua)
   if not lua then
     return
   end
