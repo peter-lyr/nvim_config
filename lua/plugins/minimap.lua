@@ -1,4 +1,4 @@
-local S = require 'my_simple'
+local S = require 'startup'
 
 local plugin = 'echasnovski/mini.map'
 local map = 'Minimap'
@@ -9,9 +9,11 @@ return {
   event = { 'BufReadPost', 'BufNewFile', },
   lazy = true,
   init = function()
-    S.wkey('<leader>a', plugin, map)
+    if not S.enable then
+      require 'my_simple'.wkey('<leader>a', plugin, map)
+    end
   end,
   config = function()
-    S.load_require(plugin, 'map.' .. map)
+    require 'my_simple'.load_require(plugin, 'map.' .. map)
   end,
 }

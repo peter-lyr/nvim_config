@@ -1,4 +1,4 @@
-local S = require 'my_simple'
+local S = require 'startup'
 
 -- local plugin = 'nvim-telescope/telescope.nvim',
 local plugin = 'peter-lyr/telescope.nvim'
@@ -12,13 +12,15 @@ return {
     'Telescope',
   },
   init = function()
-    S.wkey('<leader>s', plugin, map)
-    S.wkey('<leader>f', plugin, map, 'Lsp')
-    S.wkey('<leader>g', plugin, map, 'Git')
+    if not S.enable then
+      require 'my_simple'.wkey('<leader>s', plugin, map)
+      require 'my_simple'.wkey('<leader>f', plugin, map, 'Lsp')
+      require 'my_simple'.wkey('<leader>g', plugin, map, 'Git')
+    end
     -- local mark = vim.api.nvim_buf_get_mark(0, '"')
     -- vim.api.nvim_input_mouse('left', 'press', '', 0, mark[1], mark[2])
   end,
   config = function()
-    S.load_require(plugin, 'map.' .. map)
+    require 'my_simple'.load_require(plugin, 'map.' .. map)
   end,
 }

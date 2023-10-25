@@ -1,4 +1,4 @@
-local S = require 'my_simple'
+local S = require 'startup'
 
 local plugin = 'folke/which-key.nvim'
 local map = 'Whichkey'
@@ -9,6 +9,8 @@ return {
   init = function()
     vim.o.timeout = true
     vim.o.timeoutlen = 300
-    S.wkey('<leader>', plugin, map)
+    if not S.enable then
+      require 'my_simple'.wkey('<leader>', plugin, map)
+    end
   end,
 }
