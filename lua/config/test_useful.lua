@@ -1,4 +1,9 @@
 local M = {}
+local B = require 'my_base'
+M.source = B.get_source(debug.getinfo(1)['source'])
+M.loaded = B.get_loaded(M.source)
+-- package.loaded[M.loaded] = nil
+--------------------------------------------
 
 function M.map_buf_close(lhs, buf, cmd)
   if not cmd then
@@ -61,6 +66,17 @@ function M.start_new_nvim_qt()
     vim.loop.cwd(),
     string.match(vim.fn.execute 'set rtp', ',([^,]+)\\share\\nvim\\runtime'))
   )
+end
+
+--------------------
+
+function M.source_lua()
+  local file = vim.api.nvim_buf_get_name(0)
+  local lua = B.get_loaded(file)
+  if B.is(lua) then
+    package.loaded[lua] = nil
+    vim.cmd('source ' .. file)
+  end
 end
 
 --------------------

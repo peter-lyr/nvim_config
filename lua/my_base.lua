@@ -62,6 +62,9 @@ end
 function B.get_loaded(source)
   source = B.get_source(source)
   local loaded = string.match(source, '.+lua/(.+)%.lua')
+  if not loaded then
+    return ''
+  end
   loaded = string.gsub(loaded, '/', '.')
   return loaded
 end

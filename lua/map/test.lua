@@ -22,7 +22,7 @@ B.map('<c-s-f4>s', M.config, 'start_new_nvim_qt', {})
 B.map('<c-s-f4>r', M.config, 'restart_nvim_qt', {})
 B.map('<c-s-f4>q', M.config, 'quit_nvim_qt', {})
 
-B.map('<c-s-f4><f3>', M.config, 'ttt', { 1, 332, 45, })
+B.map('<c-s-f4><f3>', M.config, 'source_lua', {})
 
 B.map_set_opts { silent = false, }
 

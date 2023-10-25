@@ -48,4 +48,10 @@ end
 
 ------------------------------
 
+function M.source_lua()
+  B.call_sub(M.loaded, 'useful', 'source_lua')
+end
+
+------------------------------
+
 return M
