@@ -62,9 +62,11 @@ end
 
 function M.start_new_nvim_qt()
   vim.cmd(
-    string.format([[silent !start /d %s %s\\bin\\nvim-qt.exe"]],
-    vim.loop.cwd(),
-    string.match(vim.fn.execute 'set rtp', ',([^,]+)\\share\\nvim\\runtime'))
+    string.format(
+      [[silent !start /d %s %s\bin\nvim-qt.exe]],
+      vim.loop.cwd(),
+      vim.fn.expand(string.match(vim.fn.execute 'set rtp', ',([^,]+)\\share\\nvim\\runtime'))
+    )
   )
 end
 
