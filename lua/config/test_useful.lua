@@ -54,6 +54,7 @@ end
 --------------------
 
 function M.startuptime()
+  vim.g.startuptime_tries = 10
   vim.cmd 'StartupTime'
   vim.fn.timer_start(20, function()
     M.map_buf_c_q_close(vim.fn.bufnr(), 'bwipeout!')
