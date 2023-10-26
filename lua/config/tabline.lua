@@ -43,9 +43,7 @@ end
 
 function M.update_bufs_and_refresh_tabline(ev)
   M.update_bufs(ev)
-    M.refresh_tabline(ev)
-  -- B.set_timeout(20, function()
-  -- end)
+  M.refresh_tabline(ev)
 end
 
 return M
