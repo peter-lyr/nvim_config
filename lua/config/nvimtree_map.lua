@@ -67,6 +67,7 @@ function M.basic_map(bufnr)
   vim.keymap.set('n', 'E', api.tree.expand_all, opts 'Expand All')
   vim.keymap.set('n', 'W', api.tree.collapse_all, opts 'Collapse')
   vim.keymap.set('n', 'q', M.close, opts 'Close')
+  vim.keymap.set('n', '<c-q>', M.close, opts 'Close')
   vim.keymap.set('n', '<esc>', M.close, opts 'Close')
 
   vim.keymap.set('n', '<leader>k', api.node.navigate.git.prev, opts 'Prev Git')
