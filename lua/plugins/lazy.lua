@@ -21,7 +21,7 @@ return {
     event = { 'VeryLazy', },
     lazy = false,
     config = function()
-      require 'my_simple'.load_require('', 'core.' .. 'options')
+      require('core.options')
     end,
   },
 }
