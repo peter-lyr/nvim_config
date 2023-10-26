@@ -53,9 +53,13 @@ end
 
 --------------------
 
-function M.startuptime()
+function M.startuptime(...)
   vim.g.startuptime_tries = 10
-  vim.cmd 'StartupTime'
+  local opts = ''
+  for _, t in ipairs { ..., } do
+    opts = opts .. ' ' .. t
+  end
+  vim.cmd('StartupTime' .. opts)
   vim.fn.timer_start(20, function()
     M.map_buf_c_q_close(vim.fn.bufnr(), 'bwipeout!')
   end)

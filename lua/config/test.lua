@@ -29,8 +29,8 @@ function M.delete_whichkeys_txt()
   B.call_sub(M.loaded, 'useful', 'delete_whichkeys_txt')
 end
 
-function M.startuptime()
-  B.call_sub(M.loaded, 'useful', 'startuptime')
+function M.startuptime(...)
+  B.call_sub(M.loaded, 'useful', 'startuptime', ...)
 end
 
 function M.start_new_nvim_qt()
@@ -44,6 +44,16 @@ end
 
 function M.quit_nvim_qt()
   vim.cmd 'qa!'
+end
+
+------------------------------
+
+function M.lazy()
+  vim.cmd 'Lazy'
+end
+
+function M.mason()
+  vim.cmd 'Mason'
 end
 
 ------------------------------

@@ -13,16 +13,28 @@ B.load_require 'dstein64/vim-startuptime'
 
 B.map_set_lua(M.config)
 
+-------
+
 B.map('<c-s-f4>1', 'execute_output', { 'mes', })
 B.map('<c-s-f4>2', 'execute_output', { 'scriptnames', })
 B.map('<c-s-f4>3', 'execute_output', { '!dir', })
 B.map('<c-s-f4>4', 'execute_output', { 'set rtp', })
 
+-------
+
 B.map('<c-s-f4><del>', 'delete_whichkeys_txt', {})
 B.map('<c-s-f4><f4>', 'startuptime', {})
+B.map('<c-s-f4><s-f4>', 'startuptime', { '--no-sort', })
 B.map('<c-s-f4>s', 'start_new_nvim_qt', {})
 B.map('<c-s-f4>r', 'restart_nvim_qt', {})
 B.map('<c-s-f4>q', 'quit_nvim_qt', {})
+
+-------
+
+B.map('<c-s-f4>l', 'lazy', {})
+B.map('<c-s-f4>m', 'mason', {})
+
+-------
 
 B.map('<c-s-f4><f3>', 'source_lua', {})
 
