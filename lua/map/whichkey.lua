@@ -9,4 +9,11 @@ M.config = B.rep_map_to_config(M.loaded)
 
 -- B.map_set_lua(M.config)
 
+require 'which-key'.setup {
+  window = {
+    border = 'single',
+    winblend = 12,
+  },
+}
+
 return M
