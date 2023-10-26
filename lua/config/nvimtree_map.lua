@@ -5,14 +5,14 @@ M.loaded = B.get_loaded(M.source)
 -- package.loaded[M.loaded] = nil
 --------------------------------------------
 
-local api = require 'nvim-tree.api'
-
 function M.tab()
+  local api = require 'nvim-tree.api'
   api.node.open.preview()
   vim.cmd 'norm j'
 end
 
 function M.c_tab()
+  local api = require 'nvim-tree.api'
   api.node.open.preview()
   vim.cmd 'norm k'
 end
@@ -22,6 +22,7 @@ function M.close()
 end
 
 function M.basic_map(bufnr)
+  local api = require 'nvim-tree.api'
   local function opts(desc)
     return { desc = 'nvim-tree: ' .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true, }
   end
