@@ -81,6 +81,7 @@ function M.source_lua(file)
   if B.is(lua) then
     package.loaded[lua] = nil
     vim.cmd('source ' .. file)
+    print('source ' .. file)
   end
 end
 
