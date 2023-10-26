@@ -13,8 +13,8 @@ function M.map_buf_close(lhs, buf, cmd)
   B.call_sub(M.loaded, 'useful', 'map_buf_close', lhs, buf, cmd)
 end
 
-function M.map_buf_q_close(buf, cmd)
-  B.call_sub(M.loaded, 'useful', 'map_buf_q_close', buf, cmd)
+function M.map_buf_c_q_close(buf, cmd)
+  B.call_sub(M.loaded, 'useful', 'map_buf_c_q_close', buf, cmd)
 end
 
 function M.execute_output(cmd)

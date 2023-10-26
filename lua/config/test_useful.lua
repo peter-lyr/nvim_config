@@ -15,8 +15,8 @@ function M.map_buf_close(lhs, buf, cmd)
   end, { buffer = buf, nowait = true, desc = desc, })
 end
 
-function M.map_buf_q_close(buf, cmd)
-  M.map_buf_close('q', buf, cmd)
+function M.map_buf_c_q_close(buf, cmd)
+  M.map_buf_close('<c-q>', buf, cmd)
 end
 
 --------------------
@@ -24,7 +24,7 @@ end
 function M.execute_output(cmd)
   vim.cmd 'wincmd n'
   vim.fn.append(vim.fn.line '.', vim.fn.split(vim.fn.execute(cmd), '\n'))
-  M.map_buf_q_close(vim.fn.bufnr(), 'bwipeout!')
+  M.map_buf_c_q_close(vim.fn.bufnr(), 'bwipeout!')
 end
 
 vim.api.nvim_create_user_command('ExecuteOutput', function(params)
@@ -56,7 +56,7 @@ end
 function M.startuptime()
   vim.cmd 'StartupTime'
   vim.fn.timer_start(20, function()
-    M.map_buf_q_close(vim.fn.bufnr(), 'bwipeout!')
+    M.map_buf_c_q_close(vim.fn.bufnr(), 'bwipeout!')
   end)
 end
 
