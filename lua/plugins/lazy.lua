@@ -16,12 +16,20 @@ return {
     lazy = true,
   },
   {
+    'dbakker/vim-projectroot',
+    lazy = true,
+  },
+  {
+    'peter-lyr/vim-bbye',
+    lazy = true,
+  },
+  {
     name = 'options',
     dir = '',
     event = { 'VeryLazy', },
     lazy = false,
     config = function()
-      require('core.options')
+      require 'core.options'
     end,
   },
 }
