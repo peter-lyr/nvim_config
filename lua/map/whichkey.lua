@@ -14,6 +14,10 @@ require 'which-key'.setup {
     border = 'single',
     winblend = 12,
   },
+  layout = {
+    height = { min = 4, max = 80, },
+    width = { min = 20, max = 200, },
+  },
 }
 
 return M
