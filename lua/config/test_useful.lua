@@ -72,8 +72,10 @@ end
 
 --------------------
 
-function M.source_lua()
-  local file = vim.api.nvim_buf_get_name(0)
+function M.source_lua(file)
+  if not file then
+    file = vim.api.nvim_buf_get_name(0)
+  end
   local lua = B.get_loaded(file)
   if B.is(lua) then
     package.loaded[lua] = nil

@@ -162,4 +162,10 @@ function B.clear_interval(timer)
   vim.fn.timer_stop(timer)
 end
 
+-----------------------------
+
+function B.source_lua()
+  B.call_sub('config.test', 'useful', 'source_lua')
+end
+
 return B
