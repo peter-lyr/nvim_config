@@ -102,10 +102,12 @@ M.is_buf_to_show = function(buf)
   return true
 end
 
-function M.update_bufs(cur_buf)
-  local cur_proj = B.rep_slash_lower(vim.fn['ProjectRootGet'](vim.api.nvim_buf_get_name(cur_buf)))
-  if not B.is(M.is_buf_to_show(cur_buf)) then
-    return {}, {}, cur_proj
+function M.update_bufs()
+  local C = require 'config.tabline'
+  local cur_proj = B.rep_slash_lower(vim.fn['ProjectRootGet'](vim.api.nvim_buf_get_name(C.cur_buf)))
+  if not B.is(M.is_buf_to_show(C.cur_buf)) then
+    C.cur_proj = cur_proj
+    return
   end
   local proj_bufs = {}
   local proj_buf = {}
@@ -120,7 +122,11 @@ function M.update_bufs(cur_buf)
       proj_buf[proj] = buf
     end
   end
-  return proj_bufs, proj_buf, cur_proj
+  if B.is(proj_bufs) and B.is(proj_buf) then
+    C.proj_bufs = proj_bufs
+    C.proj_buf = proj_buf
+    C.cur_proj = cur_proj
+  end
 end
 
 --------------
@@ -212,25 +218,26 @@ function M.get_buf_to_show(bufs, cur_buf)
   return newbufnrs
 end
 
-function M.refresh_tabline(proj_bufs, cur_proj, cur_buf)
+function M.refresh_tabline()
+  local C = require 'config.tabline'
   local items = {}
   local buf_to_show = {}
   local yy = 1
   local temp = ''
-  if proj_bufs[cur_proj] then
-    buf_to_show = M.get_buf_to_show(proj_bufs[cur_proj], cur_buf)
+  if C.proj_bufs[C.cur_proj] then
+    buf_to_show = M.get_buf_to_show(C.proj_bufs[C.cur_proj], C.cur_buf)
     if #buf_to_show == 0 then
-      buf_to_show = proj_bufs[cur_proj]
+      buf_to_show = C.proj_bufs[C.cur_proj]
     end
-    yy = B.index_of(proj_bufs[cur_proj], buf_to_show[1])
+    yy = B.index_of(C.proj_bufs[C.cur_proj], buf_to_show[1])
   end
   for i, bufnr in ipairs(buf_to_show) do
     local xx = tostring(yy + i - 1)
     local only_name = B.get_only_name(vim.fn.bufname(bufnr))
     local temp_ = ''
-    if cur_buf == bufnr then
+    if C.cur_buf == bufnr then
       temp_ = '%#tblsel#'
-      xx = xx .. '/' .. #proj_bufs[cur_proj]
+      xx = xx .. '/' .. #C.proj_bufs[C.cur_proj]
     else
       temp_ = '%#tblfil#'
     end
