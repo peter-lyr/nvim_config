@@ -17,13 +17,4 @@ return {
       require 'my_simple'.load_require('', 'event.' .. 'BufLeave')
     end,
   },
-  {
-    name = 'bufenter',
-    event = { 'BufEnter', },
-    dir = '',
-    lazy = true,
-    config = function()
-      require 'my_simple'.load_require('', 'event.' .. 'BufEnter')
-    end,
-  },
 }

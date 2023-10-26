@@ -17,4 +17,13 @@ B.aucmd(M.source, 'BufReadPost', 'BufReadPost', {
   end,
 })
 
+B.aucmd(M.source, 'BufEnter', 'BufEnter', {
+  callback = function(ev)
+    if vim.fn.filereadable(ev.file) == 1 and vim.o.modifiable == true then
+      vim.opt.cursorcolumn = true
+      vim.opt.signcolumn   = 'auto:1'
+    end
+  end,
+})
+
 return M
