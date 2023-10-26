@@ -17,4 +17,13 @@ return {
       require 'my_simple'.load_require('', 'event.' .. 'BufLeave')
     end,
   },
+  {
+    name = 'filetype',
+    event = { 'FileType', },
+    dir = '',
+    lazy = true,
+    config = function()
+      require 'my_simple'.load_require('', 'event.' .. 'FileType')
+    end,
+  },
 }

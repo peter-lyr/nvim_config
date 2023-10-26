@@ -139,4 +139,22 @@ function B.aucmd(source, desc, event, opts)
   vim.api.nvim_create_autocmd(event, opts)
 end
 
+-----------------------------
+
+function B.set_timeout(timeout, callback)
+  return vim.fn.timer_start(timeout, function()
+    callback()
+  end, { ['repeat'] = 1, })
+end
+
+function B.set_interval(interval, callback)
+  return vim.fn.timer_start(interval, function()
+    callback()
+  end, { ['repeat'] = -1, })
+end
+
+function B.clear_interval(timer)
+  vim.fn.timer_stop(timer)
+end
+
 return B
