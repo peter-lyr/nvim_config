@@ -87,6 +87,11 @@ B.map_default_opts = {
   silent = true,
 }
 B.map_opts = B.map_default_opts
+B.map_lua = ''
+
+function B.map_set_lua(lua)
+  B.map_lua = lua
+end
 
 function B.map_set_opts(opts)
   B.map_opts = vim.tbl_deep_extend('force', B.map_default_opts, opts)
@@ -96,8 +101,8 @@ function B.map_reset_opts()
   B.map_opts = B.map_default_opts
 end
 
-function B.map(lhs, lua, func, params, desc_more)
-  B.call_sub(B.loaded, 'keymap', 'map', B.merge_tables, B.map_opts, lhs, lua, func, params, desc_more)
+function B.map(lhs, func, params, desc_more)
+  B.call_sub(B.loaded, 'keymap', 'map', B.merge_tables, B.map_opts, lhs, B.map_lua, func, params, desc_more)
 end
 
 -----------------------------
@@ -110,8 +115,8 @@ end
 
 B.whichkeys = {}
 
-function B.register_whichkey(key, lua, desc)
-  B.call_sub(B.loaded, 'keymap', 'register_whichkey', B.whichkeys, key, lua, desc)
+function B.register_whichkey(key, desc)
+  B.call_sub(B.loaded, 'keymap', 'register_whichkey', B.whichkeys, key, B.map_lua, desc)
 end
 
 function B.merge_whichkeys()

@@ -11,6 +11,8 @@ B.load_require 'dstein64/vim-startuptime'
 
 ----------------------------
 
+B.map_set_lua(M.config)
+
 B.map('<c-s-f4>1', M.config, 'execute_output', { 'mes', })
 B.map('<c-s-f4>2', M.config, 'execute_output', { 'scriptnames', })
 B.map('<c-s-f4>3', M.config, 'execute_output', { '!dir', })

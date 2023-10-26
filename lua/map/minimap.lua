@@ -7,9 +7,11 @@ M.config = B.rep_map_to_config(M.loaded)
 -- package.loaded[M.loaded] = nil
 --------------------------------------------
 
-B.map('<leader>am', M.config, 'open', {})
-B.map('<leader>aM', M.config, 'close', {})
-B.map('<leader>an', M.config, 'toggle_focus', {})
-B.map('<leader>aN', M.config, 'auto_open', {})
+B.map_set_lua(M.config)
+
+B.map('<leader>am', 'open', {})
+B.map('<leader>aM', 'close', {})
+B.map('<leader>an', 'toggle_focus', {})
+B.map('<leader>aN', 'auto_open', {})
 
 return M
