@@ -23,13 +23,4 @@ return {
     'peter-lyr/vim-bbye',
     lazy = true,
   },
-  {
-    name = 'options',
-    dir = '',
-    event = { 'VeryLazy', },
-    lazy = false,
-    config = function()
-      require 'core.options'
-    end,
-  },
 }
