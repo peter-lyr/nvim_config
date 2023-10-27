@@ -123,6 +123,10 @@ function M.markdown()
   B.call_sub(M.loaded, 'event', 'markdown')
 end
 
+function M.update_lua_libraries()
+  B.call_sub(M.loaded, 'event_lua', 'update_lua_libraries')
+end
+
 ------------------
 
 M.mason_dir_path = B.get_std_data_dir_path 'mason'

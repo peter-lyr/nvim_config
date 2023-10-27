@@ -215,4 +215,36 @@ function B.get_std_data_dir_path(dirs)
   return B.get_dir_path(dirs)
 end
 
+function B.get_file_path(dirs, file)
+  local dir_path = B.get_dir_path(dirs)
+  return dir_path:joinpath(file)
+end
+
+----------------
+
+function B.system_run(way, str_format, ...)
+  if type(str_format) == 'table' then
+    str_format = vim.fn.join(str_format, ' && ')
+  end
+  local cmd = string.format(str_format, ...)
+  if way == 'start' then
+    cmd = string.format([[silent !start cmd /c "%s"]], cmd)
+    vim.cmd(cmd)
+  elseif way == 'asyncrun' then
+    vim.cmd 'Lazy load asyncrun.vim'
+    cmd = string.format('AsyncRun %s', cmd)
+    B.asyncrun_prepare_default()
+    vim.cmd(cmd)
+  elseif way == 'term' then
+    cmd = string.format('wincmd s|term %s', cmd)
+    vim.cmd(cmd)
+  end
+end
+
+function B.file_exists(file)
+  vim.cmd 'Lazy load plenary.nvim'
+  file = B.rep_slash(file)
+  return require 'plenary.path':new(file):exists()
+end
+
 return B

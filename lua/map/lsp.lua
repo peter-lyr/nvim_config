@@ -52,6 +52,8 @@ B.map('<leader>fh', 'hover', {})
 B.map('<leader>fo', 'definition', {})
 B.map('<leader>fw', 'ClangdSwitchSourceHeader', {})
 
+B.map('<leader>fUl', 'update_lua_libraries', {})
+
 B.map_reset_opts()
 
 -----------------
