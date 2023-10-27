@@ -5,7 +5,7 @@ M.loaded = B.get_loaded(M.source)
 -- package.loaded[M.loaded] = nil
 --------------------------------------------
 
-M.treesitter_parser_path = B.get_std_data_dir_path 'treesitter-parser'
+M.treesitter_parser_path = B.get_std_data_dir_path 'treesitter_parser'
 
 if not M.treesitter_parser_path:exists() then
   vim.fn.mkdir(M.treesitter_parser_path.filename)
