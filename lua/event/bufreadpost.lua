@@ -17,11 +17,28 @@ B.aucmd(M.source, 'BufReadPost', 'BufReadPost', {
   end,
 })
 
+--------------------------
+
+M.tab_4_fts = {
+  'c', 'cpp',
+  'python',
+  'ld',
+}
+
 B.aucmd(M.source, 'BufEnter', 'BufEnter', {
   callback = function(ev)
     if vim.fn.filereadable(ev.file) == 1 and vim.o.modifiable == true then
       vim.opt.cursorcolumn = true
       vim.opt.signcolumn   = 'auto:1'
+    end
+    if vim.tbl_contains(M.tab_4_fts, vim.opt.filetype:get()) == true then
+      vim.opt.tabstop = 4
+      vim.opt.softtabstop = 4
+      vim.opt.shiftwidth = 4
+    else
+      vim.opt.tabstop = 2
+      vim.opt.softtabstop = 2
+      vim.opt.shiftwidth = 2
     end
   end,
 })
