@@ -67,7 +67,7 @@ M.au = B.aucmd(M.source, 'BufEnter', 'BufEnter', {
     if ext == 'lua' and not M.loaded_lua then
       require(M.config).lua()
       M.loaded_lua = 1
-    elseif ext == 'python' and not M.loaded_python then
+    elseif ext == 'py' and not M.loaded_python then
       require(M.config).python()
       M.loaded_python = 1
     elseif ext == 'c' and not M.loaded_c then
