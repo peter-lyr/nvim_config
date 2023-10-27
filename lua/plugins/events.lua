@@ -26,4 +26,13 @@ return {
       require 'my_simple'.load_require('', 'event.' .. 'FileType')
     end,
   },
+  {
+    name = 'insertenter',
+    event = { 'InsertEnter', 'CmdlineEnter', },
+    dir = '',
+    lazy = true,
+    config = function()
+      require 'my_simple'.load_require('', 'event.' .. 'InsertEnter')
+    end,
+  },
 }
