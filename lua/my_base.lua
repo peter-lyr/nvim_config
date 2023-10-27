@@ -141,7 +141,7 @@ end
 
 function B.aucmd(source, desc, event, opts)
   opts = vim.tbl_deep_extend('force', opts, { group = B.get_group(source, desc), desc = B.get_desc(source, desc), })
-  vim.api.nvim_create_autocmd(event, opts)
+  return vim.api.nvim_create_autocmd(event, opts)
 end
 
 -----------------------------

@@ -10,7 +10,17 @@ local lazy = {
   'nvim-treesitter/nvim-treesitter-context',
   'p00f/nvim-ts-rainbow',
   'andymass/vim-matchup',
+  -- lsp
+  'folke/neodev.nvim',
+  'jay-babu/mason-null-ls.nvim',
+  'jose-elias-alvarez/null-ls.nvim',
+  'smjonas/inc-rename.nvim',
+  'williamboman/mason-lspconfig.nvim',
+  'williamboman/mason.nvim',
+  --
+  'LazyVim/LazyVim',
 }
+
 
 local new = {}
 for _, l in ipairs(lazy) do
