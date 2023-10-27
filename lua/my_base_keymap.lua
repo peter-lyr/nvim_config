@@ -10,7 +10,7 @@ function M.merge_tables(...)
   return result
 end
 
-function M.map(merge_tables, map_opts, lhs, lua, func, params, desc_more)
+function M.map(map_opts, lhs, lua, func, params, desc_more)
   local desc = { string.match(lua, '%.([^.]+)$'), }
   desc[#desc + 1] = func
   if desc_more then
@@ -19,7 +19,7 @@ function M.map(merge_tables, map_opts, lhs, lua, func, params, desc_more)
   if type(params) == 'string' then
     desc[#desc + 1] = params
   elseif type(params) == 'table' then
-    desc = merge_tables(desc, params)
+    desc = M.merge_tables(desc, params)
   end
   vim.keymap.set({ 'n', 'v', }, lhs, function()
     if type(params) == 'string' then

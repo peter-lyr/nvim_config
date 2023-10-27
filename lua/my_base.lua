@@ -102,7 +102,7 @@ function B.map_reset_opts()
 end
 
 function B.map(lhs, func, params, desc_more)
-  B.call_sub(B.loaded, 'keymap', 'map', B.merge_tables, B.map_opts, lhs, B.map_lua, func, params, desc_more)
+  B.call_sub(B.loaded, 'keymap', 'map', B.map_opts, lhs, B.map_lua, func, params, desc_more)
 end
 
 -----------------------------
