@@ -63,8 +63,6 @@ function M.get_setup_table(file_ignore_patterns)
           -- disable c-j because we dont want to allow new lines #2123
           -- ['<C-j>'] = actions.nop,
 
-          ['<c-l>'] = { '<esc>', type = 'command', },
-
           ['<F5>'] = actions_layout.toggle_preview,
 
           ["<c-'>"] = actions.move_selection_next,
@@ -190,11 +188,6 @@ function M.get_setup_table(file_ignore_patterns)
           -- ['<PageDown>'] = actions.results_scrolling_down,
 
           ['?'] = actions.which_key,
-
-          ['<c-l>'] = {
-            actions.close, type = 'action',
-            opts = { nowait = true, silent = true, },
-          },
 
           ['<leader>'] = {
             actions.select_default, type = 'action',
