@@ -188,4 +188,31 @@ function B.get_only_name(file)
   return only_name
 end
 
+--------------------
+
+function B.get_dir_path(dirs)
+  B.load_require 'nvim-lua/plenary.nvim'
+  if type(dirs) == 'string' then
+    dirs = { dirs, }
+  end
+  local dir_1 = table.remove(dirs, 1)
+  dir_1 = B.rep_slash(dir_1)
+  local dir_path = require 'plenary.path':new(dir_1)
+  for _, dir in ipairs(dirs) do
+    if not dir_path:exists() then
+      vim.fn.mkdir(dir_path.filename)
+    end
+    dir_path = dir_path:joinpath(dir)
+  end
+  return dir_path
+end
+
+function B.get_std_data_dir_path(dirs)
+  if type(dirs) == 'string' then
+    dirs = { dirs, }
+  end
+  table.insert(dirs, 1, vim.fn.stdpath 'data')
+  return B.get_dir_path(dirs)
+end
+
 return B
