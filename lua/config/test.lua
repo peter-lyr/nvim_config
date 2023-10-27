@@ -58,6 +58,24 @@ end
 
 ------------------------------
 
+function M.terminal_cmd()
+  vim.cmd 'terminal'
+end
+
+function M.terminal_ipython()
+  vim.cmd 'ipython'
+end
+
+function M.terminal_bash()
+  vim.cmd 'bash'
+end
+
+function M.terminal_powershell()
+  vim.cmd 'powershell'
+end
+
+------------------------------
+
 function M.source_lua()
   B.call_sub(M.loaded, 'useful', 'source_lua')
 end

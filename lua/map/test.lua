@@ -31,6 +31,13 @@ B.map('<c-s-f4>q', 'quit_nvim_qt', {})
 
 -------
 
+B.map('<c-s-f4><c-f1>', 'terminal_cmd', {})
+B.map('<c-s-f4><c-f2>', 'terminal_ipython', {})
+B.map('<c-s-f4><c-f3>', 'terminal_bash', {})
+B.map('<c-s-f4><c-f4>', 'terminal_powershell', {})
+
+-------
+
 B.map('<c-s-f4>l', 'lazy', {})
 B.map('<c-s-f4>m', 'mason', {})
 

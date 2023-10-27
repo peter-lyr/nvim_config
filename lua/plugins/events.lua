@@ -28,7 +28,7 @@ return {
   },
   {
     name = 'insertenter',
-    event = { 'InsertEnter', 'CmdlineEnter', },
+    event = { 'InsertEnter', 'CmdlineEnter', 'TermEnter', },
     dir = '',
     lazy = true,
     config = function()
