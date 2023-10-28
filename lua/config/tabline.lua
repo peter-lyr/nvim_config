@@ -45,6 +45,17 @@ function M.update_bufs_and_refresh_tabline(ev)
   M.refresh_tabline(ev)
 end
 
-----------
+--------------------
+-- dbakker/vim-projectroot
+--------------------
+
+function M.projectroot_titlestring(ev)
+  pcall(vim.call, 'ProjectRootCD')
+  local project = B.rep_baskslash(vim.fn['ProjectRootGet'](vim.api.nvim_buf_get_name(ev.buf)))
+  local ver = vim.version()
+  local head = vim.fn.fnamemodify(project, ':h')
+  head = B.get_only_name(head)
+  vim.opt.titlestring = string.format('%d %s %s', ver['patch'], B.get_only_name(project), head)
+end
 
 return M

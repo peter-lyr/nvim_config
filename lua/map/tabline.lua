@@ -31,5 +31,17 @@ B.aucmd(M.source, 'BufEnter', 'BufEnter', {
 })
 
 --------------------
+-- dbakker/vim-projectroot
+--------------------
+
+vim.g.rootmarkers = {
+  '.git',
+}
+
+B.aucmd('vim-projectroot', 'BufEnter', 'BufEnter', {
+  callback = function(ev)
+    require(M.config).projectroot_titlestring(ev)
+  end,
+})
 
 return M
