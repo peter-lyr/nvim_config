@@ -1,0 +1,18 @@
+snippet ji "print just int"
+	print(string.format("%d", $1))
+snippet i "print int"
+	print("$1:", $1)
+snippet jh "print just hex"
+	print(string.format("%x", $1))
+snippet h "print hex"
+	print(string.format("$1: 0x%x", $1))
+snippet hi "print hex(int)"
+	print(string.format("$1: 0x%x(%d)", $1, $1))
+snippet s "print string"
+	print("$1:", $1)
+snippet ss "print just string"
+	print("$1")
+snippet ll "print line"
+	print(string.format("## %s# %d", debug.getinfo(1)['source'], debug.getinfo(1)['currentline']))
+snippet ii "print inspect"
+	print("vim.inspect($1):", vim.inspect($1))
