@@ -6,19 +6,19 @@ M.loaded = B.get_loaded(M.source)
 --------------------------------------------
 
 function M.c()
-  require(M.loaded .. '_' .. 'c')
+  require 'config.lsp_event_c'
 end
 
 function M.lua()
-  require(M.loaded .. '_' .. 'lua')
+  require 'config.lsp_event_lua'
 end
 
 function M.markdown()
-  require(M.loaded .. '_' .. 'markdown')
+  require 'config.lsp_event_markdown'
 end
 
 function M.python()
-  require(M.loaded .. '_' .. 'python')
+  require 'config.lsp_event_python'
 end
 
 return M
