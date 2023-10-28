@@ -1,15 +1,15 @@
 local lazy = {
-  'nvim-lua/plenary.nvim',
   'dstein64/vim-startuptime',
-  'nvim-tree/nvim-web-devicons',
   'navarasu/onedark.nvim',
+  'nvim-lua/plenary.nvim',
+  'nvim-tree/nvim-web-devicons',
   -- nvimtree
   'dbakker/vim-projectroot',
   'peter-lyr/vim-bbye',
   -- treesitter
+  'andymass/vim-matchup',
   'nvim-treesitter/nvim-treesitter-context',
   'p00f/nvim-ts-rainbow',
-  'andymass/vim-matchup',
   -- lsp
   'folke/neodev.nvim',
   'jay-babu/mason-null-ls.nvim',
