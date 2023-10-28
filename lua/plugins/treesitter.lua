@@ -1,7 +1,4 @@
-local S = require 'startup'
-
 local plugin = 'nvim-treesitter/nvim-treesitter'
-local map = 'Treesitter'
 
 return {
   plugin,
@@ -15,6 +12,6 @@ return {
     'markdown',
   },
   config = function()
-    require 'my_simple'.load_require(plugin, 'map.' .. map)
+    require 'map.treesitter'
   end,
 }

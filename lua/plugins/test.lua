@@ -1,7 +1,6 @@
 local S = require 'startup'
 
 local plugin = 'test'
-local map = 'Test'
 
 return {
   name = plugin,
@@ -9,10 +8,10 @@ return {
   lazy = true,
   init = function()
     if not S.enable then
-      require 'my_simple'.add_whichkey('<c-s-f4>', plugin, map)
+      require 'my_simple'.add_whichkey('<c-s-f4>', plugin, 'Test')
     end
   end,
   config = function()
-    require 'my_simple'.load_require(plugin, 'map.' .. map)
+    require 'map.test'
   end,
 }

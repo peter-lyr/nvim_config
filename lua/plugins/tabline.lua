@@ -1,7 +1,6 @@
 -- local S = require 'startup'
 
 local plugin = 'tabline'
-local map = 'Tabline'
 
 return {
   name = plugin,
@@ -13,6 +12,6 @@ return {
     vim.opt.showtabline = 2
   end,
   config = function()
-    require 'my_simple'.load_require(plugin, 'map.' .. map)
+    require 'map.tabline'
   end,
 }

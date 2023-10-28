@@ -5,7 +5,7 @@ return {
     dir = '',
     lazy = true,
     config = function()
-      require 'my_simple'.load_require('', 'event.' .. 'BufReadPost')
+      require 'event.BufReadPost'
     end,
   },
   {
@@ -14,7 +14,7 @@ return {
     dir = '',
     lazy = true,
     config = function()
-      require 'my_simple'.load_require('', 'event.' .. 'BufLeave')
+      require 'event.BufLeave'
     end,
   },
   {
@@ -23,7 +23,7 @@ return {
     dir = '',
     lazy = true,
     config = function()
-      require 'my_simple'.load_require('', 'event.' .. 'FileType')
+      require 'event.FileType'
     end,
   },
   {
@@ -32,7 +32,7 @@ return {
     dir = '',
     lazy = true,
     config = function()
-      require 'my_simple'.load_require('', 'event.' .. 'InsertEnter')
+      require 'event.InsertEnter'
     end,
   },
 }
