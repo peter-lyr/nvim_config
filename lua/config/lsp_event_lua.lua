@@ -19,31 +19,35 @@ M.root_dir = function(root_files)
   end
 end
 
-M.lua_libraries_dir_path = B.get_std_data_dir_path 'lua_libraries'
-M.lua_libraries_txt_path = M.lua_libraries_dir_path:joinpath 'lua_libraries.txt'
-M.lua_libraries = {}
+--------------------------
 
-if not M.lua_libraries_dir_path:exists() then
-  vim.fn.mkdir(M.lua_libraries_dir_path.filename)
-end
+-- M.lua_libraries_dir_path = B.get_std_data_dir_path 'lua_libraries'
+-- M.lua_libraries_txt_path = M.lua_libraries_dir_path:joinpath 'lua_libraries.txt'
+-- M.lua_libraries = {}
+--
+-- if not M.lua_libraries_dir_path:exists() then
+--   vim.fn.mkdir(M.lua_libraries_dir_path.filename)
+-- end
+--
+-- M.update_lua_libraries = function()
+--   B.system_run('start', 'python "%s" "%s" "%s"',
+--     M.source .. '.py',
+--     M.lua_libraries_txt_path.filename,
+--     vim.fn.stdpath 'config')
+-- end
+--
+-- if not M.lua_libraries_txt_path:exists() then
+--   M.update_lua_libraries()
+-- end
+--
+-- for _, lua_library in ipairs(M.lua_libraries_txt_path:readlines()) do
+--   local file = vim.fn.trim(lua_library)
+--   if #file > 0 and B.file_exists(file) then
+--     M.lua_libraries[#M.lua_libraries + 1] = file
+--   end
+-- end
 
-M.update_lua_libraries = function()
-  B.system_run('start', 'python "%s" "%s" "%s"',
-    M.source .. '.py',
-    M.lua_libraries_txt_path.filename,
-    vim.fn.stdpath 'config')
-end
-
-if not M.lua_libraries_txt_path:exists() then
-  M.update_lua_libraries()
-end
-
-for _, lua_library in ipairs(M.lua_libraries_txt_path:readlines()) do
-  local file = vim.fn.trim(lua_library)
-  if #file > 0 and B.file_exists(file) then
-    M.lua_libraries[#M.lua_libraries + 1] = file
-  end
-end
+--------------------------
 
 lspconfig.lua_ls.setup {
   capabilities = capabilities,
@@ -54,7 +58,7 @@ lspconfig.lua_ls.setup {
   settings = {
     Lua = {
       diagnostics = {
-        -- globals = { 'vim', },
+        globals = { 'vim', },
         disable = {
           'incomplete-signature-doc',
           'undefined-global',
@@ -68,8 +72,8 @@ lspconfig.lua_ls.setup {
         version = 'LuaJIT',
       },
       workspace = {
-        -- library = {}, --vim.api.nvim_get_runtime_file('', true),
-        library = M.lua_libraries,
+        library = {}, --vim.api.nvim_get_runtime_file('', true),
+        -- library = M.lua_libraries,
         checkThirdParty = false,
       },
       telemetry = {

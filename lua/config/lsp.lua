@@ -123,9 +123,9 @@ function M.markdown()
   B.call_sub(M.loaded, 'event', 'markdown')
 end
 
-function M.update_lua_libraries()
-  B.call_sub(M.loaded, 'event_lua', 'update_lua_libraries')
-end
+-- function M.update_lua_libraries()
+--   B.call_sub(M.loaded, 'event_lua', 'update_lua_libraries')
+-- end
 
 ------------------
 

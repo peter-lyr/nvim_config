@@ -52,11 +52,16 @@ B.map('<leader>fh', 'hover', {})
 B.map('<leader>fo', 'definition', {})
 B.map('<leader>fw', 'ClangdSwitchSourceHeader', {})
 
-B.map('<leader>fUl', 'update_lua_libraries', {})
+-- B.map('<leader>fUl', 'update_lua_libraries', {})
 
 B.map_reset_opts()
 
 -----------------
+
+-- require(M.config).lua()
+-- require(M.config).python()
+-- require(M.config).c()
+-- require(M.config).markdown()
 
 M.loaded_lua = nil
 M.loaded_c = nil
