@@ -105,6 +105,18 @@ function B.map(lhs, func, params, desc_more)
   B.call_sub(B.loaded, 'keymap', 'map', B.map_opts, lhs, B.map_lua, func, params, desc_more)
 end
 
+function B.map_n(lhs, func, params, desc_more)
+  B.call_sub(B.loaded, 'keymap', 'map_n', B.map_opts, lhs, B.map_lua, func, params, desc_more)
+end
+
+function B.map_v(lhs, func, params, desc_more)
+  B.call_sub(B.loaded, 'keymap', 'map_v', B.map_opts, lhs, B.map_lua, func, params, desc_more)
+end
+
+function B.map_i(lhs, func, params, desc_more)
+  B.call_sub(B.loaded, 'keymap', 'map_i', B.map_opts, lhs, B.map_lua, func, params, desc_more)
+end
+
 -----------------------------
 
 function B.rep_map_to_config(loaded)
