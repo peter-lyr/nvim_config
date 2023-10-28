@@ -10,7 +10,7 @@ require 'neodev'.setup()
 local lspconfig = require 'lspconfig'
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
--- capabilities = require 'cmp_nvim_lsp'.default_capabilities(capabilities)
+capabilities = require 'cmp_nvim_lsp'.default_capabilities(capabilities)
 
 function M.root_dir(root_files)
   return function(fname)
@@ -18,34 +18,6 @@ function M.root_dir(root_files)
     return util.root_pattern(unpack(root_files))(fname) or util.find_git_ancestor(fname)
   end
 end
-
---------------------------
-
--- M.lua_libraries_dir_path = B.get_std_data_dir_path 'lua_libraries'
--- M.lua_libraries_txt_path = M.lua_libraries_dir_path:joinpath 'lua_libraries.txt'
--- M.lua_libraries = {}
---
--- if not M.lua_libraries_dir_path:exists() then
---   vim.fn.mkdir(M.lua_libraries_dir_path.filename)
--- end
---
--- function M.update_lua_libraries()
---   B.system_run('start', 'python "%s" "%s" "%s"',
---     M.source .. '.py',
---     M.lua_libraries_txt_path.filename,
---     vim.fn.stdpath 'config')
--- end
---
--- if not M.lua_libraries_txt_path:exists() then
---   M.update_lua_libraries()
--- end
---
--- for _, lua_library in ipairs(M.lua_libraries_txt_path:readlines()) do
---   local file = vim.fn.trim(lua_library)
---   if #file > 0 and B.file_exists(file) then
---     M.lua_libraries[#M.lua_libraries + 1] = file
---   end
--- end
 
 --------------------------
 

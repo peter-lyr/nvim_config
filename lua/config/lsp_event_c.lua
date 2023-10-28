@@ -7,9 +7,6 @@ M.loaded = B.get_loaded(M.source)
 
 local lspconfig = require 'lspconfig'
 
-local capabilities = vim.lsp.protocol.make_client_capabilities()
--- capabilities = require 'cmp_nvim_lsp'.default_capabilities(capabilities)
-
 function M.root_dir(root_files)
   return function(fname)
     local util = require 'lspconfig.util'
