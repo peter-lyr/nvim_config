@@ -33,7 +33,7 @@ B.aucmd(M.source, 'CursorHold', { 'CursorHold', }, {
   end,
 })
 
-M.next_hunk = function()
+function M.next_hunk()
   if vim.wo.diff then
     return ']c'
   end
@@ -43,7 +43,7 @@ M.next_hunk = function()
   return '<Ignore>'
 end
 
-M.prev_hunk = function()
+function M.prev_hunk()
   if vim.wo.diff then
     return '[c'
   end
@@ -53,71 +53,71 @@ M.prev_hunk = function()
   return '<Ignore>'
 end
 
-M.stage_hunk = function()
+function M.stage_hunk()
   require 'gitsigns'.stage_hunk()
 end
 
-M.stage_hunk_v = function()
+function M.stage_hunk_v()
   require 'gitsigns'.stage_hunk { vim.fn.line '.', vim.fn.line 'v', }
 end
 
-M.stage_buffer = function()
+function M.stage_buffer()
   require 'gitsigns'.stage_buffer()
 end
 
-M.undo_stage_hunk = function()
+function M.undo_stage_hunk()
   require 'gitsigns'.undo_stage_hunk()
 end
 
-M.reset_hunk = function()
+function M.reset_hunk()
   require 'gitsigns'.reset_hunk()
 end
 
-M.reset_hunk_v = function()
+function M.reset_hunk_v()
   require 'gitsigns'.reset_hunk { vim.fn.line '.', vim.fn.line 'v', }
 end
 
-M.reset_buffer = function()
+function M.reset_buffer()
   require 'gitsigns'.reset_buffer()
 end
 
-M.preview_hunk = function()
+function M.preview_hunk()
   require 'gitsigns'.preview_hunk()
 end
 
-M.blame_line = function()
+function M.blame_line()
   require 'gitsigns'.blame_line { full = true, }
 end
 
-M.diffthis = function()
+function M.diffthis()
   require 'gitsigns'.diffthis()
 end
 
-M.diffthis_l = function()
+function M.diffthis_l()
   require 'gitsigns'.diffthis '~'
 end
 
-M.toggle_current_line_blame = function()
+function M.toggle_current_line_blame()
   require 'gitsigns'.toggle_current_line_blame()
 end
 
-M.toggle_deleted = function()
+function M.toggle_deleted()
   require 'gitsigns'.toggle_deleted()
 end
 
-M.toggle_numhl = function()
+function M.toggle_numhl()
   require 'gitsigns'.toggle_numhl()
 end
 
-M.toggle_linehl = function()
+function M.toggle_linehl()
   require 'gitsigns'.toggle_linehl()
 end
 
-M.toggle_signs = function()
+function M.toggle_signs()
   require 'gitsigns'.toggle_signs()
 end
 
-M.toggle_word_diff = function()
+function M.toggle_word_diff()
   local temp = require 'gitsigns'.toggle_word_diff()
   if temp == false then
     word_diff_en = 0

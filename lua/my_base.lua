@@ -234,29 +234,24 @@ end
 
 ----------------
 
-function B.system_run(way, str_format, ...)
-  if type(str_format) == 'table' then
-    str_format = vim.fn.join(str_format, ' && ')
-  end
-  local cmd = string.format(str_format, ...)
-  if way == 'start' then
-    cmd = string.format([[silent !start cmd /c "%s"]], cmd)
-    vim.cmd(cmd)
-  elseif way == 'asyncrun' then
-    vim.cmd 'Lazy load asyncrun.vim'
-    cmd = string.format('AsyncRun %s', cmd)
-    B.asyncrun_prepare_default()
-    vim.cmd(cmd)
-  elseif way == 'term' then
-    cmd = string.format('wincmd s|term %s', cmd)
-    vim.cmd(cmd)
-  end
-end
-
 function B.file_exists(file)
   vim.cmd 'Lazy load plenary.nvim'
   file = B.rep_slash(file)
   return require 'plenary.path':new(file):exists()
+end
+
+---------
+
+function B.notify_info(message)
+  B.call_sub(B.loaded, 'asyncrun', 'notify_info', message)
+end
+
+function B.system_cd(file)
+  B.call_sub(B.loaded, 'asyncrun', 'system_cd', file)
+end
+
+function B.system_run(way, str_format, ...)
+  B.call_sub(B.loaded, 'asyncrun', 'system_run', way, str_format, ...)
 end
 
 return B

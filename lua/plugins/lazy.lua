@@ -29,6 +29,8 @@ local lazy = {
   'saadparwaiz1/cmp_luasnip',
   ----
   'paopaol/telescope-git-diffs.nvim',
+  --------
+  'skywind3000/asyncrun.vim',
 }
 
 
