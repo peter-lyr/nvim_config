@@ -52,15 +52,11 @@ function M.setup(opts)
   require 'aerial'.setup(opts)
 end
 
-M.opened = nil
-
 function M.open()
-  M.opened = 1
   vim.cmd 'AerialOpen right'
 end
 
 function M.close()
-  M.opened = 1
   vim.cmd 'AerialCloseAll'
 end
 
