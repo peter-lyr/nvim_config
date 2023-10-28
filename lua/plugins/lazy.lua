@@ -27,6 +27,8 @@ local lazy = {
   'hrsh7th/cmp-path',
   'rafamadriz/friendly-snippets',
   'saadparwaiz1/cmp_luasnip',
+  ----
+  'paopaol/telescope-git-diffs.nvim',
 }
 
 
