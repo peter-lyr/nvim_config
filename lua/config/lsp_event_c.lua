@@ -10,7 +10,7 @@ local lspconfig = require 'lspconfig'
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 -- capabilities = require 'cmp_nvim_lsp'.default_capabilities(capabilities)
 
-M.root_dir = function(root_files)
+function M.root_dir(root_files)
   return function(fname)
     local util = require 'lspconfig.util'
     return util.root_pattern(unpack(root_files))(fname) or util.find_git_ancestor(fname)

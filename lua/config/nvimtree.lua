@@ -11,8 +11,9 @@ vim.cmd [[
   hi NvimTreeSpecialFile guifg=brown gui=bold,underline
 ]]
 
-M.on_attach = function(bufnr)
+function M.on_attach(bufnr)
   B.call_sub(M.loaded, 'map', 'basic_map', bufnr)
+  B.call_sub(M.loaded, 'map', 'sel_map', bufnr)
 end
 
 M.default_opts = {
@@ -70,7 +71,7 @@ M.default_opts = {
   },
 }
 
-M.setup = function(conf)
+function M.setup(conf)
   require 'nvim-tree'.setup(vim.tbl_deep_extend('force', M.default_opts, conf or {}))
 end
 
@@ -80,22 +81,22 @@ M.setup()
 
 M.nvimtree_opened = nil
 
-M.findfile = function()
+function M.findfile()
   M.nvimtree_opened = 1
   vim.cmd 'NvimTreeFindFile'
 end
 
-M.open = function()
+function M.open()
   M.nvimtree_opened = 1
   vim.cmd 'NvimTreeOpen'
 end
 
-M.close = function()
+function M.close()
   M.nvimtree_opened = nil
   vim.cmd 'NvimTreeClose'
 end
 
-M.restart = function()
+function M.restart()
   B.source_lua(M.source)
   M.open()
 end

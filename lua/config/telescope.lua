@@ -338,7 +338,7 @@ M.add_ignore_patterns(M.ignore_patterns, {
 
 telescope.setup(M.get_setup_table(M.ignore_patterns))
 
-M.search_all_en = function(all)
+function M.search_all_en(all)
   if all == 1 then
     local temp = {}
     telescope.setup(M.get_setup_table(temp))
@@ -347,32 +347,32 @@ M.search_all_en = function(all)
   end
 end
 
-M.find_files = function()
+function M.find_files()
   M.search_all_en(0)
   vim.cmd 'Telescope find_files'
 end
 
-M.find_files_all = function()
+function M.find_files_all()
   M.search_all_en(1)
   vim.cmd 'Telescope find_files find_command=fd,--no-ignore,--hidden'
 end
 
-M.live_grep = function()
+function M.live_grep()
   M.search_all_en(0)
   vim.cmd 'Telescope live_grep'
 end
 
-M.live_grep_all = function()
+function M.live_grep_all()
   M.search_all_en(1)
   vim.cmd 'Telescope live_grep vimgrep_arguments=rg,--color=never,--no-heading,--with-filename,--line-number,--column,--smart-case,--fixed-strings,-g,*'
 end
 
-M.live_grep_def = function()
+function M.live_grep_def()
   M.search_all_en(0)
   vim.cmd [[ call feedkeys("\<esc>:Telescope live_grep cwd=\<c-r>=expand('%:p:h')\<cr>") ]]
 end
 
--- M.live_grep_rg = function()
+-- function M.live_grep_rg()
 --   local fname = vim.api.nvim_buf_get_name(0)
 --   local dirs = B.get_file_dirs(fname)
 --   B.ui_sel(dirs, 'telescope_rg_path', function(path)
@@ -392,95 +392,95 @@ end
 --   end)
 -- end
 
-M.search_history = function()
+function M.search_history()
   vim.cmd 'Telescope search_history'
 end
 
-M.command_history = function()
+function M.command_history()
   vim.cmd 'Telescope command_history'
 end
 
-M.commands = function()
+function M.commands()
   vim.cmd 'Telescope commands'
 end
 
-M.buffers_cur = function()
+function M.buffers_cur()
   vim.cmd 'Telescope buffers cwd_only=true sort_mru=true ignore_current_buffer=true'
 end
 
-M.jumplist = function()
+function M.jumplist()
   vim.cmd 'Telescope jumplist show_line=false'
 end
 
-M.diagnostics = function()
+function M.diagnostics()
   vim.cmd 'Telescope diagnostics'
 end
 
-M.filetypes = function()
+function M.filetypes()
   vim.cmd 'Telescope filetypes'
 end
 
-M.quickfix = function()
+function M.quickfix()
   vim.cmd 'Telescope quickfix'
 end
 
-M.quickfixhistory = function()
+function M.quickfixhistory()
   vim.cmd 'Telescope quickfixhistory'
 end
 
-M.builtin = function()
+function M.builtin()
   vim.cmd 'Telescope builtin'
 end
 
-M.colorscheme = function()
+function M.colorscheme()
   vim.cmd 'Telescope colorscheme'
 end
 
-M.git_branches = function()
+function M.git_branches()
   vim.cmd 'Telescope git_branches'
 end
 
-M.git_commits = function()
+function M.git_commits()
   vim.cmd 'Telescope git_commits'
 end
 
-M.git_bcommits = function()
+function M.git_bcommits()
   vim.cmd 'Telescope git_bcommits'
 end
 
-M.lsp_document_symbols = function()
+function M.lsp_document_symbols()
   vim.cmd 'Telescope lsp_document_symbols'
 end
 
-M.lsp_references = function()
+function M.lsp_references()
   vim.cmd 'Telescope lsp_references'
 end
 
-M.help_tags = function()
+function M.help_tags()
   vim.cmd 'Telescope help_tags'
 end
 
-M.vim_options = function()
+function M.vim_options()
   vim.cmd 'Telescope vim_options'
 end
 
-M.planets = function()
+function M.planets()
   vim.cmd 'Telescope planets'
 end
 
-M.grep_string = function()
+function M.grep_string()
   vim.cmd 'Telescope grep_string shorten_path=true word_match=-w only_sort_text=true search= grep_open_files=true'
 end
 
-M.keymaps = function()
+function M.keymaps()
   vim.cmd 'Telescope keymaps'
 end
 
-M.git_status = function()
+function M.git_status()
   vim.cmd 'Telescope git_status'
 end
 
-M.buffers = function()
+function M.buffers()
   vim.cmd 'Telescope buffers'
 end
 
@@ -488,7 +488,7 @@ end
 -- open config
 --------------------
 
-M.open = function()
+function M.open()
   vim.cmd('edit ' .. M.source)
 end
 

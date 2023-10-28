@@ -13,8 +13,8 @@ end
 
 vim.opt.runtimepath:append(M.treesitter_parser_path.filename)
 
--- M.disable = function(lang, buf)
-M.disable = function(_, buf)
+-- function M.disable(lang, buf)
+function M.disable(_, buf)
   local max_filesize = 1000 * 1024
   local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
   if ok and stats and stats.size > max_filesize then

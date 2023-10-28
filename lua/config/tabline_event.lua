@@ -85,7 +85,7 @@ end
 
 ---------------------
 
-M.is_buf_to_show = function(buf)
+function M.is_buf_to_show(buf)
   local file = B.rep_slash_lower(vim.api.nvim_buf_get_name(buf))
   if #file == 0 then
     return false

@@ -5,7 +5,7 @@ M.loaded = B.get_loaded(M.source)
 -- package.loaded[M.loaded] = nil
 --------------------------------------------
 
-M.b_prev_buf = function()
+function M.b_prev_buf()
   local C = require 'config.tabline'
   if C.proj_bufs[C.cur_proj] then
     local index
@@ -22,7 +22,7 @@ M.b_prev_buf = function()
   end
 end
 
-M.b_next_buf = function()
+function M.b_next_buf()
   local C = require 'config.tabline'
   if C.proj_bufs[C.cur_proj] then
     local index
@@ -39,7 +39,7 @@ M.b_next_buf = function()
   end
 end
 
-M.bd_prev_buf = function()
+function M.bd_prev_buf()
   local C = require 'config.tabline'
   if #C.proj_bufs[C.cur_proj] > 0 then
     local index = B.index_of(C.proj_bufs[C.cur_proj], C.cur_buf)
@@ -52,7 +52,7 @@ M.bd_prev_buf = function()
   end
 end
 
-M.bd_next_buf = function()
+function M.bd_next_buf()
   local C = require 'config.tabline'
   if #C.proj_bufs[C.cur_proj] > 0 then
     local index = B.index_of(C.proj_bufs[C.cur_proj], C.cur_buf)

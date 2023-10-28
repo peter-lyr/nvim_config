@@ -5,15 +5,15 @@ M.loaded = B.get_loaded(M.source)
 -- package.loaded[M.loaded] = nil
 --------------------------------------------
 
-M.stop_all = function()
+function M.stop_all()
   vim.lsp.stop_client(vim.lsp.get_active_clients(), true)
 end
 
-M.rename = function()
+function M.rename()
   vim.fn.feedkeys(':IncRename ' .. vim.fn.expand '<cword>')
 end
 
-M.format = function()
+function M.format()
   vim.lsp.buf.format {
     async = true,
     filter = function(client)
@@ -22,13 +22,13 @@ M.format = function()
   }
 end
 
-M.format_paragraph = function()
+function M.format_paragraph()
   local save_cursor = vim.fn.getpos '.'
   vim.cmd 'norm =ap'
   pcall(vim.fn.setpos, '.', save_cursor)
 end
 
-M.format_input = function()
+function M.format_input()
   vim.cmd [[
     call feedkeys("\<esc>:silent !clang-format -i \<c-r>=nvim_buf_get_name(0)\<cr> --style=\"{BasedOnStyle: llvm, IndentWidth: 4, ColumnLimit: 200, SortIncludes: true}\"")
   ]]

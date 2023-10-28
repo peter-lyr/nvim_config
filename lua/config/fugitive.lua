@@ -5,7 +5,7 @@ M.loaded = B.get_loaded(M.source)
 -- package.loaded[M.loaded] = nil
 --------------------------------------------
 
-M.toggle = function()
+function M.toggle()
   if B.is_buf_ft(vim.fn.bufnr(), 'fugitive') then
     vim.cmd 'close'
   else
