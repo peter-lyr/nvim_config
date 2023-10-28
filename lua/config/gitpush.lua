@@ -6,6 +6,7 @@ M.loaded = B.get_loaded(M.source)
 --------------------------------------------
 
 B.load_require 'rcarriga/nvim-notify'
+B.load_require 'skywind3000/asyncrun.vim'
 
 function M.addcommitpush(info)
   pcall(vim.call, 'ProjectRootCD')
