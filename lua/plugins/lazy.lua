@@ -31,6 +31,8 @@ local lazy = {
   'paopaol/telescope-git-diffs.nvim',
   --------
   'skywind3000/asyncrun.vim',
+  --------
+  'nvim-telescope/telescope-ui-select.nvim',
 }
 
 

@@ -180,6 +180,10 @@ function B.source_lua()
   B.call_sub('config.test', 'useful', 'source_lua')
 end
 
+function B.map_buf_c_q_close(buf, cmd)
+  B.call_sub('config.test', 'useful', 'map_buf_c_q_close', buf, cmd)
+end
+
 -----------------------------
 
 function B.index_of(array, value)

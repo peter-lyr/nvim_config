@@ -9,6 +9,9 @@ function M.map_buf_close(lhs, buf, cmd)
   if not cmd then
     cmd = 'close!'
   end
+  if not buf then
+    buf = vim.fn.bufnr()
+  end
   local desc = string.format('close buf %d', buf)
   vim.keymap.set({ 'n', 'v', }, lhs, function()
     vim.cmd(cmd)

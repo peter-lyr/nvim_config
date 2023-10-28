@@ -1,0 +1,55 @@
+local M = {}
+local B = require 'my_base'
+B.load_require_common()
+M.source = B.get_source(debug.getinfo(1)['source'])
+M.loaded = B.get_loaded(M.source)
+M.config = B.rep_map_to_config(M.loaded)
+-- package.loaded[M.loaded] = nil
+--------------------------------------------
+
+B.map_set_lua(M.config)
+
+-------
+
+B.map('<a-s-h>', 'height_less', {})
+B.map('<a-s-l>', 'height_more', {})
+B.map('<a-s-j>', 'width_less', {})
+B.map('<a-s-k>', 'width_more', {})
+
+B.map('<leader>w<c-i>', 'copy_tab', {})
+B.map('<leader>w<c-h>', 'copy_left', {})
+B.map('<leader>w<c-j>', 'copy_down', {})
+B.map('<leader>w<c-k>', 'copy_up', {})
+B.map('<leader>w<c-l>', 'copy_right', {})
+B.map('<leader>w<a-i>', 'new_tab', {})
+B.map('<leader>w<a-h>', 'new_left', {})
+B.map('<leader>w<a-j>', 'new_down', {})
+B.map('<leader>w<a-k>', 'new_up', {})
+B.map('<leader>w<a-l>', 'new_right', {})
+
+B.map('<leader>wh', 'change_around', { 'h', })
+B.map('<leader>wj', 'change_around', { 'j', })
+B.map('<leader>wk', 'change_around', { 'k', })
+B.map('<leader>wl', 'change_around', { 'l', })
+B.map('<leader>wL', 'change_around_last', {})
+B.map('<leader>w=', 'stack_cur', {})
+B.map('<leader>w+', 'stack_open_txt', {})
+B.map('<leader>w-', 'stack_open_sel', {})
+
+B.map('<leader>xh', 'close_win_left', {})
+B.map('<leader>xj', 'close_win_down', {})
+B.map('<leader>xk', 'close_win_up', {})
+B.map('<leader>xl', 'close_win_right', {})
+B.map('<leader>xt', 'close_cur_tab', {})
+B.map('<leader>xw', 'bwipeout_cur', {})
+B.map('<leader>xd', 'bdelete_cur', {})
+B.map('<leader>xc', 'close_cur', {})
+B.map('<leader>xp', 'bdelete_cur_proj', {})
+B.map('<leader>xP', 'bwipeout_cur_proj', {})
+B.map('<leader>xa', 'quit_all', {})
+B.map('<leader>xA', 'restart_nvim_qt', {})
+B.map('<leader>xS', 'start_new_nvim_qt', {})
+B.map('<leader>x<del>', 'bwipeout_deleted', {})
+B.map('<leader>x<cr>', 'reopen_deleted', {})
+
+return M
