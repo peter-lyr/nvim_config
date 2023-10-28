@@ -70,11 +70,11 @@ M.undo_stage_hunk = function()
 end
 
 M.reset_hunk = function()
-  require 'gitsigns'.reset_hunk { vim.fn.line '.', vim.fn.line 'v', }
+  require 'gitsigns'.reset_hunk()
 end
 
 M.reset_hunk_v = function()
-  require 'gitsigns'.reset_hunk()
+  require 'gitsigns'.reset_hunk { vim.fn.line '.', vim.fn.line 'v', }
 end
 
 M.reset_buffer = function()
