@@ -69,15 +69,19 @@ M.au = B.aucmd(M.source, 'BufEnter', 'BufEnter', {
     if ext == 'lua' and not M.loaded_lua then
       require(M.config).lua()
       M.loaded_lua = 1
+      vim.cmd 'e!'
     elseif ext == 'py' and not M.loaded_python then
       require(M.config).python()
       M.loaded_python = 1
+      vim.cmd 'e!'
     elseif ext == 'c' and not M.loaded_c then
       require(M.config).c()
       M.loaded_c = 1
+      vim.cmd 'e!'
     elseif ext == 'md' and not M.loaded_markdown then
       require(M.config).markdown()
       M.loaded_markdown = 1
+      vim.cmd 'e!'
     end
     if M.loaded_lua and M.loaded_c and M.loaded_python and M.loaded_markdown then
       pcall(vim.api.nvim_del_autocmd, M.au)

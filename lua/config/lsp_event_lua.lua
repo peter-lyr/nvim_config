@@ -5,6 +5,8 @@ M.loaded = B.get_loaded(M.source)
 -- package.loaded[M.loaded] = nil
 --------------------------------------------
 
+require 'neodev'.setup()
+
 local lspconfig = require 'lspconfig'
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
