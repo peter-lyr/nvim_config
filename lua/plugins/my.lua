@@ -74,6 +74,7 @@ return {
     ft = {
       'markdown',
     },
+    event = { 'FocusLost', },
     init = function()
       if not S.load_whichkeys_txt_enable then
         require 'my_simple'.add_whichkey('<leader>m', 'drag', 'My_Drag')
