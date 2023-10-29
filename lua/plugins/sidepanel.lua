@@ -11,11 +11,11 @@ return {
     },
     init = function()
       if not S.load_whichkeys_txt_enable then
-        require 'my_simple'.add_whichkey('<leader>a', 'stevearc/aerial.nvim', 'Aerial')
+        require 'my_simple'.add_whichkey('<leader>a', 'stevearc/aerial.nvim', 'Sidepanel_Aerial')
       end
     end,
     config = function()
-      require 'map.aerial'
+      require 'map.sidepanel_aerial'
     end,
   },
   {
@@ -24,11 +24,11 @@ return {
     lazy = true,
     init = function()
       if not S.load_whichkeys_txt_enable then
-        require 'my_simple'.add_whichkey('<leader>a', 'nvim-tree/nvim-tree.lua', 'Nvimtree')
+        require 'my_simple'.add_whichkey('<leader>a', 'nvim-tree/nvim-tree.lua', 'Sidepanel_Nvimtree')
       end
     end,
     config = function()
-      require 'map.nvimtree'
+      require 'map.sidepanel_nvimtree'
     end,
   },
   {
@@ -38,11 +38,11 @@ return {
     lazy = true,
     init = function()
       if not S.load_whichkeys_txt_enable then
-        require 'my_simple'.add_whichkey('<leader>a', 'echasnovski/mini.map', 'Minimap')
+        require 'my_simple'.add_whichkey('<leader>a', 'echasnovski/mini.map', 'Sidepanel_Minimap')
       end
     end,
     config = function()
-      require 'map.minimap'
+      require 'map.sidepanel_minimap'
     end,
   },
   {
@@ -51,11 +51,11 @@ return {
     event = { 'QuickFixCmdPre', 'BufReadPost', 'BufNewFile', },
     init = function()
       if not S.load_whichkeys_txt_enable then
-        require 'my_simple'.add_whichkey('<leader>d', 'kevinhwang91/nvim-bqf', 'QuickFix')
+        require 'my_simple'.add_whichkey('<leader>d', 'kevinhwang91/nvim-bqf', 'Sidepanel_QuickFix')
       end
     end,
     config = function()
-      require 'map.quickfix'
+      require 'map.sidepanel_quickfix'
     end,
   },
 }

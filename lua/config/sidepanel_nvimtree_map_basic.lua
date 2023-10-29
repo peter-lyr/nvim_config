@@ -18,7 +18,7 @@ function M.c_tab()
 end
 
 function M.close()
-  require 'config.nvimtree'.close()
+  require 'config.sidepanel_nvimtree'.close()
 end
 
 function M.basic_map(bufnr)
