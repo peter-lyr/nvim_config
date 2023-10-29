@@ -15,6 +15,7 @@ return {
   init = function()
     if not S.enable then
       require 'my_simple'.add_whichkey('<leader>w', plugin, 'Window')
+      require 'my_simple'.add_whichkey('<leader>x', plugin, 'Window kill')
     end
   end,
   config = function()

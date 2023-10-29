@@ -35,4 +35,18 @@ return {
       require 'event.InsertEnter'
     end,
   },
+  {
+    name = 'textyankpost',
+    event = { 'TextYankPost', },
+    dir = '',
+    lazy = true,
+    config = function()
+      -- Highlight on yank
+      require 'my_base'.aucmd('textyankpost', 'TextYankPost', 'TextYankPost', {
+        callback = function()
+          vim.highlight.on_yank()
+        end,
+      })
+    end,
+  },
 }

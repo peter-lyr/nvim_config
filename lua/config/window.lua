@@ -171,7 +171,7 @@ end
 function M.bdelete_cur()
   vim.cmd [[
     try
-      bdelete!
+      Bdelete!
       e!
     catch
     endtry
@@ -181,7 +181,7 @@ end
 function M.bwipeout_cur()
   vim.cmd [[
     try
-      bw!
+      Bwipeout!
     catch
     endtry
   ]]
@@ -196,28 +196,24 @@ function M.close_cur_tab()
   ]]
 end
 
-local function rep(content)
-  content = vim.fn.tolower(content)
-  content = string.gsub(content, '\\', '/')
-  return content
-end
-
 function M.bwipeout_cur_proj()
-  local curroot = rep(vim.fn['ProjectRootGet'](vim.api.nvim_buf_get_name(0)))
+  local curroot = B.rep_baskslash_lower(vim.fn['ProjectRootGet'](vim.api.nvim_buf_get_name(0)))
   for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do
-    if curroot == rep(vim.fn['ProjectRootGet'](vim.api.nvim_buf_get_name(bufnr))) then
-      pcall(vim.cmd, 'bw! ' .. tostring(bufnr))
+    if curroot == B.rep_baskslash_lower(vim.fn['ProjectRootGet'](vim.api.nvim_buf_get_name(bufnr))) then
+      pcall(vim.cmd, 'Bwipeout! ' .. tostring(bufnr))
     end
   end
+  vim.cmd 'e!'
 end
 
 function M.bdelete_cur_proj()
-  local curroot = rep(vim.fn['ProjectRootGet'](vim.api.nvim_buf_get_name(0)))
+  local curroot = B.rep_baskslash_lower(vim.fn['ProjectRootGet'](vim.api.nvim_buf_get_name(0)))
   for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do
-    if curroot == rep(vim.fn['ProjectRootGet'](vim.api.nvim_buf_get_name(bufnr))) then
-      pcall(vim.cmd, 'bdelete! ' .. tostring(bufnr))
+    if curroot == B.rep_baskslash_lower(vim.fn['ProjectRootGet'](vim.api.nvim_buf_get_name(bufnr))) then
+      pcall(vim.cmd, 'Bdelete! ' .. tostring(bufnr))
     end
   end
+  vim.cmd 'e!'
 end
 
 function M.get_deleted_bufnrs()
@@ -235,8 +231,8 @@ end
 
 function M.bwipeout_deleted()
   for _, bufnr in ipairs(M.get_deleted_bufnrs()) do
-    pcall(vim.cmd, 'bwipeout! ' .. tostring(bufnr))
-    print('bwipeout! -> ' .. vim.fn.bufname(bufnr))
+    pcall(vim.cmd, 'Bwipeout! ' .. tostring(bufnr))
+    print('Bwipeout! -> ' .. vim.fn.bufname(bufnr))
   end
 end
 
@@ -280,7 +276,7 @@ function M.stack_open_sel()
   local temp = M.stack_full_fname_txt_p:readlines()
   local fnames = {}
   for _, fname in ipairs(temp) do
-    fname = vim.fn.trim(rep(fname))
+    fname = vim.fn.trim(B.rep_baskslash_lower(fname))
     if #fname > 0 and vim.tbl_contains(fnames, fname) == false then
       fnames[#fnames + 1] = fname
     end
@@ -294,22 +290,6 @@ function M.stack_open_sel()
       vim.cmd('e ' .. choice)
     end)
   end
-end
-
-function M.stack_open_txt()
-  vim.cmd 'wincmd s'
-  vim.cmd('e ' .. M.stack_full_fname_txt_p.filename)
-  B.map_buf_c_q_close()
-end
-
-function M.start_new_nvim_qt()
-  local start_nvim_qt_exe = vim.fn.expand '$VIMRUNTIME' .. '\\pack\\nvim_config\\start-nvim-qt.exe'
-  vim.cmd(string.format([[silent !start /b /min cmd /c "%s"]], start_nvim_qt_exe))
-end
-
-function M.restart_nvim_qt()
-  M.start_new_nvim_qt()
-  vim.cmd 'qa!'
 end
 
 return M

@@ -9,13 +9,6 @@ M.config = B.rep_map_to_config(M.loaded)
 
 B.map_set_lua(M.config)
 
--------
-
-B.map('<a-s-h>', 'height_less', {})
-B.map('<a-s-l>', 'height_more', {})
-B.map('<a-s-j>', 'width_less', {})
-B.map('<a-s-k>', 'width_more', {})
-
 B.map('<leader>w<c-i>', 'copy_tab', {})
 B.map('<leader>w<c-h>', 'copy_left', {})
 B.map('<leader>w<c-j>', 'copy_down', {})
@@ -47,9 +40,9 @@ B.map('<leader>xc', 'close_cur', {})
 B.map('<leader>xp', 'bdelete_cur_proj', {})
 B.map('<leader>xP', 'bwipeout_cur_proj', {})
 B.map('<leader>xa', 'quit_all', {})
-B.map('<leader>xA', 'restart_nvim_qt', {})
-B.map('<leader>xS', 'start_new_nvim_qt', {})
 B.map('<leader>x<del>', 'bwipeout_deleted', {})
 B.map('<leader>x<cr>', 'reopen_deleted', {})
+
+-------
 
 return M
