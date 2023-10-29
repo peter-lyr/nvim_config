@@ -5,7 +5,17 @@ M.loaded = B.get_loaded(M.source)
 -- package.loaded[M.loaded] = nil
 --------------------------------------------
 
+function M.is_cuf_buf_readable()
+  if vim.fn.filewritable(vim.api.nvim_buf_get_name(0)) == 1 then
+    return 1
+  end
+  return nil
+end
+
 function M.b_prev_buf()
+  if not M.is_cuf_buf_readable() then
+    return
+  end
   local C = require 'config.tabline'
   if C.proj_bufs[C.cur_proj] then
     local index
@@ -23,6 +33,9 @@ function M.b_prev_buf()
 end
 
 function M.b_next_buf()
+  if not M.is_cuf_buf_readable() then
+    return
+  end
   local C = require 'config.tabline'
   if C.proj_bufs[C.cur_proj] then
     local index
@@ -40,6 +53,9 @@ function M.b_next_buf()
 end
 
 function M.bd_prev_buf()
+  if not M.is_cuf_buf_readable() then
+    return
+  end
   local C = require 'config.tabline'
   if #C.proj_bufs[C.cur_proj] > 0 then
     local index = B.index_of(C.proj_bufs[C.cur_proj], C.cur_buf)
@@ -53,6 +69,9 @@ function M.bd_prev_buf()
 end
 
 function M.bd_next_buf()
+  if not M.is_cuf_buf_readable() then
+    return
+  end
   local C = require 'config.tabline'
   if #C.proj_bufs[C.cur_proj] > 0 then
     local index = B.index_of(C.proj_bufs[C.cur_proj], C.cur_buf)
