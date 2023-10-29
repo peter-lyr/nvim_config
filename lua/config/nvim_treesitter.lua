@@ -80,7 +80,7 @@ require 'treesitter-context'.setup {
 require 'match-up'.setup {}
 
 -- solve diffview close err
-if package.loaded['plugins.diffview'] then
+if package.loaded['plugins.git_diffview'] then
   vim.api.nvim_create_autocmd({ 'TabClosed', 'TabEnter', }, {
     callback = function()
       B.set_timeout(50, function()

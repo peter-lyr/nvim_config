@@ -14,11 +14,11 @@ return {
     },
     init = function()
       if not S.load_whichkeys_txt_enable then
-        require 'my_simple'.add_whichkey('<leader>g', 'lewis6991/gitsigns.nvim', 'Gitsigns')
+        require 'my_simple'.add_whichkey('<leader>g', 'lewis6991/gitsigns.nvim', 'Git_Gitsigns')
       end
     end,
     config = function()
-      require 'map.gitsigns'
+      require 'map.git_gitsigns'
     end,
   },
   {
@@ -27,11 +27,11 @@ return {
     lazy = true,
     init = function()
       if not S.load_whichkeys_txt_enable then
-        require 'my_simple'.add_whichkey('<leader>g', 'gitpush', 'GitPush')
+        require 'my_simple'.add_whichkey('<leader>g', 'gitpush', 'Git_GitPush')
       end
     end,
     config = function()
-      require 'map.gitpush'
+      require 'map.git_gitpush'
     end,
   },
   {
@@ -42,11 +42,11 @@ return {
     },
     init = function()
       if not S.load_whichkeys_txt_enable then
-        require 'my_simple'.add_whichkey('<leader>a', 'tpope/vim-fugitive', 'Fugitive')
+        require 'my_simple'.add_whichkey('<leader>a', 'tpope/vim-fugitive', 'Git_Fugitive')
       end
     end,
     config = function()
-      require 'map.fugitive'
+      require 'map.git_fugitive'
     end,
   },
   {
@@ -54,11 +54,11 @@ return {
     lazy = true,
     init = function()
       if not S.load_whichkeys_txt_enable then
-        require 'my_simple'.add_whichkey('<leader>g', 'sindrets/diffview.nvim', 'Diffview')
+        require 'my_simple'.add_whichkey('<leader>g', 'sindrets/diffview.nvim', 'Git_Diffview')
       end
     end,
     config = function()
-      require 'map.diffview'
+      require 'map.git_diffview'
     end,
   },
 }
