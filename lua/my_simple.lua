@@ -8,7 +8,6 @@ S.load_require = Startup.load_require
 S.prepare_whichkeys = Startup.prepare_whichkeys
 
 function S.add_whichkey(key, plugin, map, desc)
-  print(key, plugin, map, desc, '=----------')
   desc = desc and map .. '_' .. desc or map
   key = vim.fn.tolower(key)
   if vim.tbl_contains(vim.tbl_keys(S.mappings), key) == false then

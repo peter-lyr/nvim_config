@@ -34,6 +34,7 @@ local lazy = {
   --------
   'nvim-telescope/telescope-ui-select.nvim',
   'ahmedkhalf/project.nvim',
+  'peter-lyr/sha2',
 }
 
 

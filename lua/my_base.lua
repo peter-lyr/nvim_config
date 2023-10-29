@@ -310,7 +310,7 @@ function B.notify_error(message)
 end
 
 function B.system_cd(file)
-  B.call_sub(B.loaded, 'asyncrun', 'system_cd', file)
+  return B.call_sub(B.loaded, 'asyncrun', 'system_cd', file)
 end
 
 function B.system_run(way, str_format, ...)
