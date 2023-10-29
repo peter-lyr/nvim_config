@@ -27,8 +27,7 @@ M.refresh_projectshistory = function()
   local lines = historyfile:readlines()
   local newlines = {}
   for _, v in ipairs(lines) do
-    local line = vim.fn.tolower(v)
-    line = string.gsub(line, '\\', '/')
+    local line = string.gsub(v, '\\', '/')
     if vim.tbl_contains(newlines, line) == false and require 'plenary.path':new(line):exists() then
       table.insert(newlines, line)
     end
