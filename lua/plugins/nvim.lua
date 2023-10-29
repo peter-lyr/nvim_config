@@ -27,11 +27,26 @@ return {
     init = function()
       if not S.load_whichkeys_txt_enable then
         require 'my_simple'.add_whichkey('<leader>f', 'neovim/nvim-lspconfig', 'Lsp')
-        require 'my_simple'.add_whichkey('<leader>fv', plugin, 'Lsp', 'more')
+        require 'my_simple'.add_whichkey('<leader>fv', 'neovim/nvim-lspconfig', 'Lsp', 'more')
       end
     end,
     config = function()
       require 'map.lsp'
+    end,
+  },
+  {
+    'nvim-treesitter/nvim-treesitter',
+    lazy = true,
+    version = '*', -- last release
+    build = ':TSUpdate',
+    ft = {
+      'c', 'cpp',
+      'python',
+      'lua',
+      'markdown',
+    },
+    config = function()
+      require 'map.treesitter'
     end,
   },
 }
