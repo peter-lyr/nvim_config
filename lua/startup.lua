@@ -5,7 +5,7 @@ S.whichkeys_txt = vim.fn.stdpath 'data' .. '\\whichkeys.txt'
 S.enable = 1
 
 function S.load_require(plugin, lua)
-  plugin = string.match(plugin, '/*([^/]+)$')
+  plugin = string.match(plugin, '/+([^/]+)$')
   if plugin then
     vim.cmd('Lazy load ' .. plugin)
   end
