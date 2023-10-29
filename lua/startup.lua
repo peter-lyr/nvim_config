@@ -11,7 +11,6 @@ function S.load_require(plugin, lua)
   if not plugin then
     print('plugin nil, lua:', lua)
     require 'my_base'.notify_error('plugin nil, lua: ' .. lua)
-    print('plugin nil, lua:', lua)
     return
   end
   plugin = string.match(plugin, '/+([^/]+)$')

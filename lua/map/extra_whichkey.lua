@@ -7,6 +7,15 @@ M.config = B.rep_map_to_config(M.loaded)
 -- package.loaded[M.loaded] = nil
 --------------------------------------------
 
-require(M.config)
+require 'which-key'.setup {
+  window = {
+    border = 'single',
+    winblend = 12,
+  },
+  layout = {
+    height = { min = 4, max = 80, },
+    width = { min = 20, max = 200, },
+  },
+}
 
 return M

@@ -15,6 +15,4 @@ B.map_v('<leader>rw', 'open_visual', {})
 B.map('<leader>ro', 'open', {})
 B.map('<leader>rc', 'open_file_search', {})
 
-require 'spectre'.setup()
-
 return M

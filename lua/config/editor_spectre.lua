@@ -21,4 +21,6 @@ function M.open_file_search()
   require 'spectre'.open_file_search { select_word = true, }
 end
 
+require 'spectre'.setup()
+
 return M
