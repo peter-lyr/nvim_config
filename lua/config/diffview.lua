@@ -150,7 +150,7 @@ function M.open()
 end
 
 function M.close()
-  vim.cmd 'DiffviewClose'
+  pcall(vim.cmd, 'tabclose')
 end
 
 function M.refresh()
