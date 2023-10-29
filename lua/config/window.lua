@@ -393,11 +393,11 @@ M.gui_window_frameless_txt = require 'startup'.gui_window_frameless_txt
 function M.fontsize_frameless_toggle()
   local f = io.open(M.gui_window_frameless_txt)
   if f then
-    if vim.fn.trim(loadstring('return ' .. f:read '*a')()) == '1' then
-      f:write '0'
+    if vim.fn.trim(f:read '*a') == '1' then
+      vim.fn.writefile({ '0', }, M.gui_window_frameless_txt)
       B.notify_info 'nvim-qt will startup with frame'
     else
-      f:write '1'
+      vim.fn.writefile({ '1', }, M.gui_window_frameless_txt)
       B.notify_info 'nvim-qt will startup framelessly'
     end
     f:close()
