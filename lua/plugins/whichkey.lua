@@ -8,7 +8,7 @@ return {
   lazy = true,
   init = function()
     vim.o.timeoutlen = 300
-    if not S.enable then
+    if not S.load_whichkeys_txt_enable then
       require 'my_simple'.add_whichkey('<leader>', plugin, map)
     end
   end,

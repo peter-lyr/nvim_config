@@ -17,7 +17,7 @@ function S.add_whichkey(key, plugin, map, desc)
   end
 end
 
-if not Startup.enable then
+if not Startup.load_whichkeys_txt_enable then
   vim.api.nvim_create_autocmd('VimEnter', {
     callback = function()
       S.prepare_whichkeys(S.mappings)

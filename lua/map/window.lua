@@ -45,4 +45,10 @@ B.map('<leader>x<cr>', 'reopen_deleted', {})
 
 -------
 
+B.map('<c-0><c-0>', 'fontsize_normal', {})
+B.map('<c-0>_', 'fontsize_min', {})
+B.map('<c-0><c-->', 'fontsize_frameless', {})
+B.map('<c-0><c-=>', 'fontsize_fullscreen', {})
+B.map('<c-0><c-bs>', 'fontsize_frameless_toggle', {})
+
 return M

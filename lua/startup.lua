@@ -1,8 +1,11 @@
 local S = {}
 
 S.whichkeys_txt = vim.fn.stdpath 'data' .. '\\whichkeys.txt'
+S.gui_window_frameless_dir = vim.fn.stdpath 'data' .. '\\gui-window-frameless'
+S.gui_window_frameless_txt = S.gui_window_frameless_dir .. '\\gui-window-frameless.txt'
 
-S.enable = 1
+S.load_whichkeys_txt_enable = 1
+S.startup_with_frame_enable = 1
 
 function S.load_require(plugin, lua)
   if not plugin then
@@ -44,7 +47,7 @@ function S.prepare_whichkeys(mappings)
   end
 end
 
-if S.enable then
+if S.load_whichkeys_txt_enable then
   local f = io.open(S.whichkeys_txt)
   if f then
     S.mappings = loadstring('return ' .. f:read '*a')()
@@ -55,7 +58,27 @@ if S.enable then
       end,
     })
   else
-    S.enable = nil
+    S.load_whichkeys_txt_enable = nil
+  end
+end
+
+if S.startup_with_frame_enable then
+  if vim.fn.isdirectory(S.gui_window_frameless_dir) == 0 then
+    vim.fn.mkdir(S.gui_window_frameless_dir)
+  end
+  local f = io.open(S.gui_window_frameless_txt)
+  if f then
+    if vim.fn.trim(loadstring('return ' .. f:read '*a')()) == '1' then
+      vim.g.gui_window_frameless_timer = vim.fn.timer_start(20, function()
+        if vim.fn.exists 'g:GuiLoaded' then
+          vim.fn.timer_stop(vim.g.gui_window_frameless_timer)
+          if vim.g.GuiLoaded == 1 then
+            vim.fn['GuiWindowFrameless'](1)
+          end
+        end
+      end, { ['repeat'] = 20, })
+    end
+    f:close()
   end
 end
 

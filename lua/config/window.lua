@@ -292,4 +292,118 @@ function M.stack_open_sel()
   end
 end
 
+------------------
+
+function M.getfontnamesize()
+  local fontname
+  local fontsize
+  for k, v in string.gmatch(vim.g.GuiFont, '(.*:h)(%d+)') do
+    fontname, fontsize = k, v
+  end
+  return fontname, fontsize
+end
+
+M.last_font_size_dir_p = require 'plenary.path':new(vim.fn.stdpath 'data'):joinpath 'last-font-size'
+M.last_font_size_txt_p = M.last_font_size_dir_p:joinpath 'last-font-size.txt'
+
+if not M.last_font_size_dir_p:exists() then
+  vim.fn.mkdir(M.last_font_size_dir_p.filename)
+end
+
+if not M.last_font_size_txt_p:exists() then
+  M.last_font_size_txt_p:write('9', 'w')
+end
+
+M.fontsizenormal = 9
+local _, temp = M.getfontnamesize()
+M.lastfontsize = temp
+if (tonumber(temp) == M.fontsizenormal) == true then
+  M.lastfontsize = M.last_font_size_txt_p:read()
+end
+
+B.aucmd(M.source, 'VimLeavePre', { 'VimLeavePre', }, {
+  callback = function()
+    if M.lastfontsize ~= M.fontsizenormal then
+      M.last_font_size_txt_p:write(M.lastfontsize, 'w')
+    end
+  end,
+})
+
+function M.fontsize_up()
+  local fontname, fontsize = M.getfontnamesize()
+  fontsize = fontsize + 1
+  M.lastfontsize = fontsize
+  if fontsize <= 72 then
+    local cmd = 'GuiFont! ' .. fontname .. fontsize
+    vim.cmd(cmd)
+    B.notify_info(cmd)
+  end
+end
+
+function M.fontsize_down()
+  local fontname, fontsize = M.getfontnamesize()
+  fontsize = fontsize - 1
+  M.lastfontsize = fontsize
+  if fontsize >= 1 then
+    local cmd = 'GuiFont! ' .. fontname .. fontsize
+    vim.cmd(cmd)
+    B.notify_info(cmd)
+  end
+end
+
+function M.fontsize_normal()
+  local fontname, fontsize = M.getfontnamesize()
+  if (tonumber(fontsize) == M.fontsizenormal) == true then
+    local cmd = 'GuiFont! ' .. fontname .. M.lastfontsize
+    vim.cmd(cmd)
+    B.notify_info(cmd)
+  else
+    local cmd = 'GuiFont! ' .. fontname .. M.fontsizenormal
+    vim.cmd(cmd)
+    B.notify_info(cmd)
+  end
+end
+
+function M.fontsize_min()
+  local fontname, _ = M.getfontnamesize()
+  M.lastfontsize = 1
+  local cmd = 'GuiFont! ' .. fontname .. 1
+  vim.cmd(cmd)
+  B.notify_info(cmd)
+end
+
+function M.fontsize_frameless()
+  if vim.g.GuiWindowFrameless == 0 then
+    vim.fn['GuiWindowFrameless'](1)
+  else
+    vim.fn['GuiWindowFrameless'](0)
+  end
+end
+
+function M.fontsize_fullscreen()
+  if vim.g.GuiWindowFullScreen == 0 then
+    vim.fn['GuiWindowFullScreen'](1)
+  else
+    vim.fn['GuiWindowFullScreen'](0)
+  end
+end
+
+M.gui_window_frameless_txt = require 'startup'.gui_window_frameless_txt
+
+function M.fontsize_frameless_toggle()
+  local f = io.open(M.gui_window_frameless_txt)
+  if f then
+    if vim.fn.trim(loadstring('return ' .. f:read '*a')()) == '1' then
+      f:write '0'
+      B.notify_info 'nvim-qt will startup with frame'
+    else
+      f:write '1'
+      B.notify_info 'nvim-qt will startup framelessly'
+    end
+    f:close()
+  else
+    vim.fn.writefile({ '0', }, M.gui_window_frameless_txt)
+  end
+end
+
 return M

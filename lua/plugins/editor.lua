@@ -37,7 +37,7 @@ return {
     'nvim-pack/nvim-spectre',
     lazy = true,
     init = function()
-      if not S.enable then
+      if not S.load_whichkeys_txt_enable then
         require 'my_simple'.add_whichkey('<leader>r', 'nvim-pack/nvim-spectre', 'Editor_Spectre')
       end
     end,

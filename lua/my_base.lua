@@ -176,8 +176,8 @@ end
 
 -----------------------------
 
-function B.source_lua()
-  B.call_sub('config.test', 'useful', 'source_lua')
+function B.source_lua(file)
+  B.call_sub('config.test', 'useful', 'source_lua', file)
 end
 
 function B.map_buf_c_q_close(buf, cmd)
@@ -234,6 +234,42 @@ end
 function B.get_file_path(dirs, file)
   local dir_path = B.get_dir_path(dirs)
   return dir_path:joinpath(file)
+end
+
+function B.get_create_dir(dirs)
+  if type(dirs) == 'string' then
+    dirs = { dirs, }
+  end
+  local dir_1 = table.remove(dirs, 1)
+  local dir = string.gsub(dir_1, '\\', '/')
+  if vim.fn.isdirectory(dir) == 0 then
+    vim.fn.mkdir(dir)
+  end
+  for _, d in ipairs(dirs) do
+    dir = dir .. '/' .. d
+    if vim.fn.isdirectory(dir) == 0 then
+      vim.fn.mkdir(dir)
+    end
+  end
+  return dir
+end
+
+function B.get_create_std_data_dir(dirs)
+  if type(dirs) == 'string' then
+    dirs = { dirs, }
+  end
+  table.insert(dirs, 1, vim.fn.stdpath 'data')
+  return B.get_create_dir(dirs)
+end
+
+function B.get_create_file(dir, filename)
+  dir = string.gsub(dir, '\\', '/')
+  dir = vim.fn.trim(dir, '/')
+  local file = dir .. '/' .. filename
+  if vim.fn.filereadable(file) == 0 then
+    vim.fn.writefile({ '', }, file)
+  end
+  return file
 end
 
 ----------------

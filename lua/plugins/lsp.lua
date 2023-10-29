@@ -12,7 +12,7 @@ return {
     'python',
   },
   init = function()
-    if not S.enable then
+    if not S.load_whichkeys_txt_enable then
       require 'my_simple'.add_whichkey('<leader>f', plugin, 'Lsp')
       require 'my_simple'.add_whichkey('<leader>fv', plugin, 'Lsp', 'more')
     end

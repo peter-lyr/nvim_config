@@ -11,7 +11,7 @@ return {
     { '[a', '<cmd>AerialPrev<cr>', mode = { 'n', 'v', }, silent = true, desc = 'AerialPrev', },
   },
   init = function()
-    if not S.enable then
+    if not S.load_whichkeys_txt_enable then
       require 'my_simple'.add_whichkey('<leader>a', plugin, 'Aerial')
     end
   end,
