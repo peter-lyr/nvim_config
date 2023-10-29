@@ -9,7 +9,7 @@ M.config = B.rep_map_to_config(M.loaded)
 
 B.map_set_lua(M.config)
 
-B.map('d<leader>', 'toggle', {})
+B.map('<leader>d<leader>', 'toggle', {})
 
 ------------
 

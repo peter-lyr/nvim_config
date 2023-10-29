@@ -8,7 +8,7 @@ return {
   event = { 'QuickFixCmdPre', 'BufReadPost', 'BufNewFile', },
   init = function()
     if not S.load_whichkeys_txt_enable then
-      require 'my_simple'.add_whichkey('d', plugin, 'QuickFix')
+      require 'my_simple'.add_whichkey('<leader>d', plugin, 'QuickFix')
     end
   end,
   config = function()
