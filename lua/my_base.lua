@@ -177,11 +177,11 @@ end
 -----------------------------
 
 function B.source_lua(file)
-  B.call_sub('config.test', 'useful', 'source_lua', file)
+  B.call_sub('config.my_test', 'useful', 'source_lua', file)
 end
 
 function B.map_buf_c_q_close(buf, cmd)
-  B.call_sub('config.test', 'useful', 'map_buf_c_q_close', buf, cmd)
+  B.call_sub('config.my_test', 'useful', 'map_buf_c_q_close', buf, cmd)
 end
 
 -----------------------------

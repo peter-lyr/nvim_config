@@ -16,7 +16,7 @@ function M.b_prev_buf()
   if not M.is_cuf_buf_readable() then
     return
   end
-  local C = require 'config.tabline'
+  local C = require 'config.my_tabline'
   if C.proj_bufs[C.cur_proj] then
     local index
     if vim.v.count ~= 0 then
@@ -36,7 +36,7 @@ function M.b_next_buf()
   if not M.is_cuf_buf_readable() then
     return
   end
-  local C = require 'config.tabline'
+  local C = require 'config.my_tabline'
   if C.proj_bufs[C.cur_proj] then
     local index
     if vim.v.count ~= 0 then
@@ -56,7 +56,7 @@ function M.bd_prev_buf()
   if not M.is_cuf_buf_readable() then
     return
   end
-  local C = require 'config.tabline'
+  local C = require 'config.my_tabline'
   if #C.proj_bufs[C.cur_proj] > 0 then
     local index = B.index_of(C.proj_bufs[C.cur_proj], C.cur_buf)
     if index <= 1 then
@@ -72,7 +72,7 @@ function M.bd_next_buf()
   if not M.is_cuf_buf_readable() then
     return
   end
-  local C = require 'config.tabline'
+  local C = require 'config.my_tabline'
   if #C.proj_bufs[C.cur_proj] > 0 then
     local index = B.index_of(C.proj_bufs[C.cur_proj], C.cur_buf)
     if index >= #C.proj_bufs[C.cur_proj] then
@@ -93,7 +93,7 @@ function M.only_cur_buffer()
 end
 
 function M.restore_hidden_tabs()
-  local C = require 'config.tabline'
+  local C = require 'config.my_tabline'
   pcall(vim.cmd, 'tabo')
   pcall(vim.cmd, 'wincmd o')
   if #vim.tbl_keys(C.proj_bufs) > 1 then
@@ -112,7 +112,7 @@ end
 require 'telescope'.load_extension 'ui-select'
 
 function M.append_one_proj_right_down()
-  local C = require 'config.tabline'
+  local C = require 'config.my_tabline'
   if #vim.tbl_keys(C.proj_bufs) > 1 then
     local projs = {}
     local active_projs = {}
@@ -154,7 +154,7 @@ function M.open_proj_in_new_tab(proj)
 end
 
 function M.append_one_proj_new_tab()
-  local C = require 'config.tabline'
+  local C = require 'config.my_tabline'
   if #vim.tbl_keys(C.proj_bufs) > 1 then
     local projs = {}
     local temp = B.rep_slash_lower(vim.fn['ProjectRootGet'](vim.api.nvim_buf_get_name(0)))
@@ -174,7 +174,7 @@ function M.append_one_proj_new_tab()
 end
 
 function M.append_one_proj_new_tab_no_dupl()
-  local C = require 'config.tabline'
+  local C = require 'config.my_tabline'
   if #vim.tbl_keys(C.proj_bufs) > 1 then
     local projs = {}
     local active_projs = {}
@@ -200,7 +200,7 @@ function M.append_one_proj_new_tab_no_dupl()
 end
 
 function M.simple_statusline_toggle()
-  local C = require 'config.tabline'
+  local C = require 'config.my_tabline'
   if C.simple_statusline then
     C.simple_statusline = nil
     vim.opt.showtabline = 2

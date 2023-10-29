@@ -31,7 +31,7 @@ vim.cmd [[
 ]]
 
 function SwitchBuffer(bufnr, mouseclicks, mousebutton, modifiers)
-  local C = require 'config.tabline'
+  local C = require 'config.my_tabline'
   if mousebutton == 'm' then -- and mouseclicks == 1 then
     vim.cmd('Bdelete! ' .. bufnr)
     C.update_bufs_and_refresh_tabline()
@@ -45,7 +45,7 @@ function SwitchBuffer(bufnr, mouseclicks, mousebutton, modifiers)
 end
 
 function SwitchTab(tabnr, mouseclicks, mousebutton, modifiers)
-  local C = require 'config.tabline'
+  local C = require 'config.my_tabline'
   if mousebutton == 'm' then -- and mouseclicks == 1 then
     pcall(vim.cmd, tabnr .. 'tabclose')
     C.update_bufs_and_refresh_tabline()
@@ -58,7 +58,7 @@ function SwitchTab(tabnr, mouseclicks, mousebutton, modifiers)
 end
 
 function SwitchTabNext(tabnr, mouseclicks, mousebutton, modifiers)
-  local C = require 'config.tabline'
+  local C = require 'config.my_tabline'
   if mousebutton == 'm' then -- and mouseclicks == 1 then
     pcall(vim.cmd, tabnr .. 'tabclose')
     C.update_bufs_and_refresh_tabline()
@@ -103,7 +103,7 @@ function M.is_buf_to_show(buf)
 end
 
 function M.update_bufs()
-  local C = require 'config.tabline'
+  local C = require 'config.my_tabline'
   local cur_proj = B.rep_slash_lower(vim.fn['ProjectRootGet'](vim.api.nvim_buf_get_name(C.cur_buf)))
   if not B.is(M.is_buf_to_show(C.cur_buf)) then
     C.cur_proj = cur_proj
@@ -219,7 +219,7 @@ function M.get_buf_to_show(bufs, cur_buf)
 end
 
 function M.refresh_tabline()
-  local C = require 'config.tabline'
+  local C = require 'config.my_tabline'
   local items = {}
   local buf_to_show = {}
   local yy = 1

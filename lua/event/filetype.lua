@@ -26,7 +26,7 @@ B.aucmd(M.source, 'FileType', 'FileType', {
   callback = function(ev)
     vim.bo[ev.buf].buflisted = false
     B.set_timeout(30, function()
-      require 'config.test'.map_buf_c_q_close(ev.buf, 'close!')
+      require 'config.my_test'.map_buf_c_q_close(ev.buf, 'close!')
     end)
   end,
 })
