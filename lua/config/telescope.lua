@@ -496,4 +496,15 @@ function M.my_projects()
   B.call_sub(M.loaded, 'projects', 'my_projects')
 end
 
+B.aucmd(M.source, 'BufEnter-telescope', { 'BufEnter', }, {
+  callback = function(ev)
+    local filetype = vim.api.nvim_buf_get_option(ev.buf, 'filetype')
+    local buftype = vim.api.nvim_buf_get_option(ev.buf, 'buftype')
+    local bufname = vim.api.nvim_buf_get_name(ev.buf)
+    if filetype == '' and buftype == '' and bufname == '' then
+      vim.api.nvim_buf_set_option(ev.buf, 'buftype', 'nofile')
+    end
+  end,
+})
+
 return M
