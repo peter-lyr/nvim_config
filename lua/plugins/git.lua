@@ -34,4 +34,19 @@ return {
       require 'map.gitpush'
     end,
   },
+  {
+    'tpope/vim-fugitive',
+    lazy = true,
+    cmd = {
+      'Git',
+    },
+    init = function()
+      if not S.load_whichkeys_txt_enable then
+        require 'my_simple'.add_whichkey('<leader>a', 'tpope/vim-fugitive', 'Fugitive')
+      end
+    end,
+    config = function()
+      require 'map.fugitive'
+    end,
+  },
 }
