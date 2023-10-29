@@ -6,19 +6,19 @@ M.loaded = B.get_loaded(M.source)
 --------------------------------------------
 
 function M.c()
-  require 'config.lsp_event_c'
+  require 'config.nvim_lsp_event_c'
 end
 
 function M.lua()
-  require 'config.lsp_event_lua'
+  require 'config.nvim_lsp_event_lua'
 end
 
 function M.markdown()
-  require 'config.lsp_event_markdown'
+  require 'config.nvim_lsp_event_markdown'
 end
 
 function M.python()
-  require 'config.lsp_event_python'
+  require 'config.nvim_lsp_event_python'
 end
 
 return M

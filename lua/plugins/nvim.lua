@@ -12,7 +12,7 @@ return {
       'python',
     },
     config = function()
-      require 'map.cmp'
+      require 'map.nvim_cmp'
     end,
   },
   {
@@ -31,7 +31,7 @@ return {
       end
     end,
     config = function()
-      require 'map.lsp'
+      require 'map.nvim_lsp'
     end,
   },
   {
@@ -46,7 +46,7 @@ return {
       'markdown',
     },
     config = function()
-      require 'map.treesitter'
+      require 'map.nvim_treesitter'
     end,
   },
 }

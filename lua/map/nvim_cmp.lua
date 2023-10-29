@@ -17,6 +17,6 @@ B.load_require 'saadparwaiz1/cmp_luasnip'
 
 -----------------
 
-require 'config.cmp'
+require(M.config)
 
 return M
