@@ -27,6 +27,8 @@ B.map_n('<leader>gmtn', 'toggle_numhl', {})
 B.map_n('<leader>gmts', 'toggle_signs', {})
 B.map_n('<leader>gmtw', 'toggle_word_diff', {})
 
+B.map_n('<leader>gl', 'lazygit', {})
+
 ------
 
 B.register_whichkey('<leader>gm', 'more')

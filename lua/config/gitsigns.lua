@@ -126,4 +126,10 @@ function M.toggle_word_diff()
   end
 end
 
+------
+
+function M.lazygit()
+  B.system_run('start', 'lazygit')
+end
+
 return M
