@@ -7,17 +7,6 @@ M.config = B.rep_map_to_config(M.loaded)
 -- package.loaded[M.loaded] = nil
 --------------------------------------------
 
--- B.map_set_lua(M.config)
-
-require 'which-key'.setup {
-  window = {
-    border = 'single',
-    winblend = 12,
-  },
-  layout = {
-    height = { min = 4, max = 80, },
-    width = { min = 20, max = 200, },
-  },
-}
+require(M.config)
 
 return M

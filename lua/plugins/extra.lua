@@ -8,17 +8,7 @@ return {
       { '<esc>', function() require 'notify'.dismiss() end, mode = { 'n', }, silent = true, desc = 'dismiss notification', },
     },
     config = function()
-      require 'notify'.setup {
-        top_down = false,
-        timeout = 3000,
-        max_height = function()
-          return math.floor(vim.o.lines * 0.75)
-        end,
-        max_width = function()
-          return math.floor(vim.o.columns * 0.75)
-        end,
-      }
-      vim.notify = require 'notify'
+      require 'map.extra_notify'
     end,
   },
   {
@@ -27,8 +17,11 @@ return {
     init = function()
       vim.o.timeoutlen = 300
       if not S.load_whichkeys_txt_enable then
-        require 'my_simple'.add_whichkey('<leader>', 'folke/which-key.nvim', 'Whichkey')
+        require 'my_simple'.add_whichkey('<leader>', 'folke/which-key.nvim', 'Extra_Whichkey')
       end
+    end,
+    config = function()
+      require 'map.extra_whichkey'
     end,
   },
 }

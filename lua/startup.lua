@@ -34,7 +34,7 @@ function S.prepare_whichkeys(mappings)
     end
     local desc = vim.fn.join(new_desc, ' ')
     vim.keymap.set({ 'n', 'v', }, key, function()
-      if not package.loaded['config.whichkey'] then
+      if not package.loaded['config.extra_whichkey'] then
         vim.cmd 'Lazy load which-key.nvim'
       end
       for _, val in ipairs(vals) do
