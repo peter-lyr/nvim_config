@@ -113,4 +113,10 @@ return {
     lazy = true,
     event = { 'CursorMoved', },
   },
+  {
+    'numToStr/Comment.nvim',
+    lazy = true,
+    event = { 'BufReadPre', 'BufNewFile', },
+    opts = {},
+  },
 }
