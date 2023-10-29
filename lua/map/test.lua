@@ -38,6 +38,10 @@ B.map('<c-s-f4><c-f4>', 'terminal_powershell', {})
 
 -------
 
+B.map('<c-s-f4>;', 'asyncrun', {})
+
+-------
+
 B.map('<c-s-f4>l', 'lazy', {})
 B.map('<c-s-f4>m', 'mason', {})
 

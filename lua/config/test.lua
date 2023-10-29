@@ -74,6 +74,13 @@ function M.terminal_powershell()
   vim.cmd 'powershell'
 end
 
+-----
+
+function M.asyncrun()
+  B.load_require 'skywind3000/asyncrun.vim'
+  vim.cmd [[call feedkeys(":\<c-u>AsyncRun ")]]
+end
+
 ------------------------------
 
 function M.source_lua()
