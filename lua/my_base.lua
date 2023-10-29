@@ -236,6 +236,14 @@ function B.get_file_path(dirs, file)
   return dir_path:joinpath(file)
 end
 
+function B.get_create_file_path(dirs, file)
+  local file_path = B.get_file_path(dirs, file)
+  if not file_path:exists() then
+    file_path:touch()
+  end
+  return file_path
+end
+
 function B.get_create_dir(dirs)
   if type(dirs) == 'string' then
     dirs = { dirs, }
@@ -280,6 +288,17 @@ function B.file_exists(file)
   return require 'plenary.path':new(file):exists()
 end
 
+function B.fetch_existed_files(files)
+  local new_files = {}
+  for _, file in ipairs(files) do
+    file = vim.fn.trim(file)
+    if #file > 0 and B.file_exists(file) then
+      new_files[#new_files + 1] = file
+    end
+  end
+  return new_files
+end
+
 ---------
 
 function B.notify_info(message)
@@ -296,6 +315,31 @@ end
 
 function B.system_run(way, str_format, ...)
   B.call_sub(B.loaded, 'asyncrun', 'system_run', way, str_format, ...)
+end
+
+-----
+
+function B.ui_sel(items, prompt, callback)
+  if items and #items > 0 then
+    vim.ui.select(items, { prompt = prompt, }, callback)
+  end
+end
+
+function B.is_buf_loaded_valid(buf)
+  return vim.api.nvim_buf_is_loaded(buf) == true and vim.api.nvim_buf_is_valid(buf) == true
+end
+
+function B.get_loaded_valid_bufs()
+  local files = {}
+  for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+    if B.is_buf_loaded_valid(buf) then
+      local fname = vim.api.nvim_buf_get_name(buf)
+      if #fname > 0 and B.file_exists(fname) then
+        files[#files + 1] = fname
+      end
+    end
+  end
+  return files
 end
 
 return B
