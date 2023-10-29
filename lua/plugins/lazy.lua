@@ -33,6 +33,8 @@ local lazy = {
   'skywind3000/asyncrun.vim',
   --------
   'nvim-telescope/telescope-ui-select.nvim',
+  ------
+  'ahmedkhalf/project.nvim',
 }
 
 

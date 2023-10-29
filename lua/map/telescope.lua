@@ -43,6 +43,8 @@ B.map('<leader>svva', 'builtin', {})
 B.map('<leader>svvo', 'vim_options', {})
 B.map('<leader>svvp', 'planets', {})
 
+B.map('<leader>sk', 'my_projects', {})
+
 B.register_whichkey('<leader>gt', 'Git more')
 B.register_whichkey('<leader>sv', 'more')
 B.register_whichkey('<leader>svv', 'more more')

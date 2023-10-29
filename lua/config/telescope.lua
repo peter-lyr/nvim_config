@@ -492,4 +492,8 @@ function M.open()
   vim.cmd('edit ' .. M.source)
 end
 
+function M.my_projects()
+  B.call_sub(M.loaded, 'projects', 'my_projects')
+end
+
 return M
