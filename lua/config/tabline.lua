@@ -10,6 +10,8 @@ M.proj_buf = {}
 M.cur_proj = ''
 M.cur_buf = 0
 
+M.simple_statusline = nil
+
 ----------
 
 function M.b_next_buf()
@@ -43,6 +45,32 @@ end
 function M.update_bufs_and_refresh_tabline(ev)
   M.update_bufs(ev)
   M.refresh_tabline(ev)
+end
+
+------------------
+
+function M.only_cur_buffer()
+  B.call_sub(M.loaded, 'funcs', 'only_cur_buffer')
+end
+
+function M.restore_hidden_tabs()
+  B.call_sub(M.loaded, 'funcs', 'restore_hidden_tabs')
+end
+
+function M.append_one_proj_right_down()
+  B.call_sub(M.loaded, 'funcs', 'append_one_proj_right_down')
+end
+
+function M.append_one_proj_new_tab()
+  B.call_sub(M.loaded, 'funcs', 'o')
+end
+
+function M.append_one_proj_new_tab_no_dupl()
+  B.call_sub(M.loaded, 'funcs', 'append_one_proj_new_tab_no_dupl')
+end
+
+function M.simple_statusline_toggle()
+  B.call_sub(M.loaded, 'funcs', 'simple_statusline_toggle')
 end
 
 --------------------

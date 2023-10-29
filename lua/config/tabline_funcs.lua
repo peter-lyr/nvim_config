@@ -84,4 +84,132 @@ function M.bd_next_buf()
   end
 end
 
+------------------
+
+function M.only_cur_buffer()
+  pcall(vim.cmd, 'tabo')
+  pcall(vim.cmd, 'wincmd o')
+  pcall(vim.cmd, 'e!')
+end
+
+function M.restore_hidden_tabs()
+  local C = require 'config.tabline'
+  pcall(vim.cmd, 'tabo')
+  pcall(vim.cmd, 'wincmd o')
+  if #vim.tbl_keys(C.proj_bufs) > 1 then
+    local temp = B.rep_slash_lower(vim.fn['ProjectRootGet'](vim.api.nvim_buf_get_name(0)))
+    for _, project in ipairs(vim.tbl_keys(C.proj_buf)) do
+      if project ~= temp and vim.fn.buflisted(C.proj_buf[project]) == 1 then
+        vim.cmd 'wincmd v'
+        vim.cmd 'wincmd T'
+        vim.cmd('b' .. C.proj_buf[project])
+      end
+    end
+    vim.cmd '1tabnext'
+  end
+end
+
+require 'telescope'.load_extension 'ui-select'
+
+function M.append_one_proj_right_down()
+  local C = require 'config.tabline'
+  if #vim.tbl_keys(C.proj_bufs) > 1 then
+    local projs = {}
+    local active_projs = {}
+    for winnr = 1, vim.fn.winnr '$' do
+      local tt = B.rep_slash_lower(vim.fn['ProjectRootGet'](vim.api.nvim_buf_get_name(vim.fn.winbufnr(winnr))))
+      if vim.tbl_contains(active_projs, tt) == false then
+        active_projs[#active_projs + 1] = tt
+      end
+    end
+    for _, project in ipairs(vim.tbl_keys(C.proj_buf)) do
+      if vim.tbl_contains(active_projs, project) == false and vim.fn.buflisted(C.proj_buf[project]) == 1 then
+        projs[#projs + 1] = project
+      end
+    end
+    if #projs > 0 then
+      vim.ui.select(projs, { prompt = 'append_one_proj_right_down', }, function(proj, _)
+        if not proj then
+          return
+        end
+        vim.cmd 'wincmd b'
+        vim.cmd 'wincmd s'
+        vim.cmd('b' .. C.proj_buf[proj])
+        vim.cmd 'e!'
+      end)
+    else
+      print 'no append_one_proj_right_down'
+    end
+  end
+end
+
+function M.open_proj_in_new_tab(proj)
+  if not proj then
+    return
+  end
+  vim.cmd 'wincmd s'
+  vim.cmd 'wincmd T'
+  vim.cmd('b' .. C.proj_buf[proj])
+  vim.cmd 'e!'
+end
+
+function M.append_one_proj_new_tab()
+  local C = require 'config.tabline'
+  if #vim.tbl_keys(C.proj_bufs) > 1 then
+    local projs = {}
+    local temp = B.rep_slash_lower(vim.fn['ProjectRootGet'](vim.api.nvim_buf_get_name(0)))
+    for _, project in ipairs(vim.tbl_keys(C.proj_buf)) do
+      if project ~= temp and vim.fn.buflisted(C.proj_buf[project]) == 1 then
+        projs[#projs + 1] = project
+      end
+    end
+    if #projs > 0 then
+      vim.ui.select(projs, { prompt = 'append_one_proj_new_tab', }, function(proj, idx)
+        M.open_proj_in_new_tab(proj)
+      end)
+    else
+      print 'no append_one_proj_new_tab'
+    end
+  end
+end
+
+function M.append_one_proj_new_tab_no_dupl()
+  local C = require 'config.tabline'
+  if #vim.tbl_keys(C.proj_bufs) > 1 then
+    local projs = {}
+    local active_projs = {}
+    for _, winid in ipairs(vim.api.nvim_list_wins()) do
+      local tt = B.rep_slash_lower(vim.fn['ProjectRootGet'](vim.api.nvim_buf_get_name(vim.fn.winbufnr(winid))))
+      if vim.tbl_contains(active_projs, tt) == false then
+        active_projs[#active_projs + 1] = tt
+      end
+    end
+    for _, project in ipairs(vim.tbl_keys(C.proj_buf)) do
+      if vim.tbl_contains(active_projs, project) == false and vim.fn.buflisted(C.proj_buf[project]) == 1 then
+        projs[#projs + 1] = project
+      end
+    end
+    if #projs > 0 then
+      vim.ui.select(projs, { prompt = 'append_one_proj_new_tab_no_dupl', }, function(proj, _)
+        M.open_proj_in_new_tab(proj)
+      end)
+    else
+      print 'no append_one_proj_new_tab_no_dupl'
+    end
+  end
+end
+
+function M.simple_statusline_toggle()
+  local C = require 'config.tabline'
+  if C.simple_statusline then
+    C.simple_statusline = nil
+    vim.opt.showtabline = 2
+    vim.opt.laststatus = 3
+  else
+    C.simple_statusline = 1
+    vim.opt.showtabline = 0
+    vim.opt.laststatus = 2
+  end
+end
+
 return M

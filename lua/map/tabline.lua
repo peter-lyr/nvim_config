@@ -20,6 +20,15 @@ B.map('<c-h>', 'b_prev_buf', {})
 B.map('<c-s-l>', 'bd_next_buf', {})
 B.map('<c-s-h>', 'bd_prev_buf', {})
 
+--------
+
+B.map('<leader>qw', 'only_cur_buffer', {})
+B.map('<leader>qt', 'restore_hidden_tabs', {})
+B.map('<leader>qo', 'append_one_proj_right_down', {})
+B.map('<leader>qn', 'append_one_proj_new_tab', {})
+B.map('<leader>qm', 'append_one_proj_new_tab_no_dupl', {})
+B.map('<leader>q<leader>', 'simple_statusline_toggle', {})
+
 B.map_reset_opts()
 
 --------------------
@@ -27,6 +36,19 @@ B.map_reset_opts()
 B.aucmd(M.source, 'BufEnter', 'BufEnter', {
   callback = function(ev)
     require(M.config).update_bufs_and_refresh_tabline(ev)
+  end,
+})
+
+B.aucmd(M.source, 'WinResized', { 'WinResized', }, {
+  callback = function()
+    require(M.config).update_bufs_and_refresh_tabline(ev)
+  end,
+})
+
+B.aucmd(M.source, 'DirChanged', { 'DirChanged', 'TabEnter', }, {
+  callback = function()
+    require(M.config).update_bufs_and_refresh_tabline(ev)
+    pcall(vim.cmd, 'ProjectRootCD')
   end,
 })
 
