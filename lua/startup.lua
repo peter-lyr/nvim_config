@@ -5,6 +5,12 @@ S.whichkeys_txt = vim.fn.stdpath 'data' .. '\\whichkeys.txt'
 S.enable = 1
 
 function S.load_require(plugin, lua)
+  if not plugin then
+    print('plugin nil, lua:', lua)
+    require 'my_base'.notify_error('plugin nil, lua: ' .. lua)
+    print('plugin nil, lua:', lua)
+    return
+  end
   plugin = string.match(plugin, '/+([^/]+)$')
   if plugin then
     vim.cmd('Lazy load ' .. plugin)

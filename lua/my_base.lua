@@ -250,6 +250,10 @@ function B.notify_info(message)
   B.call_sub(B.loaded, 'asyncrun', 'notify_info', message)
 end
 
+function B.notify_error(message)
+  B.call_sub(B.loaded, 'asyncrun', 'notify_error', message)
+end
+
 function B.system_cd(file)
   B.call_sub(B.loaded, 'asyncrun', 'system_cd', file)
 end

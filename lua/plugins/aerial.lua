@@ -1,7 +1,9 @@
 local S = require 'startup'
 
+local plugin = 'stevearc/aerial.nvim'
+
 return {
-  'stevearc/aerial.nvim',
+  plugin,
   lazy = true,
   event = { 'LspAttach', },
   keys = {
