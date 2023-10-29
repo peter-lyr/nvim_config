@@ -49,4 +49,16 @@ return {
       require 'map.fugitive'
     end,
   },
+  {
+    'sindrets/diffview.nvim',
+    lazy = true,
+    init = function()
+      if not S.load_whichkeys_txt_enable then
+        require 'my_simple'.add_whichkey('<leader>g', 'sindrets/diffview.nvim', 'Diffview')
+      end
+    end,
+    config = function()
+      require 'map.diffview'
+    end,
+  },
 }
