@@ -7,6 +7,7 @@ M.loaded = B.get_loaded(M.source)
 
 M.sessions_txt_path = B.get_create_file_path(B.get_create_std_data_dir 'sessions', 'sessions.txt')
 
+require 'config.telescope'
 require 'telescope'.load_extension 'ui-select'
 
 function M.sel()
