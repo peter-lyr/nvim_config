@@ -6,6 +6,7 @@ return {
   name = plugin,
   dir = '',
   lazy = true,
+  event = { 'BufReadPost', 'BufNewFile', },
   init = function()
     if not S.load_whichkeys_txt_enable then
       require 'my_simple'.add_whichkey('<leader>s', plugin, 'Sessions')
