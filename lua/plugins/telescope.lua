@@ -12,6 +12,7 @@ return {
   },
   init = function()
     if not S.load_whichkeys_txt_enable then
+      require 'my_simple'.add_whichkey('<c-s-f12>', plugin, 'Telescope')
       require 'my_simple'.add_whichkey('<leader>s', plugin, 'Telescope')
       require 'my_simple'.add_whichkey('<leader>f', plugin, 'Telescope', 'Lsp')
       require 'my_simple'.add_whichkey('<leader>g', plugin, 'Telescope', 'Git')

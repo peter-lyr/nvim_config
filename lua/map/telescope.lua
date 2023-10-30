@@ -45,6 +45,18 @@ B.map('<leader>svvp', 'planets', {})
 
 B.map('<leader>sk', 'my_projects', {})
 
+-----------------------------------
+
+B.map('<c-s-f12><f1>', 'git_status', {})
+B.map('<c-s-f12><f2>', 'buffers_cur', {})
+B.map('<c-s-f12><f3>', 'find_files', {})
+B.map('<c-s-f12><f4>', 'jumplist', {})
+B.map('<c-s-f12><f6>', 'command_history', {})
+B.map('<c-s-f12><f7>', 'lsp_document_symbols', {})
+B.map('<c-s-f12><f8>', 'buffers', {})
+
+-----------------------------------
+
 B.register_whichkey('<leader>gt', 'Git more')
 B.register_whichkey('<leader>sv', 'more')
 B.register_whichkey('<leader>svv', 'more more')
