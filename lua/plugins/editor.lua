@@ -117,7 +117,9 @@ return {
     'numToStr/Comment.nvim',
     lazy = true,
     event = { 'BufReadPre', 'BufNewFile', },
-    opts = {},
+    config = function()
+      require 'map.editor_comment'
+    end
   },
   {
     'natecraddock/sessions.nvim',
