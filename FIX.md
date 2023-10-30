@@ -1,0 +1,1 @@
+- aerial make tabline highlight disappear.
