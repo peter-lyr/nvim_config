@@ -10,6 +10,6 @@ M.config = B.rep_map_to_config(M.loaded)
 require(M.config)
 
 vim.keymap.set({ 'n', }, '<leader>co',  "}kvip:call nerdcommenter#Comment('x', 'invert')<CR>", { desc = 'Nerdcommenter invert a paragraph', })
-vim.keymap.set({ 'n', }, '<leader>cp',  "}kvip:call nerdcommenter#Comment('x', 'toggle')<CR>", { desc = 'Nerdcommenter invert paragraph', })
+vim.keymap.set({ 'n', }, '<leader>cp',  "}kvip:call nerdcommenter#Comment('x', 'toggle')<CR>", { desc = 'Nerdcommenter toggle a paragraph', })
 
 return M
