@@ -235,10 +235,10 @@ end
 
 M.get_desktop = function()
   local my_drag_images_lua_desktop_c_path = require 'plenary.path':new(M.source .. '.desktop.c')
-  local my_drag_images_lua_desktop_exe_path = my_drag_images_lua_desktop_c_path:paren():joinpath 'my_drag_images.lua.desktop.exe'
+  local my_drag_images_lua_desktop_exe_path = my_drag_images_lua_desktop_c_path:parent():joinpath 'my_drag_images.lua.desktop.exe'
   if not my_drag_images_lua_desktop_exe_path:exists() then
     vim.cmd(string.format(
-      [[silent !start /b /min cmd /c "%s && gcc my_drag_images.lua.desktop.c -Wall -s -ffunction-sections -fdata-sections -Wl,--gc-sections -O3 -o drag_images_desktop"]],
+      [[silent !start /b /min cmd /c "%s && gcc my_drag_images.lua.desktop.c -Wall -s -ffunction-sections -fdata-sections -Wl,--gc-sections -O3 -o my_drag_images.lua.desktop.exe"]],
       B.system_cd(my_drag_images_lua_desktop_c_path.filename)))
   end
   local f = io.popen(my_drag_images_lua_desktop_exe_path.filename)
