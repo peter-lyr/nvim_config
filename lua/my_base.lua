@@ -333,4 +333,10 @@ function B.get_loaded_valid_bufs()
   return B.call_sub(B.loaded, 'funcs', 'get_loaded_valid_bufs')
 end
 
+------
+
+function B.get_file_dirs(file)
+  return B.call_sub(B.loaded, 'funcs', 'get_file_dirs', file)
+end
+
 return B

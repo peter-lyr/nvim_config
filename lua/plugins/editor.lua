@@ -110,6 +110,11 @@ return {
       if not S.load_whichkeys_txt_enable then
         require 'my_simple'.add_whichkey('<leader>s', 'natecraddock/sessions.nvim', 'Editor_Sessions')
       end
+      require 'my_base'.aucmd('my_window', 'VimLeave', 'VimLeave', {
+        callback = function()
+          require 'config.editor_sessions'.save()
+        end,
+      })
     end,
     config = function()
       require 'map.editor_sessions'

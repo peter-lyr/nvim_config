@@ -15,4 +15,8 @@ function M.load()
   vim.cmd 'SessionsLoad'
 end
 
+function M.save()
+  vim.cmd 'SessionsSave'
+end
+
 return M
