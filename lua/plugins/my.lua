@@ -18,9 +18,6 @@ return {
   {
     name = 'my_window',
     dir = '',
-    event = {
-      'VimLeave',
-    },
     lazy = true,
     keys = {
       { '<a-s-h>', function() require 'config.my_window'.height_less() end,   mode = { 'n', 'v', }, silent = true, desc = 'Window height_less', },
@@ -36,6 +33,11 @@ return {
         require 'my_simple'.add_whichkey('<leader>x', 'window', 'My_Window', 'kill')
         require 'my_simple'.add_whichkey('<c-0>', 'window', 'My_Window', 'Font size')
       end
+      require 'my_base'.aucmd('my_window', 'VimLeave', 'VimLeave', {
+        callback = function()
+          require 'config.my_window'.leave()
+        end,
+      })
     end,
     config = function()
       require 'map.my_window'
