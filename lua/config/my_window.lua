@@ -406,4 +406,20 @@ function M.fontsize_frameless_toggle()
   end
 end
 
+function M.leave()
+  if vim.fn.trim(vim.fn.join(vim.fn.readfile(require 'startup'.gui_window_frameless_txt), '')) == '1' then
+    if vim.fn.exists 'g:GuiLoaded' and vim.g.GuiLoaded == 1 then
+      if vim.g.GuiWindowMaximized == 1 then
+        vim.fn['GuiWindowMaximized'](0)
+      end
+      if vim.g.GuiWindowFrameless == 1 then
+        vim.fn['GuiWindowFrameless'](0)
+        B.set_timeout(10, function()
+          vim.fn['GuiWindowFrameless'](0)
+        end)
+      end
+    end
+  end
+end
+
 return M

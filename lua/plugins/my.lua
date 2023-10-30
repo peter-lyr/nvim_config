@@ -18,6 +18,9 @@ return {
   {
     name = 'my_window',
     dir = '',
+    event = {
+      'VimLeavePre',
+    },
     lazy = true,
     keys = {
       { '<a-s-h>', function() require 'config.my_window'.height_less() end,   mode = { 'n', 'v', }, silent = true, desc = 'Window height_less', },

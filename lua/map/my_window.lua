@@ -51,4 +51,12 @@ B.map('<c-0><c-->', 'fontsize_frameless', {})
 B.map('<c-0><c-=>', 'fontsize_fullscreen', {})
 B.map('<c-0><c-bs>', 'fontsize_frameless_toggle', {})
 
+-------
+
+B.aucmd(M.source, 'VimLeavePre', 'VimLeavePre', {
+  callback = function()
+    require(M.config).leave()
+  end,
+})
+
 return M
