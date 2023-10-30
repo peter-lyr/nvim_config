@@ -84,4 +84,21 @@ return {
       require 'map.my_drag'
     end,
   },
+  {
+    name = 'my_info',
+    dir = '',
+    lazy = true,
+    keys = {
+      { '<f1>', function() require 'config.my_info'.info() end, mode = { 'n', 'v', }, silent = true, desc = 'Info', },
+    },
+    dependencies = {
+      {
+        'itchyny/vim-gitbranch',
+        lazy = true,
+        keys = {
+          { '<c-3>', function() vim.cmd [[call feedkeys("\<c-r>=gitbranch#name()\<cr>")]] end, mode = { 'c', 'i', }, silent = true, desc = 'paste branch name', },
+        },
+      },
+    },
+  },
 }
