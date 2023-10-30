@@ -70,13 +70,7 @@ return {
     lazy = true,
     event = { 'InsertEnter', 'TextChanged', },
     config = function()
-      require 'auto-save'.setup {
-        execution_message = {
-          message = function()
-            return ''
-          end,
-        },
-      }
+      require 'map.editor_autosave'
     end,
   },
   {
