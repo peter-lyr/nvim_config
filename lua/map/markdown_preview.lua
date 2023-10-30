@@ -13,12 +13,4 @@ B.map('<leader>m<leader>', 'start', {})
 B.map('<leader>mm', 'restart', {})
 B.map('<leader>mq', 'stop', {})
 
-------
-
-vim.g.mkdp_theme              = 'light'
-vim.g.mkdp_auto_close         = 0
-vim.g.mkdp_auto_start         = 0
-vim.g.mkdp_combine_preview    = 1
-vim.g.mkdp_command_for_global = 1
-
 return M
