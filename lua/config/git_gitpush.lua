@@ -92,7 +92,7 @@ function M.init_do(git_root_dir)
   end
   local file_path = B.get_file_path(git_root_dir, '.gitignore')
   if file_path:exists() then
-    local lines = file_path:read()
+    local lines = file_path:readlines()
     if vim.tbl_contains(lines, remote_name) == false then
       file_path:write(remote_name, 'a')
     end

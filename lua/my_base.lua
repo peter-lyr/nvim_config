@@ -317,7 +317,13 @@ function B.system_run(way, str_format, ...)
   B.call_sub(B.loaded, 'asyncrun', 'system_run', way, str_format, ...)
 end
 
------
+-----------
+
+function B.asyncrun_prepare_add(callback)
+  return B.call_sub(B.loaded, 'asyncrun', 'asyncrun_prepare_add', callback)
+end
+
+----------------------
 
 function B.ui_sel(items, prompt, callback)
   if items and #items > 0 then
@@ -337,6 +343,10 @@ end
 
 function B.get_file_dirs(file)
   return B.call_sub(B.loaded, 'funcs', 'get_file_dirs', file)
+end
+
+function B.get_fname_tail(file)
+  return B.call_sub(B.loaded, 'funcs', 'get_fname_tail', file)
 end
 
 return B

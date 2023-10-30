@@ -40,4 +40,22 @@ function M.get_file_dirs(file)
   return dirs
 end
 
+function M.get_fname_tail(file)
+  vim.cmd 'Lazy load plenary.nvim'
+  file = B.rep_slash(file)
+  local fpath = require 'plenary.path':new(file)
+  if fpath:is_file() then
+    file = fpath:_split()
+    return file[#file]
+  elseif fpath:is_dir() then
+    file = fpath:_split()
+    if #file[#file] > 0 then
+      return file[#file]
+    else
+      return file[#file - 1]
+    end
+  end
+  return ''
+end
+
 return M
