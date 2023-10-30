@@ -10,6 +10,6 @@ M.config = B.rep_map_to_config(M.loaded)
 B.map_set_lua(M.config)
 
 B.map('<leader>aa', 'open', {})
-B.map('<leader>aA', 'close', {})
+B.map('<leader>as', 'close', {})
 
 return M

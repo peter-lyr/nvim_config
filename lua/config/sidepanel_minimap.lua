@@ -38,18 +38,12 @@ minimap.setup {
 
 function M.open()
   minimap.open()
-  M.auto_open_en = 1
   M.opened = 1
 end
 
 function M.close()
   minimap.close()
-  M.auto_open_en = nil
   M.opened = nil
-end
-
-function M.auto_open()
-  M.auto_open_en = 1
 end
 
 function M.toggle_focus()

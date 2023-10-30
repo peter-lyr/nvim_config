@@ -10,8 +10,7 @@ M.config = B.rep_map_to_config(M.loaded)
 B.map_set_lua(M.config)
 
 B.map('<leader>am', 'open', {})
-B.map('<leader>aM', 'close', {})
+B.map('<leader>a,', 'close', {})
 B.map('<leader>an', 'toggle_focus', {})
-B.map('<leader>aN', 'auto_open', {})
 
 return M
