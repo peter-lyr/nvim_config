@@ -82,23 +82,11 @@ return {
   {
     'lukas-reineke/indent-blankline.nvim',
     lazy = true,
+    main = "ibl",
     event = { 'CursorMoved', 'CursorMovedI', },
-    opt = {
-      space_char_blankline = ' ',
-      char = '│',
-      filetype_exclude = {
-        'qf',
-        'help',
-        'lazy',
-        'mason',
-        'notify',
-        'startuptime',
-        'lspinfo',
-        'noice',
-      },
-      show_trailing_blankline_indent = false,
-      show_current_context = false,
-    },
+    config = function()
+      require 'map.editor_blankline'
+    end,
   },
   {
     'echasnovski/mini.indentscope',
@@ -119,7 +107,7 @@ return {
     event = { 'BufReadPre', 'BufNewFile', },
     config = function()
       require 'map.editor_comment'
-    end
+    end,
   },
   {
     'natecraddock/sessions.nvim',
