@@ -119,4 +119,16 @@ return {
     event = { 'BufReadPre', 'BufNewFile', },
     opts = {},
   },
+  {
+    'natecraddock/sessions.nvim',
+    lazy = true,
+    init = function()
+      if not S.load_whichkeys_txt_enable then
+        require 'my_simple'.add_whichkey('<leader>s', 'natecraddock/sessions.nvim', 'Editor_Sessions')
+      end
+    end,
+    config = function()
+      require 'map.editor_sessions'
+    end,
+  },
 }
