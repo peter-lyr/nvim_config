@@ -484,6 +484,9 @@ function M.buffers()
   vim.cmd 'Telescope buffers'
 end
 
+function M.nop()
+end
+
 --------------------
 -- open config
 --------------------
