@@ -51,7 +51,7 @@ M.default_opts = {
   --   unfocus       - close aerial when you leave the original source window
   --   switch_buffer - close aerial when you change buffers in the source window
   --   unsupported   - close aerial when attaching to a buffer that has no symbol source
-  close_automatic_events = { 'unfocus', 'switch_buffer', 'unfocus', },
+  close_automatic_events = { 'unsupported', 'switch_buffer', 'unfocus', },
 
   -- Keymaps in aerial window. Can be any value that `vim.keymap.set` accepts OR a table of keymap
   -- options with a `callback` (e.g. { callback = function() ... end, desc = "", nowait = true })
