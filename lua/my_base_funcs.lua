@@ -20,7 +20,7 @@ end
 
 ---------
 
-function B.get_file_dirs(file)
+function M.get_file_dirs(file)
   vim.cmd 'Lazy load plenary.nvim'
   file = B.rep_slash(file)
   local file_path = require 'plenary.path':new(file)
