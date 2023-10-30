@@ -406,6 +406,8 @@ function M.fontsize_frameless_toggle()
   end
 end
 
+-----------
+
 function M.leave()
   if vim.fn.trim(vim.fn.join(vim.fn.readfile(require 'startup'.gui_window_frameless_txt), '')) == '1' then
     if vim.fn.exists 'g:GuiLoaded' and vim.g.GuiLoaded == 1 then
@@ -420,6 +422,24 @@ function M.leave()
       end
     end
   end
+end
+
+-----------
+
+function M.gt()
+  vim.cmd [[call feedkeys("gt")]]
+end
+
+function M.gT()
+  vim.cmd [[call feedkeys("gT")]]
+end
+
+function M.c_tab_v()
+  vim.cmd [[call feedkeys("\<esc>\<c-tab>")]]
+end
+
+function M.c_tab()
+  vim.cmd [[call feedkeys("\<c-tab>")]]
 end
 
 return M

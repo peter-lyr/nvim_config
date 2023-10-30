@@ -26,6 +26,12 @@ return {
       { '<a-s-k>', function() require 'config.my_window'.width_more() end,    mode = { 'n', 'v', }, silent = true, desc = 'Window width_more', },
       { '<c-=>',   function() require 'config.my_window'.fontsize_up() end,   mode = { 'n', 'v', }, silent = true, desc = 'font_size up', },
       { '<c-->',   function() require 'config.my_window'.fontsize_down() end, mode = { 'n', 'v', }, silent = true, desc = 'font_size down', },
+
+      { '<c-`>',   function() require 'config.my_window'.gt() end,            mode = { 'n', 'v', }, silent = true, desc = 'gt', },
+      { '<a-`>',   function() require 'config.my_window'.gT() end,            mode = { 'n', 'v', }, silent = true, desc = 'gT', },
+      { '<c-cr>',  function() require 'config.my_window'.c_tab_v() end,       mode = { 'v', },      silent = true, desc = '<c-tab>', },
+      { '<c-cr>',  function() require 'config.my_window'.c_tab() end,         mode = { 'n', },      silent = true, desc = '<c-tab>', },
+
     },
     init = function()
       if not S.load_whichkeys_txt_enable then
