@@ -21,6 +21,11 @@ function M.close()
   require 'config.sidepanel_nvimtree'.close()
 end
 
+function M.system_run_and_close()
+  require 'nvim-tree.api'.node.run.system()
+  require 'config.sidepanel_nvimtree'.close()
+end
+
 function M.basic_map(bufnr)
   local api = require 'nvim-tree.api'
   local function opts(desc)
@@ -86,6 +91,7 @@ function M.basic_map(bufnr)
   vim.keymap.set('n', '<c-u>', api.node.navigate.parent_close, opts 'Close Directory')
 
   vim.keymap.set('n', 'x', api.node.run.system, opts 'Run System')
+  vim.keymap.set('n', '<c-x>', M.system_run_and_close, opts 'Run System')
   vim.keymap.set('n', '<MiddleMouse>', api.node.run.system, opts 'Run System')
   vim.keymap.set('n', 'gx', api.node.run.cmd, opts 'Run Command')
 
