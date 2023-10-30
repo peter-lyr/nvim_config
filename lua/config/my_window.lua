@@ -434,12 +434,4 @@ function M.gT()
   vim.cmd [[call feedkeys("gT")]]
 end
 
-function M.c_tab_v()
-  vim.cmd [[call feedkeys("\<esc>\<c-tab>")]]
-end
-
-function M.c_tab()
-  vim.cmd [[call feedkeys("\<c-tab>")]]
-end
-
 return M

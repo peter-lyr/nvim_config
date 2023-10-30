@@ -29,8 +29,7 @@ return {
 
       { '<c-`>',   function() require 'config.my_window'.gt() end,            mode = { 'n', 'v', }, silent = true, desc = 'gt', },
       { '<a-`>',   function() require 'config.my_window'.gT() end,            mode = { 'n', 'v', }, silent = true, desc = 'gT', },
-      { '<c-cr>',  function() require 'config.my_window'.c_tab_v() end,       mode = { 'v', },      silent = true, desc = '<c-tab>', },
-      { '<c-cr>',  function() require 'config.my_window'.c_tab() end,         mode = { 'n', },      silent = true, desc = '<c-tab>', },
+      { '<c-tab>', '<esc><c-tab>',                                            mode = { 'v', },      silent = true, desc = 'c-tab', },
 
     },
     init = function()
