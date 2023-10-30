@@ -35,7 +35,7 @@ M.default_opts = {
   filesystem_watchers = {
     enable = true,
     debounce_delay = 50,
-    ignore_dirs = { '*.git', },
+    ignore_dirs = { '*.git*', },
   },
   filters = {
     dotfiles = true,
