@@ -1,0 +1,4 @@
+Windows Registry Editor Version 5.00
+[-HKEY_LOCAL_MACHINE\SOFTWARE\Classes\Directory\background\shell\nvim_qt_here]
+[-HKEY_LOCAL_MACHINE\SOFTWARE\Classes\Directory\shell\nvim_qt_here]
+[-HKEY_LOCAL_MACHINE\SOFTWARE\Classes\*\shell\open_with_nvim_qt]
