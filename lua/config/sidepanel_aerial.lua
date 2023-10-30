@@ -33,7 +33,7 @@ M.default_opts = {
     -- Determines where the aerial window will be opened
     --   edge   - open aerial at the far right/left of the editor
     --   window - open aerial to the right/left of the current window
-    placement = 'window',
+    placement = 'edge',
 
     -- When the symbols change, resize the aerial window (within min/max constraints) to fit
     resize_to_content = true,
