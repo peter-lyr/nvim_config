@@ -76,7 +76,7 @@ return {
   {
     'lukas-reineke/indent-blankline.nvim',
     lazy = true,
-    main = "ibl",
+    main = 'ibl',
     event = { 'CursorMoved', 'CursorMovedI', },
     config = function()
       require 'map.editor_blankline'
@@ -118,6 +118,21 @@ return {
     end,
     config = function()
       require 'map.editor_sessions'
+    end,
+  },
+  {
+    'preservim/nerdcommenter',
+    lazy = true,
+    event = { 'BufReadPost', 'BufNewFile', },
+    init = function()
+      if not S.load_whichkeys_txt_enable then
+        require 'my_simple'.add_whichkey('<leader>c', 'preservim/nerdcommenter', 'Editor_NerdCommenter')
+      end
+    end,
+    keys = {
+    },
+    config = function()
+      require 'map.editor_nerdcommenter'
     end,
   },
 }
