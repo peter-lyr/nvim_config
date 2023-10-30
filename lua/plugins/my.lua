@@ -19,7 +19,7 @@ return {
     name = 'my_window',
     dir = '',
     event = {
-      'VimLeavePre',
+      'VimLeave',
     },
     lazy = true,
     keys = {
