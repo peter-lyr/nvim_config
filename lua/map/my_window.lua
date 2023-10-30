@@ -53,7 +53,7 @@ B.map('<c-0><c-bs>', 'fontsize_frameless_toggle', {})
 
 -------
 
-B.aucmd(M.source, 'VimLeavePre', 'VimLeavePre', {
+B.aucmd(M.source, 'VimLeave', 'VimLeave', {
   callback = function()
     require(M.config).leave()
   end,
