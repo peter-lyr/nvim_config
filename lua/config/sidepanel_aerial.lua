@@ -28,7 +28,7 @@ M.default_opts = {
     -- options will open the window in the other direction *if* there is a
     -- different buffer in the way of the preferred direction
     -- Enum: prefer_right, prefer_left, right, left, float
-    default_direction = 'prefer_right',
+    default_direction = 'right',
 
     -- Determines where the aerial window will be opened
     --   edge   - open aerial at the far right/left of the editor
@@ -51,7 +51,7 @@ M.default_opts = {
   --   unfocus       - close aerial when you leave the original source window
   --   switch_buffer - close aerial when you change buffers in the source window
   --   unsupported   - close aerial when attaching to a buffer that has no symbol source
-  close_automatic_events = {},
+  close_automatic_events = { 'unfocus', 'switch_buffer', 'unfocus', },
 
   -- Keymaps in aerial window. Can be any value that `vim.keymap.set` accepts OR a table of keymap
   -- options with a `callback` (e.g. { callback = function() ... end, desc = "", nowait = true })
@@ -110,7 +110,7 @@ M.default_opts = {
   -- This can be a filetype map (see :help aerial-filetype-map)
   -- To see all available values, see :help SymbolKind
   filter_kind = {
-    'Array',
+    -- 'Array',
     -- 'Boolean',
     -- 'Class',
     -- 'Constant',
@@ -153,7 +153,7 @@ M.default_opts = {
   highlight_closest = true,
 
   -- Highlight the symbol in the source buffer when cursor is in the aerial win
-  highlight_on_hover = false,
+  highlight_on_hover = true,
 
   -- When jumping to a symbol, highlight the line for this many ms.
   -- Set to false to disable
@@ -345,10 +345,10 @@ M.default_opts = {
   lsp = {
     -- Fetch document symbols when LSP diagnostics update.
     -- If false, will update on buffer changes.
-    diagnostics_trigger_update = true,
+    diagnostics_trigger_update = false,
 
     -- Set to false to not update the symbols when there are LSP errors
-    update_when_errors = true,
+    update_when_errors = false,
 
     -- How long to wait (in ms) after a buffer change before updating
     -- Only used when diagnostics_trigger_update = false
