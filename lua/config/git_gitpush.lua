@@ -9,6 +9,7 @@ B.load_require 'rcarriga/nvim-notify'
 B.load_require 'skywind3000/asyncrun.vim'
 
 function M.addcommitpush(info)
+  local start = info
   pcall(vim.call, 'ProjectRootCD')
   local result = vim.fn.systemlist { 'git', 'status', '-s', }
   if #result > 0 then
@@ -18,7 +19,11 @@ function M.addcommitpush(info)
     end
     if #info > 0 then
       B.set_timeout(10, function()
-        B.system_run('asyncrun', 'git add -A && git status && git commit -m "%s" && git push', info)
+        if start then
+          B.system_run('start', 'git add -A && git status && git commit -m "%s" && git push', info)
+        else
+          B.system_run('asyncrun', 'git add -A && git status && git commit -m "%s" && git push', info)
+        end
       end)
     end
   else
