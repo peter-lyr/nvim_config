@@ -81,6 +81,8 @@ vim.keymap.set({ 't', 'c', 'i', }, '<a-a>', '<LEFT>', { desc = 'left', })
 vim.keymap.set({ 't', 'c', 'i', }, '<a-s-d>', '<c-RIGHT>', { desc = 'ctrl right', })
 vim.keymap.set({ 't', 'c', 'i', }, '<a-s-a>', '<c-LEFT>', { desc = 'ctrl left', })
 
+vim.keymap.set({ 'n', 'v', }, '<c-f11>', 'gf', { desc = 'gf', })
+
 -- esc
 
 vim.keymap.set({ 't', }, '<esc>', '<c-\\><c-n>', { desc = 'esc', })
