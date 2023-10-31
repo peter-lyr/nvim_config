@@ -26,8 +26,8 @@ return {
     },
     init = function()
       if not S.load_whichkeys_txt_enable then
-        require 'my_simple'.add_whichkey('<leader>f', 'neovim/nvim-lspconfig', 'Lsp')
-        require 'my_simple'.add_whichkey('<leader>fv', 'neovim/nvim-lspconfig', 'Lsp', 'more')
+        require 'my_simple'.add_whichkey('<leader>f', 'neovim/nvim-lspconfig', 'Nvim_Lsp')
+        require 'my_simple'.add_whichkey('<leader>fv', 'neovim/nvim-lspconfig', 'Nvim_Lsp', 'more')
       end
     end,
     config = function()
