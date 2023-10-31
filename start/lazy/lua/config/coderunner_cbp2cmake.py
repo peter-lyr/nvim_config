@@ -182,12 +182,12 @@ if __name__ == "__main__":
                 lib_files, lib_dirs = get_files_and_dirs(
                     project_root, lib_cbp_file, lib_cbp_dir
                 )
-                ff.write(("add_library(%s STATIC\n" % os.path.basename(lib_cbp_dir)).encode('utf-8'))
+                ff.write(("add_library(%s STATIC\n" % re.sub(r'[^\w]+', '_', lib_cbp_dir.replace("\\", "/").replace(project_root, ""))).encode('utf-8'))
                 for lib_file in lib_files:
                     lib_file = '           "${PROJECT_SOURCE_DIR}/%s"\n' % lib_file
                     ff.write(lib_file.encode('utf-8'))
                 ff.write(b"           )\n")
-                ff.write(("target_include_directories(%s PUBLIC\n" % os.path.basename(lib_cbp_dir)).encode('utf-8'))
+                ff.write(("target_include_directories(%s PUBLIC\n" % re.sub(r'[^\w]+', '_', lib_cbp_dir.replace("\\", "/").replace(project_root, ""))).encode('utf-8'))
                 for lib_dir in lib_dirs:
                     lib_dir = lib_dir.replace("\\", "/").replace(project_root, "").strip("\\").strip("/").replace("\\", "/")
                     lib_dir = '                            "${PROJECT_SOURCE_DIR}/%s"\n' % lib_dir
