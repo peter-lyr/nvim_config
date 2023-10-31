@@ -23,8 +23,7 @@ function M.get_cbps(file)
   return cbps
 end
 
-function M.to_cmake()
-  local proj = B.rep_slash_lower(vim.call 'ProjectRootGet')
+function M.to_cmake_do(proj)
   if #proj == 0 then
     local fname = vim.api.nvim_buf_get_name(0)
     B.notify_info('not in a project: ' .. fname)
@@ -37,6 +36,16 @@ function M.to_cmake()
   else
     B.notify_info 'cbp2cmake...'
     B.system_run('start', 'chcp 65001 && %s && python "%s" "%s"', B.system_cd(proj), M.cbp2cmake_py, proj)
+  end
+end
+
+function M.to_cmake(sel)
+  if not sel then
+    M.to_cmake_do(B.rep_slash_lower(vim.call 'ProjectRootGet'))
+  else
+    B.ui_sel(B.get_file_dirs(vim.api.nvim_buf_get_name(0)), 'sel as root', function(proj)
+      M.to_cmake_do(proj)
+    end)
   end
 end
 
