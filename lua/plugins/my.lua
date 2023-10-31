@@ -111,4 +111,15 @@ return {
       },
     },
   },
+  {
+    name = 'my_cmake',
+    dir = '',
+    lazy = true,
+    keys = {
+      { '<c-f10>', function() require 'config.my_cmake'.to_cmake() end, mode = { 'n', 'v', }, silent = true, desc = 'c or cbps to cmake', },
+    },
+    config = function()
+      require 'map.my_cmake'
+    end,
+  },
 }
