@@ -1,1 +1,2 @@
 - [x] aerial make tabline highlight disappear.
+- [ ] markdown lsp not working.
