@@ -29,7 +29,7 @@ B.aucmd(M.source, 'BufEnter', 'BufEnter', {
   callback = function(ev)
     if vim.fn.filereadable(ev.file) == 1 and vim.o.modifiable == true then
       vim.opt.cursorcolumn = true
-      vim.opt.signcolumn   = 'auto:1'
+      vim.opt.signcolumn   = 'auto:2'
     end
     if vim.tbl_contains(M.tab_4_fts, vim.opt.filetype:get()) == true then
       vim.opt.tabstop = 4
