@@ -24,6 +24,15 @@ return {
       'markdown',
       'python',
     },
+    dependencies = {
+      {
+        'j-hui/fidget.nvim',
+        tag = 'legacy',
+        event = 'LspAttach',
+        opts = {
+        },
+      },
+    },
     init = function()
       if not S.load_whichkeys_txt_enable then
         require 'my_simple'.add_whichkey('<leader>f', 'neovim/nvim-lspconfig', 'Nvim_Lsp')
