@@ -31,7 +31,6 @@ vim.opt.swapfile      = false
 vim.opt.fileformats   = 'dos'
 vim.opt.foldmethod    = 'indent'
 vim.opt.foldlevel     = 99
-vim.opt.signcolumn    = 'auto:1-2'
 -- local ver             = vim.version()
 vim.opt.titlestring   = 'Neovim-094' -- string.format('v%d.%d.%d-Neovim', ver['major'], ver['minor'], ver['patch'])
 vim.opt.fileencodings = 'utf-8,gbk,default,ucs-bom,latin'
@@ -50,4 +49,3 @@ vim.opt.list          = true
 vim.opt.shada         = [[!,'1000,<500,s10000,h]]
 vim.opt.laststatus    = 3
 vim.opt.statusline    = [[%f %h%m%r%=%<%-14.(%l,%c%V%) %P]]
-vim.opt.foldcolumn    = 'auto:1'

@@ -60,6 +60,14 @@ return {
     end,
   },
   {
+    'luukvbaal/statuscol.nvim',
+    lazy = true,
+    event = { 'BufReadPost', 'BufNewFile', },
+    config = function()
+      require 'map.editor_statuscol'
+    end,
+  },
+  {
     'windwp/nvim-autopairs',
     lazy = true,
     event = 'InsertEnter',
