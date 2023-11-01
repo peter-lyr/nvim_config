@@ -143,4 +143,16 @@ return {
       require 'map.editor_sessions'
     end,
   },
+  {
+    'folke/todo-comments.nvim',
+    lazy = true,
+    init = function()
+      if not S.load_whichkeys_txt_enable then
+        require 'my_simple'.add_whichkey('<leader>t', 'folke/todo-comments.nvim', 'Editor_Todo')
+      end
+    end,
+    config = function()
+      require 'map.editor_todo'
+    end,
+  },
 }
