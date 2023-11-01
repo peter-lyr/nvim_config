@@ -28,6 +28,7 @@ M.default_opts = {
   view = {
     width = 30,
     number = true,
+    relativenumber = true,
   },
   sync_root_with_cwd = true,
   reload_on_bufenter = true,
