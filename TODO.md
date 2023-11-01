@@ -2,3 +2,5 @@
 2. [ ] telescope find files feedkeys cur fname
 3. [ ] middlemouse paste image no stuck
 4. [ ] paste mp3 mp4
+5. [ ] statuscolumn
+6. [ ] tabline show all
