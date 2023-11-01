@@ -13,7 +13,7 @@ M.markdowns_fts = {
 }
 
 M.docs_fts = {
-  'pdf',
+  pdf = '[%s](%s)',
 }
 
 M.get_hash = function(file)
@@ -59,13 +59,13 @@ end
 
 M.append_info = function()
   local _url = B.rep_baskslash_lower(M.doc_hash_name)
-  local _line = string.format('%s[%s](%s)\n', M.doc_hash_64, M.doc_fname_tail_root, _url)
+  local _line = string.format('%s' .. M.docs_fts[M.ext] .. '\n', M.doc_hash_64, M.doc_fname_tail_root, _url)
   M.doc_root_md_path:write(_line, 'a')
 end
 
 M.append_line_pre = function()
   local url = B.rep_baskslash_lower(require 'plenary.path':new(M.markdown_rel_head_dot):joinpath(M.doc_root_dir, M.doc_hash_8 .. '.' .. M.doc_fname_tail_ext).filename)
-  return string.format('[%s](%s)', M.doc_fname_tail_root, url)
+  return string.format(M.docs_fts[M.ext], M.doc_fname_tail_root, url)
 end
 
 M.append_line_do = function(line)
@@ -126,8 +126,8 @@ M.check = function(buf)
   local ext = string.match(markdown_fname, '%.([^.]+)$')
   if vim.tbl_contains(M.markdowns_fts, ext) == true then
     local doc_fname = B.rep_slash_lower(vim.api.nvim_buf_get_name(buf))
-    ext = string.match(doc_fname, '%.([^.]+)$')
-    if vim.tbl_contains(M.docs_fts, ext) == true then
+    M.ext = string.match(doc_fname, '%.([^.]+)$')
+    if vim.tbl_contains(vim.tbl_keys(M.docs_fts), M.ext) == true then
       return M.append_doc(project, doc_fname, markdown_fname)
     end
   end
