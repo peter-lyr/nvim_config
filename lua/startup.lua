@@ -15,7 +15,7 @@ function S.load_require(plugin, lua)
   end
   plugin = string.match(plugin, '/+([^/]+)$')
   if plugin then
-    vim.cmd('Lazy load ' .. plugin)
+    pcall(vim.cmd, 'Lazy load ' .. plugin)
   end
   if lua then
     lua = vim.fn.tolower(lua)
