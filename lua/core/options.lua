@@ -21,7 +21,6 @@ vim.cmd [[
   hi TabLine     guifg=#a4a4a4
   hi TabLineSel  guifg=#a4a4a4
   hi TabLineFill guifg=#a4a4a4
-  hi FoldColumn  guibg=NONE
 ]]
 vim.opt.termguicolors = true
 vim.opt.splitright    = true
@@ -32,7 +31,7 @@ vim.opt.swapfile      = false
 vim.opt.fileformats   = 'dos'
 vim.opt.foldmethod    = 'indent'
 vim.opt.foldlevel     = 99
-vim.opt.signcolumn    = 'auto:2'
+vim.opt.signcolumn    = 'auto:1-2'
 -- local ver             = vim.version()
 vim.opt.titlestring   = 'Neovim-094' -- string.format('v%d.%d.%d-Neovim', ver['major'], ver['minor'], ver['patch'])
 vim.opt.fileencodings = 'utf-8,gbk,default,ucs-bom,latin'
