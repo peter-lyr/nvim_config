@@ -100,50 +100,6 @@ M.append_image = function(project, image_fname, markdown_fname)
   return { callback, { M.append_line_pre(), }, }
 end
 
-M.asyncrunprepare = function()
-  local l1 = 0
-  AsyncrunTimer = nil
-  AsyncrunTimer = vim.loop.new_timer()
-  AsyncrunTimer:start(300, 100, function()
-    vim.schedule(function()
-      local temp = #vim.fn.getqflist()
-      if l1 ~= temp then
-        pcall(require 'quickfix'.ausize)
-        l1 = temp
-      end
-    end)
-  end)
-  AsyncRunDone = function()
-    if AsyncrunTimer then
-      AsyncrunTimer:stop()
-    end
-    local l2 = vim.fn.getqflist()
-    if #l2 > 2 then
-      vim.notify(l2[1]['text'] .. '\n' .. l2[#l2 - 1]['text'] .. '\n' .. l2[#l2]['text'])
-    else
-      vim.notify(l2[1]['text'] .. '\n' .. l2[2]['text'])
-    end
-    vim.cmd 'au! User AsyncRunStop'
-    vim.cmd 'e!'
-  end
-  vim.cmd [[au User AsyncRunStop call v:lua.AsyncRunDone()]]
-end
-
-local function system_run(way, str_format, ...)
-  local cmd = string.format(str_format, ...)
-  if way == 'start' then
-    cmd = string.format([[silent !start cmd /c "%s"]], cmd)
-    vim.cmd(cmd)
-  elseif way == 'asyncrun' then
-    cmd = string.format('AsyncRun %s', cmd)
-    M.asyncrunprepare()
-    vim.cmd(cmd)
-  elseif way == 'term' then
-    cmd = string.format('wincmd s|term %s', cmd)
-    vim.cmd(cmd)
-  end
-end
-
 M.update = function(cur)
   local drag_images_docs_update_py = require 'plenary.path':new(M.source .. '.update.py')
   local project = B.rep_slash_lower(vim.fn['ProjectRootGet']())
@@ -161,7 +117,7 @@ M.update = function(cur)
     B.notify_info('[updating] markdown image cwd: `' .. project .. '`')
     cur = ''
   end
-  system_run('asyncrun', 'python "%s" "%s" "%s" "%s"', drag_images_docs_update_py, project, M.image_root_md, cur)
+  B.system_run('asyncrun', 'python "%s" "%s" "%s" "%s"', drag_images_docs_update_py, project, M.image_root_md, cur)
 end
 
 M.paste_check = function()
@@ -289,8 +245,7 @@ M.is_dragged = function(project, buf)
   if not require 'plenary.path':new(image_fname):exists() then
     return nil
   end
-  local hash_64 = M.get_hash(image_fname)
-  if string.match(content, hash_64) then
+  if string.match(content, M.get_hash(image_fname)) then
     return 1
   end
   return nil
