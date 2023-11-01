@@ -14,6 +14,8 @@ M.markdowns_fts = {
 
 M.docs_fts = {
   pdf = '[%s](%s)',
+  mp4 = '<video controls name="%s"><source src="%s" type="video/mp4"></source></video>',
+  mp3 = '<audio controls name="%s"><source src="%s" type="audio/mpeg"></audio>',
 }
 
 M.get_hash = function(file)
