@@ -70,9 +70,13 @@ function M.down()
   vim.cmd [[call feedkeys("\<down>")]]
 end
 
+M.waiting_for_aerial_leave = nil
+
 B.aucmd(M.source, 'BufEnter', 'BufEnter', {
   callback = function(ev)
-    if vim.api.nvim_buf_get_option(ev.buf, 'filetype') == 'minimap' then
+    local ft = vim.api.nvim_buf_get_option(ev.buf, 'filetype')
+    if ft == 'minimap' then
+      M.opened = 1
       vim.cmd 'setlocal signcolumn=no'
       vim.fn.timer_start(20, function()
         vim.keymap.set({ 'n', }, '<MiddleMouse>', function() M.esc(1) end, { buffer = ev.buf, desc = 'MiniMap esc', })
@@ -90,6 +94,23 @@ B.aucmd(M.source, 'BufEnter', 'BufEnter', {
         vim.keymap.set({ 'n', 'v', }, '<ScrollWheelUp>', function() M.up() end, { buffer = ev.buf, desc = 'MiniMap up', })
         vim.keymap.set({ 'n', 'v', }, '<ScrollWheelDown>', function() M.down() end, { buffer = ev.buf, desc = 'MiniMap down', })
       end)
+    elseif ft == 'aerial' then
+      if M.opened then
+        M.waiting_for_aerial_leave = 1
+        M.close()
+      end
+    end
+  end,
+})
+
+B.aucmd(M.source, 'BufLeave', 'BufLeave', {
+  callback = function(ev)
+    local ft = vim.api.nvim_buf_get_option(ev.buf, 'filetype')
+    if ft == 'aerial' then
+      if M.waiting_for_aerial_leave then
+        M.waiting_for_aerial_leave = nil
+        M.open()
+      end
     end
   end,
 })
