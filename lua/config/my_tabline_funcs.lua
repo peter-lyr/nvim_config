@@ -216,11 +216,15 @@ function M.simple_statusline_toggle()
   if C.simple_statusline then
     C.simple_statusline = nil
     vim.opt.showtabline = 2
-    vim.opt.laststatus = 3
+    vim.opt.laststatus  = 3
+    vim.opt.winbar      = ''
+    vim.opt.statusline  = [[%f %h%m%r%=%<%-14.(%l,%c%V%) %P]]
   else
     C.simple_statusline = 1
     vim.opt.showtabline = 0
-    vim.opt.laststatus = 2
+    vim.opt.laststatus  = 2
+    vim.opt.winbar      = '%f'
+    vim.opt.statusline  = '%{getcwd()}'
   end
 end
 
