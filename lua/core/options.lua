@@ -21,6 +21,7 @@ vim.cmd [[
   hi TabLine     guifg=#a4a4a4
   hi TabLineSel  guifg=#a4a4a4
   hi TabLineFill guifg=#a4a4a4
+  hi FoldColumn  guibg=NONE
 ]]
 vim.opt.termguicolors = true
 vim.opt.splitright    = true
