@@ -394,7 +394,14 @@ function M.open()
 end
 
 function M.close()
-  vim.cmd 'AerialCloseAll'
+  if B.is_buf_ft 'aerial' then
+    vim.cmd 'wincmd p'
+    B.set_timeout(20, function()
+      vim.cmd 'AerialCloseAll'
+    end)
+  else
+    vim.cmd 'AerialCloseAll'
+  end
 end
 
 return M

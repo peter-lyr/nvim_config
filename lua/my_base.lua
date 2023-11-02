@@ -25,7 +25,10 @@ function B.is(val)
   return 1
 end
 
-function B.is_buf_ft(buf, ft)
+function B.is_buf_ft(ft, buf)
+  if not buf then
+    buf = vim.fn.bufnr()
+  end
   if vim.api.nvim_buf_get_option(buf, 'filetype') == ft then
     return 1
   end

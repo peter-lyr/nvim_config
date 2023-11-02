@@ -6,7 +6,7 @@ M.loaded = B.get_loaded(M.source)
 --------------------------------------------
 
 function M.toggle()
-  if B.is_buf_ft(vim.fn.bufnr(), 'fugitive') then
+  if B.is_buf_ft('fugitive') then
     vim.cmd 'close'
   else
     vim.cmd 'Git'
