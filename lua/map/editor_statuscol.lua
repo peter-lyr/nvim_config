@@ -9,10 +9,12 @@ M.config = B.rep_map_to_config(M.loaded)
 
 require(M.config)
 
-B.aucmd(M.config, 'BufEnter', 'BufEnter', function()
-  if vim.o.statuscolumn ~= '%!v:lua.StatusCol()' then
-    require(M.config).init()
-  end
-end)
+B.aucmd(M.config, 'BufEnter', 'BufEnter', {
+  callback = function()
+    if vim.o.statuscolumn ~= '%!v:lua.StatusCol()' then
+      require(M.config).init()
+    end
+  end,
+})
 
 return M
