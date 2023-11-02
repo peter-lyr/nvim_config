@@ -79,8 +79,10 @@ B.aucmd(M.source, 'BufEnter', 'BufEnter', {
       M.opened = 1
       vim.cmd 'setlocal signcolumn=no'
       vim.fn.timer_start(20, function()
-        vim.keymap.set({ 'n', }, '<MiddleMouse>', function() M.esc(1) end, { buffer = ev.buf, desc = 'MiniMap esc', })
-        vim.keymap.set({ 'v', }, '<MiddleMouse>', function() M.esc(2) end, { buffer = ev.buf, desc = 'MiniMap esc', })
+        vim.keymap.set({ 'n', }, '<MiddleMouse>', function() M.close() end, { buffer = ev.buf, desc = 'MiniMap close', })
+        vim.keymap.set({ 'v', }, '<MiddleMouse>', function() M.close() end, { buffer = ev.buf, desc = 'MiniMap close', })
+        vim.keymap.set({ 'n', }, '<RightMouse>', function() M.esc(1) end, { buffer = ev.buf, desc = 'MiniMap esc', })
+        vim.keymap.set({ 'v', }, '<RightMouse>', function() M.esc(2) end, { buffer = ev.buf, desc = 'MiniMap esc', })
         vim.keymap.set({ 'n', }, 'q', function() M.esc(1) end, { buffer = ev.buf, desc = 'MiniMap esc', })
         vim.keymap.set({ 'v', }, 'q', function() M.esc(2) end, { buffer = ev.buf, desc = 'MiniMap esc', })
         vim.keymap.set({ 'n', }, '`', function() M.esc(1) end, { buffer = ev.buf, desc = 'MiniMap esc', })
