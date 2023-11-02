@@ -123,4 +123,17 @@ return {
       require 'map.my_cmake'
     end,
   },
+  {
+    name = 'my_toggle',
+    dir = '',
+    lazy = true,
+    init = function()
+      if not S.load_whichkeys_txt_enable then
+        require 'my_simple'.add_whichkey('<leader>t', 'toggle', 'My_Toggle')
+      end
+    end,
+    config = function()
+      require 'map.my_toggle'
+    end,
+  },
 }

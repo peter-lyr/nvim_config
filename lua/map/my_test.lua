@@ -53,6 +53,14 @@ B.map_set_opts { silent = false, }
 
 B.map('<c-s-f4>t', 'type_execute_output', {})
 
+--------
+
+B.map('<c-s-f4>ot', 'open_stdpath_temp', {})
+
 B.map_reset_opts()
+
+B.register_whichkey('<c-s-f4>o', 'open')
+
+B.merge_whichkeys()
 
 return M
