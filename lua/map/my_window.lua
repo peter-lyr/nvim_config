@@ -40,12 +40,18 @@ B.map('<leader>xW', 'bwipeout_cur', {})
 B.map('<leader>xd', 'Bdelete_cur', {})
 B.map('<leader>xD', 'bdelete_cur', {})
 
+B.map('<leader>xow', 'Bwipeout_other', {})
+B.map('<leader>xoW', 'bwipeout_other', {})
+B.map('<leader>xod', 'Bdelete_other', {})
+B.map('<leader>xoD', 'bdelete_other', {})
+
 B.map('<leader>xc', 'close_cur', {})
 
 B.map('<leader>xp', 'bdelete_cur_proj', {})
 B.map('<leader>xP', 'bwipeout_cur_proj', {})
-B.map('<leader>xo', 'bdelete_other_proj', {})
-B.map('<leader>xO', 'bwipeout_other_proj', {})
+
+B.map('<leader>xop', 'bdelete_other_proj', {})
+B.map('<leader>xoP', 'bwipeout_other_proj', {})
 
 B.map('<leader>x<del>', 'bwipeout_deleted', {})
 B.map('<leader>x<cr>', 'reopen_deleted', {})

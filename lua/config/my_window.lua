@@ -206,6 +206,50 @@ function M.Bwipeout_cur()
   ]]
 end
 
+function M.bdelete_other()
+  local curroot = B.rep_baskslash_lower(vim.fn['ProjectRootGet'](vim.api.nvim_buf_get_name(0)))
+  local curbuf = vim.fn.bufnr()
+  for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do
+    if bufnr ~= curbuf and curroot == B.rep_baskslash_lower(vim.fn['ProjectRootGet'](vim.api.nvim_buf_get_name(bufnr))) then
+      pcall(vim.cmd, 'bdelete! ' .. tostring(bufnr))
+    end
+  end
+  vim.cmd 'e!'
+end
+
+function M.Bdelete_other()
+  local curroot = B.rep_baskslash_lower(vim.fn['ProjectRootGet'](vim.api.nvim_buf_get_name(0)))
+  local curbuf = vim.fn.bufnr()
+  for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do
+    if bufnr ~= curbuf and curroot == B.rep_baskslash_lower(vim.fn['ProjectRootGet'](vim.api.nvim_buf_get_name(bufnr))) then
+      pcall(vim.cmd, 'Bdelete! ' .. tostring(bufnr))
+    end
+  end
+  vim.cmd 'e!'
+end
+
+function M.bwipeout_other()
+  local curroot = B.rep_baskslash_lower(vim.fn['ProjectRootGet'](vim.api.nvim_buf_get_name(0)))
+  local curbuf = vim.fn.bufnr()
+  for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do
+    if bufnr ~= curbuf and curroot == B.rep_baskslash_lower(vim.fn['ProjectRootGet'](vim.api.nvim_buf_get_name(bufnr))) then
+      pcall(vim.cmd, 'bwipeout! ' .. tostring(bufnr))
+    end
+  end
+  vim.cmd 'e!'
+end
+
+function M.Bwipeout_other()
+  local curroot = B.rep_baskslash_lower(vim.fn['ProjectRootGet'](vim.api.nvim_buf_get_name(0)))
+  local curbuf = vim.fn.bufnr()
+  for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do
+    if bufnr ~= curbuf and curroot == B.rep_baskslash_lower(vim.fn['ProjectRootGet'](vim.api.nvim_buf_get_name(bufnr))) then
+      pcall(vim.cmd, 'Bwipeout! ' .. tostring(bufnr))
+    end
+  end
+  vim.cmd 'e!'
+end
+
 function M.close_cur_tab()
   vim.cmd [[
     try
