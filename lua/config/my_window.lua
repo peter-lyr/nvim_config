@@ -235,6 +235,26 @@ function M.bdelete_cur_proj()
   vim.cmd 'e!'
 end
 
+function M.bwipeout_other_proj()
+  local curroot = B.rep_baskslash_lower(vim.fn['ProjectRootGet'](vim.api.nvim_buf_get_name(0)))
+  for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do
+    if curroot ~= B.rep_baskslash_lower(vim.fn['ProjectRootGet'](vim.api.nvim_buf_get_name(bufnr))) then
+      pcall(vim.cmd, 'Bwipeout! ' .. tostring(bufnr))
+    end
+  end
+  vim.cmd 'e!'
+end
+
+function M.bdelete_other_proj()
+  local curroot = B.rep_baskslash_lower(vim.fn['ProjectRootGet'](vim.api.nvim_buf_get_name(0)))
+  for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do
+    if curroot ~= B.rep_baskslash_lower(vim.fn['ProjectRootGet'](vim.api.nvim_buf_get_name(bufnr))) then
+      pcall(vim.cmd, 'Bdelete! ' .. tostring(bufnr))
+    end
+  end
+  vim.cmd 'e!'
+end
+
 function M.get_deleted_bufnrs()
   return vim.tbl_filter(function(bufnr)
     if 1 ~= vim.fn.buflisted(bufnr) then

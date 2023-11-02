@@ -41,6 +41,8 @@ B.map('<leader>xD', 'bdelete_cur', {})
 B.map('<leader>xc', 'close_cur', {})
 B.map('<leader>xp', 'bdelete_cur_proj', {})
 B.map('<leader>xP', 'bwipeout_cur_proj', {})
+B.map('<leader>xo', 'bdelete_other_proj', {})
+B.map('<leader>xO', 'bwipeout_other_proj', {})
 B.map('<leader>x<del>', 'bwipeout_deleted', {})
 B.map('<leader>x<cr>', 'reopen_deleted', {})
 
