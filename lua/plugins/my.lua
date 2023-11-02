@@ -71,6 +71,7 @@ return {
       vim.opt.showtabline = 2
       if not S.load_whichkeys_txt_enable then
         require 'my_simple'.add_whichkey('<leader>q', 'tabline', 'My_Tabline')
+        require 'my_simple'.add_whichkey('<leader>x', 'tabline', 'My_Tabline', 'Delete')
       end
     end,
     config = function()
