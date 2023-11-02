@@ -25,11 +25,14 @@ function B.is(val)
   return 1
 end
 
-function B.is_buf_ft(ft, buf)
+function B.is_buf_ft(fts, buf)
   if not buf then
     buf = vim.fn.bufnr()
   end
-  if vim.api.nvim_buf_get_option(buf, 'filetype') == ft then
+  if type(fts) == 'string' then
+    fts = { fts, }
+  end
+  if B.is(vim.tbl_contains(fts, vim.api.nvim_buf_get_option(buf, 'filetype'))) then
     return 1
   end
   return nil
