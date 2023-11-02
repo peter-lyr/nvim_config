@@ -390,10 +390,16 @@ function M.setup(opts)
 end
 
 function M.open()
+  M.setup {
+    open_automatic = true,
+  }
   vim.cmd 'AerialOpen right'
 end
 
 function M.close()
+  M.setup {
+    open_automatic = false,
+  }
   if B.is_buf_ft 'aerial' then
     vim.cmd 'wincmd p'
     B.set_timeout(20, function()
