@@ -25,6 +25,10 @@ local cfg = {
   },
 }
 
-require 'statuscol'.setup(cfg)
+function M.init()
+  require 'statuscol'.setup(cfg)
+end
+
+M.init()
 
 return M
