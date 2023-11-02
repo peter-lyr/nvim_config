@@ -38,6 +38,7 @@ function M.start_new_nvim_qt()
 end
 
 function M.restart_nvim_qt()
+  require 'config.editor_sessions'.save()
   M.start_new_nvim_qt()
   vim.cmd 'qa!'
 end
