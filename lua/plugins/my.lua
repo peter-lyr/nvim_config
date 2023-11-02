@@ -117,7 +117,7 @@ return {
     dir = '',
     lazy = true,
     keys = {
-      { '<c-f10>', function() require 'config.my_cmake'.to_cmake() end, mode = { 'n', 'v', }, silent = true, desc = 'c or cbps to cmake', },
+      { '<c-f10>',   function() require 'config.my_cmake'.to_cmake() end,  mode = { 'n', 'v', }, silent = true, desc = 'c or cbps to cmake', },
       { '<c-s-f10>', function() require 'config.my_cmake'.to_cmake(1) end, mode = { 'n', 'v', }, silent = true, desc = 'c or cbps to cmake', },
     },
     config = function()
@@ -135,6 +135,36 @@ return {
     end,
     config = function()
       require 'map.my_toggle'
+    end,
+  },
+  {
+    name = 'my_hili',
+    dir = '',
+    lazy = true,
+    event = { 'CursorHold', },
+    keys = {
+      { '*',       function() require 'config.my_hili'.search() end,          mode = { 'v', },      silent = true, desc = 'hili multiline search', },
+      -- windo cursorword
+      { '<a-7>',   function() require 'config.my_hili'.cursorword() end,      mode = { 'n', },      silent = true, desc = 'hili cursor word', },
+      { '<a-8>',   function() require 'config.my_hili'.windocursorword() end, mode = { 'n', },      silent = true, desc = 'hili windo cursor word', },
+      -- cword hili
+      { '<c-8>',   function() require 'config.my_hili'.hili_n() end,          mode = { 'n', },      silent = true, desc = 'hili cword', },
+      { '<c-8>',   function() require 'config.my_hili'.hili_v() end,          mode = { 'v', },      silent = true, desc = 'hili cword', },
+      -- cword hili rm
+      { '<c-s-8>', function() require 'config.my_hili'.rmhili_v() end,        mode = { 'v', },      silent = true, desc = 'hili rm v', },
+      { '<c-s-8>', function() require 'config.my_hili'.rmhili_n() end,        mode = { 'n', },      silent = true, desc = 'hili rm n', },
+      -- select hili
+      { '<c-7>',   function() require 'config.my_hili'.selnexthili() end,     mode = { 'n', 'v', }, silent = true, desc = 'hili sel next', },
+      { '<c-s-7>', function() require 'config.my_hili'.selprevhili() end,     mode = { 'n', 'v', }, silent = true, desc = 'hili sel prev', },
+      -- go hili
+      { '<c-n>',   function() require 'config.my_hili'.prevhili() end,        mode = { 'n', 'v', }, silent = true, desc = 'hili go prev', },
+      { '<c-m>',   function() require 'config.my_hili'.nexthili() end,        mode = { 'n', 'v', }, silent = true, desc = 'hili go next', },
+      -- go cur hili
+      { '<c-s-n>', function() require 'config.my_hili'.prevcurhili() end,     mode = { 'n', 'v', }, silent = true, desc = 'hili go cur prev', },
+      { '<c-s-m>', function() require 'config.my_hili'.nextcurhili() end,     mode = { 'n', 'v', }, silent = true, desc = 'hili go cur next', },
+    },
+    config = function()
+      require 'map.my_hili'
     end,
   },
 }
