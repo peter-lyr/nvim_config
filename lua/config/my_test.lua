@@ -60,19 +60,23 @@ end
 ------------------------------
 
 function M.terminal_cmd()
+  vim.cmd('split')
   vim.cmd 'terminal'
 end
 
 function M.terminal_ipython()
-  vim.cmd 'ipython'
+  vim.cmd('split')
+  vim.cmd 'terminal ipython'
 end
 
 function M.terminal_bash()
-  vim.cmd 'bash'
+  vim.cmd('split')
+  vim.cmd 'terminal bash'
 end
 
 function M.terminal_powershell()
-  vim.cmd 'powershell'
+  vim.cmd('split')
+  vim.cmd 'terminal powershell'
 end
 
 -----
