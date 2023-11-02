@@ -5,3 +5,4 @@
 4. [x] paste mp3 mp4
 5. [x] statuscolumn statuscol.nvim
 6. [ ] tabline show all
+7. [ ] tabline delete other projs
