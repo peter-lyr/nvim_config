@@ -29,6 +29,11 @@ B.map('<leader>qn', 'append_one_proj_new_tab', {})
 B.map('<leader>qm', 'append_one_proj_new_tab_no_dupl', {})
 B.map('<leader>q<leader>', 'simple_statusline_toggle', {})
 
+------
+
+B.map('<leader>xL', 'bd_all_next_buf', {})
+B.map('<leader>xH', 'bd_all_prev_buf', {})
+
 B.map_reset_opts()
 
 --------------------

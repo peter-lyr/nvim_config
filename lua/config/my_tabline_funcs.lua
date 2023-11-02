@@ -96,6 +96,60 @@ function M.bd_next_buf()
   end
 end
 
+-----------
+
+function M.bd_all_next_buf()
+  if not M.is_cuf_buf_readable() then
+    return
+  end
+  local C = require 'config.my_tabline'
+  if #C.proj_bufs[C.cur_proj] > 0 then
+    local index = B.index_of(C.proj_bufs[C.cur_proj], C.cur_buf)
+    if index >= #C.proj_bufs[C.cur_proj] then
+      return
+    end
+    index = index + 1
+    local bufs = {}
+    for i = index, #C.proj_bufs[C.cur_proj] do
+      local buf = C.proj_bufs[C.cur_proj][i]
+      if buf then
+        bufs[#bufs + 1] = buf
+      end
+    end
+    for _, buf in ipairs(bufs) do
+      print(string.format('prev-Bdelete! %d', buf))
+      vim.cmd(string.format('Bdelete! %d', buf))
+    end
+    C.update_bufs_and_refresh_tabline()
+  end
+end
+
+function M.bd_all_prev_buf()
+  if not M.is_cuf_buf_readable() then
+    return
+  end
+  local C = require 'config.my_tabline'
+  if #C.proj_bufs[C.cur_proj] > 0 then
+    local index = B.index_of(C.proj_bufs[C.cur_proj], C.cur_buf)
+    if index <= 1 then
+      return
+    end
+    index = index - 1
+    local bufs = {}
+    for i = 1, index do
+      local buf = C.proj_bufs[C.cur_proj][i]
+      if buf then
+        bufs[#bufs + 1] = buf
+      end
+    end
+    for _, buf in ipairs(bufs) do
+      print(string.format('next-Bdelete! %d', buf))
+      vim.cmd(string.format('Bdelete! %d', buf))
+    end
+    C.update_bufs_and_refresh_tabline()
+  end
+end
+
 ------------------
 
 function M.only_cur_buffer()

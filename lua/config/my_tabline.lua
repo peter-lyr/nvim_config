@@ -30,6 +30,16 @@ function M.bd_prev_buf()
   B.call_sub(M.loaded, 'funcs', 'bd_prev_buf')
 end
 
+-------
+
+function M.bd_all_next_buf()
+  B.call_sub(M.loaded, 'funcs', 'bd_all_next_buf')
+end
+
+function M.bd_all_prev_buf()
+  B.call_sub(M.loaded, 'funcs', 'bd_all_prev_buf')
+end
+
 ----------
 
 function M.update_bufs(ev)
