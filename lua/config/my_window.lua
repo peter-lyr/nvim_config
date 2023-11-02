@@ -178,7 +178,26 @@ function M.bdelete_cur()
   ]]
 end
 
+function M.Bdelete_cur()
+  vim.cmd [[
+    try
+      bdelete!
+      e!
+    catch
+    endtry
+  ]]
+end
+
 function M.bwipeout_cur()
+  vim.cmd [[
+    try
+      bwipeout!
+    catch
+    endtry
+  ]]
+end
+
+function M.Bwipeout_cur()
   vim.cmd [[
     try
       Bwipeout!
