@@ -167,4 +167,17 @@ return {
       require 'map.my_hili'
     end,
   },
+  {
+    name = 'my_yank',
+    dir = '',
+    lazy = true,
+    init = function()
+      if not S.load_whichkeys_txt_enable then
+        require 'my_simple'.add_whichkey('<leader>y', 'yank', 'My_Yank')
+      end
+    end,
+    config = function()
+      require 'map.my_yank'
+    end,
+  },
 }
