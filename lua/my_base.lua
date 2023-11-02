@@ -323,6 +323,12 @@ function B.system_run(way, str_format, ...)
   B.call_sub(B.loaded, 'asyncrun', 'system_run', way, str_format, ...)
 end
 
+--------
+
+function B.powershell_run(file)
+  return B.call_sub(B.loaded, 'asyncrun', 'powershell_run', file)
+end
+
 -----------
 
 function B.asyncrun_prepare_add(callback)

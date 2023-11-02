@@ -356,12 +356,13 @@ function M.paste_from_clip(node)
   if not dtarget then
     return
   end
-  local cmd = string.format('Get-Clipboard -Format FileDropList | ForEach-Object { Copy-Item -Path $_.FullName -Destination "%s" }', dtarget)
-  require 'terminal'.send('powershell', cmd, 0)
-  vim.fn.timer_start(1000, function()
-    vim.cmd 'wincmd t'
+  local cmd = string.format('Get-Clipboard -Format FileDropList|ForEach-Object{Copy-Item -Path $_.FullName -Destination "%s"}', dtarget)
+  local out = B.powershell_run(cmd)
+  if #out[2] == 1 and #out[2][1] == 0 then
     require 'nvim-tree.api'.tree.reload()
-  end)
+  else
+    B.notify_error(out[2])
+  end
 end
 
 function M.wrap_node(fn)

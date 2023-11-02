@@ -133,4 +133,33 @@ function M.system_cd(file)
   end
 end
 
+-----------
+
+function M.powershell_run(cmd)
+  vim.g.powershell_run_cmd = cmd
+  vim.g.powershell_run_out = nil
+  vim.cmd [[
+  python << EOF
+import vim
+import subprocess
+cmd = vim.eval('g:powershell_run_cmd')
+process = subprocess.Popen(["powershell", cmd],stdout=subprocess.PIPE, stderr = subprocess.PIPE)
+out = process.communicate()
+res = []
+for o in out:
+  o = o.replace(b'\r', b'')
+  try:
+    o = o.decode('utf-8')
+  except:
+    try:
+      o = o.decode('gbk')
+    except:
+      o = '-error-'
+  res.append(o.split('\n'))
+vim.command(f"""let g:powershell_run_out = {res}""")
+EOF
+]]
+  return vim.g.powershell_run_out
+end
+
 return M
