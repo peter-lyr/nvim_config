@@ -87,6 +87,10 @@ vim.keymap.set({ 'n', 'v', }, '<c-f11>', 'gf', { desc = 'gf', })
 
 vim.keymap.set({ 't', }, '<esc>', '<c-\\><c-n>', { desc = 'esc', })
 
+-- zh 2 en
+
+-- vim.keymap.set({ 't', 'c', 'i', }, '·', '`', { desc = '`', })
+
 -- B.map_reset_opts()
 
 return M
