@@ -356,7 +356,7 @@ function M.paste_from_clip(node)
   if not dtarget then
     return
   end
-  local cmd = string.format('Get-Clipboard -Format FileDropList|ForEach-Object{Copy-Item -Path $_.FullName -Destination "%s"}', dtarget)
+  local cmd = string.format('Get-Clipboard -Format FileDropList|ForEach-Object{Copy-Item -Path $_.FullName -Destination "%s" -Recurse}', dtarget)
   local out = B.powershell_run(cmd)
   if #out[2] == 1 and #out[2][1] == 0 then
     require 'nvim-tree.api'.tree.reload()
