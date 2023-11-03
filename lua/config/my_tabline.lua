@@ -96,4 +96,8 @@ function M.projectroot_titlestring(ev)
   vim.opt.titlestring = string.format('%d %s %s', ver['patch'], B.get_only_name(project), head)
 end
 
+function M.toggle_tabs_way()
+  return B.call_sub(M.loaded, 'event', 'toggle_tabs_way')
+end
+
 return M

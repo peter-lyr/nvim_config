@@ -137,22 +137,14 @@ function M.get_buf_to_show(bufs, cur_buf, tab_len)
     return {}
   end
   local columns = vim.opt.columns:get()
-  local buf_len = columns - tab_len - 2
+  local buf_len = columns - tab_len
   local newbufnrs = { bufs[index], }
-  buf_len = buf_len - #B.get_only_name(vim.fn.bufname(cur_buf)) - 4
+  local ll = #tostring(cur_buf)
+  local ss = vim.fn.strdisplaywidth(tostring(#bufs))
+  buf_len = buf_len - vim.fn.strdisplaywidth(B.get_only_name(vim.fn.bufname(cur_buf))) - 4 - ll - ss
   if buf_len < 0 then
-    if index >= 2 then
-      table.insert(newbufnrs, 1, bufs[index - 1])
-    end
-    if index < #bufs then
-      table.insert(newbufnrs, bufs[index + 1])
-    end
     return newbufnrs
   end
-  if vim.fn.tabpagenr '$' > 1 then
-    buf_len = buf_len - #string.format('%d/%d ', vim.fn.tabpagenr(), vim.fn.tabpagenr '$')
-  end
-  buf_len = buf_len - #tostring(#bufs) - 1
   local cnt1 = 1
   local cnt2 = 1
   for i = 2, #bufs do
@@ -161,7 +153,7 @@ function M.get_buf_to_show(bufs, cur_buf, tab_len)
       if ii > #bufs then
         ii = index - cnt2
         local only_name = B.get_only_name(vim.fn.bufname(bufs[ii]))
-        buf_len = buf_len - #only_name - 4
+        buf_len = buf_len - vim.fn.strdisplaywidth(only_name) - 3
         if #newbufnrs > 9 then
           buf_len = buf_len - 1
         end
@@ -172,7 +164,7 @@ function M.get_buf_to_show(bufs, cur_buf, tab_len)
         cnt2 = cnt2 + 1
       else
         local only_name = B.get_only_name(vim.fn.bufname(bufs[ii]))
-        buf_len = buf_len - #only_name - 4
+        buf_len = buf_len - vim.fn.strdisplaywidth(only_name) - 3
         if #newbufnrs > 9 then
           buf_len = buf_len - 1
         end
@@ -187,7 +179,7 @@ function M.get_buf_to_show(bufs, cur_buf, tab_len)
       if ii < 1 then
         ii = index + cnt1
         local only_name = B.get_only_name(vim.fn.bufname(bufs[ii]))
-        buf_len = buf_len - #only_name - 4
+        buf_len = buf_len - vim.fn.strdisplaywidth(only_name) - 3
         if #newbufnrs > 9 then
           buf_len = buf_len - 1
         end
@@ -198,7 +190,7 @@ function M.get_buf_to_show(bufs, cur_buf, tab_len)
         cnt1 = cnt1 + 1
       else
         local only_name = B.get_only_name(vim.fn.bufname(bufs[ii]))
-        buf_len = buf_len - #only_name - 4
+        buf_len = buf_len - vim.fn.strdisplaywidth(only_name) - 3
         if #newbufnrs > 9 then
           buf_len = buf_len - 1
         end
@@ -218,41 +210,151 @@ function M.get_buf_to_show(bufs, cur_buf, tab_len)
   return newbufnrs
 end
 
-function M.refresh_tabline()
-  local C = require 'config.my_tabline'
-  local items = {}
-  local buf_to_show = {}
-  local yy = 1
-  local temp = ''
-  local tab_to_show = vim.loop.cwd()
-  if C.proj_bufs[C.cur_proj] then
-    buf_to_show = M.get_buf_to_show(C.proj_bufs[C.cur_proj], C.cur_buf, #tab_to_show)
-    if #buf_to_show == 0 then
-      buf_to_show = C.proj_bufs[C.cur_proj]
+M.get_root_short = function(projectroot)
+  local temp__ = vim.fn.tolower(vim.fn.fnamemodify(projectroot, ':t'))
+  if #temp__ >= 15 then
+    local s1 = ''
+    local s2 = ''
+    for i = 15, 3, -1 do
+      s2 = string.sub(temp__, #temp__ - i, #temp__)
+      if vim.fn.strdisplaywidth(s2) <= 7 then
+        break
+      end
     end
-    yy = B.index_of(C.proj_bufs[C.cur_proj], buf_to_show[1])
+    for i = 15, 3, -1 do
+      s1 = string.sub(temp__, 1, i)
+      if vim.fn.strdisplaywidth(s1) <= 7 then
+        break
+      end
+    end
+    return s1 .. '…' .. s2
   end
-  for i, bufnr in ipairs(buf_to_show) do
-    local xx = tostring(yy + i - 1)
-    local only_name = B.get_only_name(vim.fn.bufname(bufnr))
-    local temp_ = ''
-    if C.cur_buf == bufnr then
-      temp_ = '%#tblsel#'
-      xx = xx .. '/' .. #C.proj_bufs[C.cur_proj]
+  local updir = vim.fn.tolower(vim.fn.fnamemodify(projectroot, ':h:t'))
+  if #updir >= 15 then
+    local s1 = ''
+    local s2 = ''
+    for i = 15, 3, -1 do
+      s2 = string.sub(updir, #updir - i, #updir)
+      if vim.fn.strdisplaywidth(s2) <= 7 then
+        break
+      end
+    end
+    for i = 15, 3, -1 do
+      s1 = string.sub(updir, 1, i)
+      if vim.fn.strdisplaywidth(s1) <= 7 then
+        break
+      end
+    end
+    return s1 .. '…' .. s2
+  end
+  return updir .. '\\' .. temp__
+end
+
+function M.one_tab()
+  local tabs = ''
+  local tab_len = 0
+  local curtab = vim.fn.tabpagenr()
+  local tabs_prefix = '%#tbltab#%' .. tostring(curtab) .. '@SwitchTabNext@'
+  if vim.fn.tabpagenr '$' == 1 then
+    tabs = tabs_prefix .. string.format(' %s ', vim.loop.cwd())
+  else
+    tabs = tabs_prefix .. string.format(' %d/%d %s ', curtab, vim.fn.tabpagenr '$', vim.loop.cwd())
+  end
+  tab_len = vim.fn.strdisplaywidth(tabs_prefix)
+  return tabs, tab_len
+end
+
+-- 1. only cur tab
+-- 2. multi tabs
+M.tabs_way = 2
+
+function M.get_tab_to_show()
+  if M.tabs_way == 1 then
+    return M.one_tab()
+  elseif M.tabs_way == 2 then
+    if vim.fn.tabpagenr '$' == 1 then
+      return M.one_tab()
     else
-      temp_ = '%#tblfil#'
+      local tabs = ''
+      local tab_len = 0
+      local projs = {}
+      local cur_tabnr = vim.fn.tabpagenr()
+      local tab_max = vim.fn.tabpagenr '$'
+      for tabnr = 1, tab_max do
+        local proj = ''
+        local temp_file = ''
+        for _, bufnr in ipairs(vim.fn.tabpagebuflist(tabnr)) do
+          temp_file = vim.api.nvim_buf_get_name(bufnr)
+          local temp_proj = B.rep_slash_lower(vim.fn['ProjectRootGet'](temp_file))
+          if temp_proj ~= '.' and vim.fn.isdirectory(temp_proj) == 1 and vim.tbl_contains(projs, temp_proj) == false then
+            projs[#projs + 1] = temp_proj
+            proj = temp_proj
+            break
+          end
+        end
+        if #proj == 0 then
+          proj = temp_file
+        end
+        if cur_tabnr == tabnr then
+          tabs = tabs .. '%#tbltab#%'
+        else
+          tabs = tabs .. '%#tblfil#%'
+        end
+        tabs = tabs .. tostring(tabnr) .. '@SwitchTab@'
+        local temp = ''
+        if cur_tabnr == tabnr then
+          temp = string.format(' %d/%d %s ', tabnr, tab_max, M.get_root_short(proj))
+        else
+          temp = string.format(' %d %s ', tabnr, M.get_root_short(proj))
+        end
+        tab_len = tab_len + vim.fn.strdisplaywidth(temp)
+        tabs = tabs .. temp
+      end
+      return tabs, tab_len
     end
-    items[#items + 1] = temp_ .. '%' .. tostring(bufnr) .. '@SwitchBuffer@ ' .. xx .. ' ' .. only_name
   end
-  temp = temp .. vim.fn.join(items, ' ') .. ' '
-  temp = temp .. '%#tblfil#%1@SwitchNone@%=%<%#tblfil#'
-  local ii = ''
-  if vim.fn.tabpagenr '$' > 1 then
-    ii = string.format('%d/%d ', vim.fn.tabpagenr(), vim.fn.tabpagenr '$')
+end
+
+function M.get_buf_content(tab_len)
+  local C = require 'config.my_tabline'
+  local bufs = {}
+  local bufs_to_show = {}
+  local buf_index_cur = 1
+  if C.proj_bufs[C.cur_proj] then
+    bufs_to_show = M.get_buf_to_show(C.proj_bufs[C.cur_proj], C.cur_buf, tab_len)
+    if #bufs_to_show == 0 then
+      bufs_to_show = C.proj_bufs[C.cur_proj]
+    end
+    buf_index_cur = B.index_of(C.proj_bufs[C.cur_proj], bufs_to_show[1])
   end
-  temp = temp .. '%#tbltab#'
-  temp = temp .. '%' .. tostring(vim.fn.tabpagenr()) .. '@SwitchTabNext@ ' .. tab_to_show .. ' ' .. ii
-  vim.opt.tabline = temp
+  for index, buf in ipairs(bufs_to_show) do
+    local only_name = B.get_only_name(vim.fn.bufname(buf))
+    if C.cur_buf == buf then
+      bufs[#bufs + 1] = string.format('%%#tblsel#%%%d@SwitchBuffer@ %d/%d %s ', buf, buf_index_cur + index - 1, #C.proj_bufs[C.cur_proj], only_name)
+    else
+      bufs[#bufs + 1] = string.format('%%#tblfil#%%%d@SwitchBuffer@ %d %s ', buf, buf_index_cur + index - 1, only_name)
+    end
+  end
+  return vim.fn.join(bufs, '')
+end
+
+function M.refresh_tabline()
+  local tabs_to_show, tab_len = M.get_tab_to_show()
+  vim.opt.tabline = M.get_buf_content(tab_len) .. '%#tblfil#%1@SwitchNone@%=%<%#tblfil#' .. tabs_to_show
+end
+
+function M.toggle_tabs_way()
+  M.tabs_way = M.tabs_way + 1
+  if M.tabs_way > 2 then
+    M.tabs_way = 1
+  end
+  if M.tabs_way == 1 then
+    B.notify_info 'only cur tab'
+  elseif M.tabs_way == 2 then
+    B.notify_info 'multi tabs'
+  end
+  local C = require 'config.my_tabline'
+  C.update_bufs_and_refresh_tabline()
 end
 
 return M
