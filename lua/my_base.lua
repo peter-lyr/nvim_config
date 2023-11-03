@@ -177,7 +177,7 @@ function B.set_interval(interval, callback)
 end
 
 function B.clear_interval(timer)
-  vim.fn.timer_stop(timer)
+  pcall(vim.fn.timer_stop, timer)
 end
 
 -----------------------------
