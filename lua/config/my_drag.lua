@@ -43,9 +43,9 @@ function M.readpre(ev)
     end
     if #M.post_cmd == 0 then
       M.post_cmd = B.call_sub(M.loaded, 'bin', 'check_xxd', ev.buf)
-      if #M.post_cmd == 0 then
-        M.post_cmd = B.call_sub(M.loaded, 'bin', 'check_others', ev.buf)
-      end
+      -- if #M.post_cmd == 0 then
+      --   M.post_cmd = B.call_sub(M.loaded, 'bin', 'check_others', ev.buf)
+      -- end
     end
   end
 end
