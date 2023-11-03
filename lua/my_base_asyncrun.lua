@@ -120,6 +120,13 @@ function M.system_run(way, str_format, ...)
   end
 end
 
+function M.cmd(str_format, ...)
+  if type(str_format) == 'table' then
+    str_format = vim.fn.join(str_format, ' && ')
+  end
+  vim.cmd(string.format(str_format, ...))
+end
+
 function M.system_cd(file)
   vim.cmd 'Lazy load plenary.nvim'
   local new_file = ''

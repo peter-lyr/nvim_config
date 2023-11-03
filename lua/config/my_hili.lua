@@ -87,7 +87,7 @@ function M.search()
   local timer = vim.loop.new_timer()
   timer:start(10, 0, function()
     vim.schedule(function()
-      vim.cmd(string.format('let @/ = "\\V" . %s', M.getvisualcontent()))
+      B.cmd('let @/ = "\\V" . %s', M.getvisualcontent())
       vim.cmd [[call feedkeys("/\\\<c-r>/\<cr>")]]
     end)
   end)
@@ -146,7 +146,7 @@ function M.hili_v()
     local timer = vim.loop.new_timer()
     timer:start(10, 0, function()
       vim.schedule(function()
-        vim.cmd(string.format('let @0 = %s', M.getvisualcontent()))
+        B.cmd('let @0 = %s', M.getvisualcontent())
         local content = M.getescape(vim.fn.getreg '0')
         local hiname = M.gethiname(content)
         local bg = Colors[math.random(#Colors)]
@@ -172,7 +172,7 @@ function M.rmhili_v()
       local timer = vim.loop.new_timer()
       timer:start(10, 0, function()
         vim.schedule(function()
-          vim.cmd(string.format('let @0 = %s', M.getvisualcontent()))
+          B.cmd('let @0 = %s', M.getvisualcontent())
           local content = M.getescape(vim.fn.getreg '0')
           if vim.tbl_contains(vim.tbl_keys(HiLi), content) then
             local hiname = M.gethiname(content)
@@ -211,7 +211,7 @@ function M.prevhili()
     local content = table.concat(vim.tbl_keys(HiLi), '\\|')
     local ee = vim.fn.searchpos(content, 'be')
     local ss = vim.fn.searchpos(content, 'bn')
-    vim.cmd(string.format('let @0 = %s', M.getcontent(ss[1], ss[2], ee[1], ee[2])))
+    B.cmd('let @0 = %s', M.getcontent(ss[1], ss[2], ee[1], ee[2]))
     M.curcontent = M.getescape(vim.fn.getreg '0')
   end
 end
@@ -223,7 +223,7 @@ function M.nexthili()
     local content = table.concat(vim.tbl_keys(HiLi), '\\|')
     local ss = vim.fn.searchpos(content)
     local ee = vim.fn.searchpos(content, 'ne')
-    vim.cmd(string.format('let @0 = %s', M.getcontent(ss[1], ss[2], ee[1], ee[2])))
+    B.cmd('let @0 = %s', M.getcontent(ss[1], ss[2], ee[1], ee[2]))
     M.curcontent = M.getescape(vim.fn.getreg '0')
   end
 end
@@ -256,7 +256,7 @@ function M.selnexthili()
       vim.cmd [[call feedkeys("\<c-v>v")]]
     else
       vim.fn.searchpos(content)
-      vim.cmd(string.format([[call feedkeys("v%dgg%d|")]], ne[1], ne[2]))
+      B.cmd([[call feedkeys("v%dgg%d|")]], ne[1], ne[2])
     end
   end
 end
@@ -274,7 +274,7 @@ function M.selprevhili()
     else
       vim.fn.searchpos(content, 'be')
       local ne = vim.fn.searchpos(content, 'nb')
-      vim.cmd(string.format([[call feedkeys("v%dgg%d|")]], ne[1], ne[2]))
+      B.cmd([[call feedkeys("v%dgg%d|")]], ne[1], ne[2])
     end
   end
 end
@@ -299,7 +299,7 @@ function M.on_cursorhold(ev)
       if vim.fn.getbufvar(ev.buf, '&buftype') ~= 'nofile' then
         local winid = vim.fn.win_getid()
         if string.match(word, M.iskeyword_pattern) then
-          vim.cmd(string.format([[keepj windo match CursorWord /\V\<%s\>/]], word))
+          B.cmd([[keepj windo match CursorWord /\V\<%s\>/]], word)
         else
           vim.cmd [[keepj windo match CursorWord //]]
         end
@@ -315,7 +315,7 @@ function M.on_cursorhold(ev)
   end
   if just_hicword then
     if string.match(word, M.iskeyword_pattern) then
-      vim.cmd(string.format([[match CursorWord /\V\<%s\>/]], word))
+      B.cmd([[match CursorWord /\V\<%s\>/]], word)
     else
       vim.cmd [[match CursorWord //]]
     end

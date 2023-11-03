@@ -98,7 +98,7 @@ function M.open_file(cclose)
       end
       vim.cmd('e ' .. cfile)
       if line ~= 0 and col ~= 0 then
-        vim.cmd(string.format('norm %dgg%d|', line, col))
+        B.cmd('norm %dgg%d|', line, col)
       else
         local mark = vim.api.nvim_buf_get_mark(0, '"')
         local lcount = vim.api.nvim_buf_line_count(0)

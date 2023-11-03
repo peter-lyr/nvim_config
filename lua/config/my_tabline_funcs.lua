@@ -29,7 +29,7 @@ function M.b_prev_buf()
     end
     local buf = C.proj_bufs[C.cur_proj][index]
     if buf then
-      vim.cmd(string.format('b%d', buf))
+      B.cmd('b%d', buf)
     end
     C.update_bufs_and_refresh_tabline()
   end
@@ -52,7 +52,7 @@ function M.b_next_buf()
     end
     local buf = C.proj_bufs[C.cur_proj][index]
     if buf then
-      vim.cmd(string.format('b%d', buf))
+      B.cmd('b%d', buf)
     end
     C.update_bufs_and_refresh_tabline()
   end
@@ -71,7 +71,7 @@ function M.bd_prev_buf()
     index = index - 1
     local buf = C.proj_bufs[C.cur_proj][index]
     if buf then
-      vim.cmd(string.format('Bdelete! %d', buf))
+      B.cmd('Bdelete! %d', buf)
     end
     C.update_bufs_and_refresh_tabline()
   end
@@ -90,7 +90,7 @@ function M.bd_next_buf()
     index = index + 1
     local buf = C.proj_bufs[C.cur_proj][index]
     if buf then
-      vim.cmd(string.format('Bdelete! %d', buf))
+      B.cmd('Bdelete! %d', buf)
     end
     C.update_bufs_and_refresh_tabline()
   end
@@ -117,7 +117,7 @@ function M.bd_all_next_buf()
       end
     end
     for _, buf in ipairs(bufs) do
-      vim.cmd(string.format('Bdelete! %d', buf))
+      B.cmd('Bdelete! %d', buf)
     end
     C.update_bufs_and_refresh_tabline()
   end
@@ -142,7 +142,7 @@ function M.bd_all_prev_buf()
       end
     end
     for _, buf in ipairs(bufs) do
-      vim.cmd(string.format('Bdelete! %d', buf))
+      B.cmd('Bdelete! %d', buf)
     end
     C.update_bufs_and_refresh_tabline()
   end

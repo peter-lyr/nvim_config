@@ -361,4 +361,10 @@ function B.get_fname_tail(file)
   return B.call_sub(B.loaded, 'funcs', 'get_fname_tail', file)
 end
 
+--------
+
+function B.cmd(str_format, ...)
+  return B.call_sub(B.loaded, 'asyncrun', 'cmd', str_format, ...)
+end
+
 return B
