@@ -131,13 +131,13 @@ end
 
 --------------
 
-function M.get_buf_to_show(bufs, cur_buf)
+function M.get_buf_to_show(bufs, cur_buf, tab_len)
   local index = B.index_of(bufs, cur_buf)
   if index == -1 then
     return {}
   end
   local columns = vim.opt.columns:get()
-  local buf_len = columns - #vim.loop.cwd() - 2
+  local buf_len = columns - tab_len - 2
   local newbufnrs = { bufs[index], }
   buf_len = buf_len - #B.get_only_name(vim.fn.bufname(cur_buf)) - 4
   if buf_len < 0 then
@@ -224,8 +224,9 @@ function M.refresh_tabline()
   local buf_to_show = {}
   local yy = 1
   local temp = ''
+  local tab_to_show = vim.loop.cwd()
   if C.proj_bufs[C.cur_proj] then
-    buf_to_show = M.get_buf_to_show(C.proj_bufs[C.cur_proj], C.cur_buf)
+    buf_to_show = M.get_buf_to_show(C.proj_bufs[C.cur_proj], C.cur_buf, #tab_to_show)
     if #buf_to_show == 0 then
       buf_to_show = C.proj_bufs[C.cur_proj]
     end
@@ -250,7 +251,7 @@ function M.refresh_tabline()
     ii = string.format('%d/%d ', vim.fn.tabpagenr(), vim.fn.tabpagenr '$')
   end
   temp = temp .. '%#tbltab#'
-  temp = temp .. '%' .. tostring(vim.fn.tabpagenr()) .. '@SwitchTabNext@ ' .. vim.loop.cwd() .. ' ' .. ii
+  temp = temp .. '%' .. tostring(vim.fn.tabpagenr()) .. '@SwitchTabNext@ ' .. tab_to_show .. ' ' .. ii
   vim.opt.tabline = temp
 end
 
