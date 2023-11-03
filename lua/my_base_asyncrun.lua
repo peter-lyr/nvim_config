@@ -109,6 +109,9 @@ function M.system_run(way, str_format, ...)
   if way == 'start' then
     cmd = string.format([[silent !start cmd /c "%s"]], cmd)
     vim.cmd(cmd)
+  elseif way == 'start silent' then
+    cmd = string.format([[silent !start /b /min cmd /c "%s"]], cmd)
+    vim.cmd(cmd)
   elseif way == 'asyncrun' then
     vim.cmd 'Lazy load asyncrun.vim'
     cmd = string.format('AsyncRun %s', cmd)

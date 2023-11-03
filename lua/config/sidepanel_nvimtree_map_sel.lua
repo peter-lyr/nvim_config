@@ -67,7 +67,7 @@ function M.delete_sel()
       else
         pcall(vim.cmd, 'bw! ' .. B.rep_slash_lower(absolute_path))
       end
-      B.system_run('asyncrun', string.format('%s "%s"', M.source .. '.recyclebin.exe', absolute_path:match '^(.-)\\*$'))
+      B.system_run('start silent', string.format('%s "%s"', M.source .. '.recyclebin.exe', absolute_path:match '^(.-)\\*$'))
     end
     require 'nvim-tree.marks'.clear_marks()
     require 'nvim-tree.api'.tree.reload()
