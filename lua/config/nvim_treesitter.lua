@@ -79,17 +79,15 @@ require 'treesitter-context'.setup {
 
 require 'match-up'.setup {}
 
--- solve diffview close err
-if package.loaded['plugins.git_diffview'] then
-  vim.api.nvim_create_autocmd({ 'TabClosed', 'TabEnter', }, {
-    callback = function()
-      B.set_timeout(50, function()
-        if string.match(vim.bo.ft, 'Diffview') or vim.opt.diff:get() == true then
-          vim.cmd 'TSDisable rainbow'
-        else
-          vim.cmd 'TSEnable rainbow'
-        end
-      end)
-    end,
-  })
-end
+-- FIX: rainbow cause diffview close err
+B.aucmd(M.source, 'TabClosed', { 'TabClosed', 'TabEnter', }, {
+  callback = function()
+    B.set_timeout(50, function()
+      if string.match(vim.bo.ft, 'Diffview') or vim.opt.diff:get() == true then
+        vim.cmd 'TSDisable rainbow'
+      else
+        vim.cmd 'TSEnable rainbow'
+      end
+    end)
+  end,
+})
