@@ -117,7 +117,6 @@ function M.bd_all_next_buf()
       end
     end
     for _, buf in ipairs(bufs) do
-      print(string.format('prev-Bdelete! %d', buf))
       vim.cmd(string.format('Bdelete! %d', buf))
     end
     C.update_bufs_and_refresh_tabline()
@@ -143,7 +142,6 @@ function M.bd_all_prev_buf()
       end
     end
     for _, buf in ipairs(bufs) do
-      print(string.format('next-Bdelete! %d', buf))
       vim.cmd(string.format('Bdelete! %d', buf))
     end
     C.update_bufs_and_refresh_tabline()
