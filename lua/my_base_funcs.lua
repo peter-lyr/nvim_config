@@ -9,9 +9,13 @@ function M.get_loaded_valid_bufs()
   local files = {}
   for _, buf in ipairs(vim.api.nvim_list_bufs()) do
     if B.is_buf_loaded_valid(buf) then
-      local fname = vim.api.nvim_buf_get_name(buf)
-      if #fname > 0 and B.file_exists(fname) then
-        files[#files + 1] = fname
+      local file = vim.api.nvim_buf_get_name(buf)
+      if #file > 0 and B.file_exists(file) then
+        local proj = B.rep_baskslash_lower(vim.fn['ProjectRootGet'](file))
+        if vim.tbl_contains(vim.tbl_keys(files), proj) == false then
+          files[proj] = {}
+        end
+        files[proj][#files[proj] + 1] = file
       end
     end
   end
