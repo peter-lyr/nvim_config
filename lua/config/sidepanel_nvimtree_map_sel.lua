@@ -365,6 +365,20 @@ function M.paste_from_clip(node)
   end
 end
 
+function M.paste_from_clip_force(node)
+  local dtarget = M.get_dtarget(node)
+  if not dtarget then
+    return
+  end
+  local cmd = string.format('Get-Clipboard -Format FileDropList|ForEach-Object{Copy-Item -Path $_.FullName -Destination "%s" -Recurse -Force}', dtarget)
+  local out = B.powershell_run(cmd)
+  if #out[2] == 1 and #out[2][1] == 0 then
+    require 'nvim-tree.api'.tree.reload()
+  else
+    B.notify_error(out[2])
+  end
+end
+
 function M.wrap_node(fn)
   return function(node, ...)
     node = node or require 'nvim-tree.lib'.get_node_at_cursor()
@@ -388,6 +402,7 @@ function M.sel_map(bufnr)
 
   vim.keymap.set('n', 'dy', M.wrap_node(M.copy_2_clip), opts 'copy_2_clip')
   vim.keymap.set('n', 'dp', M.wrap_node(M.paste_from_clip), opts 'paste_from_clip')
+  vim.keymap.set('n', 'dP', M.wrap_node(M.paste_from_clip_force), opts 'paste_from_clip_force')
 end
 
 return M
