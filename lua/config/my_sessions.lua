@@ -28,7 +28,11 @@ function M.sel()
   local projs = M.get_projs()
   local list = {}
   for proj, files in pairs(projs) do
-    list[#list + 1] = string.format('%2d files | "%s"', #files, proj)
+    local only_names = {}
+    for _, only_name in ipairs(files) do
+      only_names[#only_names + 1] = B.get_only_name(only_name)
+    end
+    list[#list + 1] = string.format('%2d files | "%s" | %s', #files, proj, vim.fn.join(only_names, ' '))
   end
   if #list > 0 then
     table.insert(list, 1, M.sel_all)
@@ -37,7 +41,7 @@ function M.sel()
         M.open_all(projs)
         return
       end
-      proj = string.match(proj, '%d+ files | "(.*)"$')
+      proj = string.match(proj, '%d+ files | "(.*)"')
       if proj then
         local files = projs[proj]
         table.insert(files, 1, M.sel_all)
