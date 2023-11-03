@@ -26,11 +26,29 @@ function M.system_run_and_close()
   require 'config.sidepanel_nvimtree'.close()
 end
 
+function M.delete(node)
+  B.cmd('Bdelete %s', node.absolute_path)
+  require 'config.my_tabline'.update_bufs_and_refresh_tabline()
+  vim.cmd 'norm j'
+end
+
+function M.wrap_node(fn)
+  return function(node, ...)
+    node = node or require 'nvim-tree.lib'.get_node_at_cursor()
+    fn(node, ...)
+  end
+end
+
 function M.basic_map(bufnr)
   local api = require 'nvim-tree.api'
   local function opts(desc)
     return { desc = 'nvim-tree: ' .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true, }
   end
+
+  vim.keymap.set('n', 'gd', M.wrap_node(M.delete), opts 'delete buf')
+
+  ---
+
   vim.keymap.set('n', '<c-f>', api.node.show_info_popup, opts 'Info')
   vim.keymap.set('n', 'dk', api.node.open.tab, opts 'Open: New Tab')
   vim.keymap.set('n', 'dl', api.node.open.vertical, opts 'Open: Vertical Split')
