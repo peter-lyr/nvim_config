@@ -172,6 +172,14 @@ end
 
 --------------
 
+function M.get_buf_name(only_name)
+  local ext = string.match(only_name, '%.([^.]+)$')
+  if vim.tbl_contains(vim.tbl_keys(M.light), ext) == true and M.light[ext]['icon'] ~= '' then
+    return vim.fn.fnamemodify(only_name, ':r') .. ' ' .. M.light[ext]['icon']
+  end
+  return only_name
+end
+
 function M.get_buf_to_show(bufs, cur_buf, tab_len)
   local index = B.index_of(bufs, cur_buf)
   if index == -1 then
@@ -182,7 +190,7 @@ function M.get_buf_to_show(bufs, cur_buf, tab_len)
   local newbufnrs = { bufs[index], }
   local ll = #tostring(cur_buf)
   local ss = vim.fn.strdisplaywidth(tostring(#bufs))
-  buf_len = buf_len - vim.fn.strdisplaywidth(B.get_only_name(vim.fn.bufname(cur_buf))) - 4 - ll - ss
+  buf_len = buf_len - vim.fn.strdisplaywidth(M.get_buf_name(B.get_only_name(vim.fn.bufname(cur_buf)))) - 4 - ll - ss
   if buf_len < 0 then
     return newbufnrs
   end
@@ -193,8 +201,9 @@ function M.get_buf_to_show(bufs, cur_buf, tab_len)
       local ii = index + cnt1
       if ii > #bufs then
         ii = index - cnt2
-        local only_name = B.get_only_name(vim.fn.bufname(bufs[ii]))
+        local only_name = M.get_buf_name(B.get_only_name(vim.fn.bufname(bufs[ii])))
         buf_len = buf_len - vim.fn.strdisplaywidth(only_name) - 4
+        -- B.print('#"%s": %d', only_name, vim.fn.strdisplaywidth(only_name))
         if #newbufnrs > 9 then
           buf_len = buf_len - 1
         end
@@ -204,7 +213,7 @@ function M.get_buf_to_show(bufs, cur_buf, tab_len)
         table.insert(newbufnrs, 1, bufs[ii])
         cnt2 = cnt2 + 1
       else
-        local only_name = B.get_only_name(vim.fn.bufname(bufs[ii]))
+        local only_name = M.get_buf_name(B.get_only_name(vim.fn.bufname(bufs[ii])))
         buf_len = buf_len - vim.fn.strdisplaywidth(only_name) - 4
         if #newbufnrs > 9 then
           buf_len = buf_len - 1
@@ -219,7 +228,7 @@ function M.get_buf_to_show(bufs, cur_buf, tab_len)
       local ii = index - cnt2
       if ii < 1 then
         ii = index + cnt1
-        local only_name = B.get_only_name(vim.fn.bufname(bufs[ii]))
+        local only_name = M.get_buf_name(B.get_only_name(vim.fn.bufname(bufs[ii])))
         buf_len = buf_len - vim.fn.strdisplaywidth(only_name) - 4
         if #newbufnrs > 9 then
           buf_len = buf_len - 1
@@ -230,7 +239,7 @@ function M.get_buf_to_show(bufs, cur_buf, tab_len)
         table.insert(newbufnrs, bufs[ii])
         cnt1 = cnt1 + 1
       else
-        local only_name = B.get_only_name(vim.fn.bufname(bufs[ii]))
+        local only_name = M.get_buf_name(B.get_only_name(vim.fn.bufname(bufs[ii])))
         buf_len = buf_len - vim.fn.strdisplaywidth(only_name) - 4
         if #newbufnrs > 9 then
           buf_len = buf_len - 1
@@ -370,7 +379,7 @@ function M.get_buf_content(tab_len)
     local only_name_no_ext = vim.fn.fnamemodify(only_name, ':r')
     local ext = string.match(only_name, '%.([^.]+)$')
     if vim.tbl_contains(vim.tbl_keys(M.light), ext) == true and M.light[ext]['icon'] ~= '' then
-      -- name = only_name_no_ext .. ' ' .. M.light[ext]['icon']
+      name = only_name_no_ext .. ' ' .. M.light[ext]['icon']
       hiname = 'tbl' .. M.light[ext]['name']
     end
     if C.cur_buf == buf then
