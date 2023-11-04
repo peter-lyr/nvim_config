@@ -69,7 +69,7 @@ vim.keymap.set({ 'c', 'i', }, '<c-|>', '<c-r>=nvim_buf_get_name(0)<cr>', { desc 
 vim.keymap.set({ 'c', 'i', }, '<c-1>', '<c-r>=bufname()<cr>', { desc = 'paste bufname', })
 vim.keymap.set({ 'c', 'i', }, '<c-2>', '<c-r>=getcwd()<cr>', { desc = 'paste cwd', })
 
-vim.keymap.set({ 'c', 'i', }, '<c-4>', '<c-r>=getline(".")<cr>', { desc = 'paste cur line', })
+vim.keymap.set({ 'c', 'i', }, '<c-l>', '<c-r>=getline(".")<cr>', { desc = 'paste cur line', })
 
 vim.keymap.set({ 'c', 't', }, "<c-'>", '<c-r>=g:single_quote<cr>', { desc = "<c-'>", })
 vim.keymap.set({ 'c', 't', }, "<c-s-'>", '<c-r>=g:double_quote<cr>', { desc = '<c-">', })

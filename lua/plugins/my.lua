@@ -107,7 +107,7 @@ return {
         'itchyny/vim-gitbranch',
         lazy = true,
         keys = {
-          { '<c-3>', function() vim.cmd [[call feedkeys("\<c-r>=gitbranch#name()\<cr>")]] end, mode = { 'c', 'i', }, silent = true, desc = 'paste branch name', },
+          { '<c-b>', function() vim.cmd [[call feedkeys("\<c-r>=gitbranch#name()\<cr>")]] end, mode = { 'c', 'i', }, silent = true, desc = 'paste branch name', },
         },
       },
     },
