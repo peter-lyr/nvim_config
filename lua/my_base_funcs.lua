@@ -108,19 +108,19 @@ function M.time_diff(timestamp)
   end
   seconds = diff
   if B.is(years) then
-    return string.format('%d years ago', years)
+    return string.format('%2d years,   %2d months  ago.', years, months)
   elseif B.is(months) then
-    return string.format('%d months ago', months)
+    return string.format('%2d months,  %2d weeks   ago.', months, weeks)
   elseif B.is(weeks) then
-    return string.format('%d weeks ago', weeks)
+    return string.format('%2d weeks,   %2d days    ago.', weeks, days)
   elseif B.is(days) then
-    return string.format('%d days ago', days)
+    return string.format('%2d days,    %2d hours   ago.', days, hours)
   elseif B.is(hours) then
-    return string.format('%d hours ago', hours)
+    return string.format('%2d hours,   %2d minutes ago.', hours, minutes)
   elseif B.is(minutes) then
-    return string.format('%d minutes ago', minutes)
+    return string.format('%2d minutes, %2d seconds ago.', minutes, seconds)
   elseif B.is(seconds) then
-    return string.format('%d seconds ago', seconds)
+    return string.format('%2d seconds ago.', seconds)
   end
 end
 
