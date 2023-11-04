@@ -64,9 +64,6 @@ function M.sel(fname)
   end
 end
 
-M.format = 'sessions_%d_%dprojs_%dfiles.txt'
-M.pattern = 'sessions_(%d+)_(%d+)projs_(%d+)files%.txt'
-
 function M.save()
   local files, cnt = B.get_loaded_valid_bufs()
   if #vim.tbl_keys(files) > 0 then
@@ -76,6 +73,9 @@ function M.save()
     last_sessions_txt_path:write(vim.inspect(files), 'w')
   end
 end
+
+M.format = 'sessions_%d_%dprojs_%dfiles.txt'
+M.pattern = 'sessions_(%d+)_(%d+)projs_(%d+)files%.txt'
 
 function M.sel_recent()
   local files = B.scan_files(M.sessions_dir_path, M.pattern)
@@ -88,8 +88,7 @@ function M.sel_recent()
     end
   end
   B.ui_sel(new_files, 'which sessions to open', function(_, idx)
-    local fname = files[idx]
-    M.sel(fname)
+    M.sel(files[idx])
   end)
 end
 
