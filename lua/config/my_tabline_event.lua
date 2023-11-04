@@ -194,7 +194,7 @@ function M.get_buf_to_show(bufs, cur_buf, tab_len)
       if ii > #bufs then
         ii = index - cnt2
         local only_name = B.get_only_name(vim.fn.bufname(bufs[ii]))
-        buf_len = buf_len - vim.fn.strdisplaywidth(only_name) - 3
+        buf_len = buf_len - vim.fn.strdisplaywidth(only_name) - 4
         if #newbufnrs > 9 then
           buf_len = buf_len - 1
         end
@@ -205,7 +205,7 @@ function M.get_buf_to_show(bufs, cur_buf, tab_len)
         cnt2 = cnt2 + 1
       else
         local only_name = B.get_only_name(vim.fn.bufname(bufs[ii]))
-        buf_len = buf_len - vim.fn.strdisplaywidth(only_name) - 3
+        buf_len = buf_len - vim.fn.strdisplaywidth(only_name) - 4
         if #newbufnrs > 9 then
           buf_len = buf_len - 1
         end
@@ -220,7 +220,7 @@ function M.get_buf_to_show(bufs, cur_buf, tab_len)
       if ii < 1 then
         ii = index + cnt1
         local only_name = B.get_only_name(vim.fn.bufname(bufs[ii]))
-        buf_len = buf_len - vim.fn.strdisplaywidth(only_name) - 3
+        buf_len = buf_len - vim.fn.strdisplaywidth(only_name) - 4
         if #newbufnrs > 9 then
           buf_len = buf_len - 1
         end
@@ -231,7 +231,7 @@ function M.get_buf_to_show(bufs, cur_buf, tab_len)
         cnt1 = cnt1 + 1
       else
         local only_name = B.get_only_name(vim.fn.bufname(bufs[ii]))
-        buf_len = buf_len - vim.fn.strdisplaywidth(only_name) - 3
+        buf_len = buf_len - vim.fn.strdisplaywidth(only_name) - 4
         if #newbufnrs > 9 then
           buf_len = buf_len - 1
         end
@@ -241,11 +241,6 @@ function M.get_buf_to_show(bufs, cur_buf, tab_len)
         table.insert(newbufnrs, 1, bufs[ii])
         cnt2 = cnt2 + 1
       end
-    end
-  end
-  if #newbufnrs == 2 then
-    if newbufnrs[1] == cur_buf and B.index_of(bufs, cur_buf) ~= 1 then
-      table.insert(newbufnrs, 1, bufs[index - 1])
     end
   end
   return newbufnrs
@@ -375,14 +370,14 @@ function M.get_buf_content(tab_len)
     local only_name_no_ext = vim.fn.fnamemodify(only_name, ':r')
     local ext = string.match(only_name, '%.([^.]+)$')
     if vim.tbl_contains(vim.tbl_keys(M.light), ext) == true and M.light[ext]['icon'] ~= '' then
-      name = only_name_no_ext .. ' ' .. M.light[ext]['icon']
+      -- name = only_name_no_ext .. ' ' .. M.light[ext]['icon']
       hiname = 'tbl' .. M.light[ext]['name']
     end
     if C.cur_buf == buf then
       M.tabhiname = hiname
       bufs[#bufs + 1] = string.format('%%#%s#%%%d@SwitchBuffer@ %d/%d %s ', hiname, buf, buf_index_cur + index - 1, #C.proj_bufs[C.cur_proj], name)
     else
-      bufs[#bufs + 1] = string.format('%%#tblfil#%%%d@SwitchBuffer@ %d %s ', buf, buf_index_cur + index - 1, name)
+      bufs[#bufs + 1] = string.format('%%#tblkil#%%%d@SwitchBuffer@ %d %s ', buf, buf_index_cur + index - 1, name)
     end
   end
   return vim.fn.join(bufs, '')
