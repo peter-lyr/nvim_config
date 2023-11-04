@@ -37,6 +37,10 @@ B.map('<leader>xH', 'bd_all_prev_buf', {})
 
 B.map_reset_opts()
 
+B.register_whichkey('<leader>xo', 'kill other')
+
+B.merge_whichkeys()
+
 --------------------
 
 B.aucmd(M.source, 'BufEnter', 'BufEnter', {
