@@ -13,6 +13,7 @@ function M.notify_info(message)
   if #messages > 1 then
     title = table.remove(messages, 1)
   end
+  require 'notify'.dismiss()
   message = vim.fn.join(messages, '\n')
   vim.notify(message, 'info', {
     title = title,

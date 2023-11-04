@@ -6,6 +6,9 @@ vim.keymap.set({ 'n', 'v', }, '<leader>;', ':', { silent = false, desc = 'go cmd
 vim.keymap.set({ 'n', 'v', }, 'q', '<cmd>WhichKey q<cr>', { silent = true, desc = 'nop', })
 vim.keymap.set({ 'n', 'v', }, 'Q', 'q', { silent = true, desc = 'record', })
 
+-- c.
+vim.keymap.set({ 'n', 'v', }, 'c.', '<cmd>cd %:h<cr>', { silent = true, desc = 'c.', })
+
 -- undo
 vim.keymap.set({ 'n', }, 'U', '<c-r>', { silent = true, desc = 'redo', })
 
