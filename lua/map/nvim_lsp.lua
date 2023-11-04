@@ -79,7 +79,7 @@ M.au = B.aucmd(M.source, 'BufEnter', 'BufEnter', {
       require(M.config).python()
       M.loaded_python = 1
       vim.cmd 'e!'
-    elseif ext == 'c' and not M.loaded_c then
+    elseif (ext == 'c' or ext == 'h') and not M.loaded_c then
       require(M.config).c()
       M.loaded_c = 1
       vim.cmd 'e!'
