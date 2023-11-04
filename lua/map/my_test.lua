@@ -39,6 +39,7 @@ B.map('<c-s-f4><c-f4>', 'terminal_powershell', {})
 -------
 
 B.map('<c-s-f4>;', 'asyncrun', {})
+B.map('<c-s-f4><del>', 'asyncstop', {})
 
 -------
 
@@ -49,10 +50,6 @@ B.map('<c-s-f4>m', 'mason', {})
 
 B.map('<c-s-f4><f3>', 'source_lua', {})
 
-B.map_set_opts { silent = false, }
-
-B.map('<c-s-f4>t', 'type_execute_output', {})
-
 --------
 
 B.map('<c-s-f4>gc', 'git_clone', {})
@@ -60,6 +57,12 @@ B.map('<c-s-f4>gc', 'git_clone', {})
 --------
 
 B.map('<c-s-f4>ot', 'open_stdpath_temp', {})
+
+------
+
+B.map_set_opts { silent = false, }
+
+B.map('<c-s-f4>t', 'type_execute_output', {})
 
 B.map_reset_opts()
 

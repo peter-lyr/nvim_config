@@ -60,22 +60,22 @@ end
 ------------------------------
 
 function M.terminal_cmd()
-  vim.cmd('split')
+  vim.cmd 'split'
   vim.cmd 'terminal'
 end
 
 function M.terminal_ipython()
-  vim.cmd('split')
+  vim.cmd 'split'
   vim.cmd 'terminal ipython'
 end
 
 function M.terminal_bash()
-  vim.cmd('split')
+  vim.cmd 'split'
   vim.cmd 'terminal bash'
 end
 
 function M.terminal_powershell()
-  vim.cmd('split')
+  vim.cmd 'split'
   vim.cmd 'terminal powershell'
 end
 
@@ -84,6 +84,11 @@ end
 function M.asyncrun()
   B.load_require 'skywind3000/asyncrun.vim'
   vim.cmd [[call feedkeys(":\<c-u>AsyncRun ")]]
+end
+
+function M.asyncstop()
+  B.load_require 'skywind3000/asyncrun.vim'
+  vim.cmd 'AsyncStop'
 end
 
 ------------------------------
