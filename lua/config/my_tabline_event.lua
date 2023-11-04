@@ -6,10 +6,50 @@ M.loaded = B.get_loaded(M.source)
 --------------------------------------------
 
 vim.cmd [[
-  hi tblsel guifg=#e6646e guibg=#555555 gui=bold
-  hi tbltab guifg=#64e66e guibg=#666666 gui=bold
-  hi tblfil guifg=none
+  hi tblsel guifg=#e6646e guibg=NONE gui=bold
+  hi tbltab guifg=#64e66e guibg=NONE gui=bold
+  hi tblfil guifg=gray
 ]]
+
+M.light = require 'nvim-web-devicons.icons-default'.icons_by_file_extension
+
+M.color_table = {
+  ['0'] = 'f',
+  ['1'] = 'e',
+  ['2'] = 'd',
+  ['3'] = 'c',
+  ['4'] = 'b',
+  ['5'] = 'a',
+  ['6'] = '9',
+  ['7'] = '8',
+  ['8'] = '7',
+  ['9'] = '6',
+  ['a'] = '5',
+  ['b'] = '4',
+  ['c'] = '3',
+  ['d'] = '2',
+  ['e'] = '1',
+  ['f'] = '0',
+}
+
+function M.reverse_color(color)
+  local new = '#'
+  for i in string.gmatch(color, '%w') do
+    new = new .. M.color_table[i]
+  end
+  return new
+end
+
+
+function M.hi()
+  for _, v in pairs(M.light) do
+    if '' ~= v['icon'] then
+      B.cmd('hi tbl%s guifg=%s guibg=%s gui=bold', v['name'], M.reverse_color(vim.fn.tolower(v['color'])), v['color'])
+    end
+  end
+end
+
+M.hi()
 
 ---------------------
 
@@ -329,10 +369,21 @@ function M.get_buf_content(tab_len)
   end
   for index, buf in ipairs(bufs_to_show) do
     local only_name = B.get_only_name(vim.fn.bufname(buf))
-    if C.cur_buf == buf then
-      bufs[#bufs + 1] = string.format('%%#tblsel#%%%d@SwitchBuffer@ %d/%d %s ', buf, buf_index_cur + index - 1, #C.proj_bufs[C.cur_proj], only_name)
+    local name = only_name
+    local hiname = 'tblsel'
+    local only_name_no_ext = vim.fn.fnamemodify(only_name, ':r')
+    local ext = string.match(only_name, '%.([^.]+)$')
+    if vim.tbl_contains(vim.tbl_keys(M.light), ext) == true and M.light[ext]['icon'] ~= '' then
+      name = only_name_no_ext .. ' ' .. M.light[ext]['icon']
+      hiname = 'tbl' .. M.light[ext]['name']
     else
-      bufs[#bufs + 1] = string.format('%%#tblfil#%%%d@SwitchBuffer@ %d %s ', buf, buf_index_cur + index - 1, only_name)
+      print("ext:", ext)
+      print(vim.inspect(vim.tbl_keys(M.light)), '000000000')
+    end
+    if C.cur_buf == buf then
+      bufs[#bufs + 1] = string.format('%%#%s#%%%d@SwitchBuffer@ %d/%d %s ', hiname, buf, buf_index_cur + index - 1, #C.proj_bufs[C.cur_proj], name)
+    else
+      bufs[#bufs + 1] = string.format('%%#tblfil#%%%d@SwitchBuffer@ %d %s ', buf, buf_index_cur + index - 1, name)
     end
   end
   return vim.fn.join(bufs, '')

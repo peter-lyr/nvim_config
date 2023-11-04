@@ -131,6 +131,10 @@ function M.cmd(str_format, ...)
   vim.cmd(string.format(str_format, ...))
 end
 
+function M.print(str_format, ...)
+  print(string.format(str_format, ...))
+end
+
 function M.system_cd(file)
   vim.cmd 'Lazy load plenary.nvim'
   local new_file = ''

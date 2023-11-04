@@ -367,4 +367,8 @@ function B.cmd(str_format, ...)
   return B.call_sub(B.loaded, 'asyncrun', 'cmd', str_format, ...)
 end
 
+function B.print(str_format, ...)
+  return B.call_sub(B.loaded, 'asyncrun', 'print', str_format, ...)
+end
+
 return B
