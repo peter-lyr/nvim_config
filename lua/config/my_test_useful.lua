@@ -34,6 +34,10 @@ vim.api.nvim_create_user_command('ExecuteOutput', function(params)
   M.execute_output(vim.fn.join(params['fargs'], ' '))
 end, { nargs = '*', complete = 'command', })
 
+function M.type_execute_output()
+  vim.cmd [[call feedkeys(":\<c-u>ExecuteOutput ")]]
+end
+
 function M.git_clone()
   B.ui_sel(B.get_file_dirs(vim.api.nvim_buf_get_name(0)), 'git clone sel a dir', function(proj)
     local author = vim.fn.input('repo name to clone: ', 'peter-lyr')
