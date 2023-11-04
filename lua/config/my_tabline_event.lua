@@ -360,17 +360,29 @@ function M.get_tab_to_show()
   end
 end
 
+M.bufs_to_show_last = {}
+M.cur_buf_last = 1
+
 function M.get_buf_content(tab_len)
   local C = require 'config.my_tabline'
   local bufs = {}
   local bufs_to_show = {}
-  local buf_index_cur = 1
+  local buf_index_first = 1
+  local cur_buf = C.cur_buf
   if C.proj_bufs[C.cur_proj] then
-    bufs_to_show = M.get_buf_to_show(C.proj_bufs[C.cur_proj], C.cur_buf, tab_len)
+    bufs_to_show = M.get_buf_to_show(C.proj_bufs[C.cur_proj], cur_buf, tab_len)
     if #bufs_to_show == 0 then
-      bufs_to_show = C.proj_bufs[C.cur_proj]
+      if #M.bufs_to_show_last > 0 then
+        bufs_to_show = M.bufs_to_show_last
+        cur_buf = M.cur_buf_last
+      else
+        bufs_to_show = C.proj_bufs[C.cur_proj]
+      end
+    else
+      M.bufs_to_show_last = bufs_to_show
+      M.cur_buf_last = cur_buf
     end
-    buf_index_cur = B.index_of(C.proj_bufs[C.cur_proj], bufs_to_show[1])
+    buf_index_first = B.index_of(C.proj_bufs[C.cur_proj], bufs_to_show[1])
   end
   for index, buf in ipairs(bufs_to_show) do
     local only_name = B.get_only_name(vim.fn.bufname(buf))
@@ -382,17 +394,17 @@ function M.get_buf_content(tab_len)
       icon = M.light[ext]['icon']
       hiname = 'tbl' .. M.light[ext]['name']
     end
-    if C.cur_buf == buf then
+    if cur_buf == buf then
       M.tabhiname = hiname
       if B.is(icon) then
         icon = ' ' .. icon
       end
-      bufs[#bufs + 1] = string.format('%%#%s#%%%d@SwitchBuffer@ %d/%d %s%s ', hiname, buf, buf_index_cur + index - 1, #C.proj_bufs[C.cur_proj], only_name_no_ext, icon)
+      bufs[#bufs + 1] = string.format('%%#%s#%%%d@SwitchBuffer@ %d/%d %s%s ', hiname, buf, buf_index_first + index - 1, #C.proj_bufs[C.cur_proj], only_name_no_ext, icon)
     else
       if B.is(icon) then
         icon = string.format(' %%#%s_#%s%%#tblfil#', hiname, icon)
       end
-      bufs[#bufs + 1] = string.format('%%#tblfil#%%%d@SwitchBuffer@ %d %s%s ', buf, buf_index_cur + index - 1, only_name_no_ext, icon)
+      bufs[#bufs + 1] = string.format('%%#tblfil#%%%d@SwitchBuffer@ %d %s%s ', buf, buf_index_first + index - 1, only_name_no_ext, icon)
     end
   end
   return vim.fn.join(bufs, '')
