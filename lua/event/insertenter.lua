@@ -30,25 +30,25 @@ B.aucmd(M.source, 'BufLeave', { 'BufLeave', 'CmdlineEnter', }, {
     end
     local bak = vim.fn.getreg '"'
     local save_cursor = vim.fn.getpos '.'
-    vim.cmd "norm yi'"
+    vim.cmd "silent norm yi'"
     vim.g.single_quote = vim.fn.getreg '"'
     pcall(vim.fn.setpos, '.', save_cursor)
-    vim.cmd 'norm yi"'
+    vim.cmd 'silent norm yi"'
     vim.g.double_quote = vim.fn.getreg '"'
     pcall(vim.fn.setpos, '.', save_cursor)
-    vim.cmd 'norm yi`'
+    vim.cmd 'silent norm yi`'
     vim.g.back_quote = vim.fn.getreg '"'
     pcall(vim.fn.setpos, '.', save_cursor)
-    vim.cmd 'norm yi)'
+    vim.cmd 'silent norm yi)'
     vim.g.parentheses = vim.fn.getreg '"'
     pcall(vim.fn.setpos, '.', save_cursor)
-    vim.cmd 'norm yi]'
+    vim.cmd 'silent norm yi]'
     vim.g.bracket = vim.fn.getreg '"'
     pcall(vim.fn.setpos, '.', save_cursor)
-    vim.cmd 'norm yi}'
+    vim.cmd 'silent norm yi}'
     vim.g.brace = vim.fn.getreg '"'
     pcall(vim.fn.setpos, '.', save_cursor)
-    vim.cmd 'norm yi>'
+    vim.cmd 'silent norm yi>'
     vim.g.angle_bracket = vim.fn.getreg '"'
     pcall(vim.fn.setpos, '.', save_cursor)
     vim.fn.setreg('"', bak)
