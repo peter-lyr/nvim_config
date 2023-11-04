@@ -22,7 +22,7 @@ function M.get_setup_table(file_ignore_patterns)
         horizontal = {
           preview_cutoff = 0,
           width = 0.99,
-          height = 0.99,
+          height = 0.90,
         },
       },
       preview = {
