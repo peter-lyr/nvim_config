@@ -14,28 +14,28 @@ vim.cmd [[
 M.light = require 'nvim-web-devicons.icons-default'.icons_by_file_extension
 
 M.color_table = {
-  ['0'] = 'f',
-  ['1'] = 'e',
-  ['2'] = 'd',
-  ['3'] = 'c',
-  ['4'] = 'b',
-  ['5'] = 'a',
-  ['6'] = '9',
-  ['7'] = '8',
-  ['8'] = '7',
-  ['9'] = '6',
-  ['a'] = '5',
-  ['b'] = '4',
-  ['c'] = '3',
-  ['d'] = '2',
-  ['e'] = '1',
-  ['f'] = '0',
+  ['0'] = '0x5',
+  ['1'] = '0x6',
+  ['2'] = '0x7',
+  ['3'] = '0x8',
+  ['4'] = '0x9',
+  ['5'] = '0xa',
+  ['6'] = '0xb',
+  ['7'] = '0xc',
+  ['8'] = '0xd',
+  ['9'] = '0xe',
+  ['a'] = '0xf',
+  ['b'] = '0x0',
+  ['c'] = '0x1',
+  ['d'] = '0x2',
+  ['e'] = '0x3',
+  ['f'] = '0x4',
 }
 
 function M.reverse_color(color)
   local new = '#'
   for i in string.gmatch(color, '%w') do
-    new = new .. M.color_table[i]
+    new = new .. string.sub(M.color_table[i], 3, 3)
   end
   return new
 end
@@ -406,3 +406,4 @@ function M.toggle_tabs_way()
 end
 
 return M
+
