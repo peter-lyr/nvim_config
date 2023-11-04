@@ -61,11 +61,6 @@ function M.sel()
   end
 end
 
-function M.load()
-  local projs = M.get_projs()
-  M.open_all(projs)
-end
-
 function M.save()
   local files = B.get_loaded_valid_bufs()
   if #vim.tbl_keys(files) > 0 then
