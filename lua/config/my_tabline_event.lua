@@ -363,9 +363,39 @@ end
 M.bufs_to_show_last = {}
 M.cur_buf_last = 1
 
+function M.one_buf(buf_index_first, index, cur_buf, buf)
+  local bufs = {}
+  local C = require 'config.my_tabline'
+  local only_name = B.get_only_name(vim.fn.bufname(buf))
+  local icon = ''
+  local hiname = 'tblsel'
+  local only_name_no_ext = vim.fn.fnamemodify(only_name, ':r')
+  local ext = string.match(only_name, '%.([^.]+)$')
+  if vim.tbl_contains(vim.tbl_keys(M.light), ext) == true and M.light[ext]['icon'] ~= '' then
+    icon = M.light[ext]['icon']
+    hiname = 'tbl' .. M.light[ext]['name']
+  end
+  if cur_buf == buf then
+    M.tabhiname = hiname
+    if B.is(icon) then
+      icon = ' ' .. icon
+    end
+    if C.proj_bufs[C.cur_proj] then
+      bufs[#bufs + 1] = string.format('%%#%s#%%%d@SwitchBuffer@ %d/%d %s%s ', hiname, buf, buf_index_first + index - 1, #C.proj_bufs[C.cur_proj], only_name_no_ext, icon)
+    else
+      bufs[#bufs + 1] = string.format('%%#%s#%%%d@SwitchBuffer@ %d/%d %s%s ', hiname, buf, buf_index_first + index - 1, 1, only_name_no_ext, icon)
+    end
+  else
+    if B.is(icon) then
+      icon = string.format(' %%#%s_#%s%%#tblfil#', hiname, icon)
+    end
+    bufs[#bufs + 1] = string.format('%%#tblfil#%%%d@SwitchBuffer@ %d %s%s ', buf, buf_index_first + index - 1, only_name_no_ext, icon)
+  end
+  return vim.fn.join(bufs, '')
+end
+
 function M.get_buf_content(tab_len)
   local C = require 'config.my_tabline'
-  local bufs = {}
   local bufs_to_show = {}
   local buf_index_first = 1
   local cur_buf = C.cur_buf
@@ -383,31 +413,14 @@ function M.get_buf_content(tab_len)
       M.cur_buf_last = cur_buf
     end
     buf_index_first = B.index_of(C.proj_bufs[C.cur_proj], bufs_to_show[1])
+  else
+    return M.one_buf(buf_index_first, 1, cur_buf, vim.fn.bufnr())
   end
+  local res = ''
   for index, buf in ipairs(bufs_to_show) do
-    local only_name = B.get_only_name(vim.fn.bufname(buf))
-    local icon = ''
-    local hiname = 'tblsel'
-    local only_name_no_ext = vim.fn.fnamemodify(only_name, ':r')
-    local ext = string.match(only_name, '%.([^.]+)$')
-    if vim.tbl_contains(vim.tbl_keys(M.light), ext) == true and M.light[ext]['icon'] ~= '' then
-      icon = M.light[ext]['icon']
-      hiname = 'tbl' .. M.light[ext]['name']
-    end
-    if cur_buf == buf then
-      M.tabhiname = hiname
-      if B.is(icon) then
-        icon = ' ' .. icon
-      end
-      bufs[#bufs + 1] = string.format('%%#%s#%%%d@SwitchBuffer@ %d/%d %s%s ', hiname, buf, buf_index_first + index - 1, #C.proj_bufs[C.cur_proj], only_name_no_ext, icon)
-    else
-      if B.is(icon) then
-        icon = string.format(' %%#%s_#%s%%#tblfil#', hiname, icon)
-      end
-      bufs[#bufs + 1] = string.format('%%#tblfil#%%%d@SwitchBuffer@ %d %s%s ', buf, buf_index_first + index - 1, only_name_no_ext, icon)
-    end
+    res = res .. M.one_buf(buf_index_first, index, cur_buf, buf)
   end
-  return vim.fn.join(bufs, '')
+  return res
 end
 
 function M.refresh_tabline()
