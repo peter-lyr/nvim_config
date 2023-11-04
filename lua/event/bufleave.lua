@@ -12,4 +12,10 @@ B.aucmd(M.source, 'BufLeave', 'BufLeave', {
   end,
 })
 
+B.aucmd(M.source, 'BufLeave-last_buf', { 'BufLeave', }, {
+  callback = function(ev)
+    vim.g.last_buf = ev.buf
+  end,
+})
+
 return M

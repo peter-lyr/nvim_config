@@ -65,6 +65,18 @@ function M.get_setup_table(file_ignore_patterns)
 
           ['<F5>'] = actions_layout.toggle_preview,
 
+          ['<c-g>'] = {
+            '<c-r>=fnamemodify(bufname(g:last_buf), ":t")<cr>',
+            type = 'command',
+            opts = { nowait = true, silent = true, desc = '5j', },
+          },
+
+          ['<c-=>'] = {
+            [[<c-r>=trim(getreg("+"))<cr>]],
+            type = 'command',
+            opts = { nowait = true, silent = true, desc = '5j', },
+          },
+
           ["<c-'>"] = actions.move_selection_next,
           ['<c-;>'] = actions.move_selection_previous,
           ['<a-j>'] = actions.move_selection_next,
