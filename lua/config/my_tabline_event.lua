@@ -41,11 +41,11 @@ function M.reverse_color(color)
   return new
 end
 
-
 function M.hi()
   for _, v in pairs(M.light) do
     if '' ~= v['icon'] then
       B.cmd('hi tbl%s guifg=%s guibg=%s gui=bold', v['name'], M.reverse_color(vim.fn.tolower(v['color'])), v['color'])
+      B.cmd('hi tbl%s_ guifg=%s guibg=NONE gui=bold', v['name'], v['color'])
     end
   end
 end
@@ -374,19 +374,25 @@ function M.get_buf_content(tab_len)
   end
   for index, buf in ipairs(bufs_to_show) do
     local only_name = B.get_only_name(vim.fn.bufname(buf))
-    local name = only_name
+    local icon = ''
     local hiname = 'tblsel'
     local only_name_no_ext = vim.fn.fnamemodify(only_name, ':r')
     local ext = string.match(only_name, '%.([^.]+)$')
     if vim.tbl_contains(vim.tbl_keys(M.light), ext) == true and M.light[ext]['icon'] ~= '' then
-      name = only_name_no_ext .. ' ' .. M.light[ext]['icon']
+      icon = M.light[ext]['icon']
       hiname = 'tbl' .. M.light[ext]['name']
     end
     if C.cur_buf == buf then
       M.tabhiname = hiname
-      bufs[#bufs + 1] = string.format('%%#%s#%%%d@SwitchBuffer@ %d/%d %s ', hiname, buf, buf_index_cur + index - 1, #C.proj_bufs[C.cur_proj], name)
+      if B.is(icon) then
+        icon = ' ' .. icon
+      end
+      bufs[#bufs + 1] = string.format('%%#%s#%%%d@SwitchBuffer@ %d/%d %s%s ', hiname, buf, buf_index_cur + index - 1, #C.proj_bufs[C.cur_proj], only_name_no_ext, icon)
     else
-      bufs[#bufs + 1] = string.format('%%#tblkil#%%%d@SwitchBuffer@ %d %s ', buf, buf_index_cur + index - 1, name)
+      if B.is(icon) then
+        icon = string.format(' %%#%s_#%s%%#tblfil#', hiname, icon)
+      end
+      bufs[#bufs + 1] = string.format('%%#tblfil#%%%d@SwitchBuffer@ %d %s%s ', buf, buf_index_cur + index - 1, only_name_no_ext, icon)
     end
   end
   return vim.fn.join(bufs, '')
@@ -412,4 +418,3 @@ function M.toggle_tabs_way()
 end
 
 return M
-
