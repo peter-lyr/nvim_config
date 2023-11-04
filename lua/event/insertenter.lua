@@ -11,12 +11,47 @@ B.load_require_common()
 
 vim.fn.setreg('e', 'reg e empty')
 
+vim.g.single_quote = ''  -- ''
+vim.g.double_quote = ''  -- ""
+vim.g.back_quote = ''    -- ``
+vim.g.parentheses = ''   -- ()
+vim.g.bracket = ''       -- []
+vim.g.brace = ''         -- {}
+vim.g.angle_bracket = '' -- <>
+
 B.aucmd(M.source, 'BufLeave', { 'BufLeave', 'CmdlineEnter', }, {
   callback = function()
     local word = vim.fn.expand '<cword>'
     if #word > 0 then
       vim.fn.setreg('e', word)
     end
+    if B.is_buf_ft { 'NvimTree', } then
+      return
+    end
+    local bak = vim.fn.getreg '"'
+    local save_cursor = vim.fn.getpos '.'
+    vim.cmd "norm yi'"
+    vim.g.single_quote = vim.fn.getreg '"'
+    pcall(vim.fn.setpos, '.', save_cursor)
+    vim.cmd 'norm yi"'
+    vim.g.double_quote = vim.fn.getreg '"'
+    pcall(vim.fn.setpos, '.', save_cursor)
+    vim.cmd 'norm yi`'
+    vim.g.back_quote = vim.fn.getreg '"'
+    pcall(vim.fn.setpos, '.', save_cursor)
+    vim.cmd 'norm yi)'
+    vim.g.parentheses = vim.fn.getreg '"'
+    pcall(vim.fn.setpos, '.', save_cursor)
+    vim.cmd 'norm yi]'
+    vim.g.bracket = vim.fn.getreg '"'
+    pcall(vim.fn.setpos, '.', save_cursor)
+    vim.cmd 'norm yi}'
+    vim.g.brace = vim.fn.getreg '"'
+    pcall(vim.fn.setpos, '.', save_cursor)
+    vim.cmd 'norm yi>'
+    vim.g.angle_bracket = vim.fn.getreg '"'
+    pcall(vim.fn.setpos, '.', save_cursor)
+    vim.fn.setreg('"', bak)
   end,
 })
 
@@ -29,12 +64,20 @@ B.aucmd(M.source, 'BufLeave', { 'BufLeave', 'CmdlineEnter', }, {
 vim.keymap.set({ 'c', 'i', }, '<c-e>', '<c-r>e', { desc = 'paste <cword>', })
 
 vim.keymap.set({ 'c', 'i', }, '<c-q>', '<c-r>=expand("%:t")<cr>', { desc = 'paste %:t', })
-vim.keymap.set({ 'c', 'i', }, '<c-`>', '<c-r>=nvim_buf_get_name(0)<cr>', { desc = 'paste nvim_buf_get_name', })
+vim.keymap.set({ 'c', 'i', }, '<c-|>', '<c-r>=nvim_buf_get_name(0)<cr>', { desc = 'paste nvim_buf_get_name', })
 
 vim.keymap.set({ 'c', 'i', }, '<c-1>', '<c-r>=bufname()<cr>', { desc = 'paste bufname', })
 vim.keymap.set({ 'c', 'i', }, '<c-2>', '<c-r>=getcwd()<cr>', { desc = 'paste cwd', })
 
 vim.keymap.set({ 'c', 'i', }, '<c-4>', '<c-r>=getline(".")<cr>', { desc = 'paste cur line', })
+
+vim.keymap.set({ 'c', 't', }, "<c-'>", '<c-r>=g:single_quote<cr>', { desc = "<c-'>", })
+vim.keymap.set({ 'c', 't', }, "<c-s-'>", '<c-r>=g:double_quote<cr>', { desc = '<c-">', })
+vim.keymap.set({ 'c', 't', }, '<c-0>', '<c-r>=g:parentheses<cr>', { desc = '<c-)>', })
+vim.keymap.set({ 'c', 't', }, '<c-]>', '<c-r>=g:bracket<cr>', { desc = '<c-]>', })
+vim.keymap.set({ 'c', 't', }, '<c-s-]>', '<c-r>=g:brace<cr>', { desc = '<c-}>', })
+vim.keymap.set({ 'c', 't', }, '<c-`>', '<c-r>=g:back_quote<cr>', { desc = '<c-`>', })
+vim.keymap.set({ 'c', 't', }, '<c-s-.>', '<c-r>=g:angle_bracket<cr>', { desc = '<c->>', })
 
 vim.keymap.set({ 'c', 'i', }, '<c-tab>', '<c-r>+', { desc = 'paste +', })
 
