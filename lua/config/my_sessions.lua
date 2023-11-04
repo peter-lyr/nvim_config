@@ -88,7 +88,7 @@ function M.sel_recent()
     end
   end
   B.ui_sel(new_files, 'which sessions to open', function(_, idx)
-    M.sel(files[idx])
+    M.sel(files[#files - idx + 1])
   end)
 end
 
