@@ -6,11 +6,12 @@ M.loaded = B.get_loaded(M.source)
 --------------------------------------------
 
 vim.cmd [[
-  hi tblsel guifg=#e6646e guibg=NONE gui=bold
+  hi tblsel guifg=#f8dfcf guibg=#777777 gui=bold
   hi tbltab guifg=#64e66e guibg=NONE gui=bold
   hi tblfil guifg=gray
 ]]
 
+M.tabhiname = 'tbltab'
 M.light = require 'nvim-web-devicons.icons-default'.icons_by_file_extension
 
 M.color_table = {
@@ -336,7 +337,7 @@ function M.get_tab_to_show()
           proj = temp_file
         end
         if cur_tabnr == tabnr then
-          tabs = tabs .. '%#tbltab#%'
+          tabs = tabs .. string.format('%%#%s#%%', M.tabhiname)
         else
           tabs = tabs .. '%#tblfil#%'
         end
@@ -378,6 +379,7 @@ function M.get_buf_content(tab_len)
       hiname = 'tbl' .. M.light[ext]['name']
     end
     if C.cur_buf == buf then
+      M.tabhiname = hiname
       bufs[#bufs + 1] = string.format('%%#%s#%%%d@SwitchBuffer@ %d/%d %s ', hiname, buf, buf_index_cur + index - 1, #C.proj_bufs[C.cur_proj], name)
     else
       bufs[#bufs + 1] = string.format('%%#tblfil#%%%d@SwitchBuffer@ %d %s ', buf, buf_index_cur + index - 1, name)
