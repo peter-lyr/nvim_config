@@ -5,7 +5,8 @@ M.loaded = B.get_loaded(M.source)
 -- package.loaded[M.loaded] = nil
 --------------------------------------------
 
-M.sessions_txt_path = B.get_create_file_path(B.get_create_std_data_dir 'sessions', 'sessions.txt')
+M.sessions_dir_path = B.get_create_std_data_dir 'sessions'
+M.sessions_txt_path = B.get_create_file_path(M.sessions_dir_path, 'sessions.txt')
 
 require 'config.telescope_ui_sel'
 
@@ -19,12 +20,15 @@ function M.open_all(projs)
   end
 end
 
-function M.get_projs()
-  return loadstring('return ' .. M.sessions_txt_path:read())()
+function M.get_projs(fname)
+  if not fname then
+    return loadstring('return ' .. M.sessions_txt_path:read())()
+  end
+  return loadstring('return ' .. B.get_create_file_path(M.sessions_dir_path, fname):read())()
 end
 
-function M.sel()
-  local projs = M.get_projs()
+function M.sel(fname)
+  local projs = M.get_projs(fname)
   local list = {}
   for proj, files in pairs(projs) do
     local only_names = {}
@@ -60,11 +64,33 @@ function M.sel()
   end
 end
 
+M.format = 'sessions_%d_%dprojs_%dfiles.txt'
+M.pattern = 'sessions_(%d+)_(%d+)projs_(%d+)files%.txt'
+
 function M.save()
-  local files = B.get_loaded_valid_bufs()
+  local files, cnt = B.get_loaded_valid_bufs()
   if #vim.tbl_keys(files) > 0 then
     M.sessions_txt_path:write(vim.inspect(files), 'w')
+    local file = string.format(M.format, os.time(), #vim.tbl_keys(files), cnt)
+    local last_sessions_txt_path = B.get_create_file_path(M.sessions_dir_path, file)
+    last_sessions_txt_path:write(vim.inspect(files), 'w')
   end
+end
+
+function M.sel_recent()
+  local files = B.scan_files(M.sessions_dir_path, M.pattern)
+  local new_files = {}
+  table.sort(files)
+  for i = #files, 1, -1 do
+    local file = files[i]
+    for timestamp, projs_cnt, files_cnt in string.gmatch(file, M.pattern) do
+      new_files[#new_files + 1] = string.format('%14s  %d projs  %d files', B.time_diff(tonumber(timestamp, 10)), projs_cnt, files_cnt)
+    end
+  end
+  B.ui_sel(new_files, 'which sessions to open', function(_, idx)
+    local fname = files[idx]
+    M.sel(fname)
+  end)
 end
 
 return M

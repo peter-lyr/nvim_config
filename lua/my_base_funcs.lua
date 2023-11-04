@@ -7,6 +7,7 @@ M.loaded = B.get_loaded(M.source)
 
 function M.get_loaded_valid_bufs()
   local files = {}
+  local cnt = 0
   for _, buf in ipairs(vim.api.nvim_list_bufs()) do
     if B.is_buf_loaded_valid(buf) then
       local file = vim.api.nvim_buf_get_name(buf)
@@ -16,10 +17,11 @@ function M.get_loaded_valid_bufs()
           files[proj] = {}
         end
         files[proj][#files[proj] + 1] = file
+        cnt = cnt + 1
       end
     end
   end
-  return files
+  return files, cnt
 end
 
 ---------
@@ -60,6 +62,66 @@ function M.get_fname_tail(file)
     end
   end
   return ''
+end
+
+function M.scan_files(dir, pattern)
+  local entries = require 'plenary.scandir'.scan_dir(dir, { hidden = true, depth = 1, add_dirs = false, })
+  local files = {}
+  for _, entry in ipairs(entries) do
+    local file = B.rep_slash_lower(entry)
+    if string.match(file, pattern) then
+      files[#files + 1] = B.get_only_name(file)
+      print(entry, '-------')
+    else
+      print(entry, '=======')
+    end
+  end
+  return files
+end
+
+function M.time_diff(timestamp)
+  local diff = os.time() - timestamp
+  local years, months, weeks, days, hours, minutes, seconds = 0, 0, 0, 0, 0, 0, 0
+  if diff >= 31536000 then
+    years = math.floor(diff / 31536000)
+    diff = diff - (years * 31536000)
+  end
+  if diff >= 2592000 then
+    months = math.floor(diff / 2592000)
+    diff = diff - (months * 2592000)
+  end
+  if diff >= 604800 then
+    weeks = math.floor(diff / 604800)
+    diff = diff - (weeks * 604800)
+  end
+  if diff >= 86400 then
+    days = math.floor(diff / 86400)
+    diff = diff - (days * 86400)
+  end
+  if diff >= 3600 then
+    hours = math.floor(diff / 3600)
+    diff = diff - (hours * 3600)
+  end
+  if diff >= 60 then
+    minutes = math.floor(diff / 60)
+    diff = diff - (minutes * 60)
+  end
+  seconds = diff
+  if B.is(years) then
+    return string.format('%d years ago', years)
+  elseif B.is(months) then
+    return string.format('%d months ago', months)
+  elseif B.is(weeks) then
+    return string.format('%d weeks ago', weeks)
+  elseif B.is(days) then
+    return string.format('%d days ago', days)
+  elseif B.is(hours) then
+    return string.format('%d hours ago', hours)
+  elseif B.is(minutes) then
+    return string.format('%d minutes ago', minutes)
+  elseif B.is(seconds) then
+    return string.format('%d seconds ago', seconds)
+  end
 end
 
 return M

@@ -371,4 +371,14 @@ function B.print(str_format, ...)
   return B.call_sub(B.loaded, 'asyncrun', 'print', str_format, ...)
 end
 
+---------------
+
+function B.scan_files(dir, pattern)
+  return B.call_sub(B.loaded, 'funcs', 'scan_files', dir, pattern)
+end
+
+function B.time_diff(timestamp)
+  return B.call_sub(B.loaded, 'funcs', 'time_diff', timestamp)
+end
+
 return B
