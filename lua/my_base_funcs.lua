@@ -71,9 +71,6 @@ function M.scan_files(dir, pattern)
     local file = B.rep_slash_lower(entry)
     if string.match(file, pattern) then
       files[#files + 1] = B.get_only_name(file)
-      print(entry, '-------')
-    else
-      print(entry, '=======')
     end
   end
   return files
