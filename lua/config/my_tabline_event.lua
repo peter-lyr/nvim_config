@@ -376,9 +376,6 @@ function M.get_buf_content(tab_len)
     if vim.tbl_contains(vim.tbl_keys(M.light), ext) == true and M.light[ext]['icon'] ~= '' then
       name = only_name_no_ext .. ' ' .. M.light[ext]['icon']
       hiname = 'tbl' .. M.light[ext]['name']
-    else
-      print("ext:", ext)
-      print(vim.inspect(vim.tbl_keys(M.light)), '000000000')
     end
     if C.cur_buf == buf then
       bufs[#bufs + 1] = string.format('%%#%s#%%%d@SwitchBuffer@ %d/%d %s ', hiname, buf, buf_index_cur + index - 1, #C.proj_bufs[C.cur_proj], name)
