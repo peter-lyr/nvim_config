@@ -55,6 +55,10 @@ B.map('<c-s-f4>t', 'type_execute_output', {})
 
 --------
 
+B.map('<c-s-f4>gc', 'git_clone', {})
+
+--------
+
 B.map('<c-s-f4>ot', 'open_stdpath_temp', {})
 
 B.map_reset_opts()

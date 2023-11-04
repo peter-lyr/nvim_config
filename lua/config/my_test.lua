@@ -98,4 +98,10 @@ function M.open_stdpath_temp()
   B.call_sub(M.loaded, 'useful', 'open_stdpath_temp')
 end
 
+------
+
+function M.git_clone()
+  B.call_sub(M.loaded, 'useful', 'git_clone')
+end
+
 return M
