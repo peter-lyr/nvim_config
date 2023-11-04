@@ -173,7 +173,7 @@ function M.restore_hidden_tabs()
   end
 end
 
-require 'telescope'.load_extension 'ui-select'
+require 'config.telescope_ui_sel'
 
 function M.append_one_proj_right_down()
   local C = require 'config.my_tabline'

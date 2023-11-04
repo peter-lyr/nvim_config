@@ -319,7 +319,7 @@ function M.bwipeout_deleted()
   end
 end
 
-require 'telescope'.load_extension 'ui-select'
+require 'config.telescope_ui_sel'
 
 function M.reopen_deleted()
   local deleted_bufnames = {}
