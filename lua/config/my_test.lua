@@ -79,6 +79,22 @@ function M.terminal_powershell()
   vim.cmd 'terminal powershell'
 end
 
+function M.terminal_outside_cmd()
+  vim.fn.system 'start cmd'
+end
+
+function M.terminal_outside_ipython()
+  vim.fn.system 'start ipython'
+end
+
+function M.terminal_outside_bash()
+  vim.fn.system 'start bash'
+end
+
+function M.terminal_outside_powershell()
+  vim.fn.system 'start powershell'
+end
+
 -----
 
 function M.asyncrun()

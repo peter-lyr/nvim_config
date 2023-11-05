@@ -37,6 +37,11 @@ B.map('<c-s-f4><c-f2>', 'terminal_ipython', {})
 B.map('<c-s-f4><c-f3>', 'terminal_bash', {})
 B.map('<c-s-f4><c-f4>', 'terminal_powershell', {})
 
+B.map('<c-s-f4><s-f1>', 'terminal_outside_cmd', {})
+B.map('<c-s-f4><s-f2>', 'terminal_outside_ipython', {})
+B.map('<c-s-f4><s-f3>', 'terminal_outside_bash', {})
+B.map('<c-s-f4><s-f4>', 'terminal_outside_powershell', {})
+
 -------
 
 B.map('<c-s-f4>;', 'asyncrun', {})
