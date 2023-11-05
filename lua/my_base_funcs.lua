@@ -5,6 +5,8 @@ M.loaded = B.get_loaded(M.source)
 -- package.loaded[M.loaded] = nil
 --------------------------------------------
 
+B.load_require 'dbakker/vim-projectroot'
+
 function M.get_loaded_valid_bufs()
   local files = {}
   local cnt = 0
