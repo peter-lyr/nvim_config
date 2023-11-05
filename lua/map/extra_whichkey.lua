@@ -18,4 +18,6 @@ require 'which-key'.setup {
   },
 }
 
+vim.keymap.set({ 'n', 'v', }, '<a-w>', '<cmd>WhichKey<cr>', { silent = true, desc = 'WhichKey', })
+
 return M
