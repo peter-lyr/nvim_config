@@ -25,7 +25,7 @@ B.aucmd(M.source, 'BufLeave', { 'BufLeave', 'CmdlineEnter', }, {
     if #word > 0 then
       vim.fn.setreg('e', word)
     end
-    if B.is_buf_ft { 'NvimTree', } then
+    if B.is_buf_ft { 'NvimTree', 'DiffviewFileHistory', } then
       return
     end
     local bak = vim.fn.getreg '"'
