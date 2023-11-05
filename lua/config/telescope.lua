@@ -402,7 +402,7 @@ function M.setreg()
   vim.g.telescope_entered = true
   local bak = vim.fn.getreg '"'
   local save_cursor = vim.fn.getpos '.'
-  local line = vim.fn.getline('.')
+  local line = vim.fn.trim(vim.fn.getline('.'))
   vim.g.curline = line
   if string.match(line, [[%']]) then
     vim.cmd "silent norm yi'"
