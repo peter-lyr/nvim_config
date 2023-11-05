@@ -71,6 +71,12 @@ function M.get_setup_table(file_ignore_patterns)
             opts = { nowait = true, silent = true, desc = '5j', },
           },
 
+          ['<c-l>'] = {
+            [[<c-r>=g:curline<cr>]],
+            type = 'command',
+            opts = { nowait = true, silent = true, desc = '5j', },
+          },
+
           ['<c-=>'] = {
             [[<c-r>=trim(getreg("+"))<cr>]],
             type = 'command',
@@ -397,6 +403,7 @@ function M.setreg()
   local bak = vim.fn.getreg '"'
   local save_cursor = vim.fn.getpos '.'
   local line = vim.fn.getline('.')
+  vim.g.curline = line
   if string.match(line, [[%']]) then
     vim.cmd "silent norm yi'"
     vim.g.single_quote = vim.fn.getreg '"' ~= bak and vim.fn.getreg '"' or ''

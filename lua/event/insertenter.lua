@@ -18,11 +18,13 @@ vim.g.parentheses = ''   -- ()
 vim.g.bracket = ''       -- []
 vim.g.brace = ''         -- {}
 vim.g.angle_bracket = '' -- <>
+vim.g.curline = ''
 
 function M.setreg()
   local bak = vim.fn.getreg '"'
   local save_cursor = vim.fn.getpos '.'
   local line = vim.fn.getline('.')
+  vim.g.curline = line
   if string.match(line, [[%']]) then
     vim.cmd "silent norm yi'"
     vim.g.single_quote = vim.fn.getreg '"' ~= bak and vim.fn.getreg '"' or ''
@@ -88,7 +90,7 @@ vim.keymap.set({ 'c', 'i', }, '<c-|>', '<c-r>=nvim_buf_get_name(0)<cr>', { desc 
 vim.keymap.set({ 'c', 'i', }, '<c-1>', '<c-r>=bufname()<cr>', { desc = 'paste bufname', })
 vim.keymap.set({ 'c', 'i', }, '<c-2>', '<c-r>=getcwd()<cr>', { desc = 'paste cwd', })
 
-vim.keymap.set({ 'c', 'i', }, '<c-l>', '<c-r>=getline(".")<cr>', { desc = 'paste cur line', })
+vim.keymap.set({ 'c', 'i', }, '<c-l>', '<c-r>=g:curline<cr>', { desc = 'paste cur line', })
 
 vim.keymap.set({ 'c', 't', }, "<c-'>", '<c-r>=g:single_quote<cr>', { desc = "<c-'>", })
 vim.keymap.set({ 'c', 't', }, "<c-s-'>", '<c-r>=g:double_quote<cr>', { desc = '<c-">', })
