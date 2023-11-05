@@ -280,4 +280,35 @@ function M.simple_statusline_toggle()
   end
 end
 
+-------
+
+function M.is_buf_deleted(buf)
+  local file = B.rep_slash_lower(vim.api.nvim_buf_get_name(buf))
+  if #file == 0 then
+    return false
+  end
+  if not require 'plenary.path'.new(file):exists() then
+    return false
+  end
+  if vim.fn.buflisted(buf) == 1 then
+    return true
+  end
+  return false
+end
+
+function M.append_unload_right_down()
+  local files = {}
+  for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+    local file = B.rep_slash_lower(vim.api.nvim_buf_get_name(buf))
+    if B.is(M.is_buf_deleted(buf)) then
+      files[#files + 1] = file
+    end
+  end
+  B.ui_sel(files, 'open deleted file', function(file)
+    vim.cmd 'wincmd b'
+    vim.cmd 'wincmd s'
+    B.cmd("e %s", file)
+  end)
+end
+
 return M

@@ -79,6 +79,10 @@ function M.append_one_proj_new_tab_no_dupl()
   B.call_sub(M.loaded, 'funcs', 'append_one_proj_new_tab_no_dupl')
 end
 
+function M.append_unload_right_down()
+  B.call_sub(M.loaded, 'funcs', 'append_unload_right_down')
+end
+
 function M.simple_statusline_toggle()
   B.call_sub(M.loaded, 'funcs', 'simple_statusline_toggle')
 end

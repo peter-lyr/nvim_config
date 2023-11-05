@@ -19,6 +19,7 @@ B.map('<c-s-f4>1', 'execute_output', { 'mes', })
 B.map('<c-s-f4>2', 'execute_output', { 'scriptnames', })
 B.map('<c-s-f4>3', 'execute_output', { '!dir', })
 B.map('<c-s-f4>4', 'execute_output', { 'set rtp', })
+B.map('<c-s-f4>5', 'execute_output', { 'ls!', })
 
 -------
 
