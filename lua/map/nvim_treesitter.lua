@@ -9,9 +9,10 @@ M.config = B.rep_map_to_config(M.loaded)
 
 B.load_require 'nvim-treesitter/nvim-treesitter-context'
 B.load_require 'p00f/nvim-ts-rainbow'
-B.load_require 'andymass/vim-matchup'
 
-vim.g.matchup_matchparen_offscreen = {}
+vim.g.matchup_matchparen_offscreen = { method = 'popup', }
+
+B.load_require 'andymass/vim-matchup'
 
 --------------
 
