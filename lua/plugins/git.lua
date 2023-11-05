@@ -4,7 +4,7 @@ return {
   {
     'lewis6991/gitsigns.nvim',
     lazy = true,
-    commit = '79127db3b127f5d125f35e0d44ba60715edf2842',
+    -- commit = '79127db3b127f5d125f35e0d44ba60715edf2842',
     event = { 'BufReadPre', 'BufNewFile', },
     keys = {
       { 'ig',        ':<C-U>Gitsigns select_hunk<CR>', mode = { 'o', 'x', }, silent = true, desc = 'Gitsigns select_hunk', },
