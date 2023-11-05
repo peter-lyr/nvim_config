@@ -116,7 +116,11 @@ end
 ------------------------------
 
 function M.open_stdpath_temp()
-  B.call_sub(M.loaded, 'useful', 'open_stdpath_temp')
+  B.system_run('start', 'explorer %s', vim.fn.stdpath 'cache')
+end
+
+function M.open_stdpath_config()
+  B.system_run('start', 'explorer %s', vim.fn.stdpath 'config')
 end
 
 ------

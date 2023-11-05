@@ -63,6 +63,7 @@ B.map('<leader><f4>gc', 'git_clone', {})
 --------
 
 B.map('<leader><f4>ot', 'open_stdpath_temp', {})
+B.map('<leader><f4>oc', 'open_stdpath_config', {})
 
 ------
 

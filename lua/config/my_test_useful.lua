@@ -48,12 +48,6 @@ function M.git_clone()
   end)
 end
 
-------------
-
-function M.open_stdpath_temp()
-  B.system_run('start', 'explorer %s', vim.fn.stdpath('cache'))
-end
-
 --------------------
 
 function M.delete_whichkeys_txt()
