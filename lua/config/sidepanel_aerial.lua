@@ -394,6 +394,15 @@ function M.open()
     open_automatic = true,
   }
   vim.cmd 'AerialOpen right'
+  vim.cmd 'wincmd p'
+end
+
+function M.toggle_focus()
+  if B.is_buf_ft 'aerial' then
+    vim.cmd 'wincmd p'
+  else
+    vim.cmd 'AerialOpen right'
+  end
 end
 
 function M.close()
