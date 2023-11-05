@@ -54,7 +54,7 @@ return {
     lazy = true,
     init = function()
       if not S.load_whichkeys_txt_enable then
-        require 'my_simple'.add_whichkey('<c-s-f4>', 'test', 'My_Test')
+        require 'my_simple'.add_whichkey('<leader><f4>', 'test', 'My_Test')
       end
     end,
     config = function()
