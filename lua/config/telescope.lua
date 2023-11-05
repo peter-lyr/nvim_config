@@ -477,25 +477,25 @@ function M.live_grep_def()
   vim.cmd [[ call feedkeys("\<esc>:Telescope live_grep cwd=\<c-r>=expand('%:p:h')\<cr>") ]]
 end
 
--- function M.live_grep_rg()
---   local fname = vim.api.nvim_buf_get_name(0)
---   local dirs = B.get_file_dirs(fname)
---   B.ui_sel(dirs, 'telescope_rg_path', function(path)
---     if path then
---       B.ui_sel({ '--fixed-strings', '', }, 'telescope_rg_fixed_strings', function(choice)
---         if choice then
---           local fixed_strings = choice
---           local cmd = vim.fn.input('telescope_rg_patt: ', [[[\u4e00-\u9fa5]+]])
---           if #cmd > 0 then
---             B.system_run('asyncrun',
---               'rg --no-heading --with-filename --line-number --column --smart-case --no-ignore %s -g !*.js %s "%s"',
---               fixed_strings, cmd, path)
---           end
---         end
---       end)
---     end
---   end)
--- end
+function M.live_grep_rg()
+  local fname = vim.api.nvim_buf_get_name(0)
+  local dirs = B.get_file_dirs(fname)
+  B.ui_sel(dirs, 'telescope_rg_path', function(path)
+    if path then
+      B.ui_sel({ '--fixed-strings', '', }, 'telescope_rg_fixed_strings', function(choice)
+        if choice then
+          local fixed_strings = choice
+          local cmd = vim.fn.input('telescope_rg_patt: ', [[[\u4e00-\u9fa5]+]])
+          if #cmd > 0 then
+            B.system_run('asyncrun',
+              'rg --no-heading --with-filename --line-number --column --smart-case --no-ignore %s -g !*.js %s "%s"',
+              fixed_strings, cmd, path)
+          end
+        end
+      end)
+    end
+  end)
+end
 
 function M.search_history()
   M.setreg()
