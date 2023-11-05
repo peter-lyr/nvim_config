@@ -22,33 +22,47 @@ vim.g.angle_bracket = '' -- <>
 function M.setreg()
   local bak = vim.fn.getreg '"'
   local save_cursor = vim.fn.getpos '.'
-  vim.cmd "silent norm yi'"
-  vim.g.single_quote = vim.fn.getreg '"' ~= bak and vim.fn.getreg '"' or ''
-  print('insertenter - vim.g.single_quote:', vim.g.single_quote)
-  pcall(vim.fn.setpos, '.', save_cursor)
-  vim.cmd 'silent norm yi"'
-  vim.g.double_quote = vim.fn.getreg '"' ~= bak and vim.fn.getreg '"' or ''
-  pcall(vim.fn.setpos, '.', save_cursor)
-  vim.cmd 'silent norm yi`'
-  vim.g.back_quote = vim.fn.getreg '"' ~= bak and vim.fn.getreg '"' or ''
-  pcall(vim.fn.setpos, '.', save_cursor)
-  vim.cmd 'silent norm yi)'
-  vim.g.parentheses = vim.fn.getreg '"' ~= bak and vim.fn.getreg '"' or ''
-  pcall(vim.fn.setpos, '.', save_cursor)
-  vim.cmd 'silent norm yi]'
-  vim.g.bracket = vim.fn.getreg '"' ~= bak and vim.fn.getreg '"' or ''
-  pcall(vim.fn.setpos, '.', save_cursor)
-  vim.cmd 'silent norm yi}'
-  vim.g.brace = vim.fn.getreg '"' ~= bak and vim.fn.getreg '"' or ''
-  pcall(vim.fn.setpos, '.', save_cursor)
-  vim.cmd 'silent norm yi>'
-  vim.g.angle_bracket = vim.fn.getreg '"' ~= bak and vim.fn.getreg '"' or ''
-  pcall(vim.fn.setpos, '.', save_cursor)
+  local line = vim.fn.getline('.')
+  if string.match(line, [[%']]) then
+    vim.cmd "silent norm yi'"
+    vim.g.single_quote = vim.fn.getreg '"' ~= bak and vim.fn.getreg '"' or ''
+    pcall(vim.fn.setpos, '.', save_cursor)
+  end
+  if string.match(line, [[%"]]) then
+    vim.cmd 'silent norm yi"'
+    vim.g.double_quote = vim.fn.getreg '"' ~= bak and vim.fn.getreg '"' or ''
+    pcall(vim.fn.setpos, '.', save_cursor)
+  end
+  if string.match(line, [[%`]]) then
+    vim.cmd 'silent norm yi`'
+    vim.g.back_quote = vim.fn.getreg '"' ~= bak and vim.fn.getreg '"' or ''
+    pcall(vim.fn.setpos, '.', save_cursor)
+  end
+  if string.match(line, [[%)]]) then
+    vim.cmd 'silent norm yi)'
+    vim.g.parentheses = vim.fn.getreg '"' ~= bak and vim.fn.getreg '"' or ''
+    pcall(vim.fn.setpos, '.', save_cursor)
+  end
+  if string.match(line, '%]') then
+    vim.cmd 'silent norm yi]'
+    vim.g.bracket = vim.fn.getreg '"' ~= bak and vim.fn.getreg '"' or ''
+    pcall(vim.fn.setpos, '.', save_cursor)
+  end
+  if string.match(line, [[%}]]) then
+    vim.cmd 'silent norm yi}'
+    vim.g.brace = vim.fn.getreg '"' ~= bak and vim.fn.getreg '"' or ''
+    pcall(vim.fn.setpos, '.', save_cursor)
+  end
+  if string.match(line, [[%>]]) then
+    vim.cmd 'silent norm yi>'
+    vim.g.angle_bracket = vim.fn.getreg '"' ~= bak and vim.fn.getreg '"' or ''
+    pcall(vim.fn.setpos, '.', save_cursor)
+  end
   vim.fn.setreg('"', bak)
 end
 
 B.aucmd(M.source, 'BufLeave', { 'BufLeave', 'CmdlineEnter', }, {
-  callback = function()
+  callback = function(ev)
     local word = vim.fn.expand '<cword>'
     if #word > 0 then
       vim.fn.setreg('e', word)
