@@ -24,8 +24,8 @@ B.map('<a-t>5', 'execute_output', { 'ls!', })
 -------
 
 B.map('<a-t><del>', 'delete_whichkeys_txt', {})
-B.map('<a-t><f4>', 'startuptime', {})
-B.map('<a-t><s-f4>', 'startuptime', { '--no-sort', })
+B.map('<a-t><f5>', 'startuptime', {})
+B.map('<a-t><s-f5>', 'startuptime', { '--no-sort', })
 B.map('<a-t>s', 'start_new_nvim_qt', {})
 B.map('<a-t>r', 'restart_nvim_qt', {})
 B.map('<a-t>q', 'quit_nvim_qt', {})
