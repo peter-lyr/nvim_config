@@ -7,8 +7,6 @@ M.config = B.rep_map_to_config(M.loaded)
 -- package.loaded[M.loaded] = nil
 --------------------------------------------
 
-vim.o.updatetime = 10
-
 B.aucmd(M.source, 'CursorHold', { 'CursorHold', 'CursorHoldI', }, {
   callback = function(ev)
     require(M.config).on_cursorhold(ev)

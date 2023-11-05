@@ -77,7 +77,49 @@ function M.get_setup_table(file_ignore_patterns)
             opts = { nowait = true, silent = true, desc = '5j', },
           },
 
-          ["<c-'>"] = actions.move_selection_next,
+          ["<c-'>"] = {
+            [[<c-r>=g:single_quote<cr>]],
+            type = 'command',
+            opts = { nowait = true, silent = true, desc = 'g:single_quote', },
+          },
+
+          ["<c-s-'>"] = {
+            [[<c-r>=g:double_quote<cr>]],
+            type = 'command',
+            opts = { nowait = true, silent = true, desc = 'g:double_quote', },
+          },
+
+          ['<c-0>'] = {
+            [[<c-r>=g:parentheses<cr>]],
+            type = 'command',
+            opts = { nowait = true, silent = true, desc = 'g:parentheses', },
+          },
+
+          ['<c-]>'] = {
+            [[<c-r>=g:bracket<cr>]],
+            type = 'command',
+            opts = { nowait = true, silent = true, desc = 'g:bracket', },
+          },
+
+          ['<c-s-]>'] = {
+            [[<c-r>=g:brace<cr>]],
+            type = 'command',
+            opts = { nowait = true, silent = true, desc = 'g:brace', },
+          },
+
+          ['<c-`>'] = {
+            [[<c-r>=g:back_quote<cr>]],
+            type = 'command',
+            opts = { nowait = true, silent = true, desc = 'g:back_quote', },
+          },
+
+          ['<c-s-.>'] = {
+            [[<c-r>=g:angle_bracket<cr>]],
+            type = 'command',
+            opts = { nowait = true, silent = true, desc = 'g:angle_bracket', },
+          },
+
+          -- ["<c-'>"] = actions.move_selection_next,
           ['<c-;>'] = actions.move_selection_previous,
           ['<a-j>'] = actions.move_selection_next,
           ['<a-k>'] = actions.move_selection_previous,
@@ -350,6 +392,37 @@ M.add_ignore_patterns(M.ignore_patterns, {
 
 telescope.setup(M.get_setup_table(M.ignore_patterns))
 
+function M.setreg()
+  vim.g.telescope_entered = true
+  local bak = vim.fn.getreg '"'
+  local save_cursor = vim.fn.getpos '.'
+  vim.cmd "silent norm yi'"
+  vim.g.single_quote = vim.fn.getreg '"' ~= bak and vim.fn.getreg '"' or ''
+  pcall(vim.fn.setpos, '.', save_cursor)
+  vim.cmd 'silent norm yi"'
+  vim.g.double_quote = vim.fn.getreg '"' ~= bak and vim.fn.getreg '"' or ''
+  pcall(vim.fn.setpos, '.', save_cursor)
+  vim.cmd 'silent norm yi`'
+  vim.g.back_quote = vim.fn.getreg '"' ~= bak and vim.fn.getreg '"' or ''
+  pcall(vim.fn.setpos, '.', save_cursor)
+  vim.cmd 'silent norm yi)'
+  vim.g.parentheses = vim.fn.getreg '"' ~= bak and vim.fn.getreg '"' or ''
+  pcall(vim.fn.setpos, '.', save_cursor)
+  vim.cmd 'silent norm yi]'
+  vim.g.bracket = vim.fn.getreg '"' ~= bak and vim.fn.getreg '"' or ''
+  pcall(vim.fn.setpos, '.', save_cursor)
+  vim.cmd 'silent norm yi}'
+  vim.g.brace = vim.fn.getreg '"' ~= bak and vim.fn.getreg '"' or ''
+  pcall(vim.fn.setpos, '.', save_cursor)
+  vim.cmd 'silent norm yi>'
+  vim.g.angle_bracket = vim.fn.getreg '"' ~= bak and vim.fn.getreg '"' or ''
+  pcall(vim.fn.setpos, '.', save_cursor)
+  vim.fn.setreg('"', bak)
+  B.set_timeout(4000, function()
+    vim.g.telescope_entered = nil
+  end)
+end
+
 function M.search_all_en(all)
   if all == 1 then
     local temp = {}
@@ -360,26 +433,31 @@ function M.search_all_en(all)
 end
 
 function M.find_files()
+  M.setreg()
   M.search_all_en(0)
   vim.cmd 'Telescope find_files'
 end
 
 function M.find_files_all()
+  M.setreg()
   M.search_all_en(1)
   vim.cmd 'Telescope find_files find_command=fd,--no-ignore,--hidden'
 end
 
 function M.live_grep()
+  M.setreg()
   M.search_all_en(0)
   vim.cmd 'Telescope live_grep'
 end
 
 function M.live_grep_all()
+  M.setreg()
   M.search_all_en(1)
   vim.cmd 'Telescope live_grep vimgrep_arguments=rg,--color=never,--no-heading,--with-filename,--line-number,--column,--smart-case,--fixed-strings,-g,*'
 end
 
 function M.live_grep_def()
+  M.setreg()
   M.search_all_en(0)
   vim.cmd [[ call feedkeys("\<esc>:Telescope live_grep cwd=\<c-r>=expand('%:p:h')\<cr>") ]]
 end
@@ -405,98 +483,122 @@ end
 -- end
 
 function M.search_history()
+  M.setreg()
   vim.cmd 'Telescope search_history'
 end
 
 function M.command_history()
+  M.setreg()
   vim.cmd 'Telescope command_history'
 end
 
 function M.commands()
+  M.setreg()
   vim.cmd 'Telescope commands'
 end
 
 function M.buffers_cur()
+  M.setreg()
   vim.cmd 'Telescope buffers cwd_only=true sort_mru=true ignore_current_buffer=true'
 end
 
 function M.jumplist()
+  M.setreg()
   vim.cmd 'Telescope jumplist show_line=false'
 end
 
 function M.diagnostics()
+  M.setreg()
   vim.cmd 'Telescope diagnostics'
 end
 
 function M.filetypes()
+  M.setreg()
   vim.cmd 'Telescope filetypes'
 end
 
 function M.quickfix()
+  M.setreg()
   vim.cmd 'Telescope quickfix'
 end
 
 function M.quickfixhistory()
+  M.setreg()
   vim.cmd 'Telescope quickfixhistory'
 end
 
 function M.builtin()
+  M.setreg()
   vim.cmd 'Telescope builtin'
 end
 
 function M.colorscheme()
+  M.setreg()
   vim.cmd 'Telescope colorscheme'
 end
 
 function M.git_branches()
+  M.setreg()
   vim.cmd 'Telescope git_branches'
 end
 
 function M.git_commits()
+  M.setreg()
   vim.cmd 'Telescope git_commits'
 end
 
 function M.git_bcommits()
+  M.setreg()
   vim.cmd 'Telescope git_bcommits'
 end
 
 function M.lsp_document_symbols()
+  M.setreg()
   vim.cmd 'Telescope lsp_document_symbols'
 end
 
 function M.lsp_references()
+  M.setreg()
   vim.cmd 'Telescope lsp_references'
 end
 
 function M.help_tags()
+  M.setreg()
   vim.cmd 'Telescope help_tags'
 end
 
 function M.vim_options()
+  M.setreg()
   vim.cmd 'Telescope vim_options'
 end
 
 function M.planets()
+  M.setreg()
   vim.cmd 'Telescope planets'
 end
 
 function M.grep_string()
+  M.setreg()
   vim.cmd 'Telescope grep_string shorten_path=true word_match=-w only_sort_text=true search= grep_open_files=true'
 end
 
 function M.keymaps()
+  M.setreg()
   vim.cmd 'Telescope keymaps'
 end
 
 function M.git_status()
+  M.setreg()
   vim.cmd 'Telescope git_status'
 end
 
 function M.buffers()
+  M.setreg()
   vim.cmd 'Telescope buffers'
 end
 
 function M.nop()
+  M.setreg()
 end
 
 --------------------
@@ -508,6 +610,7 @@ function M.open()
 end
 
 function M.my_projects()
+  M.setreg()
   B.call_sub(M.loaded, 'projects', 'my_projects')
 end
 

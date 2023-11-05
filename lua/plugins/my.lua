@@ -141,7 +141,7 @@ return {
     name = 'my_hili',
     dir = '',
     lazy = true,
-    event = { 'CursorHold', },
+    event = { 'BufReadPost', 'BufNewFile', },
     keys = {
       { '*',       function() require 'config.my_hili'.search() end,          mode = { 'v', },      silent = true, desc = 'hili multiline search', },
       -- windo cursorword
@@ -164,6 +164,7 @@ return {
       { '<c-s-m>', function() require 'config.my_hili'.nextcurhili() end,     mode = { 'n', 'v', }, silent = true, desc = 'hili go cur next', },
     },
     config = function()
+      vim.o.updatetime = 10
       require 'map.my_hili'
     end,
   },
