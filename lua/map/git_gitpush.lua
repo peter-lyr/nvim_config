@@ -11,6 +11,7 @@ B.map_set_lua(M.config)
 
 -------
 
+B.map('<leader>ga', 'addcommitpush', {})
 B.map('ga', 'addcommitpush', {})
 B.map('<leader>gc', 'commit_push', {})
 B.map('<leader>ggc', 'commit', {})

@@ -10,16 +10,26 @@ M.config = B.rep_map_to_config(M.loaded)
 B.map_set_lua(M.config)
 
 B.map_n('gd', 'diffthis', {})
+B.map_n('<leader>gd', 'diffthis', {})
+
 B.map_n('<leader>gmd', 'diffthis_l', {})
+
 B.map_n('gr', 'reset_hunk', {})
+B.map_n('<leader>gr', 'reset_hunk', {})
 B.map_v('gr', 'reset_hunk_v', {})
-B.map_n('<leader>gr', 'reset_buffer', {})
+B.map_v('<leader>gr', 'reset_hunk_v', {})
+B.map_n('<leader>gmr', 'reset_buffer', {})
+
 B.map_n('gs', 'stage_hunk', {})
+B.map_n('<leader>gs', 'stage_hunk', {})
 B.map_v('gs', 'stage_hunk_v', {})
-B.map_n('<leader>gs', 'stage_buffer', {})
+B.map_v('<leader>gs', 'stage_hunk_v', {})
+
+B.map_n('<leader>gms', 'stage_buffer', {})
 B.map_n('<leader>gu', 'undo_stage_hunk', {})
 B.map_n('<leader>gmb', 'blame_line', {})
 B.map_n('<leader>gmp', 'preview_hunk', {})
+
 B.map_n('<leader>gmtb', 'toggle_current_line_blame', {})
 B.map_n('<leader>gmtd', 'toggle_deleted', {})
 B.map_n('<leader>gmtl', 'toggle_linehl', {})
@@ -28,6 +38,7 @@ B.map_n('<leader>gmts', 'toggle_signs', {})
 B.map_n('<leader>gmtw', 'toggle_word_diff', {})
 
 B.map_n('gl', 'lazygit', {})
+B.map_n('<leader>gl', 'lazygit', {})
 
 ------
 
