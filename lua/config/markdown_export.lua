@@ -25,11 +25,11 @@ local getfiles = function(dir)
   return files
 end
 
-M.create = function()
+function M.create()
   B.system_run('start', 'python %s %s & pause', M.markdown_export_py, vim.api.nvim_buf_get_name(0))
 end
 
-M.delete = function()
+function M.delete()
   local fpath = require 'plenary.path':new(vim.api.nvim_buf_get_name(0))
   if fpath:exists() then
     local curdir = fpath:parent().filename
