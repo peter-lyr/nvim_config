@@ -9,6 +9,10 @@ vim.keymap.set({ 'n', 'v', }, 'Q', 'q', { silent = true, desc = 'record', })
 -- c.
 vim.keymap.set({ 'n', 'v', }, 'c.', '<cmd>cd %:h<cr>', { silent = true, desc = 'c.', })
 
+-- start
+vim.keymap.set({ 'n', 'v', }, 'q.', '<cmd>silent !start %:h<cr>', { silent = true, desc = 'q.', })
+vim.keymap.set({ 'n', 'v', }, 'qw', function() vim.fn.system('start ' .. vim.loop.cwd()) end, { silent = true, desc = 'qw', })
+
 -- undo
 vim.keymap.set({ 'n', }, 'U', '<c-r>', { silent = true, desc = 'redo', })
 
