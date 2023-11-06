@@ -45,6 +45,8 @@ B.map('<leader>svvp', 'planets', {})
 
 B.map('<leader>sk', 'my_projects', {})
 
+B.map('<leader>st', 'buffers_term', {})
+
 -----------------------------------
 
 B.map('<c-s-f12><f1>', 'git_status', {})
