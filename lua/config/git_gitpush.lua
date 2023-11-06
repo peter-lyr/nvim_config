@@ -68,7 +68,7 @@ function M.commit(info)
 end
 
 function M.graph()
-  B.system_run('asyncrun', 'git log --all --graph --decorate --oneline && pause')
+  B.system_run('start', 'git log --all --graph --decorate --oneline && pause')
 end
 
 function M.push()
