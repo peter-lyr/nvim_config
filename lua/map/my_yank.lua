@@ -9,8 +9,13 @@ M.config = B.rep_map_to_config(M.loaded)
 
 B.map_set_lua(M.config)
 
-B.map('<leader>y<leader>', 'fname', {})
-B.map('<leader>yg', 'absfname', {})
+B.map('<leader>yf', 'file', {})
+B.map('<leader>yt', 'file_tail', {})
+B.map('<leader>yh', 'file_head', {})
+
 B.map('<leader>yw', 'cwd', {})
+
+B.map('<leader>yb', 'bufname', {})
+B.map('<leader>yB', 'bufname_head', {})
 
 return M

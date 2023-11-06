@@ -5,19 +5,41 @@ M.loaded = B.get_loaded(M.source)
 -- package.loaded[M.loaded] = nil
 --------------------------------------------
 
-M.fname = function()
-  vim.cmd 'let @+ = expand("%:t")'
-  B.notify_info(vim.fn.expand '%:t')
+function M.set(content)
+  vim.fn.setreg('+', content)
+  B.notify_info(content)
 end
 
-M.absfname = function()
-  vim.cmd 'let @+ = substitute(nvim_buf_get_name(0), "/", "\\\\", "g")'
-  B.notify_info(vim.fn.substitute(vim.api.nvim_buf_get_name(0), '/', '\\\\', 'g'))
+function M.name()
+  return B.rep_slash(vim.api.nvim_buf_get_name(0))
 end
 
-M.cwd = function()
-  vim.cmd 'let @+ = substitute(getcwd(), "/", "\\\\", "g")'
-  B.notify_info(vim.fn.substitute(vim.loop.cwd(), '/', '\\\\', 'g'))
+function M.bname()
+  return B.rep_slash(vim.fn.bufname())
+end
+
+function M.file()
+  M.set(M.name())
+end
+
+function M.file_head()
+  M.set(vim.fn.fnamemodify(M.name(), ':h'))
+end
+
+function M.file_tail()
+  M.set(vim.fn.fnamemodify(M.name(), '%:t'))
+end
+
+function M.cwd()
+  M.set(vim.loop.cwd())
+end
+
+function M.bufname()
+  M.set(M.bname())
+end
+
+function M.bufname_head()
+  M.set(vim.fn.fnamemodify(M.bname(), ':h'))
 end
 
 return M
