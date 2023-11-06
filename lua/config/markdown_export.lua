@@ -36,11 +36,14 @@ M.delete = function()
     curdir = string.gsub(curdir, '/', '\\')
     local files = getfiles(curdir)
     local cnt = 0
-    for _, v in ipairs(files) do
+    local lines = {}
+    for _, file in ipairs(files) do
       cnt = cnt + 1
-      vim.fn.system('del "' .. v .. '"')
+      vim.fn.system('del "' .. file .. '"')
+      lines[#lines + 1] = file
     end
-    B.notify_info('delete ' .. tostring(cnt) .. ' file(s)')
+    table.insert(lines, 1, string.format('delete %d file(s)', cnt))
+    B.notify_info(lines)
   end
 end
 
