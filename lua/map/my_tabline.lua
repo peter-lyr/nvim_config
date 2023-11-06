@@ -22,14 +22,14 @@ B.map('<c-s-h>', 'bd_prev_buf', {})
 
 --------
 
-B.map('<leader>qw', 'only_cur_buffer', {})
-B.map('<leader>qt', 'restore_hidden_tabs', {})
-B.map('<leader>qo', 'append_one_proj_right_down', {})
-B.map('<leader>qn', 'append_one_proj_new_tab', {})
-B.map('<leader>qm', 'append_one_proj_new_tab_no_dupl', {})
-B.map('<leader>q<leader>', 'simple_statusline_toggle', {})
-B.map('<leader>q<cr>', 'toggle_tabs_way', {})
-B.map('<leader>qu', 'append_unload_right_down', {})
+B.map('qw', 'only_cur_buffer', {})
+B.map('qt', 'restore_hidden_tabs', {})
+B.map('qd', 'append_one_proj_right_down', {})
+B.map('qn', 'append_one_proj_new_tab', {})
+B.map('qm', 'append_one_proj_new_tab_no_dupl', {})
+B.map('q<leader>', 'simple_statusline_toggle', {})
+B.map('q<cr>', 'toggle_tabs_way', {})
+B.map('qu', 'append_unload_right_down', {})
 
 ------
 

@@ -22,7 +22,7 @@ vim.keymap.set({ 'n', 'v', }, '<S-ScrollWheelUp>', '10zh', { silent = false, des
 
 -- f5
 vim.keymap.set({ 'n', 'v', }, '<f5>', '<cmd>e!<cr>', { silent = true, desc = 'e!', })
-vim.keymap.set({ 'n', 'v', }, 'q<leader>', '<cmd>e!<cr>', { silent = true, desc = 'e!', })
+vim.keymap.set({ 'n', 'v', }, 'qq', '<cmd>e!<cr>', { silent = true, desc = 'e!', })
 
 -- cursor
 vim.keymap.set({ 'n', 'v', }, '<c-j>', '5j', { silent = true, desc = '5j', })
