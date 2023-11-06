@@ -36,10 +36,12 @@ function M.get_setup_table(file_ignore_patterns)
           ['<C-p>'] = actions.move_selection_previous,
 
           ['<C-c>'] = actions.close,
+          ['<C-,>'] = actions.close,
 
           ['<Down>'] = actions.move_selection_next,
           ['<Up>'] = actions.move_selection_previous,
 
+          ['<c-m>'] = actions.select_default,
           ['<CR>'] = actions.select_default,
           ['<C-x>'] = actions.select_horizontal,
           ['<C-v>'] = actions.select_vertical,
