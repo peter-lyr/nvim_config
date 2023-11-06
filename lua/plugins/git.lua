@@ -14,7 +14,6 @@ return {
     },
     init = function()
       if not S.load_whichkeys_txt_enable then
-        require 'my_simple'.add_whichkey('g', 'lewis6991/gitsigns.nvim', 'Git_Gitsigns')
         require 'my_simple'.add_whichkey('<leader>g', 'lewis6991/gitsigns.nvim', 'Git_Gitsigns')
       end
     end,
@@ -28,7 +27,6 @@ return {
     lazy = true,
     init = function()
       if not S.load_whichkeys_txt_enable then
-        require 'my_simple'.add_whichkey('g', 'gitpush', 'Git_GitPush')
         require 'my_simple'.add_whichkey('<leader>g', 'gitpush', 'Git_GitPush')
       end
     end,
