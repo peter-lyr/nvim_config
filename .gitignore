@@ -2,3 +2,6 @@
 .images
 *.exe
 .docs
+*.pdf
+*.docx
+*.html

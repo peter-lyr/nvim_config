@@ -22,4 +22,20 @@ return {
       require 'map.markdown_preview'
     end,
   },
+  {
+    name = 'markdown_export',
+    dir = '',
+    lazy = true,
+    ft = {
+      'markdown',
+    },
+    init = function()
+      if not S.load_whichkeys_txt_enable then
+        require 'my_simple'.add_whichkey('<leader>m', 'markdown_export', 'Markdown_Export')
+      end
+    end,
+    config = function()
+      require 'map.markdown_export'
+    end,
+  },
 }
