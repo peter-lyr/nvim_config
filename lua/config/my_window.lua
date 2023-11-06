@@ -512,11 +512,11 @@ end
 -----------
 
 function M.gt()
-  vim.cmd [[call feedkeys("gt")]]
+  vim.cmd [[tabnext]]
 end
 
 function M.gT()
-  vim.cmd [[call feedkeys("gT")]]
+  vim.cmd [[tabprev]]
 end
 
 return M
