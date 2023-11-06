@@ -266,6 +266,7 @@ function M.bwipeout_cur_proj()
       pcall(vim.cmd, 'Bwipeout! ' .. tostring(bufnr))
     end
   end
+  vim.cmd 'tabclose'
   vim.cmd 'e!'
 end
 
@@ -276,6 +277,7 @@ function M.bdelete_cur_proj()
       pcall(vim.cmd, 'Bdelete! ' .. tostring(bufnr))
     end
   end
+  vim.cmd 'tabclose'
   vim.cmd 'e!'
 end
 
