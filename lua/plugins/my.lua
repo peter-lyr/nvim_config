@@ -181,4 +181,17 @@ return {
       require 'map.my_yank'
     end,
   },
+  {
+    name = 'my_svn',
+    dir = '',
+    lazy = true,
+    init = function()
+      if not S.load_whichkeys_txt_enable then
+        require 'my_simple'.add_whichkey('<leader>v', 'svn', 'My_Svn')
+      end
+    end,
+    config = function()
+      require 'map.my_svn'
+    end,
+  },
 }
