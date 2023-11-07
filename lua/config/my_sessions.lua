@@ -91,7 +91,6 @@ end
 
 function M.sel_recent()
   local files = B.scan_files(M.sessions_dir_path, M.pattern)
-  print(#vim.tbl_keys(files))
   local new_files = {}
   table.sort(files)
   for i = #files, 1, -1 do
