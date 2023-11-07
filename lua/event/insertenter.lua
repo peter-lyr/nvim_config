@@ -10,6 +10,7 @@ B.load_require_common()
 -------------
 
 vim.fn.setreg('e', 'reg e empty')
+vim.fn.setreg('3', 'reg 3 empty')
 
 vim.g.single_quote = ''  -- ''
 vim.g.double_quote = ''  -- ""
@@ -69,6 +70,10 @@ B.aucmd(M.source, 'BufLeave', { 'BufLeave', 'CmdlineEnter', }, {
     if #word > 0 then
       vim.fn.setreg('e', word)
     end
+    local Word = vim.fn.expand '<cWORD>'
+    if #Word > 0 then
+      vim.fn.setreg('3', Word)
+    end
     if vim.g.telescope_entered or B.is_buf_ft { 'NvimTree', 'DiffviewFileHistory', } then
       return
     end
@@ -83,6 +88,7 @@ B.aucmd(M.source, 'BufLeave', { 'BufLeave', 'CmdlineEnter', }, {
 -- B.map_set_opts { mode = { 'c', 'i', }, }
 
 vim.keymap.set({ 'c', 'i', }, '<c-e>', '<c-r>e', { desc = 'paste <cword>', })
+vim.keymap.set({ 'c', 'i', }, '<c-3>', '<c-r>3', { desc = 'paste <cWORD>', })
 
 vim.keymap.set({ 'c', 'i', }, '<c-q>', '<c-r>=expand("%:t")<cr>', { desc = 'paste %:t', })
 vim.keymap.set({ 'c', 'i', }, '<c-|>', '<c-r>=nvim_buf_get_name(0)<cr>', { desc = 'paste nvim_buf_get_name', })
