@@ -11,10 +11,22 @@ function M.make(runway)
   end
   local build_dirs = B.get_dirs_equal 'build'
   if #build_dirs == 1 then
-    B.system_run(runway, [[cd %s && mingw32-make & pause]], build_dirs[1])
+    if #B.scan_files(build_dirs[1]) > 0 then
+      B.system_run(runway, [[cd %s && mingw32-make & pause]], build_dirs[1])
+      B.notify_info 'make...'
+    else
+      B.notify_info 'build dir is empty, cmake...'
+      require 'config.my_cmake'.to_cmake()
+    end
   elseif #build_dirs > 1 then
     B.ui_sel(build_dirs, 'make in build dir', function(build_dir)
-      B.system_run(runway, [[cd %s && mingw32-make & pause]], build_dir)
+      if #B.scan_files(build_dirs[1]) > 0 then
+        B.notify_info 'make...'
+        B.system_run(runway, [[cd %s && mingw32-make & pause]], build_dir)
+      else
+        B.notify_info 'build dir is empty, cmake...'
+        require 'config.my_cmake'.to_cmake()
+      end
     end)
   else
     B.notify_info 'no build dirs'
@@ -42,7 +54,7 @@ function M.clean()
           B.system_run('start', [[del /s /q %s & rd /s /q %s]], dir, dir)
         end
         table.insert(build_dirs, 1, 'deleting build dir')
-        B.kotify_info(build_dirs)
+        B.notify_info(build_dirs)
       else
         if #B.scan_files(build_dir) > 0 then
           B.system_run('start', [[del /s /q %s & rd /s /q %s]], build_dir, build_dir)
@@ -93,9 +105,11 @@ function M.run(runway)
   end
   local build_dirs = B.get_dirs_equal 'build'
   if #build_dirs == 1 then
+    B.notify_info 'run...'
     M.run_do(build_dirs[1], runway)
   elseif #build_dirs > 1 then
     B.ui_sel(build_dirs, 'make in build dir', function(build_dir)
+      B.notify_info 'run...'
       M.run_do(build_dir, runway)
     end)
   else
