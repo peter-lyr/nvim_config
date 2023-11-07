@@ -91,7 +91,7 @@ function M.scan_files(dir, pattern)
   local files = {}
   for _, entry in ipairs(entries) do
     local file = B.rep_slash(entry)
-    if string.match(file, pattern) then
+    if not pattern or string.match(file, pattern) then
       files[#files + 1] = B.get_only_name(file)
     end
   end
