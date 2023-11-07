@@ -70,9 +70,11 @@ function M.scan_files(dir, pattern)
   local entries = require 'plenary.scandir'.scan_dir(dir, { hidden = true, depth = 1, add_dirs = false, })
   local files = {}
   for _, entry in ipairs(entries) do
-    local file = B.rep_slash_lower(entry)
+    local file = B.rep_slash(entry)
     if string.match(file, pattern) then
       files[#files + 1] = B.get_only_name(file)
+    else
+      print(file, '------')
     end
   end
   return files
@@ -119,7 +121,7 @@ function M.time_diff(timestamp)
   elseif B.is(minutes) then
     return string.format('%2d minutes, %2d seconds ago.', minutes, seconds)
   elseif B.is(seconds) then
-    return string.format('%2d seconds ago.', seconds)
+    return string.format('%2d minutes, %2d seconds ago.', 0, seconds)
   end
 end
 
