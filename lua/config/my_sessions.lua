@@ -18,6 +18,8 @@ function M.open_all(projs)
       vim.cmd('edit ' .. file)
     end
   end
+  vim.cmd 'e!'
+  vim.cmd 'ProjectRootCD'
 end
 
 function M.get_projs(fname)
@@ -53,10 +55,14 @@ function M.sel(fname)
             for _, f in ipairs(files) do
               vim.cmd('edit ' .. f)
             end
+            vim.cmd 'e!'
+            vim.cmd 'ProjectRootCD'
             return
           end
           if file then
             vim.cmd('edit ' .. file)
+            vim.cmd 'e!'
+            vim.cmd 'ProjectRootCD'
           end
         end)
       end
@@ -64,18 +70,22 @@ function M.sel(fname)
   end
 end
 
+M.format = 'sessions_%d_%dprojs_%dfiles_%s.txt'
+M.pattern = 'sessions_(%d+)_(%d+)projs_(%d+)files_*(.*)%.txt'
+
 function M.save()
   local files, cnt = B.get_loaded_valid_bufs()
   if #vim.tbl_keys(files) > 0 then
     M.sessions_txt_path:write(vim.inspect(files), 'w')
-    local file = string.format(M.format, os.time(), #vim.tbl_keys(files), cnt)
+    local projs = {}
+    for proj, _ in pairs(files) do
+      projs[#projs + 1] = string.gsub(B.get_only_name(proj), '[^%w]', '_')
+    end
+    local file = string.format(M.format, os.time(), #vim.tbl_keys(files), cnt, vim.fn.join(projs, '. '))
     local last_sessions_txt_path = B.get_create_file_path(M.sessions_dir_path, file)
     last_sessions_txt_path:write(vim.inspect(files), 'w')
   end
 end
-
-M.format = 'sessions_%d_%dprojs_%dfiles.txt'
-M.pattern = 'sessions_(%d+)_(%d+)projs_(%d+)files%.txt'
 
 function M.sel_recent()
   local files = B.scan_files(M.sessions_dir_path, M.pattern)
@@ -83,8 +93,8 @@ function M.sel_recent()
   table.sort(files)
   for i = #files, 1, -1 do
     local file = files[i]
-    for timestamp, projs_cnt, files_cnt in string.gmatch(file, M.pattern) do
-      new_files[#new_files + 1] = string.format('%14s  %d projs  %d files', B.time_diff(tonumber(timestamp, 10)), projs_cnt, files_cnt)
+    for timestamp, projs_cnt, files_cnt, projs in string.gmatch(file, M.pattern) do
+      new_files[#new_files + 1] = string.format('%14s  %d projs  %d files. | %s', B.time_diff(tonumber(timestamp, 10)), projs_cnt, files_cnt, projs)
     end
   end
   B.ui_sel(new_files, 'which sessions to open', function(_, idx)
@@ -93,4 +103,3 @@ function M.sel_recent()
 end
 
 return M
-
