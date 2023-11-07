@@ -6,6 +6,17 @@ M.config = B.rep_map_to_config(M.loaded)
 -- package.loaded[M.loaded] = nil
 --------------------------------------------
 
+vim.cmd [[
+  hi CursorLine   guifg=NONE guibg=#4a4a4a
+  hi CursorColumn guifg=NONE guibg=#4a4a4a
+  hi Comment           gui=NONE
+  hi @comment          gui=NONE
+  hi @lsp.type.comment gui=NONE
+  hi TabLine     guifg=#a4a4a4
+  hi TabLineSel  guifg=#a4a4a4
+  hi TabLineFill guifg=#a4a4a4
+]]
+
 -- go to last loc when opening a buffer
 B.aucmd(M.source, 'BufReadPost', 'BufReadPost', {
   callback = function()

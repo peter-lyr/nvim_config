@@ -12,16 +12,6 @@ vim.opt.smartcase      = true
 vim.opt.smartindent    = true -- Insert indents automatically
 vim.opt.cursorline     = true
 vim.opt.cursorcolumn   = true
-vim.cmd [[
-  hi CursorLine   guifg=NONE guibg=#4a4a4a
-  hi CursorColumn guifg=NONE guibg=#4a4a4a
-  hi Comment           gui=NONE
-  hi @comment          gui=NONE
-  hi @lsp.type.comment gui=NONE
-  hi TabLine     guifg=#a4a4a4
-  hi TabLineSel  guifg=#a4a4a4
-  hi TabLineFill guifg=#a4a4a4
-]]
 vim.opt.termguicolors = true
 vim.opt.splitright    = true
 vim.opt.splitbelow    = true
