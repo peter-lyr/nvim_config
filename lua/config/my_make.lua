@@ -117,4 +117,15 @@ function M.run(runway)
   end
 end
 
+-----------
+
+function M.gcc()
+  local cur_file = vim.api.nvim_buf_get_name(0)
+  local fname = B.get_only_name(cur_file)
+  local exe = fname .. '.exe'
+  B.system_run('start',
+    [[%s && gcc %s -Wall -s -ffunction-sections -fdata-sections -Wl,--gc-sections -O3 -o %s & %s & pause]],
+    B.system_cd(cur_file), fname, exe, exe)
+end
+
 return M

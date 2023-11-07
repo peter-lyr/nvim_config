@@ -131,6 +131,7 @@ return {
       { '<c-s-f9>', function() require 'config.my_make'.clean() end,      mode = { 'n', 'v', }, silent = true, desc = 'clean: del build start', },
       { '<a-f9>',   function() require 'config.my_make'.run() end,        mode = { 'n', 'v', }, silent = true, desc = 'run build/*.exe asyncrun', },
       { '<a-s-f9>', function() require 'config.my_make'.run 'start' end,  mode = { 'n', 'v', }, silent = true, desc = 'run build/*.exe start', },
+      { '<s-f9>',   function() require 'config.my_make'.gcc() end,        mode = { 'n', 'v', }, silent = true, desc = 'gcc cur c source', },
     },
   },
   {
