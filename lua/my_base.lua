@@ -353,6 +353,10 @@ end
 
 ------
 
+function B.get_dirs_equal(dname, root_dir)
+  return B.call_sub(B.loaded, 'funcs', 'get_dirs_equal', dname, root_dir)
+end
+
 function B.get_file_dirs(file)
   return B.call_sub(B.loaded, 'funcs', 'get_file_dirs', file)
 end

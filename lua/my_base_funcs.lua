@@ -26,6 +26,26 @@ function M.get_loaded_valid_bufs()
   return files, cnt
 end
 
+-------------
+
+function M.get_dirs_equal(dname, root_dir)
+  if not root_dir then
+    root_dir = vim.fn['ProjectRootGet']()
+  end
+  local entries = require 'plenary.scandir'.scan_dir(root_dir, { hidden = false, depth = 32, add_dirs = true, })
+  local dirs = {}
+  for _, entry in ipairs(entries) do
+    entry = B.rep_slash(entry)
+    if require 'plenary.path':new(entry):is_dir() then
+      local name = B.get_only_name(entry)
+      if name == dname then
+        dirs[#dirs + 1] = entry
+      end
+    end
+  end
+  return dirs
+end
+
 ---------
 
 function M.get_file_dirs(file)

@@ -120,9 +120,14 @@ return {
       { '<c-f10>',   function() require 'config.my_cmake'.to_cmake() end,  mode = { 'n', 'v', }, silent = true, desc = 'c or cbps to cmake', },
       { '<c-s-f10>', function() require 'config.my_cmake'.to_cmake(1) end, mode = { 'n', 'v', }, silent = true, desc = 'c or cbps to cmake', },
     },
-    config = function()
-      require 'map.my_cmake'
-    end,
+  },
+  {
+    name = 'my_make',
+    dir = '',
+    lazy = true,
+    keys = {
+      { '<c-f9>', function() require 'config.my_make'.make() end, mode = { 'n', 'v', }, silent = true, desc = 'mingw32-make', },
+    },
   },
   {
     name = 'my_toggle',
