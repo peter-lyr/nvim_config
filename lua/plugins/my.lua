@@ -126,7 +126,8 @@ return {
     dir = '',
     lazy = true,
     keys = {
-      { '<c-f9>', function() require 'config.my_make'.make() end, mode = { 'n', 'v', }, silent = true, desc = 'mingw32-make', },
+      { '<c-f9>', function() require 'config.my_make'.make() end, mode = { 'n', 'v', }, silent = true, desc = 'mingw32-make asyncrun', },
+      { '<c-s-f9>', function() require 'config.my_make'.make('start') end, mode = { 'n', 'v', }, silent = true, desc = 'mingw32-make start', },
     },
   },
   {
