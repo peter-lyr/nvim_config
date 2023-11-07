@@ -215,6 +215,7 @@ function M.bdelete_other()
     end
   end
   vim.cmd 'e!'
+  vim.cmd 'ProjectRootCD'
 end
 
 function M.Bdelete_other()
@@ -226,6 +227,7 @@ function M.Bdelete_other()
     end
   end
   vim.cmd 'e!'
+  vim.cmd 'ProjectRootCD'
 end
 
 function M.bwipeout_other()
@@ -237,6 +239,7 @@ function M.bwipeout_other()
     end
   end
   vim.cmd 'e!'
+  vim.cmd 'ProjectRootCD'
 end
 
 function M.Bwipeout_other()
@@ -248,6 +251,7 @@ function M.Bwipeout_other()
     end
   end
   vim.cmd 'e!'
+  vim.cmd 'ProjectRootCD'
 end
 
 function M.close_cur_tab()
@@ -268,6 +272,7 @@ function M.bwipeout_cur_proj()
   end
   vim.cmd 'tabclose'
   vim.cmd 'e!'
+  vim.cmd 'ProjectRootCD'
 end
 
 function M.bdelete_cur_proj()
@@ -279,6 +284,7 @@ function M.bdelete_cur_proj()
   end
   vim.cmd 'tabclose'
   vim.cmd 'e!'
+  vim.cmd 'ProjectRootCD'
 end
 
 function M.bwipeout_other_proj()
@@ -289,6 +295,7 @@ function M.bwipeout_other_proj()
     end
   end
   vim.cmd 'e!'
+  vim.cmd 'ProjectRootCD'
 end
 
 function M.bdelete_other_proj()
@@ -299,6 +306,7 @@ function M.bdelete_other_proj()
     end
   end
   vim.cmd 'e!'
+  vim.cmd 'ProjectRootCD'
 end
 
 function M.get_deleted_bufnrs()
