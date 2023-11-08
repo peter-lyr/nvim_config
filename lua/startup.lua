@@ -25,6 +25,17 @@ function S.load_require(plugin, lua)
   end
 end
 
+function S.refeed(key, vals)
+  if not package.loaded['config.extra_whichkey'] then
+    vim.cmd 'Lazy load which-key.nvim'
+  end
+  for _, val in ipairs(vals) do
+    S.load_require(val[1], string.format('map.%s', val[2]))
+  end
+  key = string.gsub(key, '<leader>', '<space>')
+  vim.cmd('WhichKey ' .. key)
+end
+
 function S.prepare_whichkeys(mappings)
   for key, vals in pairs(mappings) do
     local new_desc = {}
@@ -33,15 +44,7 @@ function S.prepare_whichkeys(mappings)
     end
     local desc = vim.fn.join(new_desc, ' ')
     vim.keymap.set({ 'n', 'v', }, key, function()
-      if not package.loaded['config.extra_whichkey'] then
-        vim.cmd 'Lazy load which-key.nvim'
-      end
-      for _, val in ipairs(vals) do
-        S.load_require(val[1], string.format('map.%s', val[2]))
-      end
-      key = string.gsub(key, '<leader>', '<space>')
-      -- vim.keymap.del({ 'n', 'v', }, key)
-      vim.cmd('WhichKey ' .. key)
+      S.refeed(key, vals)
     end, { silent = true, desc = desc, })
   end
 end
