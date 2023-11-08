@@ -66,6 +66,7 @@ if __name__ == "__main__":
         os._exit(1)
 
     project_root = rep(sys.argv[1])
+    proj_name = os.path.basename(project_root)
 
     rm_build_dirs(project_root)
 
@@ -122,7 +123,7 @@ if __name__ == "__main__":
 
     with open(os.path.join(project_root, "CMakeLists.txt"), "wb") as ff:
         ff.write(b"cmake_minimum_required(VERSION 3.5)\n")
-        ff.write(b"set(PROJECT_NAME common)\n")
+        ff.write((f"set(PROJECT_NAME {proj_name})\n").encode('utf-8'))
         ff.write(b"project(${PROJECT_NAME})\n\n")
 
         ff.write(b"add_executable(${PROJECT_NAME}\n")
