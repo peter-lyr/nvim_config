@@ -37,32 +37,32 @@ end
 ------------------------
 
 M.delete_all = 'delete all above'
+M.deleting = 'deleting build dir'
+
+function M.clean_do(build_dir)
+  if #B.scan_files(build_dir) > 0 then
+    B.del_dir(build_dir)
+    B.notify_info { M.deleting, build_dir, }
+  else
+    B.notify_info { 'build dir is empty', build_dir, }
+  end
+end
 
 function M.clean()
   local build_dirs = B.get_dirs_equal 'build'
   if #build_dirs == 1 then
-    if #B.scan_files(build_dirs[1]) > 0 then
-      B.system_run('start', [[del /s /q %s & rd /s /q %s]], build_dirs[1], build_dirs[1])
-      B.notify_info { 'deleting build dir', build_dirs[1], }
-    else
-      B.notify_info { 'build dir is empty', build_dirs[1], }
-    end
+    M.clean_do(build_dirs[1])
   elseif #build_dirs > 1 then
     table.insert(build_dirs, 1, M.delete_all)
     B.ui_sel(build_dirs, 'make in build dir', function(build_dir)
       if build_dir == M.delete_all then
         for _, dir in ipairs(build_dirs) do
-          B.system_run('start', [[del /s /q %s & rd /s /q %s]], dir, dir)
+          B.del_dir(dir)
         end
-        table.insert(build_dirs, 1, 'deleting build dir')
+        table.insert(build_dirs, 1, M.deleting)
         B.notify_info(build_dirs)
       else
-        if #B.scan_files(build_dir) > 0 then
-          B.system_run('start', [[del /s /q %s & rd /s /q %s]], build_dir, build_dir)
-          B.notify_info { 'deleting build dir', build_dir, }
-        else
-          B.notify_info { 'build dir is empty', build_dir, }
-        end
+        M.clean_do(build_dir)
       end
     end)
   else
@@ -86,22 +86,23 @@ function M.get_exes(dir)
   return exes
 end
 
+function M.copy_exe_outside_build_dir_and_run(runway, build_dir, exe_name)
+  B.system_run(runway,
+    [[cd %s && copy /y %s ..\%s && cd .. && strip -s %s & upx -qq --best %s & %s & pause]],
+    build_dir, exe_name, exe_name, exe_name, exe_name, exe_name
+  )
+end
+
 function M.run_do(build_dir, runway)
   if not runway then
     runway = 'asyncrun'
   end
   local exes = M.get_exes(build_dir)
   if #exes == 1 then
-    local exe_name = B.get_only_name(exes[1])
-    B.system_run(runway,
-      [[cd %s && copy /y %s ..\%s && cd .. && strip -s %s & upx -qq --best %s & %s & pause]],
-      build_dir, exe_name, exe_name, exe_name, exe_name, exe_name)
+    M.copy_exe_outside_build_dir_and_run(runway, build_dir, B.get_only_name(exes[1]))
   elseif #exes > 1 then
     B.ui_sel(exes, 'run which exe', function(exe)
-      local exe_name = B.get_only_name(exe)
-      B.system_run(runway,
-        [[cd %s && copy /y %s ..\%s && cd .. && strip -s %s & upx -qq --best %s & %s & pause]],
-        build_dir, exe_name, exe_name, exe_name, exe_name, exe_name)
+      M.copy_exe_outside_build_dir_and_run(runway, build_dir, B.get_only_name(exe))
     end)
   end
 end
