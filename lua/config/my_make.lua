@@ -5,28 +5,26 @@ M.loaded = B.get_loaded(M.source)
 -- package.loaded[M.loaded] = nil
 --------------------------------------------
 
+function M.make_do(runway, build_dir)
+  if #B.scan_files(build_dir) > 0 then
+    B.notify_info 'make...'
+    B.system_run(runway, [[cd %s && mingw32-make & pause]], build_dir)
+  else
+    B.notify_info 'build dir is empty, cmake...'
+    require 'config.my_cmake'.to_cmake()
+  end
+end
+
 function M.make(runway)
   if not runway then
     runway = 'asyncrun'
   end
   local build_dirs = B.get_dirs_equal 'build'
   if #build_dirs == 1 then
-    if #B.scan_files(build_dirs[1]) > 0 then
-      B.system_run(runway, [[cd %s && mingw32-make & pause]], build_dirs[1])
-      B.notify_info 'make...'
-    else
-      B.notify_info 'build dir is empty, cmake...'
-      require 'config.my_cmake'.to_cmake()
-    end
+    M.make_do(runway, build_dirs[1])
   elseif #build_dirs > 1 then
     B.ui_sel(build_dirs, 'make in build dir', function(build_dir)
-      if #B.scan_files(build_dirs[1]) > 0 then
-        B.notify_info 'make...'
-        B.system_run(runway, [[cd %s && mingw32-make & pause]], build_dir)
-      else
-        B.notify_info 'build dir is empty, cmake...'
-        require 'config.my_cmake'.to_cmake()
-      end
+      M.make_do(runway, build_dir)
     end)
   else
     B.notify_info 'no build dirs, cmake...'
