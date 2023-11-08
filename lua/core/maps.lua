@@ -1,5 +1,4 @@
 -- -- go cmdline
-vim.keymap.set({ 'n', 'v', }, '<leader>；', ':', { silent = false, desc = 'go cmdline', })
 vim.keymap.set({ 'n', 'v', }, '<leader>;', ':', { silent = false, desc = 'go cmdline', })
 
 -- record
