@@ -27,7 +27,7 @@ function M.file_head()
 end
 
 function M.file_tail()
-  M.set(vim.fn.fnamemodify(M.name(), '%:t'))
+  M.set(vim.fn.fnamemodify(M.name(), ':t'))
 end
 
 function M.cwd()
