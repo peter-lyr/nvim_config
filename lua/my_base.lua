@@ -86,7 +86,7 @@ B.loaded = B.get_loaded(B.source)
 -----------------------------
 
 function B.merge_tables(...)
-  return B.call_sub(B.loaded, 'keymap', 'merge_tables', ...)
+  return require('my_base_keymap').merge_tables(...)
 end
 
 B.map_default_opts = {
@@ -108,19 +108,19 @@ function B.map_reset_opts()
 end
 
 function B.map(lhs, func, params, desc_more)
-  B.call_sub(B.loaded, 'keymap', 'map', B.map_opts, lhs, B.map_lua, func, params, desc_more)
+  require('my_base_keymap').map(B.map_opts, lhs, B.map_lua, func, params, desc_more)
 end
 
 function B.map_n(lhs, func, params, desc_more)
-  B.call_sub(B.loaded, 'keymap', 'map_n', B.map_opts, lhs, B.map_lua, func, params, desc_more)
+  require('my_base_keymap').map_n(B.map_opts, lhs, B.map_lua, func, params, desc_more)
 end
 
 function B.map_v(lhs, func, params, desc_more)
-  B.call_sub(B.loaded, 'keymap', 'map_v', B.map_opts, lhs, B.map_lua, func, params, desc_more)
+  require('my_base_keymap').map_v(B.map_opts, lhs, B.map_lua, func, params, desc_more)
 end
 
 function B.map_i(lhs, func, params, desc_more)
-  B.call_sub(B.loaded, 'keymap', 'map_i', B.map_opts, lhs, B.map_lua, func, params, desc_more)
+  require('my_base_keymap').map_i(B.map_opts, lhs, B.map_lua, func, params, desc_more)
 end
 
 -----------------------------
@@ -134,17 +134,11 @@ end
 B.whichkeys = {}
 
 function B.register_whichkey(key, desc)
-  B.call_sub(B.loaded, 'keymap', 'register_whichkey', B.whichkeys, key, B.map_lua, desc)
+  require('my_base_keymap').register_whichkey(B.whichkeys, key, B.map_lua, desc)
 end
 
 function B.merge_whichkeys()
   require 'which-key'.register(B.whichkeys)
-end
-
------------------------------
-
-function B.call_sub(main, sub, func, ...)
-  return require(main .. '_' .. sub)[func](...)
 end
 
 -----------------------------
@@ -183,11 +177,11 @@ end
 -----------------------------
 
 function B.source_lua(file)
-  B.call_sub('config.my_test', 'useful', 'source_lua', file)
+  require('my_base_useful').source_lua(file)
 end
 
 function B.map_buf_c_q_close(buf, cmd)
-  B.call_sub('config.my_test', 'useful', 'map_buf_c_q_close', buf, cmd)
+  require('my_base_useful').map_buf_c_q_close(buf, cmd)
 end
 
 -----------------------------
@@ -308,31 +302,31 @@ end
 ---------
 
 function B.notify_info(message)
-  B.call_sub(B.loaded, 'asyncrun', 'notify_info', message)
+  require('my_base_asyncrun').notify_info(message)
 end
 
 function B.notify_error(message)
-  B.call_sub(B.loaded, 'asyncrun', 'notify_error', message)
+  require('my_base_asyncrun').notify_error(message)
 end
 
 function B.system_cd(file)
-  return B.call_sub(B.loaded, 'asyncrun', 'system_cd', file)
+  return require('my_base_asyncrun').system_cd(file)
 end
 
 function B.system_run(way, str_format, ...)
-  B.call_sub(B.loaded, 'asyncrun', 'system_run', way, str_format, ...)
+  require('my_base_asyncrun').system_run(way, str_format, ...)
 end
 
 --------
 
 function B.powershell_run(file)
-  return B.call_sub(B.loaded, 'asyncrun', 'powershell_run', file)
+  return require('my_base_asyncrun').powershell_run(file)
 end
 
 -----------
 
 function B.asyncrun_prepare_add(callback)
-  return B.call_sub(B.loaded, 'asyncrun', 'asyncrun_prepare_add', callback)
+  return require('my_base_asyncrun').asyncrun_prepare_add(callback)
 end
 
 ----------------------
@@ -348,41 +342,41 @@ function B.is_buf_loaded_valid(buf)
 end
 
 function B.get_loaded_valid_bufs()
-  return B.call_sub(B.loaded, 'funcs', 'get_loaded_valid_bufs')
+  return require('my_base_funcs').get_loaded_valid_bufs()
 end
 
 ------
 
 function B.get_dirs_equal(dname, root_dir)
-  return B.call_sub(B.loaded, 'funcs', 'get_dirs_equal', dname, root_dir)
+  return require('my_base_funcs').get_dirs_equal(dname, root_dir)
 end
 
 function B.get_file_dirs(file)
-  return B.call_sub(B.loaded, 'funcs', 'get_file_dirs', file)
+  return require('my_base_funcs').get_file_dirs(file)
 end
 
 function B.get_fname_tail(file)
-  return B.call_sub(B.loaded, 'funcs', 'get_fname_tail', file)
+  return require('my_base_funcs').get_fname_tail(file)
 end
 
 --------
 
 function B.cmd(str_format, ...)
-  return B.call_sub(B.loaded, 'asyncrun', 'cmd', str_format, ...)
+  return require('my_base_asyncrun').cmd(str_format, ...)
 end
 
 function B.print(str_format, ...)
-  return B.call_sub(B.loaded, 'asyncrun', 'print', str_format, ...)
+  return require('my_base_asyncrun').print(str_format, ...)
 end
 
 ---------------
 
 function B.scan_files(dir, pattern)
-  return B.call_sub(B.loaded, 'funcs', 'scan_files', dir, pattern)
+  return require('my_base_funcs').scan_files(dir, pattern)
 end
 
 function B.time_diff(timestamp)
-  return B.call_sub(B.loaded, 'funcs', 'time_diff', timestamp)
+  return require('my_base_funcs').time_diff(timestamp)
 end
 
 return B

@@ -6,126 +6,122 @@ M.loaded = B.get_loaded(M.source)
 --------------------------------------------
 
 function M.ClangdSwitchSourceHeader()
-  B.call_sub(M.loaded, 'funcs', 'ClangdSwitchSourceHeader')
+  require('config.nvim_lsp_funcs').ClangdSwitchSourceHeader()
 end
 
 function M.LspInfo()
-  B.call_sub(M.loaded, 'funcs', 'LspInfo')
+  require('config.nvim_lsp_funcs').LspInfo()
 end
 
 function M.LspRestart()
-  B.call_sub(M.loaded, 'funcs', 'LspRestart')
+  require('config.nvim_lsp_funcs').LspRestart()
 end
 
 function M.LspStart()
-  B.call_sub(M.loaded, 'funcs', 'LspStart')
+  require('config.nvim_lsp_funcs').LspStart()
 end
 
 function M.code_action()
-  B.call_sub(M.loaded, 'funcs', 'code_action')
+  require('config.nvim_lsp_funcs').code_action()
 end
 
 function M.declaration()
-  B.call_sub(M.loaded, 'funcs', 'declaration')
+  require('config.nvim_lsp_funcs').declaration()
 end
 
 function M.definition()
-  B.call_sub(M.loaded, 'funcs', 'definition')
+  require('config.nvim_lsp_funcs').definition()
 end
 
 function M.diagnostic_disable()
-  B.call_sub(M.loaded, 'funcs', 'diagnostic_disable')
+  require('config.nvim_lsp_funcs').diagnostic_disable()
 end
 
 function M.diagnostic_enable()
-  B.call_sub(M.loaded, 'funcs', 'diagnostic_enable')
+  require('config.nvim_lsp_funcs').diagnostic_enable()
 end
 
 function M.diagnostic_goto_next()
-  B.call_sub(M.loaded, 'funcs', 'diagnostic_goto_next')
+  require('config.nvim_lsp_funcs').diagnostic_goto_next()
 end
 
 function M.diagnostic_goto_prev()
-  B.call_sub(M.loaded, 'funcs', 'diagnostic_goto_prev')
+  require('config.nvim_lsp_funcs').diagnostic_goto_prev()
 end
 
 function M.diagnostic_open_float()
-  B.call_sub(M.loaded, 'funcs', 'diagnostic_open_float')
+  require('config.nvim_lsp_funcs').diagnostic_open_float()
 end
 
 function M.diagnostic_setloclist()
-  B.call_sub(M.loaded, 'funcs', 'diagnostic_setloclist')
+  require('config.nvim_lsp_funcs').diagnostic_setloclist()
 end
 
 function M.feedkeys_LspStop()
-  B.call_sub(M.loaded, 'funcs', 'feedkeys_LspStop')
+  require('config.nvim_lsp_funcs').feedkeys_LspStop()
 end
 
 function M.format()
-  B.call_sub(M.loaded, 'funcs', 'format')
+  require('config.nvim_lsp_funcs').format()
 end
 
 function M.format_input()
-  B.call_sub(M.loaded, 'funcs', 'format_input')
+  require('config.nvim_lsp_funcs').format_input()
 end
 
 function M.format_paragraph()
-  B.call_sub(M.loaded, 'funcs', 'format_paragraph')
+  require('config.nvim_lsp_funcs').format_paragraph()
 end
 
 function M.hover()
-  B.call_sub(M.loaded, 'funcs', 'hover')
+  require('config.nvim_lsp_funcs').hover()
 end
 
 function M.implementation()
-  B.call_sub(M.loaded, 'funcs', 'implementation')
+  require('config.nvim_lsp_funcs').implementation()
 end
 
 function M.references()
-  B.call_sub(M.loaded, 'funcs', 'references')
+  require('config.nvim_lsp_funcs').references()
 end
 
 function M.rename()
-  B.call_sub(M.loaded, 'funcs', 'rename')
+  require('config.nvim_lsp_funcs').rename()
 end
 
 function M.retab_erase_bad_white_space()
-  B.call_sub(M.loaded, 'funcs', 'retab_erase_bad_white_space')
+  require('config.nvim_lsp_funcs').retab_erase_bad_white_space()
 end
 
 function M.signature_help()
-  B.call_sub(M.loaded, 'funcs', 'signature_help')
+  require('config.nvim_lsp_funcs').signature_help()
 end
 
 function M.stop_all()
-  B.call_sub(M.loaded, 'funcs', 'stop_all')
+  require('config.nvim_lsp_funcs').stop_all()
 end
 
 function M.type_definition()
-  B.call_sub(M.loaded, 'funcs', 'type_definition')
+  require('config.nvim_lsp_funcs').type_definition()
 end
 
 --------------
 
 function M.lua()
-  B.call_sub(M.loaded, 'event', 'lua')
+  require('config.nvim_lsp_event').lua()
 end
 
 function M.python()
-  B.call_sub(M.loaded, 'event', 'python')
+  require('config.nvim_lsp_event').python()
 end
 
 function M.c()
-  B.call_sub(M.loaded, 'event', 'c')
+  require('config.nvim_lsp_event').c()
 end
 
 function M.markdown()
-  B.call_sub(M.loaded, 'event', 'markdown')
+  require('config.nvim_lsp_event').markdown()
 end
-
--- function M.update_lua_libraries()
---   B.call_sub(M.loaded, 'event_lua', 'update_lua_libraries')
--- end
 
 ------------------
 

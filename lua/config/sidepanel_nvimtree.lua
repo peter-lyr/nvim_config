@@ -12,8 +12,8 @@ vim.cmd [[
 ]]
 
 function M.on_attach(bufnr)
-  B.call_sub(M.loaded, 'map', 'basic_map', bufnr)
-  B.call_sub(M.loaded, 'map', 'sel_map', bufnr)
+  require('config.sidepanel_nvimtree_map').basic_map(bufnr)
+  require('config.sidepanel_nvimtree_map').sel_map(bufnr)
 end
 
 M.default_opts = {

@@ -10,31 +10,31 @@ M.loaded = B.get_loaded(M.source)
 ------------------------------
 
 function M.map_buf_close(lhs, buf, cmd)
-  B.call_sub(M.loaded, 'useful', 'map_buf_close', lhs, buf, cmd)
+  require('config.my_test_useful').map_buf_close(lhs, buf, cmd)
 end
 
 function M.map_buf_c_q_close(buf, cmd)
-  B.call_sub(M.loaded, 'useful', 'map_buf_c_q_close', buf, cmd)
+  require('config.my_test_useful').map_buf_c_q_close(buf, cmd)
 end
 
 function M.execute_output(cmd)
-  B.call_sub(M.loaded, 'useful', 'execute_output', cmd)
+  require('config.my_test_useful').execute_output(cmd)
 end
 
 function M.type_execute_output()
-  B.call_sub(M.loaded, 'useful', 'type_execute_output')
+  require('config.my_test_useful').type_execute_output()
 end
 
 function M.delete_whichkeys_txt()
-  B.call_sub(M.loaded, 'useful', 'delete_whichkeys_txt')
+  require('config.my_test_useful').delete_whichkeys_txt()
 end
 
 function M.startuptime(...)
-  B.call_sub(M.loaded, 'useful', 'startuptime', ...)
+  require('config.my_test_useful').startuptime(...)
 end
 
 function M.start_new_nvim_qt()
-  B.call_sub(M.loaded, 'useful', 'start_new_nvim_qt')
+  require('config.my_test_useful').start_new_nvim_qt()
 end
 
 function M.restart_nvim_qt()
@@ -110,7 +110,7 @@ end
 ------------------------------
 
 function M.source_lua()
-  B.call_sub(M.loaded, 'useful', 'source_lua')
+  require('config.my_test_useful').source_lua()
 end
 
 ------------------------------
@@ -126,7 +126,7 @@ end
 ------
 
 function M.git_clone()
-  B.call_sub(M.loaded, 'useful', 'git_clone')
+  require('config.my_test_useful').git_clone()
 end
 
 return M
