@@ -16,7 +16,6 @@ if not vim.loop.fs_stat(lazypath) then
 end
 
 local root = data .. 'lazy\\plugins'
-local readme = data .. 'lazy\\readme'
 local lockfile = data .. 'lazy\\lazy-lock.json'
 
 local lazy = require 'lazy'
@@ -27,7 +26,7 @@ lazy.setup {
   },
   root = root,
   readme = {
-    root = readme,
+    enabled = false,
   },
   lockfile = lockfile,
   performance = {
