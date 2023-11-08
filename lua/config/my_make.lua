@@ -135,4 +135,9 @@ function M.gcc()
     B.system_cd(cur_file), fname, exe_name, exe_name, exe_name, exe_name)
 end
 
+----------------
+
+-- 环境变量:
+--   INCLUDE: mingw64\x86_64-w64-mingw32\include
+
 return M
