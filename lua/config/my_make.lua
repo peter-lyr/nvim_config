@@ -29,7 +29,8 @@ function M.make(runway)
       end
     end)
   else
-    B.notify_info 'no build dirs'
+    B.notify_info 'no build dirs, cmake...'
+    require 'config.my_cmake'.to_cmake()
   end
 end
 
@@ -65,7 +66,7 @@ function M.clean()
       end
     end)
   else
-    B.notify_info 'no build dirs'
+    B.notify_info 'no build dirs, clean stopping...'
   end
 end
 
@@ -119,7 +120,7 @@ function M.run(runway)
       M.run_do(build_dir, runway)
     end)
   else
-    B.notify_info 'no build dirs'
+    B.notify_info 'no build dirs, run stopping...'
   end
 end
 
