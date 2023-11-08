@@ -91,10 +91,16 @@ function M.run_do(build_dir, runway)
   end
   local exes = M.get_exes(build_dir)
   if #exes == 1 then
-    B.system_run(runway, [[cd %s && %s & pause]], build_dir, exes[1])
+    local exe_name = B.get_only_name(exes[1])
+    B.system_run(runway,
+      [[cd %s && copy /y %s ..\%s && cd .. && strip -s %s & upx -qq --best %s & %s & pause]],
+      build_dir, exe_name, exe_name, exe_name, exe_name, exe_name)
   elseif #exes > 1 then
     B.ui_sel(exes, 'run which exe', function(exe)
-      B.system_run(runway, [[cd %s && %s & pause]], build_dir, exe)
+      local exe_name = B.get_only_name(exe)
+      B.system_run(runway,
+        [[cd %s && copy /y %s ..\%s && cd .. && strip -s %s & upx -qq --best %s & %s & pause]],
+        build_dir, exe_name, exe_name, exe_name, exe_name, exe_name)
     end)
   end
 end
@@ -123,9 +129,10 @@ function M.gcc()
   local cur_file = vim.api.nvim_buf_get_name(0)
   local fname = B.get_only_name(cur_file)
   local exe = fname .. '.exe'
+  local exe_name = B.get_only_name(exe)
   B.system_run('start',
-    [[%s && gcc %s -Wall -s -ffunction-sections -fdata-sections -Wl,--gc-sections -O3 -o %s & %s & pause]],
-    B.system_cd(cur_file), fname, exe, exe)
+    [[%s && gcc %s -Wall -s -ffunction-sections -fdata-sections -Wl,--gc-sections -O3 -o %s & strip -s %s & upx -qq --best %s & %s & pause]],
+    B.system_cd(cur_file), fname, exe_name, exe_name, exe_name, exe_name)
 end
 
 return M
