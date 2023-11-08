@@ -6,11 +6,11 @@ M.loaded = B.get_loaded(M.source)
 --------------------------------------------
 
 function M.basic_map(bufnr)
-  require('config.sidepanel_nvimtree_map_basic').basic_map(bufnr)
+  require 'config.sidepanel_nvimtree_map_basic'.basic_map(bufnr)
 end
 
 function M.sel_map(bufnr)
-  require('config.sidepanel_nvimtree_map_sel').sel_map(bufnr)
+  require 'config.sidepanel_nvimtree_map_sel'.sel_map(bufnr)
 end
 
 return M

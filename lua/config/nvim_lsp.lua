@@ -6,121 +6,121 @@ M.loaded = B.get_loaded(M.source)
 --------------------------------------------
 
 function M.ClangdSwitchSourceHeader()
-  require('config.nvim_lsp_funcs').ClangdSwitchSourceHeader()
+  require 'config.nvim_lsp_funcs'.ClangdSwitchSourceHeader()
 end
 
 function M.LspInfo()
-  require('config.nvim_lsp_funcs').LspInfo()
+  require 'config.nvim_lsp_funcs'.LspInfo()
 end
 
 function M.LspRestart()
-  require('config.nvim_lsp_funcs').LspRestart()
+  require 'config.nvim_lsp_funcs'.LspRestart()
 end
 
 function M.LspStart()
-  require('config.nvim_lsp_funcs').LspStart()
+  require 'config.nvim_lsp_funcs'.LspStart()
 end
 
 function M.code_action()
-  require('config.nvim_lsp_funcs').code_action()
+  require 'config.nvim_lsp_funcs'.code_action()
 end
 
 function M.declaration()
-  require('config.nvim_lsp_funcs').declaration()
+  require 'config.nvim_lsp_funcs'.declaration()
 end
 
 function M.definition()
-  require('config.nvim_lsp_funcs').definition()
+  require 'config.nvim_lsp_funcs'.definition()
 end
 
 function M.diagnostic_disable()
-  require('config.nvim_lsp_funcs').diagnostic_disable()
+  require 'config.nvim_lsp_funcs'.diagnostic_disable()
 end
 
 function M.diagnostic_enable()
-  require('config.nvim_lsp_funcs').diagnostic_enable()
+  require 'config.nvim_lsp_funcs'.diagnostic_enable()
 end
 
 function M.diagnostic_goto_next()
-  require('config.nvim_lsp_funcs').diagnostic_goto_next()
+  require 'config.nvim_lsp_funcs'.diagnostic_goto_next()
 end
 
 function M.diagnostic_goto_prev()
-  require('config.nvim_lsp_funcs').diagnostic_goto_prev()
+  require 'config.nvim_lsp_funcs'.diagnostic_goto_prev()
 end
 
 function M.diagnostic_open_float()
-  require('config.nvim_lsp_funcs').diagnostic_open_float()
+  require 'config.nvim_lsp_funcs'.diagnostic_open_float()
 end
 
 function M.diagnostic_setloclist()
-  require('config.nvim_lsp_funcs').diagnostic_setloclist()
+  require 'config.nvim_lsp_funcs'.diagnostic_setloclist()
 end
 
 function M.feedkeys_LspStop()
-  require('config.nvim_lsp_funcs').feedkeys_LspStop()
+  require 'config.nvim_lsp_funcs'.feedkeys_LspStop()
 end
 
 function M.format()
-  require('config.nvim_lsp_funcs').format()
+  require 'config.nvim_lsp_funcs'.format()
 end
 
 function M.format_input()
-  require('config.nvim_lsp_funcs').format_input()
+  require 'config.nvim_lsp_funcs'.format_input()
 end
 
 function M.format_paragraph()
-  require('config.nvim_lsp_funcs').format_paragraph()
+  require 'config.nvim_lsp_funcs'.format_paragraph()
 end
 
 function M.hover()
-  require('config.nvim_lsp_funcs').hover()
+  require 'config.nvim_lsp_funcs'.hover()
 end
 
 function M.implementation()
-  require('config.nvim_lsp_funcs').implementation()
+  require 'config.nvim_lsp_funcs'.implementation()
 end
 
 function M.references()
-  require('config.nvim_lsp_funcs').references()
+  require 'config.nvim_lsp_funcs'.references()
 end
 
 function M.rename()
-  require('config.nvim_lsp_funcs').rename()
+  require 'config.nvim_lsp_funcs'.rename()
 end
 
 function M.retab_erase_bad_white_space()
-  require('config.nvim_lsp_funcs').retab_erase_bad_white_space()
+  require 'config.nvim_lsp_funcs'.retab_erase_bad_white_space()
 end
 
 function M.signature_help()
-  require('config.nvim_lsp_funcs').signature_help()
+  require 'config.nvim_lsp_funcs'.signature_help()
 end
 
 function M.stop_all()
-  require('config.nvim_lsp_funcs').stop_all()
+  require 'config.nvim_lsp_funcs'.stop_all()
 end
 
 function M.type_definition()
-  require('config.nvim_lsp_funcs').type_definition()
+  require 'config.nvim_lsp_funcs'.type_definition()
 end
 
 --------------
 
 function M.lua()
-  require('config.nvim_lsp_event').lua()
+  require 'config.nvim_lsp_event'.lua()
 end
 
 function M.python()
-  require('config.nvim_lsp_event').python()
+  require 'config.nvim_lsp_event'.python()
 end
 
 function M.c()
-  require('config.nvim_lsp_event').c()
+  require 'config.nvim_lsp_event'.c()
 end
 
 function M.markdown()
-  require('config.nvim_lsp_event').markdown()
+  require 'config.nvim_lsp_event'.markdown()
 end
 
 ------------------

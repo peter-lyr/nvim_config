@@ -644,7 +644,7 @@ end
 
 function M.my_projects()
   M.setreg()
-  require('config.telescope_projects').my_projects()
+  require 'config.telescope_projects'.my_projects()
 end
 
 B.aucmd(M.source, 'BufEnter-telescope', { 'BufEnter', }, {

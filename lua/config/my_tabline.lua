@@ -15,41 +15,41 @@ M.simple_statusline = nil
 ----------
 
 function M.b_next_buf()
-  require('config.my_tabline_funcs').b_next_buf()
+  require 'config.my_tabline_funcs'.b_next_buf()
 end
 
 function M.b_prev_buf()
-  require('config.my_tabline_funcs').b_prev_buf()
+  require 'config.my_tabline_funcs'.b_prev_buf()
 end
 
 function M.bd_next_buf()
-  require('config.my_tabline_funcs').bd_next_buf()
+  require 'config.my_tabline_funcs'.bd_next_buf()
 end
 
 function M.bd_prev_buf()
-  require('config.my_tabline_funcs').bd_prev_buf()
+  require 'config.my_tabline_funcs'.bd_prev_buf()
 end
 
 -------
 
 function M.bd_all_next_buf()
-  require('config.my_tabline_funcs').bd_all_next_buf()
+  require 'config.my_tabline_funcs'.bd_all_next_buf()
 end
 
 function M.bd_all_prev_buf()
-  require('config.my_tabline_funcs').bd_all_prev_buf()
+  require 'config.my_tabline_funcs'.bd_all_prev_buf()
 end
 
 ----------
 
 function M.update_bufs(ev)
   M.cur_buf = ev and ev.buf or vim.fn.bufnr()
-  require('config.my_tabline_event').update_bufs()
+  require 'config.my_tabline_event'.update_bufs()
 end
 
 function M.refresh_tabline(ev)
   M.cur_buf = ev and ev.buf or vim.fn.bufnr()
-  require('config.my_tabline_event').refresh_tabline()
+  require 'config.my_tabline_event'.refresh_tabline()
 end
 
 function M.update_bufs_and_refresh_tabline(ev)
@@ -60,31 +60,31 @@ end
 ------------------
 
 function M.only_cur_buffer()
-  require('config.my_tabline_funcs').only_cur_buffer()
+  require 'config.my_tabline_funcs'.only_cur_buffer()
 end
 
 function M.restore_hidden_tabs()
-  require('config.my_tabline_funcs').restore_hidden_tabs()
+  require 'config.my_tabline_funcs'.restore_hidden_tabs()
 end
 
 function M.append_one_proj_right_down()
-  require('config.my_tabline_funcs').append_one_proj_right_down()
+  require 'config.my_tabline_funcs'.append_one_proj_right_down()
 end
 
 function M.append_one_proj_new_tab()
-  require('config.my_tabline_funcs').o()
+  require 'config.my_tabline_funcs'.o()
 end
 
 function M.append_one_proj_new_tab_no_dupl()
-  require('config.my_tabline_funcs').append_one_proj_new_tab_no_dupl()
+  require 'config.my_tabline_funcs'.append_one_proj_new_tab_no_dupl()
 end
 
 function M.append_unload_right_down()
-  require('config.my_tabline_funcs').append_unload_right_down()
+  require 'config.my_tabline_funcs'.append_unload_right_down()
 end
 
 function M.simple_statusline_toggle()
-  require('config.my_tabline_funcs').simple_statusline_toggle()
+  require 'config.my_tabline_funcs'.simple_statusline_toggle()
 end
 
 --------------------
@@ -101,7 +101,7 @@ function M.projectroot_titlestring(ev)
 end
 
 function M.toggle_tabs_way()
-  return require('config.my_tabline_event').toggle_tabs_way()
+  return require 'config.my_tabline_event'.toggle_tabs_way()
 end
 
 return M

@@ -6,23 +6,23 @@ M.loaded = B.get_loaded(M.source)
 --------------------------------------------
 
 function M.update(cur)
-  require('config.my_drag_images').update(cur)
+  require 'config.my_drag_images'.update(cur)
 end
 
 function M.paste(png, no_input_image_name)
-  require('config.my_drag_images').paste(png, no_input_image_name)
+  require 'config.my_drag_images'.paste(png, no_input_image_name)
 end
 
 function M.copy_text()
-  require('config.my_drag_images').copy_text()
+  require 'config.my_drag_images'.copy_text()
 end
 
 function M.copy_file()
-  require('config.my_drag_images').copy_file()
+  require 'config.my_drag_images'.copy_file()
 end
 
 function M.edit_drag_bin_fts_md()
-  require('config.my_drag_bin').edit_drag_bin_fts_md()
+  require 'config.my_drag_bin'.edit_drag_bin_fts_md()
 end
 
 -------------
@@ -37,12 +37,12 @@ end
 
 function M.readpre(ev)
   if M.is_dragging == true then
-    M.post_cmd = require('config.my_drag_images').check(ev.buf)
+    M.post_cmd = require 'config.my_drag_images'.check(ev.buf)
     if #M.post_cmd == 0 then
-      M.post_cmd = require('config.my_drag_docs').check(ev.buf)
+      M.post_cmd = require 'config.my_drag_docs'.check(ev.buf)
     end
     if #M.post_cmd == 0 then
-      M.post_cmd = require('config.my_drag_bin').check_xxd(ev.buf)
+      M.post_cmd = require 'config.my_drag_bin'.check_xxd(ev.buf)
       -- if #M.post_cmd == 0 then
       --   M.post_cmd = require('config.my_drag_bin').check_others(ev.buf)
       -- end
