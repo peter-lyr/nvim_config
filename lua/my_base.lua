@@ -177,11 +177,11 @@ end
 -----------------------------
 
 function B.source_lua(file)
-  require 'my_base_useful'.source_lua(file)
+  require 'config.my_test_useful'.source_lua(file)
 end
 
 function B.map_buf_c_q_close(buf, cmd)
-  require 'my_base_useful'.map_buf_c_q_close(buf, cmd)
+  require 'config.my_test_useful'.map_buf_c_q_close(buf, cmd)
 end
 
 -----------------------------
