@@ -6,4 +6,4 @@
 5. [x] statuscolumn statuscol.nvim
 6. [x] tabline show all
 7. [x] tabline delete other projs
-8. [ ] c2cmake, cbp2cmake change common
+8. [x] c2cmake, cbp2cmake change common
