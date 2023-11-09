@@ -104,4 +104,44 @@ function M.sel_recent()
   end)
 end
 
+M.opened_projs_dir_path = B.get_create_std_data_dir 'opened_projs'
+M.opened_projs_txt_path = B.get_create_file_path(M.opened_projs_dir_path, 'opened_projs.txt')
+
+local cwd = B.rep_slash_lower(vim.loop.cwd())
+M.opened_projs = { cwd, }
+M.opened_projs_txt_path:write(vim.inspect(M.opened_projs), 'w')
+
+function M.add_opened_projs()
+  cwd = B.rep_slash_lower(vim.loop.cwd())
+  if vim.tbl_contains(M.opened_projs, cwd) == false then
+    M.opened_projs[#M.opened_projs + 1] = cwd
+    local func = loadstring('return ' .. M.opened_projs_txt_path:read())
+    if func then
+      local projs = func()
+      if projs then
+        for _, proj in ipairs(projs) do
+          proj = B.rep_slash_lower(proj)
+          if vim.tbl_contains(M.opened_projs, proj) == false then
+            M.opened_projs[#M.opened_projs + 1] = proj
+          end
+        end
+      end
+      M.opened_projs_txt_path:write(vim.inspect(M.opened_projs), 'w')
+      B.notify_info(cwd)
+    end
+  end
+end
+
+function M.cd_opened_projs()
+  local func = loadstring('return ' .. M.opened_projs_txt_path:read())
+  if func then
+    local projs = func()
+    B.ui_sel(projs, 'sel dir to change', function(dir)
+      if dir then
+        B.cmd('cd %s', dir)
+      end
+    end)
+  end
+end
+
 return M

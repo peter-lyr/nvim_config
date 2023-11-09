@@ -5,7 +5,7 @@ return {
     dir = '',
     lazy = true,
     config = function()
-      require 'event.BufReadPost'
+      require 'event.bufreadpost'
     end,
   },
   {
@@ -14,7 +14,7 @@ return {
     dir = '',
     lazy = true,
     config = function()
-      require 'event.BufLeave'
+      require 'event.bufleave'
     end,
   },
   {
@@ -23,7 +23,7 @@ return {
     dir = '',
     lazy = true,
     config = function()
-      require 'event.FileType'
+      require 'event.filetype'
     end,
   },
   {
@@ -32,7 +32,7 @@ return {
     dir = '',
     lazy = true,
     config = function()
-      require 'event.InsertEnter'
+      require 'event.insertenter'
     end,
   },
   {

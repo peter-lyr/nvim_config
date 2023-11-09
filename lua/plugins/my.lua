@@ -5,7 +5,7 @@ return {
     name = 'my_sessions',
     dir = '',
     lazy = true,
-    event = { 'BufReadPost', 'BufNewFile', },
+    event = { 'BufReadPost', 'BufNewFile', 'DirChanged', },
     init = function()
       if not S.load_whichkeys_txt_enable then
         require 'my_simple'.add_whichkey('<leader>s', 'sessions', 'My_Sessions')
