@@ -1,5 +1,5 @@
 - [x] aerial make tabline highlight disappear.
 - [x] markdown lsp not working.
-- [ ] <leader>gd modify right side and looks weird.
+- [x] <leader>gd modify right side and looks weird.
 - [x] session wait nvim quit done to restart
 - [ ] nvim running long time, stuck event
