@@ -107,12 +107,21 @@ end
 M.opened_projs_dir_path = B.get_create_std_data_dir 'opened_projs'
 M.opened_projs_txt_path = B.get_create_file_path(M.opened_projs_dir_path, 'opened_projs.txt')
 
-local cwd = B.rep_slash_lower(vim.loop.cwd())
-M.opened_projs = { cwd, }
-M.opened_projs_txt_path:write(vim.inspect(M.opened_projs), 'w')
+function M.init_opened_projs()
+  local cwd = B.rep_slash_lower(vim.loop.cwd())
+  M.opened_projs = { cwd, }
+  M.opened_projs_txt_path:write(vim.inspect(M.opened_projs), 'w')
+  B.cmd('cd %s', cwd)
+end
+
+if not M.opened_projs_loaded then
+  M.init_opened_projs()
+end
+
+M.opened_projs_loaded = 1
 
 function M.add_opened_projs()
-  cwd = B.rep_slash_lower(vim.loop.cwd())
+  local cwd = B.rep_slash_lower(vim.loop.cwd())
   if vim.tbl_contains(M.opened_projs, cwd) == false then
     M.opened_projs[#M.opened_projs + 1] = cwd
     local func = loadstring('return ' .. M.opened_projs_txt_path:read())
@@ -132,12 +141,16 @@ function M.add_opened_projs()
   end
 end
 
+require 'map.sidepanel_nvimtree'
+require 'config.sidepanel_nvimtree'
+
 function M.cd_opened_projs()
   local func = loadstring('return ' .. M.opened_projs_txt_path:read())
   if func then
     local projs = func()
     B.ui_sel(projs, 'sel dir to change', function(dir)
       if dir then
+        pcall(vim.cmd, 'NvimTreeOpen')
         B.cmd('cd %s', dir)
       end
     end)

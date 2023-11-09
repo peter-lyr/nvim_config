@@ -12,6 +12,8 @@ B.map_set_lua(M.config)
 B.map('<leader>s<cr>', 'sel', {})
 B.map('<leader>s<s-cr>', 'sel_recent', {})
 
+B.map('<leader>sn', 'cd_opened_projs', {})
+
 B.aucmd(M.source, 'VimLeavePre', { 'VimLeavePre', }, {
   callback = function()
     require(M.config).save()
@@ -27,7 +29,5 @@ B.aucmd(M.source, 'DirChanged', 'DirChanged', {
     require(M.config).add_opened_projs()
   end,
 })
-
-B.map('<leader>sn', 'cd_opened_projs', {})
 
 return M
