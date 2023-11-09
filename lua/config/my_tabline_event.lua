@@ -375,21 +375,24 @@ function M.one_buf(buf_index_first, index, cur_buf, buf)
     icon = M.light[ext]['icon']
     hiname = 'tbl' .. M.light[ext]['name']
   end
+  local name = only_name
   if cur_buf == buf then
     M.tabhiname = hiname
     if B.is(icon) then
       icon = ' ' .. icon
+      name = only_name_no_ext
     end
     if C.proj_bufs[C.cur_proj] then
-      bufs[#bufs + 1] = string.format('%%#%s#%%%d@SwitchBuffer@ %d/%d %s%s ', hiname, buf, buf_index_first + index - 1, #C.proj_bufs[C.cur_proj], only_name_no_ext, icon)
+      bufs[#bufs + 1] = string.format('%%#%s#%%%d@SwitchBuffer@ %d/%d %s%s ', hiname, buf, buf_index_first + index - 1, #C.proj_bufs[C.cur_proj], name, icon)
     else
-      bufs[#bufs + 1] = string.format('%%#%s#%%%d@SwitchBuffer@ %d/%d %s%s ', hiname, buf, buf_index_first + index - 1, 1, only_name_no_ext, icon)
+      bufs[#bufs + 1] = string.format('%%#%s#%%%d@SwitchBuffer@ %d/%d %s%s ', hiname, buf, buf_index_first + index - 1, 1, name, icon)
     end
   else
     if B.is(icon) then
       icon = string.format(' %%#%s_#%s%%#tblfil#', hiname, icon)
+      name = only_name_no_ext
     end
-    bufs[#bufs + 1] = string.format('%%#tblfil#%%%d@SwitchBuffer@ %d %s%s ', buf, buf_index_first + index - 1, only_name_no_ext, icon)
+    bufs[#bufs + 1] = string.format('%%#tblfil#%%%d@SwitchBuffer@ %d %s%s ', buf, buf_index_first + index - 1, name, icon)
   end
   return vim.fn.join(bufs, '')
 end
