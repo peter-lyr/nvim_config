@@ -220,7 +220,16 @@ M.copy_file = function()
     if desktop_p:exists() then
       local line = vim.fn.getline '.'
       local fname = string.match(line, '%[([^%]]+)%]%([^%)]+%)')
+      local ok = nil
       if fname then
+        ok = 1
+      else
+        fname = string.match(line, 'name="([^"]+)"')
+        if fname then
+          ok = 1
+        end
+      end
+      if ok then
         local ext = string.match(cfile, '%.([^.]+)$')
         local tgt = desktop_p:joinpath(fname .. '.' .. ext).filename
         vim.fn.system(string.format('copy /y "%s" "%s"', cfile, tgt))

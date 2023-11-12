@@ -8,5 +8,5 @@
 7. [x] tabline delete other projs
 8. [x] c2cmake, cbp2cmake change common
 9. [x] unuse B.map
-10. [ ] copy to desktop, wav/mp3 no support
+10. [x] copy to desktop, wav/mp3 no support
 11. [x] match windo hi cur word working
