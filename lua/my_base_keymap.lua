@@ -1,54 +1,6 @@
 local M = {}
 
-function M.merge_tables(...)
-  local result = {}
-  for _, t in ipairs { ..., } do
-    for _, v in ipairs(t) do
-      result[#result + 1] = v
-    end
-  end
-  return result
-end
-
-function M.map_(mode, map_opts, lhs, lua, func, params, desc_more)
-  local desc = { string.match(lua, '%.([^.]+)$'), }
-  desc[#desc + 1] = func
-  if desc_more then
-    desc[#desc + 1] = desc_more
-  end
-  if type(params) == 'string' then
-    desc[#desc + 1] = params
-  elseif type(params) == 'table' then
-    desc = M.merge_tables(desc, params)
-  end
-  vim.keymap.set(mode, lhs, function()
-    if type(params) == 'string' then
-      require(lua)[func](params)
-    elseif type(params) == 'table' then
-      require(lua)[func](unpack(params))
-    else
-      require(lua)[func]()
-    end
-  end, vim.tbl_deep_extend('force', map_opts, { desc = vim.fn.join(desc, ' '), }))
-end
-
-function M.map(map_opts, lhs, lua, func, params, desc_more)
-  M.map_({ 'n', 'v', }, map_opts, lhs, lua, func, params, desc_more)
-end
-
-function M.map_n(map_opts, lhs, lua, func, params, desc_more)
-  M.map_({ 'n', }, map_opts, lhs, lua, func, params, desc_more)
-end
-
-function M.map_v(map_opts, lhs, lua, func, params, desc_more)
-  M.map_({ 'v', }, map_opts, lhs, lua, func, params, desc_more)
-end
-
-function M.map_i(map_opts, lhs, lua, func, params, desc_more)
-  M.map_({ 'i', }, map_opts, lhs, lua, func, params, desc_more)
-end
-
-function M.register_whichkey(whichkeys, key, lua, desc)
+function M.register_whichkey(whichkeys, lua, key, desc)
   lua = string.match(lua, '%.*([^.]+)$')
   if not lua then
     return

@@ -83,10 +83,6 @@ B.aucmd(M.source, 'BufLeave', { 'BufLeave', 'CmdlineEnter', }, {
 
 --------------------
 
--- B.map_set_lua(M.loaded .. '_' .. 'funcs')
---
--- B.map_set_opts { mode = { 'c', 'i', }, }
-
 vim.keymap.set({ 'c', 'i', }, '<c-e>', '<c-r>e', { desc = 'paste <cword>', })
 vim.keymap.set({ 'c', 'i', }, '<c-3>', '<c-r>3', { desc = 'paste <cWORD>', })
 
@@ -160,7 +156,5 @@ vim.keymap.set({ 't', }, '<esc>', '<c-\\><c-n>', { desc = 'esc', })
 -- zh 2 en
 
 -- vim.keymap.set({ 't', 'c', 'i', }, '·', '`', { desc = '`', })
-
--- B.map_reset_opts()
 
 return M

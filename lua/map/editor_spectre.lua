@@ -1,18 +1,19 @@
 local M = {}
 local B = require 'my_base'
 B.load_require_common()
-M.source = B.get_source(debug.getinfo(1)['source'])
+M.source = require 'my_base'.get_source(debug.getinfo(1)['source'])
 M.loaded = B.get_loaded(M.source)
-M.config = B.rep_map_to_config(M.loaded)
--- package.loaded[M.loaded] = nil
+M.lua = string.match(M.loaded, '%.([^.]+)$')
 --------------------------------------------
 
-B.map_set_lua(M.config)
+function M.opt(desc)
+  return { silent = true, desc = M.lua .. ' ' .. desc, }
+end
 
-B.map_n('<leader>rw', 'open_visual_select_word', {})
-B.map_v('<leader>rw', 'open_visual', {})
+vim.keymap.set({ 'n', }, '<leader>rw', function() require 'config.editor_spectre'.open_visual_select_word() end, M.opt 'open_visual_select_word')
+vim.keymap.set({ 'v', }, '<leader>rw', function() require 'config.editor_spectre'.open_visual() end, M.opt 'open_visual')
 
-B.map('<leader>ro', 'open', {})
-B.map('<leader>rc', 'open_file_search', {})
+vim.keymap.set({ 'n', 'v', }, '<leader>ro', function() require 'config.editor_spectre'.open() end, M.opt 'open')
+vim.keymap.set({ 'n', 'v', }, '<leader>rc', function() require 'config.editor_spectre'.open_file_search() end, M.opt 'open_file_search')
 
 return M

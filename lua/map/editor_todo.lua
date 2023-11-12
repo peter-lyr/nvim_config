@@ -1,16 +1,17 @@
 local M = {}
 local B = require 'my_base'
 B.load_require_common()
-M.source = B.get_source(debug.getinfo(1)['source'])
+M.source = require 'my_base'.get_source(debug.getinfo(1)['source'])
 M.loaded = B.get_loaded(M.source)
-M.config = B.rep_map_to_config(M.loaded)
--- package.loaded[M.loaded] = nil
+M.lua = string.match(M.loaded, '%.([^.]+)$')
 --------------------------------------------
 
-B.map_set_lua(M.config)
+function M.opt(desc)
+  return { silent = true, desc = M.lua .. ' ' .. desc, }
+end
 
-B.map('<leader>tq', 'TodoQuickFix', {})
-B.map('<leader>tt', 'TodoTelescope', {})
-B.map('<leader>tl', 'TodoLocList', {})
+vim.keymap.set({ 'n', 'v', }, '<leader>tq', function() require 'config.editor_todo'.TodoQuickFix() end, M.opt 'TodoQuickFix')
+vim.keymap.set({ 'n', 'v', }, '<leader>tt', function() require 'config.editor_todo'.TodoTelescope() end, M.opt 'TodoTelescope')
+vim.keymap.set({ 'n', 'v', }, '<leader>tl', function() require 'config.editor_todo'.TodoLocList() end, M.opt 'TodoLocList')
 
 return M

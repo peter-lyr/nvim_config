@@ -1,17 +1,14 @@
 local M = {}
 local B = require 'my_base'
 B.load_require_common()
-M.source = B.get_source(debug.getinfo(1)['source'])
+M.source = require 'my_base'.get_source(debug.getinfo(1)['source'])
 M.loaded = B.get_loaded(M.source)
-M.config = B.rep_map_to_config(M.loaded)
--- package.loaded[M.loaded] = nil
+M.lua = string.match(M.loaded, '%.([^.]+)$')
 --------------------------------------------
 
-B.map_set_lua(M.config)
-
-B.map('<leader>s<cr>', 'sel', {})
-
-require(M.config)
+function M.opt(desc)
+  return { silent = true, desc = M.lua .. ' ' .. desc, }
+end
 
 vim.keymap.set({ 'n', 'v', }, '<leader>vo', '<cmd>TortoiseSVN settings cur yes<cr>', { silent = true, desc = 'TortoiseSVN settings cur yes<cr>', })
 vim.keymap.set({ 'n', 'v', }, '<leader>vd', '<cmd>TortoiseSVN diff cur yes<cr>', { silent = true, desc = 'TortoiseSVN diff cur yes<cr>', })
@@ -34,5 +31,7 @@ vim.keymap.set({ 'n', 'v', }, '<leader>vU', '<cmd>TortoiseSVN update /rev root y
 vim.keymap.set({ 'n', 'v', }, '<leader>vl', '<cmd>TortoiseSVN log cur yes<cr>', { silent = true, desc = 'TortoiseSVN log cur yes<cr>', })
 vim.keymap.set({ 'n', 'v', }, '<leader>vL', '<cmd>TortoiseSVN log root yes<cr>', { silent = true, desc = 'TortoiseSVN log root yes<cr>', })
 vim.keymap.set({ 'n', 'v', }, '<leader>vk', '<cmd>TortoiseSVN checkout root yes<cr>', { silent = true, desc = 'TortoiseSVN checkout root yes<cr>', })
+
+require('config.my_svn')
 
 return M

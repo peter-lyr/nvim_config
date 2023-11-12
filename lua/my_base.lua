@@ -86,55 +86,15 @@ B.loaded = B.get_loaded(B.source)
 -----------------------------
 
 function B.merge_tables(...)
-  return require 'my_base_keymap'.merge_tables(...)
-end
-
-B.map_default_opts = {
-  silent = true,
-}
-B.map_opts = B.map_default_opts
-B.map_lua = ''
-
-function B.map_set_lua(lua)
-  B.map_lua = lua
-end
-
-function B.map_set_opts(opts)
-  B.map_opts = vim.tbl_deep_extend('force', B.map_default_opts, opts)
-end
-
-function B.map_reset_opts()
-  B.map_opts = B.map_default_opts
-end
-
-function B.map(lhs, func, params, desc_more)
-  require 'my_base_keymap'.map(B.map_opts, lhs, B.map_lua, func, params, desc_more)
-end
-
-function B.map_n(lhs, func, params, desc_more)
-  require 'my_base_keymap'.map_n(B.map_opts, lhs, B.map_lua, func, params, desc_more)
-end
-
-function B.map_v(lhs, func, params, desc_more)
-  require 'my_base_keymap'.map_v(B.map_opts, lhs, B.map_lua, func, params, desc_more)
-end
-
-function B.map_i(lhs, func, params, desc_more)
-  require 'my_base_keymap'.map_i(B.map_opts, lhs, B.map_lua, func, params, desc_more)
-end
-
------------------------------
-
-function B.rep_map_to_config(loaded)
-  return string.gsub(loaded, 'map.', 'config.')
+  return require 'my_base_funcs'.merge_tables(...)
 end
 
 -----------------------------
 
 B.whichkeys = {}
 
-function B.register_whichkey(key, desc)
-  require 'my_base_keymap'.register_whichkey(B.whichkeys, key, B.map_lua, desc)
+function B.register_whichkey(lua, key, desc)
+  require 'my_base_keymap'.register_whichkey(B.whichkeys, lua, key, desc)
 end
 
 function B.merge_whichkeys()

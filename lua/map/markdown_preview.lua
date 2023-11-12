@@ -1,16 +1,17 @@
 local M = {}
 local B = require 'my_base'
 B.load_require_common()
-M.source = B.get_source(debug.getinfo(1)['source'])
+M.source = require 'my_base'.get_source(debug.getinfo(1)['source'])
 M.loaded = B.get_loaded(M.source)
-M.config = B.rep_map_to_config(M.loaded)
--- package.loaded[M.loaded] = nil
+M.lua = string.match(M.loaded, '%.([^.]+)$')
 --------------------------------------------
 
-B.map_set_lua(M.config)
+function M.opt(desc)
+  return { silent = true, desc = M.lua .. ' ' .. desc, }
+end
 
-B.map('<leader>m<leader>', 'start', {})
-B.map('<leader>mm', 'restart', {})
-B.map('<leader>mq', 'stop', {})
+vim.keymap.set({ 'n', 'v', }, '<leader>m<leader>', function() require 'config.markdown_preview'.start() end, M.opt 'start')
+vim.keymap.set({ 'n', 'v', }, '<leader>mm', function() require 'config.markdown_preview'.restart() end, M.opt 'restart')
+vim.keymap.set({ 'n', 'v', }, '<leader>mq', function() require 'config.markdown_preview'.stop() end, M.opt 'stop')
 
 return M

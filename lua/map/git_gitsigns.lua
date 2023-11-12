@@ -1,49 +1,50 @@
 local M = {}
 local B = require 'my_base'
 B.load_require_common()
-M.source = B.get_source(debug.getinfo(1)['source'])
+M.source = require 'my_base'.get_source(debug.getinfo(1)['source'])
 M.loaded = B.get_loaded(M.source)
-M.config = B.rep_map_to_config(M.loaded)
--- package.loaded[M.loaded] = nil
+M.lua = string.match(M.loaded, '%.([^.]+)$')
 --------------------------------------------
 
-B.map_set_lua(M.config)
+function M.opt(desc)
+  return { silent = true, desc = M.lua .. ' ' .. desc, }
+end
 
-B.map_n('gd', 'diffthis', {})
-B.map_n('<leader>gd', 'diffthis', {})
+vim.keymap.set({ 'n', }, 'gd', function() require 'config.git_gitsigns'.diffthis() end, M.opt 'diffthis')
+vim.keymap.set({ 'n', }, '<leader>gd', function() require 'config.git_gitsigns'.diffthis() end, M.opt 'diffthis')
 
-B.map_n('<leader>gmd', 'diffthis_l', {})
+vim.keymap.set({ 'n', }, '<leader>gmd', function() require 'config.git_gitsigns'.diffthis_l() end, M.opt 'diffthis_l')
 
-B.map_n('gr', 'reset_hunk', {})
-B.map_n('<leader>gr', 'reset_hunk', {})
-B.map_v('gr', 'reset_hunk_v', {})
-B.map_v('<leader>gr', 'reset_hunk_v', {})
-B.map_n('<leader>gmr', 'reset_buffer', {})
+vim.keymap.set({ 'n', }, 'gr', function() require 'config.git_gitsigns'.reset_hunk() end, M.opt 'reset_hunk')
+vim.keymap.set({ 'n', }, '<leader>gr', function() require 'config.git_gitsigns'.reset_hunk() end, M.opt 'reset_hunk')
+vim.keymap.set({ 'v', }, 'gr', function() require 'config.git_gitsigns'.reset_hunk_v() end, M.opt 'reset_hunk_v')
+vim.keymap.set({ 'v', }, '<leader>gr', function() require 'config.git_gitsigns'.reset_hunk_v() end, M.opt 'reset_hunk_v')
+vim.keymap.set({ 'n', }, '<leader>gmr', function() require 'config.git_gitsigns'.reset_buffer() end, M.opt 'reset_buffer')
 
-B.map_n('gs', 'stage_hunk', {})
-B.map_n('<leader>gs', 'stage_hunk', {})
-B.map_v('gs', 'stage_hunk_v', {})
-B.map_v('<leader>gs', 'stage_hunk_v', {})
+vim.keymap.set({ 'n', }, 'gs', function() require 'config.git_gitsigns'.stage_hunk() end, M.opt 'stage_hunk')
+vim.keymap.set({ 'n', }, '<leader>gs', function() require 'config.git_gitsigns'.stage_hunk() end, M.opt 'stage_hunk')
+vim.keymap.set({ 'v', }, 'gs', function() require 'config.git_gitsigns'.stage_hunk_v() end, M.opt 'stage_hunk_v')
+vim.keymap.set({ 'v', }, '<leader>gs', function() require 'config.git_gitsigns'.stage_hunk_v() end, M.opt 'stage_hunk_v')
 
-B.map_n('<leader>gms', 'stage_buffer', {})
-B.map_n('<leader>gu', 'undo_stage_hunk', {})
-B.map_n('<leader>gmb', 'blame_line', {})
-B.map_n('<leader>gmp', 'preview_hunk', {})
+vim.keymap.set({ 'n', }, '<leader>gms', function() require 'config.git_gitsigns'.stage_buffer() end, M.opt 'stage_buffer')
+vim.keymap.set({ 'n', }, '<leader>gu', function() require 'config.git_gitsigns'.undo_stage_hunk() end, M.opt 'undo_stage_hunk')
+vim.keymap.set({ 'n', }, '<leader>gmb', function() require 'config.git_gitsigns'.blame_line() end, M.opt 'blame_line')
+vim.keymap.set({ 'n', }, '<leader>gmp', function() require 'config.git_gitsigns'.preview_hunk() end, M.opt 'preview_hunk')
 
-B.map_n('<leader>gmtb', 'toggle_current_line_blame', {})
-B.map_n('<leader>gmtd', 'toggle_deleted', {})
-B.map_n('<leader>gmtl', 'toggle_linehl', {})
-B.map_n('<leader>gmtn', 'toggle_numhl', {})
-B.map_n('<leader>gmts', 'toggle_signs', {})
-B.map_n('<leader>gmtw', 'toggle_word_diff', {})
+vim.keymap.set({ 'n', }, '<leader>gmtb', function() require 'config.git_gitsigns'.toggle_current_line_blame() end, M.opt 'toggle_current_line_blame')
+vim.keymap.set({ 'n', }, '<leader>gmtd', function() require 'config.git_gitsigns'.toggle_deleted() end, M.opt 'toggle_deleted')
+vim.keymap.set({ 'n', }, '<leader>gmtl', function() require 'config.git_gitsigns'.toggle_linehl() end, M.opt 'toggle_linehl')
+vim.keymap.set({ 'n', }, '<leader>gmtn', function() require 'config.git_gitsigns'.toggle_numhl() end, M.opt 'toggle_numhl')
+vim.keymap.set({ 'n', }, '<leader>gmts', function() require 'config.git_gitsigns'.toggle_signs() end, M.opt 'toggle_signs')
+vim.keymap.set({ 'n', }, '<leader>gmtw', function() require 'config.git_gitsigns'.toggle_word_diff() end, M.opt 'toggle_word_diff')
 
-B.map_n('gl', 'lazygit', {})
-B.map_n('<leader>gl', 'lazygit', {})
+vim.keymap.set({ 'n', }, 'gl', function() require 'config.git_gitsigns'.lazygit() end, M.opt 'lazygit')
+vim.keymap.set({ 'n', }, '<leader>gl', function() require 'config.git_gitsigns'.lazygit() end, M.opt 'lazygit')
 
 ------
 
-B.register_whichkey('<leader>gm', 'more')
-B.register_whichkey('<leader>gmt', 'Toggle')
+B.register_whichkey('config.git_gitsigns', '<leader>gm', 'more')
+B.register_whichkey('config.git_gitsigns', '<leader>gmt', 'Toggle')
 
 B.merge_whichkeys()
 
@@ -79,7 +80,7 @@ require 'gitsigns'.setup {
     untracked = { text = '?', },
   },
   signcolumn                   = true,  -- Toggle with `:Gitsigns toggle_signs`
-  numhl                        = true, -- Toggle with `:Gitsigns toggle_numhl`
+  numhl                        = true,  -- Toggle with `:Gitsigns toggle_numhl`
   linehl                       = false, -- Toggle with `:Gitsigns toggle_linehl`
   word_diff                    = false, -- Toggle with `:Gitsigns toggle_word_diff`
   watch_gitdir                 = {

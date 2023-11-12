@@ -1,32 +1,33 @@
 local M = {}
 local B = require 'my_base'
 B.load_require_common()
-M.source = B.get_source(debug.getinfo(1)['source'])
+M.source = require 'my_base'.get_source(debug.getinfo(1)['source'])
 M.loaded = B.get_loaded(M.source)
-M.config = B.rep_map_to_config(M.loaded)
--- package.loaded[M.loaded] = nil
+M.lua = string.match(M.loaded, '%.([^.]+)$')
 --------------------------------------------
 
-B.map_set_lua(M.config)
+function M.opt(desc)
+  return { silent = true, desc = M.lua .. ' ' .. desc, }
+end
 
-B.map('<leader>s<cr>', 'sel', {})
-B.map('<leader>s<s-cr>', 'sel_recent', {})
+vim.keymap.set({ 'n', 'v', }, '<leader>s<cr>', function() require 'config.my_sessions'.sel() end, M.opt 'sel')
+vim.keymap.set({ 'n', 'v', }, '<leader>s<s-cr>', function() require 'config.my_sessions'.sel_recent() end, M.opt 'sel_recent')
 
-B.map('<leader>sn', 'cd_opened_projs', {})
+vim.keymap.set({ 'n', 'v', }, '<leader>sn', function() require 'config.my_sessions'.cd_opened_projs() end, M.opt 'cd_opened_projs')
 
 B.aucmd(M.source, 'VimLeavePre', { 'VimLeavePre', }, {
   callback = function()
-    require(M.config).save()
+    require('config.my_sessions').save()
   end,
 })
 
-require(M.config).save()
+require('config.my_sessions').save()
 
 ----------------
 
 B.aucmd(M.source, 'DirChanged', 'DirChanged', {
   callback = function()
-    require(M.config).add_opened_projs()
+    require('config.my_sessions').add_opened_projs()
   end,
 })
 

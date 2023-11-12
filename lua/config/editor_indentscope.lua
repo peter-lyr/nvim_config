@@ -5,7 +5,7 @@ M.loaded = B.get_loaded(M.source)
 -- package.loaded[M.loaded] = nil
 --------------------------------------------
 
-B.aucmd(M.config, 'FileType', 'FileType', {
+B.aucmd('config.editor_indentscope', 'FileType', 'FileType', {
   pattern = {
     'help',
     'NvimTree',
@@ -19,7 +19,7 @@ B.aucmd(M.config, 'FileType', 'FileType', {
   end,
 })
 
-B.aucmd(M.config, 'BufReadPre', 'BufReadPre', {
+B.aucmd('config.editor_indentscope', 'BufReadPre', 'BufReadPre', {
   callback = function(ev)
     local max_filesize = 1000 * 1024
     local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(ev.buf))

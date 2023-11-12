@@ -1,16 +1,17 @@
 local M = {}
 local B = require 'my_base'
 B.load_require_common()
-M.source = B.get_source(debug.getinfo(1)['source'])
+M.source = require 'my_base'.get_source(debug.getinfo(1)['source'])
 M.loaded = B.get_loaded(M.source)
-M.config = B.rep_map_to_config(M.loaded)
--- package.loaded[M.loaded] = nil
+M.lua = string.match(M.loaded, '%.([^.]+)$')
 --------------------------------------------
 
-B.map_set_lua(M.config)
+function M.opt(desc)
+  return { silent = true, desc = M.lua .. ' ' .. desc, }
+end
 
-B.map('<leader>an', 'toggle_focus', {})
-B.map('<leader>am', 'open', {})
-B.map('<leader>a,', 'close', {})
+vim.keymap.set({ 'n', 'v', }, '<leader>an', function() require 'config.sidepanel_minimap'.toggle_focus() end, M.opt 'toggle_focus')
+vim.keymap.set({ 'n', 'v', }, '<leader>am', function() require 'config.sidepanel_minimap'.open() end, M.opt 'open')
+vim.keymap.set({ 'n', 'v', }, '<leader>a,', function() require 'config.sidepanel_minimap'.close() end, M.opt 'close')
 
 return M

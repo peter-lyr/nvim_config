@@ -1,28 +1,29 @@
 local M = {}
 local B = require 'my_base'
 B.load_require_common()
-M.source = B.get_source(debug.getinfo(1)['source'])
+M.source = require 'my_base'.get_source(debug.getinfo(1)['source'])
 M.loaded = B.get_loaded(M.source)
-M.config = B.rep_map_to_config(M.loaded)
--- package.loaded[M.loaded] = nil
+M.lua = string.match(M.loaded, '%.([^.]+)$')
 --------------------------------------------
 
-B.map_set_lua(M.config)
+function M.opt(desc)
+  return { silent = true, desc = M.lua .. ' ' .. desc, }
+end
 
-B.map('<leader>d<leader>', 'toggle', {})
+vim.keymap.set({ 'n', 'v', }, '<leader>d<leader>', function() require 'config.sidepanel_quickfix'.toggle() end, M.opt 'toggle')
 
 ------------
 
 B.aucmd(M.source, 'BufEnter', 'BufEnter', {
   callback = function(ev)
-    require(M.config).au_height()
-    require(M.config).map(ev)
+    require('config.sidepanel_quickfix').au_height()
+    require('config.sidepanel_quickfix').map(ev)
   end,
 })
 
 B.aucmd(M.source, 'ColorScheme', { 'ColorScheme', }, {
   callback = function()
-    require(M.config).hi()
+    require('config.sidepanel_quickfix').hi()
   end,
 })
 

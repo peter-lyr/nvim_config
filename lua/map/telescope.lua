@@ -1,11 +1,12 @@
 local M = {}
 local B = require 'my_base'
 B.load_require_common()
-M.source = B.get_source(debug.getinfo(1)['source'])
+M.source = require 'my_base'.get_source(debug.getinfo(1)['source'])
 M.loaded = B.get_loaded(M.source)
-M.config = B.rep_map_to_config(M.loaded)
-M.lua = string.match(M.config, '%.([^.]+)$')
+M.lua = string.match(M.loaded, '%.([^.]+)$')
 --------------------------------------------
+
+print(string.match(M.loaded, '%.([^.]+)$'))
 
 B.load_require 'nvim-lua/plenary.nvim'
 B.load_require 'nvim-tree/nvim-web-devicons'
@@ -60,18 +61,18 @@ vim.keymap.set({ 'n', 'v', }, '<c-s-f12><f6>', function() require 'config.telesc
 vim.keymap.set({ 'n', 'v', }, '<c-s-f12><f7>', function() require 'config.telescope'.lsp_document_symbols() end, M.opt 'lsp_document_symbols')
 vim.keymap.set({ 'n', 'v', }, '<c-s-f12><f8>', function() require 'config.telescope'.buffers() end, M.opt 'buffers')
 
-vim.keymap.set_i({ 'n', 'v', }, '<c-s-f12><f1>', function() require 'config.telescope'.nop() end, M.opt 'nop')
-vim.keymap.set_i({ 'n', 'v', }, '<c-s-f12><f2>', function() require 'config.telescope'.nop() end, M.opt 'nop')
-vim.keymap.set_i({ 'n', 'v', }, '<c-s-f12><f3>', function() require 'config.telescope'.nop() end, M.opt 'nop')
-vim.keymap.set_i({ 'n', 'v', }, '<c-s-f12><f4>', function() require 'config.telescope'.nop() end, M.opt 'nop')
-vim.keymap.set_i({ 'n', 'v', }, '<c-s-f12><f6>', function() require 'config.telescope'.nop() end, M.opt 'nop')
-vim.keymap.set_i({ 'n', 'v', }, '<c-s-f12><f7>', function() require 'config.telescope'.nop() end, M.opt 'nop')
-vim.keymap.set_i({ 'n', 'v', }, '<c-s-f12><f8>', function() require 'config.telescope'.nop() end, M.opt 'nop')
+vim.keymap.set({ 'i', }, '<c-s-f12><f1>', function() require 'config.telescope'.nop() end, M.opt 'nop')
+vim.keymap.set({ 'i', }, '<c-s-f12><f2>', function() require 'config.telescope'.nop() end, M.opt 'nop')
+vim.keymap.set({ 'i', }, '<c-s-f12><f3>', function() require 'config.telescope'.nop() end, M.opt 'nop')
+vim.keymap.set({ 'i', }, '<c-s-f12><f4>', function() require 'config.telescope'.nop() end, M.opt 'nop')
+vim.keymap.set({ 'i', }, '<c-s-f12><f6>', function() require 'config.telescope'.nop() end, M.opt 'nop')
+vim.keymap.set({ 'i', }, '<c-s-f12><f7>', function() require 'config.telescope'.nop() end, M.opt 'nop')
+vim.keymap.set({ 'i', }, '<c-s-f12><f8>', function() require 'config.telescope'.nop() end, M.opt 'nop')
 -----------------------------------
 
-B.register_whichkey('<leader>gt', 'Git more')
-B.register_whichkey('<leader>sv', 'more')
-B.register_whichkey('<leader>svv', 'more more')
+B.register_whichkey('config.telescope', '<leader>gt', 'Git more')
+B.register_whichkey('config.telescope', '<leader>sv', 'more')
+B.register_whichkey('config.telescope', '<leader>svv', 'more more')
 
 B.merge_whichkeys()
 

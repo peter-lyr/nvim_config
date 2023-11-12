@@ -1,27 +1,28 @@
 local M = {}
 local B = require 'my_base'
 B.load_require_common()
-M.source = B.get_source(debug.getinfo(1)['source'])
+M.source = require 'my_base'.get_source(debug.getinfo(1)['source'])
 M.loaded = B.get_loaded(M.source)
-M.config = B.rep_map_to_config(M.loaded)
--- package.loaded[M.loaded] = nil
+M.lua = string.match(M.loaded, '%.([^.]+)$')
 --------------------------------------------
 
-B.map_set_lua(M.config)
+function M.opt(desc)
+  return { silent = true, desc = M.lua .. ' ' .. desc, }
+end
 
 -------
 
-B.map('<leader>ga', 'addcommitpush', {})
-B.map('ga', 'addcommitpush', {})
-B.map('<leader>gc', 'commit_push', {})
-B.map('<leader>ggc', 'commit', {})
-B.map('<leader>ggs', 'push', {})
-B.map('<leader>ggg', 'graph', {})
-B.map('<leader>ggv', 'init', {})
-B.map('<leader>ggf', 'pull', {})
-B.map('<leader>gga', 'addall', {})
-B.map('<leader>ggr', 'reset_hard', {})
-B.map('<leader>ggd', 'reset_hard_clean', {})
-B.map('<leader>ggC', 'clone', {})
+vim.keymap.set({ 'n', 'v', }, '<leader>ga', function() require 'config.git_gitpush'.addcommitpush() end, M.opt 'addcommitpush')
+vim.keymap.set({ 'n', 'v', }, 'ga', function() require 'config.git_gitpush'.addcommitpush() end, M.opt 'addcommitpush')
+vim.keymap.set({ 'n', 'v', }, '<leader>gc', function() require 'config.git_gitpush'.commit_push() end, M.opt 'commit_push')
+vim.keymap.set({ 'n', 'v', }, '<leader>ggc', function() require 'config.git_gitpush'.commit() end, M.opt 'commit')
+vim.keymap.set({ 'n', 'v', }, '<leader>ggs', function() require 'config.git_gitpush'.push() end, M.opt 'push')
+vim.keymap.set({ 'n', 'v', }, '<leader>ggg', function() require 'config.git_gitpush'.graph() end, M.opt 'graph')
+vim.keymap.set({ 'n', 'v', }, '<leader>ggv', function() require 'config.git_gitpush'.init() end, M.opt 'init')
+vim.keymap.set({ 'n', 'v', }, '<leader>ggf', function() require 'config.git_gitpush'.pull() end, M.opt 'pull')
+vim.keymap.set({ 'n', 'v', }, '<leader>gga', function() require 'config.git_gitpush'.addall() end, M.opt 'addall')
+vim.keymap.set({ 'n', 'v', }, '<leader>ggr', function() require 'config.git_gitpush'.reset_hard() end, M.opt 'reset_hard')
+vim.keymap.set({ 'n', 'v', }, '<leader>ggd', function() require 'config.git_gitpush'.reset_hard_clean() end, M.opt 'reset_hard_clean')
+vim.keymap.set({ 'n', 'v', }, '<leader>ggC', function() require 'config.git_gitpush'.clone() end, M.opt 'clone')
 
 return M

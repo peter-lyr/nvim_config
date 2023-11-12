@@ -1,20 +1,21 @@
 local M = {}
 local B = require 'my_base'
 B.load_require_common()
-M.source = B.get_source(debug.getinfo(1)['source'])
+M.source = require 'my_base'.get_source(debug.getinfo(1)['source'])
 M.loaded = B.get_loaded(M.source)
-M.config = B.rep_map_to_config(M.loaded)
--- package.loaded[M.loaded] = nil
+M.lua = string.match(M.loaded, '%.([^.]+)$')
 --------------------------------------------
+
+function M.opt(desc)
+  return { silent = true, desc = M.lua .. ' ' .. desc, }
+end
+
+vim.keymap.set({ 'n', 'v', }, '<leader>af', function() require 'config.sidepanel_nvimtree'.findfile() end, M.opt 'findfile')
+vim.keymap.set({ 'n', 'v', }, '<leader>ao', function() require 'config.sidepanel_nvimtree'.open() end, M.opt 'open')
+vim.keymap.set({ 'n', 'v', }, '<leader>aO', function() require 'config.sidepanel_nvimtree'.restart() end, M.opt 'restart')
+vim.keymap.set({ 'n', 'v', }, '<leader>ac', function() require 'config.sidepanel_nvimtree'.close() end, M.opt 'close')
 
 B.load_require 'nvim-lua/plenary.nvim'
 B.load_require 'nvim-tree/nvim-web-devicons'
-
-B.map_set_lua(M.config)
-
-B.map('<leader>af', 'findfile', {})
-B.map('<leader>ao', 'open', {})
-B.map('<leader>aO', 'restart', {})
-B.map('<leader>ac', 'close', {})
 
 return M

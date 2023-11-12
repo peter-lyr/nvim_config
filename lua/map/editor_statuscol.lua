@@ -1,23 +1,24 @@
 local M = {}
 local B = require 'my_base'
 B.load_require_common()
-M.source = B.get_source(debug.getinfo(1)['source'])
+M.source = require 'my_base'.get_source(debug.getinfo(1)['source'])
 M.loaded = B.get_loaded(M.source)
-M.config = B.rep_map_to_config(M.loaded)
--- package.loaded[M.loaded] = nil
+M.lua = string.match(M.loaded, '%.([^.]+)$')
 --------------------------------------------
 
-require(M.config)
+require('config.editor_statuscol')
 
-B.map_set_lua(M.config)
+function M.opt(desc)
+  return { silent = true, desc = M.lua .. ' ' .. desc, }
+end
 
-B.map('<c-f5>', 'init', {})
+vim.keymap.set({ 'n', 'v', }, '<c-f5>', function() require 'config.editor_statuscol'.init() end, M.opt 'init')
 
-B.aucmd(M.config, 'BufEnter', 'BufEnter', {
+B.aucmd('config.editor_statuscol', 'BufEnter', 'BufEnter', {
   callback = function(ev)
     if vim.o.statuscolumn ~= '%!v:lua.StatusCol()' then
       if #ev.file > 0 and B.file_exists(ev.file) then
-        require(M.config).init()
+        require('config.editor_statuscol').init()
       end
     end
   end,
