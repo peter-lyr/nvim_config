@@ -45,7 +45,9 @@ vim.keymap.set({ 'n', 'v', }, '<leader>svq', function() require 'config.telescop
 vim.keymap.set({ 'n', 'v', }, '<leader>svva', function() require 'config.telescope'.builtin() end, M.opt 'builtin')
 vim.keymap.set({ 'n', 'v', }, '<leader>svvo', function() require 'config.telescope'.vim_options() end, M.opt 'vim_options')
 vim.keymap.set({ 'n', 'v', }, '<leader>svvp', function() require 'config.telescope'.planets() end, M.opt 'planets')
+
 vim.keymap.set({ 'n', 'v', }, '<leader>sk', function() require 'config.telescope'.my_projects() end, M.opt 'my_projects')
+
 vim.keymap.set({ 'n', 'v', }, '<leader>st', function() require 'config.telescope'.buffers_term() end, M.opt 'buffers_term')
 
 -----------------------------------
