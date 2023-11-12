@@ -184,7 +184,9 @@ M.paste = function(png, no_input_image_name)
 end
 
 M.copy_text = function()
-  local cfile = require 'plenary.path':new(vim.loop.cwd()):joinpath(unpack(vim.fn.split(vim.fn.expand '<cfile>', '/'))).filename
+  local cfile = vim.fn.expand '<cfile>'
+  cfile = string.gsub(cfile, '%./', '')
+  cfile = require 'plenary.path':new(vim.loop.cwd()):joinpath(unpack(vim.fn.split(cfile, '/'))).filename
   vim.fn.setreg('+', cfile)
   print('copy text to clipboard: ' .. cfile)
 end
