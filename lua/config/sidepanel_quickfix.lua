@@ -160,4 +160,20 @@ function M.map(ev)
   end
 end
 
+function M.opennext()
+  if not B.is_buf_ft 'qf' then
+    M.toggle()
+  end
+  vim.cmd 'norm j'
+  vim.cmd [[call feedkeys("\<cr>")]]
+end
+
+function M.openprev()
+  if not B.is_buf_ft 'qf' then
+    M.toggle()
+  end
+  vim.cmd 'norm k'
+  vim.cmd [[call feedkeys("\<cr>")]]
+end
+
 return M
