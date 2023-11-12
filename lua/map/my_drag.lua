@@ -23,25 +23,25 @@ vim.keymap.set({ 'n', 'v', }, '<leader>mE', function() require 'config.my_drag'.
 
 ----------------
 
-B.aucmd(M.source, 'FocusLost', { 'FocusLost', }, {
+B.aucmd(M.lua, 'FocusLost', { 'FocusLost', }, {
   callback = function()
     require('config.my_drag').focuslost()
   end,
 })
 
-B.aucmd(M.source, 'BufReadPre', { 'BufReadPre', }, {
+B.aucmd(M.lua, 'BufReadPre', { 'BufReadPre', }, {
   callback = function(ev)
     require('config.my_drag').readpre(ev)
   end,
 })
 
-B.aucmd(M.source, 'BufReadPost', { 'BufReadPost', }, {
+B.aucmd(M.lua, 'BufReadPost', { 'BufReadPost', }, {
   callback = function()
     require('config.my_drag').readpost()
   end,
 })
 
-B.aucmd(M.source, 'BufEnter', { 'BufEnter', }, {
+B.aucmd(M.lua, 'BufEnter', { 'BufEnter', }, {
   callback = function(ev)
     require('config.my_drag').bufenter(ev)
   end,

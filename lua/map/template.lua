@@ -10,20 +10,16 @@ function M.opt(desc)
   return { silent = true, desc = M.lua .. ' ' .. desc, }
 end
 
-vim.keymap.set({ 'n', 'v', }, '<leader>d<leader>', function() require 'config.sidepanel_quickfix'.toggle() end, M.opt 'toggle')
+vim.keymap.set({ 'n', 'v', }, '<leader>xx', function() require 'config.telescope'.lsp_document_symbols() end, M.opt 'lsp_document_symbols')
 
-------------
+B.register_whichkey('config.telescope', '<leader>x', 'xxx more')
+B.merge_whichkeys()
+
+------------------
 
 B.aucmd(M.lua, 'BufEnter', 'BufEnter', {
   callback = function(ev)
-    require('config.sidepanel_quickfix').au_height()
-    require('config.sidepanel_quickfix').map(ev)
-  end,
-})
-
-B.aucmd(M.lua, 'ColorScheme', { 'ColorScheme', }, {
-  callback = function()
-    require('config.sidepanel_quickfix').hi()
+    require('config.xxx').map(ev)
   end,
 })
 

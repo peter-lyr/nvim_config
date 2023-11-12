@@ -61,7 +61,7 @@ M.loaded_c = nil
 M.loaded_python = nil
 M.loaded_markdown = nil
 
-M.au = B.aucmd(M.source, 'BufEnter', 'BufEnter', {
+M.au = B.aucmd(M.lua, 'BufEnter', 'BufEnter', {
   callback = function(ev)
     local ext = vim.fn.tolower(string.match(ev.file, '%.([^.]+)$'))
     if ext == 'lua' and not M.loaded_lua then

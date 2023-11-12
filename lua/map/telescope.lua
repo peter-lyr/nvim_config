@@ -6,10 +6,6 @@ M.loaded = B.get_loaded(M.source)
 M.lua = string.match(M.loaded, '%.([^.]+)$')
 --------------------------------------------
 
-B.load_require 'nvim-lua/plenary.nvim'
-B.load_require 'nvim-tree/nvim-web-devicons'
-
-
 function M.opt(desc)
   return { silent = true, desc = M.lua .. ' ' .. desc, }
 end
@@ -71,7 +67,12 @@ vim.keymap.set({ 'i', }, '<c-s-f12><f8>', function() require 'config.telescope'.
 B.register_whichkey('config.telescope', '<leader>gt', 'Git more')
 B.register_whichkey('config.telescope', '<leader>sv', 'more')
 B.register_whichkey('config.telescope', '<leader>svv', 'more more')
-
 B.merge_whichkeys()
+
+------------------------------
+
+B.load_require 'nvim-lua/plenary.nvim'
+B.load_require 'nvim-tree/nvim-web-devicons'
+
 
 return M

@@ -1,8 +1,9 @@
 local M = {}
 local B = require 'my_base'
-M.source = B.get_source(debug.getinfo(1)['source'])
+B.load_require_common()
+M.source = require 'my_base'.get_source(debug.getinfo(1)['source'])
 M.loaded = B.get_loaded(M.source)
--- package.loaded[M.loaded] = nil
+M.lua = string.match(M.loaded, '%.([^.]+)$')
 --------------------------------------------
 
 local telescope = require 'telescope'
@@ -647,7 +648,7 @@ function M.my_projects()
   require 'config.telescope_projects'.my_projects()
 end
 
-B.aucmd(M.source, 'BufEnter-telescope', { 'BufEnter', }, {
+B.aucmd(M.lua, 'BufEnter-telescope', { 'BufEnter', }, {
   callback = function(ev)
     local filetype = vim.api.nvim_buf_get_option(ev.buf, 'filetype')
     local buftype = vim.api.nvim_buf_get_option(ev.buf, 'buftype')

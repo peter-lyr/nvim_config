@@ -1,8 +1,9 @@
 local M = {}
 local B = require 'my_base'
-M.source = B.get_source(debug.getinfo(1)['source'])
+B.load_require_common()
+M.source = require 'my_base'.get_source(debug.getinfo(1)['source'])
 M.loaded = B.get_loaded(M.source)
--- package.loaded[M.loaded] = nil
+M.lua = string.match(M.loaded, '%.([^.]+)$')
 --------------------------------------------
 
 function M.ClangdSwitchSourceHeader()
@@ -189,7 +190,7 @@ require 'mason-lspconfig'.setup {
 
 require 'inc_rename'.setup()
 
-B.aucmd(M.source, 'LspAttach', { 'LspAttach', }, {
+B.aucmd(M.lua, 'LspAttach', { 'LspAttach', }, {
   callback = function(ev)
     vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
     local opts = function(desc)

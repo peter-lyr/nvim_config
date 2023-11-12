@@ -1,15 +1,16 @@
 local M = {}
 local B = require 'my_base'
-M.source = B.get_source(debug.getinfo(1)['source'])
+B.load_require_common()
+M.source = require 'my_base'.get_source(debug.getinfo(1)['source'])
 M.loaded = B.get_loaded(M.source)
--- package.loaded[M.loaded] = nil
+M.lua = string.match(M.loaded, '%.([^.]+)$')
 --------------------------------------------
 
 local word_diff_en = 1
 local word_diff = 1
 local moving = nil
 
-B.aucmd(M.source, 'InsertEnter', { 'InsertEnter', 'CursorMoved', }, {
+B.aucmd(M.lua, 'InsertEnter', { 'InsertEnter', 'CursorMoved', }, {
   callback = function()
     moving = 1
     if word_diff then
@@ -18,7 +19,7 @@ B.aucmd(M.source, 'InsertEnter', { 'InsertEnter', 'CursorMoved', }, {
   end,
 })
 
-B.aucmd(M.source, 'CursorHold', { 'CursorHold', }, {
+B.aucmd(M.lua, 'CursorHold', { 'CursorHold', }, {
   callback = function()
     moving = nil
     vim.fn.timer_start(500, function()

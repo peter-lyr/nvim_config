@@ -1,8 +1,9 @@
 local M = {}
 local B = require 'my_base'
-M.source = B.get_source(debug.getinfo(1)['source'])
+B.load_require_common()
+M.source = require 'my_base'.get_source(debug.getinfo(1)['source'])
 M.loaded = B.get_loaded(M.source)
--- package.loaded[M.loaded] = nil
+M.lua = string.match(M.loaded, '%.([^.]+)$')
 --------------------------------------------
 
 function M.height_more()
@@ -414,7 +415,7 @@ if (tonumber(temp) == M.fontsizenormal) == true then
   M.lastfontsize = M.last_font_size_txt_p:read()
 end
 
-B.aucmd(M.source, 'VimLeavePre', { 'VimLeavePre', }, {
+B.aucmd(M.lua, 'VimLeavePre', { 'VimLeavePre', }, {
   callback = function()
     if M.lastfontsize ~= M.fontsizenormal then
       M.last_font_size_txt_p:write(M.lastfontsize, 'w')

@@ -1,8 +1,9 @@
 local M = {}
 local B = require 'my_base'
-M.source = B.get_source(debug.getinfo(1)['source'])
+B.load_require_common()
+M.source = require 'my_base'.get_source(debug.getinfo(1)['source'])
 M.loaded = B.get_loaded(M.source)
--- package.loaded[M.loaded] = nil
+M.lua = string.match(M.loaded, '%.([^.]+)$')
 --------------------------------------------
 
 vim.g.NERDSpaceDelims = 1
@@ -25,7 +26,7 @@ vim.g.NERDCustomDelimiters = {
   },
 }
 
-B.aucmd(M.source, 'BufEnter', { 'BufEnter', }, {
+B.aucmd(M.lua, 'BufEnter', { 'BufEnter', }, {
   callback = function()
     if vim.bo.ft == 'python' then
       vim.g.NERDSpaceDelims = 0

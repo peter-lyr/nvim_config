@@ -1,8 +1,9 @@
 local M = {}
 local B = require 'my_base'
-M.source = B.get_source(debug.getinfo(1)['source'])
+B.load_require_common()
+M.source = require 'my_base'.get_source(debug.getinfo(1)['source'])
 M.loaded = B.get_loaded(M.source)
--- package.loaded[M.loaded] = nil
+M.lua = string.match(M.loaded, '%.([^.]+)$')
 --------------------------------------------
 
 B.load_require_common()
@@ -64,7 +65,7 @@ function M.setreg()
   vim.fn.setreg('"', bak)
 end
 
-B.aucmd(M.source, 'BufLeave', { 'BufLeave', 'CmdlineEnter', }, {
+B.aucmd(M.lua, 'BufLeave', { 'BufLeave', 'CmdlineEnter', }, {
   callback = function(ev)
     local word = vim.fn.expand '<cword>'
     if #word > 0 then

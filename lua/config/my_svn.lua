@@ -1,11 +1,12 @@
 local M = {}
 local B = require 'my_base'
-M.source = B.get_source(debug.getinfo(1)['source'])
+B.load_require_common()
+M.source = require 'my_base'.get_source(debug.getinfo(1)['source'])
 M.loaded = B.get_loaded(M.source)
--- package.loaded[M.loaded] = nil
+M.lua = string.match(M.loaded, '%.([^.]+)$')
 --------------------------------------------
 
-local tortoisesvn = function(params)
+function M.tortoisesvn(params)
   if not params or #params < 3 then
     return
   end
@@ -26,9 +27,5 @@ local tortoisesvn = function(params)
       cmd, abspath))
   end
 end
-
-vim.api.nvim_create_user_command('TortoiseSVN', function(params)
-  tortoisesvn(params['fargs'])
-end, { nargs = '*', })
 
 return M

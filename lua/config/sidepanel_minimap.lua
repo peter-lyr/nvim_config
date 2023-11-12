@@ -1,8 +1,9 @@
 local M = {}
 local B = require 'my_base'
-M.source = B.get_source(debug.getinfo(1)['source'])
+B.load_require_common()
+M.source = require 'my_base'.get_source(debug.getinfo(1)['source'])
 M.loaded = B.get_loaded(M.source)
--- package.loaded[M.loaded] = nil
+M.lua = string.match(M.loaded, '%.([^.]+)$')
 --------------------------------------------
 
 M.width = 25
@@ -72,7 +73,7 @@ end
 
 M.waiting_for_aerial_leave = nil
 
-B.aucmd(M.source, 'BufEnter', 'BufEnter', {
+B.aucmd(M.lua, 'BufEnter', 'BufEnter', {
   callback = function(ev)
     local ft = vim.api.nvim_buf_get_option(ev.buf, 'filetype')
     if ft == 'minimap' then
@@ -105,7 +106,7 @@ B.aucmd(M.source, 'BufEnter', 'BufEnter', {
   end,
 })
 
-B.aucmd(M.source, 'BufLeave', 'BufLeave', {
+B.aucmd(M.lua, 'BufLeave', 'BufLeave', {
   callback = function(ev)
     local ft = vim.api.nvim_buf_get_option(ev.buf, 'filetype')
     if ft == 'aerial' then

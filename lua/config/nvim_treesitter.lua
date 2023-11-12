@@ -1,8 +1,9 @@
 local M = {}
 local B = require 'my_base'
-M.source = B.get_source(debug.getinfo(1)['source'])
+B.load_require_common()
+M.source = require 'my_base'.get_source(debug.getinfo(1)['source'])
 M.loaded = B.get_loaded(M.source)
--- package.loaded[M.loaded] = nil
+M.lua = string.match(M.loaded, '%.([^.]+)$')
 --------------------------------------------
 
 M.treesitter_parser_path = B.get_std_data_dir_path 'treesitter_parser'
@@ -80,7 +81,7 @@ require 'treesitter-context'.setup {
 require 'match-up'.setup {}
 
 -- FIXIT: rainbow cause diffview close err
-B.aucmd(M.source, 'TabClosed', { 'TabClosed', 'TabEnter', }, {
+B.aucmd(M.lua, 'TabClosed', { 'TabClosed', 'TabEnter', }, {
   callback = function()
     B.set_timeout(50, function()
       if string.match(vim.bo.ft, 'Diffview') or vim.opt.diff:get() == true then

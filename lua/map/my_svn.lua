@@ -6,10 +6,6 @@ M.loaded = B.get_loaded(M.source)
 M.lua = string.match(M.loaded, '%.([^.]+)$')
 --------------------------------------------
 
-function M.opt(desc)
-  return { silent = true, desc = M.lua .. ' ' .. desc, }
-end
-
 vim.keymap.set({ 'n', 'v', }, '<leader>vo', '<cmd>TortoiseSVN settings cur yes<cr>', { silent = true, desc = 'TortoiseSVN settings cur yes<cr>', })
 vim.keymap.set({ 'n', 'v', }, '<leader>vd', '<cmd>TortoiseSVN diff cur yes<cr>', { silent = true, desc = 'TortoiseSVN diff cur yes<cr>', })
 vim.keymap.set({ 'n', 'v', }, '<leader>vD', '<cmd>TortoiseSVN diff root yes<cr>', { silent = true, desc = 'TortoiseSVN diff root yes<cr>', })
@@ -32,6 +28,8 @@ vim.keymap.set({ 'n', 'v', }, '<leader>vl', '<cmd>TortoiseSVN log cur yes<cr>', 
 vim.keymap.set({ 'n', 'v', }, '<leader>vL', '<cmd>TortoiseSVN log root yes<cr>', { silent = true, desc = 'TortoiseSVN log root yes<cr>', })
 vim.keymap.set({ 'n', 'v', }, '<leader>vk', '<cmd>TortoiseSVN checkout root yes<cr>', { silent = true, desc = 'TortoiseSVN checkout root yes<cr>', })
 
-require('config.my_svn')
+vim.api.nvim_create_user_command('TortoiseSVN', function(params)
+  require 'config.my_svn'.tortoisesvn(params['fargs'])
+end, { nargs = '*', })
 
 return M
