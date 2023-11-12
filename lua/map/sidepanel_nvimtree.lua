@@ -15,6 +15,9 @@ vim.keymap.set({ 'n', 'v', }, '<leader>ao', function() require 'config.sidepanel
 vim.keymap.set({ 'n', 'v', }, '<leader>aO', function() require 'config.sidepanel_nvimtree'.restart() end, M.opt 'restart')
 vim.keymap.set({ 'n', 'v', }, '<leader>ac', function() require 'config.sidepanel_nvimtree'.close() end, M.opt 'close')
 
+vim.keymap.set({ 'n', 'v', }, '<leader>aj', function() require 'config.sidepanel_nvimtree'.findnext() end, M.opt 'findnext')
+vim.keymap.set({ 'n', 'v', }, '<leader>ak', function() require 'config.sidepanel_nvimtree'.findprev() end, M.opt 'findprev')
+
 B.load_require 'nvim-lua/plenary.nvim'
 B.load_require 'nvim-tree/nvim-web-devicons'
 

@@ -102,4 +102,16 @@ function M.restart()
   M.open()
 end
 
+function M.findnext()
+  M.nvimtree_opened = 1
+  vim.cmd 'NvimTreeFindFile'
+  vim.cmd 'norm jo'
+end
+
+function M.findprev()
+  M.nvimtree_opened = 1
+  vim.cmd 'NvimTreeFindFile'
+  vim.cmd 'norm ko'
+end
+
 return M
