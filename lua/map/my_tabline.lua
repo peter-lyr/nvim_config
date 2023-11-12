@@ -33,7 +33,6 @@ vim.keymap.set({ 'n', 'v', }, '<leader>xL', function() require 'config.my_tablin
 vim.keymap.set({ 'n', 'v', }, '<leader>xH', function() require 'config.my_tabline'.bd_all_prev_buf() end, M.opt 'bd_all_prev_buf')
 
 B.register_whichkey('config.my_tabline', '<leader>xo', 'kill other')
-
 B.merge_whichkeys()
 
 --------------------

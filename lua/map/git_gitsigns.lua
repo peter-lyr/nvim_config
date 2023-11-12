@@ -45,7 +45,6 @@ vim.keymap.set({ 'n', }, '<leader>gl', function() require 'config.git_gitsigns'.
 
 B.register_whichkey('config.git_gitsigns', '<leader>gm', 'more')
 B.register_whichkey('config.git_gitsigns', '<leader>gmt', 'Toggle')
-
 B.merge_whichkeys()
 
 -------------------

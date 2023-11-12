@@ -33,7 +33,6 @@ vim.keymap.set({ 'n', 'v', }, '<leader>gvw', function() require 'config.git_diff
 --------------
 
 B.register_whichkey('config.git_diffview', '<leader>gv', 'Diffview')
-
 B.merge_whichkeys()
 
 ------
