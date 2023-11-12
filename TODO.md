@@ -7,6 +7,6 @@
 6. [x] tabline show all
 7. [x] tabline delete other projs
 8. [x] c2cmake, cbp2cmake change common
-9. [ ] unuse B.map
+9. [x] unuse B.map
 10. [ ] copy to desktop, wav/mp3 no support
 11. [ ] match windo not working
