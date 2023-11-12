@@ -6,8 +6,6 @@ M.loaded = B.get_loaded(M.source)
 M.lua = string.match(M.loaded, '%.([^.]+)$')
 --------------------------------------------
 
-print(string.match(M.loaded, '%.([^.]+)$'))
-
 B.load_require 'nvim-lua/plenary.nvim'
 B.load_require 'nvim-tree/nvim-web-devicons'
 
