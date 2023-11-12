@@ -648,7 +648,7 @@ function M.my_projects()
   require 'config.telescope_projects'.my_projects()
 end
 
-B.aucmd(M.lua, 'BufEnter-telescope', { 'BufEnter', }, {
+B.aucmd(M.source, 'BufEnter-telescope', { 'BufEnter', }, {
   callback = function(ev)
     local filetype = vim.api.nvim_buf_get_option(ev.buf, 'filetype')
     local buftype = vim.api.nvim_buf_get_option(ev.buf, 'buftype')

@@ -6,13 +6,13 @@ M.loaded = B.get_loaded(M.source)
 M.lua = string.match(M.loaded, '%.([^.]+)$')
 --------------------------------------------
 
-B.aucmd(M.lua, 'CursorHold', { 'CursorHold', 'CursorHoldI', }, {
+B.aucmd(M.source, 'CursorHold', { 'CursorHold', 'CursorHoldI', }, {
   callback = function(ev)
     require('config.my_hili').on_cursorhold(ev)
   end,
 })
 
-B.aucmd(M.lua, 'ColorScheme', { 'ColorScheme', }, {
+B.aucmd(M.source, 'ColorScheme', { 'ColorScheme', }, {
   callback = function()
     require('config.my_hili').on_colorscheme()
   end,

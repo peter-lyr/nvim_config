@@ -17,7 +17,7 @@ B.merge_whichkeys()
 
 ------------------
 
-B.aucmd(M.lua, 'BufEnter', 'BufEnter', {
+B.aucmd(M.source, 'BufEnter', 'BufEnter', {
   callback = function(ev)
     require('config.xxx').map(ev)
   end,

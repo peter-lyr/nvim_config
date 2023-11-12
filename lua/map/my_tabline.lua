@@ -37,19 +37,19 @@ B.merge_whichkeys()
 
 --------------------
 
-B.aucmd(M.lua, 'BufEnter', 'BufEnter', {
+B.aucmd(M.source, 'BufEnter', 'BufEnter', {
   callback = function(ev)
     require('config.my_tabline').update_bufs_and_refresh_tabline(ev)
   end,
 })
 
-B.aucmd(M.lua, 'WinResized', { 'WinResized', }, {
+B.aucmd(M.source, 'WinResized', { 'WinResized', }, {
   callback = function()
     require('config.my_tabline').update_bufs_and_refresh_tabline(ev)
   end,
 })
 
-B.aucmd(M.lua, 'DirChanged', { 'DirChanged', 'TabEnter', }, {
+B.aucmd(M.source, 'DirChanged', { 'DirChanged', 'TabEnter', }, {
   callback = function()
     require('config.my_tabline').update_bufs_and_refresh_tabline(ev)
     pcall(vim.cmd, 'ProjectRootCD')

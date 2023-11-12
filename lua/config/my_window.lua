@@ -415,7 +415,7 @@ if (tonumber(temp) == M.fontsizenormal) == true then
   M.lastfontsize = M.last_font_size_txt_p:read()
 end
 
-B.aucmd(M.lua, 'VimLeavePre', { 'VimLeavePre', }, {
+B.aucmd(M.source, 'VimLeavePre', { 'VimLeavePre', }, {
   callback = function()
     if M.lastfontsize ~= M.fontsizenormal then
       M.last_font_size_txt_p:write(M.lastfontsize, 'w')

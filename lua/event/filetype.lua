@@ -7,7 +7,7 @@ M.lua = string.match(M.loaded, '%.([^.]+)$')
 --------------------------------------------
 
 -- close some filetypes with <c-q>
-B.aucmd(M.lua, 'FileType', 'FileType', {
+B.aucmd(M.source, 'FileType', 'FileType', {
   pattern = {
     'lazy',
     'help',

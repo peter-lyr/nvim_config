@@ -10,7 +10,7 @@ local word_diff_en = 1
 local word_diff = 1
 local moving = nil
 
-B.aucmd(M.lua, 'InsertEnter', { 'InsertEnter', 'CursorMoved', }, {
+B.aucmd(M.source, 'InsertEnter', { 'InsertEnter', 'CursorMoved', }, {
   callback = function()
     moving = 1
     if word_diff then
@@ -19,7 +19,7 @@ B.aucmd(M.lua, 'InsertEnter', { 'InsertEnter', 'CursorMoved', }, {
   end,
 })
 
-B.aucmd(M.lua, 'CursorHold', { 'CursorHold', }, {
+B.aucmd(M.source, 'CursorHold', { 'CursorHold', }, {
   callback = function()
     moving = nil
     vim.fn.timer_start(500, function()

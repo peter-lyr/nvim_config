@@ -29,7 +29,7 @@ vim.keymap.set({ 'n', 'v', }, '<leader>fvq', function() require 'config.nvim_lsp
 
 vim.keymap.set({ 'n', 'v', }, '[d', function() require 'config.nvim_lsp'.diagnostic_goto_prev() end, M.opt 'diagnostic_goto_prev')
 vim.keymap.set({ 'n', 'v', }, '[f', function() require 'config.nvim_lsp'.diagnostic_open_float() end, M.opt 'diagnostic_open_float')
-vim.keymap.set({ 'n', 'v', }, ']d', function() require 'config.nvim_lsp'.diagnostic_goto_next() end, M.opt 'diagnostic_goto_next')
+vim.keymap.set({ 'n', 'v', }, ']d', function() require 'config.nvim_lsp'.diagnostic_goto_next() end, M.opt 'iagnostic_goto_next')
 vim.keymap.set({ 'n', 'v', }, ']f', function() require 'config.nvim_lsp'.diagnostic_setloclist() end, M.opt 'diagnostic_setloclist')
 
 vim.keymap.set({ 'n', 'v', }, '<A-F12>', function() require 'config.nvim_lsp'.hover() end, M.opt 'hover')
@@ -61,7 +61,7 @@ M.loaded_c = nil
 M.loaded_python = nil
 M.loaded_markdown = nil
 
-M.au = B.aucmd(M.lua, 'BufEnter', 'BufEnter', {
+M.au = B.aucmd(M.source, 'BufEnter', 'BufEnter', {
   callback = function(ev)
     local ext = vim.fn.tolower(string.match(ev.file, '%.([^.]+)$'))
     if ext == 'lua' and not M.loaded_lua then

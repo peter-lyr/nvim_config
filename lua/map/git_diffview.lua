@@ -41,7 +41,7 @@ require 'telescope'.load_extension 'git_diffs'
 
 ----------
 
-B.aucmd(M.lua, 'BufEnter', 'BufEnter', {
+B.aucmd(M.source, 'BufEnter', 'BufEnter', {
   callback = function(ev)
     require 'config.git_diffview'.number(ev)
   end,

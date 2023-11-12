@@ -81,7 +81,7 @@ require 'treesitter-context'.setup {
 require 'match-up'.setup {}
 
 -- FIXIT: rainbow cause diffview close err
-B.aucmd(M.lua, 'TabClosed', { 'TabClosed', 'TabEnter', }, {
+B.aucmd(M.source, 'TabClosed', { 'TabClosed', 'TabEnter', }, {
   callback = function()
     B.set_timeout(50, function()
       if string.match(vim.bo.ft, 'Diffview') or vim.opt.diff:get() == true then

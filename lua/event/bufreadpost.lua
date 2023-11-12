@@ -18,7 +18,7 @@ vim.cmd [[
 ]]
 
 -- go to last loc when opening a buffer
-B.aucmd(M.lua, 'BufReadPost', 'BufReadPost', {
+B.aucmd(M.source, 'BufReadPost', 'BufReadPost', {
   callback = function()
     local mark = vim.api.nvim_buf_get_mark(0, '"')
     local lcount = vim.api.nvim_buf_line_count(0)
@@ -36,7 +36,7 @@ M.tab_4_fts = {
   'ld',
 }
 
-B.aucmd(M.lua, 'BufEnter', 'BufEnter', {
+B.aucmd(M.source, 'BufEnter', 'BufEnter', {
   callback = function(ev)
     if vim.fn.filereadable(ev.file) == 1 and vim.o.modifiable == true then
       vim.opt.cursorcolumn = true

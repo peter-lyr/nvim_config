@@ -26,7 +26,7 @@ vim.g.NERDCustomDelimiters = {
   },
 }
 
-B.aucmd(M.lua, 'BufEnter', { 'BufEnter', }, {
+B.aucmd(M.source, 'BufEnter', { 'BufEnter', }, {
   callback = function()
     if vim.bo.ft == 'python' then
       vim.g.NERDSpaceDelims = 0

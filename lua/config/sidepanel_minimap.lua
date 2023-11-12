@@ -73,7 +73,7 @@ end
 
 M.waiting_for_aerial_leave = nil
 
-B.aucmd(M.lua, 'BufEnter', 'BufEnter', {
+B.aucmd(M.source, 'BufEnter', 'BufEnter', {
   callback = function(ev)
     local ft = vim.api.nvim_buf_get_option(ev.buf, 'filetype')
     if ft == 'minimap' then
@@ -106,7 +106,7 @@ B.aucmd(M.lua, 'BufEnter', 'BufEnter', {
   end,
 })
 
-B.aucmd(M.lua, 'BufLeave', 'BufLeave', {
+B.aucmd(M.source, 'BufLeave', 'BufLeave', {
   callback = function(ev)
     local ft = vim.api.nvim_buf_get_option(ev.buf, 'filetype')
     if ft == 'aerial' then

@@ -65,7 +65,7 @@ function M.setreg()
   vim.fn.setreg('"', bak)
 end
 
-B.aucmd(M.lua, 'BufLeave', { 'BufLeave', 'CmdlineEnter', }, {
+B.aucmd(M.source, 'BufLeave', { 'BufLeave', 'CmdlineEnter', }, {
   callback = function(ev)
     local word = vim.fn.expand '<cword>'
     if #word > 0 then

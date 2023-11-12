@@ -6,13 +6,13 @@ M.loaded = B.get_loaded(M.source)
 M.lua = string.match(M.loaded, '%.([^.]+)$')
 --------------------------------------------
 
-B.aucmd(M.lua, 'BufLeave', 'BufLeave', {
+B.aucmd(M.source, 'BufLeave', 'BufLeave', {
   callback = function()
     vim.opt.cursorcolumn = false
   end,
 })
 
-B.aucmd(M.lua, 'BufLeave-last_buf', { 'BufLeave', }, {
+B.aucmd(M.source, 'BufLeave-last_buf', { 'BufLeave', }, {
   callback = function(ev)
     vim.g.last_buf = ev.buf
   end,

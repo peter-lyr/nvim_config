@@ -15,7 +15,7 @@ vim.keymap.set({ 'n', 'v', }, '<leader>s<s-cr>', function() require 'config.my_s
 
 vim.keymap.set({ 'n', 'v', }, '<leader>sn', function() require 'config.my_sessions'.cd_opened_projs() end, M.opt 'cd_opened_projs')
 
-B.aucmd(M.lua, 'VimLeavePre', { 'VimLeavePre', }, {
+B.aucmd(M.source, 'VimLeavePre', { 'VimLeavePre', }, {
   callback = function()
     require('config.my_sessions').save()
   end,
@@ -25,7 +25,7 @@ require('config.my_sessions').save()
 
 ----------------
 
-B.aucmd(M.lua, 'DirChanged', 'DirChanged', {
+B.aucmd(M.source, 'DirChanged', 'DirChanged', {
   callback = function()
     require('config.my_sessions').add_opened_projs()
   end,
