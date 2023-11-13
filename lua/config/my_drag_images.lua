@@ -188,7 +188,7 @@ M.copy_text = function()
   cfile = string.gsub(cfile, '%./', '')
   cfile = require 'plenary.path':new(vim.loop.cwd()):joinpath(unpack(vim.fn.split(cfile, '/'))).filename
   vim.fn.setreg('+', cfile)
-  print('copy text to clipboard: ' .. cfile)
+  B.notify_info('copy text to clipboard: ' .. cfile)
 end
 
 M.get_desktop = function()
@@ -234,14 +234,14 @@ M.copy_file = function()
         local tgt = desktop_p:joinpath(fname .. '.' .. ext).filename
         vim.fn.system(string.format('copy /y "%s" "%s"', cfile, tgt))
         vim.fn.system(string.format('%s "%s"', M.drag_images_copy2clip_exe, tgt))
-        print('copy file to clipboard: ' .. tgt)
+        B.notify_info('copy file to clipboard: ' .. tgt)
       else
         vim.fn.system(string.format('%s "%s"', M.drag_images_copy2clip_exe, cfile))
-        print('copy file to clipboard: ' .. cfile)
+        B.notify_info('copy file to clipboard: ' .. cfile)
       end
     end
   else
-    print('not exists: ' .. cfile)
+    B.notify_info('not exists: ' .. cfile)
   end
 end
 
