@@ -17,6 +17,7 @@ require 'marks'.setup {
     'NvimTree',
     'fugitive',
     'help',
+    '',
   },
   mappings = {
     toggle = 'mm',
