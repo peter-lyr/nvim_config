@@ -45,7 +45,7 @@ def do(file, patt):
                     printed += 1
                     print(str(printed) + ".", new)
                     temp += new
-                lines_new.append(temp.encode("utf-8") + b"\n")
+                lines_new.append(temp.encode("utf-8") + b"\r\n")
             else:
                 lines_new.append(line)
     if printed:
