@@ -65,7 +65,7 @@ def update(project, image_doc_root_md, cur):
             for file in files:
                 if file.split(".")[-1] in markdown_fts:
                     file = rep(os.path.join(root, file))
-                    if file != image_doc_root_md:
+                    if os.path.basename(file) != image_doc_root_md:
                         do(file, patt)
 
 
@@ -73,6 +73,5 @@ if __name__ == "__main__":
     if len(sys.argv) != 4:
         os._exit(1)
     project, image_doc_root_md, cur = sys.argv[1:]
-    image_doc_root_md = rep(os.path.join(project, image_doc_root_md))
 
     update(project, image_doc_root_md, cur)

@@ -213,7 +213,7 @@ end
 M.drag_images_copy2clip_exe = require 'plenary.path':new(M.source .. '.copy2clip.exe')
 
 M.copy_file = function()
-  local cfile = require 'plenary.path':new(vim.loop.cwd()):joinpath(unpack(vim.fn.split(vim.fn.expand '<cfile>', '/'))).filename
+  local cfile = B.get_cfile()
   if require 'plenary.path':new(cfile):exists() then
     local desktop = M.get_desktop()
     local desktop_p = require 'plenary.path':new(desktop)
