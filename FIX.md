@@ -3,3 +3,4 @@
 - [x] <leader>gd modify right side and looks weird.
 - [x] session wait nvim quit done to restart
 - [ ] nvim running long time, stuck event
+- [ ] open_with_nvim_qt error
