@@ -12,17 +12,17 @@ end
 
 -------
 
-vim.keymap.set({ 'n', 'v', }, '<a-t>1', function() require 'config.my_test'.execute_output 'mes' end, M.opt 'execute_output')
-vim.keymap.set({ 'n', 'v', }, '<a-t>2', function() require 'config.my_test'.execute_output 'scriptnames' end, M.opt 'execute_output')
-vim.keymap.set({ 'n', 'v', }, '<a-t>3', function() require 'config.my_test'.execute_output '!dir' end, M.opt 'execute_output')
-vim.keymap.set({ 'n', 'v', }, '<a-t>4', function() require 'config.my_test'.execute_output 'set rtp' end, M.opt 'execute_output')
-vim.keymap.set({ 'n', 'v', }, '<a-t>5', function() require 'config.my_test'.execute_output 'ls!' end, M.opt 'execute_output')
+vim.keymap.set({ 'n', 'v', }, '<a-t>1', function() require 'config.my_test'.execute_output 'mes' end, M.opt 'execute_output mes')
+vim.keymap.set({ 'n', 'v', }, '<a-t>2', function() require 'config.my_test'.execute_output 'scriptnames' end, M.opt 'execute_output scriptnames')
+vim.keymap.set({ 'n', 'v', }, '<a-t>3', function() require 'config.my_test'.execute_output '!dir' end, M.opt 'execute_output !dir')
+vim.keymap.set({ 'n', 'v', }, '<a-t>4', function() require 'config.my_test'.execute_output 'set rtp' end, M.opt 'execute_output set rtp')
+vim.keymap.set({ 'n', 'v', }, '<a-t>5', function() require 'config.my_test'.execute_output 'ls!' end, M.opt 'execute_output ls!')
 
 -------
 
 vim.keymap.set({ 'n', 'v', }, '<a-t><del>', function() require 'config.my_test'.delete_whichkeys_txt() end, M.opt 'delete_whichkeys_txt')
 vim.keymap.set({ 'n', 'v', }, '<a-t><f5>', function() require 'config.my_test'.startuptime() end, M.opt 'startuptime')
-vim.keymap.set({ 'n', 'v', }, '<a-t><s-f5>', function() require 'config.my_test'.startuptime '--no-sort' end, M.opt 'startuptime')
+vim.keymap.set({ 'n', 'v', }, '<a-t><s-f5>', function() require 'config.my_test'.startuptime '--no-sort' end, M.opt 'startuptime --no-sort')
 vim.keymap.set({ 'n', 'v', }, '<a-t>s', function() require 'config.my_test'.start_new_nvim_qt() end, M.opt 'start_new_nvim_qt')
 vim.keymap.set({ 'n', 'v', }, '<a-t>r', function() require 'config.my_test'.restart_nvim_qt() end, M.opt 'restart_nvim_qt')
 vim.keymap.set({ 'n', 'v', }, '<a-t>q', function() require 'config.my_test'.quit_nvim_qt() end, M.opt 'quit_nvim_qt')
