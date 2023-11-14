@@ -57,6 +57,7 @@ function M.asyncrun_done_default()
   M.notify_qflist()
   M.refresh_fugitive()
   vim.cmd 'au! User AsyncRunStop'
+  B.set_timeout(10, function() vim.cmd 'e!' end)
 end
 
 function M.au_user_asyncrunstop()
