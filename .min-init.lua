@@ -22,7 +22,7 @@ local lazy = require 'lazy'
 
 lazy.setup {
   spec = {
-    -- { import = 'plugins', },
+    { import = 'min-plug', },
   },
   root = root,
   readme = {
