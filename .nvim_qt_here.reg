@@ -12,4 +12,4 @@ Windows Registry Editor Version 5.00
 [HKEY_LOCAL_MACHINE\SOFTWARE\Classes\*\shell\open_with_nvim_qt]
 "Icon"="nvim-qt.exe"
 [HKEY_LOCAL_MACHINE\SOFTWARE\Classes\*\shell\open_with_nvim_qt\command]
-@="C:\\Program Files\\Neovim\\bin\\nvim-qt.exe \"%1\" -- -u NONE"
+@="C:\\Program Files\\Neovim\\bin\\nvim-qt.exe \"%1\" -- -u \"C:\\Program Files\\Neovim\\min-init.lua\""
