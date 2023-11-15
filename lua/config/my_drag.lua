@@ -38,8 +38,6 @@ end
 
 function M.readpre(ev)
   if M.is_dragging == true then
-    vim.cmd 'wincmd s'
-    vim.cmd 'wincmd T'
     M.post_cmd = require 'config.my_drag_images'.check(ev.buf)
     if #M.post_cmd == 0 then
       M.post_cmd = require 'config.my_drag_docs'.check(ev.buf)
