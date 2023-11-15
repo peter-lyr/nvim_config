@@ -79,8 +79,7 @@ return {
     end,
   },
   {
-    name = 'my_drag',
-    dir = '',
+    'peter-lyr/my_drag',
     lazy = true,
     ft = {
       'markdown',
@@ -95,6 +94,23 @@ return {
       require 'map.my_drag'
     end,
   },
+  -- {
+  --   name = 'my_drag',
+  --   dir = '',
+  --   lazy = true,
+  --   ft = {
+  --     'markdown',
+  --   },
+  --   event = { 'FocusLost', },
+  --   init = function()
+  --     if not S.load_whichkeys_txt_enable then
+  --       require 'my_simple'.add_whichkey('<leader>m', 'drag', 'My_Drag')
+  --     end
+  --   end,
+  --   config = function()
+  --     require 'map.my_drag'
+  --   end,
+  -- },
   {
     name = 'my_info',
     dir = '',
