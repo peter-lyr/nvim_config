@@ -81,7 +81,7 @@ function M.save()
     local projs = {}
     local _cnt = 1
     for proj, _ in pairs(files) do
-      projs[#projs + 1] = string.format('%d %s', _cnt, string.gsub(B.get_only_name(proj), '[^%w]', '_'))
+      projs[#projs + 1] = string.format('%d %s', _cnt, string.gsub(B.get_only_name(proj), '[\\/:%*%?"<>|]', '_'))
       _cnt = _cnt + 1
     end
     local file = string.format(M.format, os.time(), #vim.tbl_keys(files), cnt, vim.fn.join(projs, ' '))
