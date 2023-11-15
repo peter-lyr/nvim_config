@@ -14,4 +14,6 @@ vim.keymap.set({ 'n', 'v', }, '<leader>aa', function() require 'config.sidepanel
 vim.keymap.set({ 'n', 'v', }, '<leader>as', function() require 'config.sidepanel_aerial'.open() end, M.opt 'open')
 vim.keymap.set({ 'n', 'v', }, '<leader>ad', function() require 'config.sidepanel_aerial'.close() end, M.opt 'close')
 
+require 'config.sidepanel_aerial'
+
 return M
