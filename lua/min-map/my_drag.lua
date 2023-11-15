@@ -17,7 +17,9 @@ vim.keymap.set({ 'n', 'v', }, '<leader><leader>', function() vim.cmd 'WhichKey' 
 vim.keymap.set({ 'n', 'v', }, '<c-l>', function() vim.cmd 'ls!' end, M.opt 'ls!')
 vim.keymap.set({ 'n', 'v', }, '<cr>', function() if vim.v.count ~= 0 then B.cmd('b%d', vim.v.count) end end, M.opt 'buffer v:count')
 vim.keymap.set({ 'n', 'v', }, '<c-m>', function() if vim.v.count ~= 0 then B.cmd('b%d', vim.v.count) end end, M.opt 'buffer v:count')
-vim.keymap.set({ 'n', 'v', }, '<leader>xc', function() vim.cmd 'close' end, M.opt 'buffer v:count')
+vim.keymap.set({ 'n', 'v', }, '<leader>xc', function() vim.cmd 'close' end, M.opt 'close')
+vim.keymap.set({ 'n', }, '<leader>;', function() vim.cmd [[call feedkeys(":")]] end, M.opt ':')
+vim.keymap.set({ 'v', }, '<leader>;', function() vim.cmd [[call feedkeys("\<esc>:")]] end, M.opt ':')
 
 ----------------
 
