@@ -28,26 +28,19 @@ end
 
 -------------
 
-M.is_dragging = true
 M.post_cmd = ''
 M.last_file = ''
 
-function M.focuslost()
-  M.is_dragging = true
-end
-
 function M.readpre(ev)
-  if M.is_dragging == true then
-    M.post_cmd = require 'config.my_drag_images'.check(ev.buf)
-    if #M.post_cmd == 0 then
-      M.post_cmd = require 'config.my_drag_docs'.check(ev.buf)
-    end
-    if #M.post_cmd == 0 then
-      M.post_cmd = require 'config.my_drag_bin'.check_xxd(ev.buf)
-      -- if #M.post_cmd == 0 then
-      --   M.post_cmd = require('config.my_drag_bin').check_others(ev.buf)
-      -- end
-    end
+  M.post_cmd = require 'config.my_drag_images'.check(ev.buf)
+  if #M.post_cmd == 0 then
+    M.post_cmd = require 'config.my_drag_docs'.check(ev.buf)
+  end
+  if #M.post_cmd == 0 then
+    M.post_cmd = require 'config.my_drag_bin'.check_xxd(ev.buf)
+    -- if #M.post_cmd == 0 then
+    --   M.post_cmd = require('config.my_drag_bin').check_others(ev.buf)
+    -- end
   end
 end
 
