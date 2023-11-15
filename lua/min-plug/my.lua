@@ -2,6 +2,8 @@ return {
   {
     name = 'my_drag',
     dir = '',
+    event = { 'VeryLazy', },
+    lazy = false,
     dependencies = {
       'dstein64/vim-startuptime',
       'navarasu/onedark.nvim',
@@ -14,6 +16,15 @@ return {
     },
     config = function()
       require 'min-map.my_drag'
+    end,
+  },
+  {
+    name = 'options',
+    dir = '',
+    event = { 'VeryLazy', },
+    lazy = false,
+    config = function()
+      require 'core.options'
     end,
   },
 }
