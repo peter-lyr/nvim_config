@@ -20,7 +20,7 @@ vim.keymap.set({ 'n', 'v', }, '<leader>my', function() require 'config.my_drag'.
 vim.keymap.set({ 'n', 'v', }, '<leader>mY', function() require 'config.my_drag'.copy_file() end, M.opt 'copy_file')
 vim.keymap.set({ 'n', 'v', }, '<s-f11>', function() require 'config.my_drag'.copy_file() end, M.opt 'copy_file')
 vim.keymap.set({ 'n', 'v', }, '<leader>mE', function() require 'config.my_drag'.edit_drag_bin_fts_md() end, M.opt 'edit_drag_bin_fts_md')
-vim.keymap.set({ 'n', 'v', }, '<MiddleMouse>', function() require 'config.my_drag_images'.middle_click() end, { desc = '<MiddleMouse>', expr = true, })
+vim.keymap.set({ 'n', 'v', }, '<MiddleMouse>', function() return require 'config.my_drag_images'.middle_click() end, { desc = '<MiddleMouse>', expr = true, })
 
 ----------------
 
