@@ -40,7 +40,7 @@ M.default_opts = {
     ignore_dirs = { '*.git*', },
   },
   filters = {
-    dotfiles = true,
+    -- dotfiles = false,
   },
   diagnostics = {
     enable = true,
