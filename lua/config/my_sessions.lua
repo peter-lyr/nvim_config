@@ -30,44 +30,57 @@ function M.get_projs(fname)
   return loadstring('return ' .. B.get_create_file_path(M.sessions_dir_path, fname):read())()
 end
 
+function M.edit(files)
+  if type(files) == 'string' then
+    files = { files, }
+  end
+  for _, file in ipairs(files) do
+    vim.cmd('edit ' .. file)
+  end
+  vim.cmd 'e!'
+  vim.cmd 'ProjectRootCD'
+end
+
 function M.sel(fname)
   local projs = M.get_projs(fname)
   local list = {}
+  local names = {}
   for proj, files in pairs(projs) do
     local only_names = {}
-    for _, only_name in ipairs(files) do
-      only_names[#only_names + 1] = B.get_only_name(only_name)
+    for _, name in ipairs(files) do
+      names[#names + 1] = name
+      only_names[#only_names + 1] = B.get_only_name(name)
     end
     list[#list + 1] = string.format('%2d files   "%s"   %s', #files, proj, vim.fn.join(only_names, ' '))
   end
   if #list > 0 then
-    table.insert(list, 1, M.sel_all)
-    B.ui_sel(list, 'sessions sel proj open', function(proj, _)
-      if proj == M.sel_all then
-        M.open_all(projs)
-        return
-      end
-      proj = string.match(proj, '%d+ files   "(.*)"')
-      if proj then
-        local files = projs[proj]
-        table.insert(files, 1, M.sel_all)
-        B.ui_sel(files, 'sessions sel file open', function(file, _)
-          if file == M.sel_all then
-            for _, f in ipairs(files) do
-              vim.cmd('edit ' .. f)
-            end
-            vim.cmd 'e!'
-            vim.cmd 'ProjectRootCD'
-            return
+    if #names == 1 then
+      M.edit(names)
+    else
+      table.insert(list, 1, M.sel_all)
+      B.ui_sel(list, 'sessions sel proj open', function(proj, _)
+        if proj == M.sel_all then
+          M.open_all(projs)
+          return
+        end
+        proj = string.match(proj, '%d+ files   "(.*)"')
+        if proj then
+          local files = projs[proj]
+          if #files == 1 then
+            M.edit(files)
+          else
+            table.insert(files, 1, M.sel_all)
+            B.ui_sel(files, 'sessions sel file open', function(file, _)
+              if file == M.sel_all then
+                M.edit(files)
+              else
+                M.edit(file)
+              end
+            end)
           end
-          if file then
-            vim.cmd('edit ' .. file)
-            vim.cmd 'e!'
-            vim.cmd 'ProjectRootCD'
-          end
-        end)
-      end
-    end)
+        end
+      end)
+    end
   end
 end
 
