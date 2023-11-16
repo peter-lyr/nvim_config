@@ -31,8 +31,7 @@ lazy.setup {
   lockfile = lockfile,
   performance = {
     rtp = {
-      -- paths = { string.sub(vimruntime, 1, #vimruntime - 12) .. 'nvim-qt\\runtime', },
-      paths = {},
+      paths = { string.sub(vimruntime, 1, #vimruntime - 12) .. 'nvim-qt\\runtime', },
       disabled_plugins = {
         'gzip',
         'matchit',
