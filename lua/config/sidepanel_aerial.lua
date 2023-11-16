@@ -11,7 +11,7 @@ M.width = 25
 M.default_opts = {
   -- Priority list of preferred backends for aerial.
   -- This can be a filetype map (see :help aerial-filetype-map)
-  backends = { 'treesitter', 'lsp', 'markdown', 'man', },
+  backends = { 'markdown', 'lsp', 'treesitter', 'man', },
 
   layout = {
     -- These control the width of the aerial window.
