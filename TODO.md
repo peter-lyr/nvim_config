@@ -11,4 +11,4 @@
 10. [x] copy to desktop, wav/mp3 no support
 11. [x] match windo hi cur word working
 ~~12. [ ] my_drag to github.com~~
-11. [ ] gitsigns CRLF ignore highlight
+12. [ ] gitsigns CRLF ignore highlight
