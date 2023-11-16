@@ -14,12 +14,36 @@ vim.keymap.set({ 'n', 'v', }, '<leader>mE', function() require 'config.my_drag'.
 vim.keymap.set({ 'n', }, '<esc>', function() require 'notify'.dismiss() end, M.opt 'dismiss notification')
 vim.keymap.set({ 'n', 'v', }, 'c.', function() vim.cmd 'cd %:h' end, M.opt 'cd %:h')
 vim.keymap.set({ 'n', 'v', }, '<leader><leader>', function() vim.cmd 'WhichKey' end, M.opt 'WhichKey')
-vim.keymap.set({ 'n', 'v', }, '<c-l>', function() B.notify_info(vim.fn.execute('ls')) end, M.opt 'ls')
-vim.keymap.set({ 'n', 'v', }, '<c-;>', function() B.notify_info(vim.fn.execute('ls!')) end, M.opt 'ls!')
+vim.keymap.set({ 'n', 'v', }, '<c-l>', function() B.notify_info(vim.fn.execute 'ls') end, M.opt 'ls')
+vim.keymap.set({ 'n', 'v', }, '<c-;>', function() B.notify_info(vim.fn.execute 'ls!') end, M.opt 'ls!')
 vim.keymap.set({ 'n', 'v', }, '<cr>', function() if vim.v.count ~= 0 then pcall(B.cmd, 'b%d', vim.v.count) end end, M.opt 'buffer v:count')
 vim.keymap.set({ 'n', 'v', }, '<leader>xc', function() vim.cmd 'close' end, M.opt 'close')
 vim.keymap.set({ 'n', }, '<leader>;', function() vim.cmd [[call feedkeys(":")]] end, M.opt ':')
 vim.keymap.set({ 'v', }, '<leader>;', function() vim.cmd [[call feedkeys("\<esc>:")]] end, M.opt ':')
+vim.keymap.set({ 'n', 'v', }, '<c-h>', function()
+  require 'notify'.dismiss()
+  local bufs = vim.api.nvim_list_bufs()
+  local index = B.index_of(bufs, vim.fn.bufnr())
+  if index > 1 then
+    index = index - 1
+  else
+    index = #bufs
+  end
+  B.cmd('b%d', bufs[index])
+  B.print(string.format('%d/%d. %s', index, #bufs, vim.api.nvim_buf_get_name(bufs[index])))
+end, M.opt 'prev buf')
+vim.keymap.set({ 'n', 'v', }, '<c-j>', function()
+  require 'notify'.dismiss()
+  local bufs = vim.api.nvim_list_bufs()
+  local index = B.index_of(bufs, vim.fn.bufnr())
+  if index < #bufs then
+    index = index + 1
+  else
+    index = 1
+  end
+  B.cmd('b%d', bufs[index])
+  B.print(string.format('%d/%d. %s', index, #bufs, vim.api.nvim_buf_get_name(bufs[index])))
+end, M.opt 'prev buf')
 
 ----------------
 
