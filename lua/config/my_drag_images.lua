@@ -76,7 +76,7 @@ M.append_line_pre = function()
     require 'plenary.path':new(M.markdown_rel_head_dot):joinpath(
       M.image_root_dir, M.image_hash_8 .. '.' .. M.image_fname_tail_ext
     ).filename)
-  url = vim.fn.substitute(url, '^./', '', '')
+  vim.fn.substitute(url, '^./', '', '')
   return string.format('![%s](%s)', M.image_fname_tail_root, url)
 end
 
