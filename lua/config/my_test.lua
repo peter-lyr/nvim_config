@@ -41,11 +41,14 @@ end
 function M.restart_nvim_qt()
   require 'config.editor_sessions'.save()
   M.start_new_nvim_qt()
-  vim.cmd 'qa!'
+  M.quit_nvim_qt()
 end
 
 function M.quit_nvim_qt()
-  vim.cmd 'qa!'
+  vim.fn['GuiWindowFrameless'](0)
+  B.set_timeout(10, function()
+    vim.cmd 'qa!'
+  end)
 end
 
 ------------------------------
