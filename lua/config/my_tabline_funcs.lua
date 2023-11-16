@@ -198,6 +198,9 @@ function M.append_one_proj_right_down()
           return
         end
         vim.cmd 'wincmd b'
+        if B.file_exists(vim.api.nvim_buf_get_name(0)) then
+          vim.cmd 'wincmd W'
+        end
         vim.cmd 'wincmd s'
         vim.cmd('b' .. C.proj_buf[proj])
         vim.cmd 'e!'
@@ -307,6 +310,9 @@ function M.append_unload_right_down()
   end
   B.ui_sel(files, 'open deleted file', function(file)
     vim.cmd 'wincmd b'
+    if B.file_exists(vim.api.nvim_buf_get_name(0)) then
+      vim.cmd 'wincmd W'
+    end
     vim.cmd 'wincmd s'
     B.cmd("e %s", file)
   end)
