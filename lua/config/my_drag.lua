@@ -44,6 +44,10 @@ function M.readpre(ev)
   end
 end
 
+function M.readpre_min(ev)
+  M.post_cmd = require 'config.my_drag_bin'.check_xxd(ev.buf)
+end
+
 function M.readpost()
   if #M.post_cmd > 0 then
     if type(M.post_cmd) == 'string' then

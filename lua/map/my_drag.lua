@@ -25,7 +25,7 @@ vim.keymap.set({ 'n', 'v', }, '<leader>mE', function() require 'config.my_drag'.
 
 B.aucmd(M.source, 'BufReadPre', { 'BufReadPre', }, {
   callback = function(ev)
-    require('config.my_drag').readpre(ev)
+    require('config.my_drag').readpre_min(ev)
   end,
 })
 
