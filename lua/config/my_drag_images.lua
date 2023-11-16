@@ -311,6 +311,4 @@ M.middle_click = function()
   return '<MiddleMouse>'
 end
 
-vim.keymap.set({ 'n', 'v', }, '<MiddleMouse>', M.middle_click, { desc = '<MiddleMouse>', expr = true, })
-
 return M

@@ -20,24 +20,25 @@ vim.keymap.set({ 'n', 'v', }, '<leader>my', function() require 'config.my_drag'.
 vim.keymap.set({ 'n', 'v', }, '<leader>mY', function() require 'config.my_drag'.copy_file() end, M.opt 'copy_file')
 vim.keymap.set({ 'n', 'v', }, '<s-f11>', function() require 'config.my_drag'.copy_file() end, M.opt 'copy_file')
 vim.keymap.set({ 'n', 'v', }, '<leader>mE', function() require 'config.my_drag'.edit_drag_bin_fts_md() end, M.opt 'edit_drag_bin_fts_md')
+vim.keymap.set({ 'n', 'v', }, '<MiddleMouse>', function() require 'config.my_drag_images'.middle_click() end, { desc = '<MiddleMouse>', expr = true, })
 
 ----------------
 
 B.aucmd(M.source, 'BufReadPre', { 'BufReadPre', }, {
   callback = function(ev)
-    require('config.my_drag').readpre_min(ev)
+    require 'config.my_drag'.readpre_min(ev)
   end,
 })
 
 B.aucmd(M.source, 'BufReadPost', { 'BufReadPost', }, {
   callback = function()
-    require('config.my_drag').readpost()
+    require 'config.my_drag'.readpost()
   end,
 })
 
 B.aucmd(M.source, 'BufEnter', { 'BufEnter', }, {
   callback = function(ev)
-    require('config.my_drag').bufenter(ev)
+    require 'config.my_drag'.bufenter(ev)
   end,
 })
 
