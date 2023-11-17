@@ -26,7 +26,7 @@ vim.keymap.set({ 'n', 'v', }, '<MiddleMouse>', function() return require 'config
 
 B.aucmd(M.source, 'BufReadPre', { 'BufReadPre', }, {
   callback = function(ev)
-    require 'config.my_drag'.readpre_min(ev)
+    require 'config.my_drag'.readpre(ev)
   end,
 })
 

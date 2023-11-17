@@ -49,7 +49,7 @@ end, M.opt 'prev buf')
 
 B.aucmd(M.source, 'BufReadPre', { 'BufReadPre', }, {
   callback = function(ev)
-    require 'config.my_drag'.readpre(ev)
+    require 'config.my_drag'.readpre_min(ev)
   end,
 })
 
