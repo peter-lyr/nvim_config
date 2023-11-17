@@ -42,7 +42,7 @@ function M.get_setup_table(file_ignore_patterns)
           ['<Down>'] = actions.move_selection_next,
           ['<Up>'] = actions.move_selection_previous,
 
-          ['<c-m>'] = actions.select_default,
+          ['<C-l>'] = actions.select_default,
           ['<CR>'] = actions.select_default,
           ['<C-x>'] = actions.select_horizontal,
           ['<C-v>'] = actions.select_vertical,
