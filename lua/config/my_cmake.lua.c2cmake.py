@@ -67,8 +67,6 @@ if __name__ == "__main__":
 
     project_root = rep(sys.argv[1])
 
-    rm_build_dirs(project_root)
-
     D, F = check(project_root)
 
     if not F:
@@ -112,6 +110,8 @@ if __name__ == "__main__":
     proj_name = os.path.basename(project_root)
 
     print("project_root:", project_root)
+
+    rm_build_dirs(project_root)
 
     D, F = check(project_root)
 

@@ -25,8 +25,9 @@ function M.get_cbps(file)
 end
 
 function M.to_cmake_do(proj)
+  local fname = B.rep_baskslash_lower(vim.api.nvim_buf_get_name(0))
+  proj = B.rep_baskslash_lower(proj)
   if #proj == 0 then
-    local fname = vim.api.nvim_buf_get_name(0)
     B.notify_info('not in a project: ' .. fname)
     return
   end
@@ -35,8 +36,12 @@ function M.to_cmake_do(proj)
     B.notify_info 'c2cmake...'
     B.system_run('start', 'chcp 65001 && %s && python "%s" "%s"', B.system_cd(proj), M.c2cmake_py, proj)
   else
-    B.notify_info 'cbp2cmake...'
-    B.system_run('start', 'chcp 65001 && %s && python "%s" "%s"', B.system_cd(proj), M.cbp2cmake_py, proj)
+    if B.file_exists(fname) then
+      B.notify_info 'cbp2cmake...'
+      B.system_run('start', 'chcp 65001 && %s && python "%s" "%s" "%s"', B.system_cd(proj), M.cbp2cmake_py, proj, fname)
+    else
+      B.notify_info 'try cbp2cmake...\nbut no file in cur buffer'
+    end
   end
 end
 

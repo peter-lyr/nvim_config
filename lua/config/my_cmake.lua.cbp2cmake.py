@@ -107,11 +107,91 @@ def get_files_and_dirs(project_root, executable_cbp, executable_cbp_dir):
     return files, directories
 
 
+def is_test_dir(f):
+    l = f.split('/')
+    for _f in l:
+        if not _f:
+            return 0
+        if _f[0] == '.':
+            return 1
+        for _I in ['test', 'bak', 'build', '.cache']:
+            if _I in _f:
+                return 1
+    return 0
+
+def check(project_root):
+    I = []
+    res = os.popen('git ls-files --exclude-standard --ignored --others').read()
+    for line in res.splitlines():
+        I.append(rep(line))
+
+    D = ['']
+    F = []
+    for root, _, files in os.walk(project_root):
+        for file in files:
+            if file.split('.')[-1] in ['c', 'h', 'cpp']:
+                f = rep(os.path.join(root, file)).replace(project_root + '/', '').strip('/')
+                if f in I:
+                    continue
+                if is_test_dir(f):
+                    continue
+                if file.split('.')[-1] in ['c', 'cpp']:
+                    F.append(f)
+                d = rep(root).replace(project_root, '').strip('/')
+                if not is_test_dir(d):
+                    d = d.lstrip('/')
+                    if d not in D:
+                        D.append(d)
+    return D, F
+
+
 if __name__ == "__main__":
-    if len(sys.argv) < 2:
+    if len(sys.argv) < 3:
         os._exit(1)
 
     project_root = rep(sys.argv[1])
+    file = rep(sys.argv[2])
+
+    D = []
+    file = file.replace(project_root + '/', '')
+    while 1:
+        file = os.path.dirname(file)
+        D.append(file)
+        if D[-1] == os.path.dirname(file):
+            break
+
+    sels = [project_root]
+    print("create CMakeLists.txt at which one:")
+    print("1. %s" % sels[0])
+    for dir in D:
+        dir = rep(os.path.join(project_root, dir))
+        if dir not in sels:
+            sels.append(dir)
+            print("%d. %s" % (len(sels), dir))
+        while dir != project_root:
+            dir = rep(os.path.dirname(dir))
+            if dir not in sels:
+                sels.append(dir)
+                print("%d. %s" % (len(sels), dir))
+    idx = 0
+    l = len(sels)
+    if l > 1:
+        idx = input("> ")
+        if idx == 'exit':
+            os._exit(4)
+        try:
+            idx = int(idx)
+            if idx < 1:
+                idx = 1
+            elif idx > l:
+                idx = l
+            idx -= 1
+        except:
+            idx = 0
+    project_root = sels[idx]
+    proj_name = os.path.basename(project_root)
+
+    print("project_root:", project_root)
 
     rm_build_dirs(project_root)
 
