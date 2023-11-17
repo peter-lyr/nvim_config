@@ -160,16 +160,16 @@ if __name__ == "__main__":
         if D[-1] == os.path.dirname(file):
             break
 
-    sels = [project_root]
+    sels = []
     print("create CMakeLists.txt at which one:")
-    print("1. %s" % sels[0])
-    for dir in D:
-        dir = rep(os.path.join(project_root, dir))
+    for i in range(len(D) - 1, -1, -1):
+        dir = D[i]
+        dir = rep(os.path.join(project_root, dir)).strip('/')
         if dir not in sels:
             sels.append(dir)
             print("%d. %s" % (len(sels), dir))
         while dir != project_root:
-            dir = rep(os.path.dirname(dir))
+            dir = rep(os.path.dirname(dir)).strip('/')
             if dir not in sels:
                 sels.append(dir)
                 print("%d. %s" % (len(sels), dir))
