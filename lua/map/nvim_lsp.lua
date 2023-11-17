@@ -65,25 +65,39 @@ M.au = B.aucmd(M.source, 'BufEnter', 'BufEnter', {
   callback = function(ev)
     local ext = vim.fn.tolower(string.match(ev.file, '%.([^.]+)$'))
     if ext == 'lua' and not M.loaded_lua then
-      require('config.nvim_lsp').lua()
+      require 'config.nvim_lsp'.lua()
       M.loaded_lua = 1
       vim.cmd 'e!'
     elseif ext == 'py' and not M.loaded_python then
-      require('config.nvim_lsp').python()
+      require 'config.nvim_lsp'.python()
       M.loaded_python = 1
       vim.cmd 'e!'
     elseif (ext == 'c' or ext == 'h') and not M.loaded_c then
-      require('config.nvim_lsp').c()
+      require 'config.nvim_lsp'.c()
       M.loaded_c = 1
       vim.cmd 'e!'
     elseif ext == 'md' and not M.loaded_markdown then
-      require('config.nvim_lsp').markdown()
+      require 'config.nvim_lsp'.markdown()
       M.loaded_markdown = 1
       vim.cmd 'e!'
     end
     if M.loaded_lua and M.loaded_c and M.loaded_python and M.loaded_markdown then
       pcall(vim.api.nvim_del_autocmd, M.au)
     end
+  end,
+})
+
+B.aucmd(M.source, 'FocusLost', 'FocusLost', {
+  callback = function()
+    M.timer1 = B.set_timeout(1000 * 60 * 60 * 1, function()
+      require 'config.nvim_lsp'.stop_all()
+    end)
+  end,
+})
+
+B.aucmd(M.source, 'FocusGained', 'FocusGained', {
+  callback = function()
+    B.clear_interval(M.timer1)
   end,
 })
 
