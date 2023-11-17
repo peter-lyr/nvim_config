@@ -53,6 +53,10 @@ vim.keymap.set({ 'n', 'v', }, '<a-t>m', function() require 'config.my_test'.maso
 
 vim.keymap.set({ 'n', 'v', }, '<a-t><f3>', function() require 'config.my_test'.source_lua() end, M.opt 'source_lua')
 
+-------
+
+vim.keymap.set({ 'n', 'v', }, '<a-t>c', function() B.notify_info(require 'calendar'.getCalendar()) end, M.opt 'calendar')
+
 --------
 
 vim.keymap.set({ 'n', 'v', }, '<a-t>gc', function() require 'config.my_test'.git_clone() end, M.opt 'git_clone')
