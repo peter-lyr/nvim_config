@@ -150,6 +150,13 @@ function M.reset_hard_clean()
   end
 end
 
+function M.clean_ignored_files_and_folders()
+  local res = vim.fn.input('git clean -xdf [N/y]: ', 'y')
+  if vim.tbl_contains({ 'y', 'Y', 'yes', 'Yes', 'YES', }, res) == true then
+    B.system_run('asyncrun', 'git clean -xdf')
+  end
+end
+
 function M.clone()
   B.notify_info { 'cwd: ' .. vim.loop.cwd(), }
   local res = vim.fn.input 'Input git repo name: '
