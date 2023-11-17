@@ -12,6 +12,23 @@ end
 
 -------
 
+vim.keymap.set({ 'n', 'v', }, '<leader>g<c-l>', function() require 'event.insertenter'.setreg() require 'config.git_gitpush'.addcommitpush(vim.g.curline) end, M.opt 'addcommitpush curline')
+vim.keymap.set({ 'n', 'v', }, '<leader>g<c-\'>', function() require 'event.insertenter'.setreg() require 'config.git_gitpush'.addcommitpush(vim.g.single_quote) end, M.opt 'addcommitpush single_quote')
+vim.keymap.set({ 'n', 'v', }, '<leader>g<c-s-\'>', function() require 'event.insertenter'.setreg() require 'config.git_gitpush'.addcommitpush(vim.g.double_quote) end, M.opt 'addcommitpush double_quote')
+vim.keymap.set({ 'n', 'v', }, '<leader>g<c-0>', function() require 'event.insertenter'.setreg() require 'config.git_gitpush'.addcommitpush(vim.g.parentheses) end, M.opt 'addcommitpush parentheses')
+vim.keymap.set({ 'n', 'v', }, '<leader>g<c-]>', function() require 'event.insertenter'.setreg() require 'config.git_gitpush'.addcommitpush(vim.g.bracket) end, M.opt 'addcommitpush bracket')
+vim.keymap.set({ 'n', 'v', }, '<leader>g<c-s-]>', function() require 'event.insertenter'.setreg() require 'config.git_gitpush'.addcommitpush(vim.g.brace) end, M.opt 'addcommitpush brace')
+vim.keymap.set({ 'n', 'v', }, '<leader>g<c-`>', function() require 'event.insertenter'.setreg() require 'config.git_gitpush'.addcommitpush(vim.g.back_quote) end, M.opt 'addcommitpush back_quote')
+vim.keymap.set({ 'n', 'v', }, '<leader>g<c-s-.>', function() require 'event.insertenter'.setreg() require 'config.git_gitpush'.addcommitpush(vim.g.angle_bracket) end, M.opt 'addcommitpush angle_bracket')
+vim.keymap.set({ 'n', 'v', }, 'g<c-l>', function() require 'event.insertenter'.setreg() require 'config.git_gitpush'.addcommitpush(vim.g.curline) end, M.opt 'addcommitpush curline')
+vim.keymap.set({ 'n', 'v', }, 'g<c-\'>', function() require 'event.insertenter'.setreg() require 'config.git_gitpush'.addcommitpush(vim.g.single_quote) end, M.opt 'addcommitpush single_quote')
+vim.keymap.set({ 'n', 'v', }, 'g<c-s-\'>', function() require 'event.insertenter'.setreg() require 'config.git_gitpush'.addcommitpush(vim.g.double_quote) end, M.opt 'addcommitpush double_quote')
+vim.keymap.set({ 'n', 'v', }, 'g<c-0>', function() require 'event.insertenter'.setreg() require 'config.git_gitpush'.addcommitpush(vim.g.parentheses) end, M.opt 'addcommitpush parentheses')
+vim.keymap.set({ 'n', 'v', }, 'g<c-]>', function() require 'event.insertenter'.setreg() require 'config.git_gitpush'.addcommitpush(vim.g.bracket) end, M.opt 'addcommitpush bracket')
+vim.keymap.set({ 'n', 'v', }, 'g<c-s-]>', function() require 'event.insertenter'.setreg() require 'config.git_gitpush'.addcommitpush(vim.g.brace) end, M.opt 'addcommitpush brace')
+vim.keymap.set({ 'n', 'v', }, 'g<c-`>', function() require 'event.insertenter'.setreg() require 'config.git_gitpush'.addcommitpush(vim.g.back_quote) end, M.opt 'addcommitpush back_quote')
+vim.keymap.set({ 'n', 'v', }, 'g<c-s-.>', function() require 'event.insertenter'.setreg() require 'config.git_gitpush'.addcommitpush(vim.g.angle_bracket) end, M.opt 'addcommitpush angle_bracket')
+
 vim.keymap.set({ 'n', 'v', }, '<leader>ga', function() require 'config.git_gitpush'.addcommitpush() end, M.opt 'addcommitpush')
 vim.keymap.set({ 'n', 'v', }, 'ga', function() require 'config.git_gitpush'.addcommitpush() end, M.opt 'addcommitpush')
 vim.keymap.set({ 'n', 'v', }, '<leader>gc', function() require 'config.git_gitpush'.commit_push() end, M.opt 'commit_push')
