@@ -1,6 +1,12 @@
 -- -- go cmdline
 vim.keymap.set({ 'n', 'v', }, '<leader>;', ':', { silent = false, desc = 'go cmdline', })
 
+vim.api.nvim_create_user_command('Run', function(params)
+  require 'my_base'.system_run('asyncrun', vim.fn.join(params['fargs'], ' '))
+end, { nargs = '*', })
+
+vim.keymap.set({ 'n', 'v', }, '<leader>\'', ':Run ', { silent = false, desc = 'go cmdline :AsyncRun', })
+
 -- record
 vim.keymap.set({ 'n', 'v', }, 'q', '<cmd>WhichKey q<cr>', { silent = true, desc = 'nop', })
 vim.keymap.set({ 'n', 'v', }, 'Q', 'q', { silent = true, desc = 'record', })
