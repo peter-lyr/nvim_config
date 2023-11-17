@@ -67,6 +67,7 @@ vim.keymap.set({ 'n', 'v', }, '<a-t>oc', function() require 'config.my_test'.ope
 vim.keymap.set({ 'n', 'v', }, '<a-t>t', function() require 'config.my_test'.type_execute_output() end, M.opt 'type_execute_output')
 
 B.register_whichkey('config.my_test', '<a-t>o', 'open')
+B.register_whichkey('config.my_test', '<a-t>g', 'git')
 B.merge_whichkeys()
 
 ----------------------------
