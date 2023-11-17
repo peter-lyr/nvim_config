@@ -13,3 +13,4 @@
 ~~12. [ ] my_drag to github.com~~
 12. [ ] gitsigns CRLF ignore highlight
 13. [ ] cbp2cmake 2 or more sdk, strip to certain proj dir
+14. [ ] del all ignore files and folders
