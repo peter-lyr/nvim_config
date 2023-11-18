@@ -16,6 +16,9 @@ vim.keymap.set({ 'n', 'v', }, '<leader>s<s-cr>', function() require 'config.my_s
 vim.keymap.set({ 'n', 'v', }, '<leader>sn', function() require 'config.my_sessions'.cd_opened_projs() end, M.opt 'cd_opened_projs')
 vim.keymap.set({ 'n', 'v', }, '<leader>sy', function() require 'config.my_sessions'.cd_my_dirs() end, M.opt 'cd_my_dirs')
 
+vim.keymap.set({ 'n', 'v', }, '<leader>sg', function() require 'config.my_sessions'.cd_git_repos() end, M.opt 'cd_git_repos')
+vim.keymap.set({ 'n', 'v', }, '<leader>sG', function() require 'config.my_sessions'.update_git_repos() end, M.opt 'update_git_repos')
+
 B.aucmd(M.source, 'VimLeavePre', { 'VimLeavePre', }, {
   callback = function()
     require('config.my_sessions').save()

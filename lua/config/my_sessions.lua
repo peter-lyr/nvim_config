@@ -186,4 +186,38 @@ function M.cd_my_dirs()
   end)
 end
 
+M.git_repos_dir_path = B.get_create_std_data_dir 'git_repos'
+M.git_repos_txt_path = B.get_create_file_path(M.git_repos_dir_path, 'git_repos.txt')
+M.update_git_repos_py_path = M.source .. '.update_git_repos.py'
+
+function M.cd_git_repos()
+  local git_repos = {}
+  local lines = M.git_repos_txt_path:readlines()
+  for _, line in ipairs(lines) do
+    local dir_path = require 'plenary.path':new(vim.fn.trim(line))
+    if dir_path:exists() == true then
+      git_repos[#git_repos + 1] = dir_path.filename
+    end
+  end
+  if #git_repos == 0 then
+    M.update_git_repos()
+    return
+  end
+  B.ui_sel(git_repos, 'sel dir to change', function(choice, _)
+    if not choice then
+      return
+    end
+    local dir_path = require 'plenary.path':new(vim.fn.trim(choice))
+    if dir_path:exists() == true then
+      vim.cmd 'NvimTreeOpen'
+      vim.cmd('cd ' .. choice)
+    end
+  end)
+end
+
+function M.update_git_repos()
+  B.system_run('start', '%s && python "%s" "%s"',
+    B.system_cd(M.git_repos_dir_path), M.update_git_repos_py_path, M.git_repos_txt_path.filename)
+end
+
 return M
