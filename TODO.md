@@ -15,3 +15,4 @@
 13. [x] cbp2cmake 2 or more sdk, strip to certain proj dir
 14. [x] del all ignore files and folders
 15. [x] calendar
+16. [ ] git clone optimize
