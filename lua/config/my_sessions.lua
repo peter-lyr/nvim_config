@@ -171,8 +171,15 @@ function M.cd_opened_projs()
   end
 end
 
+M.depei = vim.fn.expand [[$HOME]] .. '\\DEPEI'
+
+if vim.fn.isdirectory(M.depei) == 0 then
+  vim.fn.mkdir(M.depei)
+end
+
 function M.cd_my_dirs()
   local my_dirs = {
+    M.depei,
     vim.fn.expand [[$HOME]],
     vim.fn.expand [[$TEMP]],
     vim.fn.expand [[$LOCALAPPDATA]],
