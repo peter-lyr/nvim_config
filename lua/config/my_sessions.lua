@@ -171,4 +171,19 @@ function M.cd_opened_projs()
   end
 end
 
+function M.cd_my_dirs()
+  local my_dirs = {
+    vim.fn.expand [[$HOME]],
+    vim.fn.expand [[$TEMP]],
+    vim.fn.expand [[$LOCALAPPDATA]],
+    vim.fn.expand [[$VIMRUNTIME]],
+  }
+  B.ui_sel(my_dirs, 'sel dir to change', function(dir)
+    if dir then
+      pcall(vim.cmd, 'NvimTreeOpen')
+      B.cmd('cd %s', dir)
+    end
+  end)
+end
+
 return M

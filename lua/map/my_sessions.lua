@@ -14,6 +14,7 @@ vim.keymap.set({ 'n', 'v', }, '<leader>s<cr>', function() require 'config.my_ses
 vim.keymap.set({ 'n', 'v', }, '<leader>s<s-cr>', function() require 'config.my_sessions'.sel_recent() end, M.opt 'sel_recent')
 
 vim.keymap.set({ 'n', 'v', }, '<leader>sn', function() require 'config.my_sessions'.cd_opened_projs() end, M.opt 'cd_opened_projs')
+vim.keymap.set({ 'n', 'v', }, '<leader>sy', function() require 'config.my_sessions'.cd_my_dirs() end, M.opt 'cd_my_dirs')
 
 B.aucmd(M.source, 'VimLeavePre', { 'VimLeavePre', }, {
   callback = function()
