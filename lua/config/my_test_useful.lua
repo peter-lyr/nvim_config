@@ -76,11 +76,12 @@ function M.start_new_nvim_qt()
   M.restart_nvim_qt_bat_path:write(string.format([[
 @echo off
 REM sleep 1
-start /d %s %s\bin\nvim-qt.exe
+cd %s
+start /d %s bin\nvim-qt.exe
 exit
 ]],
-    vim.loop.cwd(),
-    vim.fn.expand(string.match(vim.fn.execute 'set rtp', ',([^,]+)\\share\\nvim\\runtime'))
+    vim.fn.expand(string.match(vim.fn.execute 'set rtp', ',([^,]+)\\share\\nvim\\runtime')),
+    vim.loop.cwd()
   ), 'w')
   vim.cmd(string.format([[silent !start /b /min %s]], M.restart_nvim_qt_bat_path.filename))
 end
