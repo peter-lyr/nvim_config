@@ -127,10 +127,4 @@ function M.open_stdpath_config()
   B.system_run('start', 'explorer %s', vim.fn.stdpath 'config')
 end
 
-------
-
-function M.git_clone()
-  require 'config.my_test_useful'.git_clone()
-end
-
 return M

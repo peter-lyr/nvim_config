@@ -177,15 +177,24 @@ if vim.fn.isdirectory(M.depei) == 0 then
   vim.fn.mkdir(M.depei)
 end
 
+M.my_dirs = {
+  B.rep_baskslash_lower(M.depei),
+  B.rep_baskslash_lower(vim.fn.expand [[$HOME]]),
+  B.rep_baskslash_lower(vim.fn.expand [[$TEMP]]),
+  B.rep_baskslash_lower(vim.fn.expand [[$LOCALAPPDATA]]),
+  B.rep_baskslash_lower(vim.fn.expand [[$VIMRUNTIME]]),
+}
+
+for i = 1, 26 do
+  local dir = vim.fn.nr2char(64 + i) .. [[:\]]
+  dir = B.rep_baskslash_lower(vim.fn.trim(dir, '/'))
+  if vim.fn.isdirectory(dir) == 1 and vim.tbl_contains(M.my_dirs, dir) == false then
+    M.my_dirs[#M.my_dirs + 1] = dir
+  end
+end
+
 function M.cd_my_dirs()
-  local my_dirs = {
-    M.depei,
-    vim.fn.expand [[$HOME]],
-    vim.fn.expand [[$TEMP]],
-    vim.fn.expand [[$LOCALAPPDATA]],
-    vim.fn.expand [[$VIMRUNTIME]],
-  }
-  B.ui_sel(my_dirs, 'sel dir to change', function(dir)
+  B.ui_sel(M.my_dirs, 'sel dir to change', function(dir)
     if dir then
       pcall(vim.cmd, 'NvimTreeOpen')
       B.cmd('cd %s', dir)

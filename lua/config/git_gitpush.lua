@@ -158,9 +158,16 @@ function M.clean_ignored_files_and_folders()
 end
 
 function M.clone()
-  B.notify_info { 'cwd: ' .. vim.loop.cwd(), }
-  local res = vim.fn.input 'Input git repo name: '
-  B.system_run('asyncrun', 'git clone git@github.com:peter-lyr/%s.git', res)
+  local dirs = B.merge_tables(
+    require 'config.my_sessions'.my_dirs,
+    B.get_file_dirs(B.rep_baskslash_lower(vim.api.nvim_buf_get_name(0)))
+  )
+  B.ui_sel(dirs, 'git clone sel a dir', function(proj)
+    local author, repo = string.match(vim.fn.input('author/repo to clone: ', 'peter-lyr/2023'), '(.+)/(.+)')
+    if B.is(author) and B.is(repo) then
+      B.system_run('start', [[cd %s & git clone git@github.com:%s/%s.git]], proj, author, repo)
+    end
+  end)
 end
 
 return M
