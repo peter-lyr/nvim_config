@@ -118,11 +118,11 @@ return {
     lazy = true,
     init = function()
       if not S.load_whichkeys_txt_enable then
-        require 'my_simple'.add_whichkey('<leader><c-b>', 'make', 'My_Cmake')
+        require 'my_simple'.add_whichkey('<leader><c-b>', 'cmake', 'My_Cmake')
       end
     end,
     config = function()
-      require 'map.my_make'
+      require 'map.my_cmake'
     end,
   },
   {
