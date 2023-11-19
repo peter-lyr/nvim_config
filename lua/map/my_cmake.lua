@@ -1,0 +1,16 @@
+local M = {}
+local B = require 'my_base'
+B.load_require_common()
+M.source = require 'my_base'.get_source(debug.getinfo(1)['source'])
+M.loaded = B.get_loaded(M.source)
+M.lua = string.match(M.loaded, '%.([^.]+)$')
+--------------------------------------------
+
+function M.opt(desc)
+  return { silent = true, desc = M.lua .. ' ' .. desc, }
+end
+
+vim.keymap.set({ 'n', 'v', }, '<leader><c-b>ct', function() require 'config.my_cmake'.to_cmake() end, M.opt 'c or cbps to cmake')
+vim.keymap.set({ 'n', 'v', }, '<leader><c-b>cT', function() require 'config.my_cmake'.to_cmake(1) end, M.opt 'c or cbps to cmake')
+
+return M

@@ -116,23 +116,27 @@ return {
     name = 'my_cmake',
     dir = '',
     lazy = true,
-    keys = {
-      { '<c-f10>',   function() require 'config.my_cmake'.to_cmake() end,  mode = { 'n', 'v', }, silent = true, desc = 'c or cbps to cmake', },
-      { '<c-s-f10>', function() require 'config.my_cmake'.to_cmake(1) end, mode = { 'n', 'v', }, silent = true, desc = 'c or cbps to cmake', },
-    },
+    init = function()
+      if not S.load_whichkeys_txt_enable then
+        require 'my_simple'.add_whichkey('<leader><c-b>', 'make', 'My_Cmake')
+      end
+    end,
+    config = function()
+      require 'map.my_make'
+    end,
   },
   {
     name = 'my_make',
     dir = '',
     lazy = true,
-    keys = {
-      { '<f9>',     function() require 'config.my_make'.make() end,       mode = { 'n', 'v', }, silent = true, desc = 'mingw32-make asyncrun', },
-      { '<c-f9>',   function() require 'config.my_make'.make 'start' end, mode = { 'n', 'v', }, silent = true, desc = 'mingw32-make start', },
-      { '<c-s-f9>', function() require 'config.my_make'.clean() end,      mode = { 'n', 'v', }, silent = true, desc = 'clean: del build start', },
-      { '<a-f9>',   function() require 'config.my_make'.run() end,        mode = { 'n', 'v', }, silent = true, desc = 'run build/*.exe asyncrun', },
-      { '<a-s-f9>', function() require 'config.my_make'.run 'start' end,  mode = { 'n', 'v', }, silent = true, desc = 'run build/*.exe start', },
-      { '<s-f9>',   function() require 'config.my_make'.gcc() end,        mode = { 'n', 'v', }, silent = true, desc = 'gcc cur c source', },
-    },
+    init = function()
+      if not S.load_whichkeys_txt_enable then
+        require 'my_simple'.add_whichkey('<leader><c-b>', 'make', 'My_Make')
+      end
+    end,
+    config = function()
+      require 'map.my_make'
+    end,
   },
   {
     name = 'my_toggle',
