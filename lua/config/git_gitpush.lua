@@ -170,4 +170,42 @@ function M.clone()
   end)
 end
 
+M.merge_other_repo_py = require 'plenary.path':new(M.source .. '.merge_other_repo.py')
+
+B.load_require 'itchyny/vim-gitbranch'
+
+function M.append(str_format, ...)
+  if type(str_format) == 'table' then
+    str_format = vim.fn.join(str_format, ' && ')
+  end
+  local cmd = string.format(str_format, ...)
+  vim.fn.append('.', cmd)
+end
+
+function M.merge_other_repo()
+  local cur_repo = B.rep_baskslash_lower(vim.fn['ProjectRootGet']())
+  if #cur_repo > 0 then
+    local repos = require 'config.my_sessions'.get_all_repos()
+    B.ui_sel(repos, 'merge which repo to ' .. vim.loop.cwd(), function(repo)
+      repo = B.rep_baskslash_lower(repo)
+      if #repo > 0 and repo ~= cur_repo then
+        local dir = vim.fn.input(string.format('mv %s to which dir (auto create): ', repo), B.get_only_name(repo))
+        local branchname = vim.fn.input(string.format('sel which branch of %s: ', repo), 'main')
+        B.system_run('start', {
+            'cd %s',
+            'python "%s" "%s" "%s" "%s" "%s" "%s"',
+          },
+          B.system_cd(vim.loop.cwd()),
+          M.merge_other_repo_py,
+          cur_repo,
+          dir,
+          vim.fn['gitbranch#name'](),
+          repo,
+          branchname
+        )
+      end
+    end)
+  end
+end
+
 return M
