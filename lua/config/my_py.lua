@@ -15,4 +15,13 @@ function M.run(way)
   B.system_run(way, [[%s && python %s]], B.system_cd(cur_file), fname)
 end
 
+function M.toexe(way)
+  if not way then
+    way = 'asyncrun'
+  end
+  local cur_file = vim.api.nvim_buf_get_name(0)
+  local fname = B.get_only_name(cur_file)
+  B.system_run(way, [[%s && pyinstaller -F %s]], B.system_cd(cur_file), fname)
+end
+
 return M
