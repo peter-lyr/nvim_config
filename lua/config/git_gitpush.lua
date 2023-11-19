@@ -185,7 +185,7 @@ end
 function M.merge_other_repo()
   local cur_repo = B.rep_baskslash_lower(vim.fn['ProjectRootGet']())
   if #cur_repo > 0 then
-    local repos = require 'config.my_sessions'.get_all_repos()
+    local repos = require 'config.sidepanel_nvimtree'.get_all_repos()
     B.ui_sel(repos, 'merge which repo to ' .. vim.loop.cwd(), function(repo)
       repo = B.rep_baskslash_lower(repo)
       if #repo > 0 and repo ~= cur_repo then
