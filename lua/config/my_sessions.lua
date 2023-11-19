@@ -206,7 +206,7 @@ M.git_repos_dir_path = B.get_create_std_data_dir 'git_repos'
 M.git_repos_txt_path = B.get_create_file_path(M.git_repos_dir_path, 'git_repos.txt')
 M.update_git_repos_py_path = M.source .. '.update_git_repos.py'
 
-function M.cd_git_repos()
+function M.get_all_repos()
   local git_repos = {}
   local lines = M.git_repos_txt_path:readlines()
   for _, line in ipairs(lines) do
@@ -217,8 +217,13 @@ function M.cd_git_repos()
   end
   if #git_repos == 0 then
     M.update_git_repos()
-    return
+    return {}
   end
+  return git_repos
+end
+
+function M.cd_git_repos()
+  local git_repos = M.get_all_repos()
   B.ui_sel(git_repos, 'sel dir to change', function(choice, _)
     if not choice then
       return
