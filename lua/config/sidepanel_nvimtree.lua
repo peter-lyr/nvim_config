@@ -163,6 +163,11 @@ function M.cd_my_dirs()
   end)
 end
 
+function M.cd_my_dirs_first()
+  pcall(vim.cmd, 'NvimTreeOpen')
+  B.cmd('cd %s', M.my_dirs[1])
+end
+
 M.git_repos_dir_path = B.get_create_std_data_dir 'git_repos'
 M.git_repos_txt_path = B.get_create_file_path(M.git_repos_dir_path, 'git_repos.txt')
 M.update_git_repos_py_path = M.source .. '.update_git_repos.py'
