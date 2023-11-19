@@ -139,6 +139,19 @@ return {
     end,
   },
   {
+    name = 'my_py',
+    dir = '',
+    lazy = true,
+    init = function()
+      if not S.load_whichkeys_txt_enable then
+        require 'my_simple'.add_whichkey('<leader><c-b>', 'make', 'My_Py')
+      end
+    end,
+    config = function()
+      require 'map.my_py'
+    end,
+  },
+  {
     name = 'my_toggle',
     dir = '',
     lazy = true,
