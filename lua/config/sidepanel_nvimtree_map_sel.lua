@@ -313,23 +313,33 @@ function M.rename_sel(_)
             cnt = cnt + 1
           end
         end
+        local ok = nil
         for _, v in pairs(cmds) do
           local s1 = v[2]
           local s2 = v[3]
+          local s3 = v[4]
           if v[1] == 0 then
             s1 = string.sub(v[2], 0, #v[2] - 1)
             s2 = string.sub(v[3], 0, #v[3] - 1)
-          end
-          vim.fn.system(string.format('move "%s" "%s"', s1, s2))
-        end
-        for _, v in pairs(cmds) do
-          local s2 = v[3]
-          local s3 = v[4]
-          if v[1] == 0 then
-            s2 = string.sub(v[3], 0, #v[3] - 1)
             s3 = string.sub(v[4], 0, #v[4] - 1)
           end
-          vim.fn.system(string.format('move "%s" "%s"', s2, s3))
+          if #vim.fn['ProjectRootGet'](s1) ~= 0 then
+            vim.fn.system(string.format('git mv "%s" "%s"', s1, s3))
+          else
+            ok = 1
+            vim.fn.system(string.format('move "%s" "%s"', s1, s2))
+          end
+        end
+        if ok then
+          for _, v in pairs(cmds) do
+            local s2 = v[3]
+            local s3 = v[4]
+            if v[1] == 0 then
+              s2 = string.sub(v[3], 0, #v[3] - 1)
+              s3 = string.sub(v[4], 0, #v[4] - 1)
+            end
+            vim.fn.system(string.format('move "%s" "%s"', s2, s3))
+          end
         end
         pcall(vim.cmd, diff1 .. 'bw!')
         pcall(vim.cmd, diff2 .. 'bw!')
