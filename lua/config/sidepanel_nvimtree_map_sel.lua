@@ -390,6 +390,28 @@ function M.git_mv(node)
   end
 end
 
+function M.git_add(node)
+  local dtarget = M.get_dtarget(node)
+  if not dtarget then
+    return
+  end
+  local marks = require 'nvim-tree.marks'.get_marks()
+  local res = vim.fn.input(dtarget .. '\nConfirm git add ' .. #marks .. ' [N/y] ', 'y')
+  if vim.tbl_contains({ 'y', 'Y', 'yes', 'Yes', 'YES', }, res) == true then
+    for _, v in ipairs(marks) do
+      local absolute_path = v['absolute_path']
+      local fname = M.get_fname_tail(absolute_path)
+      fname = string.format('%s\\%s', dtarget, fname)
+      vim.fn.system(string.format('git add "%s" "%s"', absolute_path, fname))
+      print(string.format('git add "%s"', fname))
+    end
+    require 'nvim-tree.marks'.clear_marks()
+    require 'nvim-tree.api'.tree.reload()
+  else
+    print 'canceled!'
+  end
+end
+
 function M.copy_2_clip()
   local marks = require 'nvim-tree.marks'.get_marks()
   local files = ''
@@ -451,6 +473,7 @@ function M.sel_map(bufnr)
   vim.keymap.set('n', 'dr', M.wrap_node(M.rename_sel), opts 'rename selections here')
 
   vim.keymap.set('n', 'dgm', M.wrap_node(M.git_mv), opts 'git mv here')
+  vim.keymap.set('n', 'dga', M.wrap_node(M.git_add), opts 'git add here')
 
   vim.keymap.set('n', 'dy', M.wrap_node(M.copy_2_clip), opts 'copy_2_clip')
   vim.keymap.set('n', 'dp', M.wrap_node(M.paste_from_clip), opts 'paste_from_clip')
