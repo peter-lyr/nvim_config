@@ -20,3 +20,4 @@
 18. [x] telescope find files, live grep, choose dir
 19. [x] git merge another repo, do not move .images
 20. [x] to cmake optimize
+21. [ ] nvimtree sel dd not working
