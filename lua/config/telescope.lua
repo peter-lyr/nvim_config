@@ -374,26 +374,30 @@ M.add_ignore_patterns(M.ignore_patterns, {
   'CMakeLists.txt',
 })
 
--- M.add_ignore_patterns(t, {
+-- M.add_ignore_patterns(M.ignore_patterns, {
 --   'audio_lhdc',
 --   'audio_test',
 --   'MSVC',
 -- })
 
--- M.add_ignore_patterns(t, {
+-- M.add_ignore_patterns(M.ignore_patterns, {
 --   'standard',
 -- })
 
--- M.add_ignore_patterns(t, {
+-- M.add_ignore_patterns(M.ignore_patterns, {
 --   'test',
 -- })
 
--- M.add_ignore_patterns(t, {
+-- M.add_ignore_patterns(M.ignore_patterns, {
 --   'map.txt',
 --   '%.map',
 --   '%.lst',
 --   '%.S',
 -- })
+
+M.add_ignore_patterns(M.ignore_patterns, {
+  'SDK_AB13X_S1266_20231117'
+})
 
 M.add_ignore_patterns(M.ignore_patterns, {
   '%.log',

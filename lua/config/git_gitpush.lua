@@ -190,7 +190,13 @@ function M.merge_other_repo()
       repo = B.rep_baskslash_lower(repo)
       if #repo > 0 and repo ~= cur_repo then
         local dir = vim.fn.input(string.format('mv %s to which dir (auto create): ', repo), B.get_only_name(repo))
+        if not B.is(dir) then
+          return
+        end
         local branchname = vim.fn.input(string.format('sel which branch of %s: ', repo), 'main')
+        if not B.is(branchname) then
+          return
+        end
         B.system_run('start', {
             'cd %s',
             'python "%s" "%s" "%s" "%s" "%s" "%s"',
