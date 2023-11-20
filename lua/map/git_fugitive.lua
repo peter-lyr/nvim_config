@@ -10,6 +10,6 @@ function M.opt(desc)
   return { silent = true, desc = M.lua .. ' ' .. desc, }
 end
 
-vim.keymap.set({ 'n', 'v', }, '<leader>ag', function() require 'config.git_fugitive'.toggle() end, M.opt 'toggle')
+vim.keymap.set({ 'n', 'v', }, '<leader>ah', function() require 'config.git_fugitive'.toggle() end, M.opt 'toggle')
 
 return M
