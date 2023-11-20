@@ -403,7 +403,6 @@ function M.git_add(node)
       local fname = M.get_fname_tail(absolute_path)
       fname = string.format('%s\\%s', dtarget, fname)
       vim.fn.system(string.format('git add "%s" "%s"', absolute_path, fname))
-      print(string.format('git add "%s"', fname))
     end
     require 'nvim-tree.marks'.clear_marks()
     require 'nvim-tree.api'.tree.reload()
