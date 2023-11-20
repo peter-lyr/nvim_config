@@ -10,13 +10,13 @@ function M.opt(desc)
   return { silent = true, desc = M.lua .. ' ' .. desc, }
 end
 
-vim.keymap.set({ 'n', 'v', }, '<leader><c-b>pr', function() require 'config.my_py'.run() end, M.opt 'py run')
-vim.keymap.set({ 'n', 'v', }, '<leader><c-b>pR', function() require 'config.my_py'.run('start') end, M.opt 'py run start')
+vim.keymap.set({ 'n', 'v', }, '<leader>bpr', function() require 'config.my_py'.run() end, M.opt 'py run')
+vim.keymap.set({ 'n', 'v', }, '<leader>bpR', function() require 'config.my_py'.run('start') end, M.opt 'py run start')
 
-vim.keymap.set({ 'n', 'v', }, '<leader><c-b>pe', function() require 'config.my_py'.toexe() end, M.opt 'py to exe')
-vim.keymap.set({ 'n', 'v', }, '<leader><c-b>pE', function() require 'config.my_py'.toexe('start') end, M.opt 'py to exe start')
+vim.keymap.set({ 'n', 'v', }, '<leader>bpe', function() require 'config.my_py'.toexe() end, M.opt 'py to exe')
+vim.keymap.set({ 'n', 'v', }, '<leader>bpE', function() require 'config.my_py'.toexe('start') end, M.opt 'py to exe start')
 
-B.register_whichkey('config.my_make', '<leader><c-b>p', 'python run')
+B.register_whichkey('config.my_make', '<leader>bp', 'python run')
 B.merge_whichkeys()
 
 return M

@@ -118,7 +118,7 @@ return {
     lazy = true,
     init = function()
       if not S.load_whichkeys_txt_enable then
-        require 'my_simple'.add_whichkey('<leader><c-b>', 'cmake', 'My_Cmake')
+        require 'my_simple'.add_whichkey('<leader>b', 'cmake', 'My_Cmake')
       end
     end,
     config = function()
@@ -131,7 +131,7 @@ return {
     lazy = true,
     init = function()
       if not S.load_whichkeys_txt_enable then
-        require 'my_simple'.add_whichkey('<leader><c-b>', 'make', 'My_Make')
+        require 'my_simple'.add_whichkey('<leader>b', 'make', 'My_Make')
       end
     end,
     config = function()
@@ -144,7 +144,7 @@ return {
     lazy = true,
     init = function()
       if not S.load_whichkeys_txt_enable then
-        require 'my_simple'.add_whichkey('<leader><c-b>', 'make', 'My_Py')
+        require 'my_simple'.add_whichkey('<leader>b', 'make', 'My_Py')
       end
     end,
     config = function()
