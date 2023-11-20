@@ -182,6 +182,12 @@ function M.append(str_format, ...)
   vim.fn.append('.', cmd)
 end
 
+M.do_not_move_itmes = {
+  'README.md',
+  '.images',
+  '.docs',
+}
+
 function M.merge_other_repo()
   local cur_repo = B.rep_baskslash_lower(vim.fn['ProjectRootGet']())
   if #cur_repo > 0 then
@@ -197,9 +203,10 @@ function M.merge_other_repo()
         if not B.is(branchname) then
           return
         end
+        local do_not_move_itmes = vim.fn.join(M.do_not_move_itmes, '" "')
         B.system_run('start', {
             'cd %s',
-            'python "%s" "%s" "%s" "%s" "%s" "%s"',
+            'python "%s" "%s" "%s" "%s" "%s" "%s" "%s"',
           },
           B.system_cd(vim.loop.cwd()),
           M.merge_other_repo_py,
@@ -207,7 +214,8 @@ function M.merge_other_repo()
           dir,
           vim.fn['gitbranch#name'](),
           repo,
-          branchname
+          branchname,
+          do_not_move_itmes
         )
       end
     end)

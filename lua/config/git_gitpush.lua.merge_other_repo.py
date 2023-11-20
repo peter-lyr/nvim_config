@@ -21,7 +21,7 @@ def rep(text):
 
 
 if __name__ == "__main__":
-    if len(sys.argv) < 2:
+    if len(sys.argv) < 6:
         os._exit(1)
 
     cur_repo = rep(sys.argv[1])
@@ -29,6 +29,7 @@ if __name__ == "__main__":
     cur_branchname = rep(sys.argv[3])
     repo = rep(sys.argv[4])
     branchname = rep(sys.argv[5])
+    do_not_move_itmes = sys.argv[6:]
 
     # print('cur_repo:', cur_repo)
     # print('dir:', dir)
@@ -65,6 +66,9 @@ if __name__ == "__main__":
     for line in process.communicate()[0].decode("utf-8").split("\n"):
         if line in files:
             files.remove(line)
+    for item in do_not_move_itmes:
+        if item in files:
+            files.remove(item)
 
     cmd = []
     cmd.append("git checkout --ours *")
