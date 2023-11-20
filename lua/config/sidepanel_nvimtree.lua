@@ -100,7 +100,7 @@ end
 
 function M.restart()
   B.source_lua(M.source)
-  M.open()
+  M.findfile()
 end
 
 function M.findnext()
