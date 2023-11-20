@@ -136,7 +136,14 @@ M.paste_check = function()
   vim.cmd [[
     python << EOF
 import vim
-from PIL import ImageGrab, Image
+try:
+  from PIL import ImageGrab, Image
+except:
+  import os
+  cmd = "pip install pillow -i http://pypi.douban.com/simple --trusted-host pypi.douban.com"
+  print(cmd)
+  os.system(cmd)
+  from PIL import ImageGrab, Image
 img = ImageGrab.grabclipboard()
 if isinstance(img, Image.Image):
   vim.command('let g:temp_image_en = 1')
