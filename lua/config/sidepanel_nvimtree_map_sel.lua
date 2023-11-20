@@ -140,6 +140,10 @@ function M.move_sel(node)
   end
 end
 
+M.markdowns_fts = {
+  'md',
+}
+
 function M.copy_sel(node)
   local dtarget = M.get_dtarget(node)
   if not dtarget then
@@ -193,6 +197,10 @@ function M.copy_sel(node)
           end
         else
           vim.fn.system(string.format('copy "%s" "%s"', absolute_path, fname))
+          local ext = string.match(fname, '%.([^.]+)$')
+          if vim.tbl_contains(M.markdowns_fts, ext) == true then
+            require 'config.my_drag_images'.copy(vim.fn['ProjectRootGet'](absolute_path), absolute_path, vim.fn['ProjectRootGet'](dtarget), dtarget)
+          end
         end
       end
       ::continue::
