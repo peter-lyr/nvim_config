@@ -210,12 +210,14 @@ function M.get_setup_table(file_ignore_patterns)
           ['<ScrollWheelDown>'] = actions.move_selection_next,
           ['<ScrollWheelUp>'] = actions.move_selection_previous,
           ['<LeftMouse>'] = {
-            actions.select_default, type = 'action',
+            actions.select_default,
+            type = 'action',
             opts = { nowait = true, silent = true, },
           },
           ['<RightMouse>'] = actions_layout.toggle_preview,
           ['<MiddleMouse>'] = {
-            actions.close, type = 'action',
+            actions.close,
+            type = 'action',
             opts = { nowait = true, silent = true, },
           },
 
@@ -253,7 +255,8 @@ function M.get_setup_table(file_ignore_patterns)
           ['?'] = actions.which_key,
 
           ['<leader>'] = {
-            actions.select_default, type = 'action',
+            actions.select_default,
+            type = 'action',
             opts = { nowait = true, silent = true, },
           },
           ['q'] = actions.close,
@@ -323,12 +326,14 @@ function M.get_setup_table(file_ignore_patterns)
           ['<ScrollWheelDown>'] = actions.move_selection_next,
           ['<ScrollWheelUp>'] = actions.move_selection_previous,
           ['<LeftMouse>'] = {
-            actions.select_default, type = 'action',
+            actions.select_default,
+            type = 'action',
             opts = { nowait = true, silent = true, },
           },
           ['<RightMouse>'] = actions_layout.toggle_preview,
           ['<MiddleMouse>'] = {
-            actions.close, type = 'action',
+            actions.close,
+            type = 'action',
             opts = { nowait = true, silent = true, },
           },
 
@@ -396,7 +401,7 @@ M.add_ignore_patterns(M.ignore_patterns, {
 -- })
 
 M.add_ignore_patterns(M.ignore_patterns, {
-  'SDK_AB13X_S1266_20231117'
+  'SDK_AB13X_S1266_20231117',
 })
 
 M.add_ignore_patterns(M.ignore_patterns, {
@@ -488,13 +493,15 @@ end
 function M.live_grep_def()
   M.setreg()
   M.search_all_en(0)
-  vim.cmd [[ call feedkeys("\<esc>:Telescope live_grep cwd=\<c-r>=expand('%:p:h')\<cr>") ]]
+  B.ui_sel(B.get_file_dirs_till_git(), 'which cwd', function(cwd)
+    if cwd then
+      B.cmd([[Telescope live_grep cwd=%s]], cwd)
+    end
+  end)
 end
 
 function M.live_grep_rg()
-  local fname = vim.api.nvim_buf_get_name(0)
-  local dirs = B.get_file_dirs(fname)
-  B.ui_sel(dirs, 'telescope_rg_path', function(path)
+  B.ui_sel(B.get_file_dirs_till_git(), 'telescope_rg_path', function(path)
     if path then
       B.ui_sel({ '--fixed-strings', '', }, 'telescope_rg_fixed_strings', function(choice)
         if choice then

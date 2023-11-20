@@ -70,6 +70,9 @@ end
 
 function M.get_file_dirs_till_git(file)
   vim.cmd 'Lazy load plenary.nvim'
+  if not file then
+    file = vim.api.nvim_buf_get_name(0)
+  end
   file = B.rep_slash(file)
   local file_path = require 'plenary.path':new(file)
   if not file_path:is_file() then

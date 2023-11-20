@@ -45,7 +45,7 @@ function M.to_cmake(cwd)
   if cwd then
     M.to_cmake_do(B.rep_slash_lower(vim.call 'ProjectRootGet'))
   else
-    B.ui_sel(B.get_file_dirs_till_git(vim.api.nvim_buf_get_name(0)), 'which dir to cmake', function(proj)
+    B.ui_sel(B.get_file_dirs_till_git(), 'which dir to cmake', function(proj)
       M.to_cmake_do(proj)
     end)
   end

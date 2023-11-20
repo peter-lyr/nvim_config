@@ -17,6 +17,6 @@
 15. [x] calendar
 16. [x] git clone optimize
 17. [ ] image copy from one repo to another
-18. [ ] telescope find files, live grep, choose dir
+18. [x] telescope find files, live grep, choose dir
 19. [x] git merge another repo, do not move .images
 20. [x] to cmake optimize
