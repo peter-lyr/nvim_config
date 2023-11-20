@@ -26,7 +26,7 @@ function M.toexe(way)
     if B.is(f:read '*a') then
       B.system_run(way, [[%s && pyinstaller -F %s]], B.system_cd(cur_file), fname)
     else
-      B.system_run(way, [[pip install pyinstaller -i http://pypi.douban.com/simple --trusted-host pypi.douban.com]])
+      B.system_run(way, [[pip install pyinstaller -i http://pypi.douban.com/simple --trusted-host pypi.douban.com && %s && pyinstaller -F %s]], B.system_cd(cur_file), fname)
     end
     f:close()
   end
