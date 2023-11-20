@@ -19,3 +19,4 @@
 17. [ ] image copy from one repo to another
 18. [ ] telescope find files, live grep, choose dir
 19. [x] git merge another repo, do not move .images
+20. [ ] to cmake optimize

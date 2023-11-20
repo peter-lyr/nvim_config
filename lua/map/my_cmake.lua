@@ -11,6 +11,6 @@ function M.opt(desc)
 end
 
 vim.keymap.set({ 'n', 'v', }, '<leader>bct', function() require 'config.my_cmake'.to_cmake() end, M.opt 'c or cbps to cmake')
-vim.keymap.set({ 'n', 'v', }, '<leader>bcT', function() require 'config.my_cmake'.to_cmake(1) end, M.opt 'c or cbps to cmake')
+vim.keymap.set({ 'n', 'v', }, '<leader>bcT', function() require 'config.my_cmake'.to_cmake('start') end, M.opt 'c or cbps to cmake start')
 
 return M
