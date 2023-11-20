@@ -18,3 +18,4 @@
 16. [x] git clone optimize
 17. [ ] image copy from one repo to another
 18. [ ] telescope find files, live grep, choose dir
+19. [ ] git merge another repo, do not move .images
