@@ -159,7 +159,7 @@ end
 
 function M.clone()
   local dirs = B.merge_tables(
-    require 'config.my_sessions'.my_dirs,
+    require 'config.sidepanel_nvimtree'.my_dirs,
     B.get_file_dirs(B.rep_baskslash_lower(vim.api.nvim_buf_get_name(0)))
   )
   B.ui_sel(dirs, 'git clone sel a dir', function(proj)
