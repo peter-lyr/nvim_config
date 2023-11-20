@@ -16,3 +16,4 @@
 14. [x] del all ignore files and folders
 15. [x] calendar
 16. [x] git clone optimize
+17. [ ] image copy from one repo to another
