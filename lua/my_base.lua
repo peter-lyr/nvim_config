@@ -315,6 +315,10 @@ function B.get_file_dirs(file)
   return require 'my_base_funcs'.get_file_dirs(file)
 end
 
+function B.get_file_dirs_till_git(file)
+  return require 'my_base_funcs'.get_file_dirs_till_git(file)
+end
+
 function B.get_fname_tail(file)
   return require 'my_base_funcs'.get_fname_tail(file)
 end

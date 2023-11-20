@@ -36,20 +36,16 @@ function M.to_cmake_do(proj)
     B.notify_info 'c2cmake...'
     B.system_run('start', 'chcp 65001 && %s && python "%s" "%s"', B.system_cd(proj), M.c2cmake_py, proj)
   else
-    if B.file_exists(fname) then
-      B.notify_info 'cbp2cmake...'
-      B.system_run('start', 'chcp 65001 && %s && python "%s" "%s" "%s"', B.system_cd(proj), M.cbp2cmake_py, proj, fname)
-    else
-      B.notify_info 'try cbp2cmake...\nbut no file in cur buffer'
-    end
+    B.notify_info 'cbp2cmake...'
+    B.system_run('start', 'chcp 65001 && %s && python "%s" "%s"', B.system_cd(proj), M.cbp2cmake_py, proj)
   end
 end
 
-function M.to_cmake(sel)
-  if not sel then
+function M.to_cmake(cwd)
+  if cwd then
     M.to_cmake_do(B.rep_slash_lower(vim.call 'ProjectRootGet'))
   else
-    B.ui_sel(B.get_file_dirs(vim.api.nvim_buf_get_name(0)), 'sel as root', function(proj)
+    B.ui_sel(B.get_file_dirs_till_git(vim.api.nvim_buf_get_name(0)), 'which dir to cmake', function(proj)
       M.to_cmake_do(proj)
     end)
   end

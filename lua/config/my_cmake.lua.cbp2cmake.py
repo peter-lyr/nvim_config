@@ -146,51 +146,10 @@ def check(project_root):
 
 
 if __name__ == "__main__":
-    if len(sys.argv) < 3:
+    if len(sys.argv) < 2:
         os._exit(1)
 
     project_root = rep(sys.argv[1])
-    file = rep(sys.argv[2])
-
-    D = []
-    file = file.replace(project_root + '/', '')
-    while 1:
-        file = os.path.dirname(file)
-        D.append(file)
-        if D[-1] == os.path.dirname(file):
-            break
-
-    sels = []
-    print("create CMakeLists.txt at which one:")
-    for i in range(len(D) - 1, -1, -1):
-        dir = D[i]
-        dir = rep(os.path.join(project_root, dir)).strip('/')
-        if dir not in sels:
-            sels.append(dir)
-            print("%d. %s" % (len(sels), dir))
-        while dir != project_root:
-            dir = rep(os.path.dirname(dir)).strip('/')
-            if dir not in sels:
-                sels.append(dir)
-                print("%d. %s" % (len(sels), dir))
-    idx = 0
-    l = len(sels)
-    if l > 1:
-        idx = input("> ")
-        if idx == 'exit':
-            os._exit(4)
-        try:
-            idx = int(idx)
-            if idx < 1:
-                idx = 1
-            elif idx > l:
-                idx = l
-            idx -= 1
-        except:
-            idx = 0
-    project_root = sels[idx]
-    proj_name = os.path.basename(project_root)
-
     print("project_root:", project_root)
 
     rm_build_dirs(project_root)

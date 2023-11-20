@@ -68,6 +68,26 @@ function M.get_file_dirs(file)
   return dirs
 end
 
+function M.get_file_dirs_till_git(file)
+  vim.cmd 'Lazy load plenary.nvim'
+  file = B.rep_slash(file)
+  local file_path = require 'plenary.path':new(file)
+  if not file_path:is_file() then
+    B.notify_info('not file: ' .. file)
+    return nil
+  end
+  local dirs = {}
+  for _ = 1, 24 do
+    file_path = file_path:parent()
+    local name = B.rep_baskslash(file_path.filename)
+    dirs[#dirs + 1] = name
+    if B.file_exists(require 'plenary.path':new(name):joinpath '.git'.filename) then
+      break
+    end
+  end
+  return dirs
+end
+
 function M.get_fname_tail(file)
   vim.cmd 'Lazy load plenary.nvim'
   file = B.rep_slash(file)
