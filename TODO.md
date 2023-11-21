@@ -21,4 +21,4 @@
 19. [x] git merge another repo, do not move .images
 20. [x] to cmake optimize
 21. [x] nvimtree sel dd not working
-22. [ ] telescope live grep not till git
+22. [x] telescope live grep not till git
