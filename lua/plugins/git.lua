@@ -50,7 +50,8 @@ return {
     end,
   },
   {
-    'sindrets/diffview.nvim',
+    -- 'sindrets/diffview.nvim',
+    'peter-lyr/diffview.nvim',
     lazy = true,
     init = function()
       if not S.load_whichkeys_txt_enable then
