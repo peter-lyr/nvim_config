@@ -47,6 +47,7 @@ vim.keymap.set({ 'n', 'v', }, '<leader>ggr', function() require 'config.git_gitp
 vim.keymap.set({ 'n', 'v', }, '<leader>ggd', function() require 'config.git_gitpush'.reset_hard_clean() end, M.opt 'reset_hard_clean')
 vim.keymap.set({ 'n', 'v', }, '<leader>ggD', function() require 'config.git_gitpush'.clean_ignored_files_and_folders() end, M.opt 'clean_ignored_files_and_folders')
 vim.keymap.set({ 'n', 'v', }, '<leader>ggC', function() require 'config.git_gitpush'.clone() end, M.opt 'clone')
+vim.keymap.set({ 'n', 'v', }, '<leader>gg<a-c>', function() require 'config.git_gitpush'.branch_new_and_checkout() end, M.opt 'branch_new_and_checkout')
 
 vim.keymap.set({ 'n', 'v', }, '<leader>ggm', function() require 'config.git_gitpush'.merge_other_repo() end, M.opt 'merge_other_repo')
 

@@ -170,6 +170,12 @@ function M.clone()
   end)
 end
 
+function M.branch_new_and_checkout()
+  local branchname = vim.fn.input('new branch name: ', vim.fn['gitbranch#name']())
+  local cur_repo = B.rep_baskslash_lower(vim.fn['ProjectRootGet']())
+  B.system_run('start', [[cd %s & git checkout -b %s]], B.system_cd(cur_repo), branchname)
+end
+
 M.merge_other_repo_py = require 'plenary.path':new(M.source .. '.merge_other_repo.py')
 
 B.load_require 'itchyny/vim-gitbranch'

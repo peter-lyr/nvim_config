@@ -22,4 +22,4 @@
 20. [x] to cmake optimize
 21. [x] nvimtree sel dd not working
 22. [x] telescope live grep not till git
-23. [ ] git create new branch and checkout
+23. [x] git create new branch and checkout
