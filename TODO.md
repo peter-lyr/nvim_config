@@ -24,4 +24,4 @@
 22. [x] telescope live grep not till git
 23. [x] git create new branch and checkout
 24. [x] diffview history commit info len no limit
-25. [ ] tortoise svn mapping optimize
+25. [x] tortoise svn mapping optimize
