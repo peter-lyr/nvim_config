@@ -500,22 +500,31 @@ function M.live_grep_def()
   end)
 end
 
-function M.live_grep_rg()
-  B.ui_sel(B.get_file_dirs_till_git(), 'telescope_rg_path', function(path)
-    if path then
-      B.ui_sel({ '--fixed-strings', '', }, 'telescope_rg_fixed_strings', function(choice)
-        if choice then
-          local fixed_strings = choice
-          local cmd = vim.fn.input('telescope_rg_patt: ', [[[\u4e00-\u9fa5]+]])
-          if #cmd > 0 then
-            B.system_run('asyncrun',
-              'rg --no-heading --with-filename --line-number --column --smart-case --no-ignore %s -g !*.js %s "%s"',
-              fixed_strings, cmd, path)
-          end
+function M.live_grep_rg_do(dir)
+  if dir then
+    B.ui_sel({ '--fixed-strings', '', }, 'telescope_rg_fixed_strings', function(opt)
+      if opt then
+        local fixed_strings = opt
+        local cmd = vim.fn.input('telescope_rg_patt: ', [[[\u4e00-\u9fa5]+]])
+        if #cmd > 0 then
+          B.system_run('asyncrun',
+            'rg --no-heading --with-filename --line-number --column --smart-case --no-ignore %s -g !*.js %s "%s"',
+            fixed_strings, cmd, dir)
         end
-      end)
-    end
-  end)
+      end
+    end)
+  end
+end
+
+function M.live_grep_rg()
+  local dirs = B.get_file_dirs_till_git()
+  if dirs and #dirs == 1 then
+    M.live_grep_rg_do(dirs[1])
+  else
+    B.ui_sel(dirs, 'telescope_rg_path', function(dir)
+      M.live_grep_rg_do(dir)
+    end)
+  end
 end
 
 function M.search_history()
