@@ -23,3 +23,4 @@
 21. [x] nvimtree sel dd not working
 22. [x] telescope live grep not till git
 23. [x] git create new branch and checkout
+24. [ ] diffview history commit info len no limit
