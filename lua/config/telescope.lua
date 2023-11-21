@@ -500,6 +500,16 @@ function M.live_grep_def()
   end)
 end
 
+function M.live_grep_def_all()
+  M.setreg()
+  M.search_all_en(0)
+  B.ui_sel(B.get_file_dirs(), 'which cwd', function(cwd)
+    if cwd then
+      B.cmd([[Telescope live_grep cwd=%s]], cwd)
+    end
+  end)
+end
+
 function M.live_grep_rg_do(dir)
   if dir then
     B.ui_sel({ '--fixed-strings', '', }, 'telescope_rg_fixed_strings', function(opt)
@@ -518,6 +528,17 @@ end
 
 function M.live_grep_rg()
   local dirs = B.get_file_dirs_till_git()
+  if dirs and #dirs == 1 then
+    M.live_grep_rg_do(dirs[1])
+  else
+    B.ui_sel(dirs, 'telescope_rg_path', function(dir)
+      M.live_grep_rg_do(dir)
+    end)
+  end
+end
+
+function M.live_grep_rg_all()
+  local dirs = B.get_file_dirs()
   if dirs and #dirs == 1 then
     M.live_grep_rg_do(dirs[1])
   else
