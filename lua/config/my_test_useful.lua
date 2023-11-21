@@ -73,16 +73,15 @@ M.restart_nvim_qt_dir_path = B.get_create_std_data_dir 'restart_nvim_qt'
 M.restart_nvim_qt_bat_path = B.get_create_file_path(M.restart_nvim_qt_dir_path, 'restart_nvim_qt.bat')
 
 function M.start_new_nvim_qt()
+  local rtp = vim.fn.expand(string.match(vim.fn.execute 'set rtp', ',([^,]+)\\share\\nvim\\runtime'))
   M.restart_nvim_qt_bat_path:write(string.format([[
 @echo off
 REM sleep 1
-cd %s
-start /d %s bin\nvim-qt.exe
+cd %s\bin
+start /d %s nvim-qt.exe
 exit
 ]],
-    vim.fn.expand(string.match(vim.fn.execute 'set rtp', ',([^,]+)\\share\\nvim\\runtime')),
-    vim.loop.cwd()
-  ), 'w')
+    rtp, vim.loop.cwd()), 'w')
   vim.cmd(string.format([[silent !start /b /min %s]], M.restart_nvim_qt_bat_path.filename))
 end
 
