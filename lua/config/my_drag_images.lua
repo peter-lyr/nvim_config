@@ -121,7 +121,7 @@ M.update = function(cur)
   B.system_run('asyncrun', 'python "%s" "%s" "%s" "%s"', drag_images_docs_update_py, project, M.image_root_md, cur)
 end
 
-M.copy = function(src_root, src_md, tgt_root, tgt_md)
+M.copy_md = function(src_root, src_md, tgt_root, tgt_md)
   local drag_images_docs_copy_md_py = require 'plenary.path':new(M.source .. '.copy_md.py')
   B.system_run('start silent', 'python "%s" "%s" "%s" "%s" "%s"', drag_images_docs_copy_md_py, src_root, src_md, tgt_root, tgt_md)
 end
