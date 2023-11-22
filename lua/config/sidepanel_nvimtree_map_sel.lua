@@ -113,6 +113,10 @@ function M.move_sel(node)
       else
         local fname = M.get_fname_tail(absolute_path)
         fname = string.format('%s\\%s', dtarget, fname)
+        local ext = string.match(fname, '%.([^.]+)$')
+        if vim.tbl_contains(M.markdowns_fts, ext) == true then
+          require 'config.my_drag_images'.copy_md(vim.fn['ProjectRootGet'](absolute_path), absolute_path, vim.fn['ProjectRootGet'](dtarget), dtarget)
+        end
         if require 'plenary.path':new(fname):exists() then
           vim.cmd 'redraw'
           local fname_new = vim.fn.input(absolute_path .. ' ->\nExisted! Rename? ', fname)
