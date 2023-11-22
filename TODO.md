@@ -27,3 +27,4 @@
 25. [x] tortoise svn mapping optimize
 26. [ ] nvimtree donot change root auto
 27. [x] telescope sel cur root
+28. [ ] base func add auto save/load variable
