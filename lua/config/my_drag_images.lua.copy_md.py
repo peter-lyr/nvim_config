@@ -55,6 +55,17 @@ def copy(src_root, src_md, tgt_root, tgt_md):
             os.mkdir(tgt_root + '\\' + _dir)
         os.system('copy /y ' + src_root + '\\' + _dir + '\\' + file + ' ' + tgt_root + '\\' + _dir + '\\' + file)
 
+    for _dir_ in _dirs:
+        with open(os.path.join(src_root, _dir_, _md), 'rb') as f:
+            lines = f.readlines()
+        append_lines = []
+        for _dir, file in images:
+            for line in lines:
+                if _dir == _dir_ and file in line.decode('utf-8'):
+                    append_lines.append(line)
+        with open(os.path.join(tgt_root, _dir_, _md), 'ab') as f:
+            f.writelines(append_lines)
+
     # print('src_root', src_root)
     # print('src_md', src_md)
     # print('tgt_root', tgt_root)
