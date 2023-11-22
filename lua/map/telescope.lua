@@ -47,6 +47,8 @@ vim.keymap.set({ 'n', 'v', }, '<leader>sk', function() require 'config.telescope
 
 vim.keymap.set({ 'n', 'v', }, '<leader>st', function() require 'config.telescope'.buffers_term() end, M.opt 'buffers_term')
 
+vim.keymap.set({ 'n', 'v', }, '<leader>sr', function() require 'config.telescope'.cur_root_sel() end, M.opt 'cur_root_sel')
+
 -----------------------------------
 
 vim.keymap.set({ 'n', 'v', }, '<c-s-f12><f1>', function() require 'config.telescope'.git_status() end, M.opt 'git_status')

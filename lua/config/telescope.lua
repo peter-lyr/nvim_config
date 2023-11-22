@@ -466,28 +466,62 @@ function M.search_all_en(all)
   end
 end
 
+M.cur_root = {}
+
+function M.cur_root_sel_do(dir)
+  M.cur_root[B.rep_baskslash_lower(vim.fn['ProjectRootGet'](dir))] = B.rep_baskslash_lower(dir)
+end
+
+function M.cur_root_sel()
+  local dirs = B.get_file_dirs_till_git()
+  if dirs and #dirs == 1 then
+    M.cur_root_sel_do(dirs[1])
+  else
+    B.ui_sel(dirs, 'sel as telescope root', function(dir)
+      M.cur_root_sel_do(dir)
+    end)
+  end
+end
+
 function M.find_files()
   M.setreg()
   M.search_all_en(0)
-  vim.cmd 'Telescope find_files'
+  local root_dir = B.rep_baskslash_lower(vim.fn['ProjectRootGet']())
+  if not B.is(vim.tbl_contains(vim.tbl_keys(M.cur_root), root_dir)) then
+    vim.cmd 'Telescope find_files'
+  else
+    B.cmd('Telescope find_files cwd=%s', M.cur_root[root_dir])
+  end
 end
 
 function M.find_files_all()
   M.setreg()
   M.search_all_en(1)
-  vim.cmd 'Telescope find_files find_command=fd,--no-ignore,--hidden'
+  if not B.is(vim.tbl_contains(vim.tbl_keys(M.cur_root), root_dir)) then
+    vim.cmd 'Telescope find_files find_command=fd,--no-ignore,--hidden'
+  else
+    B.cmd('Telescope find_files find_command=fd,--no-ignore,--hidden cwd=%s', M.cur_root[root_dir])
+  end
 end
 
 function M.live_grep()
   M.setreg()
   M.search_all_en(0)
-  vim.cmd 'Telescope live_grep'
+  if not B.is(vim.tbl_contains(vim.tbl_keys(M.cur_root), root_dir)) then
+    vim.cmd 'Telescope live_grep'
+  else
+    B.cmd('Telescope live_grep cwd=%s', M.cur_root[root_dir])
+  end
 end
 
 function M.live_grep_all()
   M.setreg()
   M.search_all_en(1)
-  vim.cmd 'Telescope live_grep vimgrep_arguments=rg,--color=never,--no-heading,--with-filename,--line-number,--column,--smart-case,--fixed-strings,-g,*'
+  if not B.is(vim.tbl_contains(vim.tbl_keys(M.cur_root), root_dir)) then
+    vim.cmd 'Telescope live_grep vimgrep_arguments=rg,--color=never,--no-heading,--with-filename,--line-number,--column,--smart-case,--fixed-strings,-g,*'
+  else
+    B.cmd('Telescope live_grep vimgrep_arguments=rg,--color=never,--no-heading,--with-filename,--line-number,--column,--smart-case,--fixed-strings,-g,* cwd=%s', M.cur_root[root_dir])
+  end
 end
 
 function M.live_grep_def()
