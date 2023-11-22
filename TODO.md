@@ -25,3 +25,4 @@
 23. [x] git create new branch and checkout
 24. [x] diffview history commit info len no limit
 25. [x] tortoise svn mapping optimize
+26. [ ] nvimtree donot change root auto
