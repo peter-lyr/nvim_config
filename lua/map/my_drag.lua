@@ -16,6 +16,8 @@ vim.keymap.set({ 'n', 'v', }, '<leader>mu', function() require 'config.my_drag'.
 vim.keymap.set({ 'n', 'v', }, '<leader>mU', function() require 'config.my_drag'.update 'cwd' end, M.opt 'update')
 vim.keymap.set({ 'n', 'v', }, '<leader>mv', function() require 'config.my_drag'.paste 'jpg' end, M.opt 'paste')
 vim.keymap.set({ 'n', 'v', }, '<leader>mV', function() require 'config.my_drag'.paste 'png' end, M.opt 'paste')
+vim.keymap.set({ 'n', 'v', }, '<leader>mj', function() require 'config.my_drag'.paste('jpg', 1) end, M.opt 'paste')
+vim.keymap.set({ 'n', 'v', }, '<leader>mp', function() require 'config.my_drag'.paste('png', 1) end, M.opt 'paste')
 vim.keymap.set({ 'n', 'v', }, '<leader>my', function() require 'config.my_drag'.copy_text() end, M.opt 'copy_text')
 vim.keymap.set({ 'n', 'v', }, '<leader>mY', function() require 'config.my_drag'.copy_file() end, M.opt 'copy_file')
 vim.keymap.set({ 'n', 'v', }, '<s-f11>', function() require 'config.my_drag'.copy_file() end, M.opt 'copy_file')

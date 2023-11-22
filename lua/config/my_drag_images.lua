@@ -164,6 +164,9 @@ M.paste_do = function(png, no_input_image_name)
   if not no_input_image_name then
     image_name = vim.fn.input('Input ' .. png .. ' image name: ', vim.fn.strftime '%Y%m%d-%A-%H%M%S-')
   end
+  if not B.is(image_name) then
+    return
+  end
   vim.g.temp_image_file = require 'plenary.path':new(vim.fn.expand '$temp'):joinpath(image_name .. '.' .. png).filename
   vim.g.temp_image_ext = png
   vim.g.temp_image_drag = require 'plenary.path':new(M.source):parent().filename
