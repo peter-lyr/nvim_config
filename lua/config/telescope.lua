@@ -491,6 +491,7 @@ function M.find_files()
     vim.cmd 'Telescope find_files'
   else
     B.cmd('Telescope find_files cwd=%s', M.cur_root[root_dir])
+    B.notify_info('telescope root: ' .. M.cur_root[root_dir])
   end
 end
 
@@ -501,6 +502,7 @@ function M.find_files_all()
     vim.cmd 'Telescope find_files find_command=fd,--no-ignore,--hidden'
   else
     B.cmd('Telescope find_files find_command=fd,--no-ignore,--hidden cwd=%s', M.cur_root[root_dir])
+    B.notify_info('telescope root: ' .. M.cur_root[root_dir])
   end
 end
 
@@ -511,6 +513,7 @@ function M.live_grep()
     vim.cmd 'Telescope live_grep'
   else
     B.cmd('Telescope live_grep cwd=%s', M.cur_root[root_dir])
+    B.notify_info('telescope root: ' .. M.cur_root[root_dir])
   end
 end
 
@@ -521,6 +524,7 @@ function M.live_grep_all()
     vim.cmd 'Telescope live_grep vimgrep_arguments=rg,--color=never,--no-heading,--with-filename,--line-number,--column,--smart-case,--fixed-strings,-g,*'
   else
     B.cmd('Telescope live_grep vimgrep_arguments=rg,--color=never,--no-heading,--with-filename,--line-number,--column,--smart-case,--fixed-strings,-g,* cwd=%s', M.cur_root[root_dir])
+    B.notify_info('telescope root: ' .. M.cur_root[root_dir])
   end
 end
 
@@ -530,6 +534,7 @@ function M.live_grep_def()
   B.ui_sel(B.get_file_dirs_till_git(), 'which cwd', function(cwd)
     if cwd then
       B.cmd([[Telescope live_grep cwd=%s]], cwd)
+    B.notify_info('telescope root: ' .. cwd)
     end
   end)
 end
@@ -540,6 +545,7 @@ function M.live_grep_def_all()
   B.ui_sel(B.get_file_dirs(), 'which cwd', function(cwd)
     if cwd then
       B.cmd([[Telescope live_grep cwd=%s]], cwd)
+    B.notify_info('telescope root: ' .. cwd)
     end
   end)
 end
