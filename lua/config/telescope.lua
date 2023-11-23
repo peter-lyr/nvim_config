@@ -498,6 +498,7 @@ end
 function M.find_files_all()
   M.setreg()
   M.search_all_en(1)
+  local root_dir = B.rep_baskslash_lower(vim.fn['ProjectRootGet']())
   if not B.is(vim.tbl_contains(vim.tbl_keys(M.cur_root), root_dir)) then
     vim.cmd 'Telescope find_files find_command=fd,--no-ignore,--hidden'
   else
@@ -509,6 +510,7 @@ end
 function M.live_grep()
   M.setreg()
   M.search_all_en(0)
+  local root_dir = B.rep_baskslash_lower(vim.fn['ProjectRootGet']())
   if not B.is(vim.tbl_contains(vim.tbl_keys(M.cur_root), root_dir)) then
     vim.cmd 'Telescope live_grep'
   else
@@ -520,6 +522,7 @@ end
 function M.live_grep_all()
   M.setreg()
   M.search_all_en(1)
+  local root_dir = B.rep_baskslash_lower(vim.fn['ProjectRootGet']())
   if not B.is(vim.tbl_contains(vim.tbl_keys(M.cur_root), root_dir)) then
     vim.cmd 'Telescope live_grep vimgrep_arguments=rg,--color=never,--no-heading,--with-filename,--line-number,--column,--smart-case,--fixed-strings,-g,*'
   else
