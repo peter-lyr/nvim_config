@@ -40,6 +40,7 @@ vim.keymap.set({ 'n', 'v', }, '<leader>gc', function() require 'config.git_gitpu
 vim.keymap.set({ 'n', 'v', }, '<leader>ggc', function() require 'config.git_gitpush'.commit() end, M.opt 'commit')
 vim.keymap.set({ 'n', 'v', }, '<leader>ggs', function() require 'config.git_gitpush'.push() end, M.opt 'push')
 vim.keymap.set({ 'n', 'v', }, '<leader>ggg', function() require 'config.git_gitpush'.graph() end, M.opt 'graph')
+vim.keymap.set({ 'n', 'v', }, '<leader>gg<c-g>', function() require 'config.git_gitpush'.graph('start') end, M.opt 'graph')
 vim.keymap.set({ 'n', 'v', }, '<leader>ggv', function() require 'config.git_gitpush'.init() end, M.opt 'init')
 vim.keymap.set({ 'n', 'v', }, '<leader>ggf', function() require 'config.git_gitpush'.pull() end, M.opt 'pull')
 vim.keymap.set({ 'n', 'v', }, '<leader>gga', function() require 'config.git_gitpush'.addall() end, M.opt 'addall')

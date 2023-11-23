@@ -63,8 +63,12 @@ function M.commit(info)
   end
 end
 
-function M.graph()
-  B.system_run('start', 'git log --all --graph --decorate --oneline && pause')
+function M.graph(runway)
+  if not runway then
+    B.system_run('asyncrun', 'git log --all --graph --decorate --oneline')
+  else
+    B.system_run(runway, 'git log --all --graph --decorate --oneline && pause')
+  end
 end
 
 function M.push()
