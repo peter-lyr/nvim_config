@@ -13,5 +13,6 @@ end
 vim.keymap.set({ 'n', 'v', }, '<leader>tq', function() require 'config.editor_todo'.TodoQuickFix() end, M.opt 'TodoQuickFix')
 vim.keymap.set({ 'n', 'v', }, '<leader>tt', function() require 'config.editor_todo'.TodoTelescope() end, M.opt 'TodoTelescope')
 vim.keymap.set({ 'n', 'v', }, '<leader>tl', function() require 'config.editor_todo'.TodoLocList() end, M.opt 'TodoLocList')
+vim.keymap.set({ 'n', 'v', }, '<leader>te', function() require 'config.editor_todo'.open_todo_exclude_dirs_txt() end, M.opt 'open_todo_exclude_dirs_txt')
 
 return M

@@ -1,7 +1,7 @@
 .hili
-.images
 *.exe
-.docs
 *.pdf
 *.docx
 *.html
+.*
+!.todo_exclude.txt

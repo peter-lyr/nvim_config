@@ -144,7 +144,8 @@ return {
     end,
   },
   {
-    'folke/todo-comments.nvim',
+    -- 'folke/todo-comments.nvim',
+    'peter-lyr/todo-comments.nvim',
     lazy = true,
     init = function()
       if not S.load_whichkeys_txt_enable then

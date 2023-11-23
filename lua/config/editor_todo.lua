@@ -36,4 +36,41 @@ function M.TodoLocList()
   vim.cmd 'TodoLocList'
 end
 
+local todo = require 'todo-comments.search'
+
+M.todo_exclude_dirs = {}
+
+function M.load_todo_exclude_dirs_txt()
+  M.todo_exclude_dirs_txt_path = B.get_create_file_path(vim.loop.cwd(), '.todo_exclude.txt')
+  for _, dir in ipairs(M.todo_exclude_dirs_txt_path:readlines()) do
+    dir = B.rep_baskslash_lower(dir)
+    if B.is(dir) and vim.tbl_contains(M.todo_exclude_dirs, dir) == false then
+      M.todo_exclude_dirs[#M.todo_exclude_dirs + 1] = dir
+    end
+  end
+  M.todo_exclude_dirs_txt_path:write(vim.fn.join(M.todo_exclude_dirs, '\r\n'), 'w')
+end
+
+function M.todo_exclude_this_dir(file)
+  if M.todo_exclude_dirs then
+    local proj_root = B.rep_baskslash_lower(vim.fn['ProjectRootGet'](file))
+    local dir_name = B.rep_baskslash_lower(vim.fn.fnamemodify(file, ':h'))
+    local dir = string.sub(dir_name, #proj_root + 2, #dir_name)
+    for _, _dir in ipairs(M.todo_exclude_dirs) do
+      if string.match(dir, _dir) then
+        return 1
+      end
+    end
+  end
+  return nil
+end
+
+function M.open_todo_exclude_dirs_txt()
+  vim.cmd 'wincmd s'
+  B.cmd('e %s', M.todo_exclude_dirs_txt_path.filename)
+end
+
+todo.load_todo_exclude_dirs_txt = M.load_todo_exclude_dirs_txt
+todo.todo_exclude_this_dir = M.todo_exclude_this_dir
+
 return M
