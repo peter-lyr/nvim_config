@@ -40,8 +40,12 @@ local todo = require 'todo-comments.search'
 
 M.todo_exclude_dirs = {}
 
+function M.get_todo_exclude_dirs_txt_path()
+  return B.get_create_file_path(vim.loop.cwd(), '.todo_exclude.txt')
+end
+
 function M.load_todo_exclude_dirs_txt()
-  M.todo_exclude_dirs_txt_path = B.get_create_file_path(vim.loop.cwd(), '.todo_exclude.txt')
+  M.todo_exclude_dirs_txt_path = M.get_todo_exclude_dirs_txt_path()
   for _, dir in ipairs(M.todo_exclude_dirs_txt_path:readlines()) do
     dir = B.rep_baskslash_lower(dir)
     if B.is(dir) and vim.tbl_contains(M.todo_exclude_dirs, dir) == false then
@@ -67,7 +71,7 @@ end
 
 function M.open_todo_exclude_dirs_txt()
   vim.cmd 'wincmd s'
-  B.cmd('e %s', M.todo_exclude_dirs_txt_path.filename)
+  B.cmd('e %s', M.get_todo_exclude_dirs_txt_path().filename)
 end
 
 todo.load_todo_exclude_dirs_txt = M.load_todo_exclude_dirs_txt
