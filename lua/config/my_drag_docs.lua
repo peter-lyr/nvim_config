@@ -62,13 +62,13 @@ M.save_doc = function()
 end
 
 M.append_info = function()
-  local _url = B.rep_baskslash_lower(M.doc_hash_name)
+  local _url = B.rep_backslash_lower(M.doc_hash_name)
   local _line = string.format('%s' .. M.docs_fts[M.ext] .. '\n', M.doc_hash_64, M.doc_fname_tail_root, _url)
   M.doc_root_md_path:write(_line, 'a')
 end
 
 M.append_line_pre = function()
-  local url = B.rep_baskslash_lower(require 'plenary.path':new(M.markdown_rel_head_dot):joinpath(M.doc_root_dir, M.doc_hash_8 .. '.' .. M.doc_fname_tail_ext).filename)
+  local url = B.rep_backslash_lower(require 'plenary.path':new(M.markdown_rel_head_dot):joinpath(M.doc_root_dir, M.doc_hash_8 .. '.' .. M.doc_fname_tail_ext).filename)
   return string.format(M.docs_fts[M.ext], M.doc_fname_tail_root, url)
 end
 

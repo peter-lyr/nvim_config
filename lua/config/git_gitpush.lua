@@ -160,7 +160,7 @@ end
 function M.clone()
   local dirs = B.merge_tables(
     require 'config.sidepanel_nvimtree'.my_dirs,
-    B.get_file_dirs(B.rep_baskslash_lower(vim.api.nvim_buf_get_name(0)))
+    B.get_file_dirs(B.rep_backslash_lower(vim.api.nvim_buf_get_name(0)))
   )
   B.ui_sel(dirs, 'git clone sel a dir', function(proj)
     local author, repo = string.match(vim.fn.input('author/repo to clone: ', 'peter-lyr/2023'), '(.+)/(.+)')
@@ -172,7 +172,7 @@ end
 
 function M.branch_new_and_checkout()
   local branchname = vim.fn.input('new branch name: ', vim.fn['gitbranch#name']())
-  local cur_repo = B.rep_baskslash_lower(vim.fn['ProjectRootGet']())
+  local cur_repo = B.rep_backslash_lower(vim.fn['ProjectRootGet']())
   B.system_run('start', [[cd %s & git checkout -b %s]], B.system_cd(cur_repo), branchname)
 end
 
@@ -195,11 +195,11 @@ M.do_not_move_itmes = {
 }
 
 function M.merge_other_repo()
-  local cur_repo = B.rep_baskslash_lower(vim.fn['ProjectRootGet']())
+  local cur_repo = B.rep_backslash_lower(vim.fn['ProjectRootGet']())
   if #cur_repo > 0 then
     local repos = require 'config.sidepanel_nvimtree'.get_all_repos()
     B.ui_sel(repos, 'merge which repo to ' .. vim.loop.cwd(), function(repo)
-      repo = B.rep_baskslash_lower(repo)
+      repo = B.rep_backslash_lower(repo)
       if #repo > 0 and repo ~= cur_repo then
         local dir = vim.fn.input(string.format('mv %s to which dir (auto create): ', repo), B.get_only_name(repo))
         if not B.is(dir) then

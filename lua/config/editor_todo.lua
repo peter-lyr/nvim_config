@@ -47,7 +47,7 @@ end
 function M.load_todo_exclude_dirs_txt()
   M.todo_exclude_dirs_txt_path = M.get_todo_exclude_dirs_txt_path()
   for _, dir in ipairs(M.todo_exclude_dirs_txt_path:readlines()) do
-    dir = B.rep_baskslash_lower(dir)
+    dir = B.rep_backslash_lower(dir)
     if B.is(dir) and vim.tbl_contains(M.todo_exclude_dirs, dir) == false then
       M.todo_exclude_dirs[#M.todo_exclude_dirs + 1] = dir
     end
@@ -57,8 +57,8 @@ end
 
 function M.todo_exclude_this_dir(file)
   if M.todo_exclude_dirs then
-    local proj_root = B.rep_baskslash_lower(vim.fn['ProjectRootGet'](file))
-    local dir_name = B.rep_baskslash_lower(vim.fn.fnamemodify(file, ':h'))
+    local proj_root = B.rep_backslash_lower(vim.fn['ProjectRootGet'](file))
+    local dir_name = B.rep_backslash_lower(vim.fn.fnamemodify(file, ':h'))
     local dir = string.sub(dir_name, #proj_root + 2, #dir_name)
     for _, _dir in ipairs(M.todo_exclude_dirs) do
       if string.match(dir, _dir) then

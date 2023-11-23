@@ -94,7 +94,7 @@ end
 
 function M.projectroot_titlestring(ev)
   pcall(vim.call, 'ProjectRootCD')
-  local project = B.rep_baskslash(vim.fn['ProjectRootGet'](vim.api.nvim_buf_get_name(ev.buf)))
+  local project = B.rep_backslash(vim.fn['ProjectRootGet'](vim.api.nvim_buf_get_name(ev.buf)))
   local ver = vim.version()
   local head = vim.fn.fnamemodify(project, ':h')
   head = B.get_only_name(head)

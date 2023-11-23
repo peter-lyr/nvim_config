@@ -25,8 +25,8 @@ function M.get_cbps(file)
 end
 
 function M.to_cmake_do(proj)
-  local fname = B.rep_baskslash_lower(vim.api.nvim_buf_get_name(0))
-  proj = B.rep_baskslash_lower(proj)
+  local fname = B.rep_backslash_lower(vim.api.nvim_buf_get_name(0))
+  proj = B.rep_backslash_lower(proj)
   if #proj == 0 then
     B.notify_info('not in a project: ' .. fname)
     return

@@ -88,7 +88,7 @@ function M.get_exes(dir)
   local exes = {}
   local entries = require 'plenary.scandir'.scan_dir(dir, { hidden = false, depth = 32, add_dirs = false, })
   for _, entry in ipairs(entries) do
-    local file = B.rep_baskslash_lower(entry)
+    local file = B.rep_backslash_lower(entry)
     if string.match(file, 'build/[^/]+%.([^%.]+)$') == 'exe' then
       if vim.tbl_contains(exes, file) == false then
         exes[#exes + 1] = file

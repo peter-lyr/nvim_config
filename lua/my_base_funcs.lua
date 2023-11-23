@@ -14,7 +14,7 @@ function M.get_loaded_valid_bufs()
     if B.is_buf_loaded_valid(buf) then
       local file = vim.api.nvim_buf_get_name(buf)
       if #file > 0 and B.file_exists(file) then
-        local proj = B.rep_baskslash_lower(vim.fn['ProjectRootGet'](file))
+        local proj = B.rep_backslash_lower(vim.fn['ProjectRootGet'](file))
         if vim.tbl_contains(vim.tbl_keys(files), proj) == false then
           files[proj] = {}
         end
@@ -62,7 +62,7 @@ function M.get_file_dirs(file)
   local dirs = {}
   for _ = 1, 24 do
     file_path = file_path:parent()
-    local name = B.rep_baskslash(file_path.filename)
+    local name = B.rep_backslash(file_path.filename)
     dirs[#dirs + 1] = name
     if not string.match(name, '/') then
       break
@@ -85,7 +85,7 @@ function M.get_file_dirs_till_git(file)
   local dirs = {}
   for _ = 1, 24 do
     file_path = file_path:parent()
-    local name = B.rep_baskslash(file_path.filename)
+    local name = B.rep_backslash(file_path.filename)
     dirs[#dirs + 1] = name
     if B.file_exists(require 'plenary.path':new(name):joinpath '.git'.filename) then
       break

@@ -139,18 +139,18 @@ if vim.fn.isdirectory(M.depei) == 0 then
 end
 
 M.my_dirs = {
-  B.rep_baskslash_lower(M.depei),
-  B.rep_baskslash_lower(vim.fn.expand [[$HOME]]),
-  B.rep_baskslash_lower(vim.fn.expand [[$TEMP]]),
-  B.rep_baskslash_lower(vim.fn.expand [[$LOCALAPPDATA]]),
-  B.rep_baskslash_lower(vim.fn.stdpath 'config'),
-  B.rep_baskslash_lower(vim.fn.stdpath 'data'),
-  B.rep_baskslash_lower(vim.fn.expand [[$VIMRUNTIME]]),
+  B.rep_backslash_lower(M.depei),
+  B.rep_backslash_lower(vim.fn.expand [[$HOME]]),
+  B.rep_backslash_lower(vim.fn.expand [[$TEMP]]),
+  B.rep_backslash_lower(vim.fn.expand [[$LOCALAPPDATA]]),
+  B.rep_backslash_lower(vim.fn.stdpath 'config'),
+  B.rep_backslash_lower(vim.fn.stdpath 'data'),
+  B.rep_backslash_lower(vim.fn.expand [[$VIMRUNTIME]]),
 }
 
 for i = 1, 26 do
   local dir = vim.fn.nr2char(64 + i) .. [[:\]]
-  dir = B.rep_baskslash_lower(vim.fn.trim(dir, '/'))
+  dir = B.rep_backslash_lower(vim.fn.trim(dir, '/'))
   if vim.fn.isdirectory(dir) == 1 and vim.tbl_contains(M.my_dirs, dir) == false then
     M.my_dirs[#M.my_dirs + 1] = dir
   end

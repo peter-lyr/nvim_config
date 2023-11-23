@@ -58,7 +58,7 @@ M.save_image = function()
 end
 
 M.append_info = function()
-  local _url = B.rep_baskslash_lower(M.image_hash_name)
+  local _url = B.rep_backslash_lower(M.image_hash_name)
   local _line = string.format('%s![%s](%s)\n', M.image_hash_64, M.image_fname_tail_root, _url)
   M.image_root_md_path:write(_line, 'a')
 end
@@ -72,7 +72,7 @@ M.has_hash_8 = function()
 end
 
 M.append_line_pre = function()
-  local url = B.rep_baskslash_lower(
+  local url = B.rep_backslash_lower(
     require 'plenary.path':new(M.markdown_rel_head_dot):joinpath(
       M.image_root_dir, M.image_hash_8 .. '.' .. M.image_fname_tail_ext
     ).filename)

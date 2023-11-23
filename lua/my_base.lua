@@ -47,13 +47,13 @@ function B.rep_slash_lower(content)
   return vim.fn.tolower(B.rep_slash(content))
 end
 
-function B.rep_baskslash(content)
+function B.rep_backslash(content)
   content = string.gsub(content, '\\', '/')
   return content
 end
 
-function B.rep_baskslash_lower(content)
-  return vim.fn.tolower(B.rep_baskslash(content))
+function B.rep_backslash_lower(content)
+  return vim.fn.tolower(B.rep_backslash(content))
 end
 
 -----------------------------
@@ -67,7 +67,7 @@ function B.get_source(source)
     source = B.get_base_source()
   end
   source = vim.fn.trim(source, '@')
-  return B.rep_baskslash(source)
+  return B.rep_backslash(source)
 end
 
 function B.get_loaded(source)
@@ -352,7 +352,7 @@ end
 function B.get_cfile()
   local cur_head = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(0), ':h')
   local cfile = vim.fn.expand '<cfile>'
-  cfile = B.rep_baskslash(cfile)
+  cfile = B.rep_backslash(cfile)
   cfile = require 'plenary.path':new(cur_head):joinpath(unpack(vim.fn.split(cfile, '/'))).filename
   return cfile
 end
