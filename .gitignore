@@ -4,4 +4,4 @@
 *.docx
 *.html
 .*
-!.todo_exclude.txt
+.todo_exclude.txt
