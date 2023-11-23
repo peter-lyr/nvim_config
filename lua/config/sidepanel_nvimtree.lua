@@ -143,6 +143,8 @@ M.my_dirs = {
   B.rep_baskslash_lower(vim.fn.expand [[$HOME]]),
   B.rep_baskslash_lower(vim.fn.expand [[$TEMP]]),
   B.rep_baskslash_lower(vim.fn.expand [[$LOCALAPPDATA]]),
+  B.rep_baskslash_lower(vim.fn.stdpath 'config'),
+  B.rep_baskslash_lower(vim.fn.stdpath 'data'),
   B.rep_baskslash_lower(vim.fn.expand [[$VIMRUNTIME]]),
 }
 
