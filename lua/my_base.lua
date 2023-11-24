@@ -58,13 +58,9 @@ end
 
 -----------------------------
 
-function B.get_base_source()
-  return debug.getinfo(1)['source']
-end
-
 function B.get_source(source)
   if not source then
-    source = B.get_base_source()
+    source = debug.getinfo(1)['source']
   end
   source = vim.fn.trim(source, '@')
   return B.rep_backslash(source)
@@ -80,7 +76,7 @@ function B.get_loaded(source)
   return loaded
 end
 
-B.source = B.get_source(debug.getinfo(1)['source'])
+B.source = B.get_source()
 B.loaded = B.get_loaded(B.source)
 
 -----------------------------
