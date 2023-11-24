@@ -108,7 +108,6 @@ function M.system_run(way, str_format, ...)
     str_format = vim.fn.join(str_format, ' && ')
   end
   local cmd = string.format(str_format, ...)
-  print(cmd, '|||')
   if way == 'start' then
     cmd = string.format([[silent !start cmd /c "%s"]], cmd)
     vim.cmd(cmd)
