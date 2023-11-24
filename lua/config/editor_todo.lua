@@ -24,16 +24,16 @@ require 'todo-comments'.setup {
 }
 require 'map.sidepanel_quickfix'
 
-function M.TodoQuickFix()
-  vim.cmd 'TodoQuickFix'
+function M.TodoQuickFix(keywords)
+  B.cmd('TodoQuickFix keywords=%s', keywords)
 end
 
-function M.TodoTelescope()
-  vim.cmd 'TodoTelescope'
+function M.TodoTelescope(keywords)
+  B.cmd('TodoTelescope keywords=%s', keywords)
 end
 
-function M.TodoLocList()
-  vim.cmd 'TodoLocList'
+function M.TodoLocList(keywords)
+  B.cmd('TodoLocList keywords=%s', keywords)
 end
 
 local todo = require 'todo-comments.search'
