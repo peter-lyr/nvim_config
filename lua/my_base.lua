@@ -271,11 +271,7 @@ function B.del_dir(dir)
 end
 
 function B.get_cfile()
-  local cur_head = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(0), ':h')
-  local cfile = vim.fn.expand '<cfile>'
-  cfile = B.rep_backslash(cfile)
-  cfile = require 'plenary.path':new(cur_head):joinpath(unpack(vim.fn.split(cfile, '/'))).filename
-  return cfile
+  return require 'my_base_funcs'.get_cfile()
 end
 
 return B

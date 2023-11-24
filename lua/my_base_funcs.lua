@@ -318,4 +318,14 @@ function M.fetch_existed_files(files)
   return new_files
 end
 
+---------
+
+function M.get_cfile()
+  local cur_head = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(0), ':h')
+  local cfile = vim.fn.expand '<cfile>'
+  cfile = B.rep_backslash(cfile)
+  cfile = require 'plenary.path':new(cur_head):joinpath(unpack(vim.fn.split(cfile, '/'))).filename
+  return cfile
+end
+
 return M
