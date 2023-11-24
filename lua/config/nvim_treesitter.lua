@@ -80,7 +80,6 @@ require 'treesitter-context'.setup {
 
 require 'match-up'.setup {}
 
--- FIXIT: rainbow cause diffview close err
 B.aucmd(M.source, 'TabClosed', { 'TabClosed', 'TabEnter', }, {
   callback = function()
     B.set_timeout(50, function()

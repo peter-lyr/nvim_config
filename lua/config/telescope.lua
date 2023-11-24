@@ -234,7 +234,6 @@ function M.get_setup_table(file_ignore_patterns)
           ['<C-q>'] = actions.send_to_qflist + actions.open_qflist,
           ['<M-q>'] = actions.send_selected_to_qflist + actions.open_qflist,
 
-          -- TODO: This would be weird if we switch the ordering.
           ['j'] = actions.move_selection_next,
           ['k'] = actions.move_selection_previous,
           ['H'] = actions.move_to_top,
