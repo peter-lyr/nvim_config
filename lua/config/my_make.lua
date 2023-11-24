@@ -20,21 +20,51 @@ if f then
 end
 
 M.remake_en = nil
+M.runnow_en = nil
+
+function M.cmake_exe(dir)
+  local CMakeLists = require 'plenary.path':new(dir):joinpath('CMakeLists.txt').filename
+  local c = io.open(CMakeLists)
+  if c then
+    local res = c:read '*a'
+    local exe = string.match(res, 'set%(PROJECT_NAME (%w+)%)')
+    if exe then
+      return exe
+    end
+    c:close()
+  end
+  return ''
+end
 
 function M.make_do(runway, build_dir)
   if #B.scan_files(build_dir) > 0 then
+    local pause = ''
+    if runway == 'start' then
+      pause = '& pause'
+    end
+    local run = ''
+    if M.runnow_en then
+      local exe_name = M.cmake_exe(vim.fn.fnamemodify(build_dir, ':h'))
+      if exe_name then
+        exe_name = exe_name .. '.exe'
+        run = '& ' .. string.format(
+          [[cd %s && copy /y %s ..\%s && cd .. && strip -s %s & upx -qq --best %s & %s]],
+          build_dir, exe_name, exe_name, exe_name, exe_name, exe_name)
+      end
+    end
     if M.remake_en then
       B.notify_info 'remake...'
-      B.system_run(runway, [[cd %s && mingw32-make -B -j%d & pause]], build_dir, M.cores)
+      B.system_run(runway, [[cd %s && mingw32-make -B -j%d %s %s]], build_dir, M.cores, run, pause)
     else
       B.notify_info 'make...'
-      B.system_run(runway, [[cd %s && mingw32-make -j%d & pause]], build_dir, M.cores)
+      B.system_run(runway, [[cd %s && mingw32-make -j%d %s %s]], build_dir, M.cores, run, pause)
     end
   else
     B.notify_info 'build dir is empty, cmake...'
     require 'config.my_cmake'.cmake()
   end
   M.remake_en = nil
+  M.runnow_en = nil
 end
 
 function M.make(runway)
@@ -56,6 +86,17 @@ end
 
 function M.remake(runway)
   M.remake_en = 1
+  M.make(runway)
+end
+
+function M.make_run(runway)
+  M.runnow_en = 1
+  M.make(runway)
+end
+
+function M.remake_run(runway)
+  M.remake_en = 1
+  M.runnow_en = 1
   M.make(runway)
 end
 
