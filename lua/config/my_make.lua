@@ -142,7 +142,7 @@ end
 function M.gcc()
   local cur_file = vim.api.nvim_buf_get_name(0)
   local fname = B.get_only_name(cur_file)
-  local exe = fname .. '.exe'
+  local exe = string.sub(fname, 1, #fname - 2) .. '.exe'
   local exe_name = B.get_only_name(exe)
   B.system_run('start',
     [[%s && gcc %s -Wall -s -ffunction-sections -fdata-sections -Wl,--gc-sections -O3 -o %s & strip -s %s & upx -qq --best %s & %s & pause]],
