@@ -299,4 +299,23 @@ function M.get_create_file(dir, filename)
   return file
 end
 
+--------------------------------
+
+function M.file_exists(file)
+  vim.cmd 'Lazy load plenary.nvim'
+  file = B.rep_slash(file)
+  return require 'plenary.path':new(file):exists()
+end
+
+function M.fetch_existed_files(files)
+  local new_files = {}
+  for _, file in ipairs(files) do
+    file = vim.fn.trim(file)
+    if #file > 0 and M.file_exists(file) then
+      new_files[#new_files + 1] = file
+    end
+  end
+  return new_files
+end
+
 return M

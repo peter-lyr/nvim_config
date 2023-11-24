@@ -173,20 +173,11 @@ end
 ----------------
 
 function B.file_exists(file)
-  vim.cmd 'Lazy load plenary.nvim'
-  file = B.rep_slash(file)
-  return require 'plenary.path':new(file):exists()
+  return require 'my_base_funcs'.file_exists(file)
 end
 
 function B.fetch_existed_files(files)
-  local new_files = {}
-  for _, file in ipairs(files) do
-    file = vim.fn.trim(file)
-    if #file > 0 and B.file_exists(file) then
-      new_files[#new_files + 1] = file
-    end
-  end
-  return new_files
+  return require 'my_base_funcs'.fetch_existed_files(files)
 end
 
 ---------
