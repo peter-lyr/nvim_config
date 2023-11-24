@@ -31,3 +31,4 @@
 29. [ ] lazygit stash and apply stash, no hunk anymore
 30. [x] todo list exclude not mine
 31. [ ] right click, rely on ft
+32. [ ] git push commit text no limit
