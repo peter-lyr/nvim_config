@@ -10,7 +10,7 @@ function M.opt(desc)
   return { silent = true, desc = M.lua .. ' ' .. desc, }
 end
 
-vim.keymap.set({ 'n', 'v', }, '<leader>bct', function() require 'config.my_cmake'.to_cmake() end, M.opt 'c or cbps to cmake')
-vim.keymap.set({ 'n', 'v', }, '<leader>bcT', function() require 'config.my_cmake'.to_cmake('sel') end, M.opt 'c or cbps to cmake sel')
+vim.keymap.set({ 'n', 'v', }, '<leader>bct', function() require 'config.my_cmake'.cmake() end, M.opt 'c or cbps to cmake')
+vim.keymap.set({ 'n', 'v', }, '<leader>bcT', function() require 'config.my_cmake'.cmake('sel') end, M.opt 'c or cbps to cmake sel')
 
 return M

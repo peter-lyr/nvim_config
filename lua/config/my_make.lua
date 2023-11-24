@@ -32,7 +32,7 @@ function M.make_do(runway, build_dir)
     end
   else
     B.notify_info 'build dir is empty, cmake...'
-    require 'config.my_cmake'.to_cmake()
+    require 'config.my_cmake'.cmake()
   end
   M.remake_en = nil
 end
@@ -50,7 +50,7 @@ function M.make(runway)
     end)
   else
     B.notify_info 'no build dirs, cmake...'
-    require 'config.my_cmake'.to_cmake()
+    require 'config.my_cmake'.cmake()
   end
 end
 
