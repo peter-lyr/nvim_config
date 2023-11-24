@@ -41,7 +41,7 @@ function M.to_cmake_do(proj)
   end
 end
 
-function M.to_cmake(cwd)
+function M.cmake(cwd)
   if cwd then
     M.to_cmake_do(B.rep_slash_lower(vim.call 'ProjectRootGet'))
   else
