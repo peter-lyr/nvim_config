@@ -19,14 +19,22 @@ if f then
   f:close()
 end
 
+M.remake_en = nil
+
 function M.make_do(runway, build_dir)
   if #B.scan_files(build_dir) > 0 then
-    B.notify_info 'make...'
-    B.system_run(runway, [[cd %s && mingw32-make -j%d & pause]], build_dir, M.cores)
+    if M.remake_en then
+      B.notify_info 'remake...'
+      B.system_run(runway, [[cd %s && mingw32-make -B -j%d & pause]], build_dir, M.cores)
+    else
+      B.notify_info 'make...'
+      B.system_run(runway, [[cd %s && mingw32-make -j%d & pause]], build_dir, M.cores)
+    end
   else
     B.notify_info 'build dir is empty, cmake...'
     require 'config.my_cmake'.to_cmake()
   end
+  M.remake_en = nil
 end
 
 function M.make(runway)
@@ -44,6 +52,11 @@ function M.make(runway)
     B.notify_info 'no build dirs, cmake...'
     require 'config.my_cmake'.to_cmake()
   end
+end
+
+function M.remake(runway)
+  M.remake_en = 1
+  M.make(runway)
 end
 
 ------------------------
