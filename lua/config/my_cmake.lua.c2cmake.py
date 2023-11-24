@@ -124,6 +124,7 @@ if __name__ == "__main__":
     with open(os.path.join(project_root, "CMakeLists.txt"), "wb") as ff:
         ff.write(b"cmake_minimum_required(VERSION 3.5)\n")
         ff.write((f"set(PROJECT_NAME {proj_name})\n").encode('utf-8'))
+        ff.write(b'set(CMAKE_C_FLAGS "-Wall -s -ffunction-sections -fdata-sections -Wl,--gc-sections -O3")\n')
         ff.write(b"project(${PROJECT_NAME})\n\n")
 
         ff.write(b"add_executable(${PROJECT_NAME}\n")
