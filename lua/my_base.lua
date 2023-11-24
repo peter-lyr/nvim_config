@@ -19,24 +19,14 @@ end
 -----------------------------
 
 function B.is(val)
-  if not val or val == 0 or val == '' or val == false or val == {} then
-    return nil
-  end
-  return 1
+  return require 'my_base_funcs'.is(val)
 end
 
 function B.is_buf_ft(fts, buf)
-  if not buf then
-    buf = vim.fn.bufnr()
-  end
-  if type(fts) == 'string' then
-    fts = { fts, }
-  end
-  if B.is(vim.tbl_contains(fts, vim.api.nvim_buf_get_option(buf, 'filetype'))) then
-    return 1
-  end
-  return nil
+  return require 'my_base_funcs'.is_buf_ft(fts, buf)
 end
+
+---------------
 
 function B.rep_slash(content)
   content = string.gsub(content, '/', '\\')

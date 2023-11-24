@@ -152,19 +152,19 @@ function M.time_diff(timestamp)
     diff = diff - (minutes * 60)
   end
   seconds = diff
-  if B.is(years) then
+  if M.is(years) then
     return string.format('%2d years,   %2d months  ago.', years, months)
-  elseif B.is(months) then
+  elseif M.is(months) then
     return string.format('%2d months,  %2d weeks   ago.', months, weeks)
-  elseif B.is(weeks) then
+  elseif M.is(weeks) then
     return string.format('%2d weeks,   %2d days    ago.', weeks, days)
-  elseif B.is(days) then
+  elseif M.is(days) then
     return string.format('%2d days,    %2d hours   ago.', days, hours)
-  elseif B.is(hours) then
+  elseif M.is(hours) then
     return string.format('%2d hours,   %2d minutes ago.', hours, minutes)
-  elseif B.is(minutes) then
+  elseif M.is(minutes) then
     return string.format('%2d minutes, %2d seconds ago.', minutes, seconds)
-  elseif B.is(seconds) then
+  elseif M.is(seconds) then
     return string.format('%2d minutes, %2d seconds ago.', 0, seconds)
   end
 end
@@ -179,6 +179,28 @@ function M.merge_tables(...)
     end
   end
   return result
+end
+
+------------------
+
+function M.is(val)
+  if not val or val == 0 or val == '' or val == false or val == {} then
+    return nil
+  end
+  return 1
+end
+
+function M.is_buf_ft(fts, buf)
+  if not buf then
+    buf = vim.fn.bufnr()
+  end
+  if type(fts) == 'string' then
+    fts = { fts, }
+  end
+  if M.is(vim.tbl_contains(fts, vim.api.nvim_buf_get_option(buf, 'filetype'))) then
+    return 1
+  end
+  return nil
 end
 
 return M
