@@ -133,21 +133,11 @@ end
 -----------------------------
 
 function B.index_of(array, value)
-  for i, v in ipairs(array) do
-    if v == value then
-      return i
-    end
-  end
-  return -1
+  return require 'my_base_funcs'.index_of(array, value)
 end
 
 function B.get_only_name(file)
-  file = B.rep_slash(file)
-  local only_name = vim.fn.trim(file, '\\')
-  if string.match(only_name, '\\') then
-    only_name = string.match(only_name, '.+%\\(.+)$')
-  end
-  return only_name
+  return require 'my_base_funcs'.get_only_name(file)
 end
 
 --------------------

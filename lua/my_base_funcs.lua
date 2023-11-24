@@ -203,4 +203,24 @@ function M.is_buf_ft(fts, buf)
   return nil
 end
 
+--------------
+
+function M.index_of(array, value)
+  for i, v in ipairs(array) do
+    if v == value then
+      return i
+    end
+  end
+  return -1
+end
+
+function M.get_only_name(file)
+  file = B.rep_slash(file)
+  local only_name = vim.fn.trim(file, '\\')
+  if string.match(only_name, '\\') then
+    only_name = string.match(only_name, '.+%\\(.+)$')
+  end
+  return only_name
+end
+
 return M
