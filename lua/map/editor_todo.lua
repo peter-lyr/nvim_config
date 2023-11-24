@@ -10,14 +10,6 @@ function M.opt(desc)
   return { silent = true, desc = M.lua .. ' ' .. desc, }
 end
 
-    -- FIX  = {
-    -- TODO = { icon = " ", color = "info" },
-    -- HACK = { icon = " ", color = "warning" },
-    -- WARN = { icon = " ", color = "warning", alt = { "WARNING", "XXX" } },
-    -- PERF = { icon = " ", alt = { "OPTIM", "PERFORMANCE", "OPTIMIZE" } },
-    -- NOTE = { icon = " ", color = "hint", alt = { "INFO" } },
-    -- TEST = { icon = "⏲ ", color = "test", alt = { "TESTING", "PASSED", "FAILED" } },
-
 vim.keymap.set({ 'n', 'v', }, '<leader>tqq', function() require 'config.editor_todo'.TodoQuickFix() end, M.opt 'TodoQuickFix ALL')
 vim.keymap.set({ 'n', 'v', }, '<leader>tqf', function() require 'config.editor_todo'.TodoQuickFix('FIX' ) end, M.opt 'TodoQuickFix FIX')
 vim.keymap.set({ 'n', 'v', }, '<leader>tqt', function() require 'config.editor_todo'.TodoQuickFix('TODO') end, M.opt 'TodoQuickFix TODO')
