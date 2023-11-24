@@ -11,17 +11,17 @@ function M.opt(desc)
 end
 
 vim.keymap.set({ 'n', 'v', }, '<leader>bcmm', function() require 'config.my_make'.make() end, M.opt 'make')
-vim.keymap.set({ 'n', 'v', }, '<leader>bcmM', function() require 'config.my_make'.make 'start' end, M.opt 'make start')
+vim.keymap.set({ 'n', 'v', }, '<leader>bcm<c-m>', function() require 'config.my_make'.make 'start' end, M.opt 'make start')
 vim.keymap.set({ 'n', 'v', }, '<leader>bcmr', function() require 'config.my_make'.make_run() end, M.opt 'make run')
-vim.keymap.set({ 'n', 'v', }, '<leader>bcmR', function() require 'config.my_make'.make_run 'start' end, M.opt 'make run start')
+vim.keymap.set({ 'n', 'v', }, '<leader>bcm<c-r>', function() require 'config.my_make'.make_run 'start' end, M.opt 'make run start')
 
 vim.keymap.set({ 'n', 'v', }, '<leader>bcrmm', function() require 'config.my_make'.remake() end, M.opt 'remake')
-vim.keymap.set({ 'n', 'v', }, '<leader>bcrmM', function() require 'config.my_make'.remake 'start' end, M.opt 'remake start')
+vim.keymap.set({ 'n', 'v', }, '<leader>bcrm<c-m>', function() require 'config.my_make'.remake 'start' end, M.opt 'remake start')
 vim.keymap.set({ 'n', 'v', }, '<leader>bcrmr', function() require 'config.my_make'.remake_run() end, M.opt 'remake run')
-vim.keymap.set({ 'n', 'v', }, '<leader>bcrmR', function() require 'config.my_make'.remake_run 'start' end, M.opt 'remake run start')
+vim.keymap.set({ 'n', 'v', }, '<leader>bcrm<c-r>', function() require 'config.my_make'.remake_run 'start' end, M.opt 'remake run start')
 
 vim.keymap.set({ 'n', 'v', }, '<leader>bcrr', function() require 'config.my_make'.run() end, M.opt 'run')
-vim.keymap.set({ 'n', 'v', }, '<leader>bcrR', function() require 'config.my_make'.run 'start' end, M.opt 'run start')
+vim.keymap.set({ 'n', 'v', }, '<leader>bcr<c-r>', function() require 'config.my_make'.run 'start' end, M.opt 'run start')
 
 vim.keymap.set({ 'n', 'v', }, '<leader>bcc', function() require 'config.my_make'.clean() end, M.opt 'clean')
 
