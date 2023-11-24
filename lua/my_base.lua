@@ -143,77 +143,31 @@ end
 --------------------
 
 function B.get_dir_path(dirs)
-  B.load_require 'nvim-lua/plenary.nvim'
-  if type(dirs) == 'string' then
-    dirs = { dirs, }
-  end
-  local dir_1 = table.remove(dirs, 1)
-  dir_1 = B.rep_slash(dir_1)
-  local dir_path = require 'plenary.path':new(dir_1)
-  for _, dir in ipairs(dirs) do
-    if not dir_path:exists() then
-      vim.fn.mkdir(dir_path.filename)
-    end
-    dir_path = dir_path:joinpath(dir)
-  end
-  return dir_path
+  return require 'my_base_funcs'.get_dir_path(dirs)
 end
 
 function B.get_std_data_dir_path(dirs)
-  if type(dirs) == 'string' then
-    dirs = { dirs, }
-  end
-  table.insert(dirs, 1, vim.fn.stdpath 'data')
-  return B.get_dir_path(dirs)
+  return require 'my_base_funcs'.get_std_data_dir_path(dirs)
 end
 
 function B.get_file_path(dirs, file)
-  local dir_path = B.get_dir_path(dirs)
-  return dir_path:joinpath(file)
+  return require 'my_base_funcs'.get_file_path(dirs, file)
 end
 
 function B.get_create_file_path(dirs, file)
-  local file_path = B.get_file_path(dirs, file)
-  if not file_path:exists() then
-    file_path:touch()
-  end
-  return file_path
+  return require 'my_base_funcs'.get_create_file_path(dirs, file)
 end
 
 function B.get_create_dir(dirs)
-  if type(dirs) == 'string' then
-    dirs = { dirs, }
-  end
-  local dir_1 = table.remove(dirs, 1)
-  local dir = string.gsub(dir_1, '\\', '/')
-  if vim.fn.isdirectory(dir) == 0 then
-    vim.fn.mkdir(dir)
-  end
-  for _, d in ipairs(dirs) do
-    dir = dir .. '/' .. d
-    if vim.fn.isdirectory(dir) == 0 then
-      vim.fn.mkdir(dir)
-    end
-  end
-  return dir
+  return require 'my_base_funcs'.get_create_dir(dirs)
 end
 
 function B.get_create_std_data_dir(dirs)
-  if type(dirs) == 'string' then
-    dirs = { dirs, }
-  end
-  table.insert(dirs, 1, vim.fn.stdpath 'data')
-  return B.get_create_dir(dirs)
+  return require 'my_base_funcs'.get_create_std_data_dir(dirs)
 end
 
 function B.get_create_file(dir, filename)
-  dir = string.gsub(dir, '\\', '/')
-  dir = vim.fn.trim(dir, '/')
-  local file = dir .. '/' .. filename
-  if vim.fn.filereadable(file) == 0 then
-    vim.fn.writefile({ '', }, file)
-  end
-  return file
+  return require 'my_base_funcs'.get_create_file(dir, filename)
 end
 
 ----------------
