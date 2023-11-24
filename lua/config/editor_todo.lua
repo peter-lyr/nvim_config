@@ -25,15 +25,27 @@ require 'todo-comments'.setup {
 require 'map.sidepanel_quickfix'
 
 function M.TodoQuickFix(keywords)
-  B.cmd('TodoQuickFix keywords=%s', keywords)
+  if not keywords then
+    vim.cmd('TodoQuickFix')
+  else
+    B.cmd('TodoQuickFix keywords=%s', keywords)
+  end
 end
 
 function M.TodoTelescope(keywords)
-  B.cmd('TodoTelescope keywords=%s', keywords)
+  if not keywords then
+    vim.cmd('TodoTelescope')
+  else
+    B.cmd('TodoTelescope keywords=%s', keywords)
+  end
 end
 
 function M.TodoLocList(keywords)
-  B.cmd('TodoLocList keywords=%s', keywords)
+  if not keywords then
+    vim.cmd('TodoLocList')
+  else
+    B.cmd('TodoLocList keywords=%s', keywords)
+  end
 end
 
 local todo = require 'todo-comments.search'

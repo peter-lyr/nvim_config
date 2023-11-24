@@ -18,6 +18,7 @@ end
     -- NOTE = { icon = " ", color = "hint", alt = { "INFO" } },
     -- TEST = { icon = "⏲ ", color = "test", alt = { "TESTING", "PASSED", "FAILED" } },
 
+vim.keymap.set({ 'n', 'v', }, '<leader>tqq', function() require 'config.editor_todo'.TodoQuickFix() end, M.opt 'TodoQuickFix ALL')
 vim.keymap.set({ 'n', 'v', }, '<leader>tqf', function() require 'config.editor_todo'.TodoQuickFix('FIX' ) end, M.opt 'TodoQuickFix FIX')
 vim.keymap.set({ 'n', 'v', }, '<leader>tqt', function() require 'config.editor_todo'.TodoQuickFix('TODO') end, M.opt 'TodoQuickFix TODO')
 vim.keymap.set({ 'n', 'v', }, '<leader>tqh', function() require 'config.editor_todo'.TodoQuickFix('HACK') end, M.opt 'TodoQuickFix HACK')
@@ -26,6 +27,7 @@ vim.keymap.set({ 'n', 'v', }, '<leader>tqp', function() require 'config.editor_t
 vim.keymap.set({ 'n', 'v', }, '<leader>tqn', function() require 'config.editor_todo'.TodoQuickFix('NOTE') end, M.opt 'TodoQuickFix NOTE')
 vim.keymap.set({ 'n', 'v', }, '<leader>tqs', function() require 'config.editor_todo'.TodoQuickFix('TEST') end, M.opt 'TodoQuickFix TEST')
 
+vim.keymap.set({ 'n', 'v', }, '<leader>ttt', function() require 'config.editor_todo'.TodoTelescope() end, M.opt 'TodoTelescope ALL')
 vim.keymap.set({ 'n', 'v', }, '<leader>ttf', function() require 'config.editor_todo'.TodoTelescope('FIX' ) end, M.opt 'TodoTelescope FIX')
 vim.keymap.set({ 'n', 'v', }, '<leader>ttt', function() require 'config.editor_todo'.TodoTelescope('TODO') end, M.opt 'TodoTelescope TODO')
 vim.keymap.set({ 'n', 'v', }, '<leader>tth', function() require 'config.editor_todo'.TodoTelescope('HACK') end, M.opt 'TodoTelescope HACK')
@@ -34,6 +36,7 @@ vim.keymap.set({ 'n', 'v', }, '<leader>ttp', function() require 'config.editor_t
 vim.keymap.set({ 'n', 'v', }, '<leader>ttn', function() require 'config.editor_todo'.TodoTelescope('NOTE') end, M.opt 'TodoTelescope NOTE')
 vim.keymap.set({ 'n', 'v', }, '<leader>tts', function() require 'config.editor_todo'.TodoTelescope('TEST') end, M.opt 'TodoTelescope TEST')
 
+vim.keymap.set({ 'n', 'v', }, '<leader>tll', function() require 'config.editor_todo'.TodoLocList() end, M.opt 'TodoLocList ALL')
 vim.keymap.set({ 'n', 'v', }, '<leader>tlf', function() require 'config.editor_todo'.TodoLocList('FIX' ) end, M.opt 'TodoLocList FIX')
 vim.keymap.set({ 'n', 'v', }, '<leader>tlt', function() require 'config.editor_todo'.TodoLocList('TODO') end, M.opt 'TodoLocList TODO')
 vim.keymap.set({ 'n', 'v', }, '<leader>tlh', function() require 'config.editor_todo'.TodoLocList('HACK') end, M.opt 'TodoLocList HACK')
