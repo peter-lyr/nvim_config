@@ -15,14 +15,14 @@ function M.get_str_num(str, hex)
 import re
 import vim
 s = vim.eval('g:str')
-hex = int(vim.eval('g:hex'))
-if not hex:
+h = int(vim.eval('g:hex'))
+if not h:
   if len(s) > 2 and s[:2].lower() == '0x':
-    hex = 1
+    h = 1
   elif re.findall('[a-fA-F]', s):
-    hex = 1
+    h = 1
 try:
-  if hex:
+  if h:
     num = int(s, 16)
   else:
     num = int(s)
@@ -62,14 +62,18 @@ for i, bit in enumerate(str(bin(num))[2:][::-1]):
   index_list.append(('%%%dd' % bit_width) % i)
 index_list = index_list[::-1]
 value_list = value_list[::-1]
+vim.command(f'let g:int = "{int(num)}"')
+vim.command(f'let g:hex = "{hex(num)}"')
+vim.command(f'let g:bin = "{bin(num)}"')
 vim.command(f'let g:index = {index_list}')
 vim.command(f'let g:value = {value_list}')
 EOF
 ]]
   B.notify_info {
     'count bin: ' .. tostring(cword),
-    vim.fn.join(vim.g.index, ''),
-    vim.fn.join(vim.g.value, ''),
+    string.format('`%s` -> `%s` -> `%s`', vim.g.bin, vim.g.int, vim.g.hex),
+    'index: │' .. vim.fn.join(vim.g.index, ''),
+    'value: │' .. vim.fn.join(vim.g.value, ''),
   }
 end
 
