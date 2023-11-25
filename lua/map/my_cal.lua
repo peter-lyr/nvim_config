@@ -11,6 +11,5 @@ function M.opt(desc)
 end
 
 vim.keymap.set({ 'n', 'v', }, 'c<cr>b', function() require 'config.my_cal'.count_bin('<cword>') end, M.opt 'count_bin')
-vim.keymap.set({ 'n', 'v', }, 'c<cr><c-b>', function() require 'config.my_cal'.count_bin('<cWORD>') end, M.opt 'count_bin')
 
 return M
