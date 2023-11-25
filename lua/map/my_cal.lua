@@ -10,6 +10,6 @@ function M.opt(desc)
   return { silent = true, desc = M.lua .. ' ' .. desc, }
 end
 
-vim.keymap.set({ 'n', 'v', }, 'c<cr>b', function() require 'config.my_cal'.count_bin('<cword>') end, M.opt 'count_bin')
+vim.keymap.set({ 'n', 'v', }, 'c<cr>b', function() require 'config.my_cal'.count_bin '<cword>' end, M.opt 'count_bin')
 
 return M
