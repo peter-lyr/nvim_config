@@ -32,3 +32,4 @@
 30. [x] todo list exclude not mine
 31. [ ] right click, rely on ft
 32. [ ] git push commit text no limit
+33. [ ] titlestring no refresh, <leader>qt call it
