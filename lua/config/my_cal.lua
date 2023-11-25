@@ -27,7 +27,7 @@ try:
   else:
     num = int(s)
   vim.command(f'let g:str_is_num = 1')
-  vim.command(f'let g:num = {num}')
+  vim.command(f'let g:num = "{num}"')
 except Exception as e:
   e = ','.join(e.args).replace("'", '"')
   vim.command(f"""lua require'my_base'.notify_error('get_str_num, error: {e}')""")
