@@ -39,9 +39,9 @@ EOF
   return nil
 end
 
-function M.count_bin(cword)
+function M.count_bin(cword, hex, append)
   cword = vim.fn.expand(cword)
-  local num = M.get_str_num(cword)
+  local num = M.get_str_num(cword, hex)
   if not num then
     return
   end
@@ -69,17 +69,25 @@ vim.command(f'let g:index = {index_list}')
 vim.command(f'let g:value = {value_list}')
 EOF
 ]]
-  B.notify_info {
-    '',
-    'count bin: ' .. tostring(cword),
-    '',
-    string.format('`%s` -> `%s` -> `%s`', vim.g.bin, vim.g.int, vim.g.hex),
-    '',
-    'index: │' .. vim.fn.join(vim.g.index, ''),
-    'value: │' .. vim.fn.join(vim.g.value, ''),
-    '',
-    '',
-  }
+  local main = string.format('%s %s %s', vim.g.bin, vim.g.int, vim.g.hex)
+  local index = 'index: │' .. vim.fn.join(vim.g.index, '')
+  local value = 'value: │' .. vim.fn.join(vim.g.value, '')
+  if append then
+    vim.fn.append('.', { '', cword, main, index, value, '', })
+    vim.cmd [[call feedkeys("2jgcip")]]
+  else
+    B.notify_info {
+      '',
+      'count bin: ' .. cword,
+      '',
+      main,
+      '',
+      index,
+      value,
+      '',
+      '',
+    }
+  end
 end
 
 return M
