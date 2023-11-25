@@ -70,10 +70,15 @@ vim.command(f'let g:value = {value_list}')
 EOF
 ]]
   B.notify_info {
+    '',
     'count bin: ' .. tostring(cword),
+    '',
     string.format('`%s` -> `%s` -> `%s`', vim.g.bin, vim.g.int, vim.g.hex),
+    '',
     'index: │' .. vim.fn.join(vim.g.index, ''),
     'value: │' .. vim.fn.join(vim.g.value, ''),
+    '',
+    '',
   }
 end
 
