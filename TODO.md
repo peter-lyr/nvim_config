@@ -33,4 +33,4 @@
 31. [ ] right click, rely on ft
 32. [ ] git push commit text no limit
 33. [ ] titlestring no refresh, <leader>qt call it
-34. [ ] calculate cword
+34. [x] calculate cword
