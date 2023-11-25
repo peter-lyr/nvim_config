@@ -45,3 +45,6 @@ vim.keymap.set({ 'n', }, 'cii', '"+ci', { silent = true, desc = '"+ci', })
 vim.keymap.set({ 'n', }, 'caa', '"+ca', { silent = true, desc = '"+ca', })
 vim.keymap.set({ 'n', 'v', }, '<a-p>', '"+p', { silent = true, desc = '"+p', })
 vim.keymap.set({ 'n', 'v', }, '<a-s-p>', '"+P', { silent = true, desc = '"+P', })
+
+-- for youdao dict
+vim.keymap.set({ 'v', }, '<c-c>', '"+y', { silent = true, desc = '"+y', })
