@@ -221,4 +221,17 @@ return {
       require 'map.my_svn'
     end,
   },
+  {
+    name = 'my_cal',
+    dir = '',
+    lazy = true,
+    init = function()
+      if not S.load_whichkeys_txt_enable then
+        require 'my_simple'.add_whichkey('c<cr>', 'cal', 'My_Cal')
+      end
+    end,
+    config = function()
+      require 'map.my_cal'
+    end,
+  },
 }
