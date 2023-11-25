@@ -11,10 +11,10 @@ function M.opt(desc)
 end
 
 vim.keymap.set({ 'n', 'v', }, '<leader>bpr', function() require 'config.my_py'.run() end, M.opt 'py run')
-vim.keymap.set({ 'n', 'v', }, '<leader>bpR', function() require 'config.my_py'.run('start') end, M.opt 'py run start')
+vim.keymap.set({ 'n', 'v', }, '<leader>bp<c-r>', function() require 'config.my_py'.run('start') end, M.opt 'py run start')
 
 vim.keymap.set({ 'n', 'v', }, '<leader>bpe', function() require 'config.my_py'.toexe() end, M.opt 'py to exe')
-vim.keymap.set({ 'n', 'v', }, '<leader>bpE', function() require 'config.my_py'.toexe('start') end, M.opt 'py to exe start')
+vim.keymap.set({ 'n', 'v', }, '<leader>bp<c-e>', function() require 'config.my_py'.toexe('start') end, M.opt 'py to exe start')
 
 B.register_whichkey('config.my_make', '<leader>bp', 'python run')
 B.merge_whichkeys()
