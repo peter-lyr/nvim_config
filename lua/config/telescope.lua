@@ -465,10 +465,17 @@ function M.search_all_en(all)
   end
 end
 
-M.cur_root = {}
+M.telescope_root_dir_path = B.get_create_std_data_dir 'telescope_root'
+M.telescope_root_txt_path = B.get_create_file_path(M.telescope_root_dir_path, 'telescope_root.txt')
+
+M.cur_root = loadstring('return ' .. M.telescope_root_txt_path:read())()
+if not M.cur_root then
+  M.cur_root = {}
+end
 
 function M.cur_root_sel_do(dir)
   M.cur_root[B.rep_backslash_lower(vim.fn['ProjectRootGet'](dir))] = B.rep_backslash_lower(dir)
+  M.telescope_root_txt_path:write(vim.inspect(M.cur_root), 'w')
 end
 
 function M.cur_root_sel()
