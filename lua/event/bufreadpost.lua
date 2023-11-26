@@ -32,7 +32,7 @@ B.aucmd(M.source, 'BufReadPost', 'BufReadPost', {
 
 M.tab_4_fts = {
   'c', 'cpp',
-  'python',
+  -- 'python',
   'ld',
 }
 
