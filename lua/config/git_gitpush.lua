@@ -155,10 +155,39 @@ function M.reset_hard_clean()
 end
 
 function M.clean_ignored_files_and_folders()
-  local res = vim.fn.input('git clean -xdf [N/y]: ', 'y')
-  if vim.tbl_contains({ 'y', 'Y', 'yes', 'Yes', 'YES', }, res) == true then
-    B.system_run('asyncrun', 'git clean -xdf')
-  end
+  -- vim.cmd 'mes clear'
+  vim.g.cwd = vim.fn['ProjectRootGet']()
+  vim.cmd[[
+    python << EOF
+import subprocess
+import vim
+import re
+cwd = vim.eval('g:cwd')
+rm_exclude = [
+  '.git-.*',
+  '.svn'
+]
+out = subprocess.Popen(['git', 'clean', '-xdn'], stdout=subprocess.PIPE, stderr=subprocess.STDOUT, cwd=cwd)
+stdout, stderr = out.communicate()
+if not stderr:
+  stdout = stdout.decode('utf-8').replace('\r', '').split('\n')
+  for line in stdout:
+    res = re.findall('Would remove (.+)', line)
+    if res:
+      ok = 1
+      for p in rm_exclude:
+        if re.match(p, res[0]):
+          ok = 0
+          break
+      if ok:
+        if re.match('.+/$', res[0]):
+          print(res[0])
+EOF
+]]
+  -- local res = vim.fn.input('git clean -xdf [N/y]: ', 'y')
+  -- if vim.tbl_contains({ 'y', 'Y', 'yes', 'Yes', 'YES', }, res) == true then
+  --   B.system_run('asyncrun', 'git clean -xdf')
+  -- end
 end
 
 function M.clone()
