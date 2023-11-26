@@ -155,13 +155,24 @@ function M.reset_hard_clean()
 end
 
 function M.clean_ignored_files_and_folders()
-  -- vim.cmd 'mes clear'
+  local result = vim.fn.systemlist { 'git', 'clean', '-xdn', }
+  if #result > 0 then
+    B.notify_info { 'git clean -xdn', vim.loop.cwd(), table.concat(result, '\n'), }
+    local res = vim.fn.input('Sure to del all of them? [Y/n]', 'y')
+    if vim.tbl_contains({ 'y', 'Y', 'yes', 'Yes', 'YES', }, res) == false then
+      return
+    end
+  else
+    return
+  end
   vim.g.cwd = vim.fn['ProjectRootGet']()
-  vim.cmd[[
+  vim.cmd [[
     python << EOF
 import subprocess
 import vim
 import re
+import os
+import shutil
 cwd = vim.eval('g:cwd')
 rm_exclude = [
   '.git-.*',
@@ -171,6 +182,7 @@ out = subprocess.Popen(['git', 'clean', '-xdn'], stdout=subprocess.PIPE, stderr=
 stdout, stderr = out.communicate()
 if not stderr:
   stdout = stdout.decode('utf-8').replace('\r', '').split('\n')
+  c = 0
   for line in stdout:
     res = re.findall('Would remove (.+)', line)
     if res:
@@ -180,14 +192,15 @@ if not stderr:
           ok = 0
           break
       if ok:
+        c += 1
+        file = os.path.join(cwd, res[0])
         if re.match('.+/$', res[0]):
-          print(res[0])
+          shutil.rmtree(file)
+        else:
+          os.remove(os.path.join(cwd, res[0]))
+  vim.command(f"""lua require'my_base'.notify_info('del {c} Done!')""")
 EOF
 ]]
-  -- local res = vim.fn.input('git clean -xdf [N/y]: ', 'y')
-  -- if vim.tbl_contains({ 'y', 'Y', 'yes', 'Yes', 'YES', }, res) == true then
-  --   B.system_run('asyncrun', 'git clean -xdf')
-  -- end
 end
 
 function M.clone()
@@ -196,7 +209,7 @@ function M.clone()
     B.get_file_dirs(B.rep_backslash_lower(vim.api.nvim_buf_get_name(0)))
   )
   B.ui_sel(dirs, 'git clone sel a dir', function(proj)
-    local author, repo = string.match(vim.fn.input('author/repo to clone: ', 'peter-lyr/2023'), '(.+)/(.+)')
+    local author, repo = string.match(vim.fn.input('author/repo to clone: ', 'peter-lyr/iw23'), '(.+)/(.+)')
     if B.is(author) and B.is(repo) then
       B.system_run('start', [[cd %s & git clone git@github.com:%s/%s.git]], proj, author, repo)
     end
