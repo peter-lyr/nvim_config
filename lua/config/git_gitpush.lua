@@ -197,7 +197,7 @@ if not stderr:
         if re.match('.+/$', res[0]):
           shutil.rmtree(file)
         else:
-          os.remove(os.path.join(cwd, res[0]))
+          os.remove(file)
   vim.command(f"""lua require'my_base'.notify_info('del {c} Done!')""")
 EOF
 ]]
