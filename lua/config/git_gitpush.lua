@@ -158,7 +158,7 @@ function M.clean_ignored_files_and_folders()
   local result = vim.fn.systemlist { 'git', 'clean', '-xdn', }
   if #result > 0 then
     B.notify_info { 'git clean -xdn', vim.loop.cwd(), table.concat(result, '\n'), }
-    local res = vim.fn.input('Sure to del all of them? [Y/n]', 'y')
+    local res = vim.fn.input('Sure to del all of them? [Y/n]: ', 'y')
     if vim.tbl_contains({ 'y', 'Y', 'yes', 'Yes', 'YES', }, res) == false then
       return
     end
