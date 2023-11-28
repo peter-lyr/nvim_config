@@ -64,7 +64,7 @@ vim.g.rootmarkers = {
   '.git',
 }
 
-B.aucmd('vim-projectroot', 'BufEnter', 'BufEnter', {
+B.aucmd(M.source, 'BufEnter-vim-projectroot', 'BufEnter', {
   callback = function(ev)
     require('config.my_tabline').projectroot_titlestring(ev)
   end,
