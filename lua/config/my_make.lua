@@ -27,13 +27,13 @@ function M.cmake_exe(dir)
   local c = io.open(CMakeLists)
   if c then
     local res = c:read '*a'
-    local exe = string.match(res, 'set%(PROJECT_NAME (%w+)%)')
+    local exe = string.match(res, 'set%(PROJECT_NAME ([^%)]+)%)')
     if exe then
       return exe
     end
     c:close()
   end
-  return ''
+  return nil
 end
 
 function M.make_do(runway, build_dir)
@@ -48,7 +48,7 @@ function M.make_do(runway, build_dir)
       if exe_name then
         exe_name = exe_name .. '.exe'
         run = '& ' .. string.format(
-          [[cd %s && copy /y %s ..\%s && cd .. && strip -s %s & upx -qq --best %s & %s]],
+          [[cd %s && copy /y %s ..\%s && cd .. && strip -s %s & upx -qq --best %s & echo ==============RUN============== & %s]],
           build_dir, exe_name, exe_name, exe_name, exe_name, exe_name)
       end
     end
@@ -68,6 +68,10 @@ function M.make_do(runway, build_dir)
 end
 
 function M.make(runway)
+  if #vim.call 'ProjectRootGet' == 0 then
+    B.notify_info 'not in a git repo'
+    return
+  end
   if not runway then
     runway = 'asyncrun'
   end
@@ -154,7 +158,7 @@ end
 
 function M.copy_exe_outside_build_dir_and_run(runway, build_dir, exe_name)
   B.system_run(runway,
-    [[cd %s && copy /y %s ..\%s && cd .. && strip -s %s & upx -qq --best %s & %s & pause]],
+    [[cd %s && copy /y %s ..\%s && cd .. && strip -s %s & upx -qq --best %s & echo ==============RUN============== & %s & pause]],
     build_dir, exe_name, exe_name, exe_name, exe_name, exe_name
   )
 end

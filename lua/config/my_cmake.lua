@@ -42,6 +42,10 @@ function M.to_cmake_do(proj)
 end
 
 function M.cmake(cwd)
+  if #vim.call 'ProjectRootGet' == 0 then
+    B.notify_info 'not in a git repo'
+    return
+  end
   if cwd then
     M.to_cmake_do(B.rep_slash_lower(vim.call 'ProjectRootGet'))
   else
