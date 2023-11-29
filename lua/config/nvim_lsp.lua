@@ -14,6 +14,8 @@ function M.rename()
   vim.fn.feedkeys(':IncRename ' .. vim.fn.expand '<cword>')
 end
 
+-- clang-format nedd to check pyvenv.cfg
+
 function M.format()
   vim.lsp.buf.format {
     async = true,
