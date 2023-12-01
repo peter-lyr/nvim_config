@@ -203,7 +203,7 @@ function M.gcc()
   local exe = string.sub(fname, 1, #fname - 2) .. '.exe'
   local exe_name = B.get_only_name(exe)
   B.system_run('start',
-    [[%s && gcc %s -Wall -s -ffunction-sections -fdata-sections -Wl,--gc-sections -O3 -o %s & strip -s %s & upx -qq --best %s & %s & pause]],
+    [[%s && gcc %s -Wall -s -ffunction-sections -fdata-sections -Wl,--gc-sections -O2 -o %s & strip -s %s & upx -qq --best %s & %s & pause]],
     B.system_cd(cur_file), fname, exe_name, exe_name, exe_name, exe_name)
 end
 
