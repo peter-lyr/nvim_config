@@ -27,6 +27,8 @@ return {
       { '<c-=>',   function() require 'config.my_window'.fontsize_up() end,   mode = { 'n', 'v', }, silent = true, desc = 'font_size up', },
       { '<c-->',   function() require 'config.my_window'.fontsize_down() end, mode = { 'n', 'v', }, silent = true, desc = 'font_size down', },
 
+      { '<c-2>',   '<c-tab>',                                                 mode = { 'n', },      silent = true, desc = 'c-tab', },
+      { '<c-2>',   '<esc><c-tab>',                                            mode = { 'v', },      silent = true, desc = 'c-tab', },
       { '<c-1>',   function() require 'config.my_window'.gt() end,            mode = { 'n', 'v', }, silent = true, desc = 'gt', },
       { '<c-`>',   function() require 'config.my_window'.gT() end,            mode = { 'n', 'v', }, silent = true, desc = 'gT', },
       { '<c-tab>', '<esc><c-tab>',                                            mode = { 'v', },      silent = true, desc = 'c-tab', },
