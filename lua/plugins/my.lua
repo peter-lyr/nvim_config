@@ -39,6 +39,7 @@ return {
         require 'my_simple'.add_whichkey('<leader>w', 'window', 'My_Window')
         require 'my_simple'.add_whichkey('<leader>x', 'window', 'My_Window', 'kill')
         require 'my_simple'.add_whichkey('<c-0>', 'window', 'My_Window', 'Font size')
+        require 'my_simple'.add_whichkey('q', 'window', 'My_Window', 'start')
       end
       require 'my_base'.aucmd('my_window', 'VimLeave', 'VimLeave', {
         callback = function()

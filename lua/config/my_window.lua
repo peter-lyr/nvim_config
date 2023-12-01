@@ -528,4 +528,24 @@ function M.gT()
   vim.cmd [[tabprev]]
 end
 
+---------------------
+
+M.executable_fts = { 'dosbatch', 'python', }
+
+function M.start_cur_executable()
+  if B.is_buf_ft(M.executable_fts) then
+    vim.fn.system('start /i cmd /c "' .. vim.api.nvim_buf_get_name(0) .. '"')
+  else
+    B.notify_info(vim.fn.bufname() .. ' is not executable file: ' .. vim.fn.join(M.executable_fts, ','))
+  end
+end
+
+function M.start_cur_dir()
+  vim.fn.system('start ' .. vim.fn.fnamemodify(vim.api.nvim_buf_get_name(0), ':h'))
+end
+
+function M.start_cwd()
+  vim.fn.system('start ' .. vim.loop.cwd())
+end
+
 return M

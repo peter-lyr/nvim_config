@@ -14,11 +14,6 @@ vim.keymap.set({ 'n', 'v', }, 'Q', 'q', { silent = true, desc = 'record', })
 -- c.
 vim.keymap.set({ 'n', 'v', }, 'c.', '<cmd>cd %:h<cr>', { silent = true, desc = 'c.', })
 
--- start
-vim.keymap.set({ 'n', 'v', }, 'q<cr>', function() vim.fn.system('start /i cmd /c "' .. vim.api.nvim_buf_get_name(0) .. '"') end, { silent = true, desc = 'system start cur file', })
-vim.keymap.set({ 'n', 'v', }, 'q.', function() vim.fn.system('start ' .. vim.fn.fnamemodify(vim.api.nvim_buf_get_name(0), ':h')) end, { silent = true, desc = 'q.', })
-vim.keymap.set({ 'n', 'v', }, 'qw', function() vim.fn.system('start ' .. vim.loop.cwd()) end, { silent = true, desc = 'qw', })
-
 -- undo
 vim.keymap.set({ 'n', }, 'U', '<c-r>', { silent = true, desc = 'redo', })
 
