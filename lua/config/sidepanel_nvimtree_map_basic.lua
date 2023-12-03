@@ -33,6 +33,42 @@ function M.delete(node)
   vim.cmd 'norm j'
 end
 
+M.ausize_en = 1
+
+function M.ausize_toggle()
+  if M.ausize_en then
+    M.ausize_en = nil
+  else
+    M.ausize_en = 1
+  end
+  print('ausize_en:', M.ausize_en)
+end
+
+function M.ausize(ev)
+  if vim.bo.ft == 'NvimTree' and M.ausize_en then
+    local winid = vim.fn.win_getid(vim.fn.bufwinnr(ev.buf))
+    vim.fn.timer_start(10, function()
+      if B.is_buf_ft('NvimTree', ev.buf) then
+        local max = 0
+        local min_nr = vim.fn.line 'w0'
+        if min_nr == 1 then
+          min_nr = 2
+        end
+        local max_nr = vim.fn.line 'w$'
+        for line = min_nr, max_nr do
+          local cnt = vim.fn.strdisplaywidth(vim.fn.getline(line))
+          if max < cnt then
+            max = cnt
+          end
+        end
+        if max + 1 + 1 + #tostring(vim.fn.line 'w$') + 1 + 2 > require 'nvim-tree.view'.View.width then
+          vim.api.nvim_win_set_width(winid, max + 5 + #tostring(vim.fn.line '$'))
+        end
+      end
+    end)
+  end
+end
+
 function M.wrap_node(fn)
   return function(node, ...)
     node = node or require 'nvim-tree.lib'.get_node_at_cursor()
@@ -47,6 +83,10 @@ function M.basic_map(bufnr)
   end
 
   vim.keymap.set('n', 'gd', M.wrap_node(M.delete), opts 'delete buf')
+
+  ---
+
+  vim.keymap.set('n', "<leader>'a", M.wrap_node(M.ausize_toggle), opts 'ausize_toggle')
 
   ---
 

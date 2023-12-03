@@ -30,4 +30,12 @@ vim.keymap.set({ 'n', 'v', }, '<leader>aG', function() require 'config.sidepanel
 B.load_require 'nvim-lua/plenary.nvim'
 B.load_require 'nvim-tree/nvim-web-devicons'
 
+---------------------
+
+B.aucmd(M.source, 'BufEnter', { 'BufEnter', 'DirChanged', 'CursorHold', }, {
+  callback = function(ev)
+    require 'config.sidepanel_nvimtree_map_basic'.ausize(ev)
+  end,
+})
+
 return M
