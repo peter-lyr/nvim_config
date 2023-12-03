@@ -127,4 +127,8 @@ function M.open_stdpath_config()
   B.system_run('start', 'explorer %s', vim.fn.stdpath 'config')
 end
 
+function M.open_system_path()
+  B.system_run('start silent', 'rundll32 sysdm.cpl,EditEnvironmentVariables')
+end
+
 return M

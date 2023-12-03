@@ -61,6 +61,7 @@ vim.keymap.set({ 'n', 'v', }, '<a-t>c', function() B.notify_info(require 'calend
 
 vim.keymap.set({ 'n', 'v', }, '<a-t>ot', function() require 'config.my_test'.open_stdpath_temp() end, M.opt 'open_stdpath_temp')
 vim.keymap.set({ 'n', 'v', }, '<a-t>oc', function() require 'config.my_test'.open_stdpath_config() end, M.opt 'open_stdpath_config')
+vim.keymap.set({ 'n', 'v', }, '<a-t>op', function() require 'config.my_test'.open_system_path() end, M.opt 'open_system_path')
 
 ------
 
