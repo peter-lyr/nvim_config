@@ -43,6 +43,8 @@ vim.keymap.set({ 'n', 'v', }, '<leader>fh', function() require 'config.nvim_lsp'
 vim.keymap.set({ 'n', 'v', }, '<leader>fo', function() require 'config.nvim_lsp'.definition() end, M.opt 'definition')
 vim.keymap.set({ 'n', 'v', }, '<leader>fw', function() require 'config.nvim_lsp'.ClangdSwitchSourceHeader() end, M.opt 'ClangdSwitchSourceHeader')
 
+vim.keymap.set({ 'n', 'v', }, '<leader>fU', function() require 'config.nvim_lsp'.mason_python_path_update() end, M.opt 'mason_python_path_update')
+
 -----------------
 
 B.load_require 'nvim-lua/plenary.nvim'

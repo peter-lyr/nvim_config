@@ -34,7 +34,7 @@ end
 function M.format_input()
   local dirs = B.get_file_dirs_till_git()
   for _, dir in ipairs(dirs) do
-    local _clang_format_path = require 'plenary.path':new(B.rep_slash_lower(dir)):joinpath('.clang-format')
+    local _clang_format_path = require 'plenary.path':new(B.rep_slash_lower(dir)):joinpath '.clang-format'
     if _clang_format_path:exists() then
       B.cmd('e %s', _clang_format_path.filename)
       break
@@ -152,6 +152,10 @@ end
 require 'mason'.setup {
   install_root_dir = M.mason_dir_path.filename,
 }
+
+function M.mason_python_path_update()
+  B.system_run('asyncrun', 'python %s "%s"', M.source .. '.mason.py', M.mason_dir_path.filename)
+end
 
 ------------------
 
