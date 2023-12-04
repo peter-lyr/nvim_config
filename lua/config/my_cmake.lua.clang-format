@@ -1,0 +1,8 @@
+BasedOnStyle: llvm
+IndentWidth: 4
+SortIncludes: false
+ColumnLimit: 200
+AllowShortFunctionsOnASingleLine: Empty
+BreakBeforeBraces: Allman
+DerivePointerAlignment: false
+PointerAlignment: Left

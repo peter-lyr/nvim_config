@@ -32,9 +32,7 @@ function M.format_paragraph()
 end
 
 function M.format_input()
-  vim.cmd [[
-    call feedkeys("\<esc>:silent !clang-format -i \<c-r>=nvim_buf_get_name(0)\<cr> --style=\"{BasedOnStyle: llvm, IndentWidth: 4, ColumnLimit: 200, SortIncludes: true}\"")
-  ]]
+  B.cmd('e %s', require 'plenary.path':new(B.rep_slash_lower(vim.call 'ProjectRootGet')):joinpath('.clang-format'))
 end
 
 function M.diagnostic_open_float()
@@ -183,10 +181,10 @@ nls.setup {
         'cpp',
         '*.h',
       },
-      extra_args = {
-        '--style',
-        '{BasedOnStyle: llvm, IndentWidth: 4, SortIncludes: false, ColumnLimit: 200}',
-      },
+      -- extra_args = {
+      --   '--style',
+      --   '{BasedOnStyle: llvm, IndentWidth: 4, SortIncludes: false, ColumnLimit: 200}',
+      -- },
     },
   },
 }

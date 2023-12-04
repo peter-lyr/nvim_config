@@ -8,6 +8,7 @@ M.lua = string.match(M.loaded, '%.([^.]+)$')
 
 M.c2cmake_py = M.source .. '.c2cmake.py'
 M.cbp2cmake_py = M.source .. '.cbp2cmake.py'
+M._clang_format = M.source .. '.clang-format'
 
 function M.get_cbps(file)
   local cbps = {}
@@ -39,6 +40,7 @@ function M.to_cmake_do(proj)
     B.notify_info 'cbp2cmake...'
     B.system_run('start', 'chcp 65001 && %s && python "%s" "%s"', B.system_cd(proj), M.cbp2cmake_py, proj)
   end
+  B.system_run('start silent', 'copy /y "%s" "%s"', B.rep_slash(M._clang_format), B.rep_slash(require 'plenary.path':new(proj):joinpath('.clang-format').filename))
 end
 
 function M.cmake(cwd)

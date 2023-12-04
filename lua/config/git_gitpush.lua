@@ -100,9 +100,11 @@ function M.init_do(git_root_dir)
     local lines = file_path:readlines()
     if vim.tbl_contains(lines, remote_name) == false then
       file_path:write(remote_name, 'a')
+      file_path:write('.clang-format', 'a')
     end
   else
     file_path:write(remote_name, 'w')
+    file_path:write('.clang-format', 'w')
   end
   B.asyncrun_prepare_add(function()
     M.addcommitpush 's1'
