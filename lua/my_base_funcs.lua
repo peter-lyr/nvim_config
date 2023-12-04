@@ -80,7 +80,7 @@ function M.get_file_dirs_till_git(file)
   local file_path = require 'plenary.path':new(file)
   if not file_path:is_file() then
     B.notify_info('not file: ' .. file)
-    return nil
+    return {}
   end
   local dirs = {}
   for _ = 1, 24 do

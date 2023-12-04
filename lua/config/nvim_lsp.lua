@@ -32,7 +32,14 @@ function M.format_paragraph()
 end
 
 function M.format_input()
-  B.cmd('e %s', require 'plenary.path':new(B.rep_slash_lower(vim.call 'ProjectRootGet')):joinpath('.clang-format'))
+  local dirs = B.get_file_dirs_till_git()
+  for _, dir in ipairs(dirs) do
+    local _clang_format_path = require 'plenary.path':new(B.rep_slash_lower(dir)):joinpath('.clang-format')
+    if _clang_format_path:exists() then
+      B.cmd('e %s', _clang_format_path.filename)
+      break
+    end
+  end
 end
 
 function M.diagnostic_open_float()
