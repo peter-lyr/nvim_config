@@ -35,3 +35,4 @@
 33. [ ] titlestring no refresh, <leader>qt call it
 34. [x] calculate cword
 35. [ ] git clean -xdf, exclude .svn, .git-*
+36. [ ] format_input not working
