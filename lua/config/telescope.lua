@@ -697,9 +697,10 @@ end
 ----------
 
 function M.buffers_term()
+  vim.cmd 'wincmd s'
   M.buffers()
   B.set_timeout(80, function()
-    vim.cmd [[call feedkeys("term")]]
+    vim.cmd [[call feedkeys("term:")]]
   end)
 end
 
