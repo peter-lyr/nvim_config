@@ -17,19 +17,28 @@ for root, dirs, files in os.walk(_root):
       print(file)
       with open(file, 'rb') as f:
         content = f.read()
-      with open(file, 'wb') as f:
-        res = re.subn(b'VIRTUAL_ENV=".+mason', b'VIRTUAL_ENV="' + mason, content)
-        if res[1]:
+      res = re.subn(b'VIRTUAL_ENV=".+mason', b'VIRTUAL_ENV="' + mason, content)
+      if res[1]:
+        with open(file, 'wb') as f:
           f.write(res[0])
-        else:
-          res = re.subn(b'VIRTUAL_ENV=.+mason', b'VIRTUAL_ENV=' + mason, content)
-          if res[1]:
+      else:
+        res = re.subn(b'VIRTUAL_ENV=.+mason', b'VIRTUAL_ENV=' + mason, content)
+        if res[1]:
+          with open(file, 'wb') as f:
             f.write(res[0])
     elif file == 'pyvenv.cfg':
       file = os.path.join(root, file)
       print(file)
       with open(file, 'rb') as f:
-        res = re.subn(b'home = ([^\r]+)', b'home = ' + python, f.read())
-      with open(file, 'wb') as f:
-        if res[1]:
+        res = re.subn(b'home = [^\r]+', b'home = ' + python, f.read())
+      if res[1]:
+        with open(file, 'wb') as f:
+          f.write(res[0])
+    elif file.split('.')[-1].lower() == 'cmd':
+      file = os.path.join(root, file)
+      print(file)
+      with open(file, 'rb') as f:
+        res = re.subn(b'& ".+\\\\mason\\\\packages', b'& "%dp0%\\.\\.\\\\packages', f.read())
+      if res[1]:
+        with open(file, 'wb') as f:
           f.write(res[0])
