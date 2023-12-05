@@ -95,10 +95,9 @@ end
 function M.projectroot_titlestring(ev)
   pcall(vim.call, 'ProjectRootCD')
   local project = B.rep_backslash(vim.fn['ProjectRootGet'](vim.api.nvim_buf_get_name(ev.buf)))
-  local ver = vim.version()
   local head = vim.fn.fnamemodify(project, ':h')
   head = B.get_only_name(head)
-  vim.opt.titlestring = string.format('%d %s %s', ver['patch'], B.get_only_name(project), head)
+  vim.opt.titlestring = string.format('%s %s', B.get_only_name(project), head)
 end
 
 function M.toggle_tabs_way()
