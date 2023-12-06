@@ -36,3 +36,4 @@
 34. [x] calculate cword
 35. [ ] git clean -xdf, exclude .svn, .git-*
 36. [ ] format_input not working
+37. [ ] <leader>h l, wincmd h l
