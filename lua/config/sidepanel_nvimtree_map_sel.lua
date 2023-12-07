@@ -464,6 +464,9 @@ end
 
 function M.copy_to_desktop()
   local desktop = require 'config.my_drag_images'.get_desktop()
+  if #desktop <= 0 then
+    return
+  end
   local dtarget = desktop
   local marks = require 'nvim-tree.marks'.get_marks()
   local res = vim.fn.input(dtarget .. '\nConfirm copy ' .. #marks .. ' [N/y] ', 'y')

@@ -207,15 +207,17 @@ M.copy_text = function()
   B.notify_info('copy text to clipboard: ' .. cfile)
 end
 
-M.get_desktop = function()
-  local my_drag_images_lua_desktop_c_path = require 'plenary.path':new(M.source .. '.desktop.c')
-  local my_drag_images_lua_desktop_exe_path = my_drag_images_lua_desktop_c_path:parent():joinpath 'my_drag_images.lua.desktop.exe'
+M.get_SHGetFolderPath = function(name)
+  local my_drag_images_lua_desktop_c_path = require 'plenary.path':new(M.source .. '.SHGetFolderPath.c')
+  local my_drag_images_lua_desktop_exe_path = my_drag_images_lua_desktop_c_path:parent():joinpath 'my_drag_images.lua.SHGetFolderPath.exe'
   if not my_drag_images_lua_desktop_exe_path:exists() then
     vim.cmd(string.format(
-      [[silent !start /b /min cmd /c "%s && gcc my_drag_images.lua.desktop.c -Wall -s -ffunction-sections -fdata-sections -Wl,--gc-sections -O2 -o my_drag_images.lua.desktop.exe"]],
+      [[silent !start /b /min cmd /c "%s && gcc my_drag_images.lua.SHGetFolderPath.c -Wall -s -ffunction-sections -fdata-sections -Wl,--gc-sections -O2 -o my_drag_images.lua.SHGetFolderPath.exe"]],
       B.system_cd(my_drag_images_lua_desktop_c_path.filename)))
+    B.notify_info('exe creating, try again later...')
+    return ''
   end
-  local f = io.popen(my_drag_images_lua_desktop_exe_path.filename)
+  local f = io.popen(my_drag_images_lua_desktop_exe_path.filename .. ' ' .. name)
   if f then
     for dir in string.gmatch(f:read '*a', '([%S ]+)') do
       f:close()
@@ -224,6 +226,14 @@ M.get_desktop = function()
     f:close()
   end
   return ''
+end
+
+M.get_desktop = function()
+  return M.get_SHGetFolderPath('desktop')
+end
+
+M.get_home = function()
+  return M.get_SHGetFolderPath('home')
 end
 
 M.drag_images_copy2clip_exe = require 'plenary.path':new(M.source .. '.copy2clip.exe')
