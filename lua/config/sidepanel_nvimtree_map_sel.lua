@@ -342,10 +342,9 @@ function M.rename_sel(_)
           end
           if #vim.fn['ProjectRootGet'](s1) ~= 0 then
             vim.fn.system(string.format('git mv "%s" "%s"', s1, s3))
-          else
-            ok = 1
-            vim.fn.system(string.format('move "%s" "%s"', s1, s2))
           end
+          ok = 1
+          vim.fn.system(string.format('move "%s" "%s"', s1, s2))
         end
         if ok then
           for _, v in pairs(cmds) do
