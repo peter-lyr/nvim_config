@@ -462,6 +462,70 @@ function M.paste_from_clip_force(node)
   end
 end
 
+function M.copy_to_desktop()
+  local desktop = require 'config.my_drag_images'.get_desktop()
+  local dtarget = desktop
+  local marks = require 'nvim-tree.marks'.get_marks()
+  local res = vim.fn.input(dtarget .. '\nConfirm copy ' .. #marks .. ' [N/y] ', 'y')
+  if vim.tbl_contains({ 'y', 'Y', 'yes', 'Yes', 'YES', }, res) == true then
+    for _, v in ipairs(marks) do
+      local absolute_path = v['absolute_path']
+      if require 'plenary.path':new(absolute_path):is_dir() then
+        local dname = M.get_fname_tail(absolute_path)
+        dname = string.format('%s\\%s', dtarget, dname)
+        if require 'plenary.path':new(dname):exists() then
+          vim.cmd 'redraw'
+          local dname_new = vim.fn.input(absolute_path .. ' ->\nExisted! Rename? [Or Force] ', dname)
+          if #dname_new > 0 and dname_new ~= dname then
+            if string.sub(dname_new, #dname_new, #dname_new) ~= '\\' then
+              dname_new = dname_new .. '\\'
+            end
+            vim.fn.system(string.format('xcopy "%s" "%s" /s /e /f', absolute_path, dname_new))
+          elseif #dname_new == 0 then
+            print 'cancel all!'
+            return
+          else
+            vim.fn.system(string.format('xcopy "%s" "%s" /y /s /e /f', absolute_path, dname))
+            goto continue
+          end
+        else
+          if string.sub(dname, #dname, #dname) ~= '\\' then
+            dname = dname .. '\\'
+          end
+          vim.fn.system(string.format('xcopy "%s" "%s" /s /e /f', absolute_path, dname))
+        end
+      else
+        local fname = M.get_fname_tail(absolute_path)
+        fname = string.format('%s\\%s', dtarget, fname)
+        local ext = string.match(fname, '%.([^.]+)$')
+        if vim.tbl_contains(M.markdowns_fts, ext) == true then
+          require 'config.my_drag_images'.copy_md(vim.fn['ProjectRootGet'](absolute_path), absolute_path, vim.fn['ProjectRootGet'](dtarget), dtarget)
+        end
+        if require 'plenary.path':new(fname):exists() then
+          vim.cmd 'redraw'
+          local fname_new = vim.fn.input(absolute_path .. '\n ->Existed! Rename? [Or Force] ', fname)
+          if #fname_new > 0 and fname_new ~= fname then
+            vim.fn.system(string.format('copy "%s" "%s"', absolute_path, fname_new))
+          elseif #fname_new == 0 then
+            print 'cancel all!'
+            return
+          else
+            vim.fn.system(string.format('copy /y "%s" "%s"', absolute_path, fname))
+            goto continue
+          end
+        else
+          vim.fn.system(string.format('copy "%s" "%s"', absolute_path, fname))
+        end
+      end
+      ::continue::
+    end
+    require 'nvim-tree.marks'.clear_marks()
+    require 'nvim-tree.api'.tree.reload()
+  else
+    print 'canceled!'
+  end
+end
+
 function M.wrap_node(fn)
   return function(node, ...)
     node = node or require 'nvim-tree.lib'.get_node_at_cursor()
@@ -489,6 +553,8 @@ function M.sel_map(bufnr)
   vim.keymap.set('n', 'dy', M.wrap_node(M.copy_2_clip), opts 'copy_2_clip')
   vim.keymap.set('n', 'dp', M.wrap_node(M.paste_from_clip), opts 'paste_from_clip')
   vim.keymap.set('n', 'dP', M.wrap_node(M.paste_from_clip_force), opts 'paste_from_clip_force')
+
+  vim.keymap.set('n', 'gp', M.wrap_node(M.copy_to_desktop), opts 'copy_to_desktop')
 end
 
 return M
