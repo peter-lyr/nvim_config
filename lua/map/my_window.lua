@@ -15,6 +15,9 @@ vim.keymap.set({ 'n', 'v', }, 'q<cr>', function() require 'config.my_window'.sta
 vim.keymap.set({ 'n', 'v', }, 'q.', function() require 'config.my_window'.start_cur_dir() end, { silent = true, desc = 'q.', })
 vim.keymap.set({ 'n', 'v', }, 'qw', function() require 'config.my_window'.start_cwd() end, { silent = true, desc = 'qw', })
 
+vim.keymap.set({ 'n', 'v', }, '<leader>l', '<c-w>l', M.opt '<c-w>l')
+vim.keymap.set({ 'n', 'v', }, '<leader>h', '<c-w>h', M.opt '<c-w>h')
+
 vim.keymap.set({ 'n', 'v', }, '<leader>w<c-i>', function() require 'config.my_window'.copy_tab() end, M.opt 'copy_tab')
 vim.keymap.set({ 'n', 'v', }, '<leader>w<c-h>', function() require 'config.my_window'.copy_left() end, M.opt 'copy_left')
 vim.keymap.set({ 'n', 'v', }, '<leader>w<c-j>', function() require 'config.my_window'.copy_down() end, M.opt 'copy_down')
