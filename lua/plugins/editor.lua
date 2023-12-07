@@ -24,15 +24,15 @@ return {
       require 'map.editor_dial'
     end,
   },
-  {
-    -- 'chentoast/marks.nvim',
-    'peter-lyr/marks.nvim',
-    lazy = true,
-    event = { 'BufReadPost', 'BufNewFile', },
-    config = function()
-      require 'map.editor_marks'
-    end,
-  },
+  -- {
+  --   -- 'chentoast/marks.nvim',
+  --   'peter-lyr/marks.nvim',
+  --   lazy = true,
+  --   event = { 'BufReadPost', 'BufNewFile', },
+  --   config = function()
+  --     require 'map.editor_marks'
+  --   end,
+  -- },
   {
     'nvim-pack/nvim-spectre',
     lazy = true,
