@@ -37,3 +37,4 @@
 35. [ ] git clean -xdf, exclude .svn, .git-*
 36. [ ] format_input not working
 37. [ ] <leader>h l, wincmd h l
+38. [ ] <c-o> <c-i> no ending
