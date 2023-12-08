@@ -19,6 +19,7 @@ function M.addcommitpush(info)
     end
     if #info > 0 then
       B.set_timeout(10, function()
+        info = string.gsub(info, '"', '\\"')
         B.system_run('asyncrun', 'git add -A && git status && git commit -m "%s" && git push', info)
       end)
     end
@@ -37,6 +38,7 @@ function M.commit_push(info)
     end
     if #info > 0 then
       B.set_timeout(10, function()
+        info = string.gsub(info, '"', '\\"')
         B.system_run('asyncrun', 'git commit -m "%s" && git push', info)
       end)
     end
@@ -55,6 +57,7 @@ function M.commit(info)
     end
     if #info > 0 then
       B.set_timeout(10, function()
+        info = string.gsub(info, '"', '\\"')
         B.system_run('asyncrun', 'git commit -m "%s"', info)
       end)
     end
