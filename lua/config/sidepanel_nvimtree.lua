@@ -120,7 +120,7 @@ end
 require 'config.telescope_ui_sel'
 
 function M.cd_opened_projs()
-  local func = loadstring('return ' .. M.opened_projs_txt_path:read())
+  local func = loadstring('return ' .. require 'config.my_sessions'.opened_projs_txt_path:read())
   if func then
     local projs = func()
     B.ui_sel(projs, 'sel dir to change', function(dir)

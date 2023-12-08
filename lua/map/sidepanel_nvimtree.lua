@@ -18,7 +18,7 @@ vim.keymap.set({ 'n', 'v', }, '<leader>ac', function() require 'config.sidepanel
 vim.keymap.set({ 'n', 'v', }, '<leader>aj', function() require 'config.sidepanel_nvimtree'.findnext() end, M.opt 'findnext')
 vim.keymap.set({ 'n', 'v', }, '<leader>ak', function() require 'config.sidepanel_nvimtree'.findprev() end, M.opt 'findprev')
 
-vim.keymap.set({ 'n', 'v', }, '<leader>an', function() require 'config.sidepanel_nvimtree'.cd_opened_projs() end, M.opt 'cd_opened_projs')
+vim.keymap.set({ 'n', 'v', }, '<leader>ab', function() require 'config.sidepanel_nvimtree'.cd_opened_projs() end, M.opt 'cd_opened_projs')
 vim.keymap.set({ 'n', 'v', }, '<leader>ay', function() require 'config.sidepanel_nvimtree'.cd_my_dirs() end, M.opt 'cd_my_dirs')
 vim.keymap.set({ 'n', 'v', }, '<leader>aY', function() require 'config.sidepanel_nvimtree'.cd_my_dirs_first() end, M.opt 'cd_my_dirs_first')
 
