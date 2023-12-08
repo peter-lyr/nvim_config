@@ -59,7 +59,7 @@ function M.sel(fname)
     else
       table.insert(list, 1, M.sel_all)
       B.ui_sel(list, 'sessions sel proj open', function(proj, _)
-        if B.is(proj) then
+        if not B.is(proj) then
           return
         end
         if proj == M.sel_all then
