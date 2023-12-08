@@ -38,3 +38,4 @@
 36. [ ] format_input not working
 37. [x] <leader>h l, wincmd h l
 38. [x] <c-o> <c-i> no ending
+39. [ ] fold duplicate lines
