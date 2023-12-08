@@ -274,4 +274,10 @@ function B.get_cfile()
   return require 'my_base_funcs'.get_cfile()
 end
 
+----------------
+
+function B.get_root_short(project_root_path)
+  return require 'my_base_funcs'.get_root_short(project_root_path)
+end
+
 return B

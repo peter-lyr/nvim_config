@@ -256,46 +256,6 @@ function M.get_buf_to_show(bufs, cur_buf, tab_len)
   return newbufnrs
 end
 
-M.get_root_short = function(projectroot)
-  local temp__ = vim.fn.tolower(vim.fn.fnamemodify(projectroot, ':t'))
-  if #temp__ >= 15 then
-    local s1 = ''
-    local s2 = ''
-    for i = 15, 3, -1 do
-      s2 = string.sub(temp__, #temp__ - i, #temp__)
-      if vim.fn.strdisplaywidth(s2) <= 7 then
-        break
-      end
-    end
-    for i = 15, 3, -1 do
-      s1 = string.sub(temp__, 1, i)
-      if vim.fn.strdisplaywidth(s1) <= 7 then
-        break
-      end
-    end
-    return s1 .. '…' .. s2
-  end
-  local updir = vim.fn.tolower(vim.fn.fnamemodify(projectroot, ':h:t'))
-  if #updir >= 15 then
-    local s1 = ''
-    local s2 = ''
-    for i = 15, 3, -1 do
-      s2 = string.sub(updir, #updir - i, #updir)
-      if vim.fn.strdisplaywidth(s2) <= 7 then
-        break
-      end
-    end
-    for i = 15, 3, -1 do
-      s1 = string.sub(updir, 1, i)
-      if vim.fn.strdisplaywidth(s1) <= 7 then
-        break
-      end
-    end
-    return s1 .. '…' .. s2
-  end
-  return updir .. '\\' .. temp__
-end
-
 function M.one_tab()
   local tabs = ''
   local tab_len = 0
@@ -349,9 +309,9 @@ function M.get_tab_to_show()
         tabs = tabs .. tostring(tabnr) .. '@SwitchTab@'
         local temp = ''
         if cur_tabnr == tabnr then
-          temp = string.format(' %d/%d %s ', tabnr, tab_max, M.get_root_short(proj))
+          temp = string.format(' %d/%d %s ', tabnr, tab_max, B.get_root_short(proj))
         else
-          temp = string.format(' %d %s ', tabnr, M.get_root_short(proj))
+          temp = string.format(' %d %s ', tabnr, B.get_root_short(proj))
         end
         tab_len = tab_len + vim.fn.strdisplaywidth(temp)
         tabs = tabs .. temp

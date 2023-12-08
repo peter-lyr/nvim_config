@@ -328,4 +328,44 @@ function M.get_cfile()
   return cfile
 end
 
+function M.get_root_short(project_root_path)
+  local temp__ = vim.fn.tolower(vim.fn.fnamemodify(project_root_path, ':t'))
+  if #temp__ >= 15 then
+    local s1 = ''
+    local s2 = ''
+    for i = 15, 3, -1 do
+      s2 = string.sub(temp__, #temp__ - i, #temp__)
+      if vim.fn.strdisplaywidth(s2) <= 7 then
+        break
+      end
+    end
+    for i = 15, 3, -1 do
+      s1 = string.sub(temp__, 1, i)
+      if vim.fn.strdisplaywidth(s1) <= 7 then
+        break
+      end
+    end
+    return s1 .. '…' .. s2
+  end
+  local updir = vim.fn.tolower(vim.fn.fnamemodify(project_root_path, ':h:t'))
+  if #updir >= 15 then
+    local s1 = ''
+    local s2 = ''
+    for i = 15, 3, -1 do
+      s2 = string.sub(updir, #updir - i, #updir)
+      if vim.fn.strdisplaywidth(s2) <= 7 then
+        break
+      end
+    end
+    for i = 15, 3, -1 do
+      s1 = string.sub(updir, 1, i)
+      if vim.fn.strdisplaywidth(s1) <= 7 then
+        break
+      end
+    end
+    return s1 .. '…' .. s2
+  end
+  return updir .. '/' .. temp__
+end
+
 return M
