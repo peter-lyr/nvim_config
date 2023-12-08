@@ -8,7 +8,7 @@ M.lua = string.match(M.loaded, '%.([^.]+)$')
 
 M.c2cmake_py = M.source .. '.c2cmake.py'
 M.cbp2cmake_py = M.source .. '.cbp2cmake.py'
-M._clang_format = M.source .. '.clang-format'
+M._clang_format = M.source .. '_\\.clang-format'
 
 function M.get_cbps(file)
   local cbps = {}
