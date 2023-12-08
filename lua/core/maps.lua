@@ -44,3 +44,9 @@ vim.keymap.set({ 'n', 'v', }, '<a-s-p>', '"+P', { silent = true, desc = '"+P', }
 
 -- for youdao dict
 vim.keymap.set({ 'v', }, '<c-c>', '"+y', { silent = true, desc = '"+y', })
+
+vim.cmd [[
+cab xpx sort
+cab xqc g/^\(.*\)$\n\1$/d
+cab xpq sort\|g/^\(.*\)$\n\1$/d
+]]
