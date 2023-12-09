@@ -116,16 +116,30 @@ local function find_project_files(prompt_bufnr)
   B.notify_info('telescope root: ' .. project_path)
 end
 
-local function browse_project_files(prompt_bufnr)
+local function find_project_files_all(prompt_bufnr)
+  require 'config.telescope'.search_all_en(0)
   local project_path, cd_successful = change_working_directory(prompt_bufnr, true)
   local opt = {
     cwd = project_path,
     -- hidden = config.options.show_hidden,
+    -- mode = 'insert',
+    -- find_command = { 'fd', },
   }
   if cd_successful then
-    require 'telescope'.extensions.file_browser.file_browser(opt)
+    builtin.find_files(opt)
   end
 end
+
+-- local function browse_project_files(prompt_bufnr)
+--   local project_path, cd_successful = change_working_directory(prompt_bufnr, true)
+--   local opt = {
+--     cwd = project_path,
+--     -- hidden = config.options.show_hidden,
+--   }
+--   if cd_successful then
+--     require 'telescope'.extensions.file_browser.file_browser(opt)
+--   end
+-- end
 
 local function search_in_project_files(prompt_bufnr)
   local project_path, cd_successful = change_working_directory(prompt_bufnr, true)
@@ -145,6 +159,18 @@ local function search_in_project_files(prompt_bufnr)
   B.notify_info('telescope root: ' .. project_path)
 end
 
+local function search_in_project_files_all(prompt_bufnr)
+  local project_path, cd_successful = change_working_directory(prompt_bufnr, true)
+  local opt = {
+    cwd = project_path,
+    -- hidden = config.options.show_hidden,
+    -- mode = 'insert',
+  }
+  if cd_successful then
+    builtin.live_grep(opt)
+  end
+end
+
 local function git_status(prompt_bufnr)
   local project_path, cd_successful = change_working_directory(prompt_bufnr, true)
   local m = require 'config.telescope'
@@ -161,6 +187,18 @@ local function git_status(prompt_bufnr)
     builtin.git_status(opt)
   end
   B.notify_info('telescope root: ' .. project_path)
+end
+
+local function git_status_all(prompt_bufnr)
+  local project_path, cd_successful = change_working_directory(prompt_bufnr, true)
+  local opt = {
+    cwd = project_path,
+    -- hidden = config.options.show_hidden,
+    -- mode = 'insert',
+  }
+  if cd_successful then
+    builtin.git_status(opt)
+  end
 end
 
 -- local function recent_project_files(prompt_bufnr)
@@ -203,19 +241,26 @@ local function my_projects(opts)
     previewer = false,
     sorter = telescope_config.generic_sorter(opts),
     attach_mappings = function(prompt_bufnr, map)
-      -- map("n", "f", find_project_files)
-      -- map('n', 'r', browse_project_files, { nowait = true, })
       map('n', 'd', delete_project, { nowait = true, })
       map('n', 'c', search_in_project_files, { nowait = true, })
       map('n', 'b', git_status, { nowait = true, })
+
+      map('n', 'C', search_in_project_files_all, { nowait = true, })
+      map('n', 'B', git_status_all, { nowait = true, })
+      -- map("n", "f", find_project_files)
+      -- map('n', 'r', browse_project_files, { nowait = true, })
       -- map("n", "r", recent_project_files)
       -- map("n", "w", change_working_directory)
 
-      map('i', '<a-b>', git_status, { nowait = true, })
-      -- map("i", "<c-f>", find_project_files)
-      -- map("i", "<c-b>", browse_project_files)
       map("i", "<a-d>", delete_project)
       map("i", "<a-c>", search_in_project_files)
+      map('i', '<a-b>', git_status, { nowait = true, })
+
+      map("i", "<a-s-c>", search_in_project_files_all)
+      map('i', '<a-s-b>', git_status_all, { nowait = true, })
+      map("i", "<s-cr>", find_project_files_all)
+      -- map("i", "<c-f>", find_project_files)
+      -- map("i", "<c-b>", browse_project_files)
       -- map("i", "<c-r>", recent_project_files)
       -- map("i", "<c-w>", change_working_directory)
 
