@@ -1,14 +1,7 @@
-.bookmarks
 .hili
-saved_images
 *.exe
-*.lnk
-lazy-lock.json
-*.o
-*.log
-.xxdout
+*.pdf
 *.docx
 *.html
-*.pdf
-*.temp
-*.reg
+.*
+.todo_exclude.txt
