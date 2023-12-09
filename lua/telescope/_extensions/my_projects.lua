@@ -1,3 +1,11 @@
+local M = {}
+local B = require 'my_base'
+B.load_require_common()
+M.source = require 'my_base'.get_source(debug.getinfo(1)['source'])
+M.loaded = B.get_loaded(M.source)
+M.lua = string.match(M.loaded, '%.([^.]+)$')
+--------------------------------------------
+
 -- Inspiration from:
 -- https://github.com/nvim-telescope/telescope-project.nvim
 local has_telescope, telescope = pcall(require, 'telescope')
@@ -91,6 +99,11 @@ end
 local function find_project_files(prompt_bufnr)
   require 'config.telescope'.search_all_en(0)
   local project_path, cd_successful = change_working_directory(prompt_bufnr, true)
+  local m = require 'config.telescope'
+  local root_dir = B.rep_backslash_lower(project_path)
+  if B.is(vim.tbl_contains(vim.tbl_keys(m.cur_root), root_dir)) then
+    project_path = m.cur_root[root_dir]
+  end
   local opt = {
     cwd = project_path,
     -- hidden = config.options.show_hidden,
@@ -100,6 +113,7 @@ local function find_project_files(prompt_bufnr)
   if cd_successful then
     builtin.find_files(opt)
   end
+  B.notify_info('telescope root: ' .. project_path)
 end
 
 local function browse_project_files(prompt_bufnr)
@@ -115,6 +129,11 @@ end
 
 local function search_in_project_files(prompt_bufnr)
   local project_path, cd_successful = change_working_directory(prompt_bufnr, true)
+  local m = require 'config.telescope'
+  local root_dir = B.rep_backslash_lower(project_path)
+  if B.is(vim.tbl_contains(vim.tbl_keys(m.cur_root), root_dir)) then
+    project_path = m.cur_root[root_dir]
+  end
   local opt = {
     cwd = project_path,
     -- hidden = config.options.show_hidden,
@@ -123,10 +142,16 @@ local function search_in_project_files(prompt_bufnr)
   if cd_successful then
     builtin.live_grep(opt)
   end
+  B.notify_info('telescope root: ' .. project_path)
 end
 
 local function git_status(prompt_bufnr)
   local project_path, cd_successful = change_working_directory(prompt_bufnr, true)
+  local m = require 'config.telescope'
+  local root_dir = B.rep_backslash_lower(project_path)
+  if B.is(vim.tbl_contains(vim.tbl_keys(m.cur_root), root_dir)) then
+    project_path = m.cur_root[root_dir]
+  end
   local opt = {
     cwd = project_path,
     -- hidden = config.options.show_hidden,
@@ -135,6 +160,7 @@ local function git_status(prompt_bufnr)
   if cd_successful then
     builtin.git_status(opt)
   end
+  B.notify_info('telescope root: ' .. project_path)
 end
 
 -- local function recent_project_files(prompt_bufnr)
@@ -178,18 +204,18 @@ local function my_projects(opts)
     sorter = telescope_config.generic_sorter(opts),
     attach_mappings = function(prompt_bufnr, map)
       -- map("n", "f", find_project_files)
-      map('n', 'r', browse_project_files, { nowait = true, })
-      map('n', 'z', delete_project, { nowait = true, })
+      -- map('n', 'r', browse_project_files, { nowait = true, })
+      map('n', 'd', delete_project, { nowait = true, })
       map('n', 'c', search_in_project_files, { nowait = true, })
       map('n', 'b', git_status, { nowait = true, })
       -- map("n", "r", recent_project_files)
       -- map("n", "w", change_working_directory)
 
-      map('i', '<c-b>', git_status, { nowait = true, })
+      map('i', '<a-b>', git_status, { nowait = true, })
       -- map("i", "<c-f>", find_project_files)
       -- map("i", "<c-b>", browse_project_files)
-      -- map("i", "<c-d>", delete_project)
-      -- map("i", "<c-s>", search_in_project_files)
+      map("i", "<a-d>", delete_project)
+      map("i", "<a-c>", search_in_project_files)
       -- map("i", "<c-r>", recent_project_files)
       -- map("i", "<c-w>", change_working_directory)
 
